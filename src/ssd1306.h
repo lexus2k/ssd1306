@@ -55,22 +55,38 @@
 #define SSD1306_SWITCHCAPVCC   0x2
 #define SSD1306_NOP            0xE3
 
+/**
+ * Rectangle region. not used now
+ */
 typedef struct
 {
+    /// left
     uint8_t left;
+    /// top
     uint8_t top;
+    /// right
     uint8_t right;
+    /// bottom
     uint8_t bottom;
 } SSD1306_RECT;
 
 
+/**
+ * SPRITE structure represents logical graphics object
+ */
 typedef struct
 {
+    /// draw position X on the screen
     uint8_t x;
+    /// draw position Y on the screen
     uint8_t y;
+    /// sprite width
     uint8_t w;
+    /// last draw position X on the screen
     uint8_t lx;
+    /// last draw position Y on the screen
     uint8_t ly;
+    /// Pointer to PROGMEM data, representing sprite image
     const uint8_t * data;
 } SPRITE;
 

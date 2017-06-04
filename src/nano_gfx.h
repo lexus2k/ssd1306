@@ -22,12 +22,21 @@
 
 #include "font6x8.h"
 
+/**
+ * NanoCanvas represents objects for drawing in memory buffer
+ */
 class NanoCanvas
 {
 public:
     /**
-     * width can be of any value
-     * height should be divided by 8
+     * Creates new canvas object.
+     * Width can be of any value.
+     * Height should be divided by 8.
+     * Memory buffer must be not less than w * h / 8.
+     *
+     * @param w - width
+     * @param h - height
+     * @param bytes - pointer to memory buffer to use
      */
     NanoCanvas(uint8_t w, uint8_t h, uint8_t *bytes)
     {
@@ -40,20 +49,58 @@ public:
     };
 
     /**
-     *  
+     * Draws pixel on specified position
+     * @param x - position X
+     * @param y - position Y
      */
     void drawPixel(uint8_t x, uint8_t y);
 
+    /**
+     * Draws rectangle
+     * @param x1 - left boundary
+     * @param y1 - top boundary
+     * @param x2 - right boundary
+     * @param y2 - bottom boundary
+     */
     void drawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
 
+    /**
+     * Draws horizontal line
+     * @param x1 - left boundary
+     * @param y1 - position Y
+     * @param x2 - right boundary
+     */
     void drawHLine(uint8_t x1, uint8_t y1, uint8_t x2);
 
+    /**
+     * Draws vertical line
+     * @param x1 - position X
+     * @param y1 - top boundary
+     * @param y2 - bottom boundary
+     */
     void drawVLine(uint8_t x1, uint8_t y1, uint8_t y2);
 
+    /**
+     * Draws filled rectangle
+     * @param x1 - left boundary
+     * @param y1 - top boundary
+     * @param x2 - right boundary
+     * @param y2 - bottom boundary
+     * @param templ - template to use for filling rectangle
+     */
     void fillRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t templ);
 
+    /**
+     * Clears canvas
+     */
     void clear();
     
+    /**
+     * Prints text to canvas buffer
+     * @param x - start position X
+     * @param y - start position Y
+     * @param ch - text to print (null-terminated)
+     */
     void char_f6x8(uint8_t x, uint8_t y, const char ch[]);
 
     /**
@@ -68,8 +115,19 @@ public:
      */
     void drawSprite(uint8_t x, uint8_t y, const uint8_t sprite[]);
 
+    /**
+     * Returns canvas width
+     */
     inline uint8_t width() { return m_w; };
+
+    /**
+     * Returns canvas height
+     */
     inline uint8_t height() { return m_h; };
+
+    /**
+     * Returns canvas buffer
+     */
     inline uint8_t *buffer() { return m_bytes; };
 
 private:
