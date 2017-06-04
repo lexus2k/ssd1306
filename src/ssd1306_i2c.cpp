@@ -96,12 +96,12 @@ void ssd1306_i2cStop(void)
  * Inputs: SCL is LOW, SDA is has no meaning
  * Outputs: SCL is LOW
  */
-void ssd1306_i2cSendByte(uint8_t byte)
+void ssd1306_i2cSendByte(uint8_t data)
 {
   uint8_t i;
   for(i=0; i<8; i++)
     {
-      if((byte << i) & 0x80)
+      if((data << i) & 0x80)
         DIGITAL_WRITE_HIGH(SSD1306_SDA)
       else
         DIGITAL_WRITE_LOW(SSD1306_SDA);

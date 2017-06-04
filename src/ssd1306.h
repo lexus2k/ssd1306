@@ -16,6 +16,9 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+/**
+ * @file ssd1306.h SSD1306 basic draw functions
+ */
 
 
 #ifndef _SSD1306_H_

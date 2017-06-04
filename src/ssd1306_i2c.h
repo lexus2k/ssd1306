@@ -16,6 +16,10 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+/**
+ * @file ssd1306_i2c.h SSD1306 i2c communication functions
+ */
+
 
 #ifndef _SSD1306_I2C_H_
 #define _SSD1306_I2C_H_
@@ -27,10 +31,32 @@
     #define SSD1306_SA    0x3C  // Slave address
 #endif
 
+/**
+ * Informs I2C device about data to be sent
+ */
 void         ssd1306_i2cStart();
+
+/**
+ * Completes I2C transaction
+ */
 void         ssd1306_i2cStop();
+
+/**
+ * Sends byte to I2C device
+ * @param data - byte to send
+ */
 void         ssd1306_i2cSendByte(uint8_t data);
+
+/**
+ * Sends command to I2C device: includes initiating of
+ * I2C transaction, sending data and completing I2C transaction.
+ * @param data - command to send
+ */
 void         ssd1306_i2cSendCommand(uint8_t data);
+
+/**
+ * Starts I2C transaction for sending bitmap data.
+ */
 void         ssd1306_i2cDataStart();
 
 // ----------------------------------------------------------------------------
