@@ -26,15 +26,17 @@
  * For ATtiny controllers it is standard PORTB
  * For ATmega328p, it is PORTC, which corresponds to Analog inputs/outputs
  */
-#if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)
-    // at 8Mhz each command takes ~ 0.125us
-    #define DDR_REG      DDRB
-    #define PORT_REG     PORTB
-#else
-    // at 16Mhz each command takes ~ 0.0625us
-    #define DDR_REG      DDRC
-    #define PORT_REG     PORTC
-#endif
+#if defined(SSD1306_EMBEDDED_I2C)
+    #if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
+        // at 8Mhz each command takes ~ 0.125us
+        #define DDR_REG      DDRB
+        #define PORT_REG     PORTB
+    #else // For Atmega
+        // at 16Mhz each command takes ~ 0.0625us
+        #define DDR_REG      DDRC
+        #define PORT_REG     PORTC
+    #endif
+
 
 #ifndef F_CPU
     #warning "F_CPU is not defined, there can be I2C issues"
@@ -136,4 +138,46 @@ void ssd1306_i2cDataStart(void)
     ssd1306_i2cStart();
     ssd1306_i2cSendByte(0x40);	//write data
 }
+
+
+
+#else /* STANDARD branch */
+    #include <Wire.h>
+
+void ssd1306_i2cStart(void)
+{
+    Wire.beginTransmission(SSD1306_SA);
+}
+
+void ssd1306_i2cStop(void)
+{
+    Wire.endTransmission();
+}
+
+/**
+ * Inputs: SCL is LOW, SDA is has no meaning
+ * Outputs: SCL is LOW
+ */
+void ssd1306_i2cSendByte(uint8_t data)
+{
+    Wire.write(data);
+}
+
+
+void ssd1306_i2cSendCommand(uint8_t command)
+{
+    ssd1306_i2cStart();
+    ssd1306_i2cSendByte(0x00);	// write command
+    ssd1306_i2cSendByte(command);
+    ssd1306_i2cStop();
+}
+
+void ssd1306_i2cDataStart(void)
+{
+    ssd1306_i2cStart();
+    ssd1306_i2cSendByte(0x40);	//write data
+}
+
+#endif
+
 

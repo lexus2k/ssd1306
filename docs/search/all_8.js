@@ -22,5 +22,6 @@ var searchData=
   ['ssd1306_5fi2cstop',['ssd1306_i2cStop',['../ssd1306__i2c_8h.html#a0dda0d7c1510f1b3e80a25c49ba57bc7',1,'ssd1306_i2c.cpp']]],
   ['ssd1306_5finit',['ssd1306_init',['../ssd1306_8h.html#ab83a732f28055bd6835d031e13986f0b',1,'ssd1306.cpp']]],
   ['ssd1306_5frect',['SSD1306_RECT',['../struct_s_s_d1306___r_e_c_t.html',1,'']]],
+  ['ssd1306_5fsa',['SSD1306_SA',['../ssd1306__i2c_8h.html#a05d1c9f1ad427b445574bddab25583ab',1,'ssd1306_i2c.h']]],
   ['ssd1306_5fsetpos',['ssd1306_setPos',['../ssd1306_8h.html#ad46c35ee4a2f53bee496bea6fdb23847',1,'ssd1306.cpp']]]
 ];

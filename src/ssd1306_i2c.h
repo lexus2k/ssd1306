@@ -26,10 +26,24 @@
 
 #include <Arduino.h>
 
+// Uncomment this block only, if you need to use "embedded" I2C on Atmega controllers
+// #define SSD1306_EMBEDDED_I2C
+
 #ifndef SSD1306_SA
-    /* Write command will be SSD1306_SA<<1 and read will be SSD1306_SA<<1 | 1 */
+    /**
+     * SSD1306_SA defines I2C address of LCD display. Please, check your device.
+     * If you LCD device has different address, change it here.
+     * Write command will be SSD1306_SA<<1 and read will be SSD1306_SA<<1 | 1
+     */
     #define SSD1306_SA    0x3C  // Slave address
 #endif
+
+#if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
+#ifndef SSD1306_EMBEDDED_I2C
+    #define SSD1306_EMBEDDED_I2C
+#endif
+#endif
+
 
 /**
  * Informs I2C device about data to be sent

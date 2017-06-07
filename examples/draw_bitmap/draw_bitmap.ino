@@ -23,14 +23,25 @@
  *   SCL (3) -|    |- (2)
  *   SDA (4) -|    |- (1)
  *   GND     -|____|- (0)
+ *
+ *   Atmega328 PINS: connect LCD to A4/A5
  */
 
 #include "ssd1306.h"
 #include "sova.h"
 
+/* Do not include wire.h for Attiny controllers */
+#ifndef SSD1306_EMBEDDED_I2C
+    #include <Wire.h>
+#endif
+
 
 void setup()
 {
+    /* Do not init Wire library for Attiny controllers */
+#ifndef SSD1306_EMBEDDED_I2C
+    Wire.begin();
+#endif
     ssd1306_init();
     ssd1306_fillScreen(0x00);
     ssd1306_drawBitmap(0, 0, 128, 64, Sova);
