@@ -112,6 +112,19 @@ void ssd1306_clearScreen(){
 }
 
 
+void         ssd1306_displayOff()
+{
+    ssd1306_i2cSendCommand(SSD1306_DISPLAYOFF);
+}
+
+
+void         ssd1306_displayOn()
+{
+    ssd1306_i2cSendCommand(SSD1306_DISPLAYON);
+}
+
+
+
 void ssd1306_charF6x8(uint8_t x, uint8_t y, const char ch[]){
   uint8_t c,i,j=0;
   while(ch[j] != '\0')
@@ -231,15 +244,35 @@ void ssd1306_eraseSprite(SPRITE *sprite)
 
 void ssd1306_eraseTrace(SPRITE *sprite)
 {
-    SSD1306_RECT oldRect = ssd1306_rectFromSprite(sprite->lx, sprite->ly, sprite->w);
-    SSD1306_RECT newRect = ssd1306_rectFromSprite(sprite->x, sprite->y, sprite->w);
-    if (oldRect.top < newRect.top)
+    uint8_t y1 = sprite->ly >> 3;
+    uint8_t y2 = (sprite->ly + 7) >> 3;
+    if (sprite->ly < sprite->y)
+        y2 = min(y2, (uint8_t)((sprite->y >> 3) - 1));
+    else
+        y1 = max(y1, (sprite->ly + 7) >> 3);
+    for(uint8_t y = y1; y <= y2; y++)
     {
-        for(uint8_t y = oldRect.top >> 3; y < newRect.top >> 3; y++)
+        ssd1306_setPos(sprite->lx, y);
+        ssd1306_i2cDataStart();
+        for(uint8_t x = sprite->lx; x < sprite->lx + sprite->w; x++)
         {
-            ssd1306_setPos(oldRect.left, y);
+            ssd1306_i2cSendByte( B00000000 );
+        }
+        ssd1306_i2cStop();
+    }
+    if (sprite->lx != sprite->x)
+    {
+        uint8_t x1 = sprite->lx;
+        uint8_t x2 = sprite->lx + sprite->w - 1;
+        if (sprite->x < sprite->lx)
+            x1 = max(x1, sprite->x + sprite->w);
+        else
+            x2 = min((uint8_t)(sprite->x - 1), x2);
+        for(uint8_t y = sprite->ly >> 3; y <= (sprite->ly + 7) >> 3; y++)
+        {
+            ssd1306_setPos(x1, y);
             ssd1306_i2cDataStart();
-            for(uint8_t x = oldRect.left; x <= oldRect.right; x++)
+            for(uint8_t x = x1; x <= x2; x++)
             {
                 ssd1306_i2cSendByte( B00000000 );
             }

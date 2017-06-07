@@ -3,6 +3,8 @@ var searchData=
   ['ssd1306_5fcharf6x8',['ssd1306_charF6x8',['../ssd1306_8h.html#aaa00ed77067c8e818cf20d492a158878',1,'ssd1306.cpp']]],
   ['ssd1306_5fclearscreen',['ssd1306_clearScreen',['../ssd1306_8h.html#a3e6a3cab78abaead5373dadfcf339b9d',1,'ssd1306.cpp']]],
   ['ssd1306_5fcreatesprite',['ssd1306_createSprite',['../ssd1306_8h.html#aa5f53fa7fbe48dc1a06e5fe4b1710c26',1,'ssd1306.cpp']]],
+  ['ssd1306_5fdisplayoff',['ssd1306_displayOff',['../ssd1306_8h.html#a7bfec390efdfde56e4ef8952219c94b0',1,'ssd1306.cpp']]],
+  ['ssd1306_5fdisplayon',['ssd1306_displayOn',['../ssd1306_8h.html#ac10e60962ff77aeb3687b795c364595f',1,'ssd1306.cpp']]],
   ['ssd1306_5fdrawbitmap',['ssd1306_drawBitmap',['../ssd1306_8h.html#a0a4c06ba9b309741003b172c3c5cf874',1,'ssd1306.cpp']]],
   ['ssd1306_5fdrawcanvas',['ssd1306_drawCanvas',['../ssd1306_8h.html#ad2fb18c63d7fcef959b63044dc81efa8',1,'ssd1306.cpp']]],
   ['ssd1306_5fdrawsprite',['ssd1306_drawSprite',['../ssd1306_8h.html#a9eab8105869b501ed7c22c4d46c36c37',1,'ssd1306.cpp']]],

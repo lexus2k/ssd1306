@@ -116,6 +116,17 @@ void         ssd1306_fillScreen(uint8_t fill_Data);
 void         ssd1306_clearScreen();
 
 /**
+ * Turns off display
+ */
+void         ssd1306_displayOff();
+
+
+/**
+ * Turns on display
+ */
+void         ssd1306_displayOn();
+
+/**
  * Prints text to screen.
  * @param x - horizontal position in pixels
  * @param y - vertical position in blocks (pixels/8)
