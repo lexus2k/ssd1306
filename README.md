@@ -15,13 +15,13 @@ Key Features:
  * Memory-buffered operations (nano_gfx.h)
  * Third-party font (6x8)
  * Some functions are:
- ** Clearing display
- ** Filling display with pattern data
- ** Printing text to display
- ** Drawing bitmap image from SRAM memory
- ** Drawing bitmap image from Flash memory (PROGMEM related)
- ** Sprites: moving
- ** Drawing lines in buffer (vertical and horizontal)
+   * Clearing display
+   * Filling display with pattern data
+   * Printing text to display
+   * Drawing bitmap image from SRAM memory
+   * Drawing bitmap image from Flash memory (PROGMEM related)
+   * Sprites: moving
+   * Drawing lines in buffer (vertical and horizontal)
 
 For Attiny85/Attiny45 controllers OLED display must be connected to
 PB3 (SCL) and PB4 (SDA) lines. For other controllers pins
