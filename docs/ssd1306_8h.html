@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.12"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SSD1306 Display Driver: src/ssd1306.h File Reference</title>
+<title>SSD1306 I2C Display Driver: src/ssd1306.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,8 +21,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">SSD1306 Display Driver
-   &#160;<span id="projectnumber">0.1.4</span>
+   <div id="projectname">SSD1306 I2C Display Driver
+   &#160;<span id="projectnumber">0.1.5</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306 I2C OLED Display</div>
   </td>
@@ -194,11 +194,9 @@ Functions</h2></td></tr>
 <tr class="separator:a08fc84bfc9ce818e7ed3951067799f62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5f53fa7fbe48dc1a06e5fe4b1710c26"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_p_r_i_t_e.html">SPRITE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306_8h.html#aa5f53fa7fbe48dc1a06e5fe4b1710c26">ssd1306_createSprite</a> (uint8_t x, uint8_t y, uint8_t w, const uint8_t *data)</td></tr>
 <tr class="separator:aa5f53fa7fbe48dc1a06e5fe4b1710c26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99347d938997611dd1783d1f57ead08a"><td class="memItemLeft" align="right" valign="top"><a id="a99347d938997611dd1783d1f57ead08a"></a>
-<a class="el" href="struct_s_s_d1306___r_e_c_t.html">SSD1306_RECT</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ssd1306_rect</b> (<a class="el" href="struct_s_p_r_i_t_e.html">SPRITE</a> *sprite)</td></tr>
+<tr class="memitem:a99347d938997611dd1783d1f57ead08a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_s_d1306___r_e_c_t.html">SSD1306_RECT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306_8h.html#a99347d938997611dd1783d1f57ead08a">ssd1306_rect</a> (<a class="el" href="struct_s_p_r_i_t_e.html">SPRITE</a> *sprite)</td></tr>
 <tr class="separator:a99347d938997611dd1783d1f57ead08a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92b39e923d1ffc51da1025e2436172e4"><td class="memItemLeft" align="right" valign="top"><a id="a92b39e923d1ffc51da1025e2436172e4"></a>
-<a class="el" href="struct_s_s_d1306___r_e_c_t.html">SSD1306_RECT</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ssd1306_rectFromSprite</b> (uint8_t x, uint8_t y, uint8_t w)</td></tr>
+<tr class="memitem:a92b39e923d1ffc51da1025e2436172e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_s_d1306___r_e_c_t.html">SSD1306_RECT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306_8h.html#a92b39e923d1ffc51da1025e2436172e4">ssd1306_rectFromSprite</a> (uint8_t x, uint8_t y, uint8_t w)</td></tr>
 <tr class="separator:a92b39e923d1ffc51da1025e2436172e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -638,6 +636,64 @@ Functions</h2></td></tr>
 <p>Init display </p>
 
 <p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00023">23</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a99347d938997611dd1783d1f57ead08a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99347d938997611dd1783d1f57ead08a">&sect;&nbsp;</a></span>ssd1306_rect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_s_d1306___r_e_c_t.html">SSD1306_RECT</a> ssd1306_rect </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_p_r_i_t_e.html">SPRITE</a> *&#160;</td>
+          <td class="paramname"><em>sprite</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Depricated. </p>
+
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00290">290</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a92b39e923d1ffc51da1025e2436172e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92b39e923d1ffc51da1025e2436172e4">&sect;&nbsp;</a></span>ssd1306_rectFromSprite()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_s_d1306___r_e_c_t.html">SSD1306_RECT</a> ssd1306_rectFromSprite </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>w</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Depricated. </p>
+
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00285">285</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>

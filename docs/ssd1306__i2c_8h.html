@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.12"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SSD1306 Display Driver: src/ssd1306_i2c.h File Reference</title>
+<title>SSD1306 I2C Display Driver: src/ssd1306_i2c.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,8 +21,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">SSD1306 Display Driver
-   &#160;<span id="projectnumber">0.1.4</span>
+   <div id="projectname">SSD1306 I2C Display Driver
+   &#160;<span id="projectnumber">0.1.5</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306 I2C OLED Display</div>
   </td>
@@ -79,6 +79,8 @@ $(function() {
 Macros</h2></td></tr>
 <tr class="memitem:a05d1c9f1ad427b445574bddab25583ab"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306__i2c_8h.html#a05d1c9f1ad427b445574bddab25583ab">SSD1306_SA</a>&#160;&#160;&#160;0x3C</td></tr>
 <tr class="separator:a05d1c9f1ad427b445574bddab25583ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a920bc06b164c4bfd54d6641db5368b5b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306__i2c_8h.html#a920bc06b164c4bfd54d6641db5368b5b">SSD1306_EMBEDDED_I2C</a></td></tr>
+<tr class="separator:a920bc06b164c4bfd54d6641db5368b5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -98,6 +100,23 @@ Functions</h2></td></tr>
 
 <p>Definition in file <a class="el" href="ssd1306__i2c_8h_source.html">ssd1306_i2c.h</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a920bc06b164c4bfd54d6641db5368b5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a920bc06b164c4bfd54d6641db5368b5b">&sect;&nbsp;</a></span>SSD1306_EMBEDDED_I2C</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SSD1306_EMBEDDED_I2C</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Use embedded i2c on attiny controllers. Wire library is not applicable </p>
+
+<p>Definition at line <a class="el" href="ssd1306__i2c_8h_source.html#l00046">46</a> of file <a class="el" href="ssd1306__i2c_8h_source.html">ssd1306_i2c.h</a>.</p>
+
+</div>
+</div>
 <a id="a05d1c9f1ad427b445574bddab25583ab"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a05d1c9f1ad427b445574bddab25583ab">&sect;&nbsp;</a></span>SSD1306_SA</h2>
 
@@ -132,7 +151,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Starts I2C transaction for sending bitmap data. </p>
 
-<p>Definition at line <a class="el" href="ssd1306__i2c_8cpp_source.html#l00175">175</a> of file <a class="el" href="ssd1306__i2c_8cpp_source.html">ssd1306_i2c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306__i2c_8cpp_source.html#l00136">136</a> of file <a class="el" href="ssd1306__i2c_8cpp_source.html">ssd1306_i2c.cpp</a>.</p>
 
 </div>
 </div>
@@ -159,7 +178,7 @@ Functions</h2></td></tr>
 </dl>
 <p>Inputs: SCL is LOW, SDA is has no meaning Outputs: SCL is LOW </p>
 
-<p>Definition at line <a class="el" href="ssd1306__i2c_8cpp_source.html#l00161">161</a> of file <a class="el" href="ssd1306__i2c_8cpp_source.html">ssd1306_i2c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306__i2c_8cpp_source.html#l00101">101</a> of file <a class="el" href="ssd1306__i2c_8cpp_source.html">ssd1306_i2c.cpp</a>.</p>
 
 </div>
 </div>
@@ -185,7 +204,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ssd1306__i2c_8cpp_source.html#l00167">167</a> of file <a class="el" href="ssd1306__i2c_8cpp_source.html">ssd1306_i2c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306__i2c_8cpp_source.html#l00128">128</a> of file <a class="el" href="ssd1306__i2c_8cpp_source.html">ssd1306_i2c.cpp</a>.</p>
 
 </div>
 </div>
@@ -205,9 +224,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Informs I2C device about data to be sent</p>
-<p>Port registers, containing pins, which SSD1306 display is connected to. For ATtiny controllers it is standard PORTB For ATmega328p, it is PORTC, which corresponds to Analog inputs/outputs </p>
+<p>SCL remains HIGH on EXIT, Low SDA means start transmission </p>
 
-<p>Definition at line <a class="el" href="ssd1306__i2c_8cpp_source.html#l00147">147</a> of file <a class="el" href="ssd1306__i2c_8cpp_source.html">ssd1306_i2c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306__i2c_8cpp_source.html#l00078">78</a> of file <a class="el" href="ssd1306__i2c_8cpp_source.html">ssd1306_i2c.cpp</a>.</p>
 
 </div>
 </div>
@@ -227,7 +246,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Completes I2C transaction </p>
 
-<p>Definition at line <a class="el" href="ssd1306__i2c_8cpp_source.html#l00152">152</a> of file <a class="el" href="ssd1306__i2c_8cpp_source.html">ssd1306_i2c.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306__i2c_8cpp_source.html#l00087">87</a> of file <a class="el" href="ssd1306__i2c_8cpp_source.html">ssd1306_i2c.cpp</a>.</p>
 
 </div>
 </div>

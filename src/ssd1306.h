@@ -192,8 +192,14 @@ void         ssd1306_eraseTrace(SPRITE *sprite);
  */
 SPRITE       ssd1306_createSprite(uint8_t x, uint8_t y, uint8_t w, const uint8_t *data);
 
+/**
+ * Depricated.
+ */
 SSD1306_RECT ssd1306_rect(SPRITE * sprite);
 
+/**
+ * Depricated.
+ */
 SSD1306_RECT ssd1306_rectFromSprite(uint8_t x, uint8_t y, uint8_t w);
 
 // ----------------------------------------------------------------------------

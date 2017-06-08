@@ -44,6 +44,7 @@ void setup()
 #endif
     ssd1306_init();
     ssd1306_fillScreen(0x00);
+    /* Draw image defined in sova.h */
     ssd1306_drawBitmap(0, 0, 128, 64, Sova);
 }
 

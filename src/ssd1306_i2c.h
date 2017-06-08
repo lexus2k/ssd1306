@@ -40,6 +40,9 @@
 
 #if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
 #ifndef SSD1306_EMBEDDED_I2C
+    /**
+     * Use embedded i2c on attiny controllers. Wire library is not applicable
+     */
     #define SSD1306_EMBEDDED_I2C
 #endif
 #endif

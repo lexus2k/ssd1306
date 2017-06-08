@@ -35,6 +35,12 @@
 #endif
 
 
+/* 
+ * Heart image below is defined directly in flash memory.
+ * This reduces SRAM consumption.
+ * The image is define from bottom to top (bits), from left to
+ * right (bytes).
+ */
 const PROGMEM uint8_t heartImage[8] =
 {
     B00001110,
@@ -47,8 +53,14 @@ const PROGMEM uint8_t heartImage[8] =
     B00001110
 };
 
-const int spriteWidth = 8;
+/*
+ * Define sprite width. The width can be of any size.
+ * But sprite height is always assumed to be 8 pixels
+ * (number of bits in single byte).
+ */
+const int spriteWidth = sizeof(heartImage);
 
+/* Declare variable that represents our sprite */
 SPRITE sprite;
 int speedX = 1;
 int speedY = 1;
@@ -61,22 +73,30 @@ void setup()
 #endif
     ssd1306_init();
     ssd1306_fillScreen(0x00);
+    /* Create sprite at 0,0 position. The function initializes sprite structure. */
     sprite = ssd1306_createSprite( 0, 0, spriteWidth, heartImage );
+    /* Draw sprite on the display */
     ssd1306_drawSprite( &sprite );
 }
 
 
 void loop()
 {
+    /* Move sprite every 40 milliseconds */
     delay(40);
     sprite.x += speedX;
     sprite.y += speedY;
+    /* If right boundary is reached, reverse X direction */
     if (sprite.x == (128 - spriteWidth)) speedX = -speedX;
+    /* If left boundary is reached, reverse X direction */ 
     if (sprite.x == 0) speedX = -speedX;
-    /* Sprite height is always 8 pixels */
+    /* Sprite height is always 8 pixels. Reverse Y direction if bottom boundary is reached. */
     if (sprite.y == (64 - 8)) speedY = -speedY;
+    /* If top boundary is reached, reverse Y direction */
     if (sprite.y == 0) speedY = -speedY;
+    /* Erase sprite on old place. The library knows old position of the sprite. */
     ssd1306_eraseTrace( &sprite );
+    /* Draw sprite on new place */
     ssd1306_drawSprite( &sprite );
 }
 
