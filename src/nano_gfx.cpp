@@ -154,3 +154,17 @@
         }
     };
 
+
+void NanoCanvas::drawSprite(SPRITE *sprite)
+{
+    uint8_t i;
+    if (sprite->y >= m_h) return;
+    for(i = 0; i < sprite->w; i++)
+    {
+        if ((sprite->x + i) >= m_w) return;
+        uint8_t d = pgm_read_byte(&sprite->data[i]);
+        m_bytes[YADDR(sprite->y) + sprite->x + i] |= (d << (sprite->y & 0x7));
+        if (sprite->y + 8 < m_h)
+            m_bytes[YADDR(sprite->y) + m_w + sprite->x + i] |= (d >> (8 - (sprite->y & 0x7)));
+    }
+}

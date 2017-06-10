@@ -25,6 +25,7 @@
 #define _NANO_GFX_H_
 
 #include "font6x8.h"
+#include "ssd1306.h"
 
 /**
  * NanoCanvas represents objects for drawing in memory buffer
@@ -118,6 +119,12 @@ public:
      * Reads sprite from SRAM memory
      */
     void drawSprite(uint8_t x, uint8_t y, const uint8_t sprite[]);
+
+    /**
+     * Draws sprite in the buffer
+     * @param sprite - pointer to SPRITE structure containing sprite information
+     */
+    void drawSprite(SPRITE *sprite);
 
     /**
      * Returns canvas width

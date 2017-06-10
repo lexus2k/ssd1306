@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 I2C Display Driver
-   &#160;<span id="projectnumber">0.1.5</span>
+   &#160;<span id="projectnumber">0.2.0</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306 I2C OLED Display</div>
   </td>
@@ -92,6 +92,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a599f8d8cdaba51b639f8ed8531ecba91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a6a7006f415cbf2db983b1c41acde17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#a6a6a7006f415cbf2db983b1c41acde17">drawSprite</a> (uint8_t x, uint8_t y, const uint8_t sprite[])</td></tr>
 <tr class="separator:a6a6a7006f415cbf2db983b1c41acde17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54ce488014dd316543d3ae9acba03e12"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#a54ce488014dd316543d3ae9acba03e12">drawSprite</a> (<a class="el" href="struct_s_p_r_i_t_e.html">SPRITE</a> *sprite)</td></tr>
+<tr class="separator:a54ce488014dd316543d3ae9acba03e12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad079d1fef755ca460249b018e48fdf68"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#ad079d1fef755ca460249b018e48fdf68">width</a> ()</td></tr>
 <tr class="separator:ad079d1fef755ca460249b018e48fdf68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:addf4520ec55166869ce947cc9e415bb0"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#addf4520ec55166869ce947cc9e415bb0">height</a> ()</td></tr>
@@ -102,7 +104,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="class_nano_canvas.html">NanoCanvas</a> represents objects for drawing in memory buffer </p>
 
-<p>Definition at line <a class="el" href="nano__gfx_8h_source.html#l00032">32</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
+<p>Definition at line <a class="el" href="nano__gfx_8h_source.html#l00033">33</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a291335ac8d57111407ea7449a2e58c7d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a291335ac8d57111407ea7449a2e58c7d">&sect;&nbsp;</a></span>NanoCanvas()</h2>
@@ -153,7 +155,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="nano__gfx_8h_source.html#l00045">45</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
+<p>Definition at line <a class="el" href="nano__gfx_8h_source.html#l00046">46</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
 
 </div>
 </div>
@@ -182,7 +184,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Returns canvas buffer </p>
 
-<p>Definition at line <a class="el" href="nano__gfx_8h_source.html#l00135">135</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
+<p>Definition at line <a class="el" href="nano__gfx_8h_source.html#l00142">142</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
 
 </div>
 </div>
@@ -383,7 +385,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a6a6a7006f415cbf2db983b1c41acde17"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6a6a7006f415cbf2db983b1c41acde17">&sect;&nbsp;</a></span>drawSprite()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a6a7006f415cbf2db983b1c41acde17">&sect;&nbsp;</a></span>drawSprite() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -417,6 +419,32 @@ Public Member Functions</h2></td></tr>
 <p>Sprite is small image 8x8, sprite doesn't change background </p>
 
 <p>Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00142">142</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a54ce488014dd316543d3ae9acba03e12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54ce488014dd316543d3ae9acba03e12">&sect;&nbsp;</a></span>drawSprite() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void NanoCanvas::drawSprite </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_p_r_i_t_e.html">SPRITE</a> *&#160;</td>
+          <td class="paramname"><em>sprite</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Draws sprite in the buffer </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sprite</td><td>- pointer to <a class="el" href="struct_s_p_r_i_t_e.html">SPRITE</a> structure containing sprite information </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00158">158</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
 
 </div>
 </div>
@@ -584,7 +612,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Returns canvas height </p>
 
-<p>Definition at line <a class="el" href="nano__gfx_8h_source.html#l00130">130</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
+<p>Definition at line <a class="el" href="nano__gfx_8h_source.html#l00137">137</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
 
 </div>
 </div>
@@ -612,7 +640,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Returns canvas width </p>
 
-<p>Definition at line <a class="el" href="nano__gfx_8h_source.html#l00125">125</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
+<p>Definition at line <a class="el" href="nano__gfx_8h_source.html#l00132">132</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
 
 </div>
 </div>
