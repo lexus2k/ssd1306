@@ -21,138 +21,135 @@
 
 #define YADDR(y) (((y) >> 3) << m_p)
 #define BADDR(b) ((b) << m_p)
-    /**
-     *
-     */
-    void NanoCanvas::drawPixel(uint8_t x, uint8_t y)
-    {
-        if ((x>=m_w) || (y>=m_h)) return;
-        m_bytes[YADDR(y) + x] |= (1 << (y & 0x7));
-    };
 
-    void NanoCanvas::drawHLine(uint8_t x1, uint8_t y1, uint8_t x2)
-    {
-        if (y1 >= m_h) return;
-        if (x2 < x1) x1 = 0;
-        if (x1 >= m_w) return;
-        if (x2 >= m_w) x2 = m_w - 1;
-        for(uint8_t x = x1; x<=x2; x++)
-            m_bytes[YADDR(y1) + x] |= (1 << (y1 & 0x7));
-    };
+void NanoCanvas::drawPixel(uint8_t x, uint8_t y)
+{
+    if ((x>=m_w) || (y>=m_h)) return;
+    m_bytes[YADDR(y) + x] |= (1 << (y & 0x7));
+};
 
-    void NanoCanvas::drawVLine(uint8_t x1, uint8_t y1, uint8_t y2)
-    {
-        if (x1 >= m_w) return;
-        if (y2 < y1) y1 = 0;
-        if (y1 >= m_h) return;
-        if (y2 >= m_h) y2 = m_h - 1;
-        for(uint8_t y = y1; y<=y2; y++)
-            m_bytes[YADDR(y) + x1] |= (1 << (y & 0x7));
-    };
+void NanoCanvas::drawHLine(uint8_t x1, uint8_t y1, uint8_t x2)
+{
+    if (y1 >= m_h) return;
+    if (x2 < x1) x1 = 0;
+    if (x1 >= m_w) return;
+    if (x2 >= m_w) x2 = m_w - 1;
+    for(uint8_t x = x1; x<=x2; x++)
+        m_bytes[YADDR(y1) + x] |= (1 << (y1 & 0x7));
+};
 
-    void NanoCanvas::drawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
-    {
-        drawHLine(x1, y1, x2);
-        drawHLine(x1, y2, x2);
-        drawVLine(x1, y1, y2);
-        drawVLine(x2, y1, y2);
-    };
+void NanoCanvas::drawVLine(uint8_t x1, uint8_t y1, uint8_t y2)
+{
+    if (x1 >= m_w) return;
+    if (y2 < y1) y1 = 0;
+    if (y1 >= m_h) return;
+    if (y2 >= m_h) y2 = m_h - 1;
+    for(uint8_t y = y1; y<=y2; y++)
+        m_bytes[YADDR(y) + x1] |= (1 << (y & 0x7));
+};
 
-    void NanoCanvas::fillRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t templ)
+void NanoCanvas::drawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
+{
+    drawHLine(x1, y1, x2);
+    drawHLine(x1, y2, x2);
+    drawVLine(x1, y1, y2);
+    drawVLine(x2, y1, y2);
+};
+
+
+void NanoCanvas::fillRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t templ)
+{
+    if ((x1 < x2) && (x1 >= m_w)) return;
+    if ((y1 < y2) && (y1 >= m_h)) return;
+    if (x1 > x2) x1 = 0;
+    if (y1 > y2) y1 = 0;
+    if (x2 >= m_w) x2 = m_w -1;
+    if (y2 >= m_h) y2 = m_h -1;
+    uint8_t bank1 = (y1 >> 3);
+    uint8_t bank2 = (y2 >> 3);
+    for (uint8_t bank = bank1; bank2<=(y2 >> 3); bank++)
     {
-        if ((x1 < x2) && (x1 >= m_w)) return;
-        if ((y1 < y2) && (y1 >= m_h)) return;
-        if (x1 > x2) x1 = 0;
-        if (y1 > y2) y1 = 0;
-        if (x2 >= m_w) x2 = m_w -1;
-        if (y2 >= m_h) y2 = m_h -1;
-        uint8_t bank1 = (y1 >> 3);
-        uint8_t bank2 = (y2 >> 3);
-        for (uint8_t bank = bank1; bank2<=(y2 >> 3); bank++)
+        uint8_t mask = 0xFF;
+        if (bank1 == bank2)
         {
-            uint8_t mask = 0xFF;
-            if (bank1 == bank2)
-            {
-                mask = (mask >> ((y1 & 7) + 7 - (y2 & 7))) << (7 - (y2 & 7));
-            }
-            else if (bank1 == bank)
-            {
-                mask = (mask >> (y1 & 7));
-            }
-            else if (bank2 == bank)
-            {
-                mask = (mask << (7 - (y2 & 7)));
-            }
-            for (uint8_t x=x1; x<x2; x++)
-            {
-                m_bytes[BADDR(bank) + x] &= ~mask;
-                m_bytes[BADDR(bank) + x] |= (templ & mask);
-            }
+            mask = (mask >> ((y1 & 7) + 7 - (y2 & 7))) << (7 - (y2 & 7));
         }
-    };
-
-    void NanoCanvas::clear()
-    {
-        for(uint16_t i=0; i<m_w* (m_h >> 3); i++)
-           m_bytes[i] = 0;
-    };
-
-    void NanoCanvas::char_f6x8(uint8_t x, uint8_t y, const char ch[])
-    {
-        uint8_t c, i, j;
-        if (y>=m_h) return;
-        j = 0;
-        while(ch[j] != '\0')
+        else if (bank1 == bank)
         {
-           c = ch[j] - 32;
-           for(i=0;i<6;i++)
-           {
-               if (x>=m_w) return;
-               uint8_t d = pgm_read_byte(&ssd1306xled_font6x8[c*6+i]);
-               m_bytes[YADDR(y) + x] |= (d << (y & 0x7));
-               if (y+8 < m_h)
-                   m_bytes[YADDR(y) + m_w + x] |= (d >> (8 - (y & 0x7)));
-               x++;
-           }
-           j++;
+            mask = (mask >> (y1 & 7));
         }
-    };
-
-    /**
-     * Sprite is small image 8x8, sprite doesn't change background
-     */
-    void NanoCanvas::drawSpritePgm(uint8_t x, uint8_t y, const uint8_t sprite[])
-    {
-        uint8_t i;
-        if (y>=m_h) return;
-        for(i=0;i<8;i++)
+        else if (bank2 == bank)
         {
-            if (x>=m_w) return;
-            uint8_t d = pgm_read_byte(&sprite[i]);
-            m_bytes[YADDR(y) + x] |= (d << (y & 0x7));
-            if (y+8 < m_h)
-                m_bytes[YADDR(y) + m_w + x] |= (d >> (8 - (y & 0x7)));
-            x++;
+            mask = (mask << (7 - (y2 & 7)));
         }
-    };
-
-    /**
-     * Sprite is small image 8x8, sprite doesn't change background
-     */
-    void NanoCanvas::drawSprite(uint8_t x, uint8_t y, const uint8_t sprite[])
-    {
-        uint8_t i;
-        if (y>=m_h) return;
-        for(i=0;i<8;i++)
+        for (uint8_t x=x1; x<x2; x++)
         {
-            if (x>=m_w) return;
-            uint8_t d = sprite[i];
-            m_bytes[YADDR(y) + x] |= (d << (y & 0x7));
-            if (y+8 < m_h)
-                m_bytes[YADDR(y) + m_w + x] |= (d >> (8 - (y & 0x7)));
-            x++;
+            m_bytes[BADDR(bank) + x] &= ~mask;
+            m_bytes[BADDR(bank) + x] |= (templ & mask);
         }
-    };
+    }
+};
+
+
+void NanoCanvas::clear()
+{
+    for(uint16_t i=0; i<m_w* (m_h >> 3); i++)
+       m_bytes[i] = 0;
+};
+
+
+void NanoCanvas::char_f6x8(uint8_t x, uint8_t y, const char ch[])
+{
+    uint8_t c, i, j;
+    if (y>=m_h) return;
+    j = 0;
+    while(ch[j] != '\0')
+    {
+       c = ch[j] - 32;
+       for(i=0;i<6;i++)
+       {
+           if (x>=m_w) return;
+           uint8_t d = pgm_read_byte(&ssd1306xled_font6x8[c*6+i]);
+           m_bytes[YADDR(y) + x] |= (d << (y & 0x7));
+           if (y+8 < m_h)
+               m_bytes[YADDR(y) + m_w + x] |= (d >> (8 - (y & 0x7)));
+           x++;
+       }
+       j++;
+    }
+};
+
+
+void NanoCanvas::drawSpritePgm(uint8_t x, uint8_t y, const uint8_t sprite[])
+{
+    uint8_t i;
+    if (y>=m_h) return;
+    for(i=0;i<8;i++)
+    {
+        if (x>=m_w) return;
+        uint8_t d = pgm_read_byte(&sprite[i]);
+        m_bytes[YADDR(y) + x] |= (d << (y & 0x7));
+        if (y+8 < m_h)
+            m_bytes[YADDR(y) + m_w + x] |= (d >> (8 - (y & 0x7)));
+        x++;
+    }
+};
+
+
+void NanoCanvas::drawSprite(uint8_t x, uint8_t y, const uint8_t sprite[])
+{
+    uint8_t i;
+    if (y>=m_h) return;
+    for(i=0;i<8;i++)
+    {
+        if (x>=m_w) return;
+        uint8_t d = sprite[i];
+        m_bytes[YADDR(y) + x] |= (d << (y & 0x7));
+        if (y+8 < m_h)
+            m_bytes[YADDR(y) + m_w + x] |= (d >> (8 - (y & 0x7)));
+        x++;
+    }
+};
 
 
 void NanoCanvas::drawSprite(SPRITE *sprite)

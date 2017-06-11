@@ -22,103 +22,107 @@
 
 void    ssd1306_init()
 {
-  ssd1306_i2cStop(); // i2c.begin(); begin does the same as stop
-
-  ssd1306_i2cSendCommand(SSD1306_DISPLAYOFF); // display off
-
-  /* actually 2 commands below can be omitted */
-  ssd1306_i2cSendCommand(SSD1306_SETLOWCOLUMN); 
-  ssd1306_i2cSendCommand(SSD1306_SETHIGHCOLUMN); 
-  /* normal page addressing mode */
-  ssd1306_i2cSendCommand(SSD1306_SETSTARTLINE);
-
-  ssd1306_i2cSendCommand(SSD1306_SETCONTRAST);
-  ssd1306_i2cSendCommand(0x7F); // 0xCF
-
-  ssd1306_i2cSendCommand(SSD1306_SEGREMAP | 0x01);
-  ssd1306_i2cSendCommand(SSD1306_COMSCANDEC);
-  ssd1306_i2cSendCommand(SSD1306_NORMALDISPLAY);
-
-  ssd1306_i2cSendCommand(SSD1306_SETMULTIPLEX);
-  ssd1306_i2cSendCommand(63);
-
-  ssd1306_i2cSendCommand(SSD1306_SETDISPLAYOFFSET);
-  ssd1306_i2cSendCommand(0x00); // --no offset
-
-  ssd1306_i2cSendCommand(SSD1306_SETDISPLAYCLOCKDIV);
-  ssd1306_i2cSendCommand(0x80);
-
-  ssd1306_i2cSendCommand(SSD1306_SETPRECHARGE);
-  ssd1306_i2cSendCommand(0xF1); // --switch vcc
-
-  ssd1306_i2cSendCommand(SSD1306_SETCOMPINS);
-  ssd1306_i2cSendCommand(0x12); // --set divide ratio
-
-  ssd1306_i2cSendCommand(SSD1306_SETVCOMDETECT); // --vcom detect
-  ssd1306_i2cSendCommand(0x40); // 
-
-  ssd1306_i2cSendCommand(SSD1306_MEMORYMODE);
-  ssd1306_i2cSendCommand(0x02); // Page Addressing mode
-
-  ssd1306_i2cSendCommand(SSD1306_CHARGEPUMP);
-  ssd1306_i2cSendCommand(0x14);
+    ssd1306_i2cStop(); // i2c.begin(); begin does the same as stop
   
-  ssd1306_i2cSendCommand(SSD1306_DISPLAYALLON_RESUME);
-
-  ssd1306_i2cSendCommand(SSD1306_NORMALDISPLAY);
-
-  ssd1306_i2cSendCommand(SSD1306_DISPLAYON); 
+    ssd1306_i2cSendCommand(SSD1306_DISPLAYOFF); // display off
+  
+    /* actually 2 commands below can be omitted */
+    ssd1306_i2cSendCommand(SSD1306_SETLOWCOLUMN); 
+    ssd1306_i2cSendCommand(SSD1306_SETHIGHCOLUMN); 
+    /* normal page addressing mode */
+    ssd1306_i2cSendCommand(SSD1306_SETSTARTLINE);
+  
+    ssd1306_i2cSendCommand(SSD1306_SETCONTRAST);
+    ssd1306_i2cSendCommand(0x7F); // contast value
+  
+    ssd1306_i2cSendCommand(SSD1306_SEGREMAP | 0x01);
+    ssd1306_i2cSendCommand(SSD1306_COMSCANDEC);
+    ssd1306_i2cSendCommand(SSD1306_NORMALDISPLAY);
+  
+    ssd1306_i2cSendCommand(SSD1306_SETMULTIPLEX);
+    ssd1306_i2cSendCommand(63);
+  
+    ssd1306_i2cSendCommand(SSD1306_SETDISPLAYOFFSET);
+    ssd1306_i2cSendCommand(0x00); // --no offset
+  
+    ssd1306_i2cSendCommand(SSD1306_SETDISPLAYCLOCKDIV);
+    ssd1306_i2cSendCommand(0x80);
+  
+    ssd1306_i2cSendCommand(SSD1306_SETPRECHARGE);
+    ssd1306_i2cSendCommand(0xF1); // --switch vcc
+  
+    ssd1306_i2cSendCommand(SSD1306_SETCOMPINS);
+    ssd1306_i2cSendCommand(0x12); // --set divide ratio
+  
+    ssd1306_i2cSendCommand(SSD1306_SETVCOMDETECT); // --vcom detect
+    ssd1306_i2cSendCommand(0x40); // 
+  
+    ssd1306_i2cSendCommand(SSD1306_MEMORYMODE);
+    ssd1306_i2cSendCommand(0x02); // Page Addressing mode
+  
+    ssd1306_i2cSendCommand(SSD1306_CHARGEPUMP);
+    ssd1306_i2cSendCommand(0x14);
+    
+    ssd1306_i2cSendCommand(SSD1306_DISPLAYALLON_RESUME);
+  
+    ssd1306_i2cSendCommand(SSD1306_NORMALDISPLAY);
+  
+    ssd1306_i2cSendCommand(SSD1306_DISPLAYON); 
 }
 
 
 void ssd1306_setPos(uint8_t x, uint8_t y)
 {
-  ssd1306_i2cStart();
-  ssd1306_i2cSendByte(0x00);	//write command
-  ssd1306_i2cSendByte(0xb0+y);
-  ssd1306_i2cSendByte((x>>4) | 0x10);
-  ssd1306_i2cSendByte(x&0x0f);
-
-  ssd1306_i2cStop();
-}
-
-void ssd1306_fillScreen(uint8_t fill_Data){
-  uint8_t m,n;
-  for(m=0;m<8;m++)
-    {
-      ssd1306_i2cSendCommand(0xb0+m);	//page0-page1
-      ssd1306_i2cSendCommand(0x00);		//low column start address
-      ssd1306_i2cSendCommand(0x10);		//high column start address
-      ssd1306_i2cDataStart();
-      for(n=0;n<128;n++)
-        {
-          ssd1306_i2cSendByte(fill_Data);
-        }
-      ssd1306_i2cStop();
-    }
-}
-void ssd1306_clearScreen(){
-
-  for(uint8_t m=0;m<8;m++){
-    ssd1306_i2cSendCommand(0xb0+m);	//page0-page1
-    ssd1306_i2cSendCommand(0x00);		//low column start address
-    ssd1306_i2cSendCommand(0x10);		//high column start address
-    ssd1306_i2cDataStart();
-    for(uint8_t n=0;n<128;n++){
-      ssd1306_i2cSendByte(0x00);
-    }
+    ssd1306_i2cStart();
+    ssd1306_i2cSendByte(0x00);	//write command
+    ssd1306_i2cSendByte(0xb0+y);
+    ssd1306_i2cSendByte((x>>4) | 0x10);
+    ssd1306_i2cSendByte(x&0x0f);
+  
     ssd1306_i2cStop();
-  }
+}
+
+void ssd1306_fillScreen(uint8_t fill_Data)
+{
+    uint8_t m,n;
+    for(m=0;m<8;m++)
+    {
+        ssd1306_i2cSendCommand(0xb0+m);	//page0-page1
+        ssd1306_i2cSendCommand(0x00);		//low column start address
+        ssd1306_i2cSendCommand(0x10);		//high column start address
+        ssd1306_i2cDataStart();
+        for(n=0;n<128;n++)
+        {
+            ssd1306_i2cSendByte(fill_Data);
+        }
+        ssd1306_i2cStop();
+    }
+}
+
+void ssd1306_clearScreen()
+{
+    for(uint8_t m=0;m<8;m++)
+    {
+        ssd1306_i2cSendCommand(0xb0+m);	//page0-page1
+        ssd1306_i2cSendCommand(0x00);		//low column start address
+        ssd1306_i2cSendCommand(0x10);		//high column start address
+        ssd1306_i2cDataStart();
+        for(uint8_t n=0;n<128;n++)
+        {
+            ssd1306_i2cSendByte(0x00);
+        }
+        ssd1306_i2cStop();
+    }
 }
 
 
-void         ssd1306_displayOff()
+void ssd1306_displayOff()
 {
     ssd1306_i2cSendCommand(SSD1306_DISPLAYOFF);
 }
 
 
-void         ssd1306_displayOn()
+void ssd1306_displayOn()
 {
     ssd1306_i2cSendCommand(SSD1306_DISPLAYON);
 }
