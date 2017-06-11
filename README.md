@@ -30,7 +30,7 @@ can be modified for Attiny in ssd1306_pins.h file.
 
 For more information about this library please visit
 https://github.com/lexus2k/ssd1306.
-If you found any problem, please report to Issues section.
+If you found any problem, or have any idea, please report to Issues section.
 
 == License ==
 
