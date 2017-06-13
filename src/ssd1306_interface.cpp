@@ -17,25 +17,37 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef _SSD1306_PINS_H_
-#define _SSD1306_PINS_H_
+#include "ssd1306_interface.h"
 
-#include <Arduino.h>
+/**
+ * Starts communication with SSD1306 display.
+ */
+void  (*ssd1306_startTransmission)() = nullptr;
 
-#if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__) 
-    #ifndef SSD1306_SCL
-        #define SSD1306_SCL   PB3 // SCL, Pin 3 on SSD1306 Board
-    #endif
-    #ifndef SSD1306_SDA
-        #define SSD1306_SDA   PB4 // SDA, Pin 4 on SSD1306 Board
-    #endif
-#else
-    #ifndef SSD1306_SCL
-        #define SSD1306_SCL   5 // SCL, Pin A5 on SSD1306 Board
-    #endif
-    #ifndef SSD1306_SDA
-        #define SSD1306_SDA   4 // SDA, Pin A4 on SSD1306 Board
-    #endif
-#endif
+/**
+ * Ends communication with SSD1306 display.
+ */
+void  (*ssd1306_endTransmission)() = nullptr;
 
-#endif /* _SSD1306_PINS_H_ */
+/**
+ * Sends byte to SSD1306 device
+ * @param data - byte to send
+ */
+void  (*ssd1306_sendByte)(uint8_t data) = nullptr;
+
+
+void ssd1306_sendCommand(uint8_t command)
+{
+    ssd1306_startTransmission();
+    ssd1306_sendByte(0x00);
+    ssd1306_sendByte(command);
+    ssd1306_endTransmission();
+}
+
+
+void ssd1306_dataStart(void)
+{
+    ssd1306_startTransmission();
+    ssd1306_sendByte(0x40);
+}
+

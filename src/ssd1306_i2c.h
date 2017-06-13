@@ -47,7 +47,6 @@
 #endif
 #endif
 
-
 /**
  * Informs I2C device about data to be sent
  */
@@ -63,18 +62,6 @@ void         ssd1306_i2cStop();
  * @param data - byte to send
  */
 void         ssd1306_i2cSendByte(uint8_t data);
-
-/**
- * Sends command to I2C device: includes initiating of
- * I2C transaction, sending data and completing I2C transaction.
- * @param data - command to send
- */
-void         ssd1306_i2cSendCommand(uint8_t data);
-
-/**
- * Starts I2C transaction for sending bitmap data.
- */
-void         ssd1306_i2cDataStart();
 
 // ----------------------------------------------------------------------------
 #endif // _SSD1306_I2C_H_

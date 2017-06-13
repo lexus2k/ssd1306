@@ -19,7 +19,9 @@
 
 
 #include "ssd1306_i2c.h"
-#include "ssd1306_pins.h"
+#include "ssd1306_interface.h"
+#include "ssd1306_i2c_pins.h"
+
 
 /**
  * Port registers, containing pins, which SSD1306 display is connected to.
@@ -27,6 +29,7 @@
  * For ATmega328p, it is PORTC, which corresponds to Analog inputs/outputs
  */
 #if defined(SSD1306_EMBEDDED_I2C)
+
     #if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
         // at 8Mhz each command takes ~ 0.125us
         #define DDR_REG      DDRB
@@ -60,38 +63,54 @@
 
 
 #define I2C_START_STOP_DELAY ((SSD1306_I2C_START_STOP_DELAY/CPU_CYCLE_NS + DELAY_LOOP_CYCLES/2)/DELAY_LOOP_CYCLES)
+
 #define I2C_RISE_TIME ((SSD1306_I2C_RISE_TIME/CPU_CYCLE_NS)/DELAY_LOOP_CYCLES)
+
 #define I2C_DATA_HOLD_TIME ((SSD1306_I2C_DATA_HOLD_TIME/CPU_CYCLE_NS + DELAY_LOOP_CYCLES/2)/DELAY_LOOP_CYCLES)
+
 #define I2C_IDLE_TIME   (((SSD1306_I2C_IDLE_TIME/CPU_CYCLE_NS) + DELAY_LOOP_CYCLES/2)/DELAY_LOOP_CYCLES)
+
 #define I2C_HALF_CLOCK (((SSD1306_I2C_CLOCK - SSD1306_I2C_FALL_TIME - SSD1306_I2C_RISE_TIME - SSD1306_I2C_FALL_TIME)/CPU_CYCLE_NS/2 \
                          )/DELAY_LOOP_CYCLES)
 
 
 /* I2C HIGH = PORT as INPUT(0) and PULL-UP ENABLE (1) */
-#define DIGITAL_WRITE_HIGH(PORT) { DDR_REG &= ~(1 << PORT); PORT_REG |= (1 << PORT); }
+#define DIGITAL_WRITE_HIGH(DREG, PREG, BIT) { DREG &= ~(1 << BIT); PREG |= (1 << BIT); }
+
 /* I2C LOW  = PORT as OUTPUT(1) and OUTPUT LOW (0) */
-#define DIGITAL_WRITE_LOW(PORT)  { DDR_REG |= (1 << PORT); PORT_REG &= ~(1 << PORT); }
+#define DIGITAL_WRITE_LOW(DREG, PREG, BIT)  { DREG |= (1 << BIT); PREG &= ~(1 << BIT); }
+
+static uint8_t oldSREG;
+static bool    interruptsOff = false;
 
 /**
  * SCL remains HIGH on EXIT, Low SDA means start transmission
  */
 void ssd1306_i2cStart(void)
 {
-  DIGITAL_WRITE_LOW(SSD1306_SDA);     // Set to LOW
-  ssd1306_delay(I2C_START_STOP_DELAY);
-  DIGITAL_WRITE_LOW(SSD1306_SCL);     // Set to LOW
-  ssd1306_delay(I2C_HALF_CLOCK);
-  ssd1306_i2cSendByte((SSD1306_SA << 1) | 0);
+    oldSREG = SREG;
+    cli();
+    interruptsOff = true;
+    DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, SSD1306_SDA);     // Set to LOW
+    ssd1306_delay(I2C_START_STOP_DELAY);
+    DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, SSD1306_SCL);     // Set to LOW
+    ssd1306_delay(I2C_HALF_CLOCK);
+    ssd1306_i2cSendByte((SSD1306_SA << 1) | 0);
 }
 
 void ssd1306_i2cStop(void)
 {
-  DIGITAL_WRITE_LOW(SSD1306_SDA);		// Set to LOW
-  ssd1306_delay(I2C_RISE_TIME); // Fall time is the same as rise time
-  DIGITAL_WRITE_HIGH(SSD1306_SCL);	// Set to HIGH
-  ssd1306_delay(I2C_START_STOP_DELAY); 
-  DIGITAL_WRITE_HIGH(SSD1306_SDA);	// Set to HIGH
-  ssd1306_delay(I2C_IDLE_TIME);
+    DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, SSD1306_SDA);		// Set to LOW
+    ssd1306_delay(I2C_RISE_TIME); // Fall time is the same as rise time
+    DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, SSD1306_SCL);	// Set to HIGH
+    ssd1306_delay(I2C_START_STOP_DELAY); 
+    DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, SSD1306_SDA);	// Set to HIGH
+    ssd1306_delay(I2C_IDLE_TIME);
+    if (interruptsOff)
+    {
+        SREG = oldSREG;
+        interruptsOff = false;
+    }
 }
 
 /**
@@ -104,49 +123,36 @@ void ssd1306_i2cSendByte(uint8_t data)
   for(i=0; i<8; i++)
     {
       if((data << i) & 0x80)
-        DIGITAL_WRITE_HIGH(SSD1306_SDA)
+        DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, SSD1306_SDA)
       else
-        DIGITAL_WRITE_LOW(SSD1306_SDA);
+        DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, SSD1306_SDA);
       ssd1306_delay(I2C_RISE_TIME); // Fall time is the same as rise time
 
-      DIGITAL_WRITE_HIGH(SSD1306_SCL);
+      DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, SSD1306_SCL);
       ssd1306_delay(I2C_HALF_CLOCK);
 
-      DIGITAL_WRITE_LOW(SSD1306_SCL);
+      DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, SSD1306_SCL);
       ssd1306_delay(I2C_HALF_CLOCK);
     }
   // generating confirmation impulse
-  DIGITAL_WRITE_HIGH(SSD1306_SDA);
+  DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, SSD1306_SDA);
   ssd1306_delay(I2C_RISE_TIME); // Fall time is the same as rise time
-  DIGITAL_WRITE_HIGH(SSD1306_SCL);
+  DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, SSD1306_SCL);
   ssd1306_delay(I2C_HALF_CLOCK);
-  DIGITAL_WRITE_LOW(SSD1306_SCL); 
+  DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, SSD1306_SCL); 
   ssd1306_delay(I2C_HALF_CLOCK);
 }
-
-
-void ssd1306_i2cSendCommand(uint8_t command)
-{
-    ssd1306_i2cStart();
-    ssd1306_i2cSendByte(0x00);	// write command
-    ssd1306_i2cSendByte(command);
-    ssd1306_i2cStop();
-}
-
-void ssd1306_i2cDataStart(void)
-{
-    ssd1306_i2cStart();
-    ssd1306_i2cSendByte(0x40);	//write data
-}
-
 
 
 #else /* STANDARD branch */
     #include <Wire.h>
 
+uint8_t s_bytesWritten = 0;
+
 void ssd1306_i2cStart(void)
 {
     Wire.beginTransmission(SSD1306_SA);
+    s_bytesWritten = 0;
 }
 
 void ssd1306_i2cStop(void)
@@ -160,23 +166,19 @@ void ssd1306_i2cStop(void)
  */
 void ssd1306_i2cSendByte(uint8_t data)
 {
+    // Do not write too many bytes for standard Wire.h. It may become broken
+    if (s_bytesWritten >= (BUFFER_LENGTH >> 1))
+    {
+        ssd1306_i2cStop();
+        ssd1306_i2cStart();
+        /* Commands never require many bytes. Thus assume that user tries to send data */
+        Wire.write(0x40);
+        s_bytesWritten++;
+    }        
     Wire.write(data);
+    s_bytesWritten++;
 }
 
-
-void ssd1306_i2cSendCommand(uint8_t command)
-{
-    ssd1306_i2cStart();
-    ssd1306_i2cSendByte(0x00);	// write command
-    ssd1306_i2cSendByte(command);
-    ssd1306_i2cStop();
-}
-
-void ssd1306_i2cDataStart(void)
-{
-    ssd1306_i2cStart();
-    ssd1306_i2cSendByte(0x40);	//write data
-}
 
 #endif
 

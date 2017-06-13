@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 I2C Display Driver
-   &#160;<span id="projectnumber">0.2.0</span>
+   &#160;<span id="projectnumber">0.3.0</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306 I2C OLED Display</div>
   </td>
@@ -61,6 +61,12 @@ $(function() {
 
 <div class="contents">
 <div class="textblock">Here is a list of all documented file members with links to the documentation:</div><ul>
+<li>s_oled128x64_dataLength
+: <a class="el" href="ssd1306__init_8h.html#acbf81e6e9177ce67d7f3b48af9ba2493">ssd1306_init.h</a>
+</li>
+<li>s_oled128x64_initData
+: <a class="el" href="ssd1306__init_8h.html#a244c8dcbc427e8c533e64e2da7fe2da9">ssd1306_init.h</a>
+</li>
 <li>ssd1306_charF6x8()
 : <a class="el" href="ssd1306_8h.html#aaa00ed77067c8e818cf20d492a158878">ssd1306.h</a>
 </li>
@@ -69,6 +75,9 @@ $(function() {
 </li>
 <li>ssd1306_createSprite()
 : <a class="el" href="ssd1306_8h.html#aa5f53fa7fbe48dc1a06e5fe4b1710c26">ssd1306.h</a>
+</li>
+<li>ssd1306_dataStart()
+: <a class="el" href="ssd1306__interface_8h.html#a7f15146ca19534e13c5ec789e8319b07">ssd1306_interface.h</a>
 </li>
 <li>ssd1306_displayOff()
 : <a class="el" href="ssd1306_8h.html#a7bfec390efdfde56e4ef8952219c94b0">ssd1306.h</a>
@@ -91,6 +100,9 @@ $(function() {
 <li>SSD1306_EMBEDDED_I2C
 : <a class="el" href="ssd1306__i2c_8h.html#a920bc06b164c4bfd54d6641db5368b5b">ssd1306_i2c.h</a>
 </li>
+<li>ssd1306_endTransmission
+: <a class="el" href="ssd1306__interface_8h.html#ab51dec92bb34de5137d4c96a4fc1460f">ssd1306_interface.h</a>
+</li>
 <li>ssd1306_eraseSprite()
 : <a class="el" href="ssd1306_8h.html#a03d66ea573e717bf1451745586ff849b">ssd1306.h</a>
 </li>
@@ -100,14 +112,8 @@ $(function() {
 <li>ssd1306_fillScreen()
 : <a class="el" href="ssd1306_8h.html#a5f874b5383858fd6566f7e4f76555c22">ssd1306.h</a>
 </li>
-<li>ssd1306_i2cDataStart()
-: <a class="el" href="ssd1306__i2c_8h.html#a15238f629477ab7205aeec4aef259f1c">ssd1306_i2c.h</a>
-</li>
 <li>ssd1306_i2cSendByte()
 : <a class="el" href="ssd1306__i2c_8h.html#a1ac9a9ab27912d743601ba0e4c7f7ad2">ssd1306_i2c.h</a>
-</li>
-<li>ssd1306_i2cSendCommand()
-: <a class="el" href="ssd1306__i2c_8h.html#acff811584ece6d2a83d6f98bb536411f">ssd1306_i2c.h</a>
 </li>
 <li>ssd1306_i2cStart()
 : <a class="el" href="ssd1306__i2c_8h.html#a31ec9e1944a186b6c6b3925582436ada">ssd1306_i2c.h</a>
@@ -127,8 +133,17 @@ $(function() {
 <li>SSD1306_SA
 : <a class="el" href="ssd1306__i2c_8h.html#a05d1c9f1ad427b445574bddab25583ab">ssd1306_i2c.h</a>
 </li>
+<li>ssd1306_sendByte
+: <a class="el" href="ssd1306__interface_8h.html#ab199e63bf66cf4a217305dbfc561186f">ssd1306_interface.h</a>
+</li>
+<li>ssd1306_sendCommand()
+: <a class="el" href="ssd1306__interface_8h.html#af63dd3db50389223a46d7c4eb716ef83">ssd1306_interface.h</a>
+</li>
 <li>ssd1306_setPos()
 : <a class="el" href="ssd1306_8h.html#ad46c35ee4a2f53bee496bea6fdb23847">ssd1306.h</a>
+</li>
+<li>ssd1306_startTransmission
+: <a class="el" href="ssd1306__interface_8h.html#a1568a7f33ff881981b0d8f68e64617dc">ssd1306_interface.h</a>
 </li>
 </ul>
 </div><!-- contents -->

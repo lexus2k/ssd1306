@@ -10,7 +10,8 @@ applications (please, refer to examples).
 
 Key Features:
 
- * Low level I2C OLED Driver functions (ssd1306_i2c.h): for Attiny it has its own I2C implementation, for Atmega it uses Wire library.
+ * Fast I2C implementation (ssd1306_i2c.h): for Attiny it has its own I2C implementation, for Atmega it uses Wire library.
+ * Low level I2C OLED Driver functions (ssd1306_interface.h)
  * High level I2C OLED Driver functions (ssd1306.h)
  * Memory-buffered operations (nano_gfx.h)
  * Third-party font (6x8)
@@ -26,7 +27,7 @@ Key Features:
 For Attiny85/Attiny45 controllers OLED display must be connected to
 PB3 (SCL) and PB4 (SDA) lines. For other controllers pins
 are defined by standard Wire library. The pins
-can be modified for Attiny in ssd1306_pins.h file.
+can be modified for Attiny in ssd1306_i2c_pins.h file.
 
 For more information about this library please visit
 https://github.com/lexus2k/ssd1306.

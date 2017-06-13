@@ -24,8 +24,9 @@
 #ifndef _NANO_GFX_H_
 #define _NANO_GFX_H_
 
+#include "nano_gfx_types.h"
+
 #include "font6x8.h"
-#include "ssd1306.h"
 
 /**
  * NanoCanvas represents objects for drawing in memory buffer
