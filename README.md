@@ -23,6 +23,7 @@ Key Features:
    * Drawing bitmap image from Flash memory (PROGMEM related)
    * Sprites: moving
    * Drawing lines in buffer (vertical and horizontal)
+ * And bonus: Arkanoid game as example!
 
 For Attiny85/Attiny45 controllers OLED display must be connected to
 PB3 (SCL) and PB4 (SDA) lines. For other controllers pins
