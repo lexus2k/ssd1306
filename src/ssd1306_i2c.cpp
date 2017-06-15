@@ -30,7 +30,7 @@
  */
 #if defined(SSD1306_EMBEDDED_I2C)
 
-#include <avr/interrupts.h>
+#include <avr/interrupt.h>
 
     #if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
         // at 8Mhz each command takes ~ 0.125us
