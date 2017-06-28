@@ -192,7 +192,7 @@ void drawStatusPanel()
     for(uint8_t i=0; i<min(hearts,3); i++)
     {
         SPRITE heart = ssd1306_createSprite( RIGHT_EDGE + 4, 16 + (i<<3), 8, heartSprite );
-        ssd1306_drawSprite( &heart );
+        heart.draw();
     }
     char temp[6] = {'0',0,0,0,0,0};
     utoa(score,temp + (score<10?1:0),10);
@@ -200,9 +200,9 @@ void drawStatusPanel()
     ssd1306_charF6x8(RIGHT_EDGE + 1, 1, temp);
     SPRITE power = ssd1306_createSprite( RIGHT_EDGE + 4, 40, 8, powerSprite );
     if (platformPower)
-        ssd1306_drawSprite( &power );
+        power.draw();
     else
-        ssd1306_eraseSprite( &power );
+        power.erase();
 }
 
 void drawIntro()
@@ -384,13 +384,13 @@ void drawObjects()
        }
        else if (objects[i].type == 1)
        {
-           ssd1306_eraseSprite( &objects[i].sprite );
+           objects[i].sprite.erase();
            objects[i].type = 0;
        }
        else
        {
-           ssd1306_eraseTrace( &objects[i].sprite );
-           ssd1306_drawSprite( &objects[i].sprite );
+           objects[i].sprite.eraseTrace();
+           objects[i].sprite.draw();
        }
     }
 }

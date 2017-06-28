@@ -77,7 +77,7 @@ void setup()
     /* Create sprite at 0,0 position. The function initializes sprite structure. */
     sprite = ssd1306_createSprite( 0, 0, spriteWidth, heartImage );
     /* Draw sprite on the display */
-    ssd1306_drawSprite( &sprite );
+    sprite.draw();
 }
 
 
@@ -96,9 +96,9 @@ void loop()
     /* If top boundary is reached, reverse Y direction */
     if (sprite.y == 0) speedY = -speedY;
     /* Erase sprite on old place. The library knows old position of the sprite. */
-    ssd1306_eraseTrace( &sprite );
+    sprite.eraseTrace();
     /* Draw sprite on new place */
-    ssd1306_drawSprite( &sprite );
+    sprite.draw();
 }
 
 

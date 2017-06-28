@@ -59,6 +59,25 @@ typedef struct
     uint8_t ly;
     /// Pointer to PROGMEM data, representing sprite image
     const uint8_t * data;
+
+    void setPos(uint8_t x, uint8_t y);
+
+    /**
+     * Draws sprite on the display. Position can be changed by
+     * updating x and y fields of SPRITE structure.
+     */
+    void draw();
+
+    /**
+     * Clears some sprite parts in old position on the display.
+     */
+    void eraseTrace();
+
+    /**
+     * Clears sprite from the display leaving black rectangle.
+     */
+    void erase();
+
 } SPRITE;
 
 // ----------------------------------------------------------------------------
