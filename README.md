@@ -32,6 +32,10 @@ PB3 (SCL) and PB4 (SDA) lines. For other controllers pins
 are defined by standard Wire library. The pins
 can be modified for Attiny in ssd1306_i2c_pins.h file.
 
+Tested controllers:
+* Attiny85, Attiny45
+* Atmega328p, Atmega168
+
 For more information about this library please visit
 https://github.com/lexus2k/ssd1306.
 If you found any problem, or have any idea, please report to Issues section.
