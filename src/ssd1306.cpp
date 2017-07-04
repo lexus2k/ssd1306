@@ -153,6 +153,24 @@ void ssd1306_drawBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_
     }
 }
 
+
+void ssd1306_clearBlock(uint8_t x, uint8_t y, uint8_t w, uint8_t h)
+{
+    uint8_t i, j;
+    for(j=0; j<(h >> 3); j++)
+    {
+        ssd1306_setPos(x,y);
+        ssd1306_dataStart();
+        for(i=w;i>0;i--)
+        {
+            ssd1306_sendByte(0x00);
+        }
+        ssd1306_endTransmission();
+        y++;
+    }
+}
+
+
 void ssd1306_drawSpriteData(uint8_t x, uint8_t y, const uint8_t *sprite)
 {
    uint8_t i;
@@ -272,4 +290,8 @@ SPRITE       ssd1306_createSprite(uint8_t x, uint8_t y, uint8_t w, const uint8_t
     return {x,y,w,x,y,data};
 }
 
+void         ssd1306_replaceSprite(SPRITE *sprite, const uint8_t *data)
+{
+    sprite->data = data;
+}
 

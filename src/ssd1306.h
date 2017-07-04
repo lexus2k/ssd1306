@@ -87,6 +87,18 @@ void         ssd1306_drawCanvas(uint8_t x, uint8_t y, uint8_t w, uint8_t h, cons
  */
 void         ssd1306_drawBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf);
 
+
+/**
+ * Fills block with black pixels
+ * @param x - horizontal position in pixels
+ * @param y - vertical position in blocks (pixels/8)
+ * @param w - width of block in pixels
+ * @param h - height of block in pixels (must be divided by 8)
+ * @note usually this method is used to erase bitmap on the screen.
+ */
+void         ssd1306_clearBlock(uint8_t x, uint8_t y, uint8_t w, uint8_t h);
+
+
 /**
  * Draws bitmap, located in Flash, on the display. This sprite must have 8x8 size
  * @param x - horizontal position in pixels
@@ -124,6 +136,14 @@ void         ssd1306_eraseTrace(SPRITE *sprite);
  * @return SPRITE structure
  */
 SPRITE       ssd1306_createSprite(uint8_t x, uint8_t y, uint8_t w, const uint8_t *data);
+
+/**
+ * Replaces image of the sprite with different data. The width must be the same as
+ * the width of original sprite image
+ * @param sprite - pointer to SPRITE structure
+ * @param data - pointer to data, located in Flash: each byte represents 8 vertical pixels.
+ */
+void         ssd1306_replaceSprite(SPRITE *sprite, const uint8_t *data);
 
 /**
  * Depricated.

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 I2C Display Driver
-   &#160;<span id="projectnumber">0.3.0</span>
+   &#160;<span id="projectnumber">0.3.5</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306 I2C OLED Display</div>
   </td>
@@ -61,6 +61,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="struct_s_p_r_i_t_e-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -70,6 +71,18 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:aefc379df23410812d5799c2b93161e19"><td class="memItemLeft" align="right" valign="top"><a id="aefc379df23410812d5799c2b93161e19"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setPos</b> (uint8_t <a class="el" href="struct_s_p_r_i_t_e.html#a44b2c947f1c6e30f31a77b8520855841">x</a>, uint8_t <a class="el" href="struct_s_p_r_i_t_e.html#ab0ea36dda66319248b66b1a5056b1ba9">y</a>)</td></tr>
+<tr class="separator:aefc379df23410812d5799c2b93161e19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3f35eab30dd39e4434b29923f0afab6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_p_r_i_t_e.html#af3f35eab30dd39e4434b29923f0afab6">draw</a> ()</td></tr>
+<tr class="separator:af3f35eab30dd39e4434b29923f0afab6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada52ad2a7aae3bdb62c6dc66ccb8765c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_p_r_i_t_e.html#ada52ad2a7aae3bdb62c6dc66ccb8765c">eraseTrace</a> ()</td></tr>
+<tr class="separator:ada52ad2a7aae3bdb62c6dc66ccb8765c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab08b9b2831224d69a19d992819d100a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_p_r_i_t_e.html#ab08b9b2831224d69a19d992819d100a2">erase</a> ()</td></tr>
+<tr class="separator:ab08b9b2831224d69a19d992819d100a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a44b2c947f1c6e30f31a77b8520855841"><td class="memItemLeft" align="right" valign="top"><a id="a44b2c947f1c6e30f31a77b8520855841"></a>
@@ -101,8 +114,70 @@ const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 <div class="textblock"><p><a class="el" href="struct_s_p_r_i_t_e.html">SPRITE</a> structure represents logical graphics object </p>
 
 <p>Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00048">48</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
-</div><hr/>The documentation for this struct was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="af3f35eab30dd39e4434b29923f0afab6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3f35eab30dd39e4434b29923f0afab6">&sect;&nbsp;</a></span>draw()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SPRITE::draw </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Draws sprite on the display. Position can be changed by updating x and y fields of <a class="el" href="struct_s_p_r_i_t_e.html">SPRITE</a> structure. </p>
+
+<p>Definition at line <a class="el" href="nano__gfx__types_8cpp_source.html#l00031">31</a> of file <a class="el" href="nano__gfx__types_8cpp_source.html">nano_gfx_types.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab08b9b2831224d69a19d992819d100a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab08b9b2831224d69a19d992819d100a2">&sect;&nbsp;</a></span>erase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SPRITE::erase </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clears sprite from the display leaving black rectangle. </p>
+
+<p>Definition at line <a class="el" href="nano__gfx__types_8cpp_source.html#l00041">41</a> of file <a class="el" href="nano__gfx__types_8cpp_source.html">nano_gfx_types.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ada52ad2a7aae3bdb62c6dc66ccb8765c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada52ad2a7aae3bdb62c6dc66ccb8765c">&sect;&nbsp;</a></span>eraseTrace()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SPRITE::eraseTrace </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clears some sprite parts in old position on the display. </p>
+
+<p>Definition at line <a class="el" href="nano__gfx__types_8cpp_source.html#l00036">36</a> of file <a class="el" href="nano__gfx__types_8cpp_source.html">nano_gfx_types.cpp</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following files:<ul>
 <li>src/<a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a></li>
+<li>src/<a class="el" href="nano__gfx__types_8cpp_source.html">nano_gfx_types.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

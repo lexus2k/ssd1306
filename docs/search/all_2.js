@@ -1,6 +1,7 @@
 var searchData=
 [
   ['data',['data',['../struct_s_p_r_i_t_e.html#ac56b0c16d0bcd810ae1289350df821c3',1,'SPRITE']]],
+  ['draw',['draw',['../struct_s_p_r_i_t_e.html#af3f35eab30dd39e4434b29923f0afab6',1,'SPRITE']]],
   ['drawhline',['drawHLine',['../class_nano_canvas.html#ac36d02cfedc701bc5b87f149480cbc1a',1,'NanoCanvas']]],
   ['drawpixel',['drawPixel',['../class_nano_canvas.html#a6da807deae0b2f24a34c8ad65aa96249',1,'NanoCanvas']]],
   ['drawrect',['drawRect',['../class_nano_canvas.html#a9e9cd572ae05ee2316a366566c327e6a',1,'NanoCanvas']]],

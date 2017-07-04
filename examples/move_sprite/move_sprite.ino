@@ -39,7 +39,7 @@
 /* 
  * Heart image below is defined directly in flash memory.
  * This reduces SRAM consumption.
- * The image is define from bottom to top (bits), from left to
+ * The image is defined from bottom to top (bits), from left to
  * right (bytes).
  */
 const PROGMEM uint8_t heartImage[8] =
