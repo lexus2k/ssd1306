@@ -27,9 +27,19 @@
 #include "nano_gfx_types.h"
 
 /**
- * Init display
+ * Init 128x64 OLED display over i2c
  */
-void         ssd1306_init();
+void         ssd1306_128x64_i2c_init();
+
+/**
+ * Init 128x32 OLED display over i2c
+ */
+void         ssd1306_128x32_i2c_init();
+
+/**
+ * Init default display 128x64
+ */
+static inline void ssd1306_init() { ssd1306_128x64_i2c_init(); }
 
 /**
  * Set position in terms of display.

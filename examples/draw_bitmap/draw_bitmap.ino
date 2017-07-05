@@ -43,7 +43,7 @@ void setup()
 #ifndef SSD1306_EMBEDDED_I2C
     Wire.begin();
 #endif
-    ssd1306_init();
+    ssd1306_128x64_i2c_init();
     ssd1306_fillScreen(0x00);
     /* Draw image defined in sova.h */
     ssd1306_drawBitmap(0, 0, 128, 64, Sova);

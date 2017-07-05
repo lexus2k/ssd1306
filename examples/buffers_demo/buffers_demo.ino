@@ -92,7 +92,8 @@ void setup()
     Wire.begin();
 #endif
     /* Initialize and clear display */
-    ssd1306_init();
+    /* Replace the line below with ssd1306_128x32_i2c_init() if you need to use 128x32 display */
+    ssd1306_128x64_i2c_init();
     ssd1306_fillScreen(0x00);
     /* Create 4 "hearts", and place them at different positions and give different movement direction */
     for(uint8_t i = 0; i < spritesCount; i++)

@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['ssd1306_5f128x32_5fi2c_5finit',['ssd1306_128x32_i2c_init',['../ssd1306_8h.html#a9ea532820b1870f3dc4fa2ae68d3c4cc',1,'ssd1306.cpp']]],
+  ['ssd1306_5f128x64_5fi2c_5finit',['ssd1306_128x64_i2c_init',['../ssd1306_8h.html#a11882f1e10f5ae62752d2ed643695040',1,'ssd1306.cpp']]],
   ['ssd1306_5fcharf6x8',['ssd1306_charF6x8',['../ssd1306_8h.html#aaa00ed77067c8e818cf20d492a158878',1,'ssd1306.cpp']]],
   ['ssd1306_5fclearblock',['ssd1306_clearBlock',['../ssd1306_8h.html#ac25cf0ec751a4a3e81e4c7d4ae04e81e',1,'ssd1306.cpp']]],
   ['ssd1306_5fclearscreen',['ssd1306_clearScreen',['../ssd1306_8h.html#a3e6a3cab78abaead5373dadfcf339b9d',1,'ssd1306.cpp']]],
@@ -17,7 +19,7 @@ var searchData=
   ['ssd1306_5fi2csendbyte',['ssd1306_i2cSendByte',['../ssd1306__i2c_8h.html#a1ac9a9ab27912d743601ba0e4c7f7ad2',1,'ssd1306_i2c.cpp']]],
   ['ssd1306_5fi2cstart',['ssd1306_i2cStart',['../ssd1306__i2c_8h.html#a31ec9e1944a186b6c6b3925582436ada',1,'ssd1306_i2c.cpp']]],
   ['ssd1306_5fi2cstop',['ssd1306_i2cStop',['../ssd1306__i2c_8h.html#a0dda0d7c1510f1b3e80a25c49ba57bc7',1,'ssd1306_i2c.cpp']]],
-  ['ssd1306_5finit',['ssd1306_init',['../ssd1306_8h.html#ab83a732f28055bd6835d031e13986f0b',1,'ssd1306.cpp']]],
+  ['ssd1306_5finit',['ssd1306_init',['../ssd1306_8h.html#a635fc7696ce5e780e77e9e231a35d9e3',1,'ssd1306.h']]],
   ['ssd1306_5frect',['ssd1306_rect',['../ssd1306_8h.html#a99347d938997611dd1783d1f57ead08a',1,'ssd1306.cpp']]],
   ['ssd1306_5frectfromsprite',['ssd1306_rectFromSprite',['../ssd1306_8h.html#a92b39e923d1ffc51da1025e2436172e4',1,'ssd1306.cpp']]],
   ['ssd1306_5freplacesprite',['ssd1306_replaceSprite',['../ssd1306_8h.html#a4ab1b9180be9247898ae4d2031988cd4',1,'ssd1306.cpp']]],

@@ -32,5 +32,10 @@ extern const uint8_t PROGMEM s_oled128x64_initData[];
 /** OLED 128x64 initialization data length */
 extern const uint8_t s_oled128x64_dataLength;
 
+/** OLED 128x32 initialization data */
+extern const uint8_t PROGMEM s_oled128x32_initData[];
+/** OLED 128x32 initialization data length */
+extern const uint8_t s_oled128x32_dataLength;
+
 // ----------------------------------------------------------------------------
 #endif // _SSD1306_INIT_H_

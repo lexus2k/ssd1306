@@ -17,6 +17,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 /**
+ *   !It is prefferred the example to be run at 16MHz!
+ *
  *   Attiny85 PINS
  *             ____
  *   RESET   -|_|  |- 3V
@@ -160,7 +162,7 @@ void setup()
     Wire.begin();
 #endif
     /* Initialize and clear display */
-    ssd1306_init();
+    ssd1306_128x64_i2c_init();
     ssd1306_fillScreen(0x00);
 }
 

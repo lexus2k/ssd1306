@@ -25,6 +25,8 @@
 #include "ssd1306_init.h"
 #include "ssd1306_commands.h"
 
+static uint8_t s_displayHeight;
+
 void         ssd1306_i2cInit()
 {
     ssd1306_startTransmission = ssd1306_i2cStart;
@@ -32,16 +34,27 @@ void         ssd1306_i2cInit()
     ssd1306_sendByte = ssd1306_i2cSendByte;
 }
 
-void    ssd1306_init()
+void    ssd1306_128x64_i2c_init()
 {
     ssd1306_i2cInit();
     ssd1306_endTransmission();
+    s_displayHeight = 64;
     for( uint8_t i=0; i<s_oled128x64_dataLength; i++)
     {
         ssd1306_sendCommand(pgm_read_byte(&s_oled128x64_initData[i]));
     }
 }
 
+void    ssd1306_128x32_i2c_init()
+{
+    ssd1306_i2cInit();
+    ssd1306_endTransmission();
+    s_displayHeight = 32;
+    for( uint8_t i=0; i<s_oled128x32_dataLength; i++)
+    {
+        ssd1306_sendCommand(pgm_read_byte(&s_oled128x32_initData[i]));
+    }
+}
 
 void ssd1306_setPos(uint8_t x, uint8_t y)
 {
@@ -55,7 +68,7 @@ void ssd1306_setPos(uint8_t x, uint8_t y)
 
 void ssd1306_fillScreen(uint8_t fill_Data)
 {
-    for(uint8_t m=0; m<8; m++)
+    for(uint8_t m=0; m<(s_displayHeight >> 3); m++)
     {
         ssd1306_sendCommand(0xb0+m);	//page0-page1
         ssd1306_sendCommand(0x10);		//high column start address
@@ -71,7 +84,7 @@ void ssd1306_fillScreen(uint8_t fill_Data)
 
 void ssd1306_clearScreen()
 {
-    for(uint8_t m=0;m<8;m++)
+    for(uint8_t m=0;m<(s_displayHeight >> 3);m++)
     {
         ssd1306_sendCommand(0xb0+m);	//page0-page1
         ssd1306_sendCommand(0x00);		//low column start address

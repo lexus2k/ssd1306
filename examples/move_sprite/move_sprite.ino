@@ -72,7 +72,7 @@ void setup()
 #ifndef SSD1306_EMBEDDED_I2C
     Wire.begin();
 #endif
-    ssd1306_init();
+    ssd1306_128x64_i2c_init();
     ssd1306_fillScreen(0x00);
     /* Create sprite at 0,0 position. The function initializes sprite structure. */
     sprite = ssd1306_createSprite( 0, 0, spriteWidth, heartImage );

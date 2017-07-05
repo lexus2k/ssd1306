@@ -42,7 +42,8 @@ void setup()
 #ifndef SSD1306_EMBEDDED_I2C
     Wire.begin();
 #endif
-    ssd1306_init();
+    /* Replace the line below with ssd1306_128x32_i2c_init() if you need to use 128x32 display */
+    ssd1306_128x64_i2c_init();
     ssd1306_fillScreen(0x00);
     ssd1306_charF6x8(0, 0, "Line 1 text");
     ssd1306_charF6x8(0, 2, "Line 3 text");

@@ -24,6 +24,9 @@ Key Features:
  - Low level I2C OLED Driver functions (ssd1306_interface.h)
  - High level I2C OLED Driver functions (ssd1306.h)
  - Memory-buffered operations (nano_gfx.h)
+ - Supported OLED displays:
+   - SSD1306 128x64
+   - SSD1306 128x32
  - Third-party font (6x8)
  - Some functions are:
    - Clearing display
