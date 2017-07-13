@@ -1,28 +1,4 @@
 var searchData=
 [
-  ['ssd1306_5f128x32_5fi2c_5finit',['ssd1306_128x32_i2c_init',['../ssd1306_8h.html#a9ea532820b1870f3dc4fa2ae68d3c4cc',1,'ssd1306.cpp']]],
-  ['ssd1306_5f128x64_5fi2c_5finit',['ssd1306_128x64_i2c_init',['../ssd1306_8h.html#a11882f1e10f5ae62752d2ed643695040',1,'ssd1306.cpp']]],
-  ['ssd1306_5fcharf6x8',['ssd1306_charF6x8',['../ssd1306_8h.html#aaa00ed77067c8e818cf20d492a158878',1,'ssd1306.cpp']]],
-  ['ssd1306_5fclearblock',['ssd1306_clearBlock',['../ssd1306_8h.html#ac25cf0ec751a4a3e81e4c7d4ae04e81e',1,'ssd1306.cpp']]],
-  ['ssd1306_5fclearscreen',['ssd1306_clearScreen',['../ssd1306_8h.html#a3e6a3cab78abaead5373dadfcf339b9d',1,'ssd1306.cpp']]],
-  ['ssd1306_5fcreatesprite',['ssd1306_createSprite',['../ssd1306_8h.html#aa5f53fa7fbe48dc1a06e5fe4b1710c26',1,'ssd1306.cpp']]],
-  ['ssd1306_5fdatastart',['ssd1306_dataStart',['../ssd1306__interface_8h.html#a7f15146ca19534e13c5ec789e8319b07',1,'ssd1306_interface.cpp']]],
-  ['ssd1306_5fdisplayoff',['ssd1306_displayOff',['../ssd1306_8h.html#a7bfec390efdfde56e4ef8952219c94b0',1,'ssd1306.cpp']]],
-  ['ssd1306_5fdisplayon',['ssd1306_displayOn',['../ssd1306_8h.html#ac10e60962ff77aeb3687b795c364595f',1,'ssd1306.cpp']]],
-  ['ssd1306_5fdrawbitmap',['ssd1306_drawBitmap',['../ssd1306_8h.html#a0a4c06ba9b309741003b172c3c5cf874',1,'ssd1306.cpp']]],
-  ['ssd1306_5fdrawcanvas',['ssd1306_drawCanvas',['../ssd1306_8h.html#ad2fb18c63d7fcef959b63044dc81efa8',1,'ssd1306.cpp']]],
-  ['ssd1306_5fdrawsprite',['ssd1306_drawSprite',['../ssd1306_8h.html#a9eab8105869b501ed7c22c4d46c36c37',1,'ssd1306.cpp']]],
-  ['ssd1306_5fdrawspritedata',['ssd1306_drawSpriteData',['../ssd1306_8h.html#a0f96c34b951a315cd8074273bb8308cf',1,'ssd1306.cpp']]],
-  ['ssd1306_5ferasesprite',['ssd1306_eraseSprite',['../ssd1306_8h.html#a03d66ea573e717bf1451745586ff849b',1,'ssd1306.cpp']]],
-  ['ssd1306_5ferasetrace',['ssd1306_eraseTrace',['../ssd1306_8h.html#a08fc84bfc9ce818e7ed3951067799f62',1,'ssd1306.cpp']]],
-  ['ssd1306_5ffillscreen',['ssd1306_fillScreen',['../ssd1306_8h.html#a5f874b5383858fd6566f7e4f76555c22',1,'ssd1306.cpp']]],
-  ['ssd1306_5fi2csendbyte',['ssd1306_i2cSendByte',['../ssd1306__i2c_8h.html#a1ac9a9ab27912d743601ba0e4c7f7ad2',1,'ssd1306_i2c.cpp']]],
-  ['ssd1306_5fi2cstart',['ssd1306_i2cStart',['../ssd1306__i2c_8h.html#a31ec9e1944a186b6c6b3925582436ada',1,'ssd1306_i2c.cpp']]],
-  ['ssd1306_5fi2cstop',['ssd1306_i2cStop',['../ssd1306__i2c_8h.html#a0dda0d7c1510f1b3e80a25c49ba57bc7',1,'ssd1306_i2c.cpp']]],
-  ['ssd1306_5finit',['ssd1306_init',['../ssd1306_8h.html#a635fc7696ce5e780e77e9e231a35d9e3',1,'ssd1306.h']]],
-  ['ssd1306_5frect',['ssd1306_rect',['../ssd1306_8h.html#a99347d938997611dd1783d1f57ead08a',1,'ssd1306.cpp']]],
-  ['ssd1306_5frectfromsprite',['ssd1306_rectFromSprite',['../ssd1306_8h.html#a92b39e923d1ffc51da1025e2436172e4',1,'ssd1306.cpp']]],
-  ['ssd1306_5freplacesprite',['ssd1306_replaceSprite',['../ssd1306_8h.html#a4ab1b9180be9247898ae4d2031988cd4',1,'ssd1306.cpp']]],
-  ['ssd1306_5fsendcommand',['ssd1306_sendCommand',['../ssd1306__interface_8h.html#af63dd3db50389223a46d7c4eb716ef83',1,'ssd1306_interface.cpp']]],
-  ['ssd1306_5fsetpos',['ssd1306_setPos',['../ssd1306_8h.html#ad46c35ee4a2f53bee496bea6fdb23847',1,'ssd1306.cpp']]]
+  ['height',['height',['../class_nano_canvas.html#addf4520ec55166869ce947cc9e415bb0',1,'NanoCanvas']]]
 ];

@@ -27,6 +27,12 @@
 
 static uint8_t s_displayHeight;
 
+uint8_t      ssd1306_displayHeight()
+{
+    return s_displayHeight;
+}
+
+
 void         ssd1306_i2cInit()
 {
     ssd1306_startTransmission = ssd1306_i2cStart;
@@ -300,7 +306,7 @@ SSD1306_RECT ssd1306_rect(SPRITE * sprite)
 
 SPRITE       ssd1306_createSprite(uint8_t x, uint8_t y, uint8_t w, const uint8_t *data)
 {
-    return {x,y,w,x,y,data};
+    return {x,y,w,x,y,data,nullptr};
 }
 
 void         ssd1306_replaceSprite(SPRITE *sprite, const uint8_t *data)

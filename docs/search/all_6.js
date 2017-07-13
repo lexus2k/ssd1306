@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['left',['left',['../struct_s_s_d1306___r_e_c_t.html#a596b6b6cce11df484877b63db7d0a5b5',1,'SSD1306_RECT']]],
-  ['lx',['lx',['../struct_s_p_r_i_t_e.html#afc5ed686d6064db045512fc72bc02dd3',1,'SPRITE']]],
-  ['ly',['ly',['../struct_s_p_r_i_t_e.html#aab3453c2a4cf02976c6d53fa79e5e051',1,'SPRITE']]]
+  ['getlrect',['getLRect',['../struct_s_p_r_i_t_e.html#a7eeb58efac9390a1cd2cfcffd05b38ef',1,'SPRITE']]],
+  ['getrect',['getRect',['../struct_s_p_r_i_t_e.html#a03cc27d7630a3a3222d9e9dd84d39c7c',1,'SPRITE']]],
+  ['getupdaterect',['getUpdateRect',['../struct_s_p_r_i_t_e.html#abe0e1ecd2dd76c67f085bdca419ce623',1,'SPRITE']]]
 ];

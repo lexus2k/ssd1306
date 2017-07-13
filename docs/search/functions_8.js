@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['width',['width',['../class_nano_canvas.html#ad079d1fef755ca460249b018e48fdf68',1,'NanoCanvas']]]
+  ['isnearmove',['isNearMove',['../struct_s_p_r_i_t_e.html#a48094ce2036e687c885e7dcb4c245444',1,'SPRITE']]]
 ];

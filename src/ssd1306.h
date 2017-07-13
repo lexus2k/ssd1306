@@ -70,6 +70,11 @@ void         ssd1306_displayOff();
 void         ssd1306_displayOn();
 
 /**
+ * Returns display height in pixels
+ */
+uint8_t      ssd1306_displayHeight();
+
+/**
  * Prints text to screen.
  * @param x - horizontal position in pixels
  * @param y - vertical position in blocks (pixels/8)

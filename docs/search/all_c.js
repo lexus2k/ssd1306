@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['w',['w',['../struct_s_p_r_i_t_e.html#abb6cdf1e159d5d3a8655d1944d4be2de',1,'SPRITE']]],
-  ['width',['width',['../class_nano_canvas.html#ad079d1fef755ca460249b018e48fdf68',1,'NanoCanvas']]]
+  ['refreshscreen',['refreshScreen',['../class_sprite_pool.html#a2dc3ee649258b377b5a6bb7c0e2fdb16',1,'SpritePool']]],
+  ['remove',['remove',['../class_sprite_pool.html#adce65ce2eaf9c7389e357f6f039ae7d6',1,'SpritePool']]],
+  ['right',['right',['../struct_s_s_d1306___r_e_c_t.html#a9ed468c58af55753dc61bb3dbdb6275b',1,'SSD1306_RECT']]]
 ];

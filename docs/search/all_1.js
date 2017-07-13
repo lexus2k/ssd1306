@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['char_5ff6x8',['char_f6x8',['../class_nano_canvas.html#a63270b78e91e3b70db3ea3d4369f9c72',1,'NanoCanvas']]],
-  ['clear',['clear',['../class_nano_canvas.html#a6fe2036b269cc55d9181c727a4fb3951',1,'NanoCanvas']]]
+  ['bottom',['bottom',['../struct_s_s_d1306___r_e_c_t.html#ac6f2761573966ed9540d9ac66cf1b471',1,'SSD1306_RECT']]],
+  ['buffer',['buffer',['../class_nano_canvas.html#a5604a0432977b2448918267fab25ef28',1,'NanoCanvas']]]
 ];

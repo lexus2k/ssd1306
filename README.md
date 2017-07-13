@@ -26,7 +26,9 @@ Key Features:
    * Drawing bitmap image from Flash memory (PROGMEM related)
    * Sprites: moving
    * Drawing lines in buffer (vertical and horizontal)
- * And bonus: Arkanoid game as example!
+ * And bonus:
+   * Arkanoid game as example!
+   * Simple Lode runner game as example!
 
 ![Image of arkanoid intro](https://github.com/lexus2k/ssd1306/blob/master/examples/arkanoid/screenshots/introscreen.png) ![Image of arkanoid screen](https://github.com/lexus2k/ssd1306/blob/master/examples/arkanoid/screenshots/screenshot.png)
 

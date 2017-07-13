@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['buffer',['buffer',['../class_nano_canvas.html#a5604a0432977b2448918267fab25ef28',1,'NanoCanvas']]]
+  ['add',['add',['../class_sprite_pool.html#a60cdca785f31e9535d97485afb4b2202',1,'SpritePool']]]
 ];

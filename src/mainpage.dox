@@ -37,6 +37,8 @@ Key Features:
    - Sprites: moving
    - Drawing lines in buffer (vertical and horizontal)
    - Arkanoid game as example of using SSD1306 library
+   - Simple Lode runner game as example of using sprites in SSD1306.
+
 
 For Attiny85/Attiny45 controllers OLED display must be connected to
 PB3 (SCL) and PB4 (SDA) lines. For other controllers pins

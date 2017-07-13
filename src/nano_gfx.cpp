@@ -123,14 +123,14 @@ void NanoCanvas::char_f6x8(uint8_t x, uint8_t y, const char ch[])
 void NanoCanvas::drawSpritePgm(uint8_t x, uint8_t y, const uint8_t sprite[])
 {
     uint8_t i;
-    if (y>=m_h) return;
     for(i=0;i<8;i++)
     {
-        if (x>=m_w) return;
+        if (x >= m_w) { x++; continue; }
         uint8_t d = pgm_read_byte(&sprite[i]);
-        m_bytes[YADDR(y) + x] |= (d << (y & 0x7));
-        if (y+8 < m_h)
-            m_bytes[YADDR(y) + m_w + x] |= (d >> (8 - (y & 0x7)));
+        if (y < m_h)
+            m_bytes[YADDR(y) + x] |= (d << (y & 0x7));
+        if ((uint8_t)(y + 8) < m_h)
+            m_bytes[YADDR((uint8_t)(y + 8)) + x] |= (d >> (8 - (y & 0x7)));
         x++;
     }
 };
@@ -139,14 +139,14 @@ void NanoCanvas::drawSpritePgm(uint8_t x, uint8_t y, const uint8_t sprite[])
 void NanoCanvas::drawSprite(uint8_t x, uint8_t y, const uint8_t sprite[])
 {
     uint8_t i;
-    if (y>=m_h) return;
     for(i=0;i<8;i++)
     {
-        if (x>=m_w) return;
+        if (x>=m_w) { x++; continue; }
         uint8_t d = sprite[i];
-        m_bytes[YADDR(y) + x] |= (d << (y & 0x7));
-        if (y+8 < m_h)
-            m_bytes[YADDR(y) + m_w + x] |= (d >> (8 - (y & 0x7)));
+        if (uint8_t(y) < m_h)
+            m_bytes[YADDR(y) + x] |= (d << (y & 0x7));
+        if ((uint8_t)(y+8) < m_h)
+            m_bytes[YADDR((uint8_t)(y + 8)) + x] |= (d >> (8 - (y & 0x7)));
         x++;
     }
 };
@@ -155,13 +155,13 @@ void NanoCanvas::drawSprite(uint8_t x, uint8_t y, const uint8_t sprite[])
 void NanoCanvas::drawSprite(SPRITE *sprite)
 {
     uint8_t i;
-    if (sprite->y >= m_h) return;
     for(i = 0; i < sprite->w; i++)
     {
-        if ((sprite->x + i) >= m_w) return;
+        if ((sprite->x + i) >= m_w) { continue; }
         uint8_t d = pgm_read_byte(&sprite->data[i]);
-        m_bytes[YADDR(sprite->y) + sprite->x + i] |= (d << (sprite->y & 0x7));
-        if (sprite->y + 8 < m_h)
-            m_bytes[YADDR(sprite->y) + m_w + sprite->x + i] |= (d >> (8 - (sprite->y & 0x7)));
+        if (sprite->y < m_h)
+            m_bytes[YADDR(sprite->y) + sprite->x + i] |= (d << (sprite->y & 0x7));
+        if (uint8_t(sprite->y + 8) < m_h)
+            m_bytes[YADDR(uint8_t(sprite->y + 8)) + sprite->x + i] |= (d >> (8 - (sprite->y & 0x7)));
     }
 }

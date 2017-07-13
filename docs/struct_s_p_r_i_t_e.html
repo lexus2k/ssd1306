@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 I2C Display Driver
-   &#160;<span id="projectnumber">0.4.0</span>
+   &#160;<span id="projectnumber">0.5.0</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306 I2C OLED Display</div>
   </td>
@@ -82,6 +82,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setPos</b> (uint8_t <
 <tr class="separator:ada52ad2a7aae3bdb62c6dc66ccb8765c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab08b9b2831224d69a19d992819d100a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_p_r_i_t_e.html#ab08b9b2831224d69a19d992819d100a2">erase</a> ()</td></tr>
 <tr class="separator:ab08b9b2831224d69a19d992819d100a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48094ce2036e687c885e7dcb4c245444"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_p_r_i_t_e.html#a48094ce2036e687c885e7dcb4c245444">isNearMove</a> ()</td></tr>
+<tr class="separator:a48094ce2036e687c885e7dcb4c245444"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03cc27d7630a3a3222d9e9dd84d39c7c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_s_d1306___r_e_c_t.html">SSD1306_RECT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_p_r_i_t_e.html#a03cc27d7630a3a3222d9e9dd84d39c7c">getRect</a> ()</td></tr>
+<tr class="separator:a03cc27d7630a3a3222d9e9dd84d39c7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7eeb58efac9390a1cd2cfcffd05b38ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_s_d1306___r_e_c_t.html">SSD1306_RECT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_p_r_i_t_e.html#a7eeb58efac9390a1cd2cfcffd05b38ef">getLRect</a> ()</td></tr>
+<tr class="separator:a7eeb58efac9390a1cd2cfcffd05b38ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe0e1ecd2dd76c67f085bdca419ce623"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_s_d1306___r_e_c_t.html">SSD1306_RECT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_p_r_i_t_e.html#abe0e1ecd2dd76c67f085bdca419ce623">getUpdateRect</a> ()</td></tr>
+<tr class="separator:abe0e1ecd2dd76c67f085bdca419ce623"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -109,11 +117,15 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="s
 const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_p_r_i_t_e.html#ac56b0c16d0bcd810ae1289350df821c3">data</a></td></tr>
 <tr class="memdesc:ac56b0c16d0bcd810ae1289350df821c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to PROGMEM data, representing sprite image. <br /></td></tr>
 <tr class="separator:ac56b0c16d0bcd810ae1289350df821c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a179f75785cfe41d2aaba303536d09d26"><td class="memItemLeft" align="right" valign="top"><a id="a179f75785cfe41d2aaba303536d09d26"></a>
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_p_r_i_t_e.html#a179f75785cfe41d2aaba303536d09d26">transparentMask</a></td></tr>
+<tr class="memdesc:a179f75785cfe41d2aaba303536d09d26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to PROGMEM data, representing sprite transparencyMask (can be nullptr) <br /></td></tr>
+<tr class="separator:a179f75785cfe41d2aaba303536d09d26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="struct_s_p_r_i_t_e.html">SPRITE</a> structure represents logical graphics object </p>
 
-<p>Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00048">48</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
+<p>Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00049">49</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="af3f35eab30dd39e4434b29923f0afab6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af3f35eab30dd39e4434b29923f0afab6">&sect;&nbsp;</a></span>draw()</h2>
@@ -172,6 +184,119 @@ const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 <p>Clears some sprite parts in old position on the display. </p>
 
 <p>Definition at line <a class="el" href="nano__gfx__types_8cpp_source.html#l00036">36</a> of file <a class="el" href="nano__gfx__types_8cpp_source.html">nano_gfx_types.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a7eeb58efac9390a1cd2cfcffd05b38ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7eeb58efac9390a1cd2cfcffd05b38ef">&sect;&nbsp;</a></span>getLRect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_s_d1306___r_e_c_t.html">SSD1306_RECT</a> SPRITE::getLRect </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns area in 8-pixel blocks, which was used by the sprite last time For example, if sprite pixels coordinates are 10,18 and size is 8x8, the rect will be (left:1,top:2,right:2,bottom:3). if sprite pixels coordinates are 32,16 and size is 8x8, the rect will be (left:4,top:2,right:4,bottom:2). </p>
+
+<p>Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00119">119</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
+
+</div>
+</div>
+<a id="a03cc27d7630a3a3222d9e9dd84d39c7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03cc27d7630a3a3222d9e9dd84d39c7c">&sect;&nbsp;</a></span>getRect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_s_d1306___r_e_c_t.html">SSD1306_RECT</a> SPRITE::getRect </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns area in 8-pixel blocks, which is used by the sprite.</p>
+<p>For example, if sprite pixels coordinates are 10,18 and size is 8x8, the rect will be (left:1,top:2,right:2,bottom:3). if sprite pixels coordinates are 32,16 and size is 8x8, the rect will be (left:4,top:2,right:4,bottom:2). </p>
+
+<p>Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00103">103</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
+
+</div>
+</div>
+<a id="abe0e1ecd2dd76c67f085bdca419ce623"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe0e1ecd2dd76c67f085bdca419ce623">&sect;&nbsp;</a></span>getUpdateRect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_s_d1306___r_e_c_t.html">SSD1306_RECT</a> SPRITE::getUpdateRect </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns area in 8-pixel blocks, which includes old and new position For example, if sprite pixels coordinates are 12,18 and size is 8x8, and sprite is moved to the right by 6 pixels, the rect will be (left:1,top:2,right:3,bottom:3). </p>
+
+<p>Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00136">136</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
+
+</div>
+</div>
+<a id="a48094ce2036e687c885e7dcb4c245444"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48094ce2036e687c885e7dcb4c245444">&sect;&nbsp;</a></span>isNearMove()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SPRITE::isNearMove </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns true if sprite is moved not far from previous position, and old and new rects have intersection. </p>
+
+<p>Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00088">88</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
 
 </div>
 </div>
