@@ -22,10 +22,13 @@
 
 
 SpritePool::SpritePool( )
-   :m_count( 0 )
-   ,m_canvas( 8, 8, m_canvasBuf)
+   : m_canvas( 8, 8, m_canvasBuf)
+   , m_count( 0 )
 {
-    m_rect = (SSD1306_RECT){ 0, 0, (128>>3) - 1, (ssd1306_displayHeight()>>3) - 1 };
+    m_rect = (SSD1306_RECT){ (uint8_t)0,
+                             (uint8_t)0,
+                             (uint8_t)((128>>3) - 1),
+                             (uint8_t)((ssd1306_displayHeight()>>3) - 1) };
 };
 
 void SpritePool::drawBlock(uint8_t blockColumn, uint8_t blockRow)
@@ -54,10 +57,10 @@ void SpritePool::drawSprites()
 
 void SpritePool::refreshScreen()
 {
-    updateRegion( (SSD1306_RECT){ m_rect.left<<3,
-                                  m_rect.top<<3,
-                                  m_rect.right<<3,
-                                  m_rect.bottom<<3 } );
+    updateRegion( (SSD1306_RECT){ (uint8_t)(m_rect.left<<3),
+                                  (uint8_t)(m_rect.top<<3),
+                                  (uint8_t)(m_rect.right<<3),
+                                  (uint8_t)(m_rect.bottom<<3) } );
 }
 
 uint8_t SpritePool::add( SPRITE &sprite )
