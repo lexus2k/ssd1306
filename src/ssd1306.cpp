@@ -62,6 +62,17 @@ void    ssd1306_128x32_i2c_init()
     }
 }
 
+void ssd1306_setRamBlock(uint8_t x, uint8_t y, uint8_t w)
+{
+    ssd1306_startTransmission();
+    ssd1306_sendByte(0x00);	//write command
+    ssd1306_sendByte(SSD1306_COLUMNADDR);
+    ssd1306_sendByte(x);
+    ssd1306_sendByte(x + w - 1);
+    ssd1306_sendByte(0xb0+y);
+    ssd1306_endTransmission();
+}
+
 void ssd1306_setPos(uint8_t x, uint8_t y)
 {
     ssd1306_startTransmission();
@@ -74,34 +85,30 @@ void ssd1306_setPos(uint8_t x, uint8_t y)
 
 void ssd1306_fillScreen(uint8_t fill_Data)
 {
+    ssd1306_setRamBlock(0, 0, 128);
+    ssd1306_dataStart();
     for(uint8_t m=0; m<(s_displayHeight >> 3); m++)
     {
-        ssd1306_sendCommand(0xb0+m);	//page0-page1
-        ssd1306_sendCommand(0x10);		//high column start address
-        ssd1306_sendCommand(0x00);		//low column start address
-        ssd1306_dataStart();
         for(uint8_t n=0; n<128; n++)
         {
             ssd1306_sendByte(fill_Data);
         }
-        ssd1306_endTransmission();
     }
+    ssd1306_endTransmission();
 }
 
 void ssd1306_clearScreen()
 {
+    ssd1306_setRamBlock(0, 0, 128);
+    ssd1306_dataStart();
     for(uint8_t m=0;m<(s_displayHeight >> 3);m++)
     {
-        ssd1306_sendCommand(0xb0+m);	//page0-page1
-        ssd1306_sendCommand(0x00);		//low column start address
-        ssd1306_sendCommand(0x10);		//high column start address
-        ssd1306_dataStart();
         for(uint8_t n=0;n<128;n++)
         {
             ssd1306_sendByte(0x00);
         }
-        ssd1306_endTransmission();
     }
+    ssd1306_endTransmission();
 }
 
 
@@ -143,50 +150,47 @@ void ssd1306_charF6x8(uint8_t x, uint8_t y, const char ch[]){
 void ssd1306_drawCanvas(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)
 {
     uint8_t i, j;
+    ssd1306_setRamBlock(x, y, w);
+    ssd1306_dataStart();
     for(j=0; j<(h >> 3); j++)
     {
-        ssd1306_setPos(x,y);
-        ssd1306_dataStart();
         for(i=0;i<w;i++)
         {
             ssd1306_sendByte(*buf++);
         }
-        ssd1306_endTransmission();
-        y++;
     }
+    ssd1306_endTransmission();
 }
 
 void ssd1306_drawBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)
 {
     uint8_t i, j;
+    ssd1306_setRamBlock(x, y, w);
+    ssd1306_dataStart();
     for(j=0; j<(h >> 3); j++)
     {
-        ssd1306_setPos(x,y);
-        ssd1306_dataStart();
         for(i=w;i>0;i--)
         {
             ssd1306_sendByte(pgm_read_byte(buf++));
         }
-        ssd1306_endTransmission();
-        y++;
     }
+    ssd1306_endTransmission();
 }
 
 
 void ssd1306_clearBlock(uint8_t x, uint8_t y, uint8_t w, uint8_t h)
 {
     uint8_t i, j;
+    ssd1306_setRamBlock(x, y, w);
+    ssd1306_dataStart();
     for(j=0; j<(h >> 3); j++)
     {
-        ssd1306_setPos(x,y);
-        ssd1306_dataStart();
         for(i=w;i>0;i--)
         {
             ssd1306_sendByte(0x00);
         }
-        ssd1306_endTransmission();
-        y++;
     }
+    ssd1306_endTransmission();
 }
 
 
