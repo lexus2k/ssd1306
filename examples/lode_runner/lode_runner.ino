@@ -73,7 +73,7 @@ void showGameInfo()
 {
     for (uint8_t i=0; i<goldCollection; i++)
     {
-        ssd1306_drawBitmap(0 + i<<3,0,8,8,coinImage);
+        ssd1306_drawBitmap(0 + (i<<3),0,8,8,coinImage);
     }
 }
 
