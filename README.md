@@ -31,6 +31,7 @@ Key Features:
    * Simple Lode runner game as example!
 
 ![Image of arkanoid intro](https://github.com/lexus2k/ssd1306/blob/master/examples/arkanoid/screenshots/introscreen.png) ![Image of arkanoid screen](https://github.com/lexus2k/ssd1306/blob/master/examples/arkanoid/screenshots/screenshot.png)
+![Image of arkanoid intro](https://github.com/lexus2k/ssd1306/blob/master/examples/lode_runner/screenshots/main_screen.png)
 
 For Attiny85/Attiny45 controllers OLED display must be connected to
 PB3 (SCL) and PB4 (SDA) lines. For other controllers pins
