@@ -1,10 +1,11 @@
 var searchData=
 [
+  ['setpos',['setPos',['../struct_s_p_r_i_t_e.html#aefc379df23410812d5799c2b93161e19',1,'SPRITE']]],
   ['setrect',['setRect',['../class_sprite_pool.html#a685c20c2e1b762cf10fad3e89701e0e3',1,'SpritePool']]],
   ['spritepool',['SpritePool',['../class_sprite_pool.html#ad7f28dde3e55d7e57f68507058c7cbda',1,'SpritePool']]],
   ['ssd1306_5f128x32_5fi2c_5finit',['ssd1306_128x32_i2c_init',['../ssd1306_8h.html#a9ea532820b1870f3dc4fa2ae68d3c4cc',1,'ssd1306.cpp']]],
   ['ssd1306_5f128x64_5fi2c_5finit',['ssd1306_128x64_i2c_init',['../ssd1306_8h.html#a11882f1e10f5ae62752d2ed643695040',1,'ssd1306.cpp']]],
-  ['ssd1306_5fcharf6x8',['ssd1306_charF6x8',['../ssd1306_8h.html#aaa00ed77067c8e818cf20d492a158878',1,'ssd1306.cpp']]],
+  ['ssd1306_5fcharf6x8',['ssd1306_charF6x8',['../ssd1306_8h.html#ac42554ce27a6baf324e2bdccfd8b93dc',1,'ssd1306.cpp']]],
   ['ssd1306_5fclearblock',['ssd1306_clearBlock',['../ssd1306_8h.html#ac25cf0ec751a4a3e81e4c7d4ae04e81e',1,'ssd1306.cpp']]],
   ['ssd1306_5fclearscreen',['ssd1306_clearScreen',['../ssd1306_8h.html#a3e6a3cab78abaead5373dadfcf339b9d',1,'ssd1306.cpp']]],
   ['ssd1306_5fcreatesprite',['ssd1306_createSprite',['../ssd1306_8h.html#aa5f53fa7fbe48dc1a06e5fe4b1710c26',1,'ssd1306.cpp']]],
@@ -23,6 +24,8 @@ var searchData=
   ['ssd1306_5fi2cstart',['ssd1306_i2cStart',['../ssd1306__i2c_8h.html#a31ec9e1944a186b6c6b3925582436ada',1,'ssd1306_i2c.cpp']]],
   ['ssd1306_5fi2cstop',['ssd1306_i2cStop',['../ssd1306__i2c_8h.html#a0dda0d7c1510f1b3e80a25c49ba57bc7',1,'ssd1306_i2c.cpp']]],
   ['ssd1306_5finit',['ssd1306_init',['../ssd1306_8h.html#a635fc7696ce5e780e77e9e231a35d9e3',1,'ssd1306.h']]],
+  ['ssd1306_5fputpixel',['ssd1306_putPixel',['../ssd1306_8h.html#a5d98e0567eb3f541f19508ac74899962',1,'ssd1306.cpp']]],
+  ['ssd1306_5fputpixels',['ssd1306_putPixels',['../ssd1306_8h.html#a94085f41277fb90ec4957b3e7f8cbe97',1,'ssd1306.cpp']]],
   ['ssd1306_5frect',['ssd1306_rect',['../ssd1306_8h.html#a99347d938997611dd1783d1f57ead08a',1,'ssd1306.cpp']]],
   ['ssd1306_5frectfromsprite',['ssd1306_rectFromSprite',['../ssd1306_8h.html#a92b39e923d1ffc51da1025e2436172e4',1,'ssd1306.cpp']]],
   ['ssd1306_5freplacesprite',['ssd1306_replaceSprite',['../ssd1306_8h.html#a4ab1b9180be9247898ae4d2031988cd4',1,'ssd1306.cpp']]],

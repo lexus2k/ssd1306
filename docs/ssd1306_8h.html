@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 I2C Display Driver
-   &#160;<span id="projectnumber">0.5.0</span>
+   &#160;<span id="projectnumber">0.5.3</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306 I2C OLED Display</div>
   </td>
@@ -65,6 +65,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">ssd1306.h File Reference</div>  </div>
@@ -74,6 +75,14 @@ $(function() {
 </div>
 <p><a href="ssd1306_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a4ceb6be9200d0bb016cbbb87dcf5ed88"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> { <b>STYLE_NORMAL</b>, 
+<b>STYLE_BOLD</b>, 
+<b>STYLE_ITALIC</b>
+ }</td></tr>
+<tr class="separator:a4ceb6be9200d0bb016cbbb87dcf5ed88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a11882f1e10f5ae62752d2ed643695040"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306_8h.html#a11882f1e10f5ae62752d2ed643695040">ssd1306_128x64_i2c_init</a> ()</td></tr>
@@ -94,8 +103,12 @@ Functions</h2></td></tr>
 <tr class="separator:ac10e60962ff77aeb3687b795c364595f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5c39e6ef9afb0b1f48968649a1ba45e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306_8h.html#ab5c39e6ef9afb0b1f48968649a1ba45e">ssd1306_displayHeight</a> ()</td></tr>
 <tr class="separator:ab5c39e6ef9afb0b1f48968649a1ba45e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa00ed77067c8e818cf20d492a158878"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306_8h.html#aaa00ed77067c8e818cf20d492a158878">ssd1306_charF6x8</a> (uint8_t x, uint8_t y, const char ch[])</td></tr>
-<tr class="separator:aaa00ed77067c8e818cf20d492a158878"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac42554ce27a6baf324e2bdccfd8b93dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306_8h.html#ac42554ce27a6baf324e2bdccfd8b93dc">ssd1306_charF6x8</a> (uint8_t x, uint8_t y, const char ch[], <a class="el" href="ssd1306_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style=STYLE_NORMAL)</td></tr>
+<tr class="separator:ac42554ce27a6baf324e2bdccfd8b93dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d98e0567eb3f541f19508ac74899962"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306_8h.html#a5d98e0567eb3f541f19508ac74899962">ssd1306_putPixel</a> (uint8_t x, uint8_t y)</td></tr>
+<tr class="separator:a5d98e0567eb3f541f19508ac74899962"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94085f41277fb90ec4957b3e7f8cbe97"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306_8h.html#a94085f41277fb90ec4957b3e7f8cbe97">ssd1306_putPixels</a> (uint8_t x, uint8_t y, uint8_t pixels)</td></tr>
+<tr class="separator:a94085f41277fb90ec4957b3e7f8cbe97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2fb18c63d7fcef959b63044dc81efa8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306_8h.html#ad2fb18c63d7fcef959b63044dc81efa8">ssd1306_drawCanvas</a> (uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)</td></tr>
 <tr class="separator:ad2fb18c63d7fcef959b63044dc81efa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a4c06ba9b309741003b172c3c5cf874"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306_8h.html#a0a4c06ba9b309741003b172c3c5cf874">ssd1306_drawBitmap</a> (uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)</td></tr>
@@ -123,7 +136,25 @@ Functions</h2></td></tr>
 <div class="textblock"><p>SSD1306 basic draw functions </p>
 
 <p>Definition in file <a class="el" href="ssd1306_8h_source.html">ssd1306.h</a>.</p>
-</div><h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a4ceb6be9200d0bb016cbbb87dcf5ed88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ceb6be9200d0bb016cbbb87dcf5ed88">&sect;&nbsp;</a></span>EFontStyle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="ssd1306_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Supported font styles </p>
+
+<p>Definition at line <a class="el" href="ssd1306_8h_source.html#l00030">30</a> of file <a class="el" href="ssd1306_8h_source.html">ssd1306.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
 <a id="a9ea532820b1870f3dc4fa2ae68d3c4cc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9ea532820b1870f3dc4fa2ae68d3c4cc">&sect;&nbsp;</a></span>ssd1306_128x32_i2c_init()</h2>
 
@@ -164,8 +195,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aaa00ed77067c8e818cf20d492a158878"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaa00ed77067c8e818cf20d492a158878">&sect;&nbsp;</a></span>ssd1306_charF6x8()</h2>
+<a id="ac42554ce27a6baf324e2bdccfd8b93dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac42554ce27a6baf324e2bdccfd8b93dc">&sect;&nbsp;</a></span>ssd1306_charF6x8()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -186,7 +217,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const char&#160;</td>
-          <td class="paramname"><em>ch</em>[]&#160;</td>
+          <td class="paramname"><em>ch</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="ssd1306_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a>&#160;</td>
+          <td class="paramname"><em>style</em> = <code>STYLE_NORMAL</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -195,16 +232,17 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Prints text to screen. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Prints text to screen using font 6x8. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>- horizontal position in pixels </td></tr>
     <tr><td class="paramname">y</td><td>- vertical position in blocks (pixels/8) </td></tr>
     <tr><td class="paramname">ch</td><td>- NULL-terminated string to print </td></tr>
+    <tr><td class="paramname">style</td><td>- font style (EFontStyle), normal by default. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00121">121</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00128">128</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -256,7 +294,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>usually this method is used to erase bitmap on the screen. </dd></dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00176">176</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00218">218</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -276,7 +314,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Fills screen with zero-byte </p>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00091">91</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00102">102</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -328,7 +366,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_s_p_r_i_t_e.html">SPRITE</a> structure </dd></dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00307">307</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00348">348</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -368,7 +406,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Turns off display </p>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00108">108</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00117">117</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -388,7 +426,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Turns on display </p>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00114">114</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00123">123</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -446,7 +484,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00159">159</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00202">202</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -504,7 +542,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00143">143</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00187">187</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -530,7 +568,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00206">206</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00247">247</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -574,7 +612,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00193">193</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00234">234</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -600,7 +638,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00232">232</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00273">273</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -626,7 +664,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00256">256</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00297">297</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -647,7 +685,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Fills screen with pattern byte </p>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00075">75</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00088">88</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -675,7 +713,91 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Init default display 128x64 </p>
 
-<p>Definition at line <a class="el" href="ssd1306_8h_source.html#l00042">42</a> of file <a class="el" href="ssd1306_8h_source.html">ssd1306.h</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8h_source.html#l00050">50</a> of file <a class="el" href="ssd1306_8h_source.html">ssd1306.h</a>.</p>
+
+</div>
+</div>
+<a id="a5d98e0567eb3f541f19508ac74899962"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d98e0567eb3f541f19508ac74899962">&sect;&nbsp;</a></span>ssd1306_putPixel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1306_putPixel </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Put single pixel on the LCD.</p>
+<dl class="section warning"><dt>Warning</dt><dd>Please, take into account that there is no way to read data from ssd1306, thus since each byte contains 8 pixels, all other pixels in the same byte will be cleared on the display. Use <a class="el" href="ssd1306_8h.html#a94085f41277fb90ec4957b3e7f8cbe97">ssd1306_putPixels()</a> instead.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>- horizontal position in pixels </td></tr>
+    <tr><td class="paramname">y</td><td>- vertical position in pixels </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00168">168</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a94085f41277fb90ec4957b3e7f8cbe97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94085f41277fb90ec4957b3e7f8cbe97">&sect;&nbsp;</a></span>ssd1306_putPixels()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1306_putPixels </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>pixels</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Puts eight vertical pixels on the LCD at once.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>- horizontal position in pixels </td></tr>
+    <tr><td class="paramname">y</td><td>- vertical position in blocks (pixels/8) </td></tr>
+    <tr><td class="paramname">pixels</td><td>- bit-pixels to draw on display </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00177">177</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -696,7 +818,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Depricated. </p>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00301">301</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00342">342</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -733,7 +855,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Depricated. </p>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00296">296</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00337">337</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -770,7 +892,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00312">312</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00353">353</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -807,7 +929,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00065">65</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00078">78</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>

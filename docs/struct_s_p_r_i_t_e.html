@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 I2C Display Driver
-   &#160;<span id="projectnumber">0.5.0</span>
+   &#160;<span id="projectnumber">0.5.3</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306 I2C OLED Display</div>
   </td>
@@ -73,8 +73,7 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aefc379df23410812d5799c2b93161e19"><td class="memItemLeft" align="right" valign="top"><a id="aefc379df23410812d5799c2b93161e19"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setPos</b> (uint8_t <a class="el" href="struct_s_p_r_i_t_e.html#a44b2c947f1c6e30f31a77b8520855841">x</a>, uint8_t <a class="el" href="struct_s_p_r_i_t_e.html#ab0ea36dda66319248b66b1a5056b1ba9">y</a>)</td></tr>
+<tr class="memitem:aefc379df23410812d5799c2b93161e19"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_p_r_i_t_e.html#aefc379df23410812d5799c2b93161e19">setPos</a> (uint8_t <a class="el" href="struct_s_p_r_i_t_e.html#a44b2c947f1c6e30f31a77b8520855841">x</a>, uint8_t <a class="el" href="struct_s_p_r_i_t_e.html#ab0ea36dda66319248b66b1a5056b1ba9">y</a>)</td></tr>
 <tr class="separator:aefc379df23410812d5799c2b93161e19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3f35eab30dd39e4434b29923f0afab6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_p_r_i_t_e.html#af3f35eab30dd39e4434b29923f0afab6">draw</a> ()</td></tr>
 <tr class="separator:af3f35eab30dd39e4434b29923f0afab6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -211,7 +210,7 @@ const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 </div><div class="memdoc">
 <p>Returns area in 8-pixel blocks, which was used by the sprite last time For example, if sprite pixels coordinates are 10,18 and size is 8x8, the rect will be (left:1,top:2,right:2,bottom:3). if sprite pixels coordinates are 32,16 and size is 8x8, the rect will be (left:4,top:2,right:4,bottom:2). </p>
 
-<p>Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00119">119</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
+<p>Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00124">124</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
 
 </div>
 </div>
@@ -240,7 +239,7 @@ const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 <p>Returns area in 8-pixel blocks, which is used by the sprite.</p>
 <p>For example, if sprite pixels coordinates are 10,18 and size is 8x8, the rect will be (left:1,top:2,right:2,bottom:3). if sprite pixels coordinates are 32,16 and size is 8x8, the rect will be (left:4,top:2,right:4,bottom:2). </p>
 
-<p>Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00103">103</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
+<p>Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00108">108</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
 
 </div>
 </div>
@@ -268,7 +267,7 @@ const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 </div><div class="memdoc">
 <p>Returns area in 8-pixel blocks, which includes old and new position For example, if sprite pixels coordinates are 12,18 and size is 8x8, and sprite is moved to the right by 6 pixels, the rect will be (left:1,top:2,right:3,bottom:3). </p>
 
-<p>Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00136">136</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
+<p>Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00141">141</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
 
 </div>
 </div>
@@ -296,7 +295,44 @@ const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el"
 </div><div class="memdoc">
 <p>Returns true if sprite is moved not far from previous position, and old and new rects have intersection. </p>
 
-<p>Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00088">88</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
+<p>Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00093">93</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
+
+</div>
+</div>
+<a id="aefc379df23410812d5799c2b93161e19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefc379df23410812d5799c2b93161e19">&sect;&nbsp;</a></span>setPos()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SPRITE::setPos </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates active position of the sprite (doesn't redraw it) </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>- horizontal position </td></tr>
+    <tr><td class="paramname">y</td><td>- vertical position </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="nano__gfx__types_8cpp_source.html#l00024">24</a> of file <a class="el" href="nano__gfx__types_8cpp_source.html">nano_gfx_types.cpp</a>.</p>
 
 </div>
 </div>
