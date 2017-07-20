@@ -63,6 +63,11 @@ typedef struct
     /// Pointer to PROGMEM data, representing sprite transparencyMask (can be nullptr)
     const uint8_t * transparentMask;
 
+    /**
+     * Updates active position of the sprite (doesn't redraw it)
+     * @param x - horizontal position
+     * @param y - vertical position
+     */
     void setPos(uint8_t x, uint8_t y);
 
     /**

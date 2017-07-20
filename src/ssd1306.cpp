@@ -125,29 +125,64 @@ void ssd1306_displayOn()
     ssd1306_sendCommand(SSD1306_DISPLAYON);
 }
 
-
-
-void ssd1306_charF6x8(uint8_t x, uint8_t y, const char ch[]){
-  uint8_t c,i,j=0;
-  while(ch[j] != '\0')
+void ssd1306_charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style)
+{
+    uint8_t c,i,j=0;
+    ssd1306_setRamBlock(0, 0, 128);
+    ssd1306_setPos(x,y);
+    ssd1306_dataStart();
+    while(ch[j] != '\0')
     {
-      c = ch[j] - 32;
-      if(x>126)
+        c = ch[j] - 32;
+        if(x>126)
         {
-          x=0;
-          y++;
+            x=0;
+            y++;
         }
-      ssd1306_setPos(x,y);
-      ssd1306_dataStart();
-      for(i=0;i<6;i++)
+        uint8_t ldata = 0;
+        for(i=0;i<6;i++)
         {
-          ssd1306_sendByte(pgm_read_byte(&ssd1306xled_font6x8[c*6+i]));
+            if ( style == STYLE_NORMAL )
+            {
+                ssd1306_sendByte(pgm_read_byte(&ssd1306xled_font6x8[c*6+i]));
+            }
+            else if ( style == STYLE_BOLD )
+            {
+                uint8_t data = pgm_read_byte(&ssd1306xled_font6x8[c*6+i]);
+                ssd1306_sendByte(data | ldata);
+                ldata = data;
+            }
+            else
+            {
+                uint8_t data = pgm_read_byte(&ssd1306xled_font6x8[c*6+i + 1]);
+                ssd1306_sendByte((data & 0xF0) | ldata);
+                ldata = (data & 0x0F);
+            }
         }
-      ssd1306_endTransmission();
-      x += 6;
-      j++;
+        x += 6;
+        j++;
     }
+    ssd1306_endTransmission();
 }
+
+void         ssd1306_putPixel(uint8_t x, uint8_t y)
+{
+    ssd1306_setRamBlock(0, 0, 128);
+    ssd1306_setPos(x,y >> 3);
+    ssd1306_dataStart();
+    ssd1306_sendByte(1 << (y & 0x07));
+    ssd1306_endTransmission();
+}
+
+void         ssd1306_putPixels(uint8_t x, uint8_t y, uint8_t pixels)
+{
+    ssd1306_setRamBlock(0, 0, 128);
+    ssd1306_setPos(x,y);
+    ssd1306_dataStart();
+    ssd1306_sendByte(pixels);
+    ssd1306_endTransmission();
+}
+
 
 void ssd1306_drawCanvas(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)
 {

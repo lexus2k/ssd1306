@@ -26,6 +26,14 @@
 
 #include "nano_gfx_types.h"
 
+/** Supported font styles */
+enum EFontStyle
+{
+    STYLE_NORMAL,
+    STYLE_BOLD,
+    STYLE_ITALIC,
+};
+
 /**
  * Init 128x64 OLED display over i2c
  */
@@ -75,12 +83,37 @@ void         ssd1306_displayOn();
 uint8_t      ssd1306_displayHeight();
 
 /**
- * Prints text to screen.
+ * Prints text to screen using font 6x8.
  * @param x - horizontal position in pixels
  * @param y - vertical position in blocks (pixels/8)
  * @param ch - NULL-terminated string to print
+ * @param style - font style (EFontStyle), normal by default.
  */
-void         ssd1306_charF6x8(uint8_t x, uint8_t y, const char ch[]);
+void         ssd1306_charF6x8(uint8_t x, uint8_t y,
+                              const char ch[],
+                              EFontStyle style = STYLE_NORMAL);
+
+/**
+ * Put single pixel on the LCD.
+ *
+ * @warning Please, take into account that there is no way
+ * to read data from ssd1306, thus since each byte contains
+ * 8 pixels, all other pixels in the same byte will be cleared
+ * on the display. Use ssd1306_putPixels() instead.
+ *
+ * @param x - horizontal position in pixels
+ * @param y - vertical position in pixels
+ */
+void         ssd1306_putPixel(uint8_t x, uint8_t y);
+
+/**
+ * Puts eight vertical pixels on the LCD at once.
+ *
+ * @param x - horizontal position in pixels
+ * @param y - vertical position in blocks (pixels/8)
+ * @param pixels - bit-pixels to draw on display
+ */
+void         ssd1306_putPixels(uint8_t x, uint8_t y, uint8_t pixels);
 
 /**
  * Draws bitmap, located in SRAM, on the display

@@ -25,6 +25,7 @@
 
 #include "nano_gfx_types.h"
 
+/** SSD1306 LCD driver commands */
 enum ESsd1306Commands
 {
     SSD1306_DEFAULT_ADDRESS  = 0x78,
@@ -58,6 +59,7 @@ enum ESsd1306Commands
     SSD1306_NOP              = 0xE3,
 };
 
+/** SSD1306 supported memory modes. */
 enum ESsd1306MemoryMode
 {
     HORIZONTAL_ADDRESSING_MODE  = 0x00,
