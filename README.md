@@ -43,7 +43,7 @@ Tested controllers:
 * Atmega328p, Atmega168
 
 For more information about this library please visit
-https://github.com/lexus2k/ssd1306. Doxygen documentation can be found at [Documentation](http://lexus2k.github.io/ssd1306).
+https://github.com/lexus2k/ssd1306. Doxygen documentation can be found at [github.io site](http://lexus2k.github.io/ssd1306).
 If you found any problem, or have any idea, please report to Issues section.
 
 == License ==
