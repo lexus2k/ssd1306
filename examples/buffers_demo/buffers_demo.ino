@@ -134,5 +134,5 @@ void loop()
         canvas.drawSprite( &objects[i].sprite );
     }
     /* Now, draw canvas on the display */
-    ssd1306_drawCanvas(48, 0, canvasWidth, canvasHeight, canvasData);
+    canvas.blt(48, 0);
 }

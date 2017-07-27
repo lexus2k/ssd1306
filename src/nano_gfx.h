@@ -111,7 +111,7 @@ public:
 
     /**
      * Sprite is small image 8x8, sprite doesn't change background
-     * Reads sprite from Program memory
+     * Reads sprite from Flash memory
      */
     void drawSpritePgm(uint8_t x, uint8_t y, const uint8_t sprite[]);
 
@@ -141,6 +141,24 @@ public:
      * Returns canvas buffer
      */
     inline uint8_t *buffer() { return m_bytes; };
+
+    /**
+     * Inverts content in the buffer.
+     * white becomes black and wise versa.
+     */
+    void invert();
+
+    /**
+     * Flips image horizontally.
+     */
+    void flipH();
+
+   /**
+    * Draws canvas on the LCD display
+    * @param x - horizontal position in pixels
+    * @param y - vertical position in blocks (pixels/8)
+    */
+    void blt(uint8_t x, uint8_t y);
 
 private:
     uint8_t m_w;

@@ -119,7 +119,7 @@ void SpritePool::updateRegion(SSD1306_RECT ur)
                                       m_sprites[i]->y - (y << 3),
                                       m_sprites[i]->data );
            }
-           ssd1306_drawCanvas( x << 3, y, 8, 8, m_canvas.buffer() );
+           m_canvas.blt( x << 3, y );
        }
     }
 }

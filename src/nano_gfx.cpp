@@ -18,6 +18,7 @@
 */
 
 #include "nano_gfx.h"
+#include "ssd1306.h"
 
 #define YADDR(y) (((y) >> 3) << m_p)
 #define BADDR(b) ((b) << m_p)
@@ -151,7 +152,6 @@ void NanoCanvas::drawSprite(uint8_t x, uint8_t y, const uint8_t sprite[])
     }
 };
 
-
 void NanoCanvas::drawSprite(SPRITE *sprite)
 {
     uint8_t i;
@@ -164,4 +164,26 @@ void NanoCanvas::drawSprite(SPRITE *sprite)
         if (uint8_t(sprite->y + 8) < m_h)
             m_bytes[YADDR(uint8_t(sprite->y + 8)) + sprite->x + i] |= (d >> (8 - (sprite->y & 0x7)));
     }
+}
+
+void NanoCanvas::blt(uint8_t x, uint8_t y)
+{
+    ssd1306_drawCanvas(x, y, m_w, m_h, m_bytes);
+}
+
+void NanoCanvas::invert()
+{
+    for(uint16_t i=0; i<m_w* (m_h >> 3); i++)
+       m_bytes[i] = ~m_bytes[i];
+}
+
+void NanoCanvas::flipH()
+{
+   for (uint8_t y=0; y<(m_h>>3); y++)
+       for (uint8_t x=0; x<m_w>>1; x++)
+       {
+           uint8_t temp = m_bytes[YADDR(y) + x];
+           m_bytes[YADDR(y) + x] = m_bytes[YADDR(y) + m_w - x -1];
+           m_bytes[YADDR(y) + m_w - x -1] = temp;
+       }
 }
