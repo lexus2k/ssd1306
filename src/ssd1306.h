@@ -71,11 +71,20 @@ void         ssd1306_clearScreen();
  */
 void         ssd1306_displayOff();
 
-
 /**
  * Turns on display
  */
 void         ssd1306_displayOn();
+
+/**
+ * Switches display to inverse mode.
+ */
+void         ssd1306_invertMode();
+
+/**
+ * Switches display to normal mode.
+ */
+void         ssd1306_normalMode();
 
 /**
  * Returns display height in pixels

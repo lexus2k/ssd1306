@@ -355,3 +355,12 @@ void         ssd1306_replaceSprite(SPRITE *sprite, const uint8_t *data)
     sprite->data = data;
 }
 
+void         ssd1306_invertMode()
+{
+    ssd1306_sendCommand(SSD1306_INVERTDISPLAY);
+}
+
+void         ssd1306_normalMode()
+{
+    ssd1306_sendCommand(SSD1306_NORMALDISPLAY);
+}
