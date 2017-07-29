@@ -128,7 +128,7 @@ void NanoCanvas::char_f6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle sty
             else
             {
                 data = pgm_read_byte(&s_font6x8[c*6+i + 1]);
-                uint8_t temp = data & 0xF0 | ldata;
+                uint8_t temp = (data & 0xF0) | ldata;
                 ldata = (data & 0x0F);
                 data = temp;
             }
