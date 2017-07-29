@@ -28,7 +28,7 @@
  */
 
 #include "ssd1306.h"
-#include "ssd1306_i2c.h"
+#include "ssd1306_i2c_conf.h"
 
 /* Do not include wire.h for Attiny controllers */
 #ifndef SSD1306_EMBEDDED_I2C

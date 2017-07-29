@@ -19,8 +19,9 @@
 
 
 #include "ssd1306_i2c.h"
-#include "ssd1306_interface.h"
-#include "ssd1306_i2c_pins.h"
+
+#include "intf/ssd1306_interface.h"
+#include "ssd1306_i2c_conf.h"
 
 
 /**

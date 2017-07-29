@@ -17,43 +17,31 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 /**
- *   Attiny85 PINS
- *             ____
- *   RESET   -|_|  |- 3V
- *   SCL (3) -|    |- (2)
- *   SDA (4) -|    |- (1)
- *   GND     -|____|- (0)
- *
- *   Atmega328 PINS: connect LCD to A4/A5
+ * @file ssd1306_i2c.h SSD1306 i2c communication functions
  */
 
-#include "ssd1306.h"
+
+#ifndef _SSD1306_I2C_H_
+#define _SSD1306_I2C_H_
+
 #include "ssd1306_i2c_conf.h"
-#include "sova.h"
+#include <Arduino.h>
 
-/* Do not include wire.h for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_I2C
-    #include <Wire.h>
-#endif
+/**
+ * Informs I2C device about data to be sent
+ */
+void         ssd1306_i2cStart();
 
+/**
+ * Completes I2C transaction
+ */
+void         ssd1306_i2cStop();
 
-void setup()
-{
-    /* Do not init Wire library for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_I2C
-    Wire.begin();
-#endif
-    ssd1306_128x64_i2c_init();
-    ssd1306_fillScreen(0x00);
-    /* Draw image defined in sova.h */
-    ssd1306_drawBitmap(0, 0, 128, 64, Sova);
-}
+/**
+ * Sends byte to I2C device
+ * @param data - byte to send
+ */
+void         ssd1306_i2cSendByte(uint8_t data);
 
-
-void loop()
-{
-}
-
-
-
-
+// ----------------------------------------------------------------------------
+#endif // _SSD1306_I2C_H_

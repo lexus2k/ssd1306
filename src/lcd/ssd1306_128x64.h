@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2016-2017 Alexey Dynda
+    Copyright (C) 2017 Alexey Dynda
 
     This file is part of SSD1306 library.
 
@@ -16,26 +16,21 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+/**
+ * @file ssd1306_128x64.h support for OLED 128x64 display
+ */
 
-#ifndef _SSD1306_I2C_PINS_H_
-#define _SSD1306_I2C_PINS_H_
+
+#ifndef _SSD1306_128X64_H_
+#define _SSD1306_128X64_H_
 
 #include <Arduino.h>
+#include <stdint.h>
 
-#if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__) 
-    #ifndef SSD1306_SCL
-        #define SSD1306_SCL   PB3 // SCL, Pin 3 on SSD1306 Board
-    #endif
-    #ifndef SSD1306_SDA
-        #define SSD1306_SDA   PB4 // SDA, Pin 4 on SSD1306 Board
-    #endif
-#else
-    #ifndef SSD1306_SCL
-        #define SSD1306_SCL   5 // SCL, Pin A5 on SSD1306 Board
-    #endif
-    #ifndef SSD1306_SDA
-        #define SSD1306_SDA   4 // SDA, Pin A4 on SSD1306 Board
-    #endif
-#endif
+/** OLED 128x64 initialization data */
+extern const uint8_t PROGMEM s_oled128x64_initData[];
+/** OLED 128x64 initialization data length */
+extern const uint8_t s_oled128x64_dataLength;
 
-#endif /* _SSD1306_I2C_PINS_H_ */
+// ----------------------------------------------------------------------------
+#endif // _SSD1306_128X64_H_

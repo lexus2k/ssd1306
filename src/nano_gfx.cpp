@@ -20,6 +20,8 @@
 #include "nano_gfx.h"
 #include "ssd1306.h"
 
+extern const uint8_t *s_font6x8;
+
 #define YADDR(y) (((y) >> 3) << m_p)
 #define BADDR(b) ((b) << m_p)
 
@@ -96,29 +98,48 @@ void NanoCanvas::clear()
 {
     for(uint16_t i=0; i<m_w* (m_h >> 3); i++)
        m_bytes[i] = 0;
-};
+}
 
 
-void NanoCanvas::char_f6x8(uint8_t x, uint8_t y, const char ch[])
+void NanoCanvas::char_f6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style)
 {
     uint8_t c, i, j;
     if (y>=m_h) return;
     j = 0;
     while(ch[j] != '\0')
     {
-       c = ch[j] - 32;
-       for(i=0;i<6;i++)
-       {
-           if (x>=m_w) return;
-           uint8_t d = pgm_read_byte(&ssd1306xled_font6x8[c*6+i]);
-           m_bytes[YADDR(y) + x] |= (d << (y & 0x7));
-           if (y+8 < m_h)
-               m_bytes[YADDR(y) + m_w + x] |= (d >> (8 - (y & 0x7)));
-           x++;
-       }
-       j++;
+        c = ch[j] - 32;
+        uint8_t ldata = 0;
+        for(i=0;i<6;i++)
+        {
+            if (x>=m_w) return;
+            uint8_t data;
+            if ( style == STYLE_NORMAL )
+            {
+                data = pgm_read_byte(&s_font6x8[c*6+i]);
+            }
+            else if ( style == STYLE_BOLD )
+            {
+                data = pgm_read_byte(&s_font6x8[c*6+i]);
+                uint8_t temp = data | ldata;
+                ldata = data;
+                data = temp;
+            }
+            else
+            {
+                data = pgm_read_byte(&s_font6x8[c*6+i + 1]);
+                uint8_t temp = data & 0xF0 | ldata;
+                ldata = (data & 0x0F);
+                data = temp;
+            }
+            m_bytes[YADDR(y) + x] |= (data << (y & 0x7));
+            if (y+8 < m_h)
+                m_bytes[YADDR(y) + m_w + x] |= (data >> (8 - (y & 0x7)));
+            x++;
+        }
+        j++;
     }
-};
+}
 
 
 void NanoCanvas::drawSpritePgm(uint8_t x, uint8_t y, const uint8_t sprite[])

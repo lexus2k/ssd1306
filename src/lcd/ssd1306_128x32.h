@@ -17,20 +17,15 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 /**
- * @file ssd1306_init.h supported SSD1306 displays
+ * @file ssd1306_128x32.h support for OLED 128x32 display
  */
 
 
-#ifndef _SSD1306_INIT_H_
-#define _SSD1306_INIT_H_
+#ifndef _SSD1306_128X32_H_
+#define _SSD1306_128X32_H_
 
 #include <Arduino.h>
 #include <stdint.h>
-
-/** OLED 128x64 initialization data */
-extern const uint8_t PROGMEM s_oled128x64_initData[];
-/** OLED 128x64 initialization data length */
-extern const uint8_t s_oled128x64_dataLength;
 
 /** OLED 128x32 initialization data */
 extern const uint8_t PROGMEM s_oled128x32_initData[];
@@ -38,4 +33,4 @@ extern const uint8_t PROGMEM s_oled128x32_initData[];
 extern const uint8_t s_oled128x32_dataLength;
 
 // ----------------------------------------------------------------------------
-#endif // _SSD1306_INIT_H_
+#endif // _SSD1306_128X32_H_

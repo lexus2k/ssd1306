@@ -28,7 +28,7 @@
  */
 
 #include "ssd1306.h"
-#include "ssd1306_i2c.h"
+#include "ssd1306_i2c_conf.h"
 #include "nano_gfx.h"
 
 /* Do not include wire.h for Attiny controllers */

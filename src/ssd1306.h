@@ -26,14 +26,6 @@
 
 #include "nano_gfx_types.h"
 
-/** Supported font styles */
-enum EFontStyle
-{
-    STYLE_NORMAL,
-    STYLE_BOLD,
-    STYLE_ITALIC,
-};
-
 /**
  * Init 128x64 OLED display over i2c
  */
@@ -101,6 +93,18 @@ uint8_t      ssd1306_displayHeight();
 void         ssd1306_charF6x8(uint8_t x, uint8_t y,
                               const char ch[],
                               EFontStyle style = STYLE_NORMAL);
+
+/**
+ * Function allows to set another font for the library.
+ * By default, the font supports only first 128 - 32 ascii chars.
+ * First 32 chars of ascii table are non-printable, and removed
+ * from the font table to reduce flash memory consumption.
+ * Default font doesn't support russian characters. Using
+ * this function you can implement your own fonts.
+ * First font char must be started with \<space\> image.
+ * @param progmemFont - font to setup located in Flash area
+ */
+void         ssd1306_setFont6x8(const uint8_t * progmemFont);
 
 /**
  * Put single pixel on the LCD.

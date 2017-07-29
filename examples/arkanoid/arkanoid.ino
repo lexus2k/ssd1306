@@ -51,8 +51,8 @@
 
 #include <avr/eeprom.h>
 #include "ssd1306.h"
-#include "ssd1306_i2c.h"
-#include "ssd1306_interface.h"
+#include "ssd1306_i2c_conf.h"
+#include "intf/ssd1306_interface.h"
 #include <avr/sleep.h>
 #include <avr/interrupt.h> // needed for the additional interrupt
 

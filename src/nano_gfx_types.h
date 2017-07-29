@@ -27,6 +27,14 @@
 #include <stdint.h>
 #include <Arduino.h>
 
+/** Supported font styles */
+enum EFontStyle
+{
+    STYLE_NORMAL,
+    STYLE_BOLD,
+    STYLE_ITALIC,
+};
+
 /**
  * Rectangle region. not used now
  */

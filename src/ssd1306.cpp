@@ -19,13 +19,15 @@
 
 #include "font6x8.h"
 #include "ssd1306.h"
-#include "ssd1306_interface.h"
+#include "intf/ssd1306_interface.h"
 
-#include "ssd1306_i2c.h"
-#include "ssd1306_init.h"
-#include "ssd1306_commands.h"
+#include "i2c/ssd1306_i2c.h"
+#include "lcd/ssd1306_128x64.h"
+#include "lcd/ssd1306_128x32.h"
+#include "intf/ssd1306_commands.h"
 
 static uint8_t s_displayHeight;
+const uint8_t *s_font6x8 = ssd1306xled_font6x8;
 
 uint8_t      ssd1306_displayHeight()
 {
@@ -144,17 +146,17 @@ void ssd1306_charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style)
         {
             if ( style == STYLE_NORMAL )
             {
-                ssd1306_sendByte(pgm_read_byte(&ssd1306xled_font6x8[c*6+i]));
+                ssd1306_sendByte(pgm_read_byte(&s_font6x8[c*6+i]));
             }
             else if ( style == STYLE_BOLD )
             {
-                uint8_t data = pgm_read_byte(&ssd1306xled_font6x8[c*6+i]);
+                uint8_t data = pgm_read_byte(&s_font6x8[c*6+i]);
                 ssd1306_sendByte(data | ldata);
                 ldata = data;
             }
             else
             {
-                uint8_t data = pgm_read_byte(&ssd1306xled_font6x8[c*6+i + 1]);
+                uint8_t data = pgm_read_byte(&s_font6x8[c*6+i + 1]);
                 ssd1306_sendByte((data & 0xF0) | ldata);
                 ldata = (data & 0x0F);
             }
@@ -163,6 +165,11 @@ void ssd1306_charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style)
         j++;
     }
     ssd1306_endTransmission();
+}
+
+void         ssd1306_setFont6x8(const uint8_t * progmemFont)
+{
+    s_font6x8 = progmemFont;
 }
 
 void         ssd1306_putPixel(uint8_t x, uint8_t y)

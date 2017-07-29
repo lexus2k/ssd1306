@@ -23,8 +23,6 @@
 #ifndef _SSD1306_COMMANDS_H_
 #define _SSD1306_COMMANDS_H_
 
-#include "nano_gfx_types.h"
-
 /** SSD1306 LCD driver commands */
 enum ESsd1306Commands
 {

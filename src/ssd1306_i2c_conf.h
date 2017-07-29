@@ -16,15 +16,9 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-/**
- * @file ssd1306_i2c.h SSD1306 i2c communication functions
- */
 
-
-#ifndef _SSD1306_I2C_H_
-#define _SSD1306_I2C_H_
-
-#include <Arduino.h>
+#ifndef _SSD1306_I2C_CONF_H_
+#define _SSD1306_I2C_CONF_H_
 
 // Uncomment this block only, if you need to use "embedded" I2C on Atmega controllers
 // #define SSD1306_EMBEDDED_I2C
@@ -47,21 +41,20 @@
 #endif
 #endif
 
-/**
- * Informs I2C device about data to be sent
- */
-void         ssd1306_i2cStart();
+#if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__) 
+    #ifndef SSD1306_SCL
+        #define SSD1306_SCL   PB3 // SCL, Pin 3 on SSD1306 Board
+    #endif
+    #ifndef SSD1306_SDA
+        #define SSD1306_SDA   PB4 // SDA, Pin 4 on SSD1306 Board
+    #endif
+#else
+    #ifndef SSD1306_SCL
+        #define SSD1306_SCL   5 // SCL, Pin A5 on SSD1306 Board
+    #endif
+    #ifndef SSD1306_SDA
+        #define SSD1306_SDA   4 // SDA, Pin A4 on SSD1306 Board
+    #endif
+#endif
 
-/**
- * Completes I2C transaction
- */
-void         ssd1306_i2cStop();
-
-/**
- * Sends byte to I2C device
- * @param data - byte to send
- */
-void         ssd1306_i2cSendByte(uint8_t data);
-
-// ----------------------------------------------------------------------------
-#endif // _SSD1306_I2C_H_
+#endif
