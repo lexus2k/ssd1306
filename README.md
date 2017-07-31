@@ -3,7 +3,7 @@
 SSD1306 I2C OLED Display driver is Arduino style library, intended for use with
 very small microcontrollers (with a little of SRAM). First of all, it was developed
 for ATTiny controllers to use as few resources as possible (in simple case it requires
-only 26 bytes of SRAM). Since ATTiny controllers have no division and multiply
+only 18 bytes of SRAM). Since ATTiny controllers have no division and multiply
 operations, the library has some limited functionaly, and uses shift operation
 to speed up calculations. But it is still can be used to develop simple graphics
 applications (please, refer to examples).

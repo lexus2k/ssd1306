@@ -48,7 +48,7 @@ void setup()
     ssd1306_charF6x8(0, 0, "Line 1. text");
     ssd1306_charF6x8(8, 1, "Line 2. 8 pixels to the right");
     ssd1306_charF6x8(0, 4, "Line 5. Bold text", STYLE_BOLD);
-    ssd1306_charF6x8(0, 6, "Line 6. Italic text", STYLE_ITALIC);
+    ssd1306_charF6x8(0, 6, "Line 7. Italic text", STYLE_ITALIC);
 }
 
 

@@ -69,7 +69,20 @@ void         ssd1306_displayOff();
 void         ssd1306_displayOn();
 
 /**
+ * All drawing functions start to work in negative mode.
+ * Old picture on the display remains unchanged.
+ */
+void         ssd1306_negativeMode();
+
+/**
+ * All drawing functions start to work in positive (default) mode.
+ * Old picture on the display remains unchanged.
+ */
+void         ssd1306_positiveMode();
+
+/**
  * Switches display to inverse mode.
+ * LCD will display 0-pixels as white, and 1-pixels as black.
  */
 void         ssd1306_invertMode();
 
