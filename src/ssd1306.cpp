@@ -259,14 +259,17 @@ void ssd1306_drawSprite(SPRITE *sprite)
 {
     uint8_t posy = sprite->y >> 3;
     uint8_t offsety = sprite->y & 0x7;
-    ssd1306_setPos(sprite->x, posy);
-    ssd1306_dataStart();
-    for (uint8_t i=0; i < sprite->w; i++)
+    if (posy < (s_displayHeight >> 3))
     {
-        ssd1306_sendByte( s_invertByte^(pgm_read_byte( &sprite->data[i] ) << offsety) );
+        ssd1306_setPos(sprite->x, posy);
+        ssd1306_dataStart();
+        for (uint8_t i=0; i < sprite->w; i++)
+        {
+            ssd1306_sendByte( s_invertByte^(pgm_read_byte( &sprite->data[i] ) << offsety) );
+        }
+        ssd1306_endTransmission();
     }
-    ssd1306_endTransmission();
-    if (offsety)
+    if (offsety && (posy + 1 < (s_displayHeight >> 3)))
     {
         ssd1306_setPos(sprite->x, posy + 1);
         ssd1306_dataStart();
@@ -289,7 +292,7 @@ void ssd1306_eraseSprite(SPRITE *sprite)
     ssd1306_dataStart();
     for (uint8_t i=0; i < sprite->w; i++)
     {
-       ssd1306_sendByte( B00000000 );
+       ssd1306_sendByte( s_invertByte );
     }
     ssd1306_endTransmission();
     if (offsety)
