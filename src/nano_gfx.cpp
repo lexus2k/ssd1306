@@ -28,7 +28,14 @@ extern const uint8_t *s_font6x8;
 void NanoCanvas::drawPixel(uint8_t x, uint8_t y)
 {
     if ((x>=m_w) || (y>=m_h)) return;
-    m_bytes[YADDR(y) + x] |= (1 << (y & 0x7));
+    if (m_inverseByte)
+    {
+        m_bytes[YADDR(y) + x] &= ((1 << (y & 0x7))^m_inverseByte);
+    }
+    else
+    {
+        m_bytes[YADDR(y) + x] |= (1 << (y & 0x7));
+    }
 };
 
 void NanoCanvas::drawHLine(uint8_t x1, uint8_t y1, uint8_t x2)
@@ -62,6 +69,7 @@ void NanoCanvas::drawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
 
 void NanoCanvas::fillRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t templ)
 {
+    templ ^= m_inverseByte;
     if ((x1 < x2) && (x1 >= m_w)) return;
     if ((y1 < y2) && (y1 >= m_h)) return;
     if (x1 > x2) x1 = 0;
@@ -97,7 +105,9 @@ void NanoCanvas::fillRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_
 void NanoCanvas::clear()
 {
     for(uint16_t i=0; i<m_w* (m_h >> 3); i++)
-       m_bytes[i] = 0;
+    {
+       m_bytes[i] = m_inverseByte;
+    }
 }
 
 
