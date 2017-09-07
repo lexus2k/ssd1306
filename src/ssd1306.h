@@ -174,12 +174,13 @@ void         ssd1306_clearBlock(uint8_t x, uint8_t y, uint8_t w, uint8_t h);
 
 
 /**
- * Draws bitmap, located in Flash, on the display. This sprite must have 8x8 size
+ * Draws bitmap, located in Flash, on the display. This sprite must have wx8 size
  * @param x - horizontal position in pixels
  * @param y - vertical position in blocks (pixels/8)
+ * @param w - width in pixels
  * @param sprite - pointer to data, located in Flash: each byte represents 8 vertical pixels.
  */
-void         ssd1306_drawSpriteData(uint8_t x, uint8_t y, const uint8_t *sprite);
+void         ssd1306_drawSpriteData(uint8_t x, uint8_t y, uint8_t w, const uint8_t *sprite);
 
 // ----------------------------------------------------------------------------
 /**

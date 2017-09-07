@@ -37,7 +37,7 @@
  *            PD1  3|    |26  PC3                  
  * RIGHT(D 2) PD2  4|    |25  PC2                   
  * BUZZ (D 3) PD3  5|    |24  PC1               
- * LEFT (D 4) PD4  6|    |23  PC0              
+ * LEFT (D 4) PD4  6|    |23  PC0  Z-KEYPAD (A 0) if USE_Z_KEYPAD is defined (see below)
  *            VCC  7|    |22  GND
  *            GND  8|    |21  AREF
  *            PB6  9|    |20  AVCC
@@ -64,6 +64,7 @@
 #include "blocks.h"
 #include "sprites.h"
 #include "arkanoid.h"
+#include "buttons.h"
 
 typedef struct
 {
@@ -75,14 +76,17 @@ typedef struct
 
 uint16_t *EEPROM_ADDR = (uint16_t*)0;
 
-#if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)
-#define LEFT_BTN    2
-#define BUZZER      1
-#define RIGHT_BTN   0
+#if defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)
+#    define LEFT_BTN    2
+#    define BUZZER      1
+#    define RIGHT_BTN   0
 #else // For Arduino Nano/Atmega328 we use different pins
-#define LEFT_BTN    4
-#define BUZZER      3
-#define RIGHT_BTN   2
+#    define USE_Z_KEYPAD // use analog Z-keypad ADC module on A0 pin.
+#    ifndef USE_Z_KEYPAD
+#        define LEFT_BTN    4
+#        define RIGHT_BTN   2
+#    endif
+#    define BUZZER      3
 #endif
 
 
@@ -144,6 +148,7 @@ void setup()
 {
 #ifndef SSD1306_EMBEDDED_I2C
     Wire.begin();
+    Wire.setClock( 400000 );
 #endif
     randomSeed(analogRead(0));
 #if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)
@@ -151,11 +156,15 @@ void setup()
     sei();                      // enable all interrupts
     attachInterrupt(0,playerInc,HIGH);
 #else
-    pinMode(LEFT_BTN, INPUT);
-    pinMode(RIGHT_BTN, INPUT);
+    #ifndef USE_Z_KEYPAD
+        pinMode(LEFT_BTN, INPUT);
+        pinMode(RIGHT_BTN, INPUT);
+    #endif
     pinMode(BUZZER, OUTPUT);
     sei();                      // enable all interrupts
-    attachInterrupt(digitalPinToInterrupt(RIGHT_BTN),playerInc,HIGH);
+    #ifndef USE_Z_KEYPAD
+        attachInterrupt(digitalPinToInterrupt(RIGHT_BTN),playerInc,HIGH);
+    #endif
 #endif
     resetGame();
 }
@@ -253,6 +262,8 @@ void resetGame()
 }
 
 
+
+
 /* Draws and clears platform */
 void drawPlatform()
 {
@@ -285,58 +296,41 @@ void drawPlatform()
 }
 
 
-void sendBlock(uint8_t fill)
-{
-  const uint8_t * ptr = &blockImages[fill][0];
-  for (uint8_t cnt=16; cnt>0; cnt--)
-  {
-      ssd1306_sendByte( pgm_read_byte(ptr) );
-      ptr++;
-  }
-}
-
-
 void drawBlock(uint8_t x, uint8_t y)
 {
-    ssd1306_setPos(LEFT_EDGE + 1 + (x << 4),y);
-    ssd1306_dataStart();
-    sendBlock(gameField[y][x]);
-    ssd1306_endTransmission();
+    ssd1306_drawSpriteData(LEFT_EDGE + 1 + (x << 4), y, 16, &blockImages[gameField[y][x]][0]);
 }
 
 
 void resetBlocks()
 {
-  if (level > MAX_LEVELS)
-  {
-     level = MAX_LEVELS;
-  }
-  blocksLeft = 0;
-  for (byte i =0; i<BLOCKS_PER_ROW;i++)
-  {
-    for (int j=0; j<BLOCK_NUM_ROWS; ++j)
+    if (level > MAX_LEVELS)
     {
-      gameField[j][i] = pgm_read_byte( &levels[level-1][j][i] );
-      if ((gameField[j][i]) && (gameField[j][i] != BLOCK_STRONG))
-      {
-        blocksLeft++;
-      }
+       level = MAX_LEVELS;
     }
-  }
+    blocksLeft = 0;
+    for (byte i =0; i<BLOCKS_PER_ROW;i++)
+    {
+        for (int j=0; j<BLOCK_NUM_ROWS; ++j)
+        {
+            gameField[j][i] = pgm_read_byte( &levels[level-1][j][i] );
+            if ((gameField[j][i]) && (gameField[j][i] != BLOCK_STRONG))
+            {
+                blocksLeft++;
+            }
+        }
+    }
 }
 
 void drawBlocks()
 {
-  for (uint8_t r=0; r<BLOCK_NUM_ROWS; ++r)
-  {
-    ssd1306_setPos(LEFT_EDGE + 1,r);
-    ssd1306_dataStart();
-    for (uint8_t bl = 0; bl <BLOCKS_PER_ROW; bl++)
+    for (uint8_t r=0; r<BLOCK_NUM_ROWS; ++r)
     {
-      sendBlock(gameField[r][bl]);
+        for (uint8_t bl = 0; bl <BLOCKS_PER_ROW; bl++)
+        {
+            drawBlock(bl, r);
+        }
     }
-    ssd1306_endTransmission();
-  }
 }
 
 void drawFieldEdges()
@@ -542,11 +536,20 @@ bool moveObjects()
 // continues moving after interrupt
 void movePlatform()
 {
+#ifdef USE_Z_KEYPAD
+    uint8_t buttonCode = getPressedButton(A0);
+    if (buttonCode == BUTTON_RIGHT)
+#else
     if (digitalRead(RIGHT_BTN) != LOW)
+#endif
     {
         platformPos = min(RIGHT_EDGE - LEFT_EDGE - 1 - platformWidth, platformPos + PLATFORM_SPEED);
     }
+#ifdef USE_Z_KEYPAD    
+    if (buttonCode == BUTTON_LEFT)
+#else
     if (digitalRead(LEFT_BTN) != LOW)
+#endif
     {
         platformPos = max(0, platformPos - PLATFORM_SPEED);
     }
@@ -716,6 +719,11 @@ void beep(int bCount,int bDelay)
         {
             __asm__("nop\n\t");
 #if F_CPU > 8000000
+            __asm__("nop\n\t");
+            __asm__("nop\n\t");
+            __asm__("nop\n\t");
+            __asm__("nop\n\t");
+            __asm__("nop\n\t");
             __asm__("nop\n\t");
             __asm__("nop\n\t");
             __asm__("nop\n\t");

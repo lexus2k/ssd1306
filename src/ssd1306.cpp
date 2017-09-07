@@ -242,12 +242,12 @@ void ssd1306_clearBlock(uint8_t x, uint8_t y, uint8_t w, uint8_t h)
 }
 
 
-void ssd1306_drawSpriteData(uint8_t x, uint8_t y, const uint8_t *sprite)
+void ssd1306_drawSpriteData(uint8_t x, uint8_t y, uint8_t w, const uint8_t *sprite)
 {
    uint8_t i;
    ssd1306_setPos(x,y);
    ssd1306_dataStart();
-   for(i=0;i<8;i++)
+   for(i=0;i<w;i++)
    {
        ssd1306_sendByte(s_invertByte^pgm_read_byte(&sprite[i]));
    }
