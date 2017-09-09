@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 I2C Display Driver
-   &#160;<span id="projectnumber">0.7.0</span>
+   &#160;<span id="projectnumber">0.8.0</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306 I2C OLED Display</div>
   </td>
@@ -219,7 +219,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This method is call every time 8x8 pixels block is needed to be drawn. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>This method is call every time 8x8 pixels block is needed to be drawn. Use m_canvas field variable, which represents block to update. For example, you can draw any 8x8 image, starting at 0,0 position in m_canvas.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">blockColumn</td><td>- column of the block to redraw </td></tr>
     <tr><td class="paramname">blockRow</td><td>- row of the block to redraw </td></tr>

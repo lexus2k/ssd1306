@@ -88,6 +88,9 @@ protected:
 
     /**
      * This method is call every time 8x8 pixels block is needed to be drawn.
+     * Use m_canvas field variable, which represents block to update.
+     * For example, you can draw any 8x8 image, starting at 0,0 position in m_canvas.
+     *
      * @param blockColumn - column of the block to redraw
      * @param blockRow    - row of the block to redraw
      * @note 128x64 display has 16 columns and 8 rows.
