@@ -26,6 +26,15 @@
 
 #include "nano_gfx_types.h"
 
+///////////////////////////////////////////////////////////////////////
+//                 DISPLAY CONTROL FUNCTIONS
+///////////////////////////////////////////////////////////////////////
+
+/**
+ * @defgroup LCD_DISPLAY_API LCD Display control functions
+ * @{
+ */
+
 /**
  * Init 128x64 OLED display over i2c
  */
@@ -40,6 +49,45 @@ void         ssd1306_128x32_i2c_init();
  * Init default display 128x64
  */
 static inline void ssd1306_init() { ssd1306_128x64_i2c_init(); }
+
+/**
+ * Turns off display
+ */
+void         ssd1306_displayOff();
+
+/**
+ * Turns on display
+ */
+void         ssd1306_displayOn();
+
+/**
+ * Switches display to inverse mode.
+ * LCD will display 0-pixels as white, and 1-pixels as black.
+ */
+void         ssd1306_invertMode();
+
+/**
+ * Switches display to normal mode.
+ */
+void         ssd1306_normalMode();
+
+/**
+ * Returns display height in pixels
+ */
+uint8_t      ssd1306_displayHeight();
+
+/**
+ * @}
+ */
+
+///////////////////////////////////////////////////////////////////////
+//                 DIRECT GRAPH FUNCTIONS
+///////////////////////////////////////////////////////////////////////
+
+/**
+ * @defgroup LCD_GRAPHICS_API LCD direct graphics functions
+ * @{
+ */
 
 /**
  * Set position in terms of display.
@@ -59,16 +107,6 @@ void         ssd1306_fillScreen(uint8_t fill_Data);
 void         ssd1306_clearScreen();
 
 /**
- * Turns off display
- */
-void         ssd1306_displayOff();
-
-/**
- * Turns on display
- */
-void         ssd1306_displayOn();
-
-/**
  * All drawing functions start to work in negative mode.
  * Old picture on the display remains unchanged.
  */
@@ -79,22 +117,6 @@ void         ssd1306_negativeMode();
  * Old picture on the display remains unchanged.
  */
 void         ssd1306_positiveMode();
-
-/**
- * Switches display to inverse mode.
- * LCD will display 0-pixels as white, and 1-pixels as black.
- */
-void         ssd1306_invertMode();
-
-/**
- * Switches display to normal mode.
- */
-void         ssd1306_normalMode();
-
-/**
- * Returns display height in pixels
- */
-uint8_t      ssd1306_displayHeight();
 
 /**
  * Prints text to screen using font 6x8.
@@ -135,6 +157,13 @@ void         ssd1306_putPixel(uint8_t x, uint8_t y);
 /**
  * Puts eight vertical pixels on the LCD at once.
  *
+ * ~~~~~~~~~~~~~~~{.c}
+ * // Draw 8 vertical pixels, starting at [10,16] position 
+ * ssd1306_putPixels(10,2,0xFF);
+ * // Draw 4 vertical pixels, starting at [32,28] position
+ * ssd1306_putPixels(32,3,0x0F);
+ * ~~~~~~~~~~~~~~~
+ *
  * @param x - horizontal position in pixels
  * @param y - vertical position in blocks (pixels/8)
  * @param pixels - bit-pixels to draw on display
@@ -143,16 +172,30 @@ void         ssd1306_putPixels(uint8_t x, uint8_t y, uint8_t pixels);
 
 /**
  * Draws bitmap, located in SRAM, on the display
+ * Each byte represents 8 vertical pixels. 
+ *
+ * ~~~~~~~~~~~~~~~{.c}
+ * // Draw small rectangle 3x8 at position 10,8
+ * uint8_t buffer[3] = { 0xFF, 0x81, 0xFF };
+ * ssd1306_drawBuffer(10, 1, 3, 8, buffer);
+ * ~~~~~~~~~~~~~~~
+ *
  * @param x - horizontal position in pixels
  * @param y - vertical position in blocks (pixels/8)
  * @param w - width of bitmap in pixels
  * @param h - height of bitmap in pixels (must be divided by 8)
  * @param buf - pointer to data, located in SRAM: each byte represents 8 vertical pixels.
  */
-void         ssd1306_drawCanvas(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf);
+void         ssd1306_drawBuffer(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf);
+
+/**
+ * @copydoc ssd1306_drawBuffer
+ */
+#define      ssd1306_drawCanvas(x, y, w, h, buf)   ssd1306_drawBuffer(x, y, w, h, buf)
 
 /**
  * Draws bitmap, located in Flash, on the display
+ *
  * @param x - horizontal position in pixels
  * @param y - vertical position in blocks (pixels/8)
  * @param w - width of bitmap in pixels
@@ -180,9 +223,8 @@ void         ssd1306_clearBlock(uint8_t x, uint8_t y, uint8_t w, uint8_t h);
  * @param w - width in pixels
  * @param sprite - pointer to data, located in Flash: each byte represents 8 vertical pixels.
  */
-void         ssd1306_drawSpriteData(uint8_t x, uint8_t y, uint8_t w, const uint8_t *sprite);
+void         ssd1306_drawSpriteEx(uint8_t x, uint8_t y, uint8_t w, const uint8_t *sprite);
 
-// ----------------------------------------------------------------------------
 /**
  * Draws sprite on the display. Position can be changed by
  * updating x and y fields of SPRITE structure.
@@ -221,14 +263,7 @@ SPRITE       ssd1306_createSprite(uint8_t x, uint8_t y, uint8_t w, const uint8_t
 void         ssd1306_replaceSprite(SPRITE *sprite, const uint8_t *data);
 
 /**
- * Depricated.
+ * @}
  */
-SSD1306_RECT ssd1306_rect(SPRITE * sprite);
 
-/**
- * Depricated.
- */
-SSD1306_RECT ssd1306_rectFromSprite(uint8_t x, uint8_t y, uint8_t w);
-
-// ----------------------------------------------------------------------------
 #endif // _SSD1306_H_

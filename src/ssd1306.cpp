@@ -195,7 +195,7 @@ void         ssd1306_putPixels(uint8_t x, uint8_t y, uint8_t pixels)
 }
 
 
-void ssd1306_drawCanvas(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)
+void ssd1306_drawBuffer(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)
 {
     uint8_t i, j;
     ssd1306_setRamBlock(x, y, w);
@@ -242,7 +242,7 @@ void ssd1306_clearBlock(uint8_t x, uint8_t y, uint8_t w, uint8_t h)
 }
 
 
-void ssd1306_drawSpriteData(uint8_t x, uint8_t y, uint8_t w, const uint8_t *sprite)
+void ssd1306_drawSpriteEx(uint8_t x, uint8_t y, uint8_t w, const uint8_t *sprite)
 {
    uint8_t i;
    ssd1306_setPos(x,y);
@@ -346,18 +346,6 @@ void ssd1306_eraseTrace(SPRITE *sprite)
         }
     }
 }
-
-
-SSD1306_RECT ssd1306_rectFromSprite(uint8_t x, uint8_t y, uint8_t w)
-{
-    return { x, (uint8_t)(y & 0xF8), (uint8_t)(x + w - 1), (uint8_t)((y + 7) & 0xF8) };
-}
-
-SSD1306_RECT ssd1306_rect(SPRITE * sprite)
-{
-    return { 0, 0, 0, 0 };
-}
-
 
 SPRITE       ssd1306_createSprite(uint8_t x, uint8_t y, uint8_t w, const uint8_t *data)
 {

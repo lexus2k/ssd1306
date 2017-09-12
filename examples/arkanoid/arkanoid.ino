@@ -298,7 +298,7 @@ void drawPlatform()
 
 void drawBlock(uint8_t x, uint8_t y)
 {
-    ssd1306_drawSpriteData(LEFT_EDGE + 1 + (x << 4), y, 16, &blockImages[gameField[y][x]][0]);
+    ssd1306_drawSpriteEx(LEFT_EDGE + 1 + (x << 4), y, 16, &blockImages[gameField[y][x]][0]);
 }
 
 

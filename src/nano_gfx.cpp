@@ -199,7 +199,7 @@ void NanoCanvas::drawSprite(SPRITE *sprite)
 
 void NanoCanvas::blt(uint8_t x, uint8_t y)
 {
-    ssd1306_drawCanvas(x, y, m_w, m_h, m_bytes);
+    ssd1306_drawBuffer(x, y, m_w, m_h, m_bytes);
 }
 
 void NanoCanvas::invert()
