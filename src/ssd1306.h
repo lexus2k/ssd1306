@@ -97,6 +97,13 @@ uint8_t      ssd1306_displayHeight();
 void         ssd1306_setPos(uint8_t x, uint8_t y);
 
 /**
+ * Sends byte data to SSD1306 controller memory.
+ * Performs 3 operations at once: ssd1306_dataStart(); ssd1306_sendByte( data ); ssd1306_endTransmission();
+ * @param data - byte to send to the controller memory
+ */
+void         ssd1306_sendData(uint8_t data);
+
+/**
  * Fills screen with pattern byte
  */
 void         ssd1306_fillScreen(uint8_t fill_Data);
@@ -148,6 +155,7 @@ void         ssd1306_setFont6x8(const uint8_t * progmemFont);
  * to read data from ssd1306, thus since each byte contains
  * 8 pixels, all other pixels in the same byte will be cleared
  * on the display. Use ssd1306_putPixels() instead.
+ * If you need to have buffered output, please, refer to NanoCanvas.
  *
  * @param x - horizontal position in pixels
  * @param y - vertical position in pixels

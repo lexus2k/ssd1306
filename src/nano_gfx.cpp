@@ -25,7 +25,7 @@ extern const uint8_t *s_font6x8;
 #define YADDR(y) (((y) >> 3) << m_p)
 #define BADDR(b) ((b) << m_p)
 
-void NanoCanvas::drawPixel(uint8_t x, uint8_t y)
+void NanoCanvas::putPixel(uint8_t x, uint8_t y)
 {
     if ((x>=m_w) || (y>=m_h)) return;
     if (m_inverseByte)
@@ -111,7 +111,7 @@ void NanoCanvas::clear()
 }
 
 
-void NanoCanvas::char_f6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style)
+void NanoCanvas::charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style)
 {
     uint8_t c, i, j;
     if (y>=m_h) return;
