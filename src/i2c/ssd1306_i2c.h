@@ -27,6 +27,10 @@
 #include "ssd1306_i2c_conf.h"
 #include <Arduino.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Informs I2C device about data to be sent
  */
@@ -42,6 +46,10 @@ void         ssd1306_i2cStop();
  * @param data - byte to send
  */
 void         ssd1306_i2cSendByte(uint8_t data);
+
+#ifdef __cplusplus
+}
+#endif
 
 // ----------------------------------------------------------------------------
 #endif // _SSD1306_I2C_H_

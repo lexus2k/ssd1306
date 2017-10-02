@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['m_5fcanvas',['m_canvas',['../class_sprite_pool.html#aacf3c183566ace3d39ace8755a2a60aa',1,'SpritePool']]],
-  ['m_5frect',['m_rect',['../class_sprite_pool.html#a4a3cbbd6bbd5c9c74f1ed5dd8e631589',1,'SpritePool']]]
+  ['items',['items',['../struct_s_app_menu.html#a9112659b47fa205336626f5ee0caa870',1,'SAppMenu']]]
 ];

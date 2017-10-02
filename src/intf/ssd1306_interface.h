@@ -26,6 +26,10 @@
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Starts communication with SSD1306 display.
  */
@@ -54,6 +58,9 @@ void ssd1306_sendCommand(uint8_t command);
  */
 void ssd1306_dataStart();
 
+#ifdef __cplusplus
+}
+#endif
 
 // ----------------------------------------------------------------------------
 #endif // _SSD1306_INTERFACE_H_

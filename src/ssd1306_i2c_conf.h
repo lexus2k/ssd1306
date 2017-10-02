@@ -20,6 +20,10 @@
 #ifndef _SSD1306_I2C_CONF_H_
 #define _SSD1306_I2C_CONF_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Uncomment this block only, if you need to use "embedded" I2C on Atmega controllers
 // #define SSD1306_EMBEDDED_I2C
 
@@ -55,6 +59,10 @@
     #ifndef SSD1306_SDA
         #define SSD1306_SDA   4 // SDA, Pin A4 on SSD1306 Board
     #endif
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif

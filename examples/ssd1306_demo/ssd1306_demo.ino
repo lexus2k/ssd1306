@@ -61,38 +61,16 @@ const PROGMEM uint8_t heartImage[8] =
  */
 const int spriteWidth = sizeof(heartImage);
 
+SAppMenu menu;
 
-void displayMenu(const char *items[], uint8_t count, uint8_t selection)
+const char *menuItems[] =
 {
-    uint8_t startIndex = 0;
-    if ( selection > 5 )
-    {
-        startIndex = selection - 5;
-    }
-    for (uint8_t i = startIndex; i < count; i++)
-    {
-        if (i == selection)
-        {
-            ssd1306_negativeMode();
-        }
-        else
-        {
-            ssd1306_positiveMode();
-        }
-        ssd1306_charF6x8(16, i - startIndex + 1, items[i] );
-    }
-    ssd1306_positiveMode();
-}
-
-void animateMenu(const char *items[], uint8_t count, uint8_t oldSelection, uint8_t selection)
-{
-    ssd1306_clearScreen();
-    displayMenu(items, count, oldSelection);
-    delay(500);
-    displayMenu(items, count, selection);
-    delay(1000);
-}
-
+    "draw bitmap",
+    "sprites",
+    "fonts",
+    "canvas gfx",
+    "sprite pool",
+};
 
 void setup()
 {
@@ -102,72 +80,76 @@ void setup()
     Wire.setClock(400000);
 #endif
     ssd1306_128x64_i2c_init();
-    ssd1306_fillScreen(0x00);
+    ssd1306_fillScreen( 0x00 );
+    ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
+    ssd1306_showMenu( &menu );
 }
 
-const char *items[] =
+void bitmapDemo()
 {
-    "draw bitmap",
-    "sprites",
-    "fonts",
-    "canvas gfx",
-    "sprite pool",
-};
+    ssd1306_drawBitmap(0, 0, 128, 64, Sova);
+    delay(1000);
+    ssd1306_invertMode();
+    delay(2000);
+    ssd1306_normalMode();
+}
 
-uint8_t step = 0;
-uint8_t stepsCount = sizeof(items) / sizeof(char *);
+void spriteDemo()
+{
+    ssd1306_clearScreen();
+    /* Declare variable that represents our sprite */
+    SPRITE sprite;
+    /* Create sprite at 0,0 position. The function initializes sprite structure. */
+    sprite = ssd1306_createSprite( 0, 0, spriteWidth, heartImage );
+    for (int i=0; i<300; i++)
+    {
+        delay(10);
+        sprite.x = (sprite.x + 1) & 0x7F;
+        sprite.y = (sprite.y + 1) & 0x3F;
+        /* Erase sprite on old place. The library knows old position of the sprite. */
+        sprite.eraseTrace();
+        /* Draw sprite on new place */
+        sprite.draw();
+    }
+}
+
+void textDemo()
+{
+    ssd1306_clearScreen();
+    ssd1306_charF6x8(16, 1, "Normal text");
+    ssd1306_charF6x8(16, 2, "Bold text", STYLE_BOLD);
+    ssd1306_charF6x8(16, 3, "Italic text", STYLE_ITALIC);
+    ssd1306_negativeMode();
+    ssd1306_charF6x8(16, 5, "Inverted bold", STYLE_BOLD);
+    ssd1306_positiveMode();
+    delay(3000);
+}
 
 void loop()
 {
-    static uint8_t oldStep = 0;
-    animateMenu( items, stepsCount, oldStep, step );
-    switch (step)
+    delay(1000);
+    switch (ssd1306_menuSelection(&menu))
     {
         case 0:
-            ssd1306_drawBitmap(0, 0, 128, 64, Sova);
-            delay(1000);
-            ssd1306_invertMode();
-            delay(2000);
-            ssd1306_normalMode();
+            bitmapDemo();
             break;
 
         case 1:
-            {
-                ssd1306_clearScreen();
-                /* Declare variable that represents our sprite */
-                SPRITE sprite;
-                /* Create sprite at 0,0 position. The function initializes sprite structure. */
-                sprite = ssd1306_createSprite( 0, 0, spriteWidth, heartImage );
-                for (int i=0; i<300; i++)
-                {
-                    delay(10);
-                    sprite.x = (sprite.x + 1) & 0x7F;
-                    sprite.y = (sprite.y + 1) & 0x3F;
-                    /* Erase sprite on old place. The library knows old position of the sprite. */
-                    sprite.eraseTrace();
-                    /* Draw sprite on new place */
-                    sprite.draw();
-                }
-            }
+            spriteDemo();
             break;
 
         case 2:
-            ssd1306_clearScreen();
-            ssd1306_charF6x8(16, 1, "Normal text");
-            ssd1306_charF6x8(16, 2, "Bold text", STYLE_BOLD);
-            ssd1306_charF6x8(16, 3, "Italic text", STYLE_ITALIC);
-            ssd1306_negativeMode();
-            ssd1306_charF6x8(16, 5, "Inverted bold", STYLE_BOLD);
-            ssd1306_positiveMode();
-            delay(3000);
+            textDemo();
             break;
 
         default:
             break;
     }
-    oldStep = step;
-    step++;
-    if (step >= stepsCount) step = 0;
+    ssd1306_fillScreen( 0x00 );
+    ssd1306_showMenu(&menu);
+    delay(500);
+    ssd1306_menuDown(&menu);
+    ssd1306_updateMenu(&menu);
 }
 
 

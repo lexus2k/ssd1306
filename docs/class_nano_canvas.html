@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 I2C Display Driver
-   &#160;<span id="projectnumber">0.8.1</span>
+   &#160;<span id="projectnumber">1.0.0</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306 I2C OLED Display</div>
   </td>
@@ -74,8 +74,10 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a291335ac8d57111407ea7449a2e58c7d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#a291335ac8d57111407ea7449a2e58c7d">NanoCanvas</a> (uint8_t w, uint8_t h, uint8_t *bytes)</td></tr>
 <tr class="separator:a291335ac8d57111407ea7449a2e58c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6da807deae0b2f24a34c8ad65aa96249"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#a6da807deae0b2f24a34c8ad65aa96249">drawPixel</a> (uint8_t x, uint8_t y)</td></tr>
-<tr class="separator:a6da807deae0b2f24a34c8ad65aa96249"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7daa4b41c3c0e91627bad1c0bb1f789"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#ac7daa4b41c3c0e91627bad1c0bb1f789">drawPixel</a> (uint8_t x, uint8_t y) __attribute__((deprecated))</td></tr>
+<tr class="separator:ac7daa4b41c3c0e91627bad1c0bb1f789"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54a4d7fccec6cd25aa2651301e787241"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#a54a4d7fccec6cd25aa2651301e787241">putPixel</a> (uint8_t x, uint8_t y)</td></tr>
+<tr class="separator:a54a4d7fccec6cd25aa2651301e787241"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e9cd572ae05ee2316a366566c327e6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#a9e9cd572ae05ee2316a366566c327e6a">drawRect</a> (uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)</td></tr>
 <tr class="separator:a9e9cd572ae05ee2316a366566c327e6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac36d02cfedc701bc5b87f149480cbc1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#ac36d02cfedc701bc5b87f149480cbc1a">drawHLine</a> (uint8_t x1, uint8_t y1, uint8_t x2)</td></tr>
@@ -86,8 +88,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3f987bce72b865a483c4a65922b7cc45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6fe2036b269cc55d9181c727a4fb3951"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#a6fe2036b269cc55d9181c727a4fb3951">clear</a> ()</td></tr>
 <tr class="separator:a6fe2036b269cc55d9181c727a4fb3951"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aece7ea526e1276cb43b49c8817f71fd9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#aece7ea526e1276cb43b49c8817f71fd9">char_f6x8</a> (uint8_t x, uint8_t y, const char ch[], <a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style=STYLE_NORMAL)</td></tr>
-<tr class="separator:aece7ea526e1276cb43b49c8817f71fd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe659b5c2c540b8af0d8c0fd53eb7327"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#afe659b5c2c540b8af0d8c0fd53eb7327">char_f6x8</a> (uint8_t x, uint8_t y, const char ch[], <a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style=STYLE_NORMAL) __attribute__((deprecated))</td></tr>
+<tr class="separator:afe659b5c2c540b8af0d8c0fd53eb7327"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a025db957c4a51f9de6afe6b413440d0e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#a025db957c4a51f9de6afe6b413440d0e">charF6x8</a> (uint8_t x, uint8_t y, const char ch[], <a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style=STYLE_NORMAL)</td></tr>
+<tr class="separator:a025db957c4a51f9de6afe6b413440d0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a599f8d8cdaba51b639f8ed8531ecba91"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#a599f8d8cdaba51b639f8ed8531ecba91">drawSpritePgm</a> (uint8_t x, uint8_t y, const uint8_t sprite[])</td></tr>
 <tr class="separator:a599f8d8cdaba51b639f8ed8531ecba91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a6a7006f415cbf2db983b1c41acde17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#a6a6a7006f415cbf2db983b1c41acde17">drawSprite</a> (uint8_t x, uint8_t y, const uint8_t sprite[])</td></tr>
@@ -227,18 +231,77 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Returns canvas buffer </p>
 
-<p>Definition at line <a class="el" href="nano__gfx_8h_source.html#l00145">145</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
+<p>Definition at line <a class="el" href="nano__gfx_8h_source.html#l00163">163</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
 
 </div>
 </div>
-<a id="aece7ea526e1276cb43b49c8817f71fd9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aece7ea526e1276cb43b49c8817f71fd9">&sect;&nbsp;</a></span>char_f6x8()</h2>
+<a id="afe659b5c2c540b8af0d8c0fd53eb7327"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe659b5c2c540b8af0d8c0fd53eb7327">&sect;&nbsp;</a></span>char_f6x8()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void NanoCanvas::char_f6x8 </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char&#160;</td>
+          <td class="paramname"><em>ch</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a>&#160;</td>
+          <td class="paramname"><em>style</em> = <code>STYLE_NORMAL</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Prints text to canvas buffer </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>- start position X </td></tr>
+    <tr><td class="paramname">y</td><td>- start position Y </td></tr>
+    <tr><td class="paramname">ch</td><td>- text to print (null-terminated) </td></tr>
+    <tr><td class="paramname">style</td><td>- font style (EFontStyle), normal by default </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="nano__gfx_8h_source.html#l00119">119</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
+
+</div>
+</div>
+<a id="a025db957c4a51f9de6afe6b413440d0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a025db957c4a51f9de6afe6b413440d0e">&sect;&nbsp;</a></span>charF6x8()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void NanoCanvas::char_f6x8 </td>
+          <td class="memname">void NanoCanvas::charF6x8 </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>x</em>, </td>
@@ -346,11 +409,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a6da807deae0b2f24a34c8ad65aa96249"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6da807deae0b2f24a34c8ad65aa96249">&sect;&nbsp;</a></span>drawPixel()</h2>
+<a id="ac7daa4b41c3c0e91627bad1c0bb1f789"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7daa4b41c3c0e91627bad1c0bb1f789">&sect;&nbsp;</a></span>drawPixel()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void NanoCanvas::drawPixel </td>
@@ -370,6 +436,11 @@ Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Draws pixel on specified position </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -379,7 +450,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00028">28</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
+<p>Definition at line <a class="el" href="nano__gfx_8h_source.html#l00063">63</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
 
 </div>
 </div>
@@ -680,7 +751,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Returns canvas height </p>
 
-<p>Definition at line <a class="el" href="nano__gfx_8h_source.html#l00140">140</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
+<p>Definition at line <a class="el" href="nano__gfx_8h_source.html#l00158">158</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
 
 </div>
 </div>
@@ -701,6 +772,43 @@ Public Member Functions</h2></td></tr>
 <p>Inverts content in the buffer. white becomes black and wise versa. </p>
 
 <p>Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00205">205</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a54a4d7fccec6cd25aa2651301e787241"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54a4d7fccec6cd25aa2651301e787241">&sect;&nbsp;</a></span>putPixel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void NanoCanvas::putPixel </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Draws pixel on specified position </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>- position X </td></tr>
+    <tr><td class="paramname">y</td><td>- position Y </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00028">28</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
 
 </div>
 </div>
@@ -728,7 +836,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Returns canvas width </p>
 
-<p>Definition at line <a class="el" href="nano__gfx_8h_source.html#l00135">135</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
+<p>Definition at line <a class="el" href="nano__gfx_8h_source.html#l00153">153</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
 
 </div>
 </div>

@@ -19,21 +19,23 @@
 
 #include "ssd1306_interface.h"
 
+#include <stddef.h>
+
 /**
  * Starts communication with SSD1306 display.
  */
-void  (*ssd1306_startTransmission)() = nullptr;
+void  (*ssd1306_startTransmission)() = NULL;
 
 /**
  * Ends communication with SSD1306 display.
  */
-void  (*ssd1306_endTransmission)() = nullptr;
+void  (*ssd1306_endTransmission)() = NULL;
 
 /**
  * Sends byte to SSD1306 device
  * @param data - byte to send
  */
-void  (*ssd1306_sendByte)(uint8_t data) = nullptr;
+void  (*ssd1306_sendByte)(uint8_t data) = NULL;
 
 
 void ssd1306_sendCommand(uint8_t command)

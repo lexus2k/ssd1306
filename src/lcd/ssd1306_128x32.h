@@ -27,10 +27,18 @@
 #include <Arduino.h>
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** OLED 128x32 initialization data */
 extern const uint8_t PROGMEM s_oled128x32_initData[];
 /** OLED 128x32 initialization data length */
 extern const uint8_t s_oled128x32_dataLength;
+
+#ifdef __cplusplus
+}
+#endif
 
 // ----------------------------------------------------------------------------
 #endif // _SSD1306_128X32_H_

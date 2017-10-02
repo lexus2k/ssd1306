@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['y',['y',['../struct_s_p_r_i_t_e.html#ab0ea36dda66319248b66b1a5056b1ba9',1,'SPRITE']]]
+  ['w',['w',['../struct_s_p_r_i_t_e.html#abb6cdf1e159d5d3a8655d1944d4be2de',1,'SPRITE']]],
+  ['width',['width',['../class_nano_canvas.html#ad079d1fef755ca460249b018e48fdf68',1,'NanoCanvas']]]
 ];

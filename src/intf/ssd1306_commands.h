@@ -23,6 +23,11 @@
 #ifndef _SSD1306_COMMANDS_H_
 #define _SSD1306_COMMANDS_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /** SSD1306 LCD driver commands */
 enum ESsd1306Commands
 {
@@ -64,6 +69,10 @@ enum ESsd1306MemoryMode
     VERTICAL_ADDRESSING_MODE    = 0x01,
     PAGE_ADDRESSING_MODE        = 0x02,
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 // ----------------------------------------------------------------------------
 #endif // _SSD1306_COMMANDS_H_

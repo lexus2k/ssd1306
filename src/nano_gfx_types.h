@@ -27,13 +27,17 @@
 #include <stdint.h>
 #include <Arduino.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** Supported font styles */
-enum EFontStyle
+typedef enum
 {
     STYLE_NORMAL,
     STYLE_BOLD,
     STYLE_ITALIC,
-};
+} EFontStyle;
 
 /**
  * Rectangle region. not used now
@@ -71,6 +75,7 @@ typedef struct
     /// Pointer to PROGMEM data, representing sprite transparencyMask (can be nullptr)
     const uint8_t * transparentMask;
 
+#ifdef __cplusplus
     /**
      * Updates active position of the sprite (doesn't redraw it)
      * @param x - horizontal position
@@ -156,7 +161,14 @@ typedef struct
         if ( top >= bottom ) top = 0;
         return (SSD1306_RECT){ left, top, right, bottom };
     };
+
+#endif
+
 } SPRITE;
+
+#ifdef __cplusplus
+}
+#endif
 
 // ----------------------------------------------------------------------------
 #endif // _NANO_GFX_TYPES_H_
