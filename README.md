@@ -26,6 +26,7 @@ Key Features:
    * Drawing bitmap image from Flash memory (PROGMEM related)
    * Sprites: moving
    * Drawing lines in buffer (vertical and horizontal)
+   * Creating and controlling menu (ssd1306_demo example)
  * And bonus:
    * Arkanoid game as example!
    * Simple Lode runner game as example!
