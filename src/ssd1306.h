@@ -187,6 +187,31 @@ void         ssd1306_putPixel(uint8_t x, uint8_t y);
 void         ssd1306_putPixels(uint8_t x, uint8_t y, uint8_t pixels);
 
 /**
+ * Draws rectangle
+ * @param x1 - left boundary in pixel units
+ * @param y1 - top boundary in pixel units
+ * @param x2 - right boundary in pixel units
+ * @param y2 - bottom boundary int pixel units
+ */
+void         ssd1306_drawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
+
+/**
+ * Draws horizontal line
+ * @param x1 - left boundary in pixels
+ * @param y1 - position Y in pixels
+ * @param x2 - right boundary in pixels
+ */
+void         ssd1306_drawHLine(uint8_t x1, uint8_t y1, uint8_t x2);
+
+/**
+ * Draws vertical line
+ * @param x1 - position X in pixels
+ * @param y1 - top boundary in pixels
+ * @param y2 - bottom boundary in pixels
+ */
+void         ssd1306_drawVLine(uint8_t x1, uint8_t y1, uint8_t y2);
+
+/**
  * Draws bitmap, located in SRAM, on the display
  * Each byte represents 8 vertical pixels. 
  *

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 I2C Display Driver
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.1.0</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306 I2C OLED Display</div>
   </td>
@@ -95,6 +95,12 @@ Functions</h2></td></tr>
 <tr class="separator:ga5d98e0567eb3f541f19508ac74899962"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga94085f41277fb90ec4957b3e7f8cbe97"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga94085f41277fb90ec4957b3e7f8cbe97">ssd1306_putPixels</a> (uint8_t x, uint8_t y, uint8_t pixels)</td></tr>
 <tr class="separator:ga94085f41277fb90ec4957b3e7f8cbe97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad465a0486e33c34e96fd69fb58525dbf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#gad465a0486e33c34e96fd69fb58525dbf">ssd1306_drawRect</a> (uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)</td></tr>
+<tr class="separator:gad465a0486e33c34e96fd69fb58525dbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6faddb309eac3e7e17d288ce010fa458"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga6faddb309eac3e7e17d288ce010fa458">ssd1306_drawHLine</a> (uint8_t x1, uint8_t y1, uint8_t x2)</td></tr>
+<tr class="separator:ga6faddb309eac3e7e17d288ce010fa458"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8d600483f434f6b117893d4b3c0dc36c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga8d600483f434f6b117893d4b3c0dc36c">ssd1306_drawVLine</a> (uint8_t x1, uint8_t y1, uint8_t y2)</td></tr>
+<tr class="separator:ga8d600483f434f6b117893d4b3c0dc36c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7a7f8e761a45eb4b4d53d76dd5f72a35"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga7a7f8e761a45eb4b4d53d76dd5f72a35">ssd1306_drawBuffer</a> (uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)</td></tr>
 <tr class="separator:ga7a7f8e761a45eb4b4d53d76dd5f72a35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0a4c06ba9b309741003b172c3c5cf874"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga0a4c06ba9b309741003b172c3c5cf874">ssd1306_drawBitmap</a> (uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)</td></tr>
@@ -173,7 +179,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8h_source.html#l00210">210</a> of file <a class="el" href="ssd1306_8h_source.html">ssd1306.h</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8h_source.html#l00235">235</a> of file <a class="el" href="ssd1306_8h_source.html">ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -277,7 +283,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>usually this method is used to erase bitmap on the screen. </dd></dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00237">237</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00268">268</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -349,7 +355,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_s_p_r_i_t_e.html">SPRITE</a> structure </dd></dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00358">358</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00389">389</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -408,7 +414,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00221">221</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00252">252</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -467,7 +473,102 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00206">206</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00237">237</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ga6faddb309eac3e7e17d288ce010fa458"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6faddb309eac3e7e17d288ce010fa458">&sect;&nbsp;</a></span>ssd1306_drawHLine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1306_drawHLine </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Draws horizontal line </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x1</td><td>- left boundary in pixels </td></tr>
+    <tr><td class="paramname">y1</td><td>- position Y in pixels </td></tr>
+    <tr><td class="paramname">x2</td><td>- right boundary in pixels </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00205">205</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+
+</div>
+</div>
+<a id="gad465a0486e33c34e96fd69fb58525dbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad465a0486e33c34e96fd69fb58525dbf">&sect;&nbsp;</a></span>ssd1306_drawRect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1306_drawRect </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Draws rectangle </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x1</td><td>- left boundary in pixel units </td></tr>
+    <tr><td class="paramname">y1</td><td>- top boundary in pixel units </td></tr>
+    <tr><td class="paramname">x2</td><td>- right boundary in pixel units </td></tr>
+    <tr><td class="paramname">y2</td><td>- bottom boundary int pixel units </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00229">229</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -493,7 +594,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00266">266</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00297">297</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -544,7 +645,51 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00253">253</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00284">284</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ga8d600483f434f6b117893d4b3c0dc36c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8d600483f434f6b117893d4b3c0dc36c">&sect;&nbsp;</a></span>ssd1306_drawVLine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1306_drawVLine </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Draws vertical line </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x1</td><td>- position X in pixels </td></tr>
+    <tr><td class="paramname">y1</td><td>- top boundary in pixels </td></tr>
+    <tr><td class="paramname">y2</td><td>- bottom boundary in pixels </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00216">216</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -570,7 +715,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00295">295</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00326">326</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -596,7 +741,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00319">319</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00350">350</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -637,7 +782,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>All drawing functions start to work in negative mode. Old picture on the display remains unchanged. </p>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00378">378</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00409">409</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -657,7 +802,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>All drawing functions start to work in positive (default) mode. Old picture on the display remains unchanged. </p>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00383">383</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00414">414</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -778,7 +923,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00363">363</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00394">394</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>

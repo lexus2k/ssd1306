@@ -20,6 +20,11 @@
 #include "font6x8.h"
 #include "ssd1306.h"
 
+static uint8_t getMaxScreenItems()
+{
+    return (ssd1306_displayHeight() >> 3) - 2;
+}
+
 void ssd1306_createMenu(SAppMenu *menu, const char **items, uint8_t count)
 {
     menu->items = items;
@@ -35,9 +40,9 @@ static uint8_t calculateScrollPosition(SAppMenu *menu, uint8_t selection)
     {
         return selection;
     }
-    else if ( selection - menu->scrollPosition > 5 )
+    else if ( selection - menu->scrollPosition > getMaxScreenItems() - 1)
     {
-        return selection - 5;
+        return selection - getMaxScreenItems() + 1;
     }
     return menu->scrollPosition;
 }
@@ -58,8 +63,9 @@ static void drawMenuItem(SAppMenu *menu, uint8_t index)
 
 void ssd1306_showMenu(SAppMenu *menu)
 {
+    ssd1306_drawRect(4, 4, 123, ssd1306_displayHeight() - 5);
     menu->scrollPosition = calculateScrollPosition( menu, menu->selection );
-    for (uint8_t i = menu->scrollPosition; i < min(menu->count, menu->scrollPosition + 6); i++)
+    for (uint8_t i = menu->scrollPosition; i < min(menu->count, menu->scrollPosition + getMaxScreenItems()); i++)
     {
         drawMenuItem(menu, i);
     }
