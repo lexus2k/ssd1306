@@ -146,43 +146,6 @@ void ssd1306_i2cSendByte(uint8_t data)
   ssd1306_delay(I2C_HALF_CLOCK);
 }
 
-
-#else /* STANDARD branch */
-    #include <Wire.h>
-
-uint8_t s_bytesWritten = 0;
-
-void ssd1306_i2cStart(void)
-{
-    Wire.beginTransmission(SSD1306_SA);
-    s_bytesWritten = 0;
-}
-
-void ssd1306_i2cStop(void)
-{
-    Wire.endTransmission();
-}
-
-/**
- * Inputs: SCL is LOW, SDA is has no meaning
- * Outputs: SCL is LOW
- */
-void ssd1306_i2cSendByte(uint8_t data)
-{
-    // Do not write too many bytes for standard Wire.h. It may become broken
-    if (s_bytesWritten >= (BUFFER_LENGTH >> 1))
-    {
-        ssd1306_i2cStop();
-        ssd1306_i2cStart();
-        /* Commands never require many bytes. Thus assume that user tries to send data */
-        Wire.write(0x40);
-        s_bytesWritten++;
-    }        
-    Wire.write(data);
-    s_bytesWritten++;
-}
-
-
 #endif
 
 
