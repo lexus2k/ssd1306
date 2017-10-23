@@ -54,9 +54,14 @@ extern void  (*ssd1306_sendByte)(uint8_t data);
 void ssd1306_sendCommand(uint8_t command);
 
 /**
+ * Starts transaction for sending commands.
+ */
+extern void (*ssd1306_commandStart)();
+
+/**
  * Starts transaction for sending bitmap data.
  */
-void ssd1306_dataStart();
+extern void (*ssd1306_dataStart)();
 
 #ifdef __cplusplus
 }

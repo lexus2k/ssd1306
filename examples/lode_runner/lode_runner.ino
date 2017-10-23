@@ -24,13 +24,22 @@
  *   SDA (4) -|    |- (1) - BUZZER
  *   GND     -|____|- (0) - BUTTONS module
  *
- *   Atmega328 PINS: connect LCD to A4/A5, BUZZER on D3,
+ *   Atmega328 PINS with i2c SSD1306 to A4/A5, BUZZER on D8,
  *   Z-keypad ADC module on A0 pin.
+ *
+ *   Atmega328 PINS with spi Nokia 5510 LCD:
+ *   LCD RST to D3
+ *   LCD CES to D4
+ *   LCD DC to  D5
+ *   LCD DIN to D11
+ *   LCD CLK to D13
+ *   LCD BL to  VCC
  */
 
 #include "game_field.h"
 #include "ssd1306.h"
 #include "ssd1306_i2c_conf.h"
+#include "ssd1306_spi_conf.h"
 #include "player_sprites.h"
 #include "coin_sprite.h"
 #include "hero_states.h"
@@ -41,11 +50,16 @@
     #include <Wire.h>
 #endif
 
+/* Do not include SPI.h for Attiny controllers */
+#ifndef SSD1306_EMBEDDED_SPI
+    #include <SPI.h>
+#endif
+
 #if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)
 #define BUZZER      1
 #define BUTTON_PIN  A0
 #else // For Arduino Nano/Atmega328 we use different pins
-#define BUZZER      3
+#define BUZZER      8
 #define BUTTON_PIN  A0
 #endif
 
@@ -179,6 +193,14 @@ void setup()
     Wire.setClock( 400000  );
 #endif
     ssd1306_128x64_i2c_init();
+
+    /* Use the commented lines below, if you want to connect Nokia 5510 LCD */
+/*
+#ifndef SSD1306_EMBEDDED_SPI
+    SPI.begin();
+#endif
+    pcd8544_84x48_spi_init(3, 4, 5); // 3 RST, 4 CES, 5 DS
+*/
     ssd1306_fillScreen(0x00);
     /* Set range of the gameField on the screen in blocks. */
     field.setRect( (SSD1306_RECT) { 0, 1, 15, 7 } );

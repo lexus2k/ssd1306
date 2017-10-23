@@ -17,23 +17,28 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 /**
- *   Attiny85 PINS
+ *   Attiny85 PINS (i2c)
  *             ____
  *   RESET   -|_|  |- 3V
  *   SCL (3) -|    |- (2)
  *   SDA (4) -|    |- (1)
  *   GND     -|____|- (0)
  *
- *   Atmega328 PINS: connect LCD to A4/A5
+ *   Atmega328 PINS: connect LCD to A4/A5 (i2c)
  */
 
 #include "ssd1306.h"
 #include "ssd1306_i2c_conf.h"
+#include "ssd1306_spi_conf.h"
 #include "sova.h"
 
 /* Do not include wire.h for Attiny controllers */
 #ifndef SSD1306_EMBEDDED_I2C
     #include <Wire.h>
+#endif
+/* Do not include SPI.h for Attiny controllers */
+#ifndef SSD1306_EMBEDDED_SPI
+    #include <SPI.h>
 #endif
 
 /* 
@@ -80,6 +85,15 @@ void setup()
     Wire.setClock(400000);
 #endif
     ssd1306_128x64_i2c_init();
+
+    /* Uncomment lines below if you want to use SPI Nokia 5510 LCD */
+/*
+#ifndef SSD1306_EMBEDDED_SPI
+    SPI.begin();
+#endif
+    pcd8544_84x48_spi_init(3, 4, 5);
+*/
+
     ssd1306_fillScreen( 0x00 );
     ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
     ssd1306_showMenu( &menu );
@@ -116,11 +130,11 @@ void spriteDemo()
 void textDemo()
 {
     ssd1306_clearScreen();
-    ssd1306_charF6x8(16, 1, "Normal text");
-    ssd1306_charF6x8(16, 2, "Bold text", STYLE_BOLD);
-    ssd1306_charF6x8(16, 3, "Italic text", STYLE_ITALIC);
+    ssd1306_charF6x8(0, 1, "Normal text");
+    ssd1306_charF6x8(0, 2, "Bold text", STYLE_BOLD);
+    ssd1306_charF6x8(0, 3, "Italic text", STYLE_ITALIC);
     ssd1306_negativeMode();
-    ssd1306_charF6x8(16, 5, "Inverted bold", STYLE_BOLD);
+    ssd1306_charF6x8(0, 4, "Inverted bold", STYLE_BOLD);
     ssd1306_positiveMode();
     delay(3000);
 }

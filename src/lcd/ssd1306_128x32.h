@@ -31,10 +31,19 @@
 extern "C" {
 #endif
 
-/** OLED 128x32 initialization data */
-extern const uint8_t PROGMEM s_oled128x32_initData[];
-/** OLED 128x32 initialization data length */
-extern const uint8_t s_oled128x32_dataLength;
+/**
+ * @defgroup LCD_DISPLAY_API LCD Display control functions
+ * @{
+ */
+
+/**
+ * Inits 128x32 OLED display over i2c (based on SSD1306 controller)
+ */
+void         ssd1306_128x32_i2c_init();
+
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

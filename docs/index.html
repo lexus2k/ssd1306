@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.12"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SSD1306 I2C Display Driver: SSD1306 API.</title>
+<title>SSD1306 I2C Display Driver: SSD1306/PCD8544 API.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 I2C Display Driver
-   &#160;<span id="projectnumber">1.1.0</span>
+   &#160;<span id="projectnumber">1.2.0</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306 I2C OLED Display</div>
   </td>
@@ -61,36 +61,35 @@ $(function() {
 
 <div class="header">
   <div class="headertitle">
-<div class="title">SSD1306 API. </div>  </div>
+<div class="title">SSD1306/PCD8544 API. </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This is SSD1306 i2c oled display driver implementation for Arduino.</p>
-<h1>SSD1306 Library</h1>
+<div class="textblock"><p>This is SSD1306 i2c oled display driver implementation for Arduino. The driver is also capable to work with pcd8544 (nokia 5510) LCD over SPI.</p>
+<h1>SSD1306 OLED display driver</h1>
 <h2>Introduction</h2>
-<p>SSD1306 I2C OLED Display library is intended for use on controllers with very small amount of SRAM. First of all, it is developed for ATTiny controllers to use as few resources as possible (in simple case it requires only 18 bytes of SRAM). Since ATTiny controllers have no division and multiply operations, the library has some limited functionaly, and uses shift operation to speed up calculations. But it is still can be used to develop simple graphics applications (please, refer to examples).</p>
-<p>Key Features:</p>
+<p>SSD1306 i2c OLED Display driver is Arduino style library, intended for use with very small microcontrollers (with a little of SRAM). First of all, it was developed for ATTiny controllers to use as few resources as possible. With internal i2c impementation and without using buffer-related functions the library requires only 26 bytes of SRAM. Since ATTiny controllers have no division and multiply operations, the library uses shift operation to speed up calculations.</p>
+<h2>Key Features</h2>
 <ul>
-<li>Fast I2C implementation (ssd1306_i2c.h): for Attiny it has its own I2C implementation, for Atmega it uses Wire library.</li>
-<li>Low level I2C OLED Driver functions (ssd1306_interface.h)</li>
-<li>High level I2C OLED Driver functions (<a class="el" href="ssd1306_8h.html">ssd1306.h</a>)</li>
-<li>Memory-buffered operations (<a class="el" href="nano__gfx_8h.html">nano_gfx.h</a>)</li>
+<li>Internal i2c implementation for Attiny controllers (for Atmega the library uses Wire library).</li>
+<li>Low level i2c OLED Driver functions (<a class="el" href="ssd1306__i2c_8h.html">ssd1306_i2c.h</a>) for direct communication with lcd display.</li>
+<li>Memory-buffered operations (<a class="el" href="nano__gfx_8h.html">nano_gfx.h</a>) for flickering-free output.</li>
 <li>Supported OLED displays:<ul>
 <li>SSD1306 128x64</li>
 <li>SSD1306 128x32</li>
+<li>PCD8544 84x48 (experimental support)</li>
 </ul>
 </li>
-<li>Third-party font (6x8)</li>
-<li>Some functions are:<ul>
-<li>Clearing display</li>
-<li>Filling display with pattern data</li>
+<li>Main API functions are:<ul>
+<li>Primitive graphics functions (line,rectangle,pixels)</li>
 <li>Printing text to display</li>
-<li>Drawing bitmap image from SRAM memory</li>
-<li>Drawing bitmap image from Flash memory (PROGMEM related)</li>
-<li>Sprites: moving</li>
-<li>Drawing lines in buffer (vertical and horizontal)</li>
-<li>Creating and controlling menu (ssd1306_demo example)</li>
-<li>Arkanoid game as example of using SSD1306 library</li>
-<li>Simple Lode runner game as example of using sprites in SSD1306.</li>
+<li>Drawing bitmap images, located in SRAM or Flash memory (PROGMEM)</li>
+<li>Work with sprite objects</li>
+<li>Creating and controlling menu items (see ssd1306_demo example)</li>
+</ul>
+</li>
+<li>Bonus games:<ul>
+<li>Arkanoid game as example!</li>
+<li>Simple Lode runner game as example!</li>
 </ul>
 </li>
 </ul>

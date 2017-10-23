@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['sprite_5fpool_2eh',['sprite_pool.h',['../sprite__pool_8h.html',1,'']]],
-  ['ssd1306_2eh',['ssd1306.h',['../ssd1306_8h.html',1,'']]]
+  ['nano_5fgfx_2eh',['nano_gfx.h',['../nano__gfx_8h.html',1,'']]],
+  ['nano_5fgfx_5ftypes_2eh',['nano_gfx_types.h',['../nano__gfx__types_8h.html',1,'']]]
 ];

@@ -103,7 +103,7 @@ typedef struct
      * Returns true if sprite is moved not far from previous position,
      * and old and new rects have intersection.
      */
-    inline bool isNearMove()
+    inline bool isNearMove() const
     {
         /* We emulate abs function for unsigned vars here */
         return (((uint8_t)(x-lx)<w) || ((uint8_t)(lx-x)<w)) &&
@@ -118,7 +118,7 @@ typedef struct
      * if sprite pixels coordinates are 32,16 and size is 8x8,
      * the rect will be (left:4,top:2,right:4,bottom:2).
      */
-    inline SSD1306_RECT getRect()
+    inline SSD1306_RECT getRect() const
     {
         uint8_t right = ((x + w - 1)>>3);
         uint8_t bottom = ((y + 7)>>3);
@@ -134,7 +134,7 @@ typedef struct
      * if sprite pixels coordinates are 32,16 and size is 8x8,
      * the rect will be (left:4,top:2,right:4,bottom:2).
      */
-    inline SSD1306_RECT getLRect()
+    inline SSD1306_RECT getLRect() const
     {
         uint8_t left = lx;
         uint8_t top = ly;
@@ -151,7 +151,7 @@ typedef struct
      * and sprite is moved to the right by 6 pixels, the rect will be
      * (left:1,top:2,right:3,bottom:3).
      */
-    inline SSD1306_RECT getUpdateRect()
+    inline SSD1306_RECT getUpdateRect() const
     {
         uint8_t left = min(x,lx);
         uint8_t top = min(y,ly);

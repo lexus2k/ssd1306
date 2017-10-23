@@ -2,48 +2,44 @@
  @file
  @brief SSD1306 i2c oled display driver for Attiny/Atmega Avr controllers.
 
- \mainpage SSD1306 API.
+ \mainpage SSD1306/PCD8544 API.
 
  This is SSD1306 i2c oled display driver implementation for Arduino.
+ The driver is also capable to work with pcd8544 (nokia 5510) LCD over SPI.
 
-# SSD1306 Library
+# SSD1306 OLED display driver
 
 ## Introduction
 
-SSD1306 I2C OLED Display library is intended for use on controllers
-with very small amount of SRAM. First of all, it is developed for ATTiny
-controllers to use as few resources as possible (in simple case it requires
-only 18 bytes of SRAM). Since ATTiny controllers have no division and multiply
-operations, the library has some limited functionaly, and uses shift operation
-to speed up calculations. But it is still can be used to develop simple graphics
-applications (please, refer to examples).
+SSD1306 i2c OLED Display driver is Arduino style library, intended for use with
+very small microcontrollers (with a little of SRAM). First of all, it was developed
+for ATTiny controllers to use as few resources as possible. With internal
+i2c impementation and without  using buffer-related functions the library requires
+only 26 bytes of SRAM. Since ATTiny controllers have no division and multiply
+operations, the library uses shift operation to speed up calculations.
 
-Key Features:
+## Key Features
 
- - Fast I2C implementation (ssd1306_i2c.h): for Attiny it has its own I2C implementation, for Atmega it uses Wire library.
- - Low level I2C OLED Driver functions (ssd1306_interface.h)
- - High level I2C OLED Driver functions (ssd1306.h)
- - Memory-buffered operations (nano_gfx.h)
+ - Internal i2c implementation for Attiny controllers (for Atmega the library uses Wire library).
+ - Low level i2c OLED Driver functions (ssd1306_i2c.h) for direct communication with lcd display.
+ - Memory-buffered operations (nano_gfx.h) for flickering-free output.
  - Supported OLED displays:
    - SSD1306 128x64
    - SSD1306 128x32
- - Third-party font (6x8)
- - Some functions are:
-   - Clearing display
-   - Filling display with pattern data
+   - PCD8544 84x48 (experimental support)
+ - Main API functions are:
+   - Primitive graphics functions (line,rectangle,pixels)
    - Printing text to display
-   - Drawing bitmap image from SRAM memory
-   - Drawing bitmap image from Flash memory (PROGMEM related)
-   - Sprites: moving
-   - Drawing lines in buffer (vertical and horizontal)
-   - Creating and controlling menu (ssd1306_demo example)
-   - Arkanoid game as example of using SSD1306 library
-   - Simple Lode runner game as example of using sprites in SSD1306.
+   - Drawing bitmap images, located in SRAM or Flash memory (PROGMEM)
+   - Work with sprite objects
+   - Creating and controlling menu items (see ssd1306_demo example)
+ - Bonus games:
+   - Arkanoid game as example!
+   - Simple Lode runner game as example!
 
 
-For Attiny85/Attiny45 controllers OLED display must be connected to
-PB3 (SCL) and PB4 (SDA) lines. For other controllers pins
-are defined by standard Wire library. The pins
-can be modified for Attiny in ssd1306_i2c_conf.h file.
+For Attiny85/Attiny45 controllers OLED display must be connected to PB3 (SCL) and PB4 (SDA) lines.
+For other controllers pins are defined by standard Wire library.
+The pins can be modified for Attiny in ssd1306_i2c_conf.h file.
 
 */

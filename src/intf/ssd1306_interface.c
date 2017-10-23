@@ -37,19 +37,14 @@ void  (*ssd1306_endTransmission)() = NULL;
  */
 void  (*ssd1306_sendByte)(uint8_t data) = NULL;
 
+void (*ssd1306_commandStart)() = NULL;
+
+void (*ssd1306_dataStart)() = NULL;
 
 void ssd1306_sendCommand(uint8_t command)
 {
-    ssd1306_startTransmission();
-    ssd1306_sendByte(0x00);
+    ssd1306_commandStart();
     ssd1306_sendByte(command);
     ssd1306_endTransmission();
-}
-
-
-void ssd1306_dataStart(void)
-{
-    ssd1306_startTransmission();
-    ssd1306_sendByte(0x40);
 }
 

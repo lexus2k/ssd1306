@@ -113,12 +113,12 @@ void NanoCanvas::clear()
 
 void NanoCanvas::charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style)
 {
-    uint8_t c, i, j;
+    uint8_t i, j;
     if (y>=m_h) return;
     j = 0;
     while(ch[j] != '\0')
     {
-        c = ch[j] - 32;
+        uint8_t c = ch[j] - 32;
         uint8_t ldata = 0;
         for(i=0;i<6;i++)
         {

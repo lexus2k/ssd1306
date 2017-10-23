@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['right',['right',['../struct_s_s_d1306___r_e_c_t.html#a9ed468c58af55753dc61bb3dbdb6275b',1,'SSD1306_RECT']]]
+  ['oldselection',['oldSelection',['../struct_s_app_menu.html#ad79da4d78c16e3fbbd2e380dc5763275',1,'SAppMenu']]]
 ];

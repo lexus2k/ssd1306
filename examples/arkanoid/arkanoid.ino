@@ -113,7 +113,7 @@ int        bally;
 int        vSpeed;
 int        hSpeed;
 uint8_t    hearts;
-uint32_t   lastDrawTimestamp;
+uint16_t   lastDrawTimestamp;
 uint8_t    gameField[BLOCK_NUM_ROWS][MAX_BLOCKS_PER_ROW];
 GameObject objects[MAX_GAME_OBJECTS];
 uint16_t   score;
@@ -170,7 +170,7 @@ void setup()
 }
 
 void loop() {
-  if ( millis() - lastDrawTimestamp > 30 )
+  if ( ((uint16_t)millis()) - lastDrawTimestamp > 30 )
   {
     uint8_t lastx = (ballx >> SPEED_SHIFT);
     uint8_t lasty = (bally >> SPEED_SHIFT);
@@ -217,7 +217,7 @@ void drawStatusPanel()
 void drawIntro()
 {
   ssd1306_init();
-  ssd1306_fillScreen(0x00);
+  ssd1306_clearScreen( );
   ssd1306_drawBitmap(16, 2, 96, 24, arkanoid_2);
   ssd1306_charF6x8(40, 5, "BREAKOUT");
   beep(200,600);
@@ -227,7 +227,7 @@ void drawIntro()
 
 void drawStartScreen()
 {
-  ssd1306_fillScreen(0x00);
+  ssd1306_clearScreen( );
   drawBlocks();
   drawFieldEdges();
   drawStatusPanel();
@@ -567,7 +567,7 @@ void movePlatform()
 
 void gameOver(uint16_t topScore)
 {
-    ssd1306_fillScreen(0x00);
+    ssd1306_clearScreen( );
     ssd1306_charF6x8(32, 2, "GAME OVER");
     ssd1306_charF6x8(32, 4, "score ");
     char temp[6] = {0,0,0,0,0,0};
@@ -734,7 +734,7 @@ void beep(int bCount,int bDelay)
 
 void system_sleep()
 {
-  ssd1306_fillScreen(0x00);
+  ssd1306_clearScreen( );
   ssd1306_displayOff();
   cbi(ADCSRA,ADEN);                    // switch Analog to Digitalconverter OFF
   set_sleep_mode(SLEEP_MODE_PWR_DOWN); // sleep mode is set here

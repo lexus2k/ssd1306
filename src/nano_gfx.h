@@ -150,17 +150,17 @@ public:
     /**
      * Returns canvas width
      */
-    inline uint8_t width() { return m_w; };
+    inline uint8_t width() const { return m_w; };
 
     /**
      * Returns canvas height
      */
-    inline uint8_t height() { return m_h; };
+    inline uint8_t height() const { return m_h; };
 
     /**
      * Returns canvas buffer
      */
-    inline uint8_t *buffer() { return m_bytes; };
+    inline uint8_t *buffer() const { return m_bytes; };
 
     /**
      * Inverts content in the buffer.

@@ -32,6 +32,11 @@ extern "C" {
 #endif
 
 /**
+ * Inits display interface to use i2c bus.
+ */
+void         ssd1306_i2cInit();
+
+/**
  * Informs I2C device about data to be sent
  */
 void         ssd1306_i2cStart();
@@ -46,6 +51,16 @@ void         ssd1306_i2cStop();
  * @param data - byte to send
  */
 void         ssd1306_i2cSendByte(uint8_t data);
+
+/**
+ * Switches i2c chip to command transmission mode.
+ */
+void         ssd1306_i2cCommandStart();
+
+/**
+ * Switches i2c chip to data transmission mode.
+ */
+void         ssd1306_i2cDataStart();
 
 #ifdef __cplusplus
 }

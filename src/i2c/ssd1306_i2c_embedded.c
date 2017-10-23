@@ -31,6 +31,9 @@
  */
 #if defined(SSD1306_EMBEDDED_I2C)
 
+static uint8_t s_sda = SSD1306_SDA;
+static uint8_t s_scl = SSD1306_SCL;
+
 #include <avr/interrupt.h>
 
     #if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
@@ -94,20 +97,20 @@ void ssd1306_i2cStart(void)
     oldSREG = SREG;
     cli();
     interruptsOff = true;
-    DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, SSD1306_SDA);     // Set to LOW
+    DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_sda);     // Set to LOW
     ssd1306_delay(I2C_START_STOP_DELAY);
-    DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, SSD1306_SCL);     // Set to LOW
+    DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_scl);     // Set to LOW
     ssd1306_delay(I2C_HALF_CLOCK);
     ssd1306_i2cSendByte((SSD1306_SA << 1) | 0);
 }
 
 void ssd1306_i2cStop(void)
 {
-    DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, SSD1306_SDA);		// Set to LOW
+    DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_sda);		// Set to LOW
     ssd1306_delay(I2C_RISE_TIME); // Fall time is the same as rise time
-    DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, SSD1306_SCL);	// Set to HIGH
+    DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_scl);	// Set to HIGH
     ssd1306_delay(I2C_START_STOP_DELAY); 
-    DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, SSD1306_SDA);	// Set to HIGH
+    DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_sda);	// Set to HIGH
     ssd1306_delay(I2C_IDLE_TIME);
     if (interruptsOff)
     {
@@ -126,23 +129,23 @@ void ssd1306_i2cSendByte(uint8_t data)
   for(i=0; i<8; i++)
     {
       if((data << i) & 0x80)
-        DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, SSD1306_SDA)
+        DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_sda)
       else
-        DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, SSD1306_SDA);
+        DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_sda);
       ssd1306_delay(I2C_RISE_TIME); // Fall time is the same as rise time
 
-      DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, SSD1306_SCL);
+      DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_scl);
       ssd1306_delay(I2C_HALF_CLOCK);
 
-      DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, SSD1306_SCL);
+      DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_scl);
       ssd1306_delay(I2C_HALF_CLOCK);
     }
   // generating confirmation impulse
-  DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, SSD1306_SDA);
+  DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_sda);
   ssd1306_delay(I2C_RISE_TIME); // Fall time is the same as rise time
-  DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, SSD1306_SCL);
+  DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_scl);
   ssd1306_delay(I2C_HALF_CLOCK);
-  DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, SSD1306_SCL); 
+  DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_scl); 
   ssd1306_delay(I2C_HALF_CLOCK);
 }
 

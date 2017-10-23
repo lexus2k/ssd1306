@@ -1,59 +1,58 @@
-= SSD1306 Driver for ATTiny controllers =
+# SSD1306 OLED display driver, PCD8544 LED display driver
 
-SSD1306 I2C OLED Display driver is Arduino style library, intended for use with
+## Introduction
+
+SSD1306 i2c OLED Display driver is Arduino style library, intended for use with
 very small microcontrollers (with a little of SRAM). First of all, it was developed
-for ATTiny controllers to use as few resources as possible (in simple case it requires
-only 18 bytes of SRAM). Since ATTiny controllers have no division and multiply
-operations, the library has some limited functionaly, and uses shift operation
-to speed up calculations. But it is still can be used to develop simple graphics
-applications (please, refer to examples).
+for ATTiny controllers to use as few resources as possible. With internal
+i2c impementation and without  using buffer-related functions the library requires
+only 26 bytes of SRAM. Since ATTiny controllers have no division and multiply
+operations, the library uses shift operation to speed up calculations.
 
-Key Features:
+## Key Features
 
- * Fast I2C implementation (ssd1306_i2c.h): for Attiny it has its own I2C implementation, for Atmega it uses Wire library.
- * Low level I2C OLED Driver functions (ssd1306_interface.h)
- * High level I2C OLED Driver functions (ssd1306.h)
- * Memory-buffered operations (nano_gfx.h)
+ * Internal i2c implementation for Attiny controllers (for Atmega the library uses Wire library).
+ * Low level i2c OLED Driver functions (ssd1306_i2c.h) for direct communication with lcd display.
  * Supported OLED displays:
    * SSD1306 128x64
    * SSD1306 128x32
- * Third-party font (6x8)
- * Some functions are:
-   * Clearing display
-   * Filling display with pattern data
+   * PCD8544 84x48 (experimental support)
+ * Main API functions are:
+   * Primitive graphics functions (line,rectangle,pixels)
    * Printing text to display
-   * Drawing bitmap image from SRAM memory
-   * Drawing bitmap image from Flash memory (PROGMEM related)
-   * Sprites: moving
-   * Drawing lines in buffer (vertical and horizontal)
-   * Creating and controlling menu (ssd1306_demo example)
- * And bonus:
+   * Drawing bitmap images, located in SRAM or Flash memory (PROGMEM)
+   * Work with sprite objects
+   * Creating and controlling menu items (see ssd1306_demo example)
+ * Memory-buffered operations (nano_gfx.h) for flickering-free output.
+ * Bonus games:
    * Arkanoid game as example!
    * Simple Lode runner game as example!
 
 ![Image of arkanoid intro](https://github.com/lexus2k/ssd1306/blob/master/examples/arkanoid/screenshots/introscreen.png)
-![Image of arkanoid screen](https://github.com/lexus2k/ssd1306/blob/master/examples/arkanoid/screenshots/screenshot.png)
 
 ![Image of lode runner](https://github.com/lexus2k/ssd1306/blob/master/examples/lode_runner/screenshots/main_screen.png)
 
-![Image of draw_text](https://github.com/lexus2k/ssd1306/blob/master/examples/draw_text/screenshots/fonts.png)
-
 ![Image of menu example](https://github.com/lexus2k/ssd1306/blob/master/examples/ssd1306_demo/screenshots/mainmenu_top.png)
 
-For Attiny85/Attiny45 controllers OLED display must be connected to
-PB3 (SCL) and PB4 (SDA) lines. For other controllers pins
-are defined by standard Wire library. The pins
-can be modified for Attiny in ssd1306_i2c_conf.h file.
+For Attiny85/Attiny45 controllers OLED display must be connected to PB3 (SCL) and PB4 (SDA) lines.
+For other controllers pins are defined by standard Wire library. The pins can be modified for
+Attiny in ssd1306_i2c_conf.h file.
 
 Tested controllers:
-* Attiny85, Attiny45
-* Atmega328p, Atmega168
 
-For more information about this library please visit
-https://github.com/lexus2k/ssd1306. Doxygen documentation can be found at [github.io site](http://lexus2k.github.io/ssd1306).
-If you found any problem, or have any idea, please report to Issues section.
+ * Attiny85, Attiny45
+ * Atmega328p, Atmega168
 
-== License ==
+## Setting up
+
+ * Download source from https://github.com/lexus2k/ssd1306
+ * Put the sources to Arduino/libraries/ folder
+
+For more information about this library, please, visit https://github.com/lexus2k/ssd1306.
+Doxygen documentation can be found at [github.io site](http://lexus2k.github.io/ssd1306).
+If you found any problem or have any idea, please, report to Issues section.
+
+## License
 
 Copyright (C) 2016-2017 Alexey Dynda
 

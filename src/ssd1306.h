@@ -25,6 +25,9 @@
 #define _SSD1306_H_
 
 #include "nano_gfx_types.h"
+#include "lcd/ssd1306_128x64.h"
+#include "lcd/ssd1306_128x32.h"
+#include "lcd/pcd8544_84x48.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -38,21 +41,6 @@ extern "C" {
  * @defgroup LCD_DISPLAY_API LCD Display control functions
  * @{
  */
-
-/**
- * Init 128x64 OLED display over i2c
- */
-void         ssd1306_128x64_i2c_init();
-
-/**
- * Init 128x32 OLED display over i2c
- */
-void         ssd1306_128x32_i2c_init();
-
-/**
- * Init default display 128x64
- */
-static inline void ssd1306_init() { ssd1306_128x64_i2c_init(); }
 
 /**
  * Turns off display
@@ -79,6 +67,11 @@ void         ssd1306_normalMode();
  * Returns display height in pixels
  */
 uint8_t      ssd1306_displayHeight();
+
+/**
+ * Returns display width in pixels
+ */
+uint8_t      ssd1306_displayWidth();
 
 /**
  * @}
@@ -312,7 +305,7 @@ void         ssd1306_replaceSprite(SPRITE *sprite, const uint8_t *data);
 ///////////////////////////////////////////////////////////////////////
 
 /**
- * @defgroup LCD_APP_API LCD direct graphics functions
+ * @defgroup LCD_APP_API LCD menu control functions
  * @{
  */
 

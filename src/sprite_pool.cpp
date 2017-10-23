@@ -23,12 +23,14 @@
 
 SpritePool::SpritePool( )
    : m_canvas( 8, 8, m_canvasBuf)
+   , m_canvasBuf( {0} )
+   , m_sprites( {0} )
    , m_count( 0 )
 {
-    m_rect = (SSD1306_RECT){ (uint8_t)0,
-                             (uint8_t)0,
-                             (uint8_t)((128>>3) - 1),
-                             (uint8_t)((ssd1306_displayHeight()>>3) - 1) };
+    m_rect.left = 0;
+    m_rect.top = 0;
+    m_rect.right = (ssd1306_displayWidth() >> 3) - 1;
+    m_rect.bottom = (ssd1306_displayHeight() >> 3) - 1;
 };
 
 void SpritePool::drawBlock(uint8_t blockColumn, uint8_t blockRow)

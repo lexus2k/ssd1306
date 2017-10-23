@@ -18,10 +18,12 @@
 */
 
 #include "ssd1306_128x64.h"
+#include "lcd_common.h"
 #include "intf/ssd1306_commands.h"
+#include "intf/ssd1306_interface.h"
+#include "i2c/ssd1306_i2c.h"
 
-
-const uint8_t PROGMEM s_oled128x64_initData[] =
+static const uint8_t PROGMEM s_oled128x64_initData[] =
 {
     SSD1306_DISPLAYOFF, // display off
     /* actually 2 commands below can be omitted */
@@ -46,4 +48,22 @@ const uint8_t PROGMEM s_oled128x64_initData[] =
     SSD1306_DISPLAYON 
 };
 
-const uint8_t s_oled128x64_dataLength = sizeof(s_oled128x64_initData);
+
+void    ssd1306_init()
+{
+    ssd1306_128x64_i2c_init();
+}
+
+
+void    ssd1306_128x64_i2c_init()
+{
+    g_lcd_type = LCD_TYPE_SSD1306;
+    ssd1306_i2cInit();
+    ssd1306_endTransmission();
+    s_displayHeight = 64;
+    s_displayWidth = 128;
+    for( uint8_t i=0; i<sizeof(s_oled128x64_initData); i++)
+    {
+        ssd1306_sendCommand(pgm_read_byte(&s_oled128x64_initData[i]));
+    }
+}
