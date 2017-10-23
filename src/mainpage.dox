@@ -5,7 +5,7 @@
  \mainpage SSD1306/PCD8544 API.
 
  This is SSD1306 i2c oled display driver implementation for Arduino.
- The driver is also capable to work with pcd8544 (nokia 5510) LCD over SPI.
+ The driver is also capable to work with pcd8544 (nokia 5110) LCD over SPI.
 
 # SSD1306 OLED display driver
 

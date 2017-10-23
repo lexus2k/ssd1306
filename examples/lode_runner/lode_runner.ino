@@ -27,7 +27,7 @@
  *   Atmega328 PINS with i2c SSD1306 to A4/A5, BUZZER on D8,
  *   Z-keypad ADC module on A0 pin.
  *
- *   Atmega328 PINS with spi Nokia 5510 LCD:
+ *   Atmega328 PINS with spi Nokia 5110 LCD:
  *   LCD RST to D3
  *   LCD CES to D4
  *   LCD DC to  D5
@@ -194,7 +194,7 @@ void setup()
 #endif
     ssd1306_128x64_i2c_init();
 
-    /* Use the commented lines below, if you want to connect Nokia 5510 LCD */
+    /* Use the commented lines below, if you want to connect Nokia 5110 LCD */
 /*
 #ifndef SSD1306_EMBEDDED_SPI
     SPI.begin();

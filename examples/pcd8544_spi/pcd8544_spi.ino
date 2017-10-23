@@ -18,7 +18,7 @@
 */
 /**
  *
- *   Atmega328 PINS & Nokia 5510:
+ *   Atmega328 PINS & Nokia 5110:
  *      D3 to RST pin of LCD 8544
  *      D4 to CES pin of LCD 8544
  *      D5 to DC pin of LCD 8544

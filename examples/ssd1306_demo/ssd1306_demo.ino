@@ -86,7 +86,7 @@ void setup()
 #endif
     ssd1306_128x64_i2c_init();
 
-    /* Uncomment lines below if you want to use SPI Nokia 5510 LCD */
+    /* Uncomment lines below if you want to use SPI Nokia 5110 LCD */
 /*
 #ifndef SSD1306_EMBEDDED_SPI
     SPI.begin();
