@@ -22,6 +22,7 @@
 
 #include "intf/ssd1306_interface.h"
 #include "ssd1306_spi_conf.h"
+#include "lcd/lcd_common.h"
 
 #if !defined(SSD1306_EMBEDDED_SPI)
 /* STANDARD branch */
@@ -56,9 +57,12 @@ void ssd1306_spiStop(void)
     {
         digitalWrite(s_cs, HIGH);
     }
-    digitalWrite(s_dc, LOW);
-    SPI.transfer( 0x00 ); // Send NOP command to allow last data byte to pass (bug in PCD8544?)
-                          // ssd1306 E3h is NOP command
+    if (g_lcd_type == LCD_TYPE_PCD8544)
+    {
+        digitalWrite(s_dc, LOW);
+        SPI.transfer( 0x00 ); // Send NOP command to allow last data byte to pass (bug in PCD8544?)
+                              // ssd1306 E3h is NOP command
+    }
     SPI.endTransaction();
 }
 

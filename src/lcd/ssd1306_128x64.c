@@ -67,3 +67,31 @@ void    ssd1306_128x64_i2c_init()
         ssd1306_sendCommand(pgm_read_byte(&s_oled128x64_initData[i]));
     }
 }
+
+void   ssd1306_128x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
+{
+    if (cesPin >=0) pinMode(cesPin, OUTPUT);
+    if (dcPin >= 0) pinMode(dcPin, OUTPUT);
+    if (rstPin >=0)
+    {
+        pinMode(rstPin, OUTPUT);
+        digitalWrite(rstPin, HIGH);
+        /* Wait at least 1ms after VCC is up for LCD */
+        delay(1);
+        /* Perform reset operation of LCD display */
+        digitalWrite(rstPin, LOW);
+        delay(10);
+        digitalWrite(rstPin, HIGH);
+    }
+    g_lcd_type = LCD_TYPE_SSD1306;
+
+    ssd1306_hwSpiInit(cesPin, dcPin);
+    ssd1306_commandStart();
+    s_displayHeight = 64;
+    s_displayWidth = 128;
+    for( uint8_t i=0; i<sizeof(s_oled128x64_initData); i++)
+    {
+        ssd1306_sendCommand(pgm_read_byte(&s_oled128x64_initData[i]));
+    }
+    ssd1306_endTransmission();
+}

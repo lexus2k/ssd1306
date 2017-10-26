@@ -42,6 +42,14 @@ extern "C" {
 void         ssd1306_128x64_i2c_init();
 
 /**
+ * Inits 128x64 OLED display over spi (based on SSD1306 controller)
+ * @param rstPin - pin controlling LCD reset (-1 if not used)
+ * @param cesPin - chip enable pin to LCD slave (-1 if not used)
+ * @param dcPin - data/command pin to control LCD dc (required)
+ */
+void         ssd1306_128x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin);
+
+/**
  * @copydoc ssd1306_128x64_i2c_init
  */
 void         ssd1306_init() __attribute__((deprecated));

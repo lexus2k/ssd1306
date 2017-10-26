@@ -2,7 +2,7 @@
 
 ## Introduction
 
-SSD1306 i2c OLED Display driver is Arduino style library, intended for use with
+SSD1306 OLED display driver is Arduino style library, intended for use with
 very small microcontrollers (with a little of SRAM). It was developed to use as
 few resources as possible. With internal i2c impementation and without using buffer-related 
 functions the library requires only 26 bytes of SRAM. Since ATTiny controllers have no division and multiply
