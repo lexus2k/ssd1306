@@ -37,7 +37,7 @@ For Attiny85/Attiny45 controllers OLED display must be connected to PB3 (SCL) an
 For other controllers pins are defined by standard Wire library. The pins can be modified for
 Attiny in ssd1306_i2c_conf.h file.
 
-Tested controllers:
+## Supported platforms
 
  * Attiny85, Attiny45
  * Atmega328p, Atmega168
