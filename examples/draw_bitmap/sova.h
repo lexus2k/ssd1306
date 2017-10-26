@@ -21,7 +21,11 @@
 #define _SOVA_H_
 
 // ----------------------------------------------------------------------------
-#include <avr/pgmspace.h>
+#ifdef ESP8266
+    #include <pgmspace.h>
+#else
+    #include <avr/pgmspace.h>
+#endif
 
 extern const uint8_t Sova [] PROGMEM;
 

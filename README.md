@@ -42,7 +42,7 @@ Tested controllers:
  * Attiny85, Attiny45
  * Atmega328p, Atmega168
  * Atmega2560
- * ESP8266
+ * ESP8266 (check [examples compatibility list](ESP8266_compatibility.txt))
 
 ## Setting up
 

@@ -25,7 +25,6 @@
 #define _NANO_GFX_H_
 
 #include "nano_gfx_types.h"
-
 #include "font6x8.h"
 
 /**

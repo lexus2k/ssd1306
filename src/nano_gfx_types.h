@@ -20,16 +20,11 @@
  * @file nano_gfx_types.h Basic structures of nano gfx library
  */
 
-
 #ifndef _NANO_GFX_TYPES_H_
 #define _NANO_GFX_TYPES_H_
 
 #include <stdint.h>
 #include <Arduino.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /** Supported font styles */
 typedef enum
@@ -58,7 +53,7 @@ typedef struct
 /**
  * SPRITE structure represents logical graphics object
  */
-typedef struct
+typedef struct SPRITE
 {
     /// draw position X on the screen
     uint8_t x;
@@ -75,7 +70,6 @@ typedef struct
     /// Pointer to PROGMEM data, representing sprite transparencyMask (can be nullptr)
     const uint8_t * transparentMask;
 
-#ifdef __cplusplus
     /**
      * Updates active position of the sprite (doesn't redraw it)
      * @param x - horizontal position
@@ -161,14 +155,7 @@ typedef struct
         if ( top >= bottom ) top = 0;
         return (SSD1306_RECT){ left, top, right, bottom };
     };
-
-#endif
-
 } SPRITE;
-
-#ifdef __cplusplus
-}
-#endif
 
 // ----------------------------------------------------------------------------
 #endif // _NANO_GFX_TYPES_H_

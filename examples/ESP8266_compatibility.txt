@@ -1,0 +1,11 @@
+arkanoid       [ -  ]  Not compatible
+buffers_demo   [ OK ]
+draw_bitmap    [ OK ]
+draw_text      [ OK ]
+lode_runner    [ OK ]
+menu_demo      [ OK ]
+move_sprite    [ OK ]
+pcd8544_spi    [ OK ]
+sprite_pool    [ OK ]
+ssd1306_demo   [ OK ]
+

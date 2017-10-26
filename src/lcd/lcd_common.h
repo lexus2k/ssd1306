@@ -24,6 +24,7 @@
 #define _LCD_COMMON_H_
 
 #include <stdint.h>
+
 #ifdef ESP8266
     #include <pgmspace.h>
 #else

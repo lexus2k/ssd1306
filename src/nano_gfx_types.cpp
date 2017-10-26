@@ -20,13 +20,11 @@
 #include "nano_gfx_types.h"
 #include "ssd1306.h"
 
-
 void SPRITE::setPos(uint8_t x, uint8_t y)
 {
     this->x = x;
     this->y = y;
 }
-
 
 void SPRITE::draw()
 {
