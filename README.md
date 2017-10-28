@@ -49,7 +49,7 @@ configurable through API.
  * Atmega2560
  * ESP8266 (check [examples compatibility list](examples/ESP8266_compatibility.txt))
 
-## The goals of library development
+## The goals of ssd1306 library
 
  * To use as few RAM as possible
  * To use as few Flash as possible
