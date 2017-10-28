@@ -113,9 +113,11 @@ void NanoCanvas::clear()
 
 void NanoCanvas::charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style)
 {
-    uint8_t i, j;
+    uint8_t i, j, topMask, bottomMask;
     if (y>=m_h) return;
     j = 0;
+    topMask = (0xFF >> (8 - (y & 0x7)));
+    bottomMask = (0xFF << (y & 0x7));
     while(ch[j] != '\0')
     {
         uint8_t c = ch[j] - 32;
@@ -142,9 +144,13 @@ void NanoCanvas::charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle styl
                 ldata = (data & 0x0F);
                 data = temp;
             }
+            m_bytes[YADDR(y) + x] &= topMask;
             m_bytes[YADDR(y) + x] |= (data << (y & 0x7));
             if (y+8 < m_h)
+            {
+                m_bytes[YADDR(y) + m_w + x] &= bottomMask;
                 m_bytes[YADDR(y) + m_w + x] |= (data >> (8 - (y & 0x7)));
+            }
             x++;
         }
         j++;
