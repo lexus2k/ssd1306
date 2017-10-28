@@ -23,8 +23,8 @@
 
 SpritePool::SpritePool( )
    : m_canvas( 8, 8, m_canvasBuf)
-   , m_canvasBuf( {0} )
-   , m_sprites( {0} )
+   , m_canvasBuf{0}
+   , m_sprites{0}
    , m_count( 0 )
 {
     m_rect.left = 0;

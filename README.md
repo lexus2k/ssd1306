@@ -4,28 +4,26 @@
 
 SSD1306 OLED display driver is Arduino style library, intended for use with
 very small microcontrollers (with a little of SRAM). It was developed to use as
-few resources as possible. With internal i2c impementation and without using buffer-related 
-functions the library requires only 26 bytes of SRAM. Since ATTiny controllers have no division and multiply
+few resources as possible. Since ATTiny controllers have no division and multiply
 operations, the library uses shift operation to speed up calculations.
 
 ## Key Features
 
- * Internal i2c implementation for Attiny controllers (for Atmega the library uses Wire library).
- * Low level i2c OLED Driver functions (ssd1306_i2c.h) for direct communication with lcd display.
- * Supported OLED displays:
-   * SSD1306 128x64
-   * SSD1306 128x32
-   * PCD8544 84x48 (experimental support)
- * Main API functions are:
-   * Primitive graphics functions (line,rectangle,pixels)
-   * Printing text to display
-   * Drawing bitmap images, located in SRAM or Flash memory (PROGMEM)
-   * Work with sprite objects
-   * Creating and controlling menu items (see ssd1306_demo example)
+ * Embedded i2c software implementation
+ * Standard i2c support (via Wire library)
+ * 4-wire spi support (via standard SPI library)
+ * Usage of very little of SRAM (minimum 26 bytes)
+ * Usage of as little Flash as possible
+ * Fast implementation to provide reasonable speed on slow microcontrollers
+ * Primitive graphics functions (line,rectangle,pixels)
+ * Printing text to display
+ * Drawing bitmap images, located in SRAM or Flash memory (PROGMEM)
+ * Work with sprite objects
+ * Creating and controlling menu items (see ssd1306_demo example)
  * Memory-buffered operations (nano_gfx.h) for flickering-free output.
- * Bonus games:
-   * Arkanoid game as example!
-   * Simple Lode runner game as example!
+ * Bonus examples:
+   * Arkanoid game
+   * Simple Lode runner game
 
 ![Image of arkanoid intro](https://github.com/lexus2k/ssd1306/blob/master/examples/arkanoid/screenshots/introscreen.png)
 
@@ -33,9 +31,16 @@ operations, the library uses shift operation to speed up calculations.
 
 ![Image of menu example](https://github.com/lexus2k/ssd1306/blob/master/examples/ssd1306_demo/screenshots/mainmenu_top.png)
 
-For Attiny85/Attiny45 controllers OLED display must be connected to PB3 (SCL) and PB4 (SDA) lines.
-For other controllers pins are defined by standard Wire library. The pins can be modified for
-Attiny in ssd1306_i2c_conf.h file.
+The default i2c pins for embedded implementation can be modified in ssd1306_i2c_conf.h file.
+For other controllers pins are defined by standard Wire library.
+The default spi SCLK and MOSI pins are defined by SPI library, and DC, RST, CES pins are
+configurable through API.
+
+## Supported displays:
+ * i2c ssd1306 128x64 oled display
+ * i2c ssd1306 128x32 oled display
+ * spi ssd1306 128x64 oled display
+ * spi pcd8544 84x48 nokia 5110 led display (experimental support)
 
 ## Supported platforms
 
@@ -43,6 +48,13 @@ Attiny in ssd1306_i2c_conf.h file.
  * Atmega328p, Atmega168
  * Atmega2560
  * ESP8266 (check [examples compatibility list](examples/ESP8266_compatibility.txt))
+
+## The goals of library development
+
+ * To use as few RAM as possible
+ * To use as few Flash as possible
+ * To be as fast as possible
+ * To fit [Arkanoid game example](examples/arkanoid) to Attiny85 microcontroller
 
 ## Setting up
 
