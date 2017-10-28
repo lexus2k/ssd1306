@@ -48,7 +48,7 @@ public:
         m_w = w;
         m_h = h;
         m_p = 3;
-        m_inverseByte = 0;
+        m_invertByte = 0;
         while (w >> (m_p+1)) { m_p++; };
         m_bytes = bytes;
         clear();
@@ -183,7 +183,7 @@ private:
     uint8_t m_w;
     uint8_t m_p;
     uint8_t m_h;
-    uint8_t m_inverseByte;
+    uint8_t m_invertByte;
     uint8_t *m_bytes;
 };
 

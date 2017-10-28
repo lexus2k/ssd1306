@@ -28,9 +28,9 @@ extern const uint8_t *s_font6x8;
 void NanoCanvas::putPixel(uint8_t x, uint8_t y)
 {
     if ((x>=m_w) || (y>=m_h)) return;
-    if (m_inverseByte)
+    if (m_invertByte)
     {
-        m_bytes[YADDR(y) + x] &= ((1 << (y & 0x7))^m_inverseByte);
+        m_bytes[YADDR(y) + x] &= ((1 << (y & 0x7))^m_invertByte);
     }
     else
     {
@@ -69,7 +69,7 @@ void NanoCanvas::drawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
 
 void NanoCanvas::fillRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t templ)
 {
-    templ ^= m_inverseByte;
+    templ ^= m_invertByte;
     if ((x1 < x2) && (x1 >= m_w)) return;
     if ((y1 < y2) && (y1 >= m_h)) return;
     if (x1 > x2) x1 = 0;
@@ -78,7 +78,7 @@ void NanoCanvas::fillRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_
     if (y2 >= m_h) y2 = m_h -1;
     uint8_t bank1 = (y1 >> 3);
     uint8_t bank2 = (y2 >> 3);
-    for (uint8_t bank = bank1; bank2<=(y2 >> 3); bank++)
+    for (uint8_t bank = bank1; bank<=bank2; bank++)
     {
         uint8_t mask = 0xFF;
         if (bank1 == bank2)
@@ -87,11 +87,11 @@ void NanoCanvas::fillRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_
         }
         else if (bank1 == bank)
         {
-            mask = (mask >> (y1 & 7));
+            mask = (mask << (y1 & 7));
         }
         else if (bank2 == bank)
         {
-            mask = (mask << (7 - (y2 & 7)));
+            mask = (mask >> (7 - (y2 & 7)));
         }
         for (uint8_t x=x1; x<x2; x++)
         {
@@ -106,7 +106,7 @@ void NanoCanvas::clear()
 {
     for(uint16_t i=0; i<m_w* (m_h >> 3); i++)
     {
-       m_bytes[i] = m_inverseByte;
+       m_bytes[i] = m_invertByte;
     }
 }
 

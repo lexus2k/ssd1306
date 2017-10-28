@@ -31,6 +31,7 @@
 #include "ssd1306_i2c_conf.h"
 #include "ssd1306_spi_conf.h"
 #include "sova.h"
+#include "nano_gfx.h"
 
 /* Do not include wire.h for Attiny controllers */
 #ifndef SSD1306_EMBEDDED_I2C
@@ -139,6 +140,22 @@ void textDemo()
     delay(3000);
 }
 
+void canvasDemo()
+{
+    uint8_t buffer[64*16/8];
+    NanoCanvas canvas(64,16, buffer);
+    canvas.clear();
+    canvas.fillRect(10, 3, 80, 5, 0xFF);
+    canvas.blt(32, 1);
+    delay(500);
+    canvas.fillRect(50, 1, 60, 15, 0xFF);
+    canvas.blt(32, 1);
+    delay(1500);
+    canvas.charF6x8(20, 1, " DEMO " );
+    canvas.blt(32, 1);
+    delay(3000);
+}
+
 void loop()
 {
     delay(1000);
@@ -156,6 +173,9 @@ void loop()
             textDemo();
             break;
 
+        case 3:
+            canvasDemo();
+            break;
         default:
             break;
     }
