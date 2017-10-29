@@ -128,14 +128,34 @@ void         ssd1306_positiveMode();
  * @param y - vertical position in blocks (pixels/8)
  * @param ch - NULL-terminated string to print
  * @param style - font style (EFontStyle), normal by default.
+ * @returns number of chars in string
  */
-void         ssd1306_charF6x8(uint8_t x, uint8_t y,
+uint8_t      ssd1306_charF6x8(uint8_t x, uint8_t y,
                               const char ch[],
                               EFontStyle style
 #ifdef __cplusplus
                               = STYLE_NORMAL
 #endif
                              );
+
+/**
+ * Prints text to screen using set font.
+ * If real text ends before <right> boundary,
+ * the remaining part on the display will be erased till <right>
+ * boundary.
+ * @param left - horizontal position in pixels
+ * @param y - vertical position in blocks (pixels/8)
+ * @param ch - NULL-terminated string to print
+ * @param style - font style (EFontStyle), normal by default.
+ * @param right - right boundary of the text to output
+ * @param returns number of chars in string
+ */
+uint8_t      ssd1306_charF6x8_eol(uint8_t left,
+                                  uint8_t y,
+                                  const char ch[],
+                                  EFontStyle style,
+                                  uint8_t right);
+
 
 /**
  * Function allows to set another font for the library.

@@ -131,7 +131,7 @@ void ssd1306_displayOn()
     ssd1306_sendCommand(SSD1306_DISPLAYON);
 }
 
-void ssd1306_charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style)
+uint8_t ssd1306_charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style)
 {
     uint8_t i, j=0;
     ssd1306_setRamBlock(0, 0, s_displayWidth);
@@ -171,6 +171,22 @@ void ssd1306_charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style)
         j++;
     }
     ssd1306_endTransmission();
+    return j;
+}
+
+uint8_t      ssd1306_charF6x8_eol(uint8_t left,
+                                  uint8_t y,
+                                  const char ch[],
+                                  EFontStyle style,
+                                  uint8_t right)
+{
+    uint8_t len = ssd1306_charF6x8(left, y, ch, style);
+    uint8_t text_end_pos = len * 6 + left;
+    if (text_end_pos <= right)
+    {
+        ssd1306_clearBlock(text_end_pos, y, right - text_end_pos + 1, 8);
+    }
+    return len;
 }
 
 void         ssd1306_setFont6x8(const uint8_t * progmemFont)
