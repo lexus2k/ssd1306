@@ -38,8 +38,6 @@
 
 #include "game_field.h"
 #include "ssd1306.h"
-#include "i2c/ssd1306_i2c_conf.h"
-#include "spi/ssd1306_spi_conf.h"
 #include "player_sprites.h"
 #include "coin_sprite.h"
 #include "hero_states.h"

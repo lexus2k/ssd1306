@@ -29,7 +29,6 @@
  */
 
 #include "ssd1306.h"
-#include "i2c/ssd1306_i2c_conf.h"
 #include "buttons.h"
 
 /* Do not include wire.h for Attiny controllers */

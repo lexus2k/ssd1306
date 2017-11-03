@@ -24,10 +24,6 @@
 #ifndef _SSD1306_I2C_CONF_H_
 #define _SSD1306_I2C_CONF_H_
 
-#ifdef ARDUINO
-#include <Arduino.h>
-#endif
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -62,10 +58,10 @@ extern "C" {
 
 #if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)
     #ifndef SSD1306_SCL
-        #define SSD1306_SCL   PB3 ///< SCL, Pin 3 on SSD1306 Board
+        #define SSD1306_SCL   3 ///< SCL, Pin 3 on SSD1306 Board
     #endif
     #ifndef SSD1306_SDA
-        #define SSD1306_SDA   PB4 ///< SDA, Pin 4 on SSD1306 Board
+        #define SSD1306_SDA   4 ///< SDA, Pin 4 on SSD1306 Board
     #endif
 #else
     #ifndef SSD1306_SCL
