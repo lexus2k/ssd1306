@@ -32,7 +32,7 @@
 #include "sprite_pool.h"
 
 /* Do not include SPI.h for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_SPI
+#ifdef SSD1306_SPI_SUPPORTED
     #include <SPI.h>
 #endif
 
@@ -79,7 +79,7 @@ int speedY = 1;
 void setup()
 {
     /* Do not init Wire library for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_SPI
+#ifdef SSD1306_SPI_SUPPORTED
     SPI.begin();
 #endif
     pcd8544_84x48_spi_init(3, 4, 5);

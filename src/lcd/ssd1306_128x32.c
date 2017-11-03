@@ -19,7 +19,7 @@
 
 #include "ssd1306_128x32.h"
 #include "lcd_common.h"
-#include "intf/ssd1306_commands.h"
+#include "ssd1306_commands.h"
 #include "intf/ssd1306_interface.h"
 #include "i2c/ssd1306_i2c.h"
 
@@ -31,8 +31,8 @@ static const uint8_t PROGMEM s_oled128x32_initData[] =
     SSD1306_SETDISPLAYOFFSET, 0x00, // --no offset
     SSD1306_SETSTARTLINE,
     SSD1306_CHARGEPUMP, 0x14, // 0x10
-    SSD1306_SEGREMAP | 0x01,
-    SSD1306_COMSCANDIR,
+    SSD1306_SEGREMAP | 0x01,  // Reverse mapping
+    SSD1306_COMSCANDEC,
     SSD1306_SETCOMPINS, 0x02,
     SSD1306_SETCONTRAST, 0x7F, // contast value
     SSD1306_SETPRECHARGE, 0x22, // 0x1F

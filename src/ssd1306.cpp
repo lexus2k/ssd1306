@@ -23,7 +23,7 @@
 #include "lcd/lcd_common.h"
 #include "i2c/ssd1306_i2c.h"
 #include "spi/ssd1306_spi.h"
-#include "intf/ssd1306_commands.h"
+#include "lcd/ssd1306_commands.h"
 
 uint8_t s_displayHeight;
 uint8_t s_displayWidth;
@@ -49,9 +49,9 @@ void ssd1306_setRamBlock(uint8_t x, uint8_t y, uint8_t w)
         ssd1306_sendByte(SSD1306_COLUMNADDR);
         ssd1306_sendByte(x);
         ssd1306_sendByte(x + w - 1);
-        ssd1306_sendByte(0xb0+y);
-        ssd1306_sendByte((x>>4) | 0x10);
-        ssd1306_sendByte(x&0x0f);
+        ssd1306_sendByte(SSD1306_SETPAGE | y);
+        ssd1306_sendByte((x>>4) | SSD1306_SETHIGHCOLUMN);
+        ssd1306_sendByte((x & 0x0f) | SSD1306_SETLOWCOLUMN);
         ssd1306_endTransmission();
     }
     else if ( g_lcd_type == LCD_TYPE_PCD8544 )
@@ -69,9 +69,9 @@ void ssd1306_setPos(uint8_t x, uint8_t y)
     if ( g_lcd_type == LCD_TYPE_SSD1306 )
     {
         ssd1306_commandStart();
-        ssd1306_sendByte(0xb0+y);
-        ssd1306_sendByte((x>>4) | 0x10);
-        ssd1306_sendByte(x&0x0f);
+        ssd1306_sendByte(SSD1306_SETPAGE | y);
+        ssd1306_sendByte((x>>4) | SSD1306_SETHIGHCOLUMN);
+        ssd1306_sendByte((x & 0x0f) | SSD1306_SETLOWCOLUMN);
         ssd1306_endTransmission();
     }
     else if ( g_lcd_type == LCD_TYPE_PCD8544 )
@@ -95,9 +95,11 @@ void ssd1306_fillScreen(uint8_t fill_Data)
     fill_Data ^= s_invertByte;
     ssd1306_setRamBlock(0, 0, s_displayWidth);
     ssd1306_dataStart();
-    for(uint8_t m=0; m<(s_displayHeight >> 3); m++)
+    for(uint8_t m=(s_displayHeight >> 3); m>0; m--)
+//    for(uint8_t m=0; m<(s_displayHeight >> 3); m++)
     {
-        for(uint8_t n=0; n<s_displayWidth; n++)
+        for(uint8_t n=s_displayWidth; n>0; n--)
+//        for(uint8_t n=0; n<s_displayWidth; n++)
         {
             ssd1306_sendByte(fill_Data);
         }
@@ -109,9 +111,11 @@ void ssd1306_clearScreen()
 {
     ssd1306_setRamBlock(0, 0, s_displayWidth);
     ssd1306_dataStart();
-    for(uint8_t m=0; m<(s_displayHeight >> 3); m++)
+    for(uint8_t m=(s_displayHeight >> 3); m>0; m--)
+//    for(uint8_t m=0; m<(s_displayHeight >> 3); m++)
     {
-        for(uint8_t n=0; n<s_displayWidth; n++)
+        for(uint8_t n=s_displayWidth; n>0; n--)
+//        for(uint8_t n=0; n<s_displayWidth; n++)
         {
             ssd1306_sendByte( s_invertByte );
         }

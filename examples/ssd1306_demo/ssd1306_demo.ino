@@ -34,11 +34,11 @@
 #include "nano_gfx.h"
 
 /* Do not include wire.h for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_I2C
+#ifdef SSD1306_WIRE_SUPPORTED
     #include <Wire.h>
 #endif
 /* Do not include SPI.h for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_SPI
+#ifdef SSD1306_SPI_SUPPORTED
     #include <SPI.h>
 #endif
 
@@ -81,7 +81,7 @@ const char *menuItems[] =
 void setup()
 {
     /* Do not init Wire library for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_I2C
+#ifdef SSD1306_WIRE_SUPPORTED
     Wire.begin();
     Wire.setClock(400000);
 #endif
@@ -89,7 +89,7 @@ void setup()
 
     /* Uncomment lines below if you want to use SPI Nokia 5110 LCD */
 /*
-#ifndef SSD1306_EMBEDDED_SPI
+#ifdef SSD1306_SPI_SUPPORTED
     SPI.begin();
 #endif
     pcd8544_84x48_spi_init(3, 4, 5);
@@ -144,15 +144,16 @@ void canvasDemo()
 {
     uint8_t buffer[64*16/8];
     NanoCanvas canvas(64,16, buffer);
+    ssd1306_clearScreen();
     canvas.clear();
     canvas.fillRect(10, 3, 80, 5, 0xFF);
-    canvas.blt(32, 1);
+    canvas.blt((ssd1306_displayWidth()-64)/2, 1);
     delay(500);
     canvas.fillRect(50, 1, 60, 15, 0xFF);
-    canvas.blt(32, 1);
+    canvas.blt((ssd1306_displayWidth()-64)/2, 1);
     delay(1500);
     canvas.charF6x8(20, 1, " DEMO " );
-    canvas.blt(32, 1);
+    canvas.blt((ssd1306_displayWidth()-64)/2, 1);
     delay(3000);
 }
 

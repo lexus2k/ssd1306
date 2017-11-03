@@ -33,7 +33,7 @@
 #include "buttons.h"
 
 /* Do not include wire.h for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_I2C
+#ifdef SSD1306_WIRE_SUPPORTED
     #include <Wire.h>
 #endif
 
@@ -59,7 +59,7 @@ SAppMenu menu;
 void setup()
 {
     /* Do not init Wire library for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_I2C
+#ifdef SSD1306_WIRE_SUPPORTED
     Wire.begin();
     Wire.setClock(400000);
 #endif

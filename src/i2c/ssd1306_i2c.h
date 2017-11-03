@@ -25,7 +25,7 @@
 #define _SSD1306_I2C_H_
 
 #include "ssd1306_i2c_conf.h"
-#include <Arduino.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -33,24 +33,11 @@ extern "C" {
 
 /**
  * Inits display interface to use i2c bus.
+ * The function automatically selects available type of i2c implementation
+ * 1. Wire library
+ * 2. sw i2c implementation
  */
 void         ssd1306_i2cInit();
-
-/**
- * Informs I2C device about data to be sent
- */
-void         ssd1306_i2cStart();
-
-/**
- * Completes I2C transaction
- */
-void         ssd1306_i2cStop();
-
-/**
- * Sends byte to I2C device
- * @param data - byte to send
- */
-void         ssd1306_i2cSendByte(uint8_t data);
 
 /**
  * Switches i2c chip to command transmission mode.

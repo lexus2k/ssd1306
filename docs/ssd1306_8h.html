@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.12"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SSD1306 I2C Display Driver: src/ssd1306.h File Reference</title>
+<title>SSD1306 OLED display driver: src/ssd1306.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,10 +21,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">SSD1306 I2C Display Driver
-   &#160;<span id="projectnumber">1.2.2</span>
+   <div id="projectname">SSD1306 OLED display driver
+   &#160;<span id="projectnumber">1.2.5</span>
    </div>
-   <div id="projectbrief">This library is developed to control SSD1306 I2C OLED Display</div>
+   <div id="projectbrief">This library is developed to control SSD1306 i2c/spi OLED display</div>
   </td>
  </tr>
  </tbody>
@@ -115,8 +115,10 @@ Functions</h2></td></tr>
 <tr class="separator:ga27cde6402b4646c4f17d03f169dd8d8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4aeb15a4b7c562ea715fec100d35a7ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga4aeb15a4b7c562ea715fec100d35a7ce">ssd1306_positiveMode</a> ()</td></tr>
 <tr class="separator:ga4aeb15a4b7c562ea715fec100d35a7ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac42554ce27a6baf324e2bdccfd8b93dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#gac42554ce27a6baf324e2bdccfd8b93dc">ssd1306_charF6x8</a> (uint8_t x, uint8_t y, const char ch[], <a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style=STYLE_NORMAL)</td></tr>
-<tr class="separator:gac42554ce27a6baf324e2bdccfd8b93dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4ff90cffc500961db143a8c01d3f67d3"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga4ff90cffc500961db143a8c01d3f67d3">ssd1306_charF6x8</a> (uint8_t x, uint8_t y, const char ch[], <a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style=STYLE_NORMAL)</td></tr>
+<tr class="separator:ga4ff90cffc500961db143a8c01d3f67d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1f687aa1ed05ab20bc1ab79f83a82bfd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga1f687aa1ed05ab20bc1ab79f83a82bfd">ssd1306_charF6x8_eol</a> (uint8_t left, uint8_t y, const char ch[], <a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style, uint8_t right)</td></tr>
+<tr class="separator:ga1f687aa1ed05ab20bc1ab79f83a82bfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga880de8436b0e2fd1664094f7a2b5192c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga880de8436b0e2fd1664094f7a2b5192c">ssd1306_setFont6x8</a> (const uint8_t *progmemFont)</td></tr>
 <tr class="separator:ga880de8436b0e2fd1664094f7a2b5192c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5d98e0567eb3f541f19508ac74899962"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga5d98e0567eb3f541f19508ac74899962">ssd1306_putPixel</a> (uint8_t x, uint8_t y)</td></tr>

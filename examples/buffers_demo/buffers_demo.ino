@@ -32,7 +32,7 @@
 #include "nano_gfx.h"
 
 /* Do not include wire.h for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_I2C
+#ifdef SSD1306_WIRE_SUPPORTED
     #include <Wire.h>
 #endif
 
@@ -88,7 +88,7 @@ NanoCanvas canvas(canvasWidth, canvasHeight, canvasData);
 void setup()
 {
     /* Do not init Wire library for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_I2C
+#ifdef SSD1306_WIRE_SUPPORTED
     Wire.begin();
 #endif
     /* Initialize and clear display */

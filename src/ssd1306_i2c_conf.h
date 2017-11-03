@@ -17,40 +17,55 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file ssd1306_i2c_conf.h SSD1306 library basic i2c definitions
+ */
+
 #ifndef _SSD1306_I2C_CONF_H_
 #define _SSD1306_I2C_CONF_H_
+
+#ifdef ARDUINO
+#include <Arduino.h>
+#endif
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-// Uncomment this block only, if you need to use "embedded" I2C on Atmega controllers
-// #define SSD1306_EMBEDDED_I2C
-
 #ifndef SSD1306_SA
     /**
-     * SSD1306_SA defines I2C address of LCD display. Please, check your device.
-     * If you LCD device has different address, change it here.
+     * SSD1306_SA defines default i2c address of LCD display. Please, check your device.
+     * If you LCD device has different address, you can set different one via
+     * ssd1306_i2cInit_Wire() or ssd1306_i2cInit_Embedded() functions.
      * Write command will be SSD1306_SA<<1 and read will be SSD1306_SA<<1 | 1
      */
     #define SSD1306_SA    0x3C  // Slave address
 #endif
 
 #if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
-#ifndef SSD1306_EMBEDDED_I2C
     /**
      * Use embedded i2c on attiny controllers. Wire library is not applicable
+     * The macro is deprecated. Use SSD1306_I2C_SW_SUPPORTED or SSD1306_WIRE_SUPPORTED instead
      */
     #define SSD1306_EMBEDDED_I2C
-#endif
+
+    /** The macro is defined when software i2c implementation is available */
+    #define SSD1306_I2C_SW_SUPPORTED
+#else
+    /** The macro is defined when i2c Wire library is available */
+    #define SSD1306_WIRE_SUPPORTED
+    #ifndef ESP8266
+        /** The macro is defined when software i2c implementation is available */
+        #define SSD1306_I2C_SW_SUPPORTED
+    #endif
 #endif
 
-#if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__) 
+#if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)
     #ifndef SSD1306_SCL
-        #define SSD1306_SCL   PB3 // SCL, Pin 3 on SSD1306 Board
+        #define SSD1306_SCL   PB3 ///< SCL, Pin 3 on SSD1306 Board
     #endif
     #ifndef SSD1306_SDA
-        #define SSD1306_SDA   PB4 // SDA, Pin 4 on SSD1306 Board
+        #define SSD1306_SDA   PB4 ///< SDA, Pin 4 on SSD1306 Board
     #endif
 #else
     #ifndef SSD1306_SCL

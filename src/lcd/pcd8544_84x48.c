@@ -19,7 +19,7 @@
 
 #include "pcd8544_84x48.h"
 #include "lcd_common.h"
-#include "intf/pcd8544_commands.h"
+#include "pcd8544_commands.h"
 #include "intf/ssd1306_interface.h"
 #include "spi/ssd1306_spi.h"
 
@@ -35,8 +35,6 @@ static const uint8_t PROGMEM s_lcd84x48_initData[] =
 
 void    pcd8544_84x48_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
 {
-    if (cesPin >=0) pinMode(cesPin, OUTPUT);
-    if (dcPin >= 0) pinMode(dcPin, OUTPUT);
     if (rstPin >=0)
     {
         pinMode(rstPin, OUTPUT);
@@ -50,7 +48,7 @@ void    pcd8544_84x48_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
     }
     g_lcd_type = LCD_TYPE_PCD8544;
 
-    ssd1306_hwSpiInit(cesPin, dcPin);
+    ssd1306_spiInit(cesPin, dcPin);
     ssd1306_commandStart();
     s_displayHeight = 48;
     s_displayWidth = 84;

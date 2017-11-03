@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.12"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SSD1306 I2C Display Driver: LCD Display control functions</title>
+<title>SSD1306 OLED display driver: LCD Display control functions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,10 +21,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">SSD1306 I2C Display Driver
-   &#160;<span id="projectnumber">1.2.2</span>
+   <div id="projectname">SSD1306 OLED display driver
+   &#160;<span id="projectnumber">1.2.5</span>
    </div>
-   <div id="projectbrief">This library is developed to control SSD1306 I2C OLED Display</div>
+   <div id="projectbrief">This library is developed to control SSD1306 i2c/spi OLED display</div>
   </td>
  </tr>
  </tbody>
@@ -75,6 +75,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga9ea532820b1870f3dc4fa2ae68d3c4cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga11882f1e10f5ae62752d2ed643695040"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___d_i_s_p_l_a_y___a_p_i.html#ga11882f1e10f5ae62752d2ed643695040">ssd1306_128x64_i2c_init</a> ()</td></tr>
 <tr class="separator:ga11882f1e10f5ae62752d2ed643695040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga008655e2f6258b9e4e869733485dd821"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___d_i_s_p_l_a_y___a_p_i.html#ga008655e2f6258b9e4e869733485dd821">ssd1306_128x64_spi_init</a> (int8_t rstPin, int8_t cesPin, int8_t dcPin)</td></tr>
+<tr class="separator:ga008655e2f6258b9e4e869733485dd821"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaddcd945c94799be343fa97fa2a247c42"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___d_i_s_p_l_a_y___a_p_i.html#gaddcd945c94799be343fa97fa2a247c42">ssd1306_init</a> () __attribute__((deprecated))</td></tr>
 <tr class="separator:gaddcd945c94799be343fa97fa2a247c42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7bfec390efdfde56e4ef8952219c94b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___d_i_s_p_l_a_y___a_p_i.html#ga7bfec390efdfde56e4ef8952219c94b0">ssd1306_displayOff</a> ()</td></tr>
@@ -172,7 +174,51 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Inits 128x64 OLED display over i2c (based on SSD1306 controller) </p>
 
-<p>Definition at line <a class="el" href="ssd1306__128x64_8c_source.html#l00058">58</a> of file <a class="el" href="ssd1306__128x64_8c_source.html">ssd1306_128x64.c</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306__128x64_8c_source.html#l00059">59</a> of file <a class="el" href="ssd1306__128x64_8c_source.html">ssd1306_128x64.c</a>.</p>
+
+</div>
+</div>
+<a id="ga008655e2f6258b9e4e869733485dd821"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga008655e2f6258b9e4e869733485dd821">&sect;&nbsp;</a></span>ssd1306_128x64_spi_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1306_128x64_spi_init </td>
+          <td>(</td>
+          <td class="paramtype">int8_t&#160;</td>
+          <td class="paramname"><em>rstPin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int8_t&#160;</td>
+          <td class="paramname"><em>cesPin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int8_t&#160;</td>
+          <td class="paramname"><em>dcPin</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Inits 128x64 OLED display over spi (based on SSD1306 controller) </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rstPin</td><td>- pin controlling LCD reset (-1 if not used) </td></tr>
+    <tr><td class="paramname">cesPin</td><td>- chip enable pin to LCD slave (-1 if not used) </td></tr>
+    <tr><td class="paramname">dcPin</td><td>- data/command pin to control LCD dc (required) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="ssd1306__128x64_8c_source.html#l00072">72</a> of file <a class="el" href="ssd1306__128x64_8c_source.html">ssd1306_128x64.c</a>.</p>
 
 </div>
 </div>
@@ -274,7 +320,7 @@ Functions</h2></td></tr>
 <p></p>
 <p>Inits 128x64 OLED display over i2c (based on SSD1306 controller) </p>
 
-<p>Definition at line <a class="el" href="ssd1306__128x64_8c_source.html#l00052">52</a> of file <a class="el" href="ssd1306__128x64_8c_source.html">ssd1306_128x64.c</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306__128x64_8c_source.html#l00053">53</a> of file <a class="el" href="ssd1306__128x64_8c_source.html">ssd1306_128x64.c</a>.</p>
 
 </div>
 </div>
@@ -294,7 +340,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Switches display to inverse mode. LCD will display 0-pixels as white, and 1-pixels as black. </p>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00411">411</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00427">427</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -314,7 +360,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Switches display to normal mode. </p>
 
-<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00416">416</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306_8cpp_source.html#l00432">432</a> of file <a class="el" href="ssd1306_8cpp_source.html">ssd1306.cpp</a>.</p>
 
 </div>
 </div>

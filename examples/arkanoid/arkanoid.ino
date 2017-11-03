@@ -56,11 +56,13 @@
 #endif
 #include "ssd1306.h"
 #include "ssd1306_i2c_conf.h"
+#include "i2c/ssd1306_i2c_wire.h"
+#include "i2c/ssd1306_i2c_embedded.h"
 #include "intf/ssd1306_interface.h"
 #include <avr/sleep.h>
 #include <avr/interrupt.h> // needed for the additional interrupt
 
-#ifndef SSD1306_EMBEDDED_I2C
+#ifdef SSD1306_WIRE_SUPPORTED
 #include <Wire.h>
 #endif
 
@@ -150,7 +152,7 @@ void playerInc()
 
 void setup()
 {
-#ifndef SSD1306_EMBEDDED_I2C
+#ifdef SSD1306_WIRE_SUPPORTED
     Wire.begin();
     Wire.setClock( 400000 );
 #endif
@@ -220,13 +222,18 @@ void drawStatusPanel()
 
 void drawIntro()
 {
-  ssd1306_init();
-  ssd1306_clearScreen( );
-  ssd1306_drawBitmap(16, 2, 96, 24, arkanoid_2);
-  ssd1306_charF6x8(40, 5, "BREAKOUT");
-  beep(200,600);
-  beep(300,200);
-  beep(400,300);
+#ifdef SSD1306_WIRE_SUPPORTED
+    ssd1306_i2cInit_Wire(0);
+#elif defined(SSD1306_I2C_SW_SUPPORTED)
+    ssd1306_i2cInit_Embedded(0,0,0);
+#endif
+    ssd1306_128x64_init();
+    ssd1306_clearScreen( );
+    ssd1306_drawBitmap(16, 2, 96, 24, arkanoid_2);
+    ssd1306_charF6x8(40, 5, "BREAKOUT");
+    beep(200,600);
+    beep(300,200);
+    beep(400,300);
 }
 
 void drawStartScreen()
@@ -313,9 +320,9 @@ void resetBlocks()
        level = MAX_LEVELS;
     }
     blocksLeft = 0;
-    for (byte i =0; i<BLOCKS_PER_ROW;i++)
+    for (byte i =0; i<BLOCKS_PER_ROW; i++)
     {
-        for (int j=0; j<BLOCK_NUM_ROWS; ++j)
+        for (int j=0; j<BLOCK_NUM_ROWS; j++)
         {
             gameField[j][i] = pgm_read_byte( &levels[level-1][j][i] );
             if ((gameField[j][i]) && (gameField[j][i] != BLOCK_STRONG))
@@ -328,9 +335,9 @@ void resetBlocks()
 
 void drawBlocks()
 {
-    for (uint8_t r=0; r<BLOCK_NUM_ROWS; ++r)
+    for (uint8_t r=0; r<BLOCK_NUM_ROWS; r++)
     {
-        for (uint8_t bl = 0; bl <BLOCKS_PER_ROW; bl++)
+        for (uint8_t bl = 0; bl<BLOCKS_PER_ROW; bl++)
         {
             drawBlock(bl, r);
         }
@@ -339,7 +346,7 @@ void drawBlocks()
 
 void drawFieldEdges()
 {
-    for (uint8_t i=0; i<8; i++)
+    for (uint8_t i=8; i>0; i--)
     {
         ssd1306_setPos(LEFT_EDGE, i);
         ssd1306_sendData( B01010101 );

@@ -17,6 +17,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file ssd1306_spi_conf.h SSD1306 library basic spi definitions
+ */
+
 #ifndef _SSD1306_SPI_CONF_H_
 #define _SSD1306_SPI_CONF_H_
 
@@ -24,16 +28,15 @@
 extern "C" {
 #endif
 
-// Uncomment this block only, if you need to use "embedded" SPI on Atmega controllers
-// #define SSD1306_EMBEDDED_SPI
-
 #if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
-#ifndef SSD1306_EMBEDDED_SPI
     /**
      * Use embedded spi on attiny controllers. SPI library is not applicable
+     * The macro is deprecated. Use SSD1306_SPI_SUPPORTED instead.
      */
     #define SSD1306_EMBEDDED_SPI
-#endif
+#else
+    /** The macro is defined when SPI library is available */
+    #define SSD1306_SPI_SUPPORTED
 #endif
 
 #ifdef __cplusplus

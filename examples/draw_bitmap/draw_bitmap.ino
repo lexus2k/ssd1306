@@ -32,7 +32,7 @@
 #include "sova.h"
 
 /* Do not include wire.h for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_I2C
+#ifdef SSD1306_WIRE_SUPPORTED
     #include <Wire.h>
 #endif
 
@@ -40,7 +40,7 @@
 void setup()
 {
     /* Do not init Wire library for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_I2C
+#ifdef SSD1306_WIRE_SUPPORTED
     Wire.begin();
 #endif
     ssd1306_128x64_i2c_init();

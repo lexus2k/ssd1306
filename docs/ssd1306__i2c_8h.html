@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.12"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SSD1306 I2C Display Driver: src/i2c/ssd1306_i2c.h File Reference</title>
+<title>SSD1306 OLED display driver: src/i2c/ssd1306_i2c.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,10 +21,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">SSD1306 I2C Display Driver
-   &#160;<span id="projectnumber">1.2.2</span>
+   <div id="projectname">SSD1306 OLED display driver
+   &#160;<span id="projectnumber">1.2.5</span>
    </div>
-   <div id="projectbrief">This library is developed to control SSD1306 I2C OLED Display</div>
+   <div id="projectbrief">This library is developed to control SSD1306 i2c/spi OLED display</div>
   </td>
  </tr>
  </tbody>
@@ -70,8 +70,8 @@ $(function() {
 <div class="title">ssd1306_i2c.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;ssd1306_i2c_conf.h&quot;</code><br />
-<code>#include &lt;Arduino.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="ssd1306__i2c__conf_8h_source.html">ssd1306_i2c_conf.h</a>&quot;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
 </div>
 <p><a href="ssd1306__i2c_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -79,12 +79,6 @@ $(function() {
 Functions</h2></td></tr>
 <tr class="memitem:a68a69b6dea3bb0226e855c0a24f4448d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306__i2c_8h.html#a68a69b6dea3bb0226e855c0a24f4448d">ssd1306_i2cInit</a> ()</td></tr>
 <tr class="separator:a68a69b6dea3bb0226e855c0a24f4448d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31ec9e1944a186b6c6b3925582436ada"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306__i2c_8h.html#a31ec9e1944a186b6c6b3925582436ada">ssd1306_i2cStart</a> ()</td></tr>
-<tr class="separator:a31ec9e1944a186b6c6b3925582436ada"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0dda0d7c1510f1b3e80a25c49ba57bc7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306__i2c_8h.html#a0dda0d7c1510f1b3e80a25c49ba57bc7">ssd1306_i2cStop</a> ()</td></tr>
-<tr class="separator:a0dda0d7c1510f1b3e80a25c49ba57bc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ac9a9ab27912d743601ba0e4c7f7ad2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306__i2c_8h.html#a1ac9a9ab27912d743601ba0e4c7f7ad2">ssd1306_i2cSendByte</a> (uint8_t data)</td></tr>
-<tr class="separator:a1ac9a9ab27912d743601ba0e4c7f7ad2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae3a68eee85f87bd05807f2ef5b99dee2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306__i2c_8h.html#ae3a68eee85f87bd05807f2ef5b99dee2">ssd1306_i2cCommandStart</a> ()</td></tr>
 <tr class="separator:ae3a68eee85f87bd05807f2ef5b99dee2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15238f629477ab7205aeec4aef259f1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306__i2c_8h.html#a15238f629477ab7205aeec4aef259f1c">ssd1306_i2cDataStart</a> ()</td></tr>
@@ -111,7 +105,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Switches i2c chip to command transmission mode. </p>
 
-<p>Definition at line <a class="el" href="ssd1306__i2c__common_8cpp_source.html#l00023">23</a> of file <a class="el" href="ssd1306__i2c__common_8cpp_source.html">ssd1306_i2c_common.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306__i2c__common_8cpp_source.html#l00025">25</a> of file <a class="el" href="ssd1306__i2c__common_8cpp_source.html">ssd1306_i2c_common.cpp</a>.</p>
 
 </div>
 </div>
@@ -131,7 +125,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Switches i2c chip to data transmission mode. </p>
 
-<p>Definition at line <a class="el" href="ssd1306__i2c__common_8cpp_source.html#l00029">29</a> of file <a class="el" href="ssd1306__i2c__common_8cpp_source.html">ssd1306_i2c_common.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306__i2c__common_8cpp_source.html#l00031">31</a> of file <a class="el" href="ssd1306__i2c__common_8cpp_source.html">ssd1306_i2c_common.cpp</a>.</p>
 
 </div>
 </div>
@@ -149,76 +143,12 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Inits display interface to use i2c bus. </p>
+<p>Inits display interface to use i2c bus. The function automatically selects available type of i2c implementation</p><ol type="1">
+<li>Wire library</li>
+<li>sw i2c implementation </li>
+</ol>
 
-<p>Definition at line <a class="el" href="ssd1306__i2c__common_8cpp_source.html#l00035">35</a> of file <a class="el" href="ssd1306__i2c__common_8cpp_source.html">ssd1306_i2c_common.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a1ac9a9ab27912d743601ba0e4c7f7ad2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ac9a9ab27912d743601ba0e4c7f7ad2">&sect;&nbsp;</a></span>ssd1306_i2cSendByte()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_i2cSendByte </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>data</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Sends byte to I2C device </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">data</td><td>- byte to send</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Inputs: SCL is LOW, SDA is has no meaning Outputs: SCL is LOW </p>
-
-<p>Definition at line <a class="el" href="ssd1306__i2c__wire_8cpp_source.html#l00047">47</a> of file <a class="el" href="ssd1306__i2c__wire_8cpp_source.html">ssd1306_i2c_wire.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a31ec9e1944a186b6c6b3925582436ada"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31ec9e1944a186b6c6b3925582436ada">&sect;&nbsp;</a></span>ssd1306_i2cStart()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_i2cStart </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Informs I2C device about data to be sent </p>
-
-<p>Definition at line <a class="el" href="ssd1306__i2c__wire_8cpp_source.html#l00032">32</a> of file <a class="el" href="ssd1306__i2c__wire_8cpp_source.html">ssd1306_i2c_wire.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a0dda0d7c1510f1b3e80a25c49ba57bc7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0dda0d7c1510f1b3e80a25c49ba57bc7">&sect;&nbsp;</a></span>ssd1306_i2cStop()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_i2cStop </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Completes I2C transaction </p>
-
-<p>Definition at line <a class="el" href="ssd1306__i2c__wire_8cpp_source.html#l00038">38</a> of file <a class="el" href="ssd1306__i2c__wire_8cpp_source.html">ssd1306_i2c_wire.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306__i2c__common_8cpp_source.html#l00037">37</a> of file <a class="el" href="ssd1306__i2c__common_8cpp_source.html">ssd1306_i2c_common.cpp</a>.</p>
 
 </div>
 </div>
