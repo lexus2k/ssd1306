@@ -63,6 +63,17 @@ extern void (*ssd1306_commandStart)();
  */
 extern void (*ssd1306_dataStart)();
 
+/**
+ * Sends byte data to SSD1306 controller memory.
+ * Performs 3 operations at once: ssd1306_dataStart(); ssd1306_sendByte( data ); ssd1306_endTransmission();
+ * @param data - byte to send to the controller memory
+ */
+void         ssd1306_sendData(uint8_t data);
+
+void ssd1306_setRamBlock(uint8_t x, uint8_t y, uint8_t w);
+
+void ssd1306_setPos(uint8_t x, uint8_t y);
+
 #ifdef __cplusplus
 }
 #endif

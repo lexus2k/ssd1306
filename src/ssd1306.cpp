@@ -19,10 +19,12 @@
 
 #include "font6x8.h"
 #include "ssd1306.h"
-#include "intf/ssd1306_interface.h"
 #include "lcd/lcd_common.h"
 #include "i2c/ssd1306_i2c.h"
 #include "spi/ssd1306_spi.h"
+#include "intf/ssd1306_interface.h"
+
+// TODO: remove
 #include "lcd/ssd1306_commands.h"
 
 uint8_t s_displayHeight;
@@ -39,55 +41,6 @@ uint8_t      ssd1306_displayHeight()
 uint8_t      ssd1306_displayWidth()
 {
     return s_displayWidth;
-}
-
-void ssd1306_setRamBlock(uint8_t x, uint8_t y, uint8_t w)
-{
-    if ( g_lcd_type == LCD_TYPE_SSD1306 )
-    {
-        ssd1306_commandStart();
-        ssd1306_sendByte(SSD1306_COLUMNADDR);
-        ssd1306_sendByte(x);
-        ssd1306_sendByte(x + w - 1);
-        ssd1306_sendByte(SSD1306_SETPAGE | y);
-        ssd1306_sendByte((x>>4) | SSD1306_SETHIGHCOLUMN);
-        ssd1306_sendByte((x & 0x0f) | SSD1306_SETLOWCOLUMN);
-        ssd1306_endTransmission();
-    }
-    else if ( g_lcd_type == LCD_TYPE_PCD8544 )
-    {
-        ssd1306_commandStart();
-        if (w == 1) ssd1306_sendByte( 0x22 ); else ssd1306_sendByte( 0x20 );
-        ssd1306_sendByte(0x80 | x);
-        ssd1306_sendByte(0x40 | y);
-        ssd1306_endTransmission();
-    }
-}
-
-void ssd1306_setPos(uint8_t x, uint8_t y)
-{
-    if ( g_lcd_type == LCD_TYPE_SSD1306 )
-    {
-        ssd1306_commandStart();
-        ssd1306_sendByte(SSD1306_SETPAGE | y);
-        ssd1306_sendByte((x>>4) | SSD1306_SETHIGHCOLUMN);
-        ssd1306_sendByte((x & 0x0f) | SSD1306_SETLOWCOLUMN);
-        ssd1306_endTransmission();
-    }
-    else if ( g_lcd_type == LCD_TYPE_PCD8544 )
-    {
-        ssd1306_commandStart();
-        ssd1306_sendByte(0x80 | x);
-        ssd1306_sendByte(0x40 | y);
-        ssd1306_endTransmission();
-    }
-}
-
-void ssd1306_sendData(uint8_t data)
-{
-    ssd1306_dataStart();
-    ssd1306_sendByte( data );
-    ssd1306_endTransmission();
 }
 
 void ssd1306_fillScreen(uint8_t fill_Data)

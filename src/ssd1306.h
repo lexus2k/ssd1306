@@ -94,13 +94,6 @@ uint8_t      ssd1306_displayWidth();
 void         ssd1306_setPos(uint8_t x, uint8_t y);
 
 /**
- * Sends byte data to SSD1306 controller memory.
- * Performs 3 operations at once: ssd1306_dataStart(); ssd1306_sendByte( data ); ssd1306_endTransmission();
- * @param data - byte to send to the controller memory
- */
-void         ssd1306_sendData(uint8_t data);
-
-/**
  * Fills screen with pattern byte
  */
 void         ssd1306_fillScreen(uint8_t fill_Data);

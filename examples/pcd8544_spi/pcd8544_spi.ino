@@ -28,7 +28,7 @@
  */
 
 #include "ssd1306.h"
-#include "ssd1306_spi_conf.h"
+#include "spi/ssd1306_spi_conf.h"
 #include "sprite_pool.h"
 
 /* Do not include SPI.h for Attiny controllers */

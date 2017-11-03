@@ -55,7 +55,7 @@
     #include <avr/pgmspace.h>
 #endif
 #include "ssd1306.h"
-#include "ssd1306_i2c_conf.h"
+#include "i2c/ssd1306_i2c_conf.h"
 #include "i2c/ssd1306_i2c_wire.h"
 #include "i2c/ssd1306_i2c_embedded.h"
 #include "intf/ssd1306_interface.h"
