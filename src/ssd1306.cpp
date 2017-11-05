@@ -418,7 +418,7 @@ void ssd1306_eraseTrace(SPRITE *sprite)
 
 SPRITE       ssd1306_createSprite(uint8_t x, uint8_t y, uint8_t w, const uint8_t *data)
 {
-    return {x,y,w,x,y,data,0};
+    return {x,y,w,x,y,data,nullptr};
 }
 
 void         ssd1306_replaceSprite(SPRITE *sprite, const uint8_t *data)

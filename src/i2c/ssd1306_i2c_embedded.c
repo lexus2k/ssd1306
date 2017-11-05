@@ -87,7 +87,7 @@ static uint8_t s_scl = SSD1306_SCL;
 #define DIGITAL_WRITE_LOW(DREG, PREG, BIT)  { DREG |= (1 << BIT); PREG &= ~(1 << BIT); }
 
 static uint8_t oldSREG;
-static bool    interruptsOff = false;
+static uint8_t interruptsOff = 0;
 
 /**
  * SCL remains HIGH on EXIT, Low SDA means start transmission
@@ -96,7 +96,7 @@ void ssd1306_i2cStart(void)
 {
     oldSREG = SREG;
     cli();
-    interruptsOff = true;
+    interruptsOff = 1;
     DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_sda);     // Set to LOW
     ssd1306_delay(I2C_START_STOP_DELAY);
     DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_scl);     // Set to LOW
@@ -115,7 +115,7 @@ void ssd1306_i2cStop(void)
     if (interruptsOff)
     {
         SREG = oldSREG;
-        interruptsOff = false;
+        interruptsOff = 0;
     }
 }
 
