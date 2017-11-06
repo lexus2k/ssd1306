@@ -116,8 +116,8 @@ bool       updateStatusPanel; // Set to true if status panel update is required
 int        platformWidth;
 int        ballx;
 int        bally;
-int        vSpeed;
-int        hSpeed;
+int8_t     vSpeed;
+int8_t     hSpeed;
 uint8_t    hearts;
 uint16_t   lastDrawTimestamp;
 uint8_t    gameField[BLOCK_NUM_ROWS][MAX_BLOCKS_PER_ROW];
@@ -179,31 +179,32 @@ void setup()
     resetGame();
 }
 
-void loop() {
-  if ( ((uint16_t)millis()) - lastDrawTimestamp > 30 )
-  {
-    uint8_t lastx = (ballx >> SPEED_SHIFT);
-    uint8_t lasty = (bally >> SPEED_SHIFT);
-    // continue moving after the interrupt
-    movePlatform();
-    // bounce off the sides of the screen
-    if (moveBall())
+void loop()
+{
+    if ( ((uint16_t)millis()) - lastDrawTimestamp > 30 )
     {
-        if (moveObjects())
+        uint8_t lastx = (ballx >> SPEED_SHIFT);
+        uint8_t lasty = (bally >> SPEED_SHIFT);
+        // continue moving after the interrupt
+        movePlatform();
+        // bounce off the sides of the screen
+        if (moveBall())
         {
-           // update whats on the screen
-           drawPlatform();
-           drawBall(lastx, lasty);
-           drawObjects();
-           if (updateStatusPanel)
-           {
-               updateStatusPanel = false;
-               drawStatusPanel();
-           }
-           lastDrawTimestamp += 30;
+            if (moveObjects())
+            {
+               // update whats on the screen
+               drawPlatform();
+               drawBall(lastx, lasty);
+               drawObjects();
+               if (updateStatusPanel)
+               {
+                   updateStatusPanel = false;
+                   drawStatusPanel();
+               }
+               lastDrawTimestamp += 30;
+            }
         }
-     }
-  }
+    }
 }
 
 void drawStatusPanel()
@@ -567,7 +568,7 @@ void movePlatform()
     if (platformPower  != 0)
     {
         platformPower--;
-        if (platformPower % 32 == 0)
+        if (!(platformPower & 0x1F))
         {
             uint8_t i = freeObject();
             if (i != 0xFF)
@@ -584,8 +585,19 @@ void movePlatform()
     }
 }
 
-void gameOver(uint16_t topScore)
+void gameOver()
 {
+    uint16_t topScore = eeprom_read_word(EEPROM_ADDR);
+    if (topScore == 0xFFFF)
+    {
+        eeprom_write_word(EEPROM_ADDR, 0);
+        topScore = 0;
+    }
+    if (score>topScore)
+    {
+        topScore = score;
+        eeprom_write_word(EEPROM_ADDR, topScore);
+    }
     ssd1306_clearScreen( );
     ssd1306_charF6x8(32, 2, "GAME OVER");
     ssd1306_charF6x8(32, 4, "score ");
@@ -623,19 +635,7 @@ void onKill()
     {
         platformCrashAnimation();
         // game over if the ball misses the platform
-        uint16_t topScore = eeprom_read_word(EEPROM_ADDR);
-        if (topScore == 0xFFFF)
-        {
-            eeprom_write_word(EEPROM_ADDR, 0);
-            topScore = 0;
-        }
-        if (score>topScore)
-        {
-            topScore = score;
-            eeprom_write_word(EEPROM_ADDR, topScore);
-        }
-
-        gameOver(topScore);
+        gameOver();
         system_sleep();
         level = 1;
         resetGame();
