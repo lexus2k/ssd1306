@@ -49,8 +49,9 @@ void ssd1306_setRamBlock(uint8_t x, uint8_t y, uint8_t w)
         ssd1306_sendByte(SSD1306_COLUMNADDR);
         ssd1306_sendByte(x);
         ssd1306_sendByte(x + w - 1);
-        ssd1306_endTransmission();
-        ssd1306_commandStart();
+        ssd1306_sendByte(SSD1306_PAGEADDR);
+        ssd1306_sendByte(y);
+        ssd1306_sendByte((s_displayHeight >> 3) - 1);
         ssd1306_sendByte(0xb0+y);
         ssd1306_sendByte((x>>4) | 0x10);
         ssd1306_sendByte(x&0x0f);
