@@ -190,7 +190,9 @@ void setup()
     /* Do not init Wire library for Attiny controllers */
 #ifndef SSD1306_EMBEDDED_I2C
     Wire.begin();
-    Wire.setClock( 400000  );
+    #ifndef ARDUINO_AVR_DIGISPARK
+        Wire.setClock( 400000  );
+    #endif
 #endif
     ssd1306_128x64_i2c_init();
 

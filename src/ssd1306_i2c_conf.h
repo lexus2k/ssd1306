@@ -36,7 +36,9 @@ extern "C" {
     #define SSD1306_SA    0x3C  // Slave address
 #endif
 
-#if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
+#if defined(ARDUINO_AVR_DIGISPARK)
+
+#elif defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
 #ifndef SSD1306_EMBEDDED_I2C
     /**
      * Use embedded i2c on attiny controllers. Wire library is not applicable
@@ -45,7 +47,14 @@ extern "C" {
 #endif
 #endif
 
-#if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__) 
+#if defined(ARDUINO_AVR_DIGISPARK)
+    #ifndef SSD1306_SCL
+        #define SSD1306_SCL   2 // SCL, Pin A5 on SSD1306 Board
+    #endif
+    #ifndef SSD1306_SDA
+        #define SSD1306_SDA   0 // SDA, Pin A4 on SSD1306 Board
+    #endif
+#elif defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__) 
     #ifndef SSD1306_SCL
         #define SSD1306_SCL   PB3 // SCL, Pin 3 on SSD1306 Board
     #endif

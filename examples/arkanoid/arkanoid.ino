@@ -152,7 +152,9 @@ void setup()
 {
 #ifndef SSD1306_EMBEDDED_I2C
     Wire.begin();
-    Wire.setClock( 400000 );
+    #ifndef ARDUINO_AVR_DIGISPARK
+        Wire.setClock( 400000 );
+    #endif
 #endif
     randomSeed(analogRead(0));
 #if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)
