@@ -153,7 +153,9 @@ void setup()
 {
 #ifdef SSD1306_WIRE_SUPPORTED
     Wire.begin();
-    Wire.setClock( 400000 );
+    #ifdef SSD1306_WIRE_CLOCK_CONFIGURABLE
+        Wire.setClock( 400000 );
+    #endif
 #endif
     randomSeed(analogRead(0));
 #if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)

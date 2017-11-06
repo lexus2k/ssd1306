@@ -38,6 +38,7 @@ extern "C" {
     #define SSD1306_SA    0x3C  // Slave address
 #endif
 
+
 #if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
     /**
      * Use embedded i2c on attiny controllers. Wire library is not applicable
@@ -47,9 +48,14 @@ extern "C" {
 
     /** The macro is defined when software i2c implementation is available */
     #define SSD1306_I2C_SW_SUPPORTED
+
+    #if defined(ARDUINO_AVR_DIGISPARK)
+        #define SSD1306_WIRE_SUPPORTED
+    #endif
 #else
     /** The macro is defined when i2c Wire library is available */
     #define SSD1306_WIRE_SUPPORTED
+    #define SSD1306_WIRE_CLOCK_CONFIGURABLE
     #ifndef ESP8266
         /** The macro is defined when software i2c implementation is available */
         #define SSD1306_I2C_SW_SUPPORTED

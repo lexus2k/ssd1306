@@ -47,7 +47,11 @@ void ssd1306_i2cStop_Wire(void)
 void ssd1306_i2cSendByte_Wire(uint8_t data)
 {
     // Do not write too many bytes for standard Wire.h. It may become broken
+#ifdef BUFFER_LENGTH
     if (s_bytesWritten >= (BUFFER_LENGTH >> 1))
+#else
+    if (s_bytesWritten >= (USI_BUF_SIZE -2))
+#endif
     {
         ssd1306_i2cStop_Wire();
         ssd1306_i2cStart_Wire();

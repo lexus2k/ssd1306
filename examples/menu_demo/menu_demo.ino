@@ -60,7 +60,9 @@ void setup()
     /* Do not init Wire library for Attiny controllers */
 #ifdef SSD1306_WIRE_SUPPORTED
     Wire.begin();
-    Wire.setClock(400000);
+    #ifdef SSD1306_WIRE_CLOCK_CONFIGURABLE
+        Wire.setClock(400000);
+    #endif
 #endif
     ssd1306_128x64_i2c_init();
     ssd1306_fillScreen( 0x00 );
