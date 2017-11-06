@@ -53,6 +53,7 @@
     #include <pgmspace.h>
 #else
     #include <avr/pgmspace.h>
+    #include <avr/eeprom.h>
 #endif
 #include "ssd1306.h"
 #include "i2c/ssd1306_i2c_wire.h"
@@ -151,18 +152,16 @@ void playerInc()
 
 void setup()
 {
-#ifdef SSD1306_WIRE_SUPPORTED
+    randomSeed(analogRead(0));
+#if defined(__AVR_ATtiny85__)
+    DDRB |= 0b00011010;         // set PB1 as output (for the speaker), PB0 and PB2 as input
+    sei();                      // enable all interrupts
+    attachInterrupt(0,playerInc,HIGH);
+#elif defined(SSD1306_WIRE_SUPPORTED)
     Wire.begin();
     #ifdef SSD1306_WIRE_CLOCK_CONFIGURABLE
         Wire.setClock( 400000 );
     #endif
-#endif
-    randomSeed(analogRead(0));
-#if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)
-    DDRB |= 0b00011010;         // set PB1 as output (for the speaker), PB0 and PB2 as input
-    sei();                      // enable all interrupts
-    attachInterrupt(0,playerInc,HIGH);
-#else
     #ifndef USE_Z_KEYPAD
         pinMode(LEFT_BTN, INPUT);
         pinMode(RIGHT_BTN, INPUT);
@@ -172,6 +171,10 @@ void setup()
     #ifndef USE_Z_KEYPAD
         attachInterrupt(digitalPinToInterrupt(RIGHT_BTN),playerInc,HIGH);
     #endif
+#elif defined(SSD1306_I2C_SW_SUPPORTED)
+    #error "Not supported microcontroller or board"
+#else
+    #error "Not supported microcontroller or board"
 #endif
     resetGame();
 }
@@ -223,10 +226,14 @@ void drawStatusPanel()
 
 void drawIntro()
 {
-#ifdef SSD1306_WIRE_SUPPORTED
+#if defined(__AVR_ATtiny85__)
+    ssd1306_i2cInit_Embedded(0,0,0);
+#elif defined(SSD1306_WIRE_SUPPORTED)
     ssd1306_i2cInit_Wire(0);
 #elif defined(SSD1306_I2C_SW_SUPPORTED)
     ssd1306_i2cInit_Embedded(0,0,0);
+#else
+    #error "Not supported microcontroller or board"
 #endif
     ssd1306_128x64_init();
     ssd1306_clearScreen( );
