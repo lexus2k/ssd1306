@@ -53,6 +53,7 @@
     #include <pgmspace.h>
 #else
     #include <avr/pgmspace.h>
+    #include <avr/eeprom.h>
 #endif
 #include "ssd1306.h"
 #include "ssd1306_i2c_conf.h"
