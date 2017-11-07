@@ -145,6 +145,7 @@ void textDemo()
 void canvasDemo()
 {
     uint8_t buffer[64*16/8];
+    ssd1306_clearScreen();
     NanoCanvas canvas(64,16, buffer);
     canvas.clear();
     canvas.fillRect(10, 3, 80, 5, 0xFF);

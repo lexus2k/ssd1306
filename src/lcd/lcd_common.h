@@ -37,6 +37,8 @@ enum
     LCD_TYPE_SSD1306,
     /** Experimental type of LCD display: pcd8544 led */
     LCD_TYPE_PCD8544,
+    /** Support for sh1106 display, which is partially compatible with ssd1306 */
+    LCD_TYPE_SH1106,
 };
 
 /** Current display height */
