@@ -33,6 +33,24 @@ static const uint8_t PROGMEM s_lcd84x48_initData[] =
     PCD8544_DISPLAYCONTROL | PCD8544_DISPLAYNORMAL
 };
 
+void pcd8544_setBlock(uint8_t x, uint8_t y, uint8_t w)
+{
+    ssd1306_commandStart();
+    if (w == 1) ssd1306_sendByte( 0x22 ); else ssd1306_sendByte( 0x20 );
+    ssd1306_sendByte(0x80 | x);
+    ssd1306_sendByte(0x40 | y);
+    ssd1306_endTransmission();
+}
+
+void pcd8544_setPos(uint8_t x, uint8_t y)
+{
+    ssd1306_commandStart();
+    ssd1306_sendByte(0x80 | x);
+    ssd1306_sendByte(0x40 | y);
+    ssd1306_endTransmission();
+}
+
+
 void    pcd8544_84x48_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
 {
     if (rstPin >=0)
@@ -47,11 +65,12 @@ void    pcd8544_84x48_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
         digitalWrite(rstPin, HIGH);
     }
     g_lcd_type = LCD_TYPE_PCD8544;
-
     ssd1306_spiInit(cesPin, dcPin);
     ssd1306_commandStart();
     s_displayHeight = 48;
     s_displayWidth = 84;
+    ssd1306_setRamBlock = pcd8544_setBlock;
+    ssd1306_setRamPos = pcd8544_setPos;
     for( uint8_t i=0; i<sizeof(s_lcd84x48_initData); i++)
     {
         ssd1306_sendByte(pgm_read_byte(&s_lcd84x48_initData[i]));

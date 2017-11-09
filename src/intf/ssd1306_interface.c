@@ -43,6 +43,10 @@ void (*ssd1306_commandStart)() = NULL;
 
 void (*ssd1306_dataStart)() = NULL;
 
+void (*ssd1306_setRamBlock)(uint8_t x, uint8_t y, uint8_t w) = NULL;
+
+void (*ssd1306_setRamPos)(uint8_t x, uint8_t y) = NULL;
+
 void ssd1306_sendCommand(uint8_t command)
 {
     ssd1306_commandStart();
@@ -55,49 +59,4 @@ void ssd1306_sendData(uint8_t data)
     ssd1306_dataStart();
     ssd1306_sendByte( data );
     ssd1306_endTransmission();
-}
-
-void ssd1306_setRamBlock(uint8_t x, uint8_t y, uint8_t w)
-{
-    if ( g_lcd_type == LCD_TYPE_SSD1306 )
-    {
-        ssd1306_commandStart();
-        ssd1306_sendByte(SSD1306_COLUMNADDR);
-        ssd1306_sendByte(x);
-        ssd1306_sendByte(x + w - 1);
-        ssd1306_sendByte(SSD1306_PAGEADDR);
-        ssd1306_sendByte(y);
-        ssd1306_sendByte((ssd1306_displayHeight() >> 3) - 1);
-//        ssd1306_sendByte(SSD1306_SETPAGE | y);
-//        ssd1306_sendByte((x>>4) | SSD1306_SETHIGHCOLUMN);
-//        ssd1306_sendByte((x & 0x0f) | SSD1306_SETLOWCOLUMN);
-        ssd1306_endTransmission();
-    }
-    else if ( g_lcd_type == LCD_TYPE_PCD8544 )
-    {
-        ssd1306_commandStart();
-        if (w == 1) ssd1306_sendByte( 0x22 ); else ssd1306_sendByte( 0x20 );
-        ssd1306_sendByte(0x80 | x);
-        ssd1306_sendByte(0x40 | y);
-        ssd1306_endTransmission();
-    }
-}
-
-void ssd1306_setPos(uint8_t x, uint8_t y)
-{
-    if ( g_lcd_type == LCD_TYPE_SSD1306 )
-    {
-        ssd1306_commandStart();
-        ssd1306_sendByte(SSD1306_SETPAGE | y);
-        ssd1306_sendByte((x>>4) | SSD1306_SETHIGHCOLUMN);
-        ssd1306_sendByte((x & 0x0f) | SSD1306_SETLOWCOLUMN);
-        ssd1306_endTransmission();
-    }
-    else if ( g_lcd_type == LCD_TYPE_PCD8544 )
-    {
-        ssd1306_commandStart();
-        ssd1306_sendByte(0x80 | x);
-        ssd1306_sendByte(0x40 | y);
-        ssd1306_endTransmission();
-    }
 }

@@ -288,7 +288,7 @@ void resetGame()
 void drawPlatform()
 {
   uint8_t pos = (platformPos < PLATFORM_SPEED) ? 0: (platformPos - PLATFORM_SPEED);
-  ssd1306_setPos( pos + LEFT_EDGE + 1, PLATFORM_ROW );
+  ssd1306_setRamPos( pos + LEFT_EDGE + 1, PLATFORM_ROW );
   ssd1306_dataStart();
   while (pos < platformPos)
   {
@@ -357,9 +357,9 @@ void drawFieldEdges()
 {
     for (uint8_t i=8; i>0; i--)
     {
-        ssd1306_setPos(LEFT_EDGE, i);
+        ssd1306_setRamPos(LEFT_EDGE, i);
         ssd1306_sendData( B01010101 );
-        ssd1306_setPos(RIGHT_EDGE, i);
+        ssd1306_setRamPos(RIGHT_EDGE, i);
         ssd1306_sendData( B01010101 );
     }
 }
@@ -369,13 +369,13 @@ void drawBall(uint8_t lastx, uint8_t lasty)
 {
     uint8_t newx = ballx >> SPEED_SHIFT;
     uint8_t newy = bally >> SPEED_SHIFT;
-    ssd1306_setPos(LEFT_EDGE + 1 + newx,newy >> 3);
+    ssd1306_setRamPos(LEFT_EDGE + 1 + newx,newy >> 3);
     uint8_t temp = B00000001;
     temp = temp << ((newy & 0x07) + 1);
     ssd1306_sendData( temp );
     if ((newx != lastx) || ((newy >> 3) != (lasty >> 3)))
     {
-        ssd1306_setPos(LEFT_EDGE + 1 + lastx, lasty >> 3);
+        ssd1306_setRamPos(LEFT_EDGE + 1 + lastx, lasty >> 3);
         ssd1306_sendData( B00000000 );
     }
 }
@@ -621,7 +621,7 @@ void platformCrashAnimation()
     {
         for ( uint8_t i = 0; i < platformWidth >> 2; i++ )
         {
-            ssd1306_setPos( platformPos + (i<<2) + ((j & 0x01)<<1) + ((j & 0x02)>>1) + LEFT_EDGE + 1, PLATFORM_ROW );
+            ssd1306_setRamPos( platformPos + (i<<2) + ((j & 0x01)<<1) + ((j & 0x02)>>1) + LEFT_EDGE + 1, PLATFORM_ROW );
             ssd1306_sendData(B00000000);
         }
         delay(150);
