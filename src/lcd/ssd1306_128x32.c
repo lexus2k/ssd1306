@@ -43,6 +43,31 @@ static const uint8_t PROGMEM s_oled128x32_initData[] =
     SSD1306_DISPLAYON 
 };
 
+static void ssd1306_setBlock(uint8_t x, uint8_t y, uint8_t w)
+{
+    ssd1306_commandStart();
+    ssd1306_sendByte(SSD1306_COLUMNADDR);
+    ssd1306_sendByte(x);
+    ssd1306_sendByte(x + w - 1);
+    ssd1306_sendByte(SSD1306_PAGEADDR);
+    ssd1306_sendByte(y);
+    ssd1306_sendByte((ssd1306_displayHeight() >> 3) - 1);
+    ssd1306_endTransmission();
+}
+
+/*
+// We do not need this function, since ssd1306 library works in Horizontal Addressing mode
+static void ssd1306_setPos(uint8_t x, uint8_t y)
+{
+    ssd1306_setBlock(0,0,s_displayWidth);
+    ssd1306_commandStart();
+    ssd1306_sendByte(SSD1306_SETPAGE | y);
+    ssd1306_sendByte((x>>4) | SSD1306_SETHIGHCOLUMN);
+    ssd1306_sendByte((x & 0x0f) | SSD1306_SETLOWCOLUMN);
+    ssd1306_endTransmission();
+}
+*/
+
 void    ssd1306_128x32_i2c_init()
 {
     g_lcd_type = LCD_TYPE_SSD1306;
@@ -50,6 +75,9 @@ void    ssd1306_128x32_i2c_init()
     ssd1306_endTransmission();
     s_displayHeight = 32;
     s_displayWidth = 128;
+    ssd1306_setRamBlock = ssd1306_setBlock;
+    // ssd1306 library doesn't use setRamPos intended for Page Addressing mode
+    ssd1306_setRamPos = NULL; //ssd1306_setPos;
     for( uint8_t i=0; i < sizeof(s_oled128x32_initData); i++)
     {
         ssd1306_sendCommand(pgm_read_byte(&s_oled128x32_initData[i]));
