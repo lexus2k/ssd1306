@@ -29,12 +29,6 @@
 
 #include "ssd1306.h"
 
-/* Do not include wire.h for Attiny controllers */
-#ifdef SSD1306_WIRE_SUPPORTED
-    #include <Wire.h>
-#endif
-
-
 /* 
  * Heart image below is defined directly in flash memory.
  * This reduces SRAM consumption.
@@ -68,9 +62,6 @@ int speedY = 1;
 void setup()
 {
     /* Do not init Wire library for Attiny controllers */
-#ifdef SSD1306_WIRE_SUPPORTED
-    Wire.begin();
-#endif
     ssd1306_128x64_i2c_init();
     ssd1306_fillScreen(0x00);
     /* Create sprite at 0,0 position. The function initializes sprite structure. */

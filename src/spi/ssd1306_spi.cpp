@@ -30,6 +30,7 @@ int8_t s_ssd1306_dc = 5;
 void ssd1306_spiInit(int8_t cesPin, int8_t dcPin)
 {
 #ifdef SSD1306_SPI_SUPPORTED
+    ssd1306_spiConfigure_hw();
     ssd1306_spiInit_hw(cesPin, dcPin);
 #endif
 }

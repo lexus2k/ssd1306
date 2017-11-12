@@ -28,6 +28,12 @@
 /* STANDARD branch */
     #include <SPI.h>
 
+void ssd1306_spiConfigure_hw()
+{
+    SPI.begin();
+}
+
+
 void ssd1306_spiInit_hw(int8_t cesPin, int8_t dcPin)
 {
     if (cesPin >=0) pinMode(cesPin, OUTPUT);

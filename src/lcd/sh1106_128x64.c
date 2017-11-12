@@ -43,13 +43,25 @@ static const uint8_t PROGMEM s_oled128x64_initData[] =
     SSD1306_DISPLAYON 
 };
 
+static uint8_t s_column;
+static uint8_t s_page;
+
 static void sh1106_setBlock(uint8_t x, uint8_t y, uint8_t w)
 {
+    s_column = x;
+    s_page = y;
     ssd1306_commandStart();
     ssd1306_sendByte(SSD1306_SETPAGE | y);
     ssd1306_sendByte((x>>4) | SSD1306_SETHIGHCOLUMN);
     ssd1306_sendByte((x & 0x0f) | SSD1306_SETLOWCOLUMN);
     ssd1306_endTransmission();
+}
+
+static void sh1106_nextPage()
+{
+    ssd1306_endTransmission();
+    sh1106_setBlock(s_column,s_page+1,0);
+    ssd1306_dataStart();
 }
 
 static void sh1106_setPos(uint8_t x, uint8_t y)
@@ -67,6 +79,7 @@ void    sh1106_128x64_init()
     s_displayHeight = 64;
     s_displayWidth = 128;
     ssd1306_setRamBlock = sh1106_setBlock;
+    ssd1306_nextRamPage = sh1106_nextPage;
     ssd1306_setRamPos = sh1106_setPos;
     for( uint8_t i=0; i<sizeof(s_oled128x64_initData); i++)
     {

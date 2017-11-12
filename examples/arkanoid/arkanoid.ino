@@ -144,7 +144,6 @@ void drawFieldEdges();
 void drawStatusPanel();
 void onKill();
 
-
 void playerInc()
 {
    // PB2 pin button interrupt
@@ -280,9 +279,6 @@ void resetGame()
     delay(3000);
     startLevel();
 }
-
-
-
 
 /* Draws and clears platform */
 void drawPlatform()

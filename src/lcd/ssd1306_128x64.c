@@ -49,11 +49,15 @@ static void ssd1306_setBlock(uint8_t x, uint8_t y, uint8_t w)
     ssd1306_commandStart();
     ssd1306_sendByte(SSD1306_COLUMNADDR);
     ssd1306_sendByte(x);
-    ssd1306_sendByte(x + w - 1);
+    ssd1306_sendByte(w ? (x + w - 1): (s_displayWidth - 1));
     ssd1306_sendByte(SSD1306_PAGEADDR);
     ssd1306_sendByte(y);
     ssd1306_sendByte((ssd1306_displayHeight() >> 3) - 1);
     ssd1306_endTransmission();
+}
+
+static void ssd1306_nextPage()
+{
 }
 
 /*
@@ -81,6 +85,7 @@ void    ssd1306_128x64_init()
     s_displayHeight = 64;
     s_displayWidth = 128;
     ssd1306_setRamBlock = ssd1306_setBlock;
+    ssd1306_nextRamPage = ssd1306_nextPage;
     // ssd1306 library doesn't use setRamPos intended for Page Addressing mode
     ssd1306_setRamPos = NULL; //ssd1306_setPos;
     for( uint8_t i=0; i<sizeof(s_oled128x64_initData); i++)

@@ -45,6 +45,8 @@ void (*ssd1306_dataStart)() = NULL;
 
 void (*ssd1306_setRamBlock)(uint8_t x, uint8_t y, uint8_t w) = NULL;
 
+void (*ssd1306_nextRamPage)() = NULL;
+
 void (*ssd1306_setRamPos)(uint8_t x, uint8_t y) = NULL;
 
 void ssd1306_sendCommand(uint8_t command)

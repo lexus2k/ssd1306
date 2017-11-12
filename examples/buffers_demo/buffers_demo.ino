@@ -30,11 +30,6 @@
 #include "ssd1306.h"
 #include "nano_gfx.h"
 
-/* Do not include wire.h for Attiny controllers */
-#ifdef SSD1306_WIRE_SUPPORTED
-    #include <Wire.h>
-#endif
-
 /* 
  * Heart image below is defined directly in flash memory.
  * This reduces SRAM consumption.
@@ -86,10 +81,6 @@ NanoCanvas canvas(canvasWidth, canvasHeight, canvasData);
 
 void setup()
 {
-    /* Do not init Wire library for Attiny controllers */
-#ifdef SSD1306_WIRE_SUPPORTED
-    Wire.begin();
-#endif
     /* Initialize and clear display */
     /* Replace the line below with ssd1306_128x32_i2c_init() if you need to use 128x32 display */
     ssd1306_128x64_i2c_init();

@@ -30,18 +30,8 @@
 #include "ssd1306.h"
 #include "sova.h"
 
-/* Do not include wire.h for Attiny controllers */
-#ifdef SSD1306_WIRE_SUPPORTED
-    #include <Wire.h>
-#endif
-
-
 void setup()
 {
-    /* Do not init Wire library for Attiny controllers */
-#ifdef SSD1306_WIRE_SUPPORTED
-    Wire.begin();
-#endif
     ssd1306_128x64_i2c_init();
     ssd1306_fillScreen(0x00);
     /* Draw image defined in sova.h */

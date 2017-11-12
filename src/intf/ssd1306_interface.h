@@ -72,6 +72,8 @@ void         ssd1306_sendData(uint8_t data);
 
 extern void (*ssd1306_setRamBlock)(uint8_t x, uint8_t y, uint8_t w);
 
+extern void (*ssd1306_nextRamPage)();
+
 extern void (*ssd1306_setRamPos)(uint8_t x, uint8_t y);
 
 #ifdef __cplusplus

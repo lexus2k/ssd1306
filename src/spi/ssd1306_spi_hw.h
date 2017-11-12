@@ -34,6 +34,12 @@ extern "C" {
 #ifdef SSD1306_SPI_SUPPORTED
 
 /**
+ * Initializes SPI library. Automatically called by ssd1306_spiInit().
+ * You may skip this by using ssd1306_spiInit_hw() instead of ssd1306_spiInit().
+ */
+void         ssd1306_spiConfigure_hw();
+
+/**
  * Inits lcd interface to use hardware SPI for communication (SPI.h library).
  * It uses standard MOSI, SCLK pins to send data to LCD.
  * @param cesPin - pin, controlling chip enable of LCD

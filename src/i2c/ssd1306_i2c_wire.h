@@ -30,6 +30,12 @@
 #ifdef SSD1306_WIRE_SUPPORTED
 
 /**
+ * Configures speed for standard Wire library.
+ * This function is called by ssd1306_i2cInit().
+ */
+void ssd1306_i2cConfigure_Wire();
+
+/**
  * Initializes ssd1306 library to use Wire lib for i2c.
  * If you do not know i2c parameters, try ssd1306_i2cInit_Wire(0).
  * SCL and SDA pins depend on platform and Wire library implementation.

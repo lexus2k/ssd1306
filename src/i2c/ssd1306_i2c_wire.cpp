@@ -40,6 +40,14 @@ void ssd1306_i2cStop_Wire(void)
     Wire.endTransmission();
 }
 
+void ssd1306_i2cConfigure_Wire()
+{
+    Wire.begin();
+    #ifdef SSD1306_WIRE_CLOCK_CONFIGURABLE
+        Wire.setClock(400000);
+    #endif
+}
+
 /**
  * Inputs: SCL is LOW, SDA is has no meaning
  * Outputs: SCL is LOW
