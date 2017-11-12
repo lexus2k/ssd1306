@@ -44,14 +44,14 @@ configurable through API.
 
 ## Supported platforms
 
- * Attiny85, Attiny45
+ * Attiny85, Attiny45 (Refer to [Damellis attiny package](https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json))
  * Atmega328p, Atmega168
  * Atmega2560
  * Digispark (check [examples compatibility list](examples/Digispark_compatibility.txt))
  * ESP8266 (check [examples compatibility list](examples/ESP8266_compatibility.txt))
 
-Digispark users, please check compilation options in your Arduino, prior to using this library.
-Ssd1306 library requires at least c++11 and c99 (by default Digispak package misses the options
+Digispark users, please check compilation options in your Arduino prior to using this library.
+Ssd1306 library requires at least c++11 and c99 (by default Digispark package misses the options
 -std=gnu11, -std=gnu++11).
 
 ## The goals of ssd1306 library
