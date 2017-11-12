@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="1">
     <analyze-all-vs-configs>true</analyze-all-vs-configs>
+    <defines>
+        <define name="BUFFER_LENGTH=64"/>
+    </defines>
     <paths>
         <dir name="."/>
     </paths>

@@ -36,6 +36,9 @@ extern "C" {
  * The function automatically selects available type of i2c implementation
  * 1. Wire library
  * 2. sw i2c implementation
+ * In case of using Wire library this function calls Wire.begin() and
+ * sets speed to fast i2c (400kHz). If you prefer to use your own Wire settings
+ * or avoid reinitializing of Wire library, please use ssd1306_i2cInit_Wire().
  */
 void         ssd1306_i2cInit();
 

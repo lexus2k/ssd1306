@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.12"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SSD1306 OLED display driver: src/intf/ssd1306_commands.h File Reference</title>
+<title>SSD1306 OLED display driver: src/lcd/ssd1306_commands.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.2.5</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306 i2c/spi OLED display</div>
   </td>
@@ -60,7 +60,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a2ec59b6ec33735e2cfbe3492a0dbaf5.html">intf</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_29f961928ec4e18b13ad7a415d928772.html">lcd</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -86,37 +86,38 @@ Enumerations</h2></td></tr>
 <b>PCD8544_SETBIAS</b> = 0x10, 
 <b>PCD8544_SETVOP</b> = 0x80, 
 <br />
-&#160;&#160;<b>SSD1306_DEFAULT_ADDRESS</b> = 0x78, 
+&#160;&#160;<b>SSD1306_SETLOWCOLUMN</b> = 0x00, 
+<b>SSD1306_SETHIGHCOLUMN</b> = 0x10, 
+<b>SSD1306_MEMORYMODE</b> = 0x20, 
+<b>SSD1306_COLUMNADDR</b> = 0x21, 
+<br />
+&#160;&#160;<b>SSD1306_PAGEADDR</b> = 0x22, 
+<b>SSD1306_SETSTARTLINE</b> = 0x40, 
+<b>SSD1306_DEFAULT_ADDRESS</b> = 0x78, 
 <b>SSD1306_SETCONTRAST</b> = 0x81, 
+<br />
+&#160;&#160;<b>SSD1306_CHARGEPUMP</b> = 0x8D, 
+<b>SSD1306_SEGREMAP</b> = 0xA0, 
 <b>SSD1306_DISPLAYALLON_RESUME</b> = 0xA4, 
 <b>SSD1306_DISPLAYALLON</b> = 0xA5, 
 <br />
 &#160;&#160;<b>SSD1306_NORMALDISPLAY</b> = 0xA6, 
 <b>SSD1306_INVERTDISPLAY</b> = 0xA7, 
+<b>SSD1306_SETMULTIPLEX</b> = 0xA8, 
 <b>SSD1306_DISPLAYOFF</b> = 0xAE, 
-<b>SSD1306_DISPLAYON</b> = 0xAF, 
+<br />
+&#160;&#160;<b>SSD1306_DISPLAYON</b> = 0xAF, 
+<b>SSD1306_SETPAGE</b> = 0xB0, 
+<b>SSD1306_COMSCANINC</b> = 0xC0, 
+<b>SSD1306_COMSCANDEC</b> = 0xC8, 
 <br />
 &#160;&#160;<b>SSD1306_SETDISPLAYOFFSET</b> = 0xD3, 
-<b>SSD1306_SETCOMPINS</b> = 0xDA, 
-<b>SSD1306_SETVCOMDETECT</b> = 0xDB, 
 <b>SSD1306_SETDISPLAYCLOCKDIV</b> = 0xD5, 
+<b>SSD1306_SETPRECHARGE</b> = 0xD9, 
+<b>SSD1306_SETCOMPINS</b> = 0xDA, 
 <br />
-&#160;&#160;<b>SSD1306_SETPRECHARGE</b> = 0xD9, 
-<b>SSD1306_SETMULTIPLEX</b> = 0xA8, 
-<b>SSD1306_SETLOWCOLUMN</b> = 0x00, 
-<b>SSD1306_SETHIGHCOLUMN</b> = 0x10, 
-<br />
-&#160;&#160;<b>SSD1306_SETSTARTLINE</b> = 0x40, 
-<b>SSD1306_MEMORYMODE</b> = 0x20, 
-<b>SSD1306_COLUMNADDR</b> = 0x21, 
-<b>SSD1306_PAGEADDR</b> = 0x22, 
-<br />
-&#160;&#160;<b>SSD1306_COMSCANINC</b> = 0xC0, 
-<b>SSD1306_COMSCANDIR</b> = 0xC8, 
-<b>SSD1306_SEGREMAP</b> = 0xA0, 
-<b>SSD1306_CHARGEPUMP</b> = 0x8D, 
-<br />
-&#160;&#160;<b>SSD1306_SWITCHCAPVCC</b> = 0x02, 
+&#160;&#160;<b>SSD1306_SETVCOMDETECT</b> = 0xDB, 
+<b>SSD1306_SWITCHCAPVCC</b> = 0x02, 
 <b>SSD1306_NOP</b> = 0xE3
 <br />
  }</td></tr>
@@ -162,7 +163,7 @@ Enumerations</h2></td></tr>
 </div><div class="memdoc">
 <p>SSD1306 supported memory modes. </p>
 
-<p>Definition at line <a class="el" href="ssd1306__commands_8h_source.html#l00066">66</a> of file <a class="el" href="ssd1306__commands_8h_source.html">ssd1306_commands.h</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306__commands_8h_source.html#l00065">65</a> of file <a class="el" href="ssd1306__commands_8h_source.html">ssd1306_commands.h</a>.</p>
 
 </div>
 </div>

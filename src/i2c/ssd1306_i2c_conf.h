@@ -50,11 +50,13 @@ extern "C" {
     #define SSD1306_I2C_SW_SUPPORTED
 
     #if defined(ARDUINO_AVR_DIGISPARK)
+        /** The macro is defined when i2c Wire library is available */
         #define SSD1306_WIRE_SUPPORTED
     #endif
 #else
     /** The macro is defined when i2c Wire library is available */
     #define SSD1306_WIRE_SUPPORTED
+    /** The macro is defined when Wire library speed can be configured */
     #define SSD1306_WIRE_CLOCK_CONFIGURABLE
     #ifndef ESP8266
         /** The macro is defined when software i2c implementation is available */

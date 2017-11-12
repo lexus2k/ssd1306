@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.2.5</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306 i2c/spi OLED display</div>
   </td>
@@ -79,6 +79,8 @@ $(function() {
 Functions</h2></td></tr>
 <tr class="memitem:af63dd3db50389223a46d7c4eb716ef83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306__interface_8h.html#af63dd3db50389223a46d7c4eb716ef83">ssd1306_sendCommand</a> (uint8_t command)</td></tr>
 <tr class="separator:af63dd3db50389223a46d7c4eb716ef83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a943f99ae0f9206ee743fb414eecba0f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306__interface_8h.html#a943f99ae0f9206ee743fb414eecba0f9">ssd1306_sendData</a> (uint8_t data)</td></tr>
+<tr class="separator:a943f99ae0f9206ee743fb414eecba0f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -92,6 +94,12 @@ Variables</h2></td></tr>
 <tr class="separator:a21f7ab77b2c88640f65830207891be6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4bab894049fd128d1bb70ffe7f2b7860"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306__interface_8h.html#a4bab894049fd128d1bb70ffe7f2b7860">ssd1306_dataStart</a> )()</td></tr>
 <tr class="separator:a4bab894049fd128d1bb70ffe7f2b7860"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add0f99f7f4f9bae0c1035ada7f578a05"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306__interface_8h.html#add0f99f7f4f9bae0c1035ada7f578a05">ssd1306_setRamBlock</a> )(uint8_t x, uint8_t y, uint8_t w)</td></tr>
+<tr class="separator:add0f99f7f4f9bae0c1035ada7f578a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb44b0f1d772d7a7d395ed402cb145a3"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306__interface_8h.html#acb44b0f1d772d7a7d395ed402cb145a3">ssd1306_nextRamPage</a> )()</td></tr>
+<tr class="separator:acb44b0f1d772d7a7d395ed402cb145a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c937df68f1020454c8ec4c499b15bf5"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306__interface_8h.html#a2c937df68f1020454c8ec4c499b15bf5">ssd1306_setRamPos</a> )(uint8_t x, uint8_t y)</td></tr>
+<tr class="separator:a2c937df68f1020454c8ec4c499b15bf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>SSD1306 interface functions. </p>
@@ -120,7 +128,33 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00044">44</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00052">52</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+
+</div>
+</div>
+<a id="a943f99ae0f9206ee743fb414eecba0f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a943f99ae0f9206ee743fb414eecba0f9">&sect;&nbsp;</a></span>ssd1306_sendData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1306_sendData </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sends byte data to SSD1306 controller memory. Performs 3 operations at once: <a class="el" href="ssd1306__interface_8h.html#a4bab894049fd128d1bb70ffe7f2b7860">ssd1306_dataStart()</a>; ssd1306_sendByte( data ); <a class="el" href="ssd1306__interface_8h.html#ab51dec92bb34de5137d4c96a4fc1460f">ssd1306_endTransmission()</a>; </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>- byte to send to the controller memory </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00059">59</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
 
 </div>
 </div>
@@ -138,7 +172,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Starts transaction for sending commands. </p>
 
-<p>Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00040">40</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00042">42</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
 
 </div>
 </div>
@@ -155,7 +189,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Starts transaction for sending bitmap data. </p>
 
-<p>Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00042">42</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00044">44</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
 
 </div>
 </div>
@@ -172,7 +206,24 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Ends communication with SSD1306 display. </p>
 
-<p>Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00032">32</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00034">34</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+
+</div>
+</div>
+<a id="acb44b0f1d772d7a7d395ed402cb145a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb44b0f1d772d7a7d395ed402cb145a3">&sect;&nbsp;</a></span>ssd1306_nextRamPage</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* ssd1306_nextRamPage) ()</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Switches to the start of next RAM page for the block, specified by <a class="el" href="ssd1306__interface_8h.html#add0f99f7f4f9bae0c1035ada7f578a05">ssd1306_setRamBlock()</a>. For ssd1306 it does nothing, while for sh1106 the function moves cursor to next page. </p>
+
+<p>Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00048">48</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
 
 </div>
 </div>
@@ -194,7 +245,54 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00038">38</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00040">40</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+
+</div>
+</div>
+<a id="add0f99f7f4f9bae0c1035ada7f578a05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add0f99f7f4f9bae0c1035ada7f578a05">&sect;&nbsp;</a></span>ssd1306_setRamBlock</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* ssd1306_setRamBlock) (uint8_t x, uint8_t y, uint8_t w)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets block in RAM of lcd display controller to write data to. For ssd1306 it uses horizontal addressing mode, while for sh1106 the function uses page addressing mode. Width can be specified as 0, thus the library will set the right region of RAM block to the right column of the display. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>- column (left region) </td></tr>
+    <tr><td class="paramname">y</td><td>- page (top page of the block) </td></tr>
+    <tr><td class="paramname">w</td><td>- width of the block in pixels to control </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00046">46</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+
+</div>
+</div>
+<a id="a2c937df68f1020454c8ec4c499b15bf5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c937df68f1020454c8ec4c499b15bf5">&sect;&nbsp;</a></span>ssd1306_setRamPos</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* ssd1306_setRamPos) (uint8_t x, uint8_t y)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets position in RAM of lcd display controller to write data to. For ssd1306 this function is not defined. So, calling it will cause your controller to reset. For sh1106 the function does the same as <a class="el" href="ssd1306__interface_8h.html#add0f99f7f4f9bae0c1035ada7f578a05">ssd1306_setRamBlock()</a>. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>- column (left region) </td></tr>
+    <tr><td class="paramname">y</td><td>- page (top page of the block) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00050">50</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
 
 </div>
 </div>
@@ -211,7 +309,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Starts communication with SSD1306 display. </p>
 
-<p>Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00027">27</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+<p>Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00029">29</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
 
 </div>
 </div>

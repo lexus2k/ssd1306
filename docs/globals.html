@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.2.5</span>
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306 i2c/spi OLED display</div>
   </td>
@@ -93,6 +93,9 @@ $(function() {
 <li>LCD_TYPE_PCD8544
 : <a class="el" href="lcd__common_8h.html#a06fc87d81c62e9abb8790b6e5713c55ba846490e1ce898baebea443873c666786">lcd_common.h</a>
 </li>
+<li>LCD_TYPE_SH1106
+: <a class="el" href="lcd__common_8h.html#a06fc87d81c62e9abb8790b6e5713c55baecd840f4bc28d78905c61044b139e73c">lcd_common.h</a>
+</li>
 <li>LCD_TYPE_SSD1306
 : <a class="el" href="lcd__common_8h.html#a06fc87d81c62e9abb8790b6e5713c55bad95a2d5ef67df02a85a1bc3bff5129a4">lcd_common.h</a>
 </li>
@@ -119,14 +122,29 @@ $(function() {
 <li>s_ssd1306_dc
 : <a class="el" href="ssd1306__spi_8h.html#aa6c559e035be91c9c57a53120c55e023">ssd1306_spi.h</a>
 </li>
+<li>sh1106_128x64_i2c_init()
+: <a class="el" href="group___l_c_d___d_i_s_p_l_a_y___a_p_i.html#ga42dc7bb7b7ed6f32ca02059d0c69554a">sh1106_128x64.h</a>
+</li>
+<li>sh1106_128x64_init()
+: <a class="el" href="group___l_c_d___d_i_s_p_l_a_y___a_p_i.html#ga7c45dd47c50942c6359ede3128149368">sh1106_128x64.h</a>
+</li>
+<li>sh1106_128x64_spi_init()
+: <a class="el" href="group___l_c_d___d_i_s_p_l_a_y___a_p_i.html#ga595cfcfd0d9f8658d5a6f5d69df3b967">sh1106_128x64.h</a>
+</li>
 <li>SPRITE
 : <a class="el" href="nano__gfx__types_8h.html#aad213759092996ab07d6972f3b21945a">nano_gfx_types.h</a>
 </li>
 <li>ssd1306_128x32_i2c_init()
 : <a class="el" href="group___l_c_d___d_i_s_p_l_a_y___a_p_i.html#ga9ea532820b1870f3dc4fa2ae68d3c4cc">ssd1306_128x32.h</a>
 </li>
+<li>ssd1306_128x32_init()
+: <a class="el" href="group___l_c_d___d_i_s_p_l_a_y___a_p_i.html#ga42a4f60bb427dc29b8618617d3bb4790">ssd1306_128x32.h</a>
+</li>
 <li>ssd1306_128x64_i2c_init()
 : <a class="el" href="group___l_c_d___d_i_s_p_l_a_y___a_p_i.html#ga11882f1e10f5ae62752d2ed643695040">ssd1306_128x64.h</a>
+</li>
+<li>ssd1306_128x64_init()
+: <a class="el" href="group___l_c_d___d_i_s_p_l_a_y___a_p_i.html#gaf11d0258e2539fcf3d0778f6f273652d">ssd1306_128x64.h</a>
 </li>
 <li>ssd1306_128x64_spi_init()
 : <a class="el" href="group___l_c_d___d_i_s_p_l_a_y___a_p_i.html#ga008655e2f6258b9e4e869733485dd821">ssd1306_128x64.h</a>
@@ -215,6 +233,9 @@ $(function() {
 <li>ssd1306_i2cCommandStart()
 : <a class="el" href="ssd1306__i2c_8h.html#ae3a68eee85f87bd05807f2ef5b99dee2">ssd1306_i2c.h</a>
 </li>
+<li>ssd1306_i2cConfigure_Wire()
+: <a class="el" href="ssd1306__i2c__wire_8h.html#acd5fc46dae151b8256199a4c1eb4b726">ssd1306_i2c_wire.h</a>
+</li>
 <li>ssd1306_i2cDataStart()
 : <a class="el" href="ssd1306__i2c_8h.html#a15238f629477ab7205aeec4aef259f1c">ssd1306_i2c.h</a>
 </li>
@@ -263,6 +284,9 @@ $(function() {
 <li>ssd1306_negativeMode()
 : <a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga27cde6402b4646c4f17d03f169dd8d8c">ssd1306.h</a>
 </li>
+<li>ssd1306_nextRamPage
+: <a class="el" href="ssd1306__interface_8h.html#acb44b0f1d772d7a7d395ed402cb145a3">ssd1306_interface.h</a>
+</li>
 <li>ssd1306_normalMode()
 : <a class="el" href="group___l_c_d___d_i_s_p_l_a_y___a_p_i.html#ga65b5398efb918de605ecdfefecca329f">ssd1306.h</a>
 </li>
@@ -294,13 +318,19 @@ $(function() {
 : <a class="el" href="ssd1306__interface_8h.html#af63dd3db50389223a46d7c4eb716ef83">ssd1306_interface.h</a>
 </li>
 <li>ssd1306_sendData()
-: <a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga943f99ae0f9206ee743fb414eecba0f9">ssd1306.h</a>
+: <a class="el" href="ssd1306__interface_8h.html#a943f99ae0f9206ee743fb414eecba0f9">ssd1306_interface.h</a>
 </li>
 <li>ssd1306_setFont6x8()
 : <a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga880de8436b0e2fd1664094f7a2b5192c">ssd1306.h</a>
 </li>
 <li>ssd1306_setPos()
 : <a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#gad46c35ee4a2f53bee496bea6fdb23847">ssd1306.h</a>
+</li>
+<li>ssd1306_setRamBlock
+: <a class="el" href="ssd1306__interface_8h.html#add0f99f7f4f9bae0c1035ada7f578a05">ssd1306_interface.h</a>
+</li>
+<li>ssd1306_setRamPos
+: <a class="el" href="ssd1306__interface_8h.html#a2c937df68f1020454c8ec4c499b15bf5">ssd1306_interface.h</a>
 </li>
 <li>ssd1306_showMenu()
 : <a class="el" href="group___l_c_d___a_p_p___a_p_i.html#ga4353274677f513ae61778927f110d507">ssd1306.h</a>

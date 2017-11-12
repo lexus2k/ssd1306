@@ -5,6 +5,7 @@ var searchData=
   ['lcd_20display_20control_20functions',['LCD Display control functions',['../group___l_c_d___d_i_s_p_l_a_y___a_p_i.html',1,'']]],
   ['lcd_20direct_20graphics_20functions',['LCD direct graphics functions',['../group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html',1,'']]],
   ['lcd_5ftype_5fpcd8544',['LCD_TYPE_PCD8544',['../lcd__common_8h.html#a06fc87d81c62e9abb8790b6e5713c55ba846490e1ce898baebea443873c666786',1,'lcd_common.h']]],
+  ['lcd_5ftype_5fsh1106',['LCD_TYPE_SH1106',['../lcd__common_8h.html#a06fc87d81c62e9abb8790b6e5713c55baecd840f4bc28d78905c61044b139e73c',1,'lcd_common.h']]],
   ['lcd_5ftype_5fssd1306',['LCD_TYPE_SSD1306',['../lcd__common_8h.html#a06fc87d81c62e9abb8790b6e5713c55bad95a2d5ef67df02a85a1bc3bff5129a4',1,'lcd_common.h']]],
   ['left',['left',['../struct_s_s_d1306___r_e_c_t.html#a596b6b6cce11df484877b63db7d0a5b5',1,'SSD1306_RECT']]],
   ['lx',['lx',['../struct_s_p_r_i_t_e.html#afc5ed686d6064db045512fc72bc02dd3',1,'SPRITE']]],

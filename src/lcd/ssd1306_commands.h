@@ -57,8 +57,6 @@ enum ESsd1306Commands
     SSD1306_SETCOMPINS       = 0xDA,
     SSD1306_SETVCOMDETECT    = 0xDB,
 
-
-
     SSD1306_SWITCHCAPVCC     = 0x02,
     SSD1306_NOP              = 0xE3,
 };

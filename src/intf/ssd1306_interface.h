@@ -70,10 +70,34 @@ extern void (*ssd1306_dataStart)();
  */
 void         ssd1306_sendData(uint8_t data);
 
+/**
+ * Sets block in RAM of lcd display controller to write data to.
+ * For ssd1306 it uses horizontal addressing mode, while for
+ * sh1106 the function uses page addressing mode.
+ * Width can be specified as 0, thus the library will set the right
+ * region of RAM block to the right column of the display.
+ * @param x - column (left region)
+ * @param y - page (top page of the block)
+ * @param w - width of the block in pixels to control
+ */
 extern void (*ssd1306_setRamBlock)(uint8_t x, uint8_t y, uint8_t w);
 
+/**
+ * Switches to the start of next RAM page for the block, specified by
+ * ssd1306_setRamBlock().
+ * For ssd1306 it does nothing, while for sh1106 the function moves cursor to
+ * next page.
+ */
 extern void (*ssd1306_nextRamPage)();
 
+/**
+ * Sets position in RAM of lcd display controller to write data to.
+ * For ssd1306 this function is not defined. So, calling it will cause
+ * your controller to reset. For sh1106 the function does the same as
+ * ssd1306_setRamBlock().
+ * @param x - column (left region)
+ * @param y - page (top page of the block)
+ */
 extern void (*ssd1306_setRamPos)(uint8_t x, uint8_t y);
 
 #ifdef __cplusplus

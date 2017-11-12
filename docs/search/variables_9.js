@@ -10,6 +10,9 @@ var searchData=
   ['ssd1306_5fcommandstart',['ssd1306_commandStart',['../ssd1306__interface_8h.html#a21f7ab77b2c88640f65830207891be6a',1,'ssd1306_interface.c']]],
   ['ssd1306_5fdatastart',['ssd1306_dataStart',['../ssd1306__interface_8h.html#a4bab894049fd128d1bb70ffe7f2b7860',1,'ssd1306_interface.c']]],
   ['ssd1306_5fendtransmission',['ssd1306_endTransmission',['../ssd1306__interface_8h.html#ab51dec92bb34de5137d4c96a4fc1460f',1,'ssd1306_interface.c']]],
+  ['ssd1306_5fnextrampage',['ssd1306_nextRamPage',['../ssd1306__interface_8h.html#acb44b0f1d772d7a7d395ed402cb145a3',1,'ssd1306_interface.c']]],
   ['ssd1306_5fsendbyte',['ssd1306_sendByte',['../ssd1306__interface_8h.html#ab199e63bf66cf4a217305dbfc561186f',1,'ssd1306_interface.c']]],
+  ['ssd1306_5fsetramblock',['ssd1306_setRamBlock',['../ssd1306__interface_8h.html#add0f99f7f4f9bae0c1035ada7f578a05',1,'ssd1306_interface.c']]],
+  ['ssd1306_5fsetrampos',['ssd1306_setRamPos',['../ssd1306__interface_8h.html#a2c937df68f1020454c8ec4c499b15bf5',1,'ssd1306_interface.c']]],
   ['ssd1306_5fstarttransmission',['ssd1306_startTransmission',['../ssd1306__interface_8h.html#a1568a7f33ff881981b0d8f68e64617dc',1,'ssd1306_interface.c']]]
 ];

@@ -30,7 +30,7 @@
 #ifdef SSD1306_WIRE_SUPPORTED
 
 /**
- * Configures speed for standard Wire library.
+ * Configures speed for standard Wire library (via Wire.begin()).
  * This function is called by ssd1306_i2cInit().
  */
 void ssd1306_i2cConfigure_Wire();
