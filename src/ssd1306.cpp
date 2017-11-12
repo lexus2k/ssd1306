@@ -201,10 +201,10 @@ void ssd1306_drawBuffer(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_
     ssd1306_dataStart();
     for(j=0; j<(h >> 3); j++)
     {
-        if ( g_lcd_type == LCD_TYPE_PCD8544 )
+        if ( g_lcd_type != LCD_TYPE_SSD1306 )
         {
            ssd1306_endTransmission();
-           ssd1306_setRamPos(x, y+j);
+           ssd1306_setRamBlock(x, y+j, w);
            ssd1306_dataStart();
         }
         for(i=0;i<w;i++)
@@ -222,10 +222,10 @@ void ssd1306_drawBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_
     ssd1306_dataStart();
     for(j=0; j<(h >> 3); j++)
     {
-        if ( g_lcd_type == LCD_TYPE_PCD8544 )
+        if ( g_lcd_type != LCD_TYPE_SSD1306 )
         {
            ssd1306_endTransmission();
-           ssd1306_setRamPos(x, y+j);
+           ssd1306_setRamBlock(x, y+j, w);
            ssd1306_dataStart();
         }
         for(i=w;i>0;i--)
@@ -244,10 +244,10 @@ void ssd1306_clearBlock(uint8_t x, uint8_t y, uint8_t w, uint8_t h)
     ssd1306_dataStart();
     for(j=0; j<(h >> 3); j++)
     {
-        if ( g_lcd_type == LCD_TYPE_PCD8544 )
+        if ( g_lcd_type != LCD_TYPE_SSD1306 )
         {
            ssd1306_endTransmission();
-           ssd1306_setRamPos(x, y+j);
+           ssd1306_setRamBlock(x, y+j, w);
            ssd1306_dataStart();
         }
         for(i=w;i>0;i--)

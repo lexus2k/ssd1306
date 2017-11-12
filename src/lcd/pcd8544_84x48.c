@@ -70,7 +70,9 @@ void    pcd8544_84x48_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
     s_displayHeight = 48;
     s_displayWidth = 84;
     ssd1306_setRamBlock = pcd8544_setBlock;
-    ssd1306_setRamPos = pcd8544_setPos;
+    ssd1306_setRamPos = NULL;
+    // pcd8544 setRamBlock works as setRamPos, we do not need additional function
+//    ssd1306_setRamPos = pcd8544_setPos;
     for( uint8_t i=0; i<sizeof(s_lcd84x48_initData); i++)
     {
         ssd1306_sendByte(pgm_read_byte(&s_lcd84x48_initData[i]));
