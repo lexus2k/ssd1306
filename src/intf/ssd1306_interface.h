@@ -31,6 +31,11 @@ extern "C" {
 #endif
 
 /**
+ * @defgroup LCD_INTERFACE_API LCD communication interface functions
+ * @{
+ */
+
+/**
  * Starts communication with SSD1306 display.
  */
 extern void  (*ssd1306_startTransmission)();
@@ -62,6 +67,47 @@ extern void (*ssd1306_commandStart)();
  * Starts transaction for sending bitmap data.
  */
 extern void (*ssd1306_dataStart)();
+
+/**
+ * Sends byte data to SSD1306 controller memory.
+ * Performs 3 operations at once: ssd1306_dataStart(); ssd1306_sendByte( data ); ssd1306_endTransmission();
+ * @param data - byte to send to the controller memory
+ */
+void         ssd1306_sendData(uint8_t data);
+
+/**
+ * Sets block in RAM of lcd display controller to write data to.
+ * For ssd1306 it uses horizontal addressing mode, while for
+ * sh1106 the function uses page addressing mode.
+ * Width can be specified as 0, thus the library will set the right
+ * region of RAM block to the right column of the display.
+ * @param x - column (left region)
+ * @param y - page (top page of the block)
+ * @param w - width of the block in pixels to control
+ */
+extern void (*ssd1306_setRamBlock)(uint8_t x, uint8_t y, uint8_t w);
+
+/**
+ * Switches to the start of next RAM page for the block, specified by
+ * ssd1306_setRamBlock().
+ * For ssd1306 it does nothing, while for sh1106 the function moves cursor to
+ * next page.
+ */
+extern void (*ssd1306_nextRamPage)();
+
+/**
+ * Sets position in RAM of lcd display controller to write data to.
+ * For ssd1306 this function is not defined. So, calling it will cause
+ * your controller to reset. For sh1106 the function does the same as
+ * ssd1306_setRamBlock().
+ * @param x - column (left region)
+ * @param y - page (top page of the block)
+ */
+extern void (*ssd1306_setRamPos)(uint8_t x, uint8_t y);
+
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

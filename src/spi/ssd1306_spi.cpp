@@ -17,27 +17,34 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef _SSD1306_SPI_CONF_H_
-#define _SSD1306_SPI_CONF_H_
 
-#ifdef __cplusplus
-extern "C" {
+#include "ssd1306_spi.h"
+#include "ssd1306_spi_hw.h"
+#include "intf/ssd1306_interface.h"
+#include "ssd1306_spi_conf.h"
+#include "lcd/lcd_common.h"
+
+int8_t s_ssd1306_cs = 4;
+int8_t s_ssd1306_dc = 5;
+
+void ssd1306_spiInit(int8_t cesPin, int8_t dcPin)
+{
+#ifdef SSD1306_SPI_SUPPORTED
+    ssd1306_spiConfigure_hw();
+    ssd1306_spiInit_hw(cesPin, dcPin);
 #endif
-
-// Uncomment this block only, if you need to use "embedded" SPI on Atmega controllers
-// #define SSD1306_EMBEDDED_SPI
-
-#if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
-#ifndef SSD1306_EMBEDDED_SPI
-    /**
-     * Use embedded spi on attiny controllers. SPI library is not applicable
-     */
-    #define SSD1306_EMBEDDED_SPI
-#endif
-#endif
-
-#ifdef __cplusplus
 }
-#endif
 
-#endif
+void ssd1306_spiCommandStart()
+{
+    digitalWrite(s_ssd1306_dc, LOW);
+    ssd1306_startTransmission();
+}
+
+void ssd1306_spiDataStart()
+{
+    digitalWrite(s_ssd1306_dc, HIGH);
+    ssd1306_startTransmission();
+}
+
+

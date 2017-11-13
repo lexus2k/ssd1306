@@ -16,44 +16,39 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-/**
- * @file ssd1306_i2c.h SSD1306 i2c communication functions
- */
 
+/**
+ * @file ssd1306_spi.h SSD1306 spi communication functions
+ */
 
 #ifndef _SSD1306_SPI_H_
 #define _SSD1306_SPI_H_
 
 #include "ssd1306_spi_conf.h"
-#include <Arduino.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /**
- * Inits lcd interface to use hardware SPI for communication.
- * It uses standard MOSI, SCLK pins to send data to LCD.
+ * @defgroup LCD_INTERFACE_API LCD communication interface functions
+ * @{
+ */
+
+/** chip enable pin to controll lcd display over spi */
+extern int8_t s_ssd1306_cs;
+/** data/command control pin for spi interface of lcd display */
+extern int8_t s_ssd1306_dc;
+
+/**
+ * Inits lcd interface to use hardware spi for communication.
+ * The function automatically selects available type of spi implementation
+ * 1. SPI library (ssd1306_spiInit_hw())
  * @param cesPin - pin, controlling chip enable of LCD
  * @param dcPin - pin, controlling data/command mode of LCD
  */
-void         ssd1306_hwSpiInit(int8_t cesPin, int8_t dcPin);
-
-/**
- * Informs SPI device about data to be sent
- */
-void         ssd1306_spiStart();
-
-/**
- * Completes SPI transaction
- */
-void         ssd1306_spiStop();
-
-/**
- * Sends byte to SPI device
- * @param data - byte to send
- */
-void         ssd1306_spiSendByte(uint8_t data);
+void         ssd1306_spiInit(int8_t cesPin, int8_t dcPin);
 
 /**
  * Switches spi chip to command transmission mode.
@@ -65,10 +60,13 @@ void         ssd1306_spiCommandStart();
  */
 void         ssd1306_spiDataStart();
 
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }
 #endif
 
 // ----------------------------------------------------------------------------
-#endif // _SSD1306_I2C_H_
+#endif // _SSD1306_SPI_H_

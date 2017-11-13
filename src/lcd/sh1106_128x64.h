@@ -37,6 +37,12 @@ extern "C" {
  */
 
 /**
+ * Inits 128x64 OLED display (based on SH1106 controller).
+ * User must init communication interface (i2c or spi) prior to calling this function.
+ */
+void         sh1106_128x64_init();
+
+/**
  * Inits 128x64 OLED display over i2c (based on SH1106 controller)
  */
 void         sh1106_128x64_i2c_init();

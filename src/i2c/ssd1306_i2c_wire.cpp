@@ -17,44 +17,52 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-#include "ssd1306_i2c.h"
-
+#include "ssd1306_i2c_wire.h"
 #include "intf/ssd1306_interface.h"
 #include "ssd1306_i2c_conf.h"
+#include "ssd1306_i2c.h"
 
-#if !defined(SSD1306_EMBEDDED_I2C)
-/* STANDARD branch */
-    #include <Wire.h>
+#ifdef SSD1306_WIRE_SUPPORTED
 
-uint8_t s_bytesWritten = 0;
+#include <Wire.h>
 
-void ssd1306_i2cStart(void)
+static uint8_t s_bytesWritten = 0;
+static uint8_t s_sa = SSD1306_SA;
+
+void ssd1306_i2cStart_Wire(void)
 {
-    Wire.beginTransmission(SSD1306_SA);
+    Wire.beginTransmission(s_sa);
     s_bytesWritten = 0;
 }
 
-void ssd1306_i2cStop(void)
+void ssd1306_i2cStop_Wire(void)
 {
     Wire.endTransmission();
+}
+
+void ssd1306_i2cConfigure_Wire()
+{
+    Wire.begin();
+    #ifdef SSD1306_WIRE_CLOCK_CONFIGURABLE
+        Wire.setClock(400000);
+    #endif
 }
 
 /**
  * Inputs: SCL is LOW, SDA is has no meaning
  * Outputs: SCL is LOW
  */
-void ssd1306_i2cSendByte(uint8_t data)
+void ssd1306_i2cSendByte_Wire(uint8_t data)
 {
     // Do not write too many bytes for standard Wire.h. It may become broken
-    #ifdef BUFFER_LENGTH
+#ifdef BUFFER_LENGTH
     if (s_bytesWritten >= (BUFFER_LENGTH >> 1))
-    #else
+#else
     if (s_bytesWritten >= (USI_BUF_SIZE -2))
-    #endif
+#endif
     {
-        ssd1306_i2cStop();
-        ssd1306_i2cStart();
+        ssd1306_i2cStop_Wire();
+        ssd1306_i2cStart_Wire();
         /* Commands never require many bytes. Thus assume that user tries to send data */
         Wire.write(0x40);
         s_bytesWritten++;
@@ -63,6 +71,15 @@ void ssd1306_i2cSendByte(uint8_t data)
     s_bytesWritten++;
 }
 
+void ssd1306_i2cInit_Wire(uint8_t sa)
+{
+    if (sa) s_sa = sa;
+    ssd1306_startTransmission = ssd1306_i2cStart_Wire;
+    ssd1306_endTransmission = ssd1306_i2cStop_Wire;
+    ssd1306_sendByte = ssd1306_i2cSendByte_Wire;
+    ssd1306_commandStart = ssd1306_i2cCommandStart;
+    ssd1306_dataStart = ssd1306_i2cDataStart;
+}
 
 #endif
 

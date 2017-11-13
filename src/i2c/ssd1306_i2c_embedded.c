@@ -18,21 +18,24 @@
 */
 
 
-#include "ssd1306_i2c.h"
-
+#include "ssd1306_i2c_embedded.h"
 #include "intf/ssd1306_interface.h"
 #include "ssd1306_i2c_conf.h"
+#include "ssd1306_i2c.h"
 
+#ifdef SSD1306_I2C_SW_SUPPORTED
+
+#include <Arduino.h>
 
 /**
  * Port registers, containing pins, which SSD1306 display is connected to.
  * For ATtiny controllers it is standard PORTB
  * For ATmega328p, it is PORTC, which corresponds to Analog inputs/outputs
  */
-#if defined(SSD1306_EMBEDDED_I2C)
 
-static uint8_t s_sda = SSD1306_SDA;
-static uint8_t s_scl = SSD1306_SCL;
+static uint8_t s_scl = (1<<SSD1306_SCL);
+static uint8_t s_sda = (1<<SSD1306_SDA);
+static uint8_t s_sa  = SSD1306_SA;
 
 #include <avr/interrupt.h>
 
@@ -81,10 +84,12 @@ static uint8_t s_scl = SSD1306_SCL;
 
 
 /* I2C HIGH = PORT as INPUT(0) and PULL-UP ENABLE (1) */
-#define DIGITAL_WRITE_HIGH(DREG, PREG, BIT) { DREG &= ~(1 << BIT); PREG |= (1 << BIT); }
+//#define DIGITAL_WRITE_HIGH(DREG, PREG, BIT) { DREG &= ~(1 << BIT); PREG |= (1 << BIT); }
+#define DIGITAL_WRITE_HIGH(DREG, PREG, BIT) { DREG &= ~BIT; PREG |= BIT; }
 
 /* I2C LOW  = PORT as OUTPUT(1) and OUTPUT LOW (0) */
-#define DIGITAL_WRITE_LOW(DREG, PREG, BIT)  { DREG |= (1 << BIT); PREG &= ~(1 << BIT); }
+//#define DIGITAL_WRITE_LOW(DREG, PREG, BIT)  { DREG |= (1 << BIT); PREG &= ~(1 << BIT); }
+#define DIGITAL_WRITE_LOW(DREG, PREG, BIT)  { DREG |= BIT; PREG &= ~BIT; }
 
 static uint8_t oldSREG;
 static uint8_t interruptsOff = 0;
@@ -92,7 +97,7 @@ static uint8_t interruptsOff = 0;
 /**
  * SCL remains HIGH on EXIT, Low SDA means start transmission
  */
-void ssd1306_i2cStart(void)
+void ssd1306_i2cStart_Embedded(void)
 {
     oldSREG = SREG;
     cli();
@@ -101,10 +106,10 @@ void ssd1306_i2cStart(void)
     ssd1306_delay(I2C_START_STOP_DELAY);
     DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_scl);     // Set to LOW
     ssd1306_delay(I2C_HALF_CLOCK);
-    ssd1306_i2cSendByte((SSD1306_SA << 1) | 0);
+    ssd1306_i2cSendByte_Embedded((s_sa << 1) | 0);
 }
 
-void ssd1306_i2cStop(void)
+void ssd1306_i2cStop_Embedded(void)
 {
     DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_sda);		// Set to LOW
     ssd1306_delay(I2C_RISE_TIME); // Fall time is the same as rise time
@@ -123,15 +128,18 @@ void ssd1306_i2cStop(void)
  * Inputs: SCL is LOW, SDA is has no meaning
  * Outputs: SCL is LOW
  */
-void ssd1306_i2cSendByte(uint8_t data)
+void ssd1306_i2cSendByte_Embedded(uint8_t data)
 {
   uint8_t i;
-  for(i=0; i<8; i++)
+  for(i=8; i>0; i--)
+//  for(i=0; i<8; i++)
     {
-      if((data << i) & 0x80)
+      if(data & 0x80)
+//      if((data << i) & 0x80)
         DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_sda)
       else
         DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_sda);
+      data<<=1;
       ssd1306_delay(I2C_RISE_TIME); // Fall time is the same as rise time
 
       DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_scl);
@@ -149,6 +157,16 @@ void ssd1306_i2cSendByte(uint8_t data)
   ssd1306_delay(I2C_HALF_CLOCK);
 }
 
+void ssd1306_i2cInit_Embedded(uint8_t scl, uint8_t sda, uint8_t sa)
+{
+    if (scl) s_scl = (1<<scl);
+    if (sda) s_sda = (1<<sda);
+    if (sa)  s_sa  = sa;
+    ssd1306_startTransmission = ssd1306_i2cStart_Embedded;
+    ssd1306_endTransmission = ssd1306_i2cStop_Embedded;
+    ssd1306_sendByte = ssd1306_i2cSendByte_Embedded;
+    ssd1306_commandStart = ssd1306_i2cCommandStart;
+    ssd1306_dataStart = ssd1306_i2cDataStart;
+}
+
 #endif
-
-

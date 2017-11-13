@@ -29,13 +29,7 @@
  */
 
 #include "ssd1306.h"
-#include "ssd1306_i2c_conf.h"
 #include "buttons.h"
-
-/* Do not include wire.h for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_I2C
-    #include <Wire.h>
-#endif
 
 #define BUTTON_PIN     A0
 
@@ -59,12 +53,6 @@ SAppMenu menu;
 void setup()
 {
     /* Do not init Wire library for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_I2C
-    Wire.begin();
-    #ifndef ARDUINO_AVR_DIGISPARK
-        Wire.setClock(400000);
-    #endif
-#endif
     ssd1306_128x64_i2c_init();
     ssd1306_fillScreen( 0x00 );
     /* Initialize main menu state */

@@ -28,17 +28,11 @@
  */
 
 #include "ssd1306.h"
-#include "ssd1306_i2c_conf.h"
-#include "ssd1306_spi_conf.h"
 #include "sova.h"
 #include "nano_gfx.h"
 
-/* Do not include wire.h for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_I2C
-    #include <Wire.h>
-#endif
 /* Do not include SPI.h for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_SPI
+#ifdef SSD1306_SPI_SUPPORTED
     #include <SPI.h>
 #endif
 
@@ -78,31 +72,7 @@ const char *menuItems[] =
     "sprite pool",
 };
 
-void setup()
-{
-    /* Do not init Wire library for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_I2C
-    Wire.begin();
-    #ifndef ARDUINO_AVR_DIGISPARK
-        Wire.setClock(400000);
-    #endif
-#endif
-    ssd1306_128x64_i2c_init();
-
-    /* Uncomment lines below if you want to use SPI Nokia 5110 LCD */
-/*
-#ifndef SSD1306_EMBEDDED_SPI
-    SPI.begin();
-#endif
-    pcd8544_84x48_spi_init(3, 4, 5);
-*/
-
-    ssd1306_fillScreen( 0x00 );
-    ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
-    ssd1306_showMenu( &menu );
-}
-
-void bitmapDemo()
+static void bitmapDemo()
 {
     ssd1306_drawBitmap(0, 0, 128, 64, Sova);
     delay(1000);
@@ -111,7 +81,7 @@ void bitmapDemo()
     ssd1306_normalMode();
 }
 
-void spriteDemo()
+static void spriteDemo()
 {
     ssd1306_clearScreen();
     /* Declare variable that represents our sprite */
@@ -130,7 +100,7 @@ void spriteDemo()
     }
 }
 
-void textDemo()
+static void textDemo()
 {
     ssd1306_clearScreen();
     ssd1306_charF6x8(0, 1, "Normal text");
@@ -142,21 +112,36 @@ void textDemo()
     delay(3000);
 }
 
-void canvasDemo()
+static void canvasDemo()
 {
     uint8_t buffer[64*16/8];
-    ssd1306_clearScreen();
     NanoCanvas canvas(64,16, buffer);
+    ssd1306_clearScreen();
     canvas.clear();
     canvas.fillRect(10, 3, 80, 5, 0xFF);
-    canvas.blt(32, 1);
+    canvas.blt((ssd1306_displayWidth()-64)/2, 1);
     delay(500);
     canvas.fillRect(50, 1, 60, 15, 0xFF);
-    canvas.blt(32, 1);
+    canvas.blt((ssd1306_displayWidth()-64)/2, 1);
     delay(1500);
     canvas.charF6x8(20, 1, " DEMO " );
-    canvas.blt(32, 1);
+    canvas.blt((ssd1306_displayWidth()-64)/2, 1);
     delay(3000);
+}
+
+void setup()
+{
+    /* Do not init Wire library for Attiny controllers */
+    ssd1306_128x64_i2c_init();
+
+    /* Uncomment lines below if you want to use SPI Nokia 5110 LCD */
+/*
+    pcd8544_84x48_spi_init(3, 4, 5);
+*/
+
+    ssd1306_fillScreen( 0x00 );
+    ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
+    ssd1306_showMenu( &menu );
 }
 
 void loop()

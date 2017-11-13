@@ -38,22 +38,10 @@
 
 #include "game_field.h"
 #include "ssd1306.h"
-#include "ssd1306_i2c_conf.h"
-#include "ssd1306_spi_conf.h"
 #include "player_sprites.h"
 #include "coin_sprite.h"
 #include "hero_states.h"
 #include "buttons.h"
-
-/* Do not include wire.h for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_I2C
-    #include <Wire.h>
-#endif
-
-/* Do not include SPI.h for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_SPI
-    #include <SPI.h>
-#endif
 
 #if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)
 #define BUZZER      1
@@ -188,19 +176,10 @@ void movePlayer(SPRITE &playerSprite, uint8_t direction)
 void setup()
 {
     /* Do not init Wire library for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_I2C
-    Wire.begin();
-    #ifndef ARDUINO_AVR_DIGISPARK
-        Wire.setClock( 400000  );
-    #endif
-#endif
     ssd1306_128x64_i2c_init();
 
     /* Use the commented lines below, if you want to connect Nokia 5110 LCD */
 /*
-#ifndef SSD1306_EMBEDDED_SPI
-    SPI.begin();
-#endif
     pcd8544_84x48_spi_init(3, 4, 5); // 3 RST, 4 CES, 5 DS
 */
     ssd1306_fillScreen(0x00);

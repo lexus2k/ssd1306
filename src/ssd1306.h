@@ -25,9 +25,11 @@
 #define _SSD1306_H_
 
 #include "nano_gfx_types.h"
+#include "i2c/ssd1306_i2c_conf.h"
+#include "spi/ssd1306_spi_conf.h"
 #include "lcd/ssd1306_128x64.h"
-#include "lcd/sh1106_128x64.h"
 #include "lcd/ssd1306_128x32.h"
+#include "lcd/sh1106_128x64.h"
 #include "lcd/pcd8544_84x48.h"
 
 #ifdef __cplusplus
@@ -95,13 +97,6 @@ uint8_t      ssd1306_displayWidth();
 void         ssd1306_setPos(uint8_t x, uint8_t y);
 
 /**
- * Sends byte data to SSD1306 controller memory.
- * Performs 3 operations at once: ssd1306_dataStart(); ssd1306_sendByte( data ); ssd1306_endTransmission();
- * @param data - byte to send to the controller memory
- */
-void         ssd1306_sendData(uint8_t data);
-
-/**
  * Fills screen with pattern byte
  */
 void         ssd1306_fillScreen(uint8_t fill_Data);
@@ -141,15 +136,15 @@ uint8_t      ssd1306_charF6x8(uint8_t x, uint8_t y,
 
 /**
  * Prints text to screen using set font.
- * If real text ends before <right> boundary,
- * the remaining part on the display will be erased till <right>
+ * If real text ends before right boundary,
+ * the remaining part on the display will be erased till right
  * boundary.
  * @param left - horizontal position in pixels
  * @param y - vertical position in blocks (pixels/8)
  * @param ch - NULL-terminated string to print
  * @param style - font style (EFontStyle), normal by default.
  * @param right - right boundary of the text to output
- * @param returns number of chars in string
+ * @returns number of chars in string
  */
 uint8_t      ssd1306_charF6x8_eol(uint8_t left,
                                   uint8_t y,

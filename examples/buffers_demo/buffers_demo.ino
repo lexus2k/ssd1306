@@ -28,13 +28,7 @@
  */
 
 #include "ssd1306.h"
-#include "ssd1306_i2c_conf.h"
 #include "nano_gfx.h"
-
-/* Do not include wire.h for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_I2C
-    #include <Wire.h>
-#endif
 
 /* 
  * Heart image below is defined directly in flash memory.
@@ -87,10 +81,6 @@ NanoCanvas canvas(canvasWidth, canvasHeight, canvasData);
 
 void setup()
 {
-    /* Do not init Wire library for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_I2C
-    Wire.begin();
-#endif
     /* Initialize and clear display */
     /* Replace the line below with ssd1306_128x32_i2c_init() if you need to use 128x32 display */
     ssd1306_128x64_i2c_init();

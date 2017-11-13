@@ -28,14 +28,7 @@
  */
 
 #include "ssd1306.h"
-#include "ssd1306_spi_conf.h"
 #include "sprite_pool.h"
-
-/* Do not include SPI.h for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_SPI
-    #include <SPI.h>
-#endif
-
 
 /* 
  * Heart image below is defined directly in flash memory.
@@ -78,10 +71,6 @@ int speedY = 1;
 
 void setup()
 {
-    /* Do not init Wire library for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_SPI
-    SPI.begin();
-#endif
     pcd8544_84x48_spi_init(3, 4, 5);
     ssd1306_fillScreen(0x0);
     /* Set range of the SpritePool field on the screen in blocks. *

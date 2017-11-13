@@ -37,6 +37,14 @@ extern "C" {
  */
 
 /**
+ * Inits 128x64 OLED display (based on SSD1306 controller).
+ * User must init communication interface (i2c, spi) prior to calling this function.
+ * @see ssd1306_i2cInit()
+ * @see ssd1306_spiInit()
+ */
+void         ssd1306_128x64_init();
+
+/**
  * Inits 128x64 OLED display over i2c (based on SSD1306 controller)
  */
 void         ssd1306_128x64_i2c_init();

@@ -56,12 +56,13 @@
     #include <avr/eeprom.h>
 #endif
 #include "ssd1306.h"
-#include "ssd1306_i2c_conf.h"
+#include "i2c/ssd1306_i2c_wire.h"
+#include "i2c/ssd1306_i2c_embedded.h"
 #include "intf/ssd1306_interface.h"
 #include <avr/sleep.h>
 #include <avr/interrupt.h> // needed for the additional interrupt
 
-#ifndef SSD1306_EMBEDDED_I2C
+#ifdef SSD1306_WIRE_SUPPORTED
 #include <Wire.h>
 #endif
 
@@ -115,8 +116,8 @@ bool       updateStatusPanel; // Set to true if status panel update is required
 int        platformWidth;
 int        ballx;
 int        bally;
-int        vSpeed;
-int        hSpeed;
+int8_t     vSpeed;
+int8_t     hSpeed;
 uint8_t    hearts;
 uint16_t   lastDrawTimestamp;
 uint8_t    gameField[BLOCK_NUM_ROWS][MAX_BLOCKS_PER_ROW];
@@ -143,7 +144,6 @@ void drawFieldEdges();
 void drawStatusPanel();
 void onKill();
 
-
 void playerInc()
 {
    // PB2 pin button interrupt
@@ -151,18 +151,16 @@ void playerInc()
 
 void setup()
 {
-#ifndef SSD1306_EMBEDDED_I2C
-    Wire.begin();
-    #ifndef ARDUINO_AVR_DIGISPARK
-        Wire.setClock( 400000 );
-    #endif
-#endif
     randomSeed(analogRead(0));
-#if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)
+#if defined(__AVR_ATtiny85__)
     DDRB |= 0b00011010;         // set PB1 as output (for the speaker), PB0 and PB2 as input
     sei();                      // enable all interrupts
     attachInterrupt(0,playerInc,HIGH);
-#else
+#elif defined(SSD1306_WIRE_SUPPORTED)
+    Wire.begin();
+    #ifdef SSD1306_WIRE_CLOCK_CONFIGURABLE
+        Wire.setClock( 400000 );
+    #endif
     #ifndef USE_Z_KEYPAD
         pinMode(LEFT_BTN, INPUT);
         pinMode(RIGHT_BTN, INPUT);
@@ -172,35 +170,40 @@ void setup()
     #ifndef USE_Z_KEYPAD
         attachInterrupt(digitalPinToInterrupt(RIGHT_BTN),playerInc,HIGH);
     #endif
+#elif defined(SSD1306_I2C_SW_SUPPORTED)
+    #error "Not supported microcontroller or board"
+#else
+    #error "Not supported microcontroller or board"
 #endif
     resetGame();
 }
 
-void loop() {
-  if ( ((uint16_t)millis()) - lastDrawTimestamp > 30 )
-  {
-    uint8_t lastx = (ballx >> SPEED_SHIFT);
-    uint8_t lasty = (bally >> SPEED_SHIFT);
-    // continue moving after the interrupt
-    movePlatform();
-    // bounce off the sides of the screen
-    if (moveBall())
+void loop()
+{
+    if ( ((uint16_t)millis()) - lastDrawTimestamp > 30 )
     {
-        if (moveObjects())
+        uint8_t lastx = (ballx >> SPEED_SHIFT);
+        uint8_t lasty = (bally >> SPEED_SHIFT);
+        // continue moving after the interrupt
+        movePlatform();
+        // bounce off the sides of the screen
+        if (moveBall())
         {
-           // update whats on the screen
-           drawPlatform();
-           drawBall(lastx, lasty);
-           drawObjects();
-           if (updateStatusPanel)
-           {
-               updateStatusPanel = false;
-               drawStatusPanel();
-           }
-           lastDrawTimestamp += 30;
+            if (moveObjects())
+            {
+               // update whats on the screen
+               drawPlatform();
+               drawBall(lastx, lasty);
+               drawObjects();
+               if (updateStatusPanel)
+               {
+                   updateStatusPanel = false;
+                   drawStatusPanel();
+               }
+               lastDrawTimestamp += 30;
+            }
         }
-     }
-  }
+    }
 }
 
 void drawStatusPanel()
@@ -223,13 +226,22 @@ void drawStatusPanel()
 
 void drawIntro()
 {
-  ssd1306_init();
-  ssd1306_clearScreen( );
-  ssd1306_drawBitmap(16, 2, 96, 24, arkanoid_2);
-  ssd1306_charF6x8(40, 5, "BREAKOUT");
-  beep(200,600);
-  beep(300,200);
-  beep(400,300);
+#if defined(__AVR_ATtiny85__)
+    ssd1306_i2cInit_Embedded(0,0,0);
+#elif defined(SSD1306_WIRE_SUPPORTED)
+    ssd1306_i2cInit_Wire(0);
+#elif defined(SSD1306_I2C_SW_SUPPORTED)
+    ssd1306_i2cInit_Embedded(0,0,0);
+#else
+    #error "Not supported microcontroller or board"
+#endif
+    ssd1306_128x64_init();
+    ssd1306_clearScreen( );
+    ssd1306_drawBitmap(16, 2, 96, 24, arkanoid_2);
+    ssd1306_charF6x8(40, 5, "BREAKOUT");
+    beep(200,600);
+    beep(300,200);
+    beep(400,300);
 }
 
 void drawStartScreen()
@@ -268,14 +280,11 @@ void resetGame()
     startLevel();
 }
 
-
-
-
 /* Draws and clears platform */
 void drawPlatform()
 {
   uint8_t pos = (platformPos < PLATFORM_SPEED) ? 0: (platformPos - PLATFORM_SPEED);
-  ssd1306_setPos( pos + LEFT_EDGE + 1, PLATFORM_ROW );
+  ssd1306_setRamBlock( pos + LEFT_EDGE + 1, PLATFORM_ROW, platformWidth + PLATFORM_SPEED * 2 );
   ssd1306_dataStart();
   while (pos < platformPos)
   {
@@ -316,9 +325,9 @@ void resetBlocks()
        level = MAX_LEVELS;
     }
     blocksLeft = 0;
-    for (byte i =0; i<BLOCKS_PER_ROW;i++)
+    for (byte i =0; i<BLOCKS_PER_ROW; i++)
     {
-        for (int j=0; j<BLOCK_NUM_ROWS; ++j)
+        for (int j=0; j<BLOCK_NUM_ROWS; j++)
         {
             gameField[j][i] = pgm_read_byte( &levels[level-1][j][i] );
             if ((gameField[j][i]) && (gameField[j][i] != BLOCK_STRONG))
@@ -331,9 +340,9 @@ void resetBlocks()
 
 void drawBlocks()
 {
-    for (uint8_t r=0; r<BLOCK_NUM_ROWS; ++r)
+    for (uint8_t r=0; r<BLOCK_NUM_ROWS; r++)
     {
-        for (uint8_t bl = 0; bl <BLOCKS_PER_ROW; bl++)
+        for (uint8_t bl = 0; bl<BLOCKS_PER_ROW; bl++)
         {
             drawBlock(bl, r);
         }
@@ -342,11 +351,11 @@ void drawBlocks()
 
 void drawFieldEdges()
 {
-    for (uint8_t i=0; i<8; i++)
+    for (uint8_t i=8; i>0; i--)
     {
-        ssd1306_setPos(LEFT_EDGE, i);
+        ssd1306_setRamBlock(LEFT_EDGE, i, 1);
         ssd1306_sendData( B01010101 );
-        ssd1306_setPos(RIGHT_EDGE, i);
+        ssd1306_setRamBlock(RIGHT_EDGE, i, 1);
         ssd1306_sendData( B01010101 );
     }
 }
@@ -356,13 +365,13 @@ void drawBall(uint8_t lastx, uint8_t lasty)
 {
     uint8_t newx = ballx >> SPEED_SHIFT;
     uint8_t newy = bally >> SPEED_SHIFT;
-    ssd1306_setPos(LEFT_EDGE + 1 + newx,newy >> 3);
+    ssd1306_setRamBlock(LEFT_EDGE + 1 + newx,newy >> 3, 1);
     uint8_t temp = B00000001;
     temp = temp << ((newy & 0x07) + 1);
     ssd1306_sendData( temp );
     if ((newx != lastx) || ((newy >> 3) != (lasty >> 3)))
     {
-        ssd1306_setPos(LEFT_EDGE + 1 + lastx, lasty >> 3);
+        ssd1306_setRamBlock(LEFT_EDGE + 1 + lastx, lasty >> 3, 1);
         ssd1306_sendData( B00000000 );
     }
 }
@@ -555,7 +564,7 @@ void movePlatform()
     if (platformPower  != 0)
     {
         platformPower--;
-        if (platformPower % 32 == 0)
+        if (!(platformPower & 0x1F))
         {
             uint8_t i = freeObject();
             if (i != 0xFF)
@@ -572,8 +581,19 @@ void movePlatform()
     }
 }
 
-void gameOver(uint16_t topScore)
+void gameOver()
 {
+    uint16_t topScore = eeprom_read_word(EEPROM_ADDR);
+    if (topScore == 0xFFFF)
+    {
+        eeprom_write_word(EEPROM_ADDR, 0);
+        topScore = 0;
+    }
+    if (score>topScore)
+    {
+        topScore = score;
+        eeprom_write_word(EEPROM_ADDR, topScore);
+    }
     ssd1306_clearScreen( );
     ssd1306_charF6x8(32, 2, "GAME OVER");
     ssd1306_charF6x8(32, 4, "score ");
@@ -597,7 +617,7 @@ void platformCrashAnimation()
     {
         for ( uint8_t i = 0; i < platformWidth >> 2; i++ )
         {
-            ssd1306_setPos( platformPos + (i<<2) + ((j & 0x01)<<1) + ((j & 0x02)>>1) + LEFT_EDGE + 1, PLATFORM_ROW );
+            ssd1306_setRamBlock( platformPos + (i<<2) + ((j & 0x01)<<1) + ((j & 0x02)>>1) + LEFT_EDGE + 1, PLATFORM_ROW, platformWidth );
             ssd1306_sendData(B00000000);
         }
         delay(150);
@@ -611,19 +631,7 @@ void onKill()
     {
         platformCrashAnimation();
         // game over if the ball misses the platform
-        uint16_t topScore = eeprom_read_word(EEPROM_ADDR);
-        if (topScore == 0xFFFF)
-        {
-            eeprom_write_word(EEPROM_ADDR, 0);
-            topScore = 0;
-        }
-        if (score>topScore)
-        {
-            topScore = score;
-            eeprom_write_word(EEPROM_ADDR, topScore);
-        }
-
-        gameOver(topScore);
+        gameOver();
         system_sleep();
         level = 1;
         resetGame();

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.12"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SSD1306 I2C Display Driver: SSD1306/PCD8544 API.</title>
+<title>SSD1306 OLED display driver: SSD1306/PCD8544 API.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,10 +21,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">SSD1306 I2C Display Driver
-   &#160;<span id="projectnumber">1.2.2</span>
+   <div id="projectname">SSD1306 OLED display driver
+   &#160;<span id="projectnumber">1.3.0</span>
    </div>
-   <div id="projectbrief">This library is developed to control SSD1306 I2C OLED Display</div>
+   <div id="projectbrief">This library is developed to control SSD1306 i2c/spi OLED display</div>
   </td>
  </tr>
  </tbody>
@@ -64,36 +64,52 @@ $(function() {
 <div class="title">SSD1306/PCD8544 API. </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This is SSD1306 i2c oled display driver implementation for Arduino. The driver is also capable to work with pcd8544 (nokia 5110) LCD over SPI.</p>
+<div class="textblock"><p>This is SSD1306 oled display driver implementation for Arduino. The driver supports i2c and spi displays, and is also capable to work with pcd8544 (nokia 5110) LCD over SPI.</p>
 <h1>SSD1306 OLED display driver</h1>
 <h2>Introduction</h2>
-<p>SSD1306 i2c OLED Display driver is Arduino style library, intended for use with very small microcontrollers (with a little of SRAM). It was developed to use as few resources as possible. With internal i2c impementation and without using buffer-related functions the library requires only 26 bytes of SRAM. Since ATTiny controllers have no division and multiply operations, the library uses shift operation to speed up calculations.</p>
+<p>SSD1306 OLED display driver is Arduino style library, intended for use with very small microcontrollers (with a little of SRAM). It was developed to use as few resources as possible. Since ATTiny controllers have no division and multiply operations, the library uses shift operation to speed up calculations.</p>
 <h2>Key Features</h2>
 <ul>
-<li>Internal i2c implementation for Attiny controllers (for Atmega the library uses Wire library).</li>
-<li>Low level i2c OLED Driver functions (<a class="el" href="ssd1306__i2c_8h.html">ssd1306_i2c.h</a>) for direct communication with lcd display.</li>
-<li>Memory-buffered operations (<a class="el" href="nano__gfx_8h.html">nano_gfx.h</a>) for flickering-free output.</li>
-<li>Supported OLED displays:<ul>
-<li>SSD1306 128x64</li>
-<li>SSD1306 128x32</li>
-<li>PCD8544 84x48 (experimental support)</li>
-</ul>
-</li>
-<li>Main API functions are:<ul>
+<li>Embedded i2c software implementation</li>
+<li>Standard i2c support (via Wire library)</li>
+<li>4-wire spi support (via standard SPI library)</li>
+<li>Usage of very little of SRAM (minimum 26 bytes)</li>
+<li>Usage of as little Flash as possible</li>
+<li>Fast implementation to provide reasonable speed on slow microcontrollers</li>
 <li>Primitive graphics functions (line,rectangle,pixels)</li>
 <li>Printing text to display</li>
 <li>Drawing bitmap images, located in SRAM or Flash memory (PROGMEM)</li>
 <li>Work with sprite objects</li>
 <li>Creating and controlling menu items (see ssd1306_demo example)</li>
+<li>Memory-buffered operations (<a class="el" href="nano__gfx_8h.html">nano_gfx.h</a>) for flickering-free output.</li>
+<li>Bonus examples:<ul>
+<li>Arkanoid game</li>
+<li>Simple Lode runner game</li>
 </ul>
 </li>
-<li>Bonus games:<ul>
-<li>Arkanoid game as example!</li>
-<li>Simple Lode runner game as example!</li>
 </ul>
-</li>
+<p>The default i2c pins for embedded implementation can be modified in <a class="el" href="ssd1306__i2c__conf_8h.html">ssd1306_i2c_conf.h</a> file. For other controllers pins are defined by standard Wire library. The default spi SCLK and MOSI pins are defined by SPI library, and DC, RST, CES pins are configurable through API.</p>
+<h2>Supported displays:</h2>
+<ul>
+<li>i2c ssd1306 128x64 oled display</li>
+<li>i2c ssd1306 128x32 oled display</li>
+<li>spi ssd1306 128x64 oled display</li>
+<li>spi pcd8544 84x48 nokia 5110 led display (experimental support)</li>
 </ul>
-<p>For Attiny85/Attiny45 controllers OLED display must be connected to PB3 (SCL) and PB4 (SDA) lines. For other controllers pins are defined by standard Wire library. The pins can be modified for Attiny in <a class="el" href="ssd1306__i2c__conf_8h_source.html">ssd1306_i2c_conf.h</a> file. </p>
+<h2>Supported platforms</h2>
+<ul>
+<li>Attiny85, Attiny45</li>
+<li>Atmega328p, Atmega168</li>
+<li>Atmega2560</li>
+<li>ESP8266 (check <a href="examples/ESP8266_compatibility.txt">examples compatibility list</a>)</li>
+</ul>
+<h2>The goals of ssd1306 library</h2>
+<ul>
+<li>To use as few RAM as possible</li>
+<li>To use as few Flash as possible</li>
+<li>To be as fast as possible</li>
+<li>To fit <a href="examples/arkanoid">Arkanoid game example</a> to Attiny85 microcontroller </li>
+</ul>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

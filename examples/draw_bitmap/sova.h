@@ -29,4 +29,4 @@
 
 extern const uint8_t Sova [] PROGMEM;
 
-#endif
+#endif /* _SOVA_H_ */

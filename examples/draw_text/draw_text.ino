@@ -28,20 +28,9 @@
  */
 
 #include "ssd1306.h"
-#include "ssd1306_i2c_conf.h"
-
-/* Do not include wire.h for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_I2C
-    #include <Wire.h>
-#endif
-
 
 void setup()
 {
-    /* Do not init Wire library for Attiny controllers */
-#ifndef SSD1306_EMBEDDED_I2C
-    Wire.begin();
-#endif
     /* Replace the line below with ssd1306_128x32_i2c_init() if you need to use 128x32 display */
     ssd1306_128x64_i2c_init();
     ssd1306_fillScreen(0x00);

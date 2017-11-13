@@ -19,24 +19,27 @@
 
 #include "ssd1306_i2c.h"
 #include "intf/ssd1306_interface.h"
+#include "ssd1306_i2c_wire.h"
+#include "ssd1306_i2c_embedded.h"
 
 void ssd1306_i2cCommandStart(void)
 {
-    ssd1306_i2cStart();
-    ssd1306_i2cSendByte(0x00);
+    ssd1306_startTransmission();
+    ssd1306_sendByte(0x00);
 }
 
 void ssd1306_i2cDataStart(void)
 {
-    ssd1306_i2cStart();
-    ssd1306_i2cSendByte(0x40);
+    ssd1306_startTransmission();
+    ssd1306_sendByte(0x40);
 }
 
 void ssd1306_i2cInit()
 {
-    ssd1306_startTransmission = ssd1306_i2cStart;
-    ssd1306_endTransmission = ssd1306_i2cStop;
-    ssd1306_sendByte = ssd1306_i2cSendByte;
-    ssd1306_commandStart = ssd1306_i2cCommandStart;
-    ssd1306_dataStart = ssd1306_i2cDataStart;
+#ifdef SSD1306_WIRE_SUPPORTED
+    ssd1306_i2cConfigure_Wire();
+    ssd1306_i2cInit_Wire(SSD1306_SA);
+#elif defined(SSD1306_I2C_SW_SUPPORTED)
+    ssd1306_i2cInit_Embedded(SSD1306_SCL, SSD1306_SDA, SSD1306_SA);
+#endif
 }

@@ -42,6 +42,14 @@ extern "C" {
 void         ssd1306_128x32_i2c_init();
 
 /**
+ * Inits 128x32 OLED display (based on ssd1306 controller)
+ * spi or i2c bus must be initialized prior to calling this function.
+ * @see ssd1306_i2cInit()
+ * @see ssd1306_spiInit()
+ */
+void         ssd1306_128x32_init();
+
+/**
  * @}
  */
 

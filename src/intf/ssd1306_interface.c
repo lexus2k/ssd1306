@@ -19,6 +19,8 @@
 
 #include "ssd1306_interface.h"
 
+#include "lcd/ssd1306_commands.h"
+#include "lcd/lcd_common.h"
 #include <stddef.h>
 
 /**
@@ -41,6 +43,12 @@ void (*ssd1306_commandStart)() = NULL;
 
 void (*ssd1306_dataStart)() = NULL;
 
+void (*ssd1306_setRamBlock)(uint8_t x, uint8_t y, uint8_t w) = NULL;
+
+void (*ssd1306_nextRamPage)() = NULL;
+
+void (*ssd1306_setRamPos)(uint8_t x, uint8_t y) = NULL;
+
 void ssd1306_sendCommand(uint8_t command)
 {
     ssd1306_commandStart();
@@ -48,3 +56,9 @@ void ssd1306_sendCommand(uint8_t command)
     ssd1306_endTransmission();
 }
 
+void ssd1306_sendData(uint8_t data)
+{
+    ssd1306_dataStart();
+    ssd1306_sendByte( data );
+    ssd1306_endTransmission();
+}
