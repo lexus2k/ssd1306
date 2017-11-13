@@ -31,11 +31,15 @@
 extern "C" {
 #endif
 
+/**
+ * @defgroup LCD_INTERFACE_API LCD communication interface functions
+ * @{
+ */
+
 /** chip enable pin to controll lcd display over spi */
 extern int8_t s_ssd1306_cs;
 /** data/command control pin for spi interface of lcd display */
 extern int8_t s_ssd1306_dc;
-
 
 /**
  * Inits lcd interface to use hardware spi for communication.
@@ -56,6 +60,9 @@ void         ssd1306_spiCommandStart();
  */
 void         ssd1306_spiDataStart();
 
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

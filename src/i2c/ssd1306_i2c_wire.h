@@ -30,6 +30,11 @@
 #ifdef SSD1306_WIRE_SUPPORTED
 
 /**
+ * @defgroup LCD_INTERFACE_API LCD communication interface functions
+ * @{
+ */
+
+/**
  * Configures speed for standard Wire library (via Wire.begin()).
  * This function is called by ssd1306_i2cInit().
  */
@@ -58,6 +63,10 @@ void ssd1306_i2cStop_Wire(void);
  * @param data - byte to send
  */
 void ssd1306_i2cSendByte_Wire(uint8_t data);
+
+/**
+ * @}
+ */
 
 #endif
 

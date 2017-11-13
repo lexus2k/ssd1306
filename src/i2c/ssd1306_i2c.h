@@ -32,6 +32,11 @@ extern "C" {
 #endif
 
 /**
+ * @defgroup LCD_INTERFACE_API LCD communication interface functions
+ * @{
+ */
+
+/**
  * Inits display interface to use i2c bus.
  * The function automatically selects available type of i2c implementation
  * 1. Wire library
@@ -51,6 +56,10 @@ void         ssd1306_i2cCommandStart();
  * Switches i2c chip to data transmission mode.
  */
 void         ssd1306_i2cDataStart();
+
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

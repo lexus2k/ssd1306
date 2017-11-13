@@ -31,6 +31,11 @@ extern "C" {
 #endif
 
 /**
+ * @defgroup LCD_INTERFACE_API LCD communication interface functions
+ * @{
+ */
+
+/**
  * Starts communication with SSD1306 display.
  */
 extern void  (*ssd1306_startTransmission)();
@@ -99,6 +104,10 @@ extern void (*ssd1306_nextRamPage)();
  * @param y - page (top page of the block)
  */
 extern void (*ssd1306_setRamPos)(uint8_t x, uint8_t y);
+
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

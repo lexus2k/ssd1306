@@ -28,6 +28,11 @@
 extern "C" {
 #endif
 
+/**
+ * @defgroup LCD_INTERFACE_API LCD communication interface functions
+ * @{
+ */
+
 #ifndef SSD1306_SA
     /**
      * SSD1306_SA defines default i2c address of LCD display. Please, check your device.
@@ -41,7 +46,7 @@ extern "C" {
 
 #if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
     /**
-     * Use embedded i2c on attiny controllers. Wire library is not applicable
+     * Use embedded i2c on attiny controllers, when Wire library is not applicable.
      * The macro is deprecated. Use SSD1306_I2C_SW_SUPPORTED or SSD1306_WIRE_SUPPORTED instead
      */
     #define SSD1306_EMBEDDED_I2C
@@ -79,6 +84,10 @@ extern "C" {
         #define SSD1306_SDA   4 // SDA, Pin A4 on SSD1306 Board
     #endif
 #endif
+
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

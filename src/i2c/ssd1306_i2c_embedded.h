@@ -34,6 +34,11 @@ extern "C" {
 #endif
 
 /**
+ * @defgroup LCD_INTERFACE_API LCD communication interface functions
+ * @{
+ */
+
+/**
  * Initializes software implementation of i2c.
  * If you do not know i2c parameters, try ssd1306_i2cInit_Embedded(0,0,0).
  * @warning the function disables interrupts.
@@ -59,6 +64,10 @@ void ssd1306_i2cStop_Embedded(void);
  * @param data - byte to send
  */
 void ssd1306_i2cSendByte_Embedded(uint8_t data);
+
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

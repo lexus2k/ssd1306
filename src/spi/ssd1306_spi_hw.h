@@ -31,6 +31,11 @@
 extern "C" {
 #endif
 
+/**
+ * @defgroup LCD_INTERFACE_API LCD communication interface functions
+ * @{
+ */
+
 #ifdef SSD1306_SPI_SUPPORTED
 
 /**
@@ -64,6 +69,10 @@ void         ssd1306_spiStop_hw();
 void         ssd1306_spiSendByte_hw(uint8_t data);
 
 #endif
+
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

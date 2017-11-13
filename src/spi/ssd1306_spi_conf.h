@@ -28,6 +28,11 @@
 extern "C" {
 #endif
 
+/**
+ * @defgroup LCD_INTERFACE_API LCD communication interface functions
+ * @{
+ */
+
 #if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
     /**
      * Use embedded spi on attiny controllers. SPI library is not applicable
@@ -38,6 +43,10 @@ extern "C" {
     /** The macro is defined when SPI library is available */
     #define SSD1306_SPI_SUPPORTED
 #endif
+
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }
