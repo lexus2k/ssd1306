@@ -63,7 +63,9 @@ extern "C" {
     #define SSD1306_WIRE_SUPPORTED
     /** The macro is defined when Wire library speed can be configured */
     #define SSD1306_WIRE_CLOCK_CONFIGURABLE
-    #ifndef ESP8266
+    #if defined(ESP8266) || defined(ESP32) || defined(ESP31B)
+        /* SW implementation of i2c isn't supported on ESP platforms */
+    #else
         /** The macro is defined when software i2c implementation is available */
         #define SSD1306_I2C_SW_SUPPORTED
     #endif

@@ -42,7 +42,7 @@ void ssd1306_i2cStop_Wire(void)
 
 void ssd1306_i2cConfigure_Wire(int8_t scl, int8_t sda)
 {
-#ifdef ESP8266
+#if defined(ESP8266) || defined(ESP32) || defined(ESP31B)
     if ((scl>=0) && (sda >=0))
     {
         Wire.begin(sda, scl);
