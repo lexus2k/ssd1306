@@ -157,10 +157,10 @@ void ssd1306_i2cSendByte_Embedded(uint8_t data)
   ssd1306_delay(I2C_HALF_CLOCK);
 }
 
-void ssd1306_i2cInit_Embedded(uint8_t scl, uint8_t sda, uint8_t sa)
+void ssd1306_i2cInit_Embedded(int8_t scl, int8_t sda, uint8_t sa)
 {
-    if (scl) s_scl = (1<<scl);
-    if (sda) s_sda = (1<<sda);
+    if (scl>=0) s_scl = (1<<scl);
+    if (sda>=0) s_sda = (1<<sda);
     if (sa)  s_sa  = sa;
     ssd1306_startTransmission = ssd1306_i2cStart_Embedded;
     ssd1306_endTransmission = ssd1306_i2cStop_Embedded;

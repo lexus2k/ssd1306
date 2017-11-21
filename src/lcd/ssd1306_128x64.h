@@ -37,6 +37,8 @@ extern "C" {
  */
 
 /**
+ * @brief Inits 128x64 OLED display (based on SSD1306 controller).
+ *
  * Inits 128x64 OLED display (based on SSD1306 controller).
  * User must init communication interface (i2c, spi) prior to calling this function.
  * @see ssd1306_i2cInit()
@@ -45,11 +47,18 @@ extern "C" {
 void         ssd1306_128x64_init();
 
 /**
+ * @brief Inits 128x64 OLED display over i2c (based on SSD1306 controller).
+ *
  * Inits 128x64 OLED display over i2c (based on SSD1306 controller)
+ * This function uses hardcoded pins for i2c communication, depending on your hardware.
+ * If you use non-standard pins in your project, please perform call ssd1306_i2cInitEx() and
+ * ssd1306_128x64_init().
  */
 void         ssd1306_128x64_i2c_init();
 
 /**
+ * @brief Inits 128x64 OLED display over spi (based on SSD1306 controller).
+ *
  * Inits 128x64 OLED display over spi (based on SSD1306 controller)
  * @param rstPin - pin controlling LCD reset (-1 if not used)
  * @param cesPin - chip enable pin to LCD slave (-1 if not used)

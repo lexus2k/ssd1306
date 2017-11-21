@@ -37,8 +37,13 @@
 /**
  * Configures speed for standard Wire library (via Wire.begin()).
  * This function is called by ssd1306_i2cInit().
+ * @param scl - i2c clock pin. Use -1 if you don't need to change default pin number
+ * @param sda - i2c data pin. Use -1 if you don't need to change default pin number
+ *
+ * @note scl and sda parameters depend on used hardware. For many hardware boards these
+ * parameters do not have any effect. ESP8266 allows to specify these parameters
  */
-void ssd1306_i2cConfigure_Wire();
+void ssd1306_i2cConfigure_Wire(int8_t scl, int8_t sda);
 
 /**
  * Initializes ssd1306 library to use Wire lib for i2c.

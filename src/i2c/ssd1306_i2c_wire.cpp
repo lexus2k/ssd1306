@@ -40,9 +40,18 @@ void ssd1306_i2cStop_Wire(void)
     Wire.endTransmission();
 }
 
-void ssd1306_i2cConfigure_Wire()
+void ssd1306_i2cConfigure_Wire(int8_t scl, int8_t sda)
 {
-    Wire.begin();
+#ifdef ESP8266
+    if ((scl>=0) && (sda >=0))
+    {
+        Wire.begin(sda, scl);
+    }
+    else
+#endif
+    {
+        Wire.begin();
+    }
     #ifdef SSD1306_WIRE_CLOCK_CONFIGURABLE
         Wire.setClock(400000);
     #endif

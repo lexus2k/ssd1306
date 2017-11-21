@@ -42,11 +42,11 @@ extern "C" {
  * Initializes software implementation of i2c.
  * If you do not know i2c parameters, try ssd1306_i2cInit_Embedded(0,0,0).
  * @warning the function disables interrupts.
- * @param scl - i2c clock pin. Use 0 if you don't need to change default pin number
- * @param sda - i2c data pin. Use 0 if you don't need to change default pin number
+ * @param scl - i2c clock pin. Use -1 if you don't need to change default pin number
+ * @param sda - i2c data pin. Use -1 if you don't need to change default pin number
  * @param sa  - i2c address of lcd display. Use 0 to leave default
  */
-void ssd1306_i2cInit_Embedded(uint8_t scl, uint8_t sda, uint8_t sa);
+void ssd1306_i2cInit_Embedded(int8_t scl, int8_t sda, uint8_t sa);
 
 /**
  * Starts i2c communication with lcd display using software implementation of i2c interface.
