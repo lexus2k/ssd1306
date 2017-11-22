@@ -64,7 +64,9 @@ void ssd1306_i2cConfigure_Wire(int8_t scl, int8_t sda)
 void ssd1306_i2cSendByte_Wire(uint8_t data)
 {
     // Do not write too many bytes for standard Wire.h. It may become broken
-#ifdef BUFFER_LENGTH
+#if defined(I2C_BUFFER_LENGTH)
+    if (s_bytesWritten >= (I2C_BUFFER_LENGTH >> 1))
+#elif defined(BUFFER_LENGTH)
     if (s_bytesWritten >= (BUFFER_LENGTH >> 1))
 #else
     if (s_bytesWritten >= (USI_BUF_SIZE -2))
