@@ -35,10 +35,9 @@ void setup()
     ssd1306_128x64_i2c_init();
     ssd1306_fillScreen(0x00);
     ssd1306_charF6x8(0, 0, "Line 1. text");
-    ssd1306_charF6x8(8, 1, "Line 2. 8 pixels to the right");
-    ssd1306_charF6x8(0, 4, "Line 5. Bold text", STYLE_BOLD);
-    ssd1306_charF6x8(0, 6, "Line 7. Italic text", STYLE_ITALIC);
-}
+    ssd1306_charF6x8(0, 1, "Line 2. Bold text", STYLE_BOLD);
+    ssd1306_charF6x8(0, 2, "Line 3. Italic text", STYLE_ITALIC);
+    ssd1306_charF12x16(0, 3, "Line 4. Double size", STYLE_BOLD);}
 
 
 void loop()

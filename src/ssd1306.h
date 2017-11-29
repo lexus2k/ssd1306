@@ -135,6 +135,20 @@ uint8_t      ssd1306_charF6x8(uint8_t x, uint8_t y,
                              );
 
 /**
+ * Prints text to screen using double size font 12x16.
+ * @param x - horizontal position in pixels
+ * @param y - vertical position in blocks (pixels/8)
+ * @param ch - NULL-terminated string to print
+ * @param style - font style (EFontStyle).
+ * @returns number of chars in string
+ */
+uint8_t      ssd1306_charF12x16(uint8_t xpos,
+                                uint8_t y,
+                                const char ch[],
+                                EFontStyle style);
+
+
+/**
  * Prints text to screen using set font.
  * If real text ends before right boundary,
  * the remaining part on the display will be erased till right

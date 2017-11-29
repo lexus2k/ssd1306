@@ -128,6 +128,78 @@ uint8_t ssd1306_charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style
     return j;
 }
 
+uint8_t ssd1306_charF12x16(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style)
+{
+    uint8_t i, j=0;
+    uint8_t text_index = 0;
+    uint8_t odd = 0;
+    uint8_t x = xpos;
+    ssd1306_setRamBlock(xpos, y, s_displayWidth - xpos);
+    ssd1306_dataStart();
+    for(;;)
+    {
+        if( (x > s_displayWidth-12) || (ch[j] == '\0') )
+        {
+            x = xpos;
+            y++;
+            if (y >= (s_displayHeight >> 3))
+            {
+                break;
+            }
+            if (odd)
+            {
+                text_index = j;
+                if (ch[j] == '\0')
+                {
+                    break;
+                }
+            }
+            else
+            {
+                j = text_index;
+            }
+            odd = !odd;
+            ssd1306_endTransmission();
+            ssd1306_setRamBlock(xpos, y, s_displayWidth - xpos);
+            ssd1306_dataStart();
+        }
+        uint8_t c = ch[j] - 32;
+        uint8_t ldata = 0;
+        for(i=0;i<6;i++)
+        {
+            uint8_t data;
+            if ( style == STYLE_NORMAL )
+            {
+                data = pgm_read_byte(&s_font6x8[c*6+i]);
+            }
+            else if ( style == STYLE_BOLD )
+            {
+                uint8_t temp = pgm_read_byte(&s_font6x8[c*6+i]);
+                data = temp | ldata;
+                ldata = temp;
+            }
+            else
+            {
+                uint8_t temp = pgm_read_byte(&s_font6x8[c*6+i + 1]);
+                data = (temp & 0xF0) | ldata;
+                ldata = (temp & 0x0F);
+            }
+            uint8_t outdata = 0;
+            if (odd) data >>= 4;
+            data = ((data & 0x01) ? 0x03: 0x00) |
+                   ((data & 0x02) ? 0x0C: 0x00) |
+                   ((data & 0x04) ? 0x30: 0x00) |
+                   ((data & 0x08) ? 0xC0: 0x00);
+            ssd1306_sendByte(data^s_invertByte);
+            ssd1306_sendByte(data^s_invertByte);
+        }
+        x += 12;
+        j++;
+    }
+    ssd1306_endTransmission();
+    return j;
+}
+
 uint8_t      ssd1306_charF6x8_eol(uint8_t left,
                                   uint8_t y,
                                   const char ch[],
