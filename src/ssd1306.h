@@ -136,7 +136,7 @@ uint8_t      ssd1306_charF6x8(uint8_t x, uint8_t y,
 
 /**
  * Prints text to screen using double size font 12x16.
- * @param x - horizontal position in pixels
+ * @param xpos - horizontal position in pixels
  * @param y - vertical position in blocks (pixels/8)
  * @param ch - NULL-terminated string to print
  * @param style - font style (EFontStyle).

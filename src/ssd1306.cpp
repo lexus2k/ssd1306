@@ -184,7 +184,6 @@ uint8_t ssd1306_charF12x16(uint8_t xpos, uint8_t y, const char ch[], EFontStyle 
                 data = (temp & 0xF0) | ldata;
                 ldata = (temp & 0x0F);
             }
-            uint8_t outdata = 0;
             if (odd) data >>= 4;
             data = ((data & 0x01) ? 0x03: 0x00) |
                    ((data & 0x02) ? 0x0C: 0x00) |

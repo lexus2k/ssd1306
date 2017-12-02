@@ -26,7 +26,7 @@ operations, the library uses shift operation to speed up calculations.
  - Usage of as little Flash as possible
  - Fast implementation to provide reasonable speed on slow microcontrollers
  - Primitive graphics functions (line,rectangle,pixels)
- - Printing text to display
+ - Printing text to display (using 6x8 fonts, and double size output 12x16)
  - Drawing bitmap images, located in SRAM or Flash memory (PROGMEM)
  - Work with sprite objects
  - Creating and controlling menu items (see ssd1306_demo example)
@@ -52,7 +52,8 @@ configurable through API.
  - Attiny85, Attiny45
  - Atmega328p, Atmega168
  - Atmega2560
- - ESP8266 (check [examples compatibility list](examples/ESP8266_compatibility.txt))
+ - Digispark
+ - ESP8266, ESP32
 
 ## The goals of ssd1306 library
 
@@ -60,5 +61,70 @@ configurable through API.
  - To use as few Flash as possible
  - To be as fast as possible
  - To fit [Arkanoid game example](examples/arkanoid) to Attiny85 microcontroller
+
+## Adding new interface
+
+If you need to add new not supported interface for the library, just implement
+interface specific functions and assign them to function pointers:
+
+~~~~~~~~~~~~~~~{.cpp}
+#include "intf/ssd1306_interface.h"
+
+void setup()
+{
+    ssd1306_startTransmission = &myStartTransmissionFunc;
+    ssd1306_endTransmission   = &myEndTransmissionFunc;
+    ssd1306_sendByte          = &mySendByteToInterfaceFunc;
+    ssd1306_commandStart      = &myStartCommandModeTransmissionFunc;
+    ssd1306_dataStart         = &myStartDataModeTransmissionFunc;
+    ...
+    # init your interface here
+    myInterfaceInit();
+    ssd1306_128x64_init();
+}
+~~~~~~~~~~~~~~~
+Refer to SPI, I2C interfaces init function to understand required implementation.
+
+## Adding new LCD type to the library
+
+The main requirements for LCD display to use it with this library are:
+
+ * Each byte, sent to LCD, represents 8 vertical pixels
+ * After sending each byte LCD controller shifts GDRAM pointer to the right by 1 pixel
+ * LCD width should not exceed 128 pixels
+
+To add new LCD type to the library, implement GDRAM address positioning functions and
+initialization function for you LCD:
+
+~~~~~~~~~~~~~~~{.cpp}
+#include "lcd/lcd_common.h"
+
+void    myDisplayInit()
+{
+    # Use LCD_TYPE_CUSTOM constant
+    g_lcd_type = LCD_TYPE_CUSTOM;
+    # Set display size:
+    #     Width should be less or equal to 128
+    s_displayWidth = 128;
+    #     Height should be less or equal to 128
+    s_displayHeight = 64;
+    ssd1306_setRamBlock = &mySetRamBlockFunc;
+    ssd1306_nextRamPage = &myNextPageFunc;
+    ssd1306_setRamPos = mySetRamAddressFunc;
+    # Put you LCD initialization code here
+    ...
+}
+
+void setup()
+{
+    # Init the interface here
+    ...
+    # Call LCD initialization here
+    myDisplayInit();
+}
+~~~~~~~~~~~~~~~
+Refer to SH1106 intialization implementation as reference code.
+
+
 
 */

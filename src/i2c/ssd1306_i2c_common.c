@@ -22,13 +22,13 @@
 #include "ssd1306_i2c_wire.h"
 #include "ssd1306_i2c_embedded.h"
 
-void ssd1306_i2cCommandStart(void)
+void ssd1306_i2cCommandStart()
 {
     ssd1306_startTransmission();
     ssd1306_sendByte(0x00);
 }
 
-void ssd1306_i2cDataStart(void)
+void ssd1306_i2cDataStart()
 {
     ssd1306_startTransmission();
     ssd1306_sendByte(0x40);

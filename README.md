@@ -13,10 +13,10 @@ operations, the library uses shift operation to speed up calculations.
  * Standard i2c support (via Wire library)
  * 4-wire spi support (via standard SPI library)
  * Usage of very little of SRAM (minimum 26 bytes)
- * Usage of as little Flash as possible
+ * The library uses as little Flash memory as possible
  * Fast implementation to provide reasonable speed on slow microcontrollers
  * Primitive graphics functions (line,rectangle,pixels)
- * Printing text to display
+ * Printing text to display (using 6x8 fonts, and double size output 12x16)
  * Drawing bitmap images, located in SRAM or Flash memory (PROGMEM)
  * Work with sprite objects
  * Creating and controlling menu items (see ssd1306_demo example)
@@ -48,7 +48,7 @@ configurable through API.
  * Atmega328p, Atmega168
  * Atmega2560
  * Digispark (check [examples compatibility list](examples/Digispark_compatibility.txt))
- * ESP8266 (check [examples compatibility list](examples/ESP8266_compatibility.txt))
+ * ESP8266, ESP32 (check [examples compatibility list](examples/ESP8266_compatibility.txt))
 
 Digispark users, please check compilation options in your Arduino prior to using this library.
 Ssd1306 library requires at least c++11 and c99 (by default Digispark package misses the options
@@ -65,6 +65,69 @@ Ssd1306 library requires at least c++11 and c99 (by default Digispark package mi
 
  * Download source from https://github.com/lexus2k/ssd1306
  * Put the sources to Arduino/libraries/ folder
+
+## Adding new interface
+
+If you need to add new not supported interface for the library, just implement
+interface specific functions and assign them to function pointers:
+
+```cpp
+#include "intf/ssd1306_interface.h"
+
+void setup()
+{
+    ssd1306_startTransmission = &myStartTransmissionFunc;
+    ssd1306_endTransmission   = &myEndTransmissionFunc;
+    ssd1306_sendByte          = &mySendByteToInterfaceFunc;
+    ssd1306_commandStart      = &myStartCommandModeTransmissionFunc;
+    ssd1306_dataStart         = &myStartDataModeTransmissionFunc;
+    ...
+    # init your interface here
+    myInterfaceInit();
+    ssd1306_128x64_init();
+}
+```
+Refer to SPI, I2C interfaces init function to understand required implementation.
+
+## Adding new LCD type to the library
+
+The main requirements for LCD display to use it with this library are:
+
+ * Each byte, sent to LCD, represents 8 vertical pixels
+ * After sending each byte LCD controller shifts GDRAM pointer to the right by 1 pixel
+ * LCD width should not exceed 128 pixels
+
+To add new LCD type to the library, implement GDRAM address positioning functions and
+initialization function for you LCD:
+
+```cpp
+#include "lcd/lcd_common.h"
+
+void    myDisplayInit()
+{
+    # Use LCD_TYPE_CUSTOM constant
+    g_lcd_type = LCD_TYPE_CUSTOM;
+    # Set display size:
+    #     Width should be less or equal to 128
+    s_displayWidth = 128;
+    #     Height should be less or equal to 128
+    s_displayHeight = 64;
+    ssd1306_setRamBlock = &mySetRamBlockFunc;
+    ssd1306_nextRamPage = &myNextPageFunc;
+    ssd1306_setRamPos = mySetRamAddressFunc;
+    # Put you LCD initialization code here
+    ...
+}
+
+void setup()
+{
+    # Init the interface here
+    ...
+    # Call LCD initialization here
+    myDisplayInit();
+}
+```
+Refer to SH1106 intialization implementation as reference code.
 
 For more information about this library, please, visit https://github.com/lexus2k/ssd1306.
 Doxygen documentation can be found at [github.io site](http://lexus2k.github.io/ssd1306).

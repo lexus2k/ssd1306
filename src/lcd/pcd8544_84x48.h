@@ -37,6 +37,17 @@ extern "C" {
  */
 
 /**
+ * @brief Inits 84x48 LED display (based on PCD8544 controller).
+ *
+ * Inits 84x48 LED display (based on PCD8544 controller).
+ * User must init communication interface (i2c, spi) prior to calling this function.
+ * @see ssd1306_i2cInit()
+ * @see ssd1306_spiInit()
+ */
+void pcd8544_84x48_init();
+
+
+/**
  * Inits 84x48 LED display over spi (based on PCD8544 controller)
  * @param rstPin - pin controlling LCD reset (-1 if not used)
  * @param cesPin - chip enable pin to LCD slave (-1 if not used)

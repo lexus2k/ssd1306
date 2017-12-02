@@ -26,6 +26,9 @@
 #include <stdint.h>
 #include <Arduino.h>
 
+/** Pointer type to LCD display initialization function */
+typedef void (*InitFunction)();
+
 /** Supported font styles */
 typedef enum
 {

@@ -23,31 +23,15 @@
 #include "lcd/lcd_common.h"
 #include <stddef.h>
 
-/**
- * Starts communication with SSD1306 display.
- */
 void  (*ssd1306_startTransmission)() = NULL;
-
-/**
- * Ends communication with SSD1306 display.
- */
 void  (*ssd1306_endTransmission)() = NULL;
-
-/**
- * Sends byte to SSD1306 device
- * @param data - byte to send
- */
 void  (*ssd1306_sendByte)(uint8_t data) = NULL;
+void  (*ssd1306_commandStart)() = NULL;
+void  (*ssd1306_dataStart)() = NULL;
 
-void (*ssd1306_commandStart)() = NULL;
-
-void (*ssd1306_dataStart)() = NULL;
-
-void (*ssd1306_setRamBlock)(uint8_t x, uint8_t y, uint8_t w) = NULL;
-
-void (*ssd1306_nextRamPage)() = NULL;
-
-void (*ssd1306_setRamPos)(uint8_t x, uint8_t y) = NULL;
+void  (*ssd1306_setRamBlock)(uint8_t x, uint8_t y, uint8_t w) = NULL;
+void  (*ssd1306_nextRamPage)() = NULL;
+void  (*ssd1306_setRamPos)(uint8_t x, uint8_t y) = NULL;
 
 void ssd1306_sendCommand(uint8_t command)
 {

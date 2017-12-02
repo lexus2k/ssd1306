@@ -29,6 +29,10 @@
 
 #ifdef SSD1306_WIRE_SUPPORTED
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @defgroup LCD_INTERFACE_API LCD communication interface functions
  * @{
@@ -56,12 +60,12 @@ void ssd1306_i2cInit_Wire(uint8_t sa);
 /**
  * Starts i2c communication with lcd display via Wire library.
  */
-void ssd1306_i2cStart_Wire(void);
+void ssd1306_i2cStart_Wire();
 
 /**
  * Stops i2c communication.
  */
-void ssd1306_i2cStop_Wire(void);
+void ssd1306_i2cStop_Wire();
 
 /**
  * Sends single byte to i2c device using Wire library.
@@ -72,6 +76,10 @@ void ssd1306_i2cSendByte_Wire(uint8_t data);
 /**
  * @}
  */
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

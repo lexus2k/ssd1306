@@ -59,14 +59,21 @@ static void pcd8544_nextPage()
     }
 }
 
-/*
-static void pcd8544_setPos(uint8_t x, uint8_t y)
+void pcd8544_84x48_init()
 {
+    g_lcd_type = LCD_TYPE_PCD8544;
+    s_displayWidth = 84;
+    s_displayHeight = 48;
     ssd1306_commandStart();
-    ssd1306_sendByte(0x80 | x);
-    ssd1306_sendByte(0x40 | y);
+    ssd1306_setRamBlock = pcd8544_setBlock;
+    ssd1306_nextRamPage = pcd8544_nextPage;
+    ssd1306_setRamPos = NULL;
+    for( uint8_t i=0; i<sizeof(s_lcd84x48_initData); i++)
+    {
+        ssd1306_sendByte(pgm_read_byte(&s_lcd84x48_initData[i]));
+    }
     ssd1306_endTransmission();
-}*/
+}
 
 void    pcd8544_84x48_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
 {
@@ -81,19 +88,6 @@ void    pcd8544_84x48_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
         delay(1);
         digitalWrite(rstPin, HIGH);
     }
-    g_lcd_type = LCD_TYPE_PCD8544;
     ssd1306_spiInit(cesPin, dcPin);
-    ssd1306_commandStart();
-    s_displayHeight = 48;
-    s_displayWidth = 84;
-    ssd1306_setRamBlock = pcd8544_setBlock;
-    ssd1306_nextRamPage = pcd8544_nextPage;
-    ssd1306_setRamPos = NULL;
-    // pcd8544 setRamBlock works as setRamPos, we do not need additional function
-//    ssd1306_setRamPos = pcd8544_setPos;
-    for( uint8_t i=0; i<sizeof(s_lcd84x48_initData); i++)
-    {
-        ssd1306_sendByte(pgm_read_byte(&s_lcd84x48_initData[i]));
-    }
-    ssd1306_endTransmission();
+    pcd8544_84x48_init();
 }
