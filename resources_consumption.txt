@@ -1,0 +1,8 @@
+SRAM/Flash consumption is minimum required to initialize LCD module over i2c bus.
+These data do not include any additional consumption, required by Arduino libraries.
+Real project consumption will depend on number ssd1306 API, used by the project.
+
+                          SRAM     Flash
+Attiny85 (Damellis)    |   25       778
+Atmega328 (Nano)       |   56       810
+ESP8266 (Generic)      |   26      1876

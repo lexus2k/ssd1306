@@ -12,7 +12,10 @@ operations, the library uses shift operation to speed up calculations.
  * Embedded i2c software implementation
  * Standard i2c support (via Wire library)
  * 4-wire spi support (via standard SPI library)
- * Usage of very little of SRAM (minimum 26 bytes)
+ * Usage of very little of SRAM:
+   * Attiny85 with Damellis package (minimum 25 bytes of SRAM)
+   * Atmega328p (minimum 56 bytes of SRAM)
+   * ESP8266 (minimum 26 bytes of SRAM)
  * The library uses as little Flash memory as possible
  * Fast implementation to provide reasonable speed on slow microcontrollers
  * Primitive graphics functions (line,rectangle,pixels)

@@ -37,7 +37,8 @@ void setup()
     ssd1306_charF6x8(0, 0, "Line 1. text");
     ssd1306_charF6x8(0, 1, "Line 2. Bold text", STYLE_BOLD);
     ssd1306_charF6x8(0, 2, "Line 3. Italic text", STYLE_ITALIC);
-    ssd1306_charF12x16(0, 3, "Line 4. Double size", STYLE_BOLD);}
+    ssd1306_charF12x16(0, 3, "Line 4. Double size", STYLE_BOLD);
+}
 
 
 void loop()
