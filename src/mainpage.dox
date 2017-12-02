@@ -53,7 +53,8 @@ configurable through API.
  - Atmega328p, Atmega168
  - Atmega2560
  - Digispark
- - ESP8266, ESP32
+ - ESP8266
+ - ESP32 (unofficial, only compilation checked)
 
 ## The goals of ssd1306 library
 

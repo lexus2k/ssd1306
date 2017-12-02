@@ -51,7 +51,8 @@ configurable through API.
  * Atmega328p, Atmega168
  * Atmega2560
  * Digispark (check [examples compatibility list](examples/Digispark_compatibility.txt))
- * ESP8266, ESP32 (check [examples compatibility list](examples/ESP8266_compatibility.txt))
+ * ESP8266 (check [examples compatibility list](examples/ESP8266_compatibility.txt))
+ * ESP32 (unofficial, only compilation checked)
 
 Digispark users, please check compilation options in your Arduino prior to using this library.
 Ssd1306 library requires at least c++11 and c99 (by default Digispark package misses the options
