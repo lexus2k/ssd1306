@@ -340,11 +340,10 @@ void ssd1306_drawSpriteEx(uint8_t x, uint8_t y, uint8_t w, const uint8_t *sprite
 
 void ssd1306_drawSprite(SPRITE *sprite)
 {
-    uint8_t posy = sprite->y >> 3;
     uint8_t offsety = sprite->y & 0x7;
-    if (posy < (s_displayHeight >> 3))
+    if (sprite->y < s_displayHeight)
     {
-        ssd1306_setRamBlock(sprite->x, posy, sprite->w);
+        ssd1306_setRamBlock(sprite->x, sprite->y >> 3, sprite->w);
         ssd1306_dataStart();
         for (uint8_t i=0; i < sprite->w; i++)
         {
@@ -352,9 +351,9 @@ void ssd1306_drawSprite(SPRITE *sprite)
         }
         ssd1306_endTransmission();
     }
-    if (offsety && (posy + 1 < (s_displayHeight >> 3)))
+    if (offsety && (sprite->y + 8 < s_displayHeight))
     {
-        ssd1306_setRamBlock(sprite->x, posy + 1, sprite->w);
+        ssd1306_setRamBlock(sprite->x, (sprite->y >> 3) + 1, sprite->w);
         ssd1306_dataStart();
         for (uint8_t i=0; i < sprite->w; i++)
         {

@@ -62,8 +62,12 @@ extern "C" {
     /** The macro is defined when i2c Wire library is available */
     #define SSD1306_WIRE_SUPPORTED
     /** The macro is defined when Wire library speed can be configured */
-    #define SSD1306_WIRE_CLOCK_CONFIGURABLE
-    #if defined(ESP8266) || defined(ESP32) || defined(ESP31B)
+    #if defined(ARDUINO_AVR_DIGISPARKPRO)
+        /* Wire.setClock() is not supported by Digispark PRO */
+    #else
+        #define SSD1306_WIRE_CLOCK_CONFIGURABLE
+    #endif
+    #if defined(ESP8266) || defined(ESP32) || defined(ESP31B) || defined(ARDUINO_AVR_DIGISPARKPRO)
         /* SW implementation of i2c isn't supported on ESP platforms */
     #else
         /** The macro is defined when software i2c implementation is available */

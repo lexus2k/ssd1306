@@ -130,31 +130,29 @@ void ssd1306_i2cStop_Embedded(void)
  */
 void ssd1306_i2cSendByte_Embedded(uint8_t data)
 {
-  uint8_t i;
-  for(i=8; i>0; i--)
-//  for(i=0; i<8; i++)
+    uint8_t i;
+    for(i=8; i>0; i--)
     {
-      if(data & 0x80)
-//      if((data << i) & 0x80)
-        DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_sda)
-      else
-        DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_sda);
-      data<<=1;
-      ssd1306_delay(I2C_RISE_TIME); // Fall time is the same as rise time
+        if(data & 0x80)
+          DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_sda)
+        else
+          DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_sda);
+        data<<=1;
+        ssd1306_delay(I2C_RISE_TIME); // Fall time is the same as rise time
 
-      DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_scl);
-      ssd1306_delay(I2C_HALF_CLOCK);
+        DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_scl);
+        ssd1306_delay(I2C_HALF_CLOCK);
 
-      DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_scl);
-      ssd1306_delay(I2C_HALF_CLOCK);
+        DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_scl);
+        ssd1306_delay(I2C_HALF_CLOCK);
     }
-  // generating confirmation impulse
-  DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_sda);
-  ssd1306_delay(I2C_RISE_TIME); // Fall time is the same as rise time
-  DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_scl);
-  ssd1306_delay(I2C_HALF_CLOCK);
-  DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_scl); 
-  ssd1306_delay(I2C_HALF_CLOCK);
+    // generating confirmation impulse
+    DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_sda);
+    ssd1306_delay(I2C_RISE_TIME); // Fall time is the same as rise time
+    DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_scl);
+    ssd1306_delay(I2C_HALF_CLOCK);
+    DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_scl); 
+    ssd1306_delay(I2C_HALF_CLOCK);
 }
 
 void ssd1306_i2cInit_Embedded(int8_t scl, int8_t sda, uint8_t sa)

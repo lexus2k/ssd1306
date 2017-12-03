@@ -50,7 +50,7 @@ configurable through API.
  * Attiny85, Attiny45 (Refer to [Damellis attiny package](https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json))
  * Atmega328p, Atmega168
  * Atmega2560
- * Digispark (check [examples compatibility list](examples/Digispark_compatibility.txt))
+ * Digispark, including PRO version (check [examples compatibility list](examples/Digispark_compatibility.txt))
  * ESP8266 (check [examples compatibility list](examples/ESP8266_compatibility.txt))
  * ESP32 (unofficial, only compilation checked)
 
@@ -72,7 +72,7 @@ Ssd1306 library requires at least c++11 and c99 (by default Digispark package mi
 
 ## Adding new interface
 
-If you need to add new not supported interface for the library, just implement
+If you need to add support for new interface to the library, just implement
 interface specific functions and assign them to function pointers:
 
 ```cpp
@@ -106,6 +106,7 @@ initialization function for you LCD:
 
 ```cpp
 #include "lcd/lcd_common.h"
+#include "intf/ssd1306_interface.h"
 
 void    myDisplayInit()
 {
@@ -138,6 +139,10 @@ Doxygen documentation can be found at [github.io site](http://lexus2k.github.io/
 If you found any problem or have any idea, please, report to Issues section.
 
 ## License
+
+The library is free. If this project helps you, you can give me a cup of coffee.
+[![Donate via Paypal](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/lexus2k)
+
 
 Copyright (C) 2016-2017 Alexey Dynda
 

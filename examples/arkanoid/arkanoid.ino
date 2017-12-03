@@ -113,7 +113,7 @@ const uint8_t SPEED_SHIFT  = 2;
 
 uint8_t    platformPos;       // platform position
 bool       updateStatusPanel; // Set to true if status panel update is required
-int        platformWidth;
+const int  platformWidth = INITIAL_PLATFORM_WIDTH;
 int        ballx;
 int        bally;
 int8_t     vSpeed;
@@ -258,8 +258,8 @@ void startLevel()
     hSpeed = INITIAL_H_SPEED;
     vSpeed = INITIAL_V_SPEED;
     platformPos = random(0, (RIGHT_EDGE - LEFT_EDGE - 1 - platformWidth));
-    ballx = (platformPos+(platformWidth>>1)) << SPEED_SHIFT;
-    bally = (SCREEN_HEIGHT - PLATFORM_HEIGHT) << SPEED_SHIFT;
+    ballx = ( platformPos + ( platformWidth >> 1 ) ) << SPEED_SHIFT;
+    bally = ( SCREEN_HEIGHT - PLATFORM_HEIGHT ) << SPEED_SHIFT;
     for(uint8_t i=0; i<MAX_GAME_OBJECTS; i++)
     {
         objects[i].type = 0;
@@ -271,10 +271,9 @@ void startLevel()
 void resetGame()
 {
     score = 0;
-    platformWidth = INITIAL_PLATFORM_WIDTH;
+//    platformWidth = INITIAL_PLATFORM_WIDTH;
     platformPower = 0;
     hearts = 2;
-    delay(40);
     drawIntro();
     delay(3000);
     startLevel();
@@ -545,7 +544,8 @@ bool moveObjects()
 void movePlatform()
 {
 #ifdef USE_Z_KEYPAD
-    uint8_t buttonCode = getPressedButton(A0);
+    // Use A0 ADC input (channel 0)
+    uint8_t buttonCode = getPressedButton(0);
     if (buttonCode == BUTTON_RIGHT)
 #else
     if (digitalRead(RIGHT_BTN) != LOW)

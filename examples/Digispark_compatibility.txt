@@ -1,6 +1,6 @@
 === Digispark compatibility list ===
 
-arkanoid       [ -  ]  Not compatible (compile using Damellis attiny package instead of Digispark: https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json)
+arkanoid       [ *  ]  Compatible only with Digispark PRO. For Digispark based on Attiny compile using Damellis attiny package instead of Digispark: https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json
 buffers_demo   [ OK ]
 draw_bitmap    [ OK ]
 draw_text      [ OK ]
@@ -9,5 +9,5 @@ menu_demo      [ OK ]
 move_sprite    [ OK ]
 pcd8544_spi    [ OK ]
 sprite_pool    [ OK ]
-ssd1306_demo   [ -  ]  Too big for Digispark Attiny version. Can be compiled, but doesn't fit.
+ssd1306_demo   [ *  ]  Too big for Digispark Attiny85 version (6KiB is not enough). Digispark PRO is OK.
 
