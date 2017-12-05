@@ -38,6 +38,9 @@ public:
     /// No free space for new sprite error
     static const uint8_t SP_ERR_NO_SPACE = 0xFF;
 
+    /// Defines max sprites number supported by SpritePool
+    static const uint8_t MAX_SPRITES = 10;
+
     /**
      * Creates empty SpritePool object.
      * It is able to hold up to 8 sprites.
@@ -98,8 +101,6 @@ protected:
     virtual void drawBlock(uint8_t blockColumn, uint8_t blockRow);
 
 private:
-    /// Defines max sprites number supported by SpritePool
-    static const uint8_t MAX_SPRITES = 8;
 
     /// Internal buffer for Canvas
     uint8_t m_canvasBuf[8*8/8];

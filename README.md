@@ -27,6 +27,7 @@ operations, the library uses shift operation to speed up calculations.
  * Bonus examples:
    * Arkanoid game
    * Simple Lode runner game
+   * Snowflakes
 
 ![Image of arkanoid intro](https://github.com/lexus2k/ssd1306/blob/master/examples/arkanoid/screenshots/introscreen.png)
 

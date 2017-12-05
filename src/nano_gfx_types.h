@@ -153,9 +153,17 @@ typedef struct SPRITE
         uint8_t left = min(x,lx);
         uint8_t top = min(y,ly);
         uint8_t right = max((uint8_t)(x + w - 1), (uint8_t)(lx + w - 1));
+        if (((uint8_t)(lx + w - 1) < w) && (right > 2*w))
+        {
+            right = (uint8_t)(lx + w - 1);
+        }
         uint8_t bottom = max((uint8_t)(y + 7), (uint8_t)(ly + 7));
-        if ( left >= right ) left = 0;
-        if ( top >= bottom ) top = 0;
+        if (((uint8_t)(ly + 7) < 8) && (bottom > 16))
+        {
+            bottom = (uint8_t)(ly + 7);
+        }
+        if ( left > right ) left = 0;
+        if ( top > bottom ) top = 0;
         return (SSD1306_RECT){ left, top, right, bottom };
     };
 } SPRITE;

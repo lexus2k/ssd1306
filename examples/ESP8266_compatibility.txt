@@ -1,7 +1,8 @@
-=== ESP8266 compatibility list ===
+=== ESP8266/ESP32 compatibility list ===
 
 arkanoid       [ -  ]  Not compatible
 buffers_demo   [ OK ]
+snowflakes     [ OK ]
 draw_bitmap    [ OK ]
 draw_text      [ OK ]
 lode_runner    [ OK ]
