@@ -67,8 +67,12 @@ extern "C" {
     #else
         #define SSD1306_WIRE_CLOCK_CONFIGURABLE
     #endif
-    #if defined(ESP8266) || defined(ESP32) || defined(ESP31B) || defined(ARDUINO_AVR_DIGISPARKPRO)
+    #if defined(ESP8266) || defined(ESP32) || defined(ESP31B)
         /* SW implementation of i2c isn't supported on ESP platforms */
+    #elif defined(ARDUINO_AVR_DIGISPARKPRO)
+        /* SW implementation of i2c isn't supported on Digispark PRO */
+    #elif defined(ARDUINO_ARCH_SAMD)
+        /* SW implementation of i2c isn't supported for SAMD architecture */
     #else
         /** The macro is defined when software i2c implementation is available */
         #define SSD1306_I2C_SW_SUPPORTED

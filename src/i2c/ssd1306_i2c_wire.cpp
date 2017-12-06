@@ -66,6 +66,8 @@ void ssd1306_i2cSendByte_Wire(uint8_t data)
     // Do not write too many bytes for standard Wire.h. It may become broken
 #if defined(ESP32) || defined(ESP31B)
     if (s_bytesWritten >= (I2C_BUFFER_LENGTH >> 4))
+#elif defined(ARDUINO_ARCH_SAMD)
+    if (s_bytesWritten >= 64)
 #elif defined(BUFFER_LENGTH)
     if (s_bytesWritten >= (BUFFER_LENGTH >> 1))
 #else
