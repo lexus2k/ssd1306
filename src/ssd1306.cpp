@@ -248,9 +248,10 @@ void         ssd1306_drawHLine(uint8_t x1, uint8_t y1, uint8_t x2)
 
 void         ssd1306_drawVLine(uint8_t x1, uint8_t y1, uint8_t y2)
 {
-    if ((y1 >> 3) == (y2 >> 3)) {
+    if ((y1 >> 3) == (y2 >> 3))
+    {
         uint8_t b = ((0xFF >> (7-(y2-y1))) << (y1 & 0x07))^s_invertByte;
-	    ssd1306_putPixels(x1, y1, b);
+        ssd1306_putPixels(x1, y1, b);
         return;
     }    
     ssd1306_setRamBlock(x1, y1 >> 3, 1);
