@@ -129,6 +129,15 @@ public:
     void charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style = STYLE_NORMAL);
 
     /**
+     * Prints text to canvas buffer
+     * @param x - start position X
+     * @param y - start position Y
+     * @param ch - text to print (null-terminated)
+     * @param style - font style (EFontStyle), normal by default
+     */
+    void charF12x16(uint8_t x, uint8_t y, const char ch[], EFontStyle style = STYLE_NORMAL);
+
+    /**
      * Sprite is small image 8x8, sprite doesn't change background
      * Reads sprite from Flash memory
      */
