@@ -1,6 +1,6 @@
 === ESP8266/ESP32 compatibility list ===
 
-arkanoid       [ -  ]  Not compatible
+arkanoid       [ OK ]  Can be built and run
 buffers_demo   [ OK ]
 snowflakes     [ OK ]
 draw_bitmap    [ OK ]

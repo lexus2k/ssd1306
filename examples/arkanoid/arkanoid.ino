@@ -49,18 +49,19 @@
  * 
  */
 
+#include "ssd1306.h"
+#include "i2c/ssd1306_i2c_wire.h"
+#include "i2c/ssd1306_i2c_embedded.h"
+#include "intf/ssd1306_interface.h"
+
 #if defined(ESP8266) || defined(ESP32)
     #include <pgmspace.h>
 #else
     #include <avr/pgmspace.h>
     #include <avr/eeprom.h>
+    #include <avr/sleep.h>
+    #include <avr/interrupt.h> // needed for the additional interrupt
 #endif
-#include "ssd1306.h"
-#include "i2c/ssd1306_i2c_wire.h"
-#include "i2c/ssd1306_i2c_embedded.h"
-#include "intf/ssd1306_interface.h"
-#include <avr/sleep.h>
-#include <avr/interrupt.h> // needed for the additional interrupt
 
 #ifdef SSD1306_WIRE_SUPPORTED
 #include <Wire.h>
@@ -581,8 +582,12 @@ void movePlatform()
     }
 }
 
+
 void gameOver()
 {
+#if defined(ESP32) || defined(ESP8266)
+    uint16_t topScore = score;
+#else
     uint16_t topScore = eeprom_read_word(EEPROM_ADDR);
     if (topScore == 0xFFFF)
     {
@@ -594,6 +599,7 @@ void gameOver()
         topScore = score;
         eeprom_write_word(EEPROM_ADDR, topScore);
     }
+#endif
     ssd1306_clearScreen( );
     ssd1306_charF6x8(32, 2, "GAME OVER");
     ssd1306_charF6x8(32, 4, "score ");
@@ -609,7 +615,6 @@ void gameOver()
     }
     delay(2000);
 }
-
 
 void platformCrashAnimation()
 {
@@ -747,6 +752,13 @@ void beep(int bCount,int bDelay)
 #define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
 #endif
 
+#if defined(ESP32) || defined(ESP8266)
+
+void system_sleep()
+{
+}
+
+#else
 void system_sleep()
 {
   ssd1306_clearScreen( );
@@ -759,3 +771,4 @@ void system_sleep()
   sbi(ADCSRA,ADEN);                    // switch Analog to Digitalconverter ON
   ssd1306_displayOn();
 }
+#endif
