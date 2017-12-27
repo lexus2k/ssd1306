@@ -1,5 +1,6 @@
 /*
     Copyright (C) 2017 Alexey Dynda
+    Copyright (C) 2017 Kidelo
 
     This file is part of SSD1306 library.
 
@@ -18,15 +19,59 @@
 */
 
 #include "tiny_ssd1306.h"
+#include "intf/ssd1306_interface.h"
+#include "lcd/ssd1306_commands.h"
 
 size_t TinySSD1306::write(uint8_t ch)
 {
-    const char str[2] = { static_cast<char>(ch), '\0' };
-    if ( (m_xpos > width() - 6) || (ch == '\n') )
+    // skip non printable chars and prepare the line
+    const char str[2] = { static_cast<char>( ch < ' ' ? '_' : ch ), '\0' };
+
+    // end of line reached ?
+    const bool eol = m_xpos > ( width() - FONT_X_SIZE );
+
+    // special control code ?
+    const bool cr  = '\r' == ch;
+    const bool lf  = '\n' == ch;
+
+    // skip print of char
+    const bool skip = cr || lf;
+
+    // carriage return requested or EOL in text ?
+    if ( eol || cr )
     {
         m_xpos = 0;
-        m_ypos++;
     }
-    ssd1306_charF6x8( m_xpos, m_ypos, str, STYLE_NORMAL );
-    m_xpos += 6;
+
+    // new line requested or pending line break of last call ..
+    if ( eol || m_pending_lf )
+    {
+        m_ypos += 1;
+    }
+
+    // new line outside display requested
+    if ( m_ypos >= ( height() / FONT_Y_SIZE ) )
+    {
+        // jump to home
+        m_ypos = 0;
+
+        // clear display
+        clear();
+    }
+
+    // print it ?
+    if ( !skip )
+    {
+        // normal processing
+        ssd1306_charF6x8( m_xpos, m_ypos, str, STYLE_NORMAL );
+
+        // forward
+        m_xpos += FONT_X_SIZE;
+    }
+
+    // remember line feed before next draw
+    m_pending_lf = lf;
+
+    // always consumed, fulfill behavior of write()
+    return 1;
 }

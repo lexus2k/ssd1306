@@ -55,6 +55,13 @@
 class TinySSD1306: public Print
 {
 public:
+
+    enum
+    {
+      FONT_X_SIZE = 6,
+      FONT_Y_SIZE = 8
+    };
+
     /**
      * Creates object for communicating with LCD display.
      * @param lcd - initialization callback for LCD
@@ -111,19 +118,19 @@ public:
     /**
      * Returns display height in pixels
      */
-    uint8_t      height() { ssd1306_displayHeight(); };
+    uint8_t      height() { return ssd1306_displayHeight(); };
 
     /**
      * Returns display width in pixels
      */
-    uint8_t      width() { ssd1306_displayWidth(); };
+    uint8_t      width() { return ssd1306_displayWidth(); };
 
     /**
      * Sets position in terms of display for text output (Print class).
      * @param x - horizontal position in pixels
      * @param y - vertical position in blocks (pixels/8)
      */
-    void         setCursor(uint8_t x, uint8_t y) { m_xpos = x; m_ypos = y; }
+    void         setCursor(uint8_t x, uint8_t y) { m_xpos = x; m_ypos = y; m_pending_lf = false;}
 
     /**
      * Fills screen with pattern byte.
@@ -159,7 +166,7 @@ public:
     uint8_t      charF6x8(uint8_t x, uint8_t y,
                           const char ch[],
                           EFontStyle style = STYLE_NORMAL )
-    { ssd1306_charF6x8(x, y, ch, style); };
+    { return ssd1306_charF6x8(x, y, ch, style); };
 
     /**
      * Prints text to screen using double size font 12x16.
@@ -172,7 +179,7 @@ public:
     uint8_t      charF12x16(uint8_t xpos, uint8_t y,
                             const char ch[],
                             EFontStyle style = STYLE_NORMAL)
-    { ssd1306_charF12x16( xpos, y, ch, style ); };
+    { return ssd1306_charF12x16( xpos, y, ch, style ); };
 
 
     /**
@@ -191,7 +198,7 @@ public:
                               const char ch[],
                               EFontStyle style,
                               uint8_t right)
-    { ssd1306_charF6x8_eol(left, y, ch, style, right); };
+    { return ssd1306_charF6x8_eol(left, y, ch, style, right); };
 
     /**
      * Put single pixel on the LCD.
@@ -299,6 +306,9 @@ private:
 
     uint8_t      m_xpos = 0;
     uint8_t      m_ypos = 0;
+
+    /** pending line feed feed at start of next write */
+    bool         m_pending_lf = false;
 };
 
 #endif
