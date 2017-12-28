@@ -1,5 +1,6 @@
 /*
     Copyright (C) 2017 Alexey Dynda
+    Copyright (C) 2017 Kidelo <kidelo@yahoo.com>
 
     This file is part of SSD1306 library.
 
@@ -16,6 +17,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 /**
  * @file tiny_ssd1306.h Drawing in memory buffer
  */
@@ -47,19 +49,46 @@
  * {
  *      lcd.beginI2C();
  *
+ *      // using direct write
  *      lcd.clear();
  *      lcd.charF6x8(0,0,"Hello");
- * }
+ *
+ *      // using Print::print interface
+ *      lcd.print('s');
+ *      lcd.print("sd");
+ *      lcd.print(1306);
+ *      lcd.println();
+ *      lcd.println("ssd1306");
+ *
+  * }
  * ~~~~~~~~~~~~~~~
  */
+
 class TinySSD1306: public Print
 {
 public:
 
+  /**
+   * Some common constants
+   */
     enum
     {
       FONT_X_SIZE = 6,
       FONT_Y_SIZE = 8
+    };
+
+    /**
+     * Controls the behavior of terminal mode when all lines of display are written
+     * @see TinySSD1306::write
+     * @see Print::write
+     */
+    enum TerminalMode
+    {
+      T_MODE_OVERRIDE,       /*!< OVERRIDE LAST LINE, use @see clear() to restart */
+      T_MODE_CLEAR,          /*!< CLEAR display */
+      T_MODE_SCROLLING,      /*!< SCROLL display */
+
+      MAX_T_MODE
     };
 
     /**
@@ -118,12 +147,12 @@ public:
     /**
      * Returns display height in pixels
      */
-    uint8_t      height() { return ssd1306_displayHeight(); };
+    uint8_t      height() const { return ssd1306_displayHeight(); };
 
     /**
      * Returns display width in pixels
      */
-    uint8_t      width() { return ssd1306_displayWidth(); };
+    uint8_t      width() const { return ssd1306_displayWidth(); };
 
     /**
      * Sets position in terms of display for text output (Print class).
@@ -141,7 +170,7 @@ public:
     /**
      * Fills screen with zero-byte
      */
-    void         clear() { ssd1306_clearScreen(); };
+    void         clear();
 
     /**
      * All drawing functions start to work in negative mode.
@@ -304,11 +333,18 @@ private:
     /** lcd display initialization function */
     InitFunction m_init;
 
+    /** internal positions used for write()  */
     uint8_t      m_xpos = 0;
     uint8_t      m_ypos = 0;
 
     /** pending line feed feed at start of next write */
     bool         m_pending_lf = false;
+
+    /** terminal mode when using ::write()
+     *
+     *  note: use const for compiler optimization ( dead code ) without #defines
+     */
+    static const TerminalMode m_mode = T_MODE_CLEAR;
 };
 
 #endif
