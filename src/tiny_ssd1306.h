@@ -1,5 +1,6 @@
 /*
     Copyright (C) 2017 Alexey Dynda
+    Copyright (C) 2017 Kidelo <kidelo@yahoo.com>
 
     This file is part of SSD1306 library.
 
@@ -16,6 +17,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 /**
  * @file tiny_ssd1306.h Drawing in memory buffer
  */
@@ -47,14 +49,48 @@
  * {
  *      lcd.beginI2C();
  *
+ *      // using direct write
  *      lcd.clear();
  *      lcd.charF6x8(0,0,"Hello");
- * }
+ *
+ *      // using Print::print interface
+ *      lcd.print('s');
+ *      lcd.print("sd");
+ *      lcd.print(1306);
+ *      lcd.println();
+ *      lcd.println("ssd1306");
+ *
+  * }
  * ~~~~~~~~~~~~~~~
  */
+
 class TinySSD1306: public Print
 {
 public:
+
+  /**
+   * Some common constants
+   */
+    enum
+    {
+      FONT_X_SIZE = 6,
+      FONT_Y_SIZE = 8
+    };
+
+    /**
+     * Controls the behavior of terminal mode when all lines of display are written
+     * @see TinySSD1306::write
+     * @see Print::write
+     */
+    enum TerminalMode
+    {
+      T_MODE_OVERRIDE,       /*!< OVERRIDE LAST LINE, use @see clear() to restart */
+      T_MODE_CLEAR,          /*!< CLEAR display */
+      T_MODE_SCROLLING,      /*!< SCROLL display */
+
+      MAX_T_MODE
+    };
+
     /**
      * Creates object for communicating with LCD display.
      * @param lcd - initialization callback for LCD
@@ -111,19 +147,19 @@ public:
     /**
      * Returns display height in pixels
      */
-    uint8_t      height() { ssd1306_displayHeight(); };
+    uint8_t      height() const { return ssd1306_displayHeight(); };
 
     /**
      * Returns display width in pixels
      */
-    uint8_t      width() { ssd1306_displayWidth(); };
+    uint8_t      width() const { return ssd1306_displayWidth(); };
 
     /**
      * Sets position in terms of display for text output (Print class).
      * @param x - horizontal position in pixels
      * @param y - vertical position in blocks (pixels/8)
      */
-    void         setCursor(uint8_t x, uint8_t y) { m_xpos = x; m_ypos = y; }
+    void         setCursor(uint8_t x, uint8_t y) { m_xpos = x; m_ypos = y; m_pending_lf = false;}
 
     /**
      * Fills screen with pattern byte.
@@ -134,7 +170,7 @@ public:
     /**
      * Fills screen with zero-byte
      */
-    void         clear() { ssd1306_clearScreen(); };
+    void         clear();
 
     /**
      * All drawing functions start to work in negative mode.
@@ -159,7 +195,7 @@ public:
     uint8_t      charF6x8(uint8_t x, uint8_t y,
                           const char ch[],
                           EFontStyle style = STYLE_NORMAL )
-    { ssd1306_charF6x8(x, y, ch, style); };
+    { return ssd1306_charF6x8(x, y, ch, style); };
 
     /**
      * Prints text to screen using double size font 12x16.
@@ -172,7 +208,7 @@ public:
     uint8_t      charF12x16(uint8_t xpos, uint8_t y,
                             const char ch[],
                             EFontStyle style = STYLE_NORMAL)
-    { ssd1306_charF12x16( xpos, y, ch, style ); };
+    { return ssd1306_charF12x16( xpos, y, ch, style ); };
 
 
     /**
@@ -191,7 +227,7 @@ public:
                               const char ch[],
                               EFontStyle style,
                               uint8_t right)
-    { ssd1306_charF6x8_eol(left, y, ch, style, right); };
+    { return ssd1306_charF6x8_eol(left, y, ch, style, right); };
 
     /**
      * Put single pixel on the LCD.
@@ -297,8 +333,18 @@ private:
     /** lcd display initialization function */
     InitFunction m_init;
 
+    /** internal positions used for write()  */
     uint8_t      m_xpos = 0;
     uint8_t      m_ypos = 0;
+
+    /** pending line feed feed at start of next write */
+    bool         m_pending_lf = false;
+
+    /** terminal mode when using ::write()
+     *
+     *  note: use const for compiler optimization ( dead code ) without #defines
+     */
+    static const TerminalMode m_mode = T_MODE_CLEAR;
 };
 
 #endif
