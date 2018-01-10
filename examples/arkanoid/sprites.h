@@ -1,77 +1,82 @@
 /*
-    Copyright (C) 2016-2017 Alexey Dynda
+    MIT License
 
-    This file is part of SSD1306 library.
+    Copyright (c) 2016-2018, Alexey Dynda
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
 */
 
 #pragma once
 
 const PROGMEM uint8_t heartSprite[8] =
 {
-    B00001110,
-    B00011111,
-    B00111111,
-    B01111110,
-    B01111110,
-    B00111101,
-    B00011001,
-    B00001110
+    0B00001110,
+    0B00011111,
+    0B00111111,
+    0B01111110,
+    0B01111110,
+    0B00111101,
+    0B00011001,
+    0B00001110
 };
 
 
 const PROGMEM uint8_t powerSprite[8] =
 {
-    B11001110,
-    B11111110,
-    B00111110,
-    B00010110,
-    B00001110,
-    B00001110,
-    B00001111,
-    B00001110
+    0B11001110,
+    0B11111110,
+    0B00111110,
+    0B00010110,
+    0B00001110,
+    0B00001110,
+    0B00001111,
+    0B00001110
 };
 
 
 const PROGMEM uint8_t shootSprite[1] =
 {
-    B00111100,
+    0B00111100,
 };
 
 const PROGMEM uint8_t bonusSprites[][5] =
 {
     { /* BLOCK_BOMB */
-        B01111001,
-        B11111110,
-        B11101110,
-        B01111001,
-        B00000000,
+        0B01111001,
+        0B11111110,
+        0B11101110,
+        0B01111001,
+        0B00000000,
     },
     { /* BLOCK_HEART */
-        B00011100,
-        B00111110,
-        B01111100,
-        B00111010,
-        B00011100,
+        0B00011100,
+        0B00111110,
+        0B01111100,
+        0B00111010,
+        0B00011100,
     },
     { /* BLOCK_POWER */
-        B00000000,
-        B01111110,
-        B00010010,
-        B00010010,
-        B00001100,
+        0B00000000,
+        0B01111110,
+        0B00010010,
+        0B00010010,
+        0B00001100,
     },
 };
 

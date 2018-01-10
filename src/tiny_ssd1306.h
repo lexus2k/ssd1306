@@ -1,20 +1,25 @@
 /*
-    Copyright (C) 2017 Alexey Dynda
+    MIT License
 
-    This file is part of SSD1306 library.
+    Copyright (c) 2017-2018, Alexey Dynda
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
 */
 /**
  * @file tiny_ssd1306.h Drawing in memory buffer
@@ -26,6 +31,8 @@
 
 #include "ssd1306.h"
 #include "i2c/ssd1306_i2c.h"
+#include "i2c/ssd1306_i2c_embedded.h"
+#include "i2c/ssd1306_i2c_wire.h"
 #include "spi/ssd1306_spi.h"
 #include <stdint.h>
 #include "Print.h"
@@ -67,16 +74,62 @@ public:
      * Initializes lcd display.
      * SPI or i2c interface should be initializes prior to calling this method.
      */
-    void begin() { m_init(); };
+    void begin()
+    {
+        m_init();
+    };
 
     /**
-     * Initializes default custom i2c interface and lcd display.
+     * Initializes default custom i2c interface and lcd display. Refer to ssd1306_i2cInitEx() for details.
      * 
      * @param scl  - i2c clock pin. Use -1 if you don't need to change default pin number
      * @param sda  - i2c data pin. Use -1 if you don't need to change default pin number
      * @param addr - i2c address of lcd display. Use 0 to leave default
+     *
+     * @see ssd1306_i2cInitEx()
      */
-    void beginI2C(int8_t scl = -1, int8_t sda = -1, uint8_t addr = 0) { ssd1306_i2cInitEx(scl, sda, addr); m_init(); };
+    void beginI2C(int8_t scl = -1, int8_t sda = -1, uint8_t addr = 0)
+    {
+        ssd1306_i2cInitEx(scl, sda, addr);
+        m_init();
+    };
+
+#ifdef SSD1306_I2C_SW_SUPPORTED
+    /**
+     * Initializes i2c Wire library interface and lcd display. Refer to ssd1306_i2cInit_Embedded() for details.
+     * This API is available only if Wire library is supported for selected board.
+     * 
+     * @param scl  - i2c clock pin. Use -1 if you don't need to change default pin number
+     * @param sda  - i2c data pin. Use -1 if you don't need to change default pin number
+     * @param addr - i2c address of lcd display. Use 0 to leave default
+     *
+     * @see ssd1306_i2cInit_Embedded()
+     */
+    void beginI2CEmbedded(int8_t scl = -1, int8_t sda = -1, uint8_t addr = 0)
+    {
+        ssd1306_i2cInit_Embedded(scl, sda, addr);
+        m_init();
+    }
+#endif
+
+#ifdef SSD1306_WIRE_SUPPORTED
+    /**
+     * Initializes i2c Wire library interface and lcd display. Refer to beginI2CWire() for details.
+     * This API is available only if embedded i2c is supported for selected board.
+     * 
+     * @param scl  - i2c clock pin. Use -1 if you don't need to change default pin number
+     * @param sda  - i2c data pin. Use -1 if you don't need to change default pin number
+     * @param addr - i2c address of lcd display. Use 0 to leave default
+     *
+     * @see beginI2CWire()
+     */
+    void beginI2CWire(int8_t scl = -1, int8_t sda = -1, uint8_t addr = 0)
+    {
+        ssd1306_i2cConfigure_Wire(scl, sda);
+        ssd1306_i2cInit_Wire(addr);
+        m_init();
+    }
+#endif
 
     /**
      * @brief Initializes default custom spi interface and lcd display.
@@ -85,68 +138,103 @@ public:
      * @param csPin - chip enable pin to LCD slave (-1 if not used)
      * @param dcPin - data/command pin to control LCD dc (required)
      */
-    void beginSPI(int8_t csPin = -1, int8_t dcPin = -1) { ssd1306_spiInit(csPin, dcPin); m_init(); };
+    void beginSPI(int8_t csPin = -1, int8_t dcPin = -1)
+    {
+        ssd1306_spiInit(csPin, dcPin);
+        m_init();
+    };
 
     /**
      * Turns off display
      */
-    void         off() { ssd1306_displayOff(); };
+    void         off()
+    {
+        ssd1306_displayOff();
+    };
 
     /**
      * Turns on display
      */
-    void         on() { ssd1306_displayOn(); };
+    void         on()
+    {
+        ssd1306_displayOn();
+    };
 
     /**
      * Switches display to inverse mode.
      * LCD will display 0-pixels as white, and 1-pixels as black.
      */
-    void         invertMode() { ssd1306_invertMode(); };
+    void         invertMode()
+    {
+        ssd1306_invertMode();
+    };
 
     /**
      * Switches display to normal mode.
      */
-    void         normalMode() { ssd1306_normalMode(); };
+    void         normalMode()
+    {
+        ssd1306_normalMode();
+    };
 
     /**
      * Returns display height in pixels
      */
-    uint8_t      height() { ssd1306_displayHeight(); };
+    uint8_t      height()
+    {
+        return ssd1306_displayHeight();
+    };
 
     /**
      * Returns display width in pixels
      */
-    uint8_t      width() { ssd1306_displayWidth(); };
+    uint8_t      width()
+    {
+        return ssd1306_displayWidth();
+    };
 
     /**
      * Sets position in terms of display for text output (Print class).
      * @param x - horizontal position in pixels
      * @param y - vertical position in blocks (pixels/8)
      */
-    void         setCursor(uint8_t x, uint8_t y) { m_xpos = x; m_ypos = y; }
+    void         setCursor(uint8_t x, uint8_t y)
+    {
+        m_xpos = x;
+        m_ypos = y;
+    }
 
     /**
      * Fills screen with pattern byte.
      * @param fill_Data - pattern to fill display with.
      */
-    void         fill(uint8_t fill_Data) { ssd1306_fillScreen(fill_Data); };
+    void         fill(uint8_t fill_Data)
+    {
+        ssd1306_fillScreen(fill_Data);
+    };
 
     /**
      * Fills screen with zero-byte
      */
-    void         clear() { ssd1306_clearScreen(); };
+    void         clear();
 
     /**
      * All drawing functions start to work in negative mode.
      * Old picture on the display remains unchanged.
      */
-    void         negativeMode() { ssd1306_negativeMode(); };
+    void         negativeMode()
+    {
+        ssd1306_negativeMode();
+    };
 
     /**
      * All drawing functions start to work in positive (default) mode.
      * Old picture on the display remains unchanged.
      */
-    void         positiveMode() { ssd1306_positiveMode(); };
+    void         positiveMode()
+    {
+        ssd1306_positiveMode();
+    };
 
     /**
      * Prints text to screen using font 6x8.
@@ -159,7 +247,9 @@ public:
     uint8_t      charF6x8(uint8_t x, uint8_t y,
                           const char ch[],
                           EFontStyle style = STYLE_NORMAL )
-    { ssd1306_charF6x8(x, y, ch, style); };
+    {
+        return ssd1306_charF6x8(x, y, ch, style);
+    };
 
     /**
      * Prints text to screen using double size font 12x16.
@@ -172,7 +262,9 @@ public:
     uint8_t      charF12x16(uint8_t xpos, uint8_t y,
                             const char ch[],
                             EFontStyle style = STYLE_NORMAL)
-    { ssd1306_charF12x16( xpos, y, ch, style ); };
+    {
+        return ssd1306_charF12x16( xpos, y, ch, style );
+    };
 
 
     /**
@@ -191,7 +283,9 @@ public:
                               const char ch[],
                               EFontStyle style,
                               uint8_t right)
-    { ssd1306_charF6x8_eol(left, y, ch, style, right); };
+    {
+        return ssd1306_charF6x8_eol(left, y, ch, style, right);
+    };
 
     /**
      * Put single pixel on the LCD.
@@ -205,7 +299,10 @@ public:
      * @param x - horizontal position in pixels
      * @param y - vertical position in pixels
      */
-    void putPixel(uint8_t x, uint8_t y) { ssd1306_putPixel(x,y); };
+    void putPixel(uint8_t x, uint8_t y)
+    {
+        ssd1306_putPixel(x,y);
+    };
 
     /**
      * Puts eight vertical pixels on the LCD at once.
@@ -221,7 +318,10 @@ public:
      * @param y - vertical position in blocks (pixels/8)
      * @param pixels - bit-pixels to draw on display
      */
-    void         putPixels(uint8_t x, uint8_t y, uint8_t pixels) { ssd1306_putPixels(x,y,pixels); };
+    void         putPixels(uint8_t x, uint8_t y, uint8_t pixels)
+    {
+        ssd1306_putPixels(x,y,pixels);
+    };
 
     /**
      * Draws rectangle
@@ -230,7 +330,10 @@ public:
      * @param x2 - right boundary in pixel units
      * @param y2 - bottom boundary int pixel units
      */
-    void         drawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2) { ssd1306_drawRect(x1, y1, x2, y2); };
+    void         drawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
+    {
+        ssd1306_drawRect(x1, y1, x2, y2);
+    };
 
     /**
      * Draws horizontal line
@@ -238,7 +341,10 @@ public:
      * @param y1 - position Y in pixels
      * @param x2 - right boundary in pixels
      */
-    void         drawHLine(uint8_t x1, uint8_t y1, uint8_t x2) { ssd1306_drawHLine(x1, y1, x2); };
+    void         drawHLine(uint8_t x1, uint8_t y1, uint8_t x2)
+    {
+        ssd1306_drawHLine(x1, y1, x2);
+    };
 
     /**
      * Draws vertical line
@@ -246,7 +352,10 @@ public:
      * @param y1 - top boundary in pixels
      * @param y2 - bottom boundary in pixels
      */
-    void         drawVLine(uint8_t x1, uint8_t y1, uint8_t y2) { ssd1306_drawVLine(x1, y1, y2); };
+    void         drawVLine(uint8_t x1, uint8_t y1, uint8_t y2)
+    {
+        ssd1306_drawVLine(x1, y1, y2);
+    };
 
     /**
      * Draws bitmap, located in SRAM, on the display
@@ -264,7 +373,10 @@ public:
      * @param h - height of bitmap in pixels (must be divided by 8)
      * @param buf - pointer to data, located in SRAM: each byte represents 8 vertical pixels.
      */
-    void         drawBuffer(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf) { ssd1306_drawBuffer(x,y,w,h,buf); };
+    void         drawBuffer(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)
+    {
+        ssd1306_drawBuffer(x,y,w,h,buf);
+    };
 
     /**
      * Draws bitmap, located in Flash, on the display
@@ -275,7 +387,10 @@ public:
      * @param h - height of bitmap in pixels (must be divided by 8)
      * @param buf - pointer to data, located in Flash: each byte represents 8 vertical pixels.
      */
-    void         drawBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf) { ssd1306_drawBitmap(x,y,w,h,buf); };
+    void         drawBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)
+    {
+        ssd1306_drawBitmap(x,y,w,h,buf);
+    };
 
     /**
      * Fills block with black pixels
@@ -285,7 +400,10 @@ public:
      * @param h - height of block in pixels (must be divided by 8)
      * @note usually this method is used to erase bitmap on the screen.
      */
-    void         clearBlock(uint8_t x, uint8_t y, uint8_t w, uint8_t h) { ssd1306_clearBlock(x,y,w,h); };
+    void         clearBlock(uint8_t x, uint8_t y, uint8_t w, uint8_t h)
+    {
+        ssd1306_clearBlock(x,y,w,h);
+    };
 
     /**
      * Writes single character to the display

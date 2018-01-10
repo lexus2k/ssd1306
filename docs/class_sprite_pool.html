@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.3.5</span>
+   &#160;<span id="projectnumber">1.3.99</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306 i2c/spi OLED display</div>
   </td>
@@ -120,7 +120,7 @@ Protected Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Sprites pool class automates processing of several sprites. It remembers pointers to <a class="el" href="struct_s_p_r_i_t_e.html">SPRITE</a> objects, and carefully updates only the areas, touched by the sprites. So, it reduces number of i2c calls to SSD1306 display. </p>
 
-<p class="definition">Definition at line <a class="el" href="sprite__pool_8h_source.html#l00035">35</a> of file <a class="el" href="sprite__pool_8h_source.html">sprite_pool.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sprite__pool_8h_source.html#l00040">40</a> of file <a class="el" href="sprite__pool_8h_source.html">sprite_pool.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad7f28dde3e55d7e57f68507058c7cbda"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad7f28dde3e55d7e57f68507058c7cbda">&#9670;&nbsp;</a></span>SpritePool()</h2>
@@ -138,7 +138,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Creates empty <a class="el" href="class_sprite_pool.html">SpritePool</a> object. It is able to hold up to 8 sprites. </p>
 
-<p class="definition">Definition at line <a class="el" href="sprite__pool_8cpp_source.html#l00024">24</a> of file <a class="el" href="sprite__pool_8cpp_source.html">sprite_pool.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sprite__pool_8cpp_source.html#l00029">29</a> of file <a class="el" href="sprite__pool_8cpp_source.html">sprite_pool.cpp</a>.</p>
 
 </div>
 </div>
@@ -166,7 +166,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>index of added object or SP_ERR_NO_SPACE in case of error. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sprite__pool_8cpp_source.html#l00068">68</a> of file <a class="el" href="sprite__pool_8cpp_source.html">sprite_pool.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sprite__pool_8cpp_source.html#l00073">73</a> of file <a class="el" href="sprite__pool_8cpp_source.html">sprite_pool.cpp</a>.</p>
 
 </div>
 </div>
@@ -186,7 +186,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Removes all <a class="el" href="struct_s_p_r_i_t_e.html">SPRITE</a> objects from internal list of <a class="el" href="class_sprite_pool.html">SpritePool</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="sprite__pool_8cpp_source.html#l00080">80</a> of file <a class="el" href="sprite__pool_8cpp_source.html">sprite_pool.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sprite__pool_8cpp_source.html#l00085">85</a> of file <a class="el" href="sprite__pool_8cpp_source.html">sprite_pool.cpp</a>.</p>
 
 </div>
 </div>
@@ -233,7 +233,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>128x64 display has 16 columns and 8 rows. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sprite__pool_8cpp_source.html#l00036">36</a> of file <a class="el" href="sprite__pool_8cpp_source.html">sprite_pool.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sprite__pool_8cpp_source.html#l00041">41</a> of file <a class="el" href="sprite__pool_8cpp_source.html">sprite_pool.cpp</a>.</p>
 
 </div>
 </div>
@@ -253,7 +253,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Draw all areas, touched by the sprites. To remove flickering, the method uses <a class="el" href="class_nano_canvas.html">NanoCanvas</a> capabilities. </p>
 
-<p class="definition">Definition at line <a class="el" href="sprite__pool_8cpp_source.html#l00041">41</a> of file <a class="el" href="sprite__pool_8cpp_source.html">sprite_pool.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sprite__pool_8cpp_source.html#l00046">46</a> of file <a class="el" href="sprite__pool_8cpp_source.html">sprite_pool.cpp</a>.</p>
 
 </div>
 </div>
@@ -273,7 +273,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Redraws whole area, used by the sprites. </p>
 
-<p class="definition">Definition at line <a class="el" href="sprite__pool_8cpp_source.html#l00060">60</a> of file <a class="el" href="sprite__pool_8cpp_source.html">sprite_pool.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sprite__pool_8cpp_source.html#l00065">65</a> of file <a class="el" href="sprite__pool_8cpp_source.html">sprite_pool.cpp</a>.</p>
 
 </div>
 </div>
@@ -294,7 +294,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Removes specific <a class="el" href="struct_s_p_r_i_t_e.html">SPRITE</a> object from the <a class="el" href="class_sprite_pool.html">SpritePool</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="sprite__pool_8cpp_source.html#l00085">85</a> of file <a class="el" href="sprite__pool_8cpp_source.html">sprite_pool.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sprite__pool_8cpp_source.html#l00090">90</a> of file <a class="el" href="sprite__pool_8cpp_source.html">sprite_pool.cpp</a>.</p>
 
 </div>
 </div>
@@ -328,7 +328,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="sprite__pool_8h_source.html#l00083">83</a> of file <a class="el" href="sprite__pool_8h_source.html">sprite_pool.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sprite__pool_8h_source.html#l00093">93</a> of file <a class="el" href="sprite__pool_8h_source.html">sprite_pool.h</a>.</p>
 
 </div>
 </div>

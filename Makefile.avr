@@ -1,0 +1,93 @@
+#################################################################
+# Makefile to build ssd1306 library for AVR controllers
+#
+# Accept the following parameters:
+# CC
+# CXX
+# STRIP
+# AR
+# MCU
+# FREQUENCY
+
+default: all
+
+CC = avr-gcc
+CXX = avr-g++
+STRIP = avr-strip
+AR = avr-ar
+MCU ?= atmega328p
+FREQUENCY ?= 16000000
+DESTDIR ?=
+BLD ?= bld
+
+#ifeq ($(MCU),attiny85)
+#    CCFLAGS += -D__AVR_ATtiny85__
+#else ifeq ($(MCU),atmega328p)
+#    CCFLAGS += -D__AVR_ATmega328P__
+#else
+#    $(error "MCU is unknown")
+#endif
+
+ifeq ($(MCU),atmega328p)
+    CCFLAGS += -D__AVR_ATmega328P__
+endif
+
+.SUFFIXES: .c .cpp .ino
+
+$(BLD)/%.o: %.c
+	mkdir -p $(dir $@)
+	$(CC) -std=gnu11 $(CCFLAGS) -c $< -o $@
+
+$(BLD)/%.o: %.ino
+	mkdir -p $(dir $@)
+	$(CXX) -std=c++11 $(CCFLAGS) -x c++ -c $< -o $@
+
+$(BLD)/%.o: %.cpp
+	mkdir -p $(dir $@)
+	$(CXX) -std=c++11 $(CCFLAGS) -c $< -o $@
+
+# ************* Common defines ********************
+
+INCLUDES += \
+        -I./src
+
+CCFLAGS += -g -Os $(INCLUDES) -mmcu=$(MCU) -DF_CPU=$(FREQUENCY) -Wall -Werror \
+	-fno-exceptions -ffunction-sections -fdata-sections
+
+.PHONY: clean ssd1306 all
+
+SRCS = \
+	src/font6x8.c \
+	src/nano_gfx.cpp \
+	src/nano_gfx_types.cpp \
+	src/sprite_pool.cpp \
+	src/ssd1306.c \
+	src/ssd1306_menu.c \
+	src/i2c/ssd1306_i2c_common.c \
+	src/i2c/ssd1306_i2c_embedded.c \
+	src/i2c/ssd1306_i2c_wire.cpp \
+	src/i2c/ssd1306_i2c_twi.c \
+	src/intf/ssd1306_interface.c \
+	src/spi/ssd1306_spi.cpp \
+	src/spi/ssd1306_spi_hw.cpp \
+	src/lcd/pcd8544_84x48.c \
+	src/lcd/sh1106_128x64.c \
+	src/lcd/ssd1306_128x32.c \
+	src/lcd/ssd1306_128x64.c
+
+# Due to absence of Print class tiny_ssd1306.cpp cannot be compiled without Arduino libs.
+#	src/tiny_ssd1306.cpp \
+ 
+OBJS = $(addprefix $(BLD)/, $(addsuffix .o, $(basename $(SRCS))))
+
+####################### Compiling library #########################
+
+$(BLD)/libssd1306.a: $(OBJS)
+	$(AR) rcs $@ $(OBJS)
+
+ssd1306: $(BLD)/libssd1306.a
+
+all: ssd1306
+
+clean:
+	rm -rf $(BLD)

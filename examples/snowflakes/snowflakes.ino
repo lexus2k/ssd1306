@@ -1,20 +1,25 @@
 /*
-    Copyright (C) 2016-2017 Alexey Dynda
+    MIT License
 
-    This file is part of SSD1306 library.
+    Copyright (c) 2017-2018, Alexey Dynda
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
 */
 /**
  *   Attiny85 PINS
@@ -27,6 +32,7 @@
  *   Attiny85  I2C PINS: see picture above
  *   Digispark I2C PINS: D0/D2
  *   Atmega328 I2C PINS: connect LCD to A4/A5
+ *   ESP8266   I2C PINS: GPIO4/GPIO5
  *   ESP32     I2C PINS: 21/22
  */
 
@@ -52,84 +58,84 @@ typedef struct
 const PROGMEM uint8_t snowFlakeImage[8][8] =
 {
     {
-        B00111000,
-        B01010100,
-        B10010010,
-        B11111110,
-        B10010010,
-        B01010100,
-        B00111000,
-        B00000000
+        0B00111000,
+        0B01010100,
+        0B10010010,
+        0B11111110,
+        0B10010010,
+        0B01010100,
+        0B00111000,
+        0B00000000
     },
     {
-        B00010000,
-        B01010100,
-        B00111000,
-        B11101110,
-        B00111000,
-        B01010100,
-        B00010000,
-        B00000000
+        0B00010000,
+        0B01010100,
+        0B00111000,
+        0B11101110,
+        0B00111000,
+        0B01010100,
+        0B00010000,
+        0B00000000
     },
     {
-        B00111000,
-        B00010000,
-        B10111010,
-        B11101110,
-        B10111010,
-        B00010000,
-        B00111000,
-        B00000000
+        0B00111000,
+        0B00010000,
+        0B10111010,
+        0B11101110,
+        0B10111010,
+        0B00010000,
+        0B00111000,
+        0B00000000
     },
     {
-        B00011000,
-        B01011010,
-        B00100100,
-        B11011011,
-        B11011011,
-        B00100100,
-        B01011010,
-        B00011000
+        0B00011000,
+        0B01011010,
+        0B00100100,
+        0B11011011,
+        0B11011011,
+        0B00100100,
+        0B01011010,
+        0B00011000
     },
     {
-        B00010000,
-        B00111000,
-        B01010100,
-        B11101110,
-        B01010100,
-        B00111000,
-        B00010000,
-        B00000000
+        0B00010000,
+        0B00111000,
+        0B01010100,
+        0B11101110,
+        0B01010100,
+        0B00111000,
+        0B00010000,
+        0B00000000
     },
     {
-        B10000010,
-        B00101000,
-        B01101100,
-        B00010000,
-        B01101100,
-        B00101000,
-        B10000010,
-        B00000000
+        0B10000010,
+        0B00101000,
+        0B01101100,
+        0B00010000,
+        0B01101100,
+        0B00101000,
+        0B10000010,
+        0B00000000
     },
     {
-        B01000100,
-        B10101010,
-        B01101100,
-        B00010000,
-        B01101100,
-        B10101010,
-        B01000100,
-        B00000000
+        0B01000100,
+        0B10101010,
+        0B01101100,
+        0B00010000,
+        0B01101100,
+        0B10101010,
+        0B01000100,
+        0B00000000
     },
     {
-        B00101000,
-        B01010100,
-        B10111010,
-        B01101100,
-        B10111010,
-        B01010100,
-        B00101000,
-        B00000000
+        0B00101000,
+        0B01010100,
+        0B10111010,
+        0B01101100,
+        0B10111010,
+        0B01010100,
+        0B00101000,
+        0B00000000
     },
 };
 

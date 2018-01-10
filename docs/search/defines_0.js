@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['sh1106_5f128x64',['SH1106_128x64',['../tiny__ssd1306_8h.html#a80e33e4023f52a96740f521855a77cfb',1,'tiny_ssd1306.h']]],
-  ['ssd1306_5f128x32',['SSD1306_128x32',['../tiny__ssd1306_8h.html#ac300d8639ea4a7025eee9d60b549055f',1,'tiny_ssd1306.h']]],
-  ['ssd1306_5f128x64',['SSD1306_128x64',['../tiny__ssd1306_8h.html#a353e095e4452703115646c0e8f2148a1',1,'tiny_ssd1306.h']]]
+  ['max',['max',['../nano__gfx__types_8h.html#affe776513b24d84b39af8ab0930fef7f',1,'nano_gfx_types.h']]],
+  ['min',['min',['../nano__gfx__types_8h.html#ac6afabdc09a49a433ee19d8a9486056d',1,'nano_gfx_types.h']]]
 ];

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.3.5</span>
+   &#160;<span id="projectnumber">1.3.99</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306 i2c/spi OLED display</div>
   </td>
@@ -86,6 +86,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae2551cb51b72ffc1655749bbdec4c139"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24c3a9e999fc0be31fd0c0622aa32fc8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tiny_s_s_d1306.html#a24c3a9e999fc0be31fd0c0622aa32fc8">beginI2C</a> (int8_t scl=-1, int8_t sda=-1, uint8_t addr=0)</td></tr>
 <tr class="separator:a24c3a9e999fc0be31fd0c0622aa32fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a991bfbe83cd490f868cf05c0f50ec450"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tiny_s_s_d1306.html#a991bfbe83cd490f868cf05c0f50ec450">beginI2CEmbedded</a> (int8_t scl=-1, int8_t sda=-1, uint8_t addr=0)</td></tr>
+<tr class="separator:a991bfbe83cd490f868cf05c0f50ec450"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b966c048fe7e21ffc0a1924a8470619"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tiny_s_s_d1306.html#a2b966c048fe7e21ffc0a1924a8470619">beginI2CWire</a> (int8_t scl=-1, int8_t sda=-1, uint8_t addr=0)</td></tr>
+<tr class="separator:a2b966c048fe7e21ffc0a1924a8470619"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a137d4efc4047edfb3cb5abca5ec71cde"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tiny_s_s_d1306.html#a137d4efc4047edfb3cb5abca5ec71cde">beginSPI</a> (int8_t csPin=-1, int8_t dcPin=-1)</td></tr>
 <tr class="memdesc:a137d4efc4047edfb3cb5abca5ec71cde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes default custom spi interface and lcd display.  <a href="#a137d4efc4047edfb3cb5abca5ec71cde">More...</a><br /></td></tr>
 <tr class="separator:a137d4efc4047edfb3cb5abca5ec71cde"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,7 +142,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="class_tiny_s_s_d1306.html">TinySSD1306</a> represents object to work with LCD display. Easy to use: </p><div class="fragment"><div class="line"><a class="code" href="class_tiny_s_s_d1306.html">TinySSD1306</a>  lcd( <a class="code" href="tiny__ssd1306_8h.html#a353e095e4452703115646c0e8f2148a1">SSD1306_128x64</a> );</div><div class="line"><span class="keywordtype">void</span> setup()</div><div class="line">{</div><div class="line">     lcd.beginI2C();</div><div class="line"></div><div class="line">     lcd.clear();</div><div class="line">     lcd.charF6x8(0,0,<span class="stringliteral">&quot;Hello&quot;</span>);</div><div class="line">}</div></div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00055">55</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00062">62</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aebd796c69a8de2580c71ec32a0563125"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aebd796c69a8de2580c71ec32a0563125">&#9670;&nbsp;</a></span>TinySSD1306()</h2>
@@ -173,7 +177,7 @@ Public Member Functions</h2></td></tr>
 <dd>
 <a class="el" href="tiny__ssd1306_8h.html#ac300d8639ea4a7025eee9d60b549055f">SSD1306_128x32</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00064">64</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00071">71</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -202,7 +206,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Initializes lcd display. SPI or i2c interface should be initializes prior to calling this method. </p>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00070">70</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00077">77</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -245,17 +249,126 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Initializes default custom i2c interface and lcd display.</p>
+<p>Initializes default custom i2c interface and lcd display. Refer to <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gadad8452b053aef2c84c6a14c7f4f247d">ssd1306_i2cInitEx()</a> for details.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">scl</td><td>- i2c clock pin. Use -1 if you don't need to change default pin number </td></tr>
     <tr><td class="paramname">sda</td><td>- i2c data pin. Use -1 if you don't need to change default pin number </td></tr>
-    <tr><td class="paramname">addr</td><td>- i2c address of lcd display. Use 0 to leave default </td></tr>
+    <tr><td class="paramname">addr</td><td>- i2c address of lcd display. Use 0 to leave default</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gadad8452b053aef2c84c6a14c7f4f247d">ssd1306_i2cInitEx()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00079">79</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00091">91</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+
+</div>
+</div>
+<a id="a991bfbe83cd490f868cf05c0f50ec450"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a991bfbe83cd490f868cf05c0f50ec450">&#9670;&nbsp;</a></span>beginI2CEmbedded()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TinySSD1306::beginI2CEmbedded </td>
+          <td>(</td>
+          <td class="paramtype">int8_t&#160;</td>
+          <td class="paramname"><em>scl</em> = <code>-1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int8_t&#160;</td>
+          <td class="paramname"><em>sda</em> = <code>-1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>addr</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Initializes i2c Wire library interface and lcd display. Refer to <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa20f0b4b8d87d4663fae2246b47ec699">ssd1306_i2cInit_Embedded()</a> for details. This API is available only if Wire library is supported for selected board.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scl</td><td>- i2c clock pin. Use -1 if you don't need to change default pin number </td></tr>
+    <tr><td class="paramname">sda</td><td>- i2c data pin. Use -1 if you don't need to change default pin number </td></tr>
+    <tr><td class="paramname">addr</td><td>- i2c address of lcd display. Use 0 to leave default</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa20f0b4b8d87d4663fae2246b47ec699">ssd1306_i2cInit_Embedded()</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00108">108</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+
+</div>
+</div>
+<a id="a2b966c048fe7e21ffc0a1924a8470619"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b966c048fe7e21ffc0a1924a8470619">&#9670;&nbsp;</a></span>beginI2CWire()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TinySSD1306::beginI2CWire </td>
+          <td>(</td>
+          <td class="paramtype">int8_t&#160;</td>
+          <td class="paramname"><em>scl</em> = <code>-1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int8_t&#160;</td>
+          <td class="paramname"><em>sda</em> = <code>-1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>addr</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Initializes i2c Wire library interface and lcd display. Refer to <a class="el" href="class_tiny_s_s_d1306.html#a2b966c048fe7e21ffc0a1924a8470619">beginI2CWire()</a> for details. This API is available only if embedded i2c is supported for selected board.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scl</td><td>- i2c clock pin. Use -1 if you don't need to change default pin number </td></tr>
+    <tr><td class="paramname">sda</td><td>- i2c data pin. Use -1 if you don't need to change default pin number </td></tr>
+    <tr><td class="paramname">addr</td><td>- i2c address of lcd display. Use 0 to leave default</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_tiny_s_s_d1306.html#a2b966c048fe7e21ffc0a1924a8470619">beginI2CWire()</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00126">126</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -302,7 +415,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00088">88</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00141">141</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -362,7 +475,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>number of chars in string </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00172">172</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00262">262</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -422,7 +535,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>number of chars in string </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00159">159</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00247">247</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -489,7 +602,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>number of chars in string </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00190">190</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00282">282</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -498,9 +611,6 @@ Public Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void TinySSD1306::clear </td>
@@ -509,15 +619,10 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Fills screen with zero-byte </p>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00137">137</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8cpp_source.html#l00052">52</a> of file <a class="el" href="tiny__ssd1306_8cpp_source.html">tiny_ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -577,7 +682,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>usually this method is used to erase bitmap on the screen. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00288">288</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00403">403</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -644,7 +749,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00278">278</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00390">390</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -711,7 +816,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00267">267</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00376">376</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -763,7 +868,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00241">241</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00344">344</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -822,7 +927,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00233">233</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00333">333</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -874,7 +979,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00249">249</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00355">355</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -908,7 +1013,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00132">132</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00211">211</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -936,7 +1041,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Returns display height in pixels </p>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00114">114</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00183">183</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -964,7 +1069,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Switches display to inverse mode. LCD will display 0-pixels as white, and 1-pixels as black. </p>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00104">104</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00167">167</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -992,7 +1097,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>All drawing functions start to work in negative mode. Old picture on the display remains unchanged. </p>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00143">143</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00225">225</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -1020,7 +1125,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Switches display to normal mode. </p>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00109">109</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00175">175</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -1048,7 +1153,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Turns off display </p>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00093">93</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00150">150</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -1076,7 +1181,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Turns on display </p>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00098">98</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00158">158</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -1104,7 +1209,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>All drawing functions start to work in positive (default) mode. Old picture on the display remains unchanged. </p>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00149">149</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00234">234</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -1151,7 +1256,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00208">208</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00302">302</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -1204,7 +1309,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00224">224</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00321">321</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -1249,7 +1354,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00126">126</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00201">201</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -1277,7 +1382,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Returns display width in pixels </p>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00119">119</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8h_source.html#l00191">191</a> of file <a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -1311,7 +1416,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8cpp_source.html#l00022">22</a> of file <a class="el" href="tiny__ssd1306_8cpp_source.html">tiny_ssd1306.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8cpp_source.html#l00032">32</a> of file <a class="el" href="tiny__ssd1306_8cpp_source.html">tiny_ssd1306.cpp</a>.</p>
 
 </div>
 </div>

@@ -1,20 +1,25 @@
 /*
-    Copyright (C) 2016-2017 Alexey Dynda
+    MIT License
 
-    This file is part of SSD1306 library.
+    Copyright (c) 2016-2018, Alexey Dynda
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
 */
 
 #include "font6x8.h"
@@ -23,6 +28,7 @@
 #include "i2c/ssd1306_i2c.h"
 #include "spi/ssd1306_spi.h"
 #include "intf/ssd1306_interface.h"
+#include <stdlib.h>
 
 // TODO: remove
 #include "lcd/ssd1306_commands.h"
@@ -31,7 +37,7 @@ uint8_t s_displayHeight;
 uint8_t s_displayWidth;
 uint8_t g_lcd_type = LCD_TYPE_SSD1306;
 static uint8_t s_invertByte = 0x00000000;
-const uint8_t *s_font6x8 = ssd1306xled_font6x8;
+const uint8_t *s_font6x8 = &ssd1306xled_font6x8[3];
 
 uint8_t      ssd1306_displayHeight()
 {
@@ -94,7 +100,11 @@ uint8_t ssd1306_charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style
     while(ch[j] != '\0')
     {
         uint8_t c = ch[j] - 32;
-        if(x>s_displayWidth-2)
+        if ( c > 224 )
+        {
+            c = 0;
+        }
+        if(x > s_displayWidth - 6)
         {
             x=0;
             y++;
@@ -164,6 +174,10 @@ uint8_t ssd1306_charF12x16(uint8_t xpos, uint8_t y, const char ch[], EFontStyle 
             ssd1306_dataStart();
         }
         uint8_t c = ch[j] - 32;
+        if ( c > 224 )
+        {
+            c = 0;
+        }
         uint8_t ldata = 0;
         for(i=0;i<6;i++)
         {
@@ -248,17 +262,20 @@ void         ssd1306_drawHLine(uint8_t x1, uint8_t y1, uint8_t x2)
 
 void         ssd1306_drawVLine(uint8_t x1, uint8_t y1, uint8_t y2)
 {
-    if ((y1 >> 3) == (y2 >> 3))
+    uint8_t topPage = y1 >> 3;
+    uint8_t bottomPage = y2 >> 3;
+    uint8_t height = y2-y1;
+    ssd1306_setRamBlock(x1, topPage, 1);
+    ssd1306_dataStart();
+    if (topPage == bottomPage)
     {
-        uint8_t b = ((0xFF >> (7-(y2-y1))) << (y1 & 0x07))^s_invertByte;
-        ssd1306_putPixels(x1, y1, b);
+        ssd1306_sendByte( ((0xFF >> (0x07 - height)) << (y1 & 0x07))^s_invertByte );
+        ssd1306_endTransmission();
         return;
     }    
-    ssd1306_setRamBlock(x1, y1 >> 3, 1);
-    ssd1306_dataStart();
     ssd1306_sendByte( (0xFF << (y1 & 0x07))^s_invertByte );
     uint8_t y;
-    for ( y = ((y1 >> 3) + 1); y <= ((y2 >> 3) - 1); y++)
+    for ( y = (topPage + 1); y <= (bottomPage - 1); y++)
     {
         ssd1306_nextRamPage();
         ssd1306_sendByte( 0xFF^s_invertByte );
@@ -432,7 +449,7 @@ void ssd1306_eraseTrace(SPRITE *sprite)
 
 SPRITE       ssd1306_createSprite(uint8_t x, uint8_t y, uint8_t w, const uint8_t *data)
 {
-    return {x,y,w,x,y,data,nullptr};
+    return (SPRITE){x,y,w,x,y,data,NULL};
 }
 
 void         ssd1306_replaceSprite(SPRITE *sprite, const uint8_t *data)

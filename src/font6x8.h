@@ -16,11 +16,7 @@
 #define FONT6x8_H
 
 // ----------------------------------------------------------------------------
-#if defined(ESP8266) || defined(ESP32) || defined(ESP31B)
-    #include <pgmspace.h>
-#else
-    #include <avr/pgmspace.h>
-#endif
+#include "hal/io.h"
 #include <stdint.h>
 
 // ----------------------------------------------------------------------------

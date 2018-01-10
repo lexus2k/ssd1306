@@ -1,24 +1,28 @@
 /*
-    Copyright (C) 2016-2017 Alexey Dynda
+    MIT License
 
-    This file is part of SSD1306 library.
+    Copyright (c) 2016-2018, Alexey Dynda
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
 */
 /**
- * Original game was developed by Ilya Titov in 2014. This version is deeply
- * reworked and based on new ssd1306 library.
+ * This game is based on original game, developed by Ilya Titov in 2014.
  */
 /*
  *   Attiny85 PINS
@@ -288,24 +292,24 @@ void drawPlatform()
   ssd1306_dataStart();
   while (pos < platformPos)
   {
-     ssd1306_sendByte(B00000000);
+     ssd1306_sendByte(0B00000000);
      pos++;
   }
-  ssd1306_sendByte(B00001110);
+  ssd1306_sendByte(0B00001110);
   pos++;
   while (pos < platformPos + platformWidth - 1)
   {
-    ssd1306_sendByte(B00000111);
+    ssd1306_sendByte(0B00000111);
     pos++;
   }
-  ssd1306_sendByte(B00001110);
+  ssd1306_sendByte(0B00001110);
   while (pos < platformPos + platformWidth + PLATFORM_SPEED - 1)
   {
      if (pos >= (RIGHT_EDGE - LEFT_EDGE - 2))
      {
         break;
      }
-     ssd1306_sendByte(B00000000);
+     ssd1306_sendByte(0B00000000);
      pos++;
   }
   ssd1306_endTransmission();
@@ -354,9 +358,9 @@ void drawFieldEdges()
     for (uint8_t i=8; i>0; i--)
     {
         ssd1306_setRamBlock(LEFT_EDGE, i, 1);
-        ssd1306_sendData( B01010101 );
+        ssd1306_sendData( 0B01010101 );
         ssd1306_setRamBlock(RIGHT_EDGE, i, 1);
-        ssd1306_sendData( B01010101 );
+        ssd1306_sendData( 0B01010101 );
     }
 }
 
@@ -366,13 +370,13 @@ void drawBall(uint8_t lastx, uint8_t lasty)
     uint8_t newx = ballx >> SPEED_SHIFT;
     uint8_t newy = bally >> SPEED_SHIFT;
     ssd1306_setRamBlock(LEFT_EDGE + 1 + newx,newy >> 3, 1);
-    uint8_t temp = B00000001;
+    uint8_t temp = 0B00000001;
     temp = temp << ((newy & 0x07) + 1);
     ssd1306_sendData( temp );
     if ((newx != lastx) || ((newy >> 3) != (lasty >> 3)))
     {
         ssd1306_setRamBlock(LEFT_EDGE + 1 + lastx, lasty >> 3, 1);
-        ssd1306_sendData( B00000000 );
+        ssd1306_sendData( 0B00000000 );
     }
 }
 
@@ -623,7 +627,7 @@ void platformCrashAnimation()
         for ( uint8_t i = 0; i < platformWidth >> 2; i++ )
         {
             ssd1306_setRamBlock( platformPos + (i<<2) + ((j & 0x01)<<1) + ((j & 0x02)>>1) + LEFT_EDGE + 1, PLATFORM_ROW, platformWidth );
-            ssd1306_sendData(B00000000);
+            ssd1306_sendData( 0B00000000 );
         }
         delay(150);
     }

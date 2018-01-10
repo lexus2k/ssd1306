@@ -1,20 +1,25 @@
 /*
-    Copyright (C) 2016-2017 Alexey Dynda
+    MIT License
 
-    This file is part of SSD1306 library.
+    Copyright (c) 2016-2018, Alexey Dynda
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
 */
 
 /**
@@ -23,6 +28,8 @@
 
 #ifndef _SSD1306_I2C_CONF_H_
 #define _SSD1306_I2C_CONF_H_
+
+#include "hal/io.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -41,42 +48,6 @@ extern "C" {
      * Write command will be SSD1306_SA<<1 and read will be SSD1306_SA<<1 | 1
      */
     #define SSD1306_SA    0x3C  // Slave address
-#endif
-
-
-#if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
-    /**
-     * Use embedded i2c on attiny controllers, when Wire library is not applicable.
-     * The macro is deprecated. Use SSD1306_I2C_SW_SUPPORTED or SSD1306_WIRE_SUPPORTED instead
-     */
-    #define SSD1306_EMBEDDED_I2C
-
-    /** The macro is defined when software i2c implementation is available */
-    #define SSD1306_I2C_SW_SUPPORTED
-
-    #if defined(ARDUINO_AVR_DIGISPARK)
-        /** The macro is defined when i2c Wire library is available */
-        #define SSD1306_WIRE_SUPPORTED
-    #endif
-#else
-    /** The macro is defined when i2c Wire library is available */
-    #define SSD1306_WIRE_SUPPORTED
-    /** The macro is defined when Wire library speed can be configured */
-    #if defined(ARDUINO_AVR_DIGISPARKPRO)
-        /* Wire.setClock() is not supported by Digispark PRO */
-    #else
-        #define SSD1306_WIRE_CLOCK_CONFIGURABLE
-    #endif
-    #if defined(ESP8266) || defined(ESP32) || defined(ESP31B)
-        /* SW implementation of i2c isn't supported on ESP platforms */
-    #elif defined(ARDUINO_AVR_DIGISPARKPRO)
-        /* SW implementation of i2c isn't supported on Digispark PRO */
-    #elif defined(ARDUINO_ARCH_SAMD)
-        /* SW implementation of i2c isn't supported for SAMD architecture */
-    #else
-        /** The macro is defined when software i2c implementation is available */
-        #define SSD1306_I2C_SW_SUPPORTED
-    #endif
 #endif
 
 #if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)

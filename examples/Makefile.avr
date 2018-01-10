@@ -1,0 +1,83 @@
+#################################################################
+# Makefile to build ssd1306 examples for AVR controllers
+#
+# Accept the following parameters:
+# CC
+# CXX
+# STRIP
+# AR
+# MCU
+# FREQUENCY
+
+default: all
+
+CC = avr-gcc
+CXX = avr-g++
+STRIP = avr-strip
+AR = avr-ar
+MCU ?= atmega328p
+FREQUENCY ?= 16000000
+DESTDIR ?=
+BLD ?= ../bld
+PROJECT ?= ssd1306_demo
+PROJECTS = $(subst /,,$(wildcard */))
+
+ifeq ($(MCU),atmega328p)
+    CCFLAGS += -D__AVR_ATmega328P__
+endif
+
+.SUFFIXES: .bin .out .hex .srec
+
+$(BLD)/%.o: %.c
+	mkdir -p $(dir $@)
+	$(CC) -std=gnu11 $(CCFLAGS) -c $< -o $@
+
+$(BLD)/%.o: %.ino
+	mkdir -p $(dir $@)
+	$(CXX) -std=c++11 $(CCFLAGS) -x c++ -c $< -o $@
+
+$(BLD)/%.o: %.cpp
+	mkdir -p $(dir $@)
+	$(CXX) -std=c++11 $(CCFLAGS) -c $< -o $@
+
+# ************* Common defines ********************
+
+INCLUDES += \
+	-I./$(PROJECT) \
+	-I../src
+
+CCFLAGS += -g -Os -w -ffreestanding $(INCLUDES) -mmcu=$(MCU) -DF_CPU=$(FREQUENCY) -Wall -Werror \
+	-Wl,--gc-sections -ffunction-sections -fdata-sections
+
+.PHONY: clean ssd1306 all
+
+SRCS = main.cpp \
+       $(wildcard $(PROJECT)/*.cpp) \
+       $(wildcard $(PROJECT)/*.ino)
+
+OBJS = $(addprefix $(BLD)/, $(addsuffix .o, $(basename $(SRCS))))
+
+LDFLAGS += -L$(BLD) -lssd1306
+
+####################### Compiling library #########################
+
+ssd1306:
+	$(MAKE) -C ../ -f Makefile.avr MCU=$(MCU)
+
+all: $(BLD)/$(PROJECT).bin $(BLD)/$(PROJECT).hex
+
+$(BLD)/$(PROJECT).out: $(OBJS) ssd1306
+	$(CC) -o $(BLD)/$(PROJECT).out $(CCFLAGS) $(OBJS) $(LDFLAGS)
+
+$(BLD)/$(PROJECT).bin: $(BLD)/$(PROJECT).out
+	avr-objcopy -O binary $< $@
+
+$(BLD)/$(PROJECT).hex: $(BLD)/$(PROJECT).out
+	avr-objcopy -O ihex $< $@
+
+flash: $(BLD)/$(PROJECT).hex
+	avrdude -p m328p -c arduino -P /dev/ttyUSB0 -b 57600 -Uflash:w:$<:i
+
+clean:
+	rm -rf $(BLD)
+	rm -f *~ *.out *.bin *.hex *.srec *.s *.o *.pdf *core

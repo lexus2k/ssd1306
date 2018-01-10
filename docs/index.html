@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.3.5</span>
+   &#160;<span id="projectnumber">1.3.99</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306 i2c/spi OLED display</div>
   </td>
@@ -64,10 +64,10 @@ $(function() {
 <div class="title">SSD1306/PCD8544 API. </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This is SSD1306 oled display driver implementation for Arduino. The driver supports i2c and spi displays, and is also capable to work with pcd8544 (nokia 5110) LCD over SPI.</p>
+<div class="textblock"><p>This is SSD1306 oled display driver implementation for Arduino, AVR, Extensa platforms. The driver supports i2c and spi displays, and is also capable to work with pcd8544 (nokia 5110) LCD over SPI.</p>
 <h1>SSD1306 OLED display driver</h1>
 <h2>Introduction</h2>
-<p>SSD1306 OLED display driver is Arduino style library, intended for use with very small microcontrollers (with a little of SRAM). It was developed to use as few resources as possible. Since ATTiny controllers have no division and multiply operations, the library uses shift operation to speed up calculations.</p>
+<p>SSD1306 OLED display driver is Arduino style library, AND it can be compiled with plain avr-gcc compiler without Arduino libraries. It is intended for use with very small microcontrollers (with a little of SRAM). It was developed to use as few resources as possible. Since ATTiny controllers have no division and multiply operations, the library uses shift operation to speed up calculations.</p>
 <h2>Key Features</h2>
 <ul>
 <li>Embedded i2c software implementation</li>
@@ -85,6 +85,7 @@ $(function() {
 <li>Bonus examples:<ul>
 <li>Arkanoid game</li>
 <li>Simple Lode runner game</li>
+<li>Snowflakes</li>
 </ul>
 </li>
 </ul>
@@ -98,12 +99,20 @@ $(function() {
 </ul>
 <h2>Supported platforms</h2>
 <ul>
-<li>Attiny85, Attiny45</li>
+<li>Arduino<ul>
+<li>Attiny85, Attiny45 (Refer to <a href="https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json">Damellis attiny package</a>)</li>
 <li>Atmega328p, Atmega168</li>
 <li>Atmega2560</li>
-<li>Digispark</li>
-<li>ESP8266</li>
-<li>ESP32 Dev Board</li>
+<li>Digispark, including PRO version (check <a href="examples/Digispark_compatibility.txt">examples compatibility list</a>)</li>
+<li>ESP8266 (check <a href="examples/ESP8266_compatibility.txt">examples compatibility list</a>)</li>
+<li>ESP32 Dev Board (check <a href="examples/ESP8266_compatibility.txt">examples compatibility list</a>)</li>
+</ul>
+</li>
+<li>AVR (ssd1306 library can be compiled and used with plain avr-gcc/avr-libc without Arduino libraries)<ul>
+<li>Attiny85, Attiny45</li>
+<li>Atmega328p, Atmega168</li>
+</ul>
+</li>
 </ul>
 <h2>The goals of ssd1306 library</h2>
 <ul>

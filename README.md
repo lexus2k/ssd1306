@@ -2,15 +2,19 @@
 
 ## Introduction
 
-SSD1306 OLED display driver is Arduino style library, intended for use with
+SSD1306 OLED display driver is Arduino style library, AND it can be compiled
+with plain avr-gcc compiler without Arduino libraries. It is intended for use with
 very small microcontrollers (with a little of SRAM). It was developed to use as
 few resources as possible. Since ATTiny controllers have no division and multiply
 operations, the library uses shift operation to speed up calculations.
+
+Do not forget pull-up resistors for i2c lines.
 
 ## Key Features
 
  * Embedded i2c software implementation
  * Standard i2c support (via Wire library)
+ * TWI i2c support for AVR controllers
  * 4-wire spi support (via standard SPI library)
  * Usage of very little of SRAM:
    * Attiny85 with Damellis package (minimum 25 bytes of SRAM)
@@ -41,6 +45,7 @@ The default spi SCLK and MOSI pins are defined by SPI library, and DC, RST, CES 
 configurable through API.
 
 ## Supported displays:
+ * i2c sh1106 128x64 oled display
  * i2c ssd1306 128x64 oled display
  * i2c ssd1306 128x32 oled display
  * spi ssd1306 128x64 oled display
@@ -48,12 +53,16 @@ configurable through API.
 
 ## Supported platforms
 
- * Attiny85, Attiny45 (Refer to [Damellis attiny package](https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json))
- * Atmega328p, Atmega168
- * Atmega2560
- * Digispark, including PRO version (check [examples compatibility list](examples/Digispark_compatibility.txt))
- * ESP8266 (check [examples compatibility list](examples/ESP8266_compatibility.txt))
- * ESP32 Dev Board (check [examples compatibility list](examples/ESP8266_compatibility.txt))
+ * Arduino
+   * Attiny85, Attiny45 (Refer to [Damellis attiny package](https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json))
+   * Atmega328p, Atmega168
+   * Atmega2560
+   * Digispark, including PRO version (check [examples compatibility list](examples/Digispark_compatibility.txt))
+   * ESP8266 (check [examples compatibility list](examples/ESP8266_compatibility.txt))
+   * ESP32 Dev Board (check [examples compatibility list](examples/ESP8266_compatibility.txt))
+ * AVR (ssd1306 library can be compiled and used with plain avr-gcc/avr-libc without Arduino libraries)
+   * Attiny85, Attiny45
+   * Atmega328p, Atmega168
 
 Digispark users, please check compilation options in your Arduino prior to using this library.
 Ssd1306 library requires at least c++11 and c99 (by default Digispark package misses the options
@@ -68,8 +77,19 @@ Ssd1306 library requires at least c++11 and c99 (by default Digispark package mi
 
 ## Setting up
 
+*Setting up for Arduino: (variant 1)*
  * Download source from https://github.com/lexus2k/ssd1306
  * Put the sources to Arduino/libraries/ folder
+
+*Setting up for Arduino: (variant 2)*
+ * Install ssd1306 library via Arduino IDE library manager
+
+*Using with plain avr-gcc:*
+ * Download source from https://github.com/lexus2k/ssd1306
+ * Build the library: cd ssd1306 && make -f Makefile.avr MCU=<your_mcu>
+ * Link library to your project (refer to [Makefile.avr](examples/Makefile.avr) in examples folder).
+
+
 
 ## Adding new interface
 
@@ -145,20 +165,26 @@ The library is free. If this project helps you, you can give me a cup of coffee.
 [![Donate via Paypal](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/lexus2k)
 
 
-Copyright (C) 2016-2017 Alexey Dynda
+MIT License
 
-This file is part of SSD1306 Library.
+Copyright (c) 2016-2018, Alexey Dynda
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
 
