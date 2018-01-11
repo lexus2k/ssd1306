@@ -4,7 +4,7 @@ As contributors and maintainers of this project, and in the interest of fosterin
 we pledge to respect all people who contribute through reporting issues, posting feature requests, updating documentation,
 submitting pull requests or patches, and other activities.
 
-## Our Standards
+## Standards
 
 Examples of behavior that contributes to creating a positive environment include:
 
@@ -22,7 +22,7 @@ Examples of unacceptable behavior by participants include:
 * Publishing others' private information, such as a physical or electronic address, without explicit permission
 * Other conduct which could reasonably be considered inappropriate in a professional setting
 
-## Our Responsibilities
+## Responsibilities
 
 Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code,
 wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily

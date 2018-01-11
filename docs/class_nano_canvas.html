@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.3.99</span>
+   &#160;<span id="projectnumber">1.4.0</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306 i2c/spi OLED display</div>
   </td>
@@ -103,6 +103,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a025db957c4a51f9de6afe6b413440d0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa1ab1e5c598b6d46f261f45396ea2743"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#aa1ab1e5c598b6d46f261f45396ea2743">charF12x16</a> (uint8_t x, uint8_t y, const char ch[], <a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style=STYLE_NORMAL)</td></tr>
 <tr class="separator:aa1ab1e5c598b6d46f261f45396ea2743"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f89c3edb9833b7d79f7d1f771b44254"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#a6f89c3edb9833b7d79f7d1f771b44254">printFixed</a> (uint8_t xpos, uint8_t y, const char ch[], <a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style=STYLE_NORMAL)</td></tr>
+<tr class="separator:a6f89c3edb9833b7d79f7d1f771b44254"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6dcb23724a60a84baaa06c189903edef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#a6dcb23724a60a84baaa06c189903edef">printFixed2x</a> (uint8_t xpos, uint8_t y, const char ch[], <a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style=STYLE_NORMAL)</td></tr>
+<tr class="separator:a6dcb23724a60a84baaa06c189903edef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a599f8d8cdaba51b639f8ed8531ecba91"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#a599f8d8cdaba51b639f8ed8531ecba91">drawSpritePgm</a> (uint8_t x, uint8_t y, const uint8_t sprite[])</td></tr>
 <tr class="separator:a599f8d8cdaba51b639f8ed8531ecba91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a6a7006f415cbf2db983b1c41acde17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas.html#a6a6a7006f415cbf2db983b1c41acde17">drawSprite</a> (uint8_t x, uint8_t y, const uint8_t sprite[])</td></tr>
@@ -214,7 +218,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00290">290</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00453">453</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
 
 </div>
 </div>
@@ -242,7 +246,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Returns canvas buffer </p>
 
-<p class="definition">Definition at line <a class="el" href="nano__gfx_8h_source.html#l00176">176</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nano__gfx_8h_source.html#l00196">196</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
 
 </div>
 </div>
@@ -342,7 +346,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Prints text to canvas buffer </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Prints text to canvas buffer using double size font 12x16 </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>- start position X </td></tr>
     <tr><td class="paramname">y</td><td>- start position Y </td></tr>
@@ -352,7 +356,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00165">165</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00166">166</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
 
 </div>
 </div>
@@ -403,7 +407,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00119">119</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00120">120</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
 
 </div>
 </div>
@@ -423,7 +427,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Clears canvas </p>
 
-<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00110">110</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00111">111</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
 
 </div>
 </div>
@@ -467,7 +471,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00046">46</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00047">47</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
 
 </div>
 </div>
@@ -563,7 +567,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00066">66</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00067">67</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
 
 </div>
 </div>
@@ -600,7 +604,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Sprite is small image 8x8, sprite doesn't change background Reads sprite from SRAM memory </p>
 
-<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00261">261</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00424">424</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
 
 </div>
 </div>
@@ -626,7 +630,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00276">276</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00439">439</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
 
 </div>
 </div>
@@ -663,7 +667,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Sprite is small image 8x8, sprite doesn't change background Reads sprite from Flash memory </p>
 
-<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00245">245</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00408">408</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
 
 </div>
 </div>
@@ -707,7 +711,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00056">56</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00057">57</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
 
 </div>
 </div>
@@ -765,7 +769,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00075">75</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00076">76</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
 
 </div>
 </div>
@@ -785,7 +789,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Flips image horizontally. </p>
 
-<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00301">301</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00464">464</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
 
 </div>
 </div>
@@ -813,7 +817,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Returns canvas height </p>
 
-<p class="definition">Definition at line <a class="el" href="nano__gfx_8h_source.html#l00171">171</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nano__gfx_8h_source.html#l00191">191</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
 
 </div>
 </div>
@@ -833,7 +837,111 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Inverts content in the buffer. white becomes black and wise versa. </p>
 
-<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00295">295</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00458">458</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a6f89c3edb9833b7d79f7d1f771b44254"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f89c3edb9833b7d79f7d1f771b44254">&#9670;&nbsp;</a></span>printFixed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void NanoCanvas::printFixed </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>xpos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char&#160;</td>
+          <td class="paramname"><em>ch</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a>&#160;</td>
+          <td class="paramname"><em>style</em> = <code>STYLE_NORMAL</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Prints text to canvas buffer using fixed font. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">xpos</td><td>- start position X </td></tr>
+    <tr><td class="paramname">y</td><td>- start position Y </td></tr>
+    <tr><td class="paramname">ch</td><td>- text to print (null-terminated) </td></tr>
+    <tr><td class="paramname">style</td><td>- font style (EFontStyle), normal by default </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#gac38e07839ff23bd17a6f0c79f5f92d2d">ssd1306_setFixedFont()</a>. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00245">245</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a6dcb23724a60a84baaa06c189903edef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6dcb23724a60a84baaa06c189903edef">&#9670;&nbsp;</a></span>printFixed2x()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void NanoCanvas::printFixed2x </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>xpos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char&#160;</td>
+          <td class="paramname"><em>ch</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a>&#160;</td>
+          <td class="paramname"><em>style</em> = <code>STYLE_NORMAL</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Prints text to canvas buffer using fixed font double size. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">xpos</td><td>- start position X </td></tr>
+    <tr><td class="paramname">y</td><td>- start position Y </td></tr>
+    <tr><td class="paramname">ch</td><td>- text to print (null-terminated) </td></tr>
+    <tr><td class="paramname">style</td><td>- font style (EFontStyle), normal by default </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#gac38e07839ff23bd17a6f0c79f5f92d2d">ssd1306_setFixedFont()</a>. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00322">322</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
 
 </div>
 </div>
@@ -870,7 +978,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00033">33</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nano__gfx_8cpp_source.html#l00034">34</a> of file <a class="el" href="nano__gfx_8cpp_source.html">nano_gfx.cpp</a>.</p>
 
 </div>
 </div>
@@ -898,7 +1006,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Returns canvas width </p>
 
-<p class="definition">Definition at line <a class="el" href="nano__gfx_8h_source.html#l00166">166</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nano__gfx_8h_source.html#l00186">186</a> of file <a class="el" href="nano__gfx_8h_source.html">nano_gfx.h</a>.</p>
 
 </div>
 </div>

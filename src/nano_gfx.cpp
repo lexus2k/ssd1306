@@ -26,6 +26,7 @@
 #include "ssd1306.h"
 
 extern const uint8_t *s_font6x8;
+extern SFixedFontInfo s_fixedFont;
 
 #define YADDR(y) (((y) >> 3) << m_p)
 #define BADDR(b) ((b) << m_p)
@@ -241,6 +242,168 @@ void NanoCanvas::charF12x16(uint8_t xpos, uint8_t y, const char ch[], EFontStyle
     }
 }
 
+void NanoCanvas::printFixed(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style)
+{
+    uint8_t i, j = 0;
+    uint8_t text_index = 0;
+    uint8_t page_offset = 0;
+    uint8_t x = xpos;
+    uint8_t topMask, bottomMask;
+    if ( y >= m_h ) return;
+    topMask = (0xFF >> (8 - (y & 0x7)));
+    bottomMask = (0xFF << (y & 0x7));
+    for(;;)
+    {
+        if( ( x > m_w - s_fixedFont.width ) || ( ch[j] == '\0' ) )
+        {
+            x = xpos;
+            y += 8;
+            if (y > (m_h - 8))
+            {
+                break;
+            }
+            page_offset++;
+            if (page_offset == s_fixedFont.pages)
+            {
+                text_index = j;
+                page_offset = 0;
+                if (ch[j] == '\0')
+                {
+                    break;
+                }
+            }
+            else
+            {
+                j = text_index;
+            }
+        }
+        uint8_t c = ch[j] - 32;
+        if ( c > 224 )
+        {
+            c = 0;
+        }
+        uint8_t ldata = 0;
+        uint16_t offset = (c * s_fixedFont.pages + page_offset) * s_fixedFont.width;
+        for( i=0; i<s_fixedFont.width; i++)
+        {
+            uint8_t data;
+            if ( style == STYLE_NORMAL )
+            {
+                data = pgm_read_byte(&s_fixedFont.data[offset]);
+            }
+            else if ( style == STYLE_BOLD )
+            {
+                data = pgm_read_byte(&s_fixedFont.data[offset]);
+                uint8_t temp = data | ldata;
+                ldata = data;
+                data = temp;
+            }
+            else
+            {
+                data = pgm_read_byte(&s_fixedFont.data[offset + 1]);
+                uint8_t temp = (data & 0xF0) | ldata;
+                ldata = (data & 0x0F);
+                data = temp;
+            }
+            m_bytes[YADDR(y) + x] &= topMask;
+            m_bytes[YADDR(y) + x] |= (data << (y & 0x7));
+            if (y + 8 < m_h)
+            {
+                m_bytes[YADDR(y) + m_w + x] &= bottomMask;
+                m_bytes[YADDR(y) + m_w + x] |= (data >> (8 - (y & 0x7)));
+            }
+            offset++;
+            x++;
+        }
+        j++;
+    }
+}
+
+void NanoCanvas::printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style)
+{
+    uint8_t i, j = 0;
+    uint8_t text_index = 0;
+    uint8_t page_offset = 0;
+    uint8_t x = xpos;
+    uint8_t topMask, bottomMask;
+    if ( y >= m_h ) return;
+    topMask = (0xFF >> (8 - (y & 0x7)));
+    bottomMask = (0xFF << (y & 0x7));
+    for(;;)
+    {
+        if( ( x > m_w - (s_fixedFont.width<<1) ) || ( ch[j] == '\0' ) )
+        {
+            x = xpos;
+            y += 8;
+            if (y > (m_h - 8))
+            {
+                break;
+            }
+            page_offset++;
+            if (page_offset == (s_fixedFont.pages<<1))
+            {
+                text_index = j;
+                page_offset = 0;
+                if (ch[j] == '\0')
+                {
+                    break;
+                }
+            }
+            else
+            {
+                j = text_index;
+            }
+        }
+        uint8_t c = ch[j] - 32;
+        if ( c > 224 )
+        {
+            c = 0;
+        }
+        uint8_t ldata = 0;
+        uint16_t offset = (c * s_fixedFont.pages + (page_offset >> 1)) * s_fixedFont.width;
+        for( i=0; i<s_fixedFont.width; i++)
+        {
+            uint8_t data;
+            if ( style == STYLE_NORMAL )
+            {
+                data = pgm_read_byte(&s_fixedFont.data[offset]);
+            }
+            else if ( style == STYLE_BOLD )
+            {
+                data = pgm_read_byte(&s_fixedFont.data[offset]);
+                uint8_t temp = data | ldata;
+                ldata = data;
+                data = temp;
+            }
+            else
+            {
+                data = pgm_read_byte(&s_fixedFont.data[offset + 1]);
+                uint8_t temp = (data & 0xF0) | ldata;
+                ldata = (data & 0x0F);
+                data = temp;
+            }
+            if (page_offset & 1) data >>= 4;
+            data = ((data & 0x01) ? 0x03: 0x00) |
+                   ((data & 0x02) ? 0x0C: 0x00) |
+                   ((data & 0x04) ? 0x30: 0x00) |
+                   ((data & 0x08) ? 0xC0: 0x00);
+
+            for (uint8_t n=2; n>0; n--)
+            {
+                m_bytes[YADDR(y) + x] &= topMask;
+                m_bytes[YADDR(y) + x] |= (data << (y & 0x7));
+                if (y+8 < m_h)
+                {
+                    m_bytes[YADDR(y) + m_w + x] &= bottomMask;
+                    m_bytes[YADDR(y) + m_w + x] |= (data >> (8 - (y & 0x7)));
+                }
+                x++;
+            }
+            offset++;
+        }
+        j++;
+    }
+}
 
 void NanoCanvas::drawSpritePgm(uint8_t x, uint8_t y, const uint8_t sprite[])
 {

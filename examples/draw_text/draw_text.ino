@@ -33,16 +33,18 @@
  */
 
 #include "ssd1306.h"
+#include "font6x8.h"
 
 void setup()
 {
     /* Replace the line below with ssd1306_128x32_i2c_init() if you need to use 128x32 display */
     ssd1306_128x64_i2c_init();
     ssd1306_fillScreen(0x00);
-    ssd1306_charF6x8(0, 0, "Line 1. text");
-    ssd1306_charF6x8(0, 1, "Line 2. Bold text", STYLE_BOLD);
-    ssd1306_charF6x8(0, 2, "Line 3. Italic text", STYLE_ITALIC);
-    ssd1306_charF12x16(0, 3, "Line 4. Double size", STYLE_BOLD);
+    ssd1306_setFixedFont(ssd1306xled_font6x8);
+    ssd1306_printFixed  (0,  8, "Line 1. text", STYLE_NORMAL);
+    ssd1306_printFixed  (0, 16, "Line 2. Bold text", STYLE_BOLD);
+    ssd1306_printFixed  (0, 24, "Line 3. Italic text", STYLE_ITALIC);
+    ssd1306_printFixed2x(0, 32, "Line 4. Double size", STYLE_BOLD);
 }
 
 

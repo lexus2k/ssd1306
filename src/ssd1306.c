@@ -38,6 +38,7 @@ uint8_t s_displayWidth;
 uint8_t g_lcd_type = LCD_TYPE_SSD1306;
 static uint8_t s_invertByte = 0x00000000;
 const uint8_t *s_font6x8 = &ssd1306xled_font6x8[3];
+SFixedFontInfo s_fixedFont = { 0 };
 
 uint8_t      ssd1306_displayHeight()
 {
@@ -91,6 +92,159 @@ void ssd1306_displayOn()
 {
     ssd1306_sendCommand(SSD1306_DISPLAYON);
 }
+
+uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style)
+{
+    uint8_t i, j=0;
+    uint8_t text_index = 0;
+    uint8_t page_offset = 0;
+    uint8_t x = xpos;
+    y >>= 3;
+    ssd1306_setRamBlock(xpos, y, s_displayWidth - xpos);
+    ssd1306_dataStart();
+    for(;;)
+    {
+        if( (x > s_displayWidth - s_fixedFont.width) || (ch[j] == '\0') )
+        {
+            x = xpos;
+            y++;
+            if (y >= (s_displayHeight >> 3))
+            {
+                break;
+            }
+            page_offset++;
+            if (page_offset == s_fixedFont.pages)
+            {
+                text_index = j;
+                page_offset = 0;
+                if (ch[j] == '\0')
+                {
+                    break;
+                }
+            }
+            else
+            {
+                j = text_index;
+            }
+            ssd1306_endTransmission();
+            ssd1306_setRamBlock(xpos, y, s_displayWidth - xpos);
+            ssd1306_dataStart();
+        }
+        uint8_t c = ch[j] - 32;
+        if ( c > 224 )
+        {
+            c = 0;
+        }
+        uint8_t ldata = 0;
+        uint16_t offset = (c * s_fixedFont.pages + page_offset) * s_fixedFont.width;
+        for( i=0; i<s_fixedFont.width; i++)
+        {
+            uint8_t data;
+            if ( style == STYLE_NORMAL )
+            {
+                data = pgm_read_byte(&s_fixedFont.data[offset]);
+            }
+            else if ( style == STYLE_BOLD )
+            {
+                uint8_t temp = pgm_read_byte(&s_fixedFont.data[offset]);
+                data = temp | ldata;
+                ldata = temp;
+            }
+            else
+            {
+                uint8_t temp = pgm_read_byte(&s_fixedFont.data[offset + 1]);
+                data = (temp & 0xF0) | ldata;
+                ldata = (temp & 0x0F);
+            }
+            ssd1306_sendByte(data^s_invertByte);
+            offset++;
+        }
+        x += s_fixedFont.width;
+        j++;
+    }
+    ssd1306_endTransmission();
+    return j;
+}
+
+uint8_t ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style)
+{
+    uint8_t i, j=0;
+    uint8_t text_index = 0;
+    uint8_t page_offset = 0;
+    uint8_t x = xpos;
+    y >>= 3;
+    ssd1306_setRamBlock(xpos, y, s_displayWidth - xpos);
+    ssd1306_dataStart();
+    for(;;)
+    {
+        if( (x > s_displayWidth - (s_fixedFont.width << 1)) || (ch[j] == '\0') )
+        {
+            x = xpos;
+            y++;
+            if (y >= (s_displayHeight >> 3))
+            {
+                break;
+            }
+            page_offset++;
+            if (page_offset == (s_fixedFont.pages << 1))
+            {
+                text_index = j;
+                page_offset = 0;
+                if (ch[j] == '\0')
+                {
+                    break;
+                }
+            }
+            else
+            {
+                j = text_index;
+            }
+            ssd1306_endTransmission();
+            ssd1306_setRamBlock(xpos, y, s_displayWidth - xpos);
+            ssd1306_dataStart();
+        }
+        uint8_t c = ch[j] - 32;
+        if ( c > 224 )
+        {
+            c = 0;
+        }
+        uint8_t ldata = 0;
+        uint16_t offset = (c * s_fixedFont.pages + (page_offset >> 1)) * s_fixedFont.width;
+        for( i=0; i<s_fixedFont.width; i++)
+        {
+            uint8_t data;
+            if ( style == STYLE_NORMAL )
+            {
+                data = pgm_read_byte(&s_fixedFont.data[offset]);
+            }
+            else if ( style == STYLE_BOLD )
+            {
+                uint8_t temp = pgm_read_byte(&s_fixedFont.data[offset]);
+                data = temp | ldata;
+                ldata = temp;
+            }
+            else
+            {
+                uint8_t temp = pgm_read_byte(&s_fixedFont.data[offset + 1]);
+                data = (temp & 0xF0) | ldata;
+                ldata = (temp & 0x0F);
+            }
+            if (page_offset & 1) data >>= 4;
+            data = ((data & 0x01) ? 0x03: 0x00) |
+                   ((data & 0x02) ? 0x0C: 0x00) |
+                   ((data & 0x04) ? 0x30: 0x00) |
+                   ((data & 0x08) ? 0xC0: 0x00);
+            ssd1306_sendByte(data^s_invertByte);
+            ssd1306_sendByte(data^s_invertByte);
+            offset++;
+        }
+        x += (s_fixedFont.width << 1);
+        j++;
+    }
+    ssd1306_endTransmission();
+    return j;
+}
+
 
 uint8_t ssd1306_charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style)
 {
@@ -226,6 +380,13 @@ uint8_t      ssd1306_charF6x8_eol(uint8_t left,
         ssd1306_clearBlock(text_end_pos, y, right - text_end_pos + 1, 8);
     }
     return len;
+}
+
+void         ssd1306_setFixedFont(const uint8_t * progmemFont)
+{
+    s_fixedFont.width = pgm_read_byte(&progmemFont[1]);
+    s_fixedFont.pages = pgm_read_byte(&progmemFont[2]) >> 3;
+    s_fixedFont.data = progmemFont + 3;
 }
 
 void         ssd1306_setFont6x8(const uint8_t * progmemFont)

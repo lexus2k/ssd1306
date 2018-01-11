@@ -134,13 +134,33 @@ public:
     void charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style = STYLE_NORMAL);
 
     /**
-     * Prints text to canvas buffer
+     * Prints text to canvas buffer using double size font 12x16
      * @param x - start position X
      * @param y - start position Y
      * @param ch - text to print (null-terminated)
      * @param style - font style (EFontStyle), normal by default
      */
     void charF12x16(uint8_t x, uint8_t y, const char ch[], EFontStyle style = STYLE_NORMAL);
+
+    /**
+     * Prints text to canvas buffer using fixed font.
+     * @param xpos - start position X
+     * @param y - start position Y
+     * @param ch - text to print (null-terminated)
+     * @param style - font style (EFontStyle), normal by default
+     * @see ssd1306_setFixedFont().
+     */
+    void printFixed(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style = STYLE_NORMAL);
+
+    /**
+     * Prints text to canvas buffer using fixed font double size.
+     * @param xpos - start position X
+     * @param y - start position Y
+     * @param ch - text to print (null-terminated)
+     * @param style - font style (EFontStyle), normal by default
+     * @see ssd1306_setFixedFont().
+     */
+    void printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style = STYLE_NORMAL);
 
     /**
      * Sprite is small image 8x8, sprite doesn't change background

@@ -124,6 +124,32 @@ void         ssd1306_negativeMode();
 void         ssd1306_positiveMode();
 
 /**
+ * Prints text to screen using fixed font.
+ * @param xpos - horizontal position in pixels
+ * @param y - vertical position in pixels
+ * @param ch - NULL-terminated string to print
+ * @param style - font style (EFontStyle), normal by default.
+ * @returns number of chars in string
+ * @see ssd1306_setFixedFont
+ * @warning ssd1306_printFixed() can output chars at fixed y positions: 0, 8, 16, 24, 32, etc.
+ *          If you specify [10,18], ssd1306_printFixed() will output text starting at [10,16] position.
+ */
+uint8_t     ssd1306_printFixed(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style);
+
+/**
+ * Prints text to screen using double size fixed font.
+ * @param xpos - horizontal position in pixels
+ * @param y - vertical position in pixels
+ * @param ch - NULL-terminated string to print
+ * @param style - font style (EFontStyle), normal by default.
+ * @returns number of chars in string
+ * @see ssd1306_setFixedFont
+ * @warning ssd1306_printFixed2x() can output chars at fixed y positions: 0, 8, 16, 24, 32, etc.
+ *          If you specify [10,18], ssd1306_printFixed2x() will output text starting at [10,16] position.
+ */
+uint8_t     ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style);
+
+/**
  * Prints text to screen using font 6x8.
  * @param x - horizontal position in pixels
  * @param y - vertical position in blocks (pixels/8)
@@ -171,6 +197,26 @@ uint8_t      ssd1306_charF6x8_eol(uint8_t left,
                                   EFontStyle style,
                                   uint8_t right);
 
+
+/**
+ * Function allows to set another fixed font for the library.
+ * By default, the font supports only first 128 - 32 ascii chars.
+ * First 32 chars of ascii table are non-printable, and removed
+ * from the font table to reduce flash memory consumption.
+ * Default font doesn't support russian characters. Using
+ * this function you can implement your own fonts.
+ * First font char must be started with \<space\> image.
+ * Font data should be in the following format:
+ * | 0x00 | 0xWW | 0xHH | FONT DATA |,
+ * where 0xWW - width in pixels, 0xHH - height in pixels.<br>
+ * For fixed font 6x8 each char is presented by 6 bytes:<br>
+ * COL0, COL1, COL2, COL3, COL4, COL5.<br>
+ * For fixed font 4x16 each char is presented by 4x16/8 = 8 bytes:<br>
+ * ROW0: COL0, COL1, COL2, COL3,<br>
+ * ROW1: COL0, COL1, COL2, COL3<br>
+ * @param progmemFont - font to setup located in Flash area
+ */
+void         ssd1306_setFixedFont(const uint8_t * progmemFont);
 
 /**
  * Function allows to set another font for the library.

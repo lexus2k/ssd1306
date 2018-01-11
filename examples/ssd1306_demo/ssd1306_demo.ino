@@ -37,6 +37,7 @@
 #include "ssd1306.h"
 #include "sova.h"
 #include "nano_gfx.h"
+#include "font6x8.h"
 
 /* Do not include SPI.h for Attiny controllers */
 #ifdef SSD1306_SPI_SUPPORTED
@@ -109,12 +110,13 @@ static void spriteDemo()
 
 static void textDemo()
 {
+    ssd1306_setFixedFont(ssd1306xled_font6x8);
     ssd1306_clearScreen();
-    ssd1306_charF6x8(0, 1, "Normal text");
-    ssd1306_charF6x8(0, 2, "Bold text", STYLE_BOLD);
-    ssd1306_charF6x8(0, 3, "Italic text", STYLE_ITALIC);
+    ssd1306_printFixed(0,  8, "Normal text", STYLE_NORMAL);
+    ssd1306_printFixed(0, 16, "Bold text", STYLE_BOLD);
+    ssd1306_printFixed(0, 24, "Italic text", STYLE_ITALIC);
     ssd1306_negativeMode();
-    ssd1306_charF6x8(0, 4, "Inverted bold", STYLE_BOLD);
+    ssd1306_printFixed(0, 32, "Inverted bold", STYLE_BOLD);
     ssd1306_positiveMode();
     delay(3000);
 }
@@ -123,6 +125,7 @@ static void canvasDemo()
 {
     uint8_t buffer[64*16/8];
     NanoCanvas canvas(64,16, buffer);
+    ssd1306_setFixedFont(ssd1306xled_font6x8);
     ssd1306_clearScreen();
     canvas.clear();
     canvas.fillRect(10, 3, 80, 5, 0xFF);
@@ -131,7 +134,7 @@ static void canvasDemo()
     canvas.fillRect(50, 1, 60, 15, 0xFF);
     canvas.blt((ssd1306_displayWidth()-64)/2, 1);
     delay(1500);
-    canvas.charF6x8(20, 1, " DEMO " );
+    canvas.printFixed(20, 1, " DEMO " );
     canvas.blt((ssd1306_displayWidth()-64)/2, 1);
     delay(3000);
 }

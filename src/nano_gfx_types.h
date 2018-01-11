@@ -51,6 +51,14 @@ typedef enum
     STYLE_ITALIC,
 } EFontStyle;
 
+/** Structure is used for internal font presentation */
+typedef struct
+{
+    uint8_t width; ///< width in pixels
+    uint8_t pages; ///< height in pages
+    const uint8_t *data; ///< font chars bits
+} SFixedFontInfo;
+
 /**
  * Rectangle region. not used now
  */
