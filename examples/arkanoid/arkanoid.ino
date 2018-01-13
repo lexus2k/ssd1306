@@ -21,8 +21,9 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-/**
+/*
  * This game is based on original game, developed by Ilya Titov in 2014.
+ * It can be still flashed to http://webboggles.com/attiny85-breakout-keychain-game/ HW.
  */
 /*
  *   Attiny85 PINS
@@ -76,6 +77,7 @@
 #include "sprites.h"
 #include "arkanoid.h"
 #include "buttons.h"
+#include "font6x8.h"
 
 typedef struct
 {
@@ -156,6 +158,7 @@ void playerInc()
 
 void setup()
 {
+    ssd1306_setFixedFont(ssd1306xled_font6x8_AB);
     randomSeed(analogRead(0));
 #if defined(__AVR_ATtiny85__)
     DDRB |= 0b00011010;         // set PB1 as output (for the speaker), PB0 and PB2 as input
@@ -221,7 +224,7 @@ void drawStatusPanel()
     char temp[6] = {'0',0,0,0,0,0};
     utoa(score,temp + (score<10?1:0),10);
     temp[2] = '\0';
-    ssd1306_charF6x8(RIGHT_EDGE + 1, 1, temp);
+    ssd1306_printFixed(RIGHT_EDGE + 1, 8, temp, STYLE_NORMAL);
     SPRITE power = ssd1306_createSprite( RIGHT_EDGE + 4, 40, 8, powerSprite );
     if (platformPower)
         power.draw();
@@ -243,7 +246,7 @@ void drawIntro()
     ssd1306_128x64_init();
     ssd1306_clearScreen( );
     ssd1306_drawBitmap(16, 2, 96, 24, arkanoid_2);
-    ssd1306_charF6x8(40, 5, "BREAKOUT");
+    ssd1306_printFixed(40, 40, "BREAKOUT", STYLE_NORMAL);
     beep(200,600);
     beep(300,200);
     beep(400,300);
@@ -605,14 +608,14 @@ void gameOver()
     }
 #endif
     ssd1306_clearScreen( );
-    ssd1306_charF6x8(32, 2, "GAME OVER");
-    ssd1306_charF6x8(32, 4, "score ");
+    ssd1306_printFixed(32, 16, "GAME OVER", STYLE_NORMAL);
+    ssd1306_printFixed(32, 32, "SCORE ", STYLE_NORMAL);
     char temp[6] = {0,0,0,0,0,0};
     utoa(score,temp,10);
-    ssd1306_charF6x8(70, 4, temp);
-    ssd1306_charF6x8(32, 5, "top score ");
+    ssd1306_printFixed(70, 32, temp, STYLE_NORMAL);
+    ssd1306_printFixed(70, 40, "TOP SCORE ", STYLE_NORMAL);
     utoa(topScore,temp,10);
-    ssd1306_charF6x8(90, 5, temp);
+    ssd1306_printFixed(90, 40, temp, STYLE_NORMAL);
     for (int i = 0; i<1000; i++)
     {
        beep(1,random(0,i*2));

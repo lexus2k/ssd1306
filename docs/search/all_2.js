@@ -6,5 +6,6 @@ var searchData=
   ['charf6x8_5feol',['charF6x8_eol',['../class_tiny_s_s_d1306.html#af07d4ee35c4812e5dab3ca453eb1529a',1,'TinySSD1306']]],
   ['clear',['clear',['../class_nano_canvas.html#a6fe2036b269cc55d9181c727a4fb3951',1,'NanoCanvas::clear()'],['../class_sprite_pool.html#a225cec38d6557f304d2279005a8aa523',1,'SpritePool::clear()'],['../class_tiny_s_s_d1306.html#ae9c880933b876e0182a712348febb923',1,'TinySSD1306::clear()']]],
   ['clearblock',['clearBlock',['../class_tiny_s_s_d1306.html#acd46239a010280a922868e80a220f215',1,'TinySSD1306']]],
-  ['count',['count',['../struct_s_app_menu.html#ad750fae199422bd44dc6063123631d62',1,'SAppMenu']]]
+  ['count',['count',['../struct_s_app_menu.html#ad750fae199422bd44dc6063123631d62',1,'SAppMenu']]],
+  ['courier_5fnew_5ffont11x16_5fdigits',['courier_new_font11x16_digits',['../group___l_c_d___f_o_n_t_s.html#gad0b4c4a1805d2cbc11910dbf2febb516',1,'courier_new_font11x16_digits():&#160;fontx16.c'],['../group___l_c_d___f_o_n_t_s.html#gad0b4c4a1805d2cbc11910dbf2febb516',1,'courier_new_font11x16_digits():&#160;fontx16.c']]]
 ];

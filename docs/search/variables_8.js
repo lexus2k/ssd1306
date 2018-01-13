@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pages',['pages',['../struct_s_fixed_font_info.html#ae1f28bffdc33257500d04b8999edb9b2',1,'SFixedFontInfo']]]
+  ['oldselection',['oldSelection',['../struct_s_app_menu.html#ad79da4d78c16e3fbbd2e380dc5763275',1,'SAppMenu']]]
 ];

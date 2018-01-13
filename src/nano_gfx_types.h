@@ -56,6 +56,7 @@ typedef struct
 {
     uint8_t width; ///< width in pixels
     uint8_t pages; ///< height in pages
+    uint8_t ascii_offset; ///< ascii offset
     const uint8_t *data; ///< font chars bits
 } SFixedFontInfo;
 

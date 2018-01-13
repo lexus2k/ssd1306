@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['items',['items',['../struct_s_app_menu.html#a9112659b47fa205336626f5ee0caa870',1,'SAppMenu']]]
+  ['g_5flcd_5ftype',['g_lcd_type',['../lcd__common_8h.html#adfa899a135c3bfee48624a3820864b33',1,'ssd1306.c']]]
 ];

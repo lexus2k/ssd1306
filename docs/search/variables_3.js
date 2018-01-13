@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['g_5flcd_5ftype',['g_lcd_type',['../lcd__common_8h.html#adfa899a135c3bfee48624a3820864b33',1,'ssd1306.c']]]
+  ['data',['data',['../struct_s_fixed_font_info.html#a0f7b369b22f547c125f83c708d8a6c39',1,'SFixedFontInfo::data()'],['../struct_s_p_r_i_t_e.html#ac56b0c16d0bcd810ae1289350df821c3',1,'SPRITE::data()']]]
 ];
