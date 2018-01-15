@@ -22,9 +22,9 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.4.2</span>
    </div>
-   <div id="projectbrief">This library is developed to control SSD1306 i2c/spi OLED display</div>
+   <div id="projectbrief">This library is developed to control SSD1306/SSD1331 RGB i2c/spi OLED displays and spi PCD8544 LED display</div>
   </td>
  </tr>
  </tbody>
@@ -78,10 +78,14 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a06fc87d81c62e9abb8790b6e5713c55b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="lcd__common_8h.html#a06fc87d81c62e9abb8790b6e5713c55bad95a2d5ef67df02a85a1bc3bff5129a4">LCD_TYPE_SSD1306</a>, 
+<tr class="memitem:a06fc87d81c62e9abb8790b6e5713c55b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br />
+&#160;&#160;<a class="el" href="lcd__common_8h.html#a06fc87d81c62e9abb8790b6e5713c55bad95a2d5ef67df02a85a1bc3bff5129a4">LCD_TYPE_SSD1306</a>, 
 <a class="el" href="lcd__common_8h.html#a06fc87d81c62e9abb8790b6e5713c55ba846490e1ce898baebea443873c666786">LCD_TYPE_PCD8544</a>, 
 <a class="el" href="lcd__common_8h.html#a06fc87d81c62e9abb8790b6e5713c55baecd840f4bc28d78905c61044b139e73c">LCD_TYPE_SH1106</a>, 
-<a class="el" href="lcd__common_8h.html#a06fc87d81c62e9abb8790b6e5713c55ba7f073223bcb6fab923d8da961abc1a7d">LCD_TYPE_CUSTOM</a>
+<a class="el" href="lcd__common_8h.html#a06fc87d81c62e9abb8790b6e5713c55ba332304434dfd968714082cb92fc85d33">LCD_TYPE_SSD1331</a>, 
+<br />
+&#160;&#160;<a class="el" href="lcd__common_8h.html#a06fc87d81c62e9abb8790b6e5713c55ba7f073223bcb6fab923d8da961abc1a7d">LCD_TYPE_CUSTOM</a>
+<br />
  }</td></tr>
 <tr class="separator:a06fc87d81c62e9abb8790b6e5713c55b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -116,6 +120,8 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a id="a06fc87d81c62e9abb8790b6e5713c55ba846490e1ce898baebea443873c666786"></a>LCD_TYPE_PCD8544&#160;</td><td class="fielddoc"><p>Experimental type of LCD display: pcd8544 led </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a06fc87d81c62e9abb8790b6e5713c55baecd840f4bc28d78905c61044b139e73c"></a>LCD_TYPE_SH1106&#160;</td><td class="fielddoc"><p>Support for sh1106 OLED display </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a06fc87d81c62e9abb8790b6e5713c55ba332304434dfd968714082cb92fc85d33"></a>LCD_TYPE_SSD1331&#160;</td><td class="fielddoc"><p>Default type of LCD display: ssd1331 oled </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a06fc87d81c62e9abb8790b6e5713c55ba7f073223bcb6fab923d8da961abc1a7d"></a>LCD_TYPE_CUSTOM&#160;</td><td class="fielddoc"><p>User LCD type </p>
 </td></tr>

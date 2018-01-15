@@ -76,6 +76,7 @@ void pcd8544_84x48_init()
     ssd1306_commandStart();
     ssd1306_setRamBlock = pcd8544_setBlock;
     ssd1306_nextRamPage = pcd8544_nextPage;
+    ssd1306_sendPixels = ssd1306_sendByte;
     ssd1306_setRamPos = NULL;
     for( uint8_t i=0; i<sizeof(s_lcd84x48_initData); i++)
     {

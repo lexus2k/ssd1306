@@ -34,6 +34,7 @@
 #include "spi/ssd1306_spi_conf.h"
 #include "lcd/ssd1306_128x64.h"
 #include "lcd/ssd1306_128x32.h"
+#include "lcd/ssd1331_96x64.h"
 #include "lcd/sh1106_128x64.h"
 #include "lcd/pcd8544_84x48.h"
 
@@ -63,11 +64,13 @@ void         ssd1306_displayOn();
 /**
  * Switches display to inverse mode.
  * LCD will display 0-pixels as white, and 1-pixels as black.
+ * @note Not supported for SSD1331
  */
 void         ssd1306_invertMode();
 
 /**
  * Switches display to normal mode.
+ * @note Not supported for SSD1331
  */
 void         ssd1306_normalMode();
 

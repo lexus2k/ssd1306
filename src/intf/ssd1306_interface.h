@@ -57,6 +57,12 @@ extern void  (*ssd1306_endTransmission)();
 extern void  (*ssd1306_sendByte)(uint8_t data);
 
 /**
+ * Sends 8 monochrome vectical pixels to OLED driver.
+ * @param data - byte, representing 8 pixels.
+ */
+extern void  (*ssd1306_sendPixels)(uint8_t data);
+
+/**
  * Sends command to SSD1306 device: includes initiating of
  * transaction, sending data and completing transaction.
  * @param command - command to send
@@ -77,6 +83,7 @@ extern void (*ssd1306_dataStart)();
  * Sends byte data to SSD1306 controller memory.
  * Performs 3 operations at once: ssd1306_dataStart(); ssd1306_sendByte( data ); ssd1306_endTransmission();
  * @param data - byte to send to the controller memory
+ * @note At present this function is used only in Arkanoid demo.
  */
 void         ssd1306_sendData(uint8_t data);
 

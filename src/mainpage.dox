@@ -1,10 +1,10 @@
 /**
  @file
- @brief SSD1306 oled display driver for Arduino, AVR, Extensa platforms.
+ @brief SSD1306/SSD1331 oled display driver for Arduino, AVR, Extensa platforms.
 
- \mainpage SSD1306/PCD8544 API.
+ \mainpage SSD1306/SSD1331/PCD8544 API.
 
- This is SSD1306 oled display driver implementation for Arduino, AVR, Extensa platforms.
+ This is SSD1306/SSD1331 OLED display driver implementation for Arduino, AVR, Extensa platforms.
  The driver supports i2c and spi displays, and is also capable to work with pcd8544
  (nokia 5110) LCD over SPI.
 
@@ -46,7 +46,8 @@ configurable through API.
  - i2c ssd1306 128x64 oled display
  - i2c ssd1306 128x32 oled display
  - spi ssd1306 128x64 oled display
- - spi pcd8544 84x48 nokia 5110 led display (experimental support)
+ - spi ssd1331 96x64 RGB oled display
+ - spi pcd8544 84x48 nokia 5110 led display
 
 ## Supported platforms
 

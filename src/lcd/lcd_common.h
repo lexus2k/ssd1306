@@ -40,6 +40,8 @@ enum
     LCD_TYPE_PCD8544,
     /** Support for sh1106 OLED display */
     LCD_TYPE_SH1106,
+    /** Default type of LCD display: ssd1331 oled */
+    LCD_TYPE_SSD1331,
     /** User LCD type */
     LCD_TYPE_CUSTOM,
 };

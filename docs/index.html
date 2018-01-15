@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SSD1306 OLED display driver: SSD1306/PCD8544 API.</title>
+<title>SSD1306 OLED display driver: SSD1306/SSD1331/PCD8544 API.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,9 +22,9 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.4.0</span>
+   &#160;<span id="projectnumber">1.4.2</span>
    </div>
-   <div id="projectbrief">This library is developed to control SSD1306 i2c/spi OLED display</div>
+   <div id="projectbrief">This library is developed to control SSD1306/SSD1331 RGB i2c/spi OLED displays and spi PCD8544 LED display</div>
   </td>
  </tr>
  </tbody>
@@ -61,10 +61,10 @@ $(function() {
 
 <div class="header">
   <div class="headertitle">
-<div class="title">SSD1306/PCD8544 API. </div>  </div>
+<div class="title">SSD1306/SSD1331/PCD8544 API. </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This is SSD1306 oled display driver implementation for Arduino, AVR, Extensa platforms. The driver supports i2c and spi displays, and is also capable to work with pcd8544 (nokia 5110) LCD over SPI.</p>
+<div class="textblock"><p>This is SSD1306/SSD1331 OLED display driver implementation for Arduino, AVR, Extensa platforms. The driver supports i2c and spi displays, and is also capable to work with pcd8544 (nokia 5110) LCD over SPI.</p>
 <h1>SSD1306 OLED display driver</h1>
 <h2>Introduction</h2>
 <p>SSD1306 OLED display driver is Arduino style library, AND it can be compiled with plain avr-gcc compiler without Arduino libraries. It is intended for use with very small microcontrollers (with a little of SRAM). It was developed to use as few resources as possible. Since ATTiny controllers have no division and multiply operations, the library uses shift operation to speed up calculations.</p>
@@ -95,7 +95,8 @@ $(function() {
 <li>i2c ssd1306 128x64 oled display</li>
 <li>i2c ssd1306 128x32 oled display</li>
 <li>spi ssd1306 128x64 oled display</li>
-<li>spi pcd8544 84x48 nokia 5110 led display (experimental support)</li>
+<li>spi ssd1331 96x64 RGB oled display</li>
+<li>spi pcd8544 84x48 nokia 5110 led display</li>
 </ul>
 <h2>Supported platforms</h2>
 <ul>

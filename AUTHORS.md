@@ -4,7 +4,8 @@
 
 ## Contributors
 
+* [MinusWall](https://github.com/minuswall)
+
 ## Special thanks to
 
 * [Peter Scargill](https://github.com/scargill)
-* [MinusWall](https://github.com/minuswall)

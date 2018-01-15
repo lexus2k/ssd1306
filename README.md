@@ -1,8 +1,8 @@
-# SSD1306 OLED display driver, PCD8544 LED display driver
+# SSD1306/SSD1331 OLED display driver, PCD8544 LED display driver
 
 ## Introduction
 
-SSD1306 OLED display driver is Arduino style library, AND it can be compiled
+SSD1306 driver is Arduino style library, AND it can be compiled
 with plain avr-gcc compiler without Arduino libraries. It is intended for use with
 very small microcontrollers (with a little of SRAM). It was developed to use as
 few resources as possible. Since ATTiny controllers have no division and multiply
@@ -49,6 +49,7 @@ configurable through API.
  * i2c ssd1306 128x64 oled display
  * i2c ssd1306 128x32 oled display
  * spi ssd1306 128x64 oled display
+ * spi ssd1331 96x64 RGB oled display
  * spi pcd8544 84x48 nokia 5110 led display (experimental support)
 
 ## Supported platforms
