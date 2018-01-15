@@ -42,7 +42,7 @@ static const PROGMEM uint8_t s_oled96x64_initData[] =
     SSD1331_SETMASTER, 0x8E,        // Set master mode
     SSD1331_POWERMODE, 0x0B,        // Disable power-safe mode
     SSD1331_SETPRECHARGE, 0x31,     // Phase 1 and Phase 2 periods
-    SSD1331_CLOCKDIV, 0xF0          // 7:4 = Oscillator Frequency, 3:0 = CLK Div Ratio (A[3:0]+1 = 1..16)
+    SSD1331_CLOCKDIV, 0xF0,         // 7:4 = Oscillator Frequency, 3:0 = CLK Div Ratio (A[3:0]+1 = 1..16)
     SSD1331_PRECHARGEA, 0x64,
     SSD1331_PRECHARGEB, 0x78,
     SSD1331_PRECHARGELEVEL, 0x3A,
