@@ -49,6 +49,6 @@ void ssd1306_sendCommand(uint8_t command)
 void ssd1306_sendData(uint8_t data)
 {
     ssd1306_dataStart();
-    ssd1306_sendByte( data );
+    ssd1306_sendPixels( data );
     ssd1306_endTransmission();
 }

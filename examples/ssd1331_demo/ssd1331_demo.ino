@@ -137,9 +137,6 @@ static void canvasDemo()
 
 void setup()
 {
-    pinMode(3,OUTPUT);
-    pinMode(4,OUTPUT);
-    pinMode(5,OUTPUT);
     ssd1331_96x64_spi_init(3, 4, 5);
 
     ssd1306_fillScreen( 0x00 );

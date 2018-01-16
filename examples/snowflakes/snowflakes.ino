@@ -160,7 +160,7 @@ void setup()
      * 15,7  means right-bottom block of lcd:                     *
      *                         that is 15*8+7=127-th pixel        *
      *                                 7*8+7=63-rd pixel          */
-    s_pool.setRect( (SSD1306_RECT) { 0, 0, 15, (ssd1306_displayHeight()>>3) - 1 } );
+    s_pool.setRect( (SSD1306_RECT) { 0, 0, (ssd1306_displayWidth()>>3) - 1, (ssd1306_displayHeight()>>3) - 1 } );
     /* Redraw whole LCD-display */
     s_pool.refreshScreen();
 }

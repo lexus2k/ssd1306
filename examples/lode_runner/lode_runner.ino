@@ -189,7 +189,7 @@ void setup()
 */
     ssd1306_fillScreen(0x00);
     /* Set range of the gameField on the screen in blocks. */
-    field.setRect( (SSD1306_RECT) { 0, 1, 15, 7 } );
+    field.setRect( (SSD1306_RECT) { 0, 1, (ssd1306_displayWidth()>>3) - 1, (ssd1306_displayHeight()>>3) - 1 } );
     playerSprite = ssd1306_createSprite( 8, 8, 8, playerFlyingImage[MAN_ANIM_FLYING][playerAnimation] );
     field.add( playerSprite );
     field.refreshScreen();

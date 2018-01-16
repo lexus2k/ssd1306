@@ -25,7 +25,11 @@
 #pragma once
 
 const int MAX_LEVELS          = 9;
+#ifdef ARKANOID_SSD1331
+const int BLOCKS_PER_ROW      = 5;
+#else
 const int BLOCKS_PER_ROW      = 7;
+#endif
 const int MAX_BLOCKS_PER_ROW  = 8;
 const int BLOCK_NUM_ROWS      = 3;
 

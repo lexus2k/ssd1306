@@ -81,7 +81,7 @@ extern void (*ssd1306_dataStart)();
 
 /**
  * Sends byte data to SSD1306 controller memory.
- * Performs 3 operations at once: ssd1306_dataStart(); ssd1306_sendByte( data ); ssd1306_endTransmission();
+ * Performs 3 operations at once: ssd1306_dataStart(); ssd1306_sendPixels( data ); ssd1306_endTransmission();
  * @param data - byte to send to the controller memory
  * @note At present this function is used only in Arkanoid demo.
  */

@@ -45,13 +45,13 @@
  * LEFT (D 4) PD4  6|    |23  PC0  Z-KEYPAD (A 0) if USE_Z_KEYPAD is defined (see below)
  *            VCC  7|    |22  GND
  *            GND  8|    |21  AREF
- *            PB6  9|    |20  AVCC
+ * BUZZ (D 6) PB6  9|    |20  AVCC
  *            PB7 10|    |19  PB5            
  *            PD5 11|    |18  PB4             
  *            PD6 12|    |17  PB3            
  *            PD7 13|    |16  PB2            
  *            PB0 14|____|15  PB1            
- * 
+ *     D6 is used in SSD1331 display mode
  */
 
 #include "ssd1306.h"
@@ -71,6 +71,8 @@
 #ifdef SSD1306_WIRE_SUPPORTED
 #include <Wire.h>
 #endif
+
+//#define ARKANOID_SSD1331
 
 #include "levels.h"
 #include "blocks.h"
@@ -99,13 +101,24 @@ uint16_t *EEPROM_ADDR = (uint16_t*)0;
 #        define LEFT_BTN    4
 #        define RIGHT_BTN   2
 #    endif
-#    define BUZZER      3
+#    ifdef ARKANOID_SSD1331
+#        define BUZZER      6
+#    else
+#        define BUZZER      3
+#    endif
 #endif
 
 
 const int LEFT_EDGE         = 0;
+#ifdef ARKANOID_SSD1331
+const int RIGHT_EDGE        = (96 - 14);
+const int SCREEN_WIDTH      = (96 - 16);
+const uint8_t OUTPUT_OFFSET = 16;
+#else
 const int RIGHT_EDGE        = (128 - 14);
 const int SCREEN_WIDTH      = (128 - 16);
+const uint8_t OUTPUT_OFFSET = 0;
+#endif
 const int SCREEN_HEIGHT     = 64;
 const int BLOCK_WIDTH       = 16;
 const int PLATFORM_HEIGHT   = 10;
@@ -160,7 +173,17 @@ void setup()
 {
     ssd1306_setFixedFont(ssd1306xled_font6x8_AB);
     randomSeed(analogRead(0));
-#if defined(__AVR_ATtiny85__)
+#if defined(ARKANOID_SSD1331)
+    #ifndef USE_Z_KEYPAD
+        pinMode(LEFT_BTN, INPUT);
+        pinMode(RIGHT_BTN, INPUT);
+    #endif
+    pinMode(BUZZER, OUTPUT);
+    sei();                      // enable all interrupts
+    #ifndef USE_Z_KEYPAD
+        attachInterrupt(digitalPinToInterrupt(RIGHT_BTN),playerInc,HIGH);
+    #endif
+#elif defined(__AVR_ATtiny85__)
     DDRB |= 0b00011010;         // set PB1 as output (for the speaker), PB0 and PB2 as input
     sei();                      // enable all interrupts
     attachInterrupt(0,playerInc,HIGH);
@@ -216,6 +239,7 @@ void loop()
 
 void drawStatusPanel()
 {
+    ssd1331_setColor(RGB_COLOR8(255,255,0));
     for(uint8_t i=0; i<min(hearts,3); i++)
     {
         SPRITE heart = ssd1306_createSprite( RIGHT_EDGE + 4, 16 + (i<<3), 8, heartSprite );
@@ -234,7 +258,10 @@ void drawStatusPanel()
 
 void drawIntro()
 {
-#if defined(__AVR_ATtiny85__)
+    ssd1331_setColor(RGB_COLOR8(255,0,0));
+#ifdef ARKANOID_SSD1331
+    ssd1331_96x64_spi_init(3,4,5);
+#elif defined(__AVR_ATtiny85__)
     ssd1306_i2cInit_Embedded(0,0,0);
 #elif defined(SSD1306_WIRE_SUPPORTED)
     ssd1306_i2cInit_Wire(0);
@@ -243,10 +270,12 @@ void drawIntro()
 #else
     #error "Not supported microcontroller or board"
 #endif
+#ifndef ARKANOID_SSD1331
     ssd1306_128x64_init();
+#endif
     ssd1306_clearScreen( );
-    ssd1306_drawBitmap(16, 2, 96, 24, arkanoid_2);
-    ssd1306_printFixed(40, 40, "BREAKOUT", STYLE_NORMAL);
+    ssd1306_drawBitmap(16 - OUTPUT_OFFSET, 2, 96, 24, arkanoid_2);
+    ssd1306_printFixed(40 - OUTPUT_OFFSET, 40, "BREAKOUT", STYLE_NORMAL);
     beep(200,600);
     beep(300,200);
     beep(400,300);
@@ -291,28 +320,29 @@ void resetGame()
 void drawPlatform()
 {
   uint8_t pos = (platformPos < PLATFORM_SPEED) ? 0: (platformPos - PLATFORM_SPEED);
+  ssd1331_setColor(RGB_COLOR8(255,255,0));
   ssd1306_setRamBlock( pos + LEFT_EDGE + 1, PLATFORM_ROW, platformWidth + PLATFORM_SPEED * 2 );
   ssd1306_dataStart();
   while (pos < platformPos)
   {
-     ssd1306_sendByte(0B00000000);
+     ssd1306_sendPixels(0B00000000);
      pos++;
   }
-  ssd1306_sendByte(0B00001110);
+  ssd1306_sendPixels(0B00001110);
   pos++;
   while (pos < platformPos + platformWidth - 1)
   {
-    ssd1306_sendByte(0B00000111);
+    ssd1306_sendPixels(0B00000111);
     pos++;
   }
-  ssd1306_sendByte(0B00001110);
+  ssd1306_sendPixels(0B00001110);
   while (pos < platformPos + platformWidth + PLATFORM_SPEED - 1)
   {
      if (pos >= (RIGHT_EDGE - LEFT_EDGE - 2))
      {
         break;
      }
-     ssd1306_sendByte(0B00000000);
+     ssd1306_sendPixels(0B00000000);
      pos++;
   }
   ssd1306_endTransmission();
@@ -351,6 +381,7 @@ void drawBlocks()
     {
         for (uint8_t bl = 0; bl<BLOCKS_PER_ROW; bl++)
         {
+            ssd1331_setColor(RGB_COLOR8(64,64,255));
             drawBlock(bl, r);
         }
     }
@@ -358,6 +389,7 @@ void drawBlocks()
 
 void drawFieldEdges()
 {
+    ssd1331_setColor(RGB_COLOR8(255,0,0));
     for (uint8_t i=8; i>0; i--)
     {
         ssd1306_setRamBlock(LEFT_EDGE, i, 1);
@@ -375,6 +407,8 @@ void drawBall(uint8_t lastx, uint8_t lasty)
     ssd1306_setRamBlock(LEFT_EDGE + 1 + newx,newy >> 3, 1);
     uint8_t temp = 0B00000001;
     temp = temp << ((newy & 0x07) + 1);
+
+    ssd1331_setColor(RGB_COLOR8(0,255,0));
     ssd1306_sendData( temp );
     if ((newx != lastx) || ((newy >> 3) != (lasty >> 3)))
     {
@@ -386,6 +420,7 @@ void drawBall(uint8_t lastx, uint8_t lasty)
 
 void drawObjects()
 {
+    ssd1331_setColor(RGB_COLOR8(255,0,192));
     for(uint8_t i=0; i<MAX_GAME_OBJECTS; i++)
     {
        if (objects[i].type == 0)
@@ -592,6 +627,7 @@ void movePlatform()
 
 void gameOver()
 {
+    ssd1331_setColor(RGB_COLOR8(255,255,255));
 #if defined(ESP32) || defined(ESP8266)
     uint16_t topScore = score;
 #else
@@ -608,14 +644,14 @@ void gameOver()
     }
 #endif
     ssd1306_clearScreen( );
-    ssd1306_printFixed(32, 16, "GAME OVER", STYLE_NORMAL);
-    ssd1306_printFixed(32, 32, "SCORE ", STYLE_NORMAL);
+    ssd1306_printFixed(32 - OUTPUT_OFFSET, 16, "GAME OVER", STYLE_NORMAL);
+    ssd1306_printFixed(32 - OUTPUT_OFFSET, 32, "SCORE ", STYLE_NORMAL);
     char temp[6] = {0,0,0,0,0,0};
     utoa(score,temp,10);
-    ssd1306_printFixed(70, 32, temp, STYLE_NORMAL);
-    ssd1306_printFixed(70, 40, "TOP SCORE ", STYLE_NORMAL);
+    ssd1306_printFixed(70 - OUTPUT_OFFSET, 32, temp, STYLE_NORMAL);
+    ssd1306_printFixed(70 - OUTPUT_OFFSET, 40, "TOP SCORE ", STYLE_NORMAL);
     utoa(topScore,temp,10);
-    ssd1306_printFixed(90, 40, temp, STYLE_NORMAL);
+    ssd1306_printFixed(90 - OUTPUT_OFFSET, 40, temp, STYLE_NORMAL);
     for (int i = 0; i<1000; i++)
     {
        beep(1,random(0,i*2));
