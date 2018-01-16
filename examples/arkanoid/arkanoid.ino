@@ -262,11 +262,11 @@ void drawIntro()
 #ifdef ARKANOID_SSD1331
     ssd1331_96x64_spi_init(3,4,5);
 #elif defined(__AVR_ATtiny85__)
-    ssd1306_i2cInit_Embedded(0,0,0);
+    ssd1306_i2cInit_Embedded(-1,-1,0);
 #elif defined(SSD1306_WIRE_SUPPORTED)
     ssd1306_i2cInit_Wire(0);
 #elif defined(SSD1306_I2C_SW_SUPPORTED)
-    ssd1306_i2cInit_Embedded(0,0,0);
+    ssd1306_i2cInit_Embedded(-1,-1,0);
 #else
     #error "Not supported microcontroller or board"
 #endif
