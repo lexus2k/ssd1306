@@ -579,7 +579,7 @@ void ssd1306_eraseTrace(SPRITE *sprite)
     uint8_t y2 = (sprite->ly + 7) >> 3;
     if (sprite->ly < sprite->y)
         y2 = min(y2, (uint8_t)((sprite->y >> 3) - 1));
-    else
+    else if (sprite->y + 8 > sprite->ly)
         y1 = max(y1, (sprite->ly + 7) >> 3);
     for(uint8_t y = y1; y <= y2; y++)
     {

@@ -38,7 +38,6 @@
 void ssd1306_spiConfigure_hw()
 {
     SPI.begin();
-    SPI.setDataMode(SPI_MODE3);
 }
 
 
