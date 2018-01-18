@@ -56,8 +56,18 @@
 #endif
 
 static inline void digitalWrite(int pin, int level) {};
+static inline int  digitalRead(int pin) { return LOW; };
 static inline void pinMode(int pin, int mode) {};
 static inline void delay(unsigned long ms) { _delay_ms(ms); };
+static inline int  analogRead(int pin) { return 0; };
+static inline uint32_t millis() { return 0; };
+static inline void randomSeed(int seed) { };
+static inline void attachInterrupt(int pin, void (*interrupt)(), int level) { };
+
+#ifdef __cplusplus
+static inline int random(int max) { return 0; };
+static inline int random(int min, int max) { return 0; };
+#endif
 
 #endif
 

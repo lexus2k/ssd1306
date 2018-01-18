@@ -59,6 +59,8 @@
 #include "i2c/ssd1306_i2c_embedded.h"
 #include "intf/ssd1306_interface.h"
 
+#include <stdlib.h>
+
 #if defined(ESP8266) || defined(ESP32)
     #include <pgmspace.h>
 #else
@@ -362,7 +364,7 @@ void resetBlocks()
        level = MAX_LEVELS;
     }
     blocksLeft = 0;
-    for (byte i =0; i<BLOCKS_PER_ROW; i++)
+    for (uint8_t i =0; i<BLOCKS_PER_ROW; i++)
     {
         for (int j=0; j<BLOCK_NUM_ROWS; j++)
         {

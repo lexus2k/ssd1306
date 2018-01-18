@@ -73,7 +73,8 @@ SRCS = \
 	src/lcd/pcd8544_84x48.c \
 	src/lcd/sh1106_128x64.c \
 	src/lcd/ssd1306_128x32.c \
-	src/lcd/ssd1306_128x64.c
+	src/lcd/ssd1306_128x64.c \
+	src/lcd/ssd1331_96x64.c
 
 # Due to absence of Print class tiny_ssd1306.cpp cannot be compiled without Arduino libs.
 #	src/tiny_ssd1306.cpp \

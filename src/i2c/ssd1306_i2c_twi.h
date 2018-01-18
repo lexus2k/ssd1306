@@ -57,6 +57,8 @@ void ssd1306_i2cConfigure_Twi(uint8_t arg);
  * If you do not know i2c parameters, try ssd1306_i2cInit_Twi(0).
  * SCL and SDA pins depend on platform.
  * @param sa  - i2c address of lcd display. Use 0 to leave default
+ *
+ * @note: after call to this function you need to initialize lcd display.
  */
 void ssd1306_i2cInit_Twi(uint8_t sa);
 

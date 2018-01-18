@@ -54,6 +54,8 @@ void         ssd1306_spiConfigure_hw();
  * It uses standard MOSI, SCLK pins to send data to LCD.
  * @param cesPin - pin, controlling chip enable of LCD
  * @param dcPin - pin, controlling data/command mode of LCD
+ *
+ * @note: after call to this function you need to initialize lcd display.
  */
 void         ssd1306_spiInit_hw(int8_t cesPin, int8_t dcPin);
 

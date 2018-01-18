@@ -59,6 +59,8 @@ void ssd1306_i2cConfigure_Wire(int8_t scl, int8_t sda);
  * If you do not know i2c parameters, try ssd1306_i2cInit_Wire(0).
  * SCL and SDA pins depend on platform and Wire library implementation.
  * @param sa  - i2c address of lcd display. Use 0 to leave default
+ *
+ * @note: after call to this function you need to initialize lcd display.
  */
 void ssd1306_i2cInit_Wire(uint8_t sa);
 

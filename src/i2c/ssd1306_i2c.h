@@ -50,6 +50,8 @@ extern "C" {
  * sets speed to fast i2c (400kHz). If you prefer to use your own Wire settings
  * or avoid reinitializing of Wire library, please use ssd1306_i2cInit_Wire().
  * If you want to use embedded i2c (if it is supported), use ssd1306_i2cInit_Embedded().
+ *
+ * @note: after call to this function you need to initialize lcd display.
  */
 void         ssd1306_i2cInit();
 
@@ -69,6 +71,8 @@ void         ssd1306_i2cInit();
  *
  * @note scl and sda parameters depend on used hardware. For many hardware boards these
  * parameters do not have any effect. ESP8266 allows to specify these parameters
+ *
+ * @note: after call to this function you need to initialize lcd display.
  */
 void ssd1306_i2cInitEx(int8_t scl, int8_t sda, int8_t sa);
 

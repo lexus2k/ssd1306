@@ -50,6 +50,8 @@ extern "C" {
  * @param scl - i2c clock pin. Use -1 if you don't need to change default pin number
  * @param sda - i2c data pin. Use -1 if you don't need to change default pin number
  * @param sa  - i2c address of lcd display. Use 0 to leave default
+ *
+ * @note: after call to this function you need to initialize lcd display.
  */
 void ssd1306_i2cInit_Embedded(int8_t scl, int8_t sda, uint8_t sa);
 

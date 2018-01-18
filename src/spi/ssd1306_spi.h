@@ -52,6 +52,8 @@ extern int8_t s_ssd1306_dc;
  * 1. SPI library (ssd1306_spiInit_hw())
  * @param cesPin - pin, controlling chip enable of LCD
  * @param dcPin - pin, controlling data/command mode of LCD
+ *
+ * @note: after call to this function you need to initialize lcd display.
  */
 void         ssd1306_spiInit(int8_t cesPin, int8_t dcPin);
 
