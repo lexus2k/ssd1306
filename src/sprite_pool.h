@@ -53,7 +53,8 @@ public:
 
     /**
      * Creates empty SpritePool object.
-     * It is able to hold up to 8 sprites.
+     * It is able to hold up to 10 sprites on AVR
+     * platforms and up to 32 sprites on ESP platforms.
      */
     SpritePool( );
 
