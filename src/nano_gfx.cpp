@@ -99,7 +99,7 @@ void NanoCanvas::fillRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_
         {
             mask = (mask >> (7 - (y2 & 7)));
         }
-        for (uint8_t x=x1; x<x2; x++)
+        for (uint8_t x=x1; x<=x2; x++)
         {
             m_bytes[BADDR(bank) + x] &= ~mask;
             m_bytes[BADDR(bank) + x] |= (templ & mask);
