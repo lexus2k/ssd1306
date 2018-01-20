@@ -5,6 +5,7 @@
 ## Contributors
 
 * [MinusWall](https://github.com/minuswall)
+* [drgallaci](https://github.com/drgallaci)
 
 ## Special thanks to
 
