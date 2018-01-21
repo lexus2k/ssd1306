@@ -62,6 +62,11 @@ void         ssd1306_displayOff();
 void         ssd1306_displayOn();
 
 /**
+ * Set display contrast, ie light intensity
+ */
+void         ssd1306_setContrast(uint8_t contrast);
+
+/**
  * Switches display to inverse mode.
  * LCD will display 0-pixels as white, and 1-pixels as black.
  * @note Not supported for SSD1331

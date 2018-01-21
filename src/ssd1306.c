@@ -93,6 +93,13 @@ void ssd1306_displayOn()
     ssd1306_sendCommand(SSD1306_DISPLAYON);
 }
 
+void ssd1306_setContrast(uint8_t contrast){
+    ssd1306_commandStart();
+    ssd1306_sendByte(SSD1306_SETCONTRAST);
+    ssd1306_sendByte(contrast);
+    ssd1306_endTransmission();
+}
+
 uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style)
 {
     uint8_t i, j=0;
