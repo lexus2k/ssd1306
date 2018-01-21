@@ -63,6 +63,7 @@ void         ssd1306_displayOn();
 
 /**
  * Set display contrast, ie light intensity
+ * @param contrast - contrast value to see, refer to ssd1306 datasheet
  */
 void         ssd1306_setContrast(uint8_t contrast);
 
