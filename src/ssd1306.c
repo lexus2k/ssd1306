@@ -375,6 +375,129 @@ uint8_t ssd1306_charF12x16(uint8_t xpos, uint8_t y, const char ch[], EFontStyle 
     return j;
 }
 
+uint8_t ssd1306_charF24x32(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style)
+{
+    uint8_t i, j=0;
+    uint8_t text_index = 0;
+    uint8_t x = xpos;
+	uint8_t cnt=0;
+	uint8_t mult=4;
+    ssd1306_setRamBlock(xpos, y, s_displayWidth - xpos);
+    ssd1306_dataStart();
+    for(;;)
+    {
+		//Reset checkings
+        if( (x > s_displayWidth-6*mult) || (ch[j] == '\0') ) //or x is not inside or end of string
+        {
+            x = xpos;
+            y++;
+            if (y >= (s_displayHeight >> 3))	break;	//error: out of display in x and y
+            if (cnt==mult-1)	//if end 
+            {
+                text_index = j;
+                if (ch[j] == '\0')	break; //end of work
+				cnt=-1;
+            }
+            else	j = text_index;	//reset to next height drawing
+			cnt++;
+            ssd1306_endTransmission();
+            ssd1306_setRamBlock(xpos, y, s_displayWidth - xpos);
+            ssd1306_dataStart();
+        }
+        uint8_t c = ch[j] - 32; //char offset from string
+        uint8_t ldata = 0;
+		//Drawing routine
+        for(i=0;i<6;i++)	//read x data
+        {
+            uint8_t data;
+            if ( style == STYLE_NORMAL )   data = pgm_read_byte(&s_font6x8[c*6+i]); //read char 6x8
+            else if ( style == STYLE_BOLD )
+            {
+                uint8_t temp = pgm_read_byte(&s_font6x8[c*6+i]); 
+                data = temp | ldata;
+                ldata = temp;
+            }
+            else
+            {
+                uint8_t temp = pgm_read_byte(&s_font6x8[c*6+i + 1]);
+                data = (temp & 0xF0) | ldata;
+                ldata = (temp & 0x0F);
+            }
+			//Drawing
+            data >>= 8/mult*cnt; //move next 4 bits cnt dependent
+			//Doubles the char (operatore ternario ?:) 
+            data = ((data & 0x01) ? 0x0F: 0x00) |
+                   ((data & 0x02) ? 0xF0: 0x00);
+            for(uint8_t m=0;m<mult;m++)	ssd1306_sendByte(data^s_invertByte);//n column duplication
+        }
+        x += 6*mult; //move mult size for next char
+        j++; //next char
+    }
+    ssd1306_endTransmission();
+    return j;
+}
+
+uint8_t ssd1306_charF48x64(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style)
+{
+    uint8_t i, j=0;
+    uint8_t text_index = 0;
+    uint8_t x = xpos;
+	uint8_t cnt=0;
+	uint8_t mult=8;
+    ssd1306_setRamBlock(xpos, y, s_displayWidth - xpos);
+    ssd1306_dataStart();
+    for(;;)
+    {
+		//Reset checkings
+        if( (x > s_displayWidth-6*mult) || (ch[j] == '\0') ) //or x is not inside or end of string
+        {
+            x = xpos;
+            y++;
+            if (y >= (s_displayHeight >> 3))	break;	//error: out of display in x and y
+            if (cnt==mult-1)	//if end of printing line
+            {
+                text_index = j; //store new start of string
+                if (ch[j] == '\0')	break; //end of work
+				cnt=-1; //if new line
+            }
+            else	j = text_index;	//reset to next height drawing
+			cnt++;
+            ssd1306_endTransmission();
+            ssd1306_setRamBlock(xpos, y, s_displayWidth - xpos);
+            ssd1306_dataStart();
+        }
+        uint8_t c = ch[j] - 32; //char offset from string table
+        uint8_t ldata = 0;
+		//Drawing routine
+        for(i=0;i<6;i++)	//read x data
+        {
+            uint8_t data;
+            if ( style == STYLE_NORMAL )   data = pgm_read_byte(&s_font6x8[c*6+i]); //read char 6x8
+            else if ( style == STYLE_BOLD )
+            {
+                uint8_t temp = pgm_read_byte(&s_font6x8[c*6+i]); 
+                data = temp | ldata;
+                ldata = temp;
+            }
+            else
+            {
+                uint8_t temp = pgm_read_byte(&s_font6x8[c*6+i + 1]);
+                data = (temp & 0xF0) | ldata;
+                ldata = (temp & 0x0F);
+            }
+			//Drawing
+            data >>= 8/mult*cnt; //move next 4 bits cnt dependent
+			//Doubles the char (operatore ternario ?:) 
+            data = ((data & 0x01) ? 0xFF: 0x00);
+            for(uint8_t m=0;m<mult;m++)	ssd1306_sendByte(data^s_invertByte);//n column duplication
+        }
+        x += 6*mult; //move mult size for next char
+        j++; //next char
+    }
+    ssd1306_endTransmission();
+    return j;
+}
+
 uint8_t      ssd1306_charF6x8_eol(uint8_t left,
                                   uint8_t y,
                                   const char ch[],
