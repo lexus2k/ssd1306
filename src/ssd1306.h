@@ -177,7 +177,7 @@ uint8_t      ssd1306_charF6x8(uint8_t x, uint8_t y,
 /**
  * Prints text to screen using double size font 12x16.
  * @param xpos - horizontal position in pixels
- * @param y - vertical position in blocks (pixels/8)
+ * @param y - vertical position in blocks (pixels/16)
  * @param ch - NULL-terminated string to print
  * @param style - font style (EFontStyle).
  * @returns number of chars in string
@@ -186,6 +186,33 @@ uint8_t      ssd1306_charF12x16(uint8_t xpos,
                                 uint8_t y,
                                 const char ch[],
                                 EFontStyle style);
+    
+/**
+ * Prints text to screen using double size font 24x32.
+ * @param xpos - horizontal position in pixels
+ * @param y - vertical position in blocks (pixels/32)
+ * @param ch - NULL-terminated string to print
+ * @param style - font style (EFontStyle).
+ * @returns number of chars in string
+ */
+uint8_t      ssd1306_charF24x32(uint8_t xpos,
+                                uint8_t y,
+                                const char ch[],
+                                EFontStyle style);
+								
+/**
+ * Prints text to screen using double size font 48x64.
+ * @param xpos - horizontal position in pixels
+ * @param y - vertical position in blocks (pixels/64)
+ * @param ch - NULL-terminated string to print
+ * @param style - font style (EFontStyle).
+ * @returns number of chars in string
+ */
+uint8_t      ssd1306_charF48x64(uint8_t xpos,
+                                uint8_t y,
+                                const char ch[],
+                                EFontStyle style);
+
 
 
 /**
