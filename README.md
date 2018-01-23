@@ -12,10 +12,9 @@ Do not forget pull-up resistors for i2c lines.
 
 ## Key Features
 
- * Embedded i2c software implementation
- * Standard i2c support (via Wire library)
- * TWI i2c support for AVR controllers
- * 4-wire spi support (via standard SPI library)
+ * Supports many interfaces:
+   * i2c (software implementation, via Wire library, AVR Twi, Linux i2c-dev)
+   * spi (4-wire spi via Arduino SPI library)
  * Usage of very little of SRAM:
    * Attiny85 with Damellis package (minimum 25 bytes of SRAM)
    * Atmega328p (minimum 56 bytes of SRAM)
@@ -23,7 +22,7 @@ Do not forget pull-up resistors for i2c lines.
  * The library uses as little Flash memory as possible
  * Fast implementation to provide reasonable speed on slow microcontrollers
  * Primitive graphics functions (line,rectangle,pixels)
- * Printing text to display (using 6x8 fonts, and double size output 12x16)
+ * Printing text to display (using fonts of different size)
  * Drawing bitmap images, located in SRAM or Flash memory (PROGMEM)
  * Work with sprite objects
  * Creating and controlling menu items (see ssd1306_demo example)
