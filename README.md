@@ -2,7 +2,7 @@
 
 ## Introduction
 
-SSD1306 driver is Arduino style library. it can be compiled with plain avr-gcc compiler
+SSD1306 driver is Arduino style C/C++ library. it can be compiled with plain avr-gcc compiler
 without Arduino libraries and supports monochrome and RGB oleds. It is intended for use with
 very small microcontrollers (with a little of SRAM). It was developed to use as
 few resources as possible. Since ATTiny controllers have no division and multiply
@@ -65,7 +65,7 @@ configurable through API.
    * Attiny85, Attiny45
    * Atmega328p, Atmega168
  * Linux
-   * Raspberry Pi
+   * Raspberry Pi (i2c-dev)
 
 Digispark users, please check compilation options in your Arduino prior to using this library.
 Ssd1306 library requires at least c++11 and c99 (by default Digispark package misses the options

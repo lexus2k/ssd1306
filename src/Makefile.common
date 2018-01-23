@@ -58,26 +58,30 @@ CCFLAGS += -g -Os $(INCLUDES) -Wall -Werror -ffunction-sections -fdata-sections 
 
 .PHONY: clean ssd1306 all
 
-SRCS = \
+SRCS_C = \
 	font6x8.c \
-	nano_gfx.cpp \
-	nano_gfx_types.cpp \
-	sprite_pool.cpp \
 	ssd1306.c \
 	ssd1306_menu.c \
 	i2c/ssd1306_i2c_common.c \
 	i2c/ssd1306_i2c_embedded.c \
-	i2c/ssd1306_i2c_wire.cpp \
 	i2c/ssd1306_i2c_twi.c \
 	i2c/ssd1306_i2c_linux.c \
+	spi/ssd1306_spi.c \
 	intf/ssd1306_interface.c \
-	spi/ssd1306_spi.cpp \
-	spi/ssd1306_spi_hw.cpp \
 	lcd/pcd8544_84x48.c \
 	lcd/sh1106_128x64.c \
 	lcd/ssd1306_128x32.c \
 	lcd/ssd1306_128x64.c \
 	lcd/ssd1331_96x64.c
+
+SRCS_CPP = \
+	nano_gfx.cpp \
+	nano_gfx_types.cpp \
+	sprite_pool.cpp \
+	i2c/ssd1306_i2c_wire.cpp \
+	spi/ssd1306_spi_hw.cpp
+
+SRCS = $(SRCS_C) $(SRCS_CPP)
 
 # Due to absence of Print class tiny_ssd1306.cpp cannot be compiled without Arduino libs.
 #	tiny_ssd1306.cpp \
