@@ -27,6 +27,7 @@
 #include "ssd1306_i2c_wire.h"
 #include "ssd1306_i2c_embedded.h"
 #include "ssd1306_i2c_twi.h"
+#include "ssd1306_i2c_linux.h"
 
 void ssd1306_i2cCommandStart()
 {
@@ -50,6 +51,8 @@ void ssd1306_i2cInitEx(int8_t scl, int8_t sda, int8_t sa)
     ssd1306_i2cInit_Twi(sa);
 #elif defined(SSD1306_SW_SUPPORTED)
     ssd1306_i2cInit_Embedded(scl, sda, sa);
+#elif defined(SSD1306_LINUX_SUPPORTED)
+    ssd1306_i2cInit_Linux(scl, sa);
 #endif
 }
 

@@ -56,23 +56,6 @@ extern "C" {
 void ssd1306_i2cInit_Embedded(int8_t scl, int8_t sda, uint8_t sa);
 
 /**
- * Starts i2c communication with lcd display using software implementation of i2c interface.
- */
-void ssd1306_i2cStart_Embedded(void);
-
-/**
- * Stops i2c communication
- * @note the function enables interrupts back.
- */
-void ssd1306_i2cStop_Embedded(void);
-
-/**
- * Sends single byte to i2c device using software implementation.
- * @param data - byte to send
- */
-void ssd1306_i2cSendByte_Embedded(uint8_t data);
-
-/**
  * @}
  */
 

@@ -37,6 +37,7 @@
 #else
     #include <avr/pgmspace.h>
     #include <avr/interrupt.h>
+    #include <avr/sleep.h>
 #endif
 
 /**
@@ -85,6 +86,12 @@
 /**
  * @}
  */
+
+#ifdef SSD1306_WIRE_SUPPORTED
+#ifdef __cplusplus
+#include <Wire.h> 
+#endif
+#endif
 
 #endif /* ARDUINO */
 

@@ -71,15 +71,6 @@ static void sh1106_nextPage()
     ssd1306_dataStart();
 }
 
-static void sh1106_setPos(uint8_t x, uint8_t y)
-{
-    ssd1306_commandStart();
-    ssd1306_sendByte(SSD1306_SETPAGE | y);
-    ssd1306_sendByte((x>>4) | SSD1306_SETHIGHCOLUMN);
-    ssd1306_sendByte((x & 0x0f) | SSD1306_SETLOWCOLUMN);
-    ssd1306_endTransmission();
-}
-
 void    sh1106_128x64_init()
 {
     g_lcd_type = LCD_TYPE_SH1106;
@@ -88,7 +79,6 @@ void    sh1106_128x64_init()
     ssd1306_setRamBlock = sh1106_setBlock;
     ssd1306_nextRamPage = sh1106_nextPage;
     ssd1306_sendPixels = ssd1306_sendByte;
-    ssd1306_setRamPos = sh1106_setPos;
     for( uint8_t i=0; i<sizeof(s_oled128x64_initData); i++)
     {
         ssd1306_sendCommand(pgm_read_byte(&s_oled128x64_initData[i]));

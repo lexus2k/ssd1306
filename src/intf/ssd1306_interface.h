@@ -57,6 +57,15 @@ extern void  (*ssd1306_endTransmission)();
 extern void  (*ssd1306_sendByte)(uint8_t data);
 
 /**
+ * @brief deinitializes internal resources, allocated for interface.
+ *
+ * Deinitializes internal resources, allocated for interface.
+ * There is no need to use this function for microcontrollers. In general
+ * the function has meaning in Linux-like systems.
+ */
+extern void  (*ssd1306_closeInterface)();
+
+/**
  * Sends 8 monochrome vectical pixels to OLED driver.
  * @param data - byte, representing 8 pixels.
  */
@@ -106,16 +115,6 @@ extern void (*ssd1306_setRamBlock)(uint8_t x, uint8_t y, uint8_t w);
  * next page.
  */
 extern void (*ssd1306_nextRamPage)();
-
-/**
- * Sets position in RAM of lcd display controller to write data to.
- * For ssd1306 this function is not defined. So, calling it will cause
- * your controller to reset. For sh1106 the function does the same as
- * ssd1306_setRamBlock().
- * @param x - column (left region)
- * @param y - page (top page of the block)
- */
-extern void (*ssd1306_setRamPos)(uint8_t x, uint8_t y);
 
 /**
  * @}

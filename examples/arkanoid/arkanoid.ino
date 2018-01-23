@@ -50,8 +50,9 @@
  *            PD5 11|    |18  PB4             
  *            PD6 12|    |17  PB3            
  *            PD7 13|    |16  PB2            
- *            PB0 14|____|15  PB1            
- *     D6 is used in SSD1331 display mode
+ *            PB0 14|____|15  PB1
+ *
+ *  IMPORTANT!!! D6 is used instead of D3 with SSD1331 display mode
  */
 
 #include "ssd1306.h"
@@ -60,19 +61,6 @@
 #include "intf/ssd1306_interface.h"
 
 #include <stdlib.h>
-
-#if defined(ESP8266) || defined(ESP32)
-    #include <pgmspace.h>
-#else
-    #include <avr/pgmspace.h>
-    #include <avr/eeprom.h>
-    #include <avr/sleep.h>
-    #include <avr/interrupt.h> // needed for the additional interrupt
-#endif
-
-#ifdef SSD1306_WIRE_SUPPORTED
-#include <Wire.h>
-#endif
 
 //#define ARKANOID_SSD1331
 
@@ -406,11 +394,10 @@ void drawBall(uint8_t lastx, uint8_t lasty)
 {
     uint8_t newx = ballx >> SPEED_SHIFT;
     uint8_t newy = bally >> SPEED_SHIFT;
-    ssd1306_setRamBlock(LEFT_EDGE + 1 + newx,newy >> 3, 1);
-    uint8_t temp = 0B00000001;
-    temp = temp << ((newy & 0x07) + 1);
-
+    uint8_t temp;
+    temp = 0B00000001 << (newy & 0x07);
     ssd1331_setColor(RGB_COLOR8(0,255,0));
+    ssd1306_setRamBlock(LEFT_EDGE + 1 + newx, newy >> 3, 1);
     ssd1306_sendData( temp );
     if ((newx != lastx) || ((newy >> 3) != (lasty >> 3)))
     {
@@ -651,7 +638,7 @@ void gameOver()
     char temp[6] = {0,0,0,0,0,0};
     utoa(score,temp,10);
     ssd1306_printFixed(70 - OUTPUT_OFFSET, 32, temp, STYLE_NORMAL);
-    ssd1306_printFixed(70 - OUTPUT_OFFSET, 40, "TOP SCORE ", STYLE_NORMAL);
+    ssd1306_printFixed(32 - OUTPUT_OFFSET, 40, "TOP SCORE ", STYLE_NORMAL);
     utoa(topScore,temp,10);
     ssd1306_printFixed(90 - OUTPUT_OFFSET, 40, temp, STYLE_NORMAL);
     for (int i = 0; i<1000; i++)
@@ -663,11 +650,11 @@ void gameOver()
 
 void platformCrashAnimation()
 {
-    for (uint8_t j = 0; j < 4; j++)
+    for (uint8_t j = 4; j > 0; j--)
     {
         for ( uint8_t i = 0; i < platformWidth >> 2; i++ )
         {
-            ssd1306_setRamBlock( platformPos + (i<<2) + ((j & 0x01)<<1) + ((j & 0x02)>>1) + LEFT_EDGE + 1, PLATFORM_ROW, platformWidth );
+            ssd1306_setRamBlock( platformPos + ((j & 0x01)<<1) + ((j & 0x02)>>1) + (i<<2) + LEFT_EDGE + 1, PLATFORM_ROW, platformWidth );
             ssd1306_sendData( 0B00000000 );
         }
         delay(150);
@@ -767,10 +754,10 @@ bool moveBall()
 
 void beep(int bCount,int bDelay)
 {
-    for (int i = 0; i<=bCount*2; i++)
+    for (int i = bCount*2; i>0; i--)
     {
-        digitalWrite(BUZZER,i&1);
-        for(int i2=0; i2<bDelay; i2++)
+        digitalWrite(BUZZER, i & 1);
+        for(int i2 = 0; i2 < bDelay; i2++)
         {
             __asm__("nop\n\t");
 #if F_CPU > 8000000
@@ -788,15 +775,6 @@ void beep(int bCount,int bDelay)
     digitalWrite(BUZZER,LOW);
 }
 
-// Routines to set and clear bits (used in the sleep code)
-#ifndef cbi
-#define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
-#endif
-
-#ifndef sbi
-#define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
-#endif
-
 #if defined(ESP32) || defined(ESP8266)
 
 void system_sleep()
@@ -808,12 +786,12 @@ void system_sleep()
 {
   ssd1306_clearScreen( );
   ssd1306_displayOff();
-  cbi(ADCSRA,ADEN);                    // switch Analog to Digitalconverter OFF
+  ADCSRA &= ~(1<<ADEN);
   set_sleep_mode(SLEEP_MODE_PWR_DOWN); // sleep mode is set here
   sleep_enable();
   sleep_mode();                        // System actually sleeps here
   sleep_disable();                     // System continues execution here when watchdog timed out
-  sbi(ADCSRA,ADEN);                    // switch Analog to Digitalconverter ON
+  ADCSRA |= (1<<ADEN);
   ssd1306_displayOn();
 }
 #endif

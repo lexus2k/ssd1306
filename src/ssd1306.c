@@ -145,7 +145,7 @@ uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char ch[], EFontStyle 
         }
         uint8_t ldata = 0;
         uint16_t offset = (c * s_fixedFont.pages + page_offset) * s_fixedFont.width;
-        for( i=0; i<s_fixedFont.width; i++)
+        for( i=s_fixedFont.width; i>0; i--)
         {
             uint8_t data;
             if ( style == STYLE_NORMAL )
@@ -218,7 +218,7 @@ uint8_t ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontStyl
         }
         uint8_t ldata = 0;
         uint16_t offset = (c * s_fixedFont.pages + (page_offset >> 1)) * s_fixedFont.width;
-        for( i=0; i<s_fixedFont.width; i++)
+        for( i=s_fixedFont.width; i>0; i--)
         {
             uint8_t data;
             if ( style == STYLE_NORMAL )
@@ -468,9 +468,9 @@ void ssd1306_drawBuffer(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_
     uint8_t i, j;
     ssd1306_setRamBlock(x, y, w);
     ssd1306_dataStart();
-    for(j=0; j<(h >> 3); j++)
+    for(j=(h >> 3); j>0; j--)
     {
-        for(i=0;i<w;i++)
+        for(i=w;i>0;i--)
         {
             ssd1306_sendPixels(s_invertByte^*buf++);
         }
@@ -486,7 +486,7 @@ void ssd1306_drawBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_
     w -= remainder;
     ssd1306_setRamBlock(x, y, w);
     ssd1306_dataStart();
-    for(j=0; j<(h >> 3); j++)
+    for(j=(h >> 3); j>0; j--)
     {
         for(i=w;i>0;i--)
         {
@@ -504,7 +504,7 @@ void ssd1306_clearBlock(uint8_t x, uint8_t y, uint8_t w, uint8_t h)
     uint8_t i, j;
     ssd1306_setRamBlock(x, y, w);
     ssd1306_dataStart();
-    for(j=0; j<(h >> 3); j++)
+    for(j=(h >> 3); j>0; j--)
     {
         for(i=w;i>0;i--)
         {
@@ -550,8 +550,8 @@ void ssd1306_drawSprite(SPRITE *sprite)
         {
             ssd1306_sendPixels( s_invertByte^(pgm_read_byte( &sprite->data[i] ) >> (8 - offsety)) );
         }
+        ssd1306_endTransmission();
     }
-    ssd1306_endTransmission();
     sprite->lx = sprite->x;
     sprite->ly = sprite->y;
 }
@@ -563,7 +563,7 @@ void ssd1306_eraseSprite(SPRITE *sprite)
     uint8_t offsety = sprite->y & 0x7;
     ssd1306_setRamBlock(sprite->x, posy, sprite->w);
     ssd1306_dataStart();
-    for (uint8_t i=0; i < sprite->w; i++)
+    for (uint8_t i=sprite->w; i > 0; i--)
     {
        ssd1306_sendPixels( s_invertByte );
     }
@@ -572,7 +572,7 @@ void ssd1306_eraseSprite(SPRITE *sprite)
     {
         ssd1306_setRamBlock(sprite->x, posy + 1, sprite->w);
         ssd1306_dataStart();
-        for (uint8_t i=0; i < sprite->w; i++)
+        for (uint8_t i=sprite->w; i > 0; i--)
         {
            ssd1306_sendPixels( s_invertByte );
         }
@@ -593,7 +593,7 @@ void ssd1306_eraseTrace(SPRITE *sprite)
     {
         ssd1306_setRamBlock(sprite->lx, y, sprite->w);
         ssd1306_dataStart();
-        for(uint8_t x = sprite->lx; x < sprite->lx + sprite->w; x++)
+        for(uint8_t x = sprite->w; x > 0; x--)
         {
             ssd1306_sendPixels( s_invertByte );
         }
@@ -609,9 +609,9 @@ void ssd1306_eraseTrace(SPRITE *sprite)
             x2 = min((uint8_t)(sprite->x - 1), x2);
         for(uint8_t y = sprite->ly >> 3; y <= (sprite->ly + 7) >> 3; y++)
         {
-            ssd1306_setRamBlock(x1, y, x2 - x1 +1 );
+            ssd1306_setRamBlock(x1, y, x2 - x1 + 1 );
             ssd1306_dataStart();
-            for(uint8_t x = x1; x <= x2; x++)
+            for(uint8_t x = x2 - x1 + 1; x > 0; x--)
             {
                 ssd1306_sendPixels( s_invertByte );
             }

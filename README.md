@@ -64,6 +64,8 @@ configurable through API.
  * AVR (ssd1306 library can be compiled and used with plain avr-gcc/avr-libc without Arduino libraries)
    * Attiny85, Attiny45
    * Atmega328p, Atmega168
+ * Linux
+   * Raspberry Pi
 
 Digispark users, please check compilation options in your Arduino prior to using this library.
 Ssd1306 library requires at least c++11 and c99 (by default Digispark package misses the options

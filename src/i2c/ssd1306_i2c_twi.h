@@ -63,22 +63,6 @@ void ssd1306_i2cConfigure_Twi(uint8_t arg);
 void ssd1306_i2cInit_Twi(uint8_t sa);
 
 /**
- * Starts i2c communication with lcd display via TWI module.
- */
-void ssd1306_i2cStart_Twi();
-
-/**
- * Stops i2c communication.
- */
-void ssd1306_i2cStop_Twi();
-
-/**
- * Sends single byte to i2c device using TWI AVR module.
- * @param data - byte to send
- */
-void ssd1306_i2cSendByte_Twi(uint8_t data);
-
-/**
  * @}
  */
 

@@ -92,7 +92,7 @@ static void ssd1306_twi_stop(void)
     TWCR = (1<<TWEN) | (1<<TWSTO) | (1<<TWINT);
 }
 
-void ssd1306_i2cStart_Twi(void)
+static void ssd1306_i2cStart_Twi(void)
 {
     do
     {
@@ -104,7 +104,7 @@ void ssd1306_i2cStart_Twi(void)
     } while (ssd1306_twi_send(s_sa << 1) == TW_MT_ARB_LOST);
 }
 
-void ssd1306_i2cStop_Twi(void)
+static void ssd1306_i2cStop_Twi(void)
 {
     ssd1306_twi_stop();
 }
@@ -123,7 +123,7 @@ void ssd1306_i2cConfigure_Twi(uint8_t arg)
     TWCR = (1 << TWEN) | (1 << TWEA);
 }
 
-void ssd1306_i2cSendByte_Twi(uint8_t data)
+static void ssd1306_i2cSendByte_Twi(uint8_t data)
 {
     for(;;)
     {
@@ -144,12 +144,17 @@ void ssd1306_i2cSendByte_Twi(uint8_t data)
     }
 }
 
+static void ssd1306_i2cClose_Twi()
+{
+}
+
 void ssd1306_i2cInit_Twi(uint8_t sa)
 {
     if (sa) s_sa = sa;
     ssd1306_startTransmission = ssd1306_i2cStart_Twi;
     ssd1306_endTransmission = ssd1306_i2cStop_Twi;
     ssd1306_sendByte = ssd1306_i2cSendByte_Twi;
+    ssd1306_closeInterface = ssd1306_i2cClose_Twi;
     ssd1306_commandStart = ssd1306_i2cCommandStart;
     ssd1306_dataStart = ssd1306_i2cDataStart;
 }

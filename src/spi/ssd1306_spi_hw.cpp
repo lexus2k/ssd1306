@@ -40,21 +40,11 @@ void ssd1306_spiConfigure_hw()
     SPI.begin();
 }
 
-
-void ssd1306_spiInit_hw(int8_t cesPin, int8_t dcPin)
+static void ssd1306_spiClose_hw()
 {
-    if (cesPin >=0) pinMode(cesPin, OUTPUT);
-    if (dcPin >= 0) pinMode(dcPin, OUTPUT);
-    if (cesPin) s_ssd1306_cs = cesPin;
-    if (dcPin) s_ssd1306_dc = dcPin;
-    ssd1306_startTransmission = ssd1306_spiStart_hw;
-    ssd1306_endTransmission = ssd1306_spiStop_hw;
-    ssd1306_sendByte = ssd1306_spiSendByte_hw;
-    ssd1306_commandStart = ssd1306_spiCommandStart;
-    ssd1306_dataStart = ssd1306_spiDataStart;
 }
 
-void ssd1306_spiStart_hw()
+static void ssd1306_spiStart_hw()
 {
     SPI.beginTransaction(SPISettings(4000000, MSBFIRST, SPI_MODE0));
     if (s_ssd1306_cs >= 0)
@@ -63,7 +53,7 @@ void ssd1306_spiStart_hw()
     }
 }
 
-void ssd1306_spiStop_hw()
+static void ssd1306_spiStop_hw()
 {
     if (s_ssd1306_cs >= 0)
     {
@@ -78,9 +68,23 @@ void ssd1306_spiStop_hw()
     SPI.endTransaction();
 }
 
-void ssd1306_spiSendByte_hw(uint8_t data)
+static void ssd1306_spiSendByte_hw(uint8_t data)
 {
     SPI.transfer(data);
+}
+
+void ssd1306_spiInit_hw(int8_t cesPin, int8_t dcPin)
+{
+    if (cesPin >=0) pinMode(cesPin, OUTPUT);
+    if (dcPin >= 0) pinMode(dcPin, OUTPUT);
+    if (cesPin) s_ssd1306_cs = cesPin;
+    if (dcPin) s_ssd1306_dc = dcPin;
+    ssd1306_startTransmission = ssd1306_spiStart_hw;
+    ssd1306_endTransmission = ssd1306_spiStop_hw;
+    ssd1306_sendByte = ssd1306_spiSendByte_hw;
+    ssd1306_closeInterface = ssd1306_spiClose_hw;
+    ssd1306_commandStart = ssd1306_spiCommandStart;
+    ssd1306_dataStart = ssd1306_spiDataStart;
 }
 
 #endif

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.4.2</span>
+   &#160;<span id="projectnumber">1.4.4</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331 RGB i2c/spi OLED displays and spi PCD8544 LED display</div>
   </td>
@@ -99,6 +99,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga7bfec390efdfde56e4ef8952219c94b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac10e60962ff77aeb3687b795c364595f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___d_i_s_p_l_a_y___a_p_i.html#gac10e60962ff77aeb3687b795c364595f">ssd1306_displayOn</a> ()</td></tr>
 <tr class="separator:gac10e60962ff77aeb3687b795c364595f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga27852f112ebe53726badd8f4998fceab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___d_i_s_p_l_a_y___a_p_i.html#ga27852f112ebe53726badd8f4998fceab">ssd1306_setContrast</a> (uint8_t contrast)</td></tr>
+<tr class="separator:ga27852f112ebe53726badd8f4998fceab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac4947c13891c281a83a03c7ca8d2985f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___d_i_s_p_l_a_y___a_p_i.html#gac4947c13891c281a83a03c7ca8d2985f">ssd1306_invertMode</a> ()</td></tr>
 <tr class="separator:gac4947c13891c281a83a03c7ca8d2985f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga65b5398efb918de605ecdfefecca329f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___d_i_s_p_l_a_y___a_p_i.html#ga65b5398efb918de605ecdfefecca329f">ssd1306_normalMode</a> ()</td></tr>
@@ -121,16 +123,16 @@ Functions</h2></td></tr>
 <tr class="separator:ga22a6b064f1ca1548303f3537e57dd5a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2ae15b0d7790e3c357438a55c0771ffd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga2ae15b0d7790e3c357438a55c0771ffd">ssd1306_printFixed2x</a> (uint8_t xpos, uint8_t y, const char ch[], <a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style)</td></tr>
 <tr class="separator:ga2ae15b0d7790e3c357438a55c0771ffd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4ff90cffc500961db143a8c01d3f67d3"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga4ff90cffc500961db143a8c01d3f67d3">ssd1306_charF6x8</a> (uint8_t x, uint8_t y, const char ch[], <a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style=STYLE_NORMAL)</td></tr>
-<tr class="separator:ga4ff90cffc500961db143a8c01d3f67d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga80b008fd417e2eea5e42604704978f5d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga80b008fd417e2eea5e42604704978f5d">ssd1306_charF12x16</a> (uint8_t xpos, uint8_t y, const char ch[], <a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style)</td></tr>
-<tr class="separator:ga80b008fd417e2eea5e42604704978f5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1f687aa1ed05ab20bc1ab79f83a82bfd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga1f687aa1ed05ab20bc1ab79f83a82bfd">ssd1306_charF6x8_eol</a> (uint8_t left, uint8_t y, const char ch[], <a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style, uint8_t right)</td></tr>
-<tr class="separator:ga1f687aa1ed05ab20bc1ab79f83a82bfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae7571909d7a37d22324d8643bca461ac"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#gae7571909d7a37d22324d8643bca461ac">ssd1306_charF6x8</a> (uint8_t x, uint8_t y, const char ch[], <a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style=STYLE_NORMAL) __attribute__((deprecated))</td></tr>
+<tr class="separator:gae7571909d7a37d22324d8643bca461ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab0054f628d4d6cb764a8e08e84446b66"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#gab0054f628d4d6cb764a8e08e84446b66">ssd1306_charF12x16</a> (uint8_t xpos, uint8_t y, const char ch[], <a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style) __attribute__((deprecated))</td></tr>
+<tr class="separator:gab0054f628d4d6cb764a8e08e84446b66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaea205bf60b42a7020b8e36fea1ffef10"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#gaea205bf60b42a7020b8e36fea1ffef10">ssd1306_charF6x8_eol</a> (uint8_t left, uint8_t y, const char ch[], <a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style, uint8_t right) __attribute__((deprecated))</td></tr>
+<tr class="separator:gaea205bf60b42a7020b8e36fea1ffef10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac38e07839ff23bd17a6f0c79f5f92d2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#gac38e07839ff23bd17a6f0c79f5f92d2d">ssd1306_setFixedFont</a> (const uint8_t *progmemFont)</td></tr>
 <tr class="separator:gac38e07839ff23bd17a6f0c79f5f92d2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga880de8436b0e2fd1664094f7a2b5192c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga880de8436b0e2fd1664094f7a2b5192c">ssd1306_setFont6x8</a> (const uint8_t *progmemFont)</td></tr>
-<tr class="separator:ga880de8436b0e2fd1664094f7a2b5192c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga99b9113b49f46e88d6a202be946044af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga99b9113b49f46e88d6a202be946044af">ssd1306_setFont6x8</a> (const uint8_t *progmemFont) __attribute__((deprecated))</td></tr>
+<tr class="separator:ga99b9113b49f46e88d6a202be946044af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5d98e0567eb3f541f19508ac74899962"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga5d98e0567eb3f541f19508ac74899962">ssd1306_putPixel</a> (uint8_t x, uint8_t y)</td></tr>
 <tr class="separator:ga5d98e0567eb3f541f19508ac74899962"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga94085f41277fb90ec4957b3e7f8cbe97"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#ga94085f41277fb90ec4957b3e7f8cbe97">ssd1306_putPixels</a> (uint8_t x, uint8_t y, uint8_t pixels)</td></tr>

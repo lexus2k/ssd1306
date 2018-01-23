@@ -59,22 +59,6 @@ void         ssd1306_spiConfigure_hw();
  */
 void         ssd1306_spiInit_hw(int8_t cesPin, int8_t dcPin);
 
-/**
- * Starts spi transmission to the device
- */
-void         ssd1306_spiStart_hw();
-
-/**
- * Completes spi transaction
- */
-void         ssd1306_spiStop_hw();
-
-/**
- * Sends byte to spi device.
- * @param data - byte to send
- */
-void         ssd1306_spiSendByte_hw(uint8_t data);
-
 #endif
 
 /**

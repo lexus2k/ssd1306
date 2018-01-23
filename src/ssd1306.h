@@ -172,7 +172,7 @@ uint8_t      ssd1306_charF6x8(uint8_t x, uint8_t y,
 #ifdef __cplusplus
                               = STYLE_NORMAL
 #endif
-                             );
+                             ) __attribute__ ((deprecated));
 
 /**
  * Prints text to screen using double size font 12x16.
@@ -185,7 +185,7 @@ uint8_t      ssd1306_charF6x8(uint8_t x, uint8_t y,
 uint8_t      ssd1306_charF12x16(uint8_t xpos,
                                 uint8_t y,
                                 const char ch[],
-                                EFontStyle style);
+                                EFontStyle style) __attribute__ ((deprecated));
 
 
 /**
@@ -204,7 +204,7 @@ uint8_t      ssd1306_charF6x8_eol(uint8_t left,
                                   uint8_t y,
                                   const char ch[],
                                   EFontStyle style,
-                                  uint8_t right);
+                                  uint8_t right) __attribute__ ((deprecated));
 
 
 /**
@@ -237,7 +237,7 @@ void         ssd1306_setFixedFont(const uint8_t * progmemFont);
  * First font char must be started with \<space\> image.
  * @param progmemFont - font to setup located in Flash area
  */
-void         ssd1306_setFont6x8(const uint8_t * progmemFont);
+void         ssd1306_setFont6x8(const uint8_t * progmemFont) __attribute__ ((deprecated));
 
 /**
  * Put single pixel on the LCD.

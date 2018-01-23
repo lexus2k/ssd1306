@@ -31,6 +31,10 @@ Prior to submitting pull request, create issue first.
    without any issues. If you don't have a chance to run ssd1306_demo on the listed platforms, please, clearly inform about that
    in your pull request.
 
+**Trivial Pull Request Checklist**
+
+For trivial pull requests, just check compilation for different platforms: Arduino Nano, Attiny85, ESP8266.
+
 If accepted, your contribution may be heavily modified as needed prior to merging. You will likely retain author
 attribution for your Git commits granted that the bulk of your changes remain intact.
 

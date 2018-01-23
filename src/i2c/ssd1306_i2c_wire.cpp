@@ -34,13 +34,13 @@
 static uint8_t s_bytesWritten = 0;
 static uint8_t s_sa = SSD1306_SA;
 
-void ssd1306_i2cStart_Wire(void)
+static void ssd1306_i2cStart_Wire(void)
 {
     Wire.beginTransmission(s_sa);
     s_bytesWritten = 0;
 }
 
-void ssd1306_i2cStop_Wire(void)
+static void ssd1306_i2cStop_Wire(void)
 {
     Wire.endTransmission();
 }
@@ -66,7 +66,7 @@ void ssd1306_i2cConfigure_Wire(int8_t scl, int8_t sda)
  * Inputs: SCL is LOW, SDA is has no meaning
  * Outputs: SCL is LOW
  */
-void ssd1306_i2cSendByte_Wire(uint8_t data)
+static void ssd1306_i2cSendByte_Wire(uint8_t data)
 {
     // Do not write too many bytes for standard Wire.h. It may become broken
 #if defined(ESP32) || defined(ESP31B)
@@ -89,12 +89,17 @@ void ssd1306_i2cSendByte_Wire(uint8_t data)
     s_bytesWritten++;
 }
 
+static void ssd1306_i2cClose_Wire()
+{
+}
+
 void ssd1306_i2cInit_Wire(uint8_t sa)
 {
     if (sa) s_sa = sa;
     ssd1306_startTransmission = ssd1306_i2cStart_Wire;
     ssd1306_endTransmission = ssd1306_i2cStop_Wire;
     ssd1306_sendByte = ssd1306_i2cSendByte_Wire;
+    ssd1306_closeInterface = ssd1306_i2cClose_Wire;
     ssd1306_commandStart = ssd1306_i2cCommandStart;
     ssd1306_dataStart = ssd1306_i2cDataStart;
 }

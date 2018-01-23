@@ -65,22 +65,6 @@ void ssd1306_i2cConfigure_Wire(int8_t scl, int8_t sda);
 void ssd1306_i2cInit_Wire(uint8_t sa);
 
 /**
- * Starts i2c communication with lcd display via Wire library.
- */
-void ssd1306_i2cStart_Wire();
-
-/**
- * Stops i2c communication.
- */
-void ssd1306_i2cStop_Wire();
-
-/**
- * Sends single byte to i2c device using Wire library.
- * @param data - byte to send
- */
-void ssd1306_i2cSendByte_Wire(uint8_t data);
-
-/**
  * @}
  */
 

@@ -32,6 +32,7 @@
 #include "arduino/io.h"
 #include "avr/io.h"
 #include "esp/io.h"
+#include "linux/io.h"
 
 #endif                                               
 

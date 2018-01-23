@@ -72,6 +72,8 @@ void         ssd1306_i2cInit();
  * @note scl and sda parameters depend on used hardware. For many hardware boards these
  * parameters do not have any effect. ESP8266 allows to specify these parameters
  *
+ * @note scl and sda for Linux systems should be the same, and should contain i2c bus id.
+ *
  * @note: after call to this function you need to initialize lcd display.
  */
 void ssd1306_i2cInitEx(int8_t scl, int8_t sda, int8_t sa);

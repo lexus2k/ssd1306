@@ -1,0 +1,97 @@
+#    MIT License
+#
+#    Copyright (c) 2018, Alexey Dynda
+#
+#    Permission is hereby granted, free of charge, to any person obtaining a copy
+#    of this software and associated documentation files (the "Software"), to deal
+#    in the Software without restriction, including without limitation the rights
+#    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#    copies of the Software, and to permit persons to whom the Software is
+#    furnished to do so, subject to the following conditions:
+#
+#    The above copyright notice and this permission notice shall be included in all
+#    copies or substantial portions of the Software.
+#
+#    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+#    SOFTWARE.
+#
+#################################################################
+# Makefile containing common logic for all systems
+#
+# Accepts the following parameters:
+# CC
+# CXX
+# STRIP
+# AR
+
+default: all
+
+DESTDIR ?=
+BLD ?= ../bld
+
+.SUFFIXES: .c .cpp .ino
+
+$(BLD)/%.o: %.c
+	mkdir -p $(dir $@)
+	$(CC) -std=gnu11 $(CCFLAGS) -c $< -o $@
+
+$(BLD)/%.o: %.ino
+	mkdir -p $(dir $@)
+	$(CXX) -std=c++11 $(CCFLAGS) -x c++ -c $< -o $@
+
+$(BLD)/%.o: %.cpp
+	mkdir -p $(dir $@)
+	$(CXX) -std=c++11 $(CCFLAGS) -c $< -o $@
+
+# ************* Common defines ********************
+
+INCLUDES += \
+        -I.
+
+CCFLAGS += -g -Os $(INCLUDES) -Wall -Werror -ffunction-sections -fdata-sections \
+	-fno-exceptions -Wno-error=deprecated-declarations
+
+.PHONY: clean ssd1306 all
+
+SRCS = \
+	font6x8.c \
+	nano_gfx.cpp \
+	nano_gfx_types.cpp \
+	sprite_pool.cpp \
+	ssd1306.c \
+	ssd1306_menu.c \
+	i2c/ssd1306_i2c_common.c \
+	i2c/ssd1306_i2c_embedded.c \
+	i2c/ssd1306_i2c_wire.cpp \
+	i2c/ssd1306_i2c_twi.c \
+	i2c/ssd1306_i2c_linux.c \
+	intf/ssd1306_interface.c \
+	spi/ssd1306_spi.cpp \
+	spi/ssd1306_spi_hw.cpp \
+	lcd/pcd8544_84x48.c \
+	lcd/sh1106_128x64.c \
+	lcd/ssd1306_128x32.c \
+	lcd/ssd1306_128x64.c \
+	lcd/ssd1331_96x64.c
+
+# Due to absence of Print class tiny_ssd1306.cpp cannot be compiled without Arduino libs.
+#	tiny_ssd1306.cpp \
+ 
+OBJS = $(addprefix $(BLD)/, $(addsuffix .o, $(basename $(SRCS))))
+
+####################### Compiling library #########################
+
+$(BLD)/libssd1306.a: $(OBJS)
+	$(AR) rcs $@ $(OBJS)
+
+ssd1306: $(BLD)/libssd1306.a
+
+all: ssd1306
+
+clean:
+	rm -rf $(BLD)
