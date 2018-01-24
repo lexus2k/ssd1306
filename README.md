@@ -88,7 +88,7 @@ Ssd1306 library requires at least c++11 and c99 (by default Digispark package mi
 
 *Using with plain avr-gcc:*
  * Download source from https://github.com/lexus2k/ssd1306
- * Build the library: cd ssd1306 && make -f Makefile.avr MCU=<your_mcu>
+ * Build the library: cd ssd1306/src && make -f Makefile.avr MCU=<your_mcu>
  * Link library to your project (refer to [Makefile.avr](examples/Makefile.avr) in examples folder).
 
 
