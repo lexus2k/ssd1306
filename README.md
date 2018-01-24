@@ -12,14 +12,14 @@ Do not forget pull-up resistors for i2c lines.
 
 ## Key Features
 
+ * The library uses as little Flash memory as possible
  * Supports many interfaces:
-   * i2c (software implementation, via Wire library, AVR Twi, Linux i2c-dev)
-   * spi (4-wire spi via Arduino SPI library)
+   * i2c (software implementation, via Wire library, AVR Twi, Linux i2c-dev)
+   * spi (4-wire spi via Arduino SPI library)
  * Usage of very little of SRAM:
    * Attiny85 with Damellis package (minimum 25 bytes of SRAM)
    * Atmega328p (minimum 56 bytes of SRAM)
    * ESP8266 (minimum 26 bytes of SRAM)
- * The library uses as little Flash memory as possible
  * Fast implementation to provide reasonable speed on slow microcontrollers
  * Primitive graphics functions (line,rectangle,pixels)
  * Printing text to display (using fonts of different size)
