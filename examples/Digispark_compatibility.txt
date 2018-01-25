@@ -10,5 +10,5 @@ menu_demo      [ OK ]
 move_sprite    [ OK ]
 pcd8544_spi    [ OK ]
 sprite_pool    [ OK ]
-ssd1306_demo   [ *  ]  Too big for Digispark Attiny85 version (6KiB is not enough). Digispark PRO is OK.
+ssd1306_demo   [ *  ]  Too big for Digispark Attiny85 version (6KiB is not enough). Digispark PRO is OK. Comment out some items.
 

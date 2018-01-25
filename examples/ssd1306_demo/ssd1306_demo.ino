@@ -119,6 +119,9 @@ static void textDemo()
     ssd1306_printFixed(0, 32, "Inverted bold", STYLE_BOLD);
     ssd1306_positiveMode();
     delay(3000);
+    ssd1306_clearScreen();
+    ssd1306_printFixedN(0, 0, "N3", STYLE_NORMAL, 3);
+    delay(3000);
 }
 
 static void canvasDemo()

@@ -142,6 +142,9 @@ void         ssd1306_positiveMode();
  * @see ssd1306_setFixedFont
  * @warning ssd1306_printFixed() can output chars at fixed y positions: 0, 8, 16, 24, 32, etc.
  *          If you specify [10,18], ssd1306_printFixed() will output text starting at [10,16] position.
+ * @warning Be careful with you flash space! Do not mix too many different functions in single sketch.
+ *          ssd1306_printFixedN() uses much flash: ~396 bytes, ssd1306_printFixed() needs 388 bytes.
+ *          Placing both of these functions to your sketch will consume almost 1KiB.
  */
 uint8_t     ssd1306_printFixed(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style);
 
@@ -155,8 +158,32 @@ uint8_t     ssd1306_printFixed(uint8_t xpos, uint8_t y, const char ch[], EFontSt
  * @see ssd1306_setFixedFont
  * @warning ssd1306_printFixed2x() can output chars at fixed y positions: 0, 8, 16, 24, 32, etc.
  *          If you specify [10,18], ssd1306_printFixed2x() will output text starting at [10,16] position.
+ * @warning Be careful with you flash space! Do not mix too many different functions in single sketch.
+ *          ssd1306_printFixedN() uses much flash: ~396 bytes, ssd1306_printFixed() needs 388 bytes.
+ *          Placing both of these functions to your sketch will consume almost 1KiB.
  */
 uint8_t     ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style);
+
+/**
+ * Prints text to screen using size fixed font, scaled by factor value. <br>
+ * Factor value 0 gives regular font size (6x8 for example) <br>
+ * Factor value 1 gives double font size (12x16 if 6x8 font is used) <br>
+ * Factor value 2 gives fourth font size (24x32 if 6x8 font is used) <br>
+ * Factor value 3 gives eighth font size (48x64 if 6x8 font is used) <br>
+ * @param xpos - horizontal position in pixels
+ * @param y - vertical position in pixels
+ * @param ch - NULL-terminated string to print
+ * @param style - font style (EFontStyle), normal by default.
+ * @param factor - 0, 1, 2, 3.
+ * @returns number of chars in string
+ * @see ssd1306_setFixedFont
+ * @warning ssd1306_printFixed2x() can output chars at fixed y positions: 0, 8, 16, 24, 32, etc.
+ *          If you specify [10,18], ssd1306_printFixed2x() will output text starting at [10,16] position.
+ * @warning Be careful with you flash space! Do not mix too many different functions in single sketch.
+ *          ssd1306_printFixedN() uses much flash: ~396 bytes, ssd1306_printFixed() needs 388 bytes.
+ *          Placing both of these functions to your sketch will consume almost 1KiB.
+ */
+uint8_t     ssd1306_printFixedN(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style, uint8_t factor);
 
 /**
  * Prints text to screen using font 6x8.
