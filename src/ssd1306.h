@@ -185,7 +185,7 @@ uint8_t      ssd1306_charF6x8(uint8_t x, uint8_t y,
 uint8_t      ssd1306_charF12x16(uint8_t xpos,
                                 uint8_t y,
                                 const char ch[],
-                                EFontStyle style);
+                                EFontStyle style); 
     
 /**
  * Prints text to screen using double size font 24x32.
