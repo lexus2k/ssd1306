@@ -425,7 +425,7 @@ uint8_t ssd1306_charF24x32(uint8_t xpos, uint8_t y, const char ch[], EFontStyle 
             }
 			//Drawing
             data >>= 8/mult*cnt; //move next 4 bits cnt dependent
-			//Doubles the char (operatore ternario ?:) 
+			//Doubles the char
             data = ((data & 0x01) ? 0x0F: 0x00) |
                    ((data & 0x02) ? 0xF0: 0x00);
             for(uint8_t m=0;m<mult;m++)	ssd1306_sendByte(data^s_invertByte);//n column duplication
@@ -448,7 +448,7 @@ uint8_t ssd1306_charF48x64(uint8_t xpos, uint8_t y, const char ch[], EFontStyle 
     ssd1306_dataStart();
     for(;;)
     {
-		//Reset checkings
+	//Reset checkings
         if( (x > s_displayWidth-6*mult) || (ch[j] == '\0') ) //or x is not inside or end of string
         {
             x = xpos;
@@ -468,7 +468,7 @@ uint8_t ssd1306_charF48x64(uint8_t xpos, uint8_t y, const char ch[], EFontStyle 
         }
         uint8_t c = ch[j] - 32; //char offset from string table
         uint8_t ldata = 0;
-		//Drawing routine
+	//Drawing routine
         for(i=0;i<6;i++)	//read x data
         {
             uint8_t data;
@@ -487,7 +487,7 @@ uint8_t ssd1306_charF48x64(uint8_t xpos, uint8_t y, const char ch[], EFontStyle 
             }
 			//Drawing
             data >>= 8/mult*cnt; //move next 4 bits cnt dependent
-			//Doubles the char (operatore ternario ?:) 
+		//Doubles the char 
             data = ((data & 0x01) ? 0xFF: 0x00);
             for(uint8_t m=0;m<mult;m++)	ssd1306_sendByte(data^s_invertByte);//n column duplication
         }
