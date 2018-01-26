@@ -162,7 +162,7 @@ uint8_t     ssd1306_printFixed(uint8_t xpos, uint8_t y, const char ch[], EFontSt
  *          ssd1306_printFixedN() uses much flash: ~396 bytes, ssd1306_printFixed() needs 388 bytes.
  *          Placing both of these functions to your sketch will consume almost 1KiB.
  */
-uint8_t     ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style);
+uint8_t     ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style) __attribute__ ((deprecated));
 
 /**
  * Prints text to screen using size fixed font, scaled by factor value. <br>
