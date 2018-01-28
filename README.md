@@ -53,18 +53,20 @@ configurable through API.
 
 ## Supported platforms
 
- * Arduino
-   * Attiny85, Attiny45 (Refer to [Damellis attiny package](https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json))
-   * Atmega328p, Atmega168
-   * Atmega2560
-   * Digispark, including PRO version (check [examples compatibility list](examples/Digispark_compatibility.txt))
-   * ESP8266 (check [examples compatibility list](examples/ESP8266_compatibility.txt))
-   * ESP32 Dev Board (check [examples compatibility list](examples/ESP8266_compatibility.txt))
- * AVR (ssd1306 library can be compiled and used with plain avr-gcc/avr-libc without Arduino libraries)
-   * Attiny85, Attiny45
-   * Atmega328p, Atmega168
- * Linux
-   * Raspberry Pi (i2c-dev)
+| **Platforms** | **I2C** | **SPI** | **Comments** |
+| :-------- |:---:|:---:|:---------|
+| **Arduino** |     |     |          |
+| Attiny85, Attiny45  |  X  |  X  | Refer to [Damellis attiny package](https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json) |
+| Atmega328p, Atmega168  |  X  |  X  |    |
+| Atmega2560  |  X  |  X  |    |
+| Digispark, including PRO version  |  X  |  X  |  check [examples compatibility list](examples/Digispark_compatibility.txt)  |
+| ESP8266  |  X  |  X  | check [examples compatibility list](examples/ESP8266_compatibility.txt)   |
+| ESP32  |  X  |  X  | check [examples compatibility list](examples/ESP8266_compatibility.txt)   |
+| **Plain AVR** |   |     |          |
+| Attiny85, Attiny45 |  X  |     |         |
+| Atmega328p, Atmega168 |  X  |     |         |
+| **Linux**  |    |     |          |
+| Raspberry Pi |  X  |      | i2c-dev  |
 
 Digispark users, please check compilation options in your Arduino prior to using this library.
 Ssd1306 library requires at least c++11 and c99 (by default Digispark package misses the options
@@ -79,6 +81,8 @@ Ssd1306 library requires at least c++11 and c99 (by default Digispark package mi
 
 ## Setting up
 
+*Hardware setup is described [here](https://github.com/lexus2k/ssd1306/wiki/Hardware-setup)
+
 *Setting up for Arduino: (variant 1)*
  * Download source from https://github.com/lexus2k/ssd1306
  * Put the sources to Arduino/libraries/ folder
@@ -90,72 +94,6 @@ Ssd1306 library requires at least c++11 and c99 (by default Digispark package mi
  * Download source from https://github.com/lexus2k/ssd1306
  * Build the library: cd ssd1306/src && make -f Makefile.avr MCU=<your_mcu>
  * Link library to your project (refer to [Makefile.avr](examples/Makefile.avr) in examples folder).
-
-
-
-## Adding new interface
-
-If you need to add support for new interface to the library, just implement
-interface specific functions and assign them to function pointers:
-
-```cpp
-#include "intf/ssd1306_interface.h"
-
-void setup()
-{
-    ssd1306_startTransmission = &myStartTransmissionFunc;
-    ssd1306_endTransmission   = &myEndTransmissionFunc;
-    ssd1306_sendByte          = &mySendByteToInterfaceFunc;
-    ssd1306_commandStart      = &myStartCommandModeTransmissionFunc;
-    ssd1306_dataStart         = &myStartDataModeTransmissionFunc;
-    ...
-    # init your interface here
-    myInterfaceInit();
-    ssd1306_128x64_init();
-}
-```
-Refer to SPI, I2C interfaces init function to understand required implementation.
-
-## Adding new LCD type to the library
-
-The main requirements for LCD display to use it with this library are:
-
- * Each byte, sent to LCD, represents 8 vertical pixels
- * After sending each byte LCD controller shifts GDRAM pointer to the right by 1 pixel
- * LCD width should not exceed 128 pixels
-
-To add new LCD type to the library, implement GDRAM address positioning functions and
-initialization function for you LCD:
-
-```cpp
-#include "lcd/lcd_common.h"
-#include "intf/ssd1306_interface.h"
-
-void    myDisplayInit()
-{
-    # Use LCD_TYPE_CUSTOM constant
-    g_lcd_type = LCD_TYPE_CUSTOM;
-    # Set display size:
-    #     Width should be less or equal to 128
-    s_displayWidth = 128;
-    #     Height should be less or equal to 128
-    s_displayHeight = 64;
-    ssd1306_setRamBlock = &mySetRamBlockFunc;
-    ssd1306_nextRamPage = &myNextPageFunc;
-    ssd1306_setRamPos = mySetRamAddressFunc;
-    # Put you LCD initialization code here
-    ...
-}
-
-void setup()
-{
-    # Init the interface here
-    ...
-    # Call LCD initialization here
-    myDisplayInit();
-}
-```
-Refer to SH1106 intialization implementation as reference code.
 
 For more information about this library, please, visit https://github.com/lexus2k/ssd1306.
 Doxygen documentation can be found at [github.io site](http://lexus2k.github.io/ssd1306).
