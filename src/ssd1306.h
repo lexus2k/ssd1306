@@ -159,7 +159,7 @@ uint8_t     ssd1306_printFixed(uint8_t xpos, uint8_t y, const char ch[], EFontSt
  * @warning ssd1306_printFixed2x() can output chars at fixed y positions: 0, 8, 16, 24, 32, etc.
  *          If you specify [10,18], ssd1306_printFixed2x() will output text starting at [10,16] position.
  * @warning Be careful with you flash space! Do not mix too many different functions in single sketch.
- *          ssd1306_printFixedN() uses much flash: ~396 bytes, ssd1306_printFixed() needs 388 bytes.
+ *          ssd1306_printFixedN() uses much flash: ~474 bytes, ssd1306_printFixed() needs 388 bytes.
  *          Placing both of these functions to your sketch will consume almost 1KiB.
  */
 uint8_t     ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style) __attribute__ ((deprecated));
@@ -180,7 +180,7 @@ uint8_t     ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFont
  * @warning ssd1306_printFixed2x() can output chars at fixed y positions: 0, 8, 16, 24, 32, etc.
  *          If you specify [10,18], ssd1306_printFixed2x() will output text starting at [10,16] position.
  * @warning Be careful with you flash space! Do not mix too many different functions in single sketch.
- *          ssd1306_printFixedN() uses much flash: ~396 bytes, ssd1306_printFixed() needs 388 bytes.
+ *          ssd1306_printFixedN() uses much flash: ~474 bytes, ssd1306_printFixed() needs 388 bytes.
  *          Placing both of these functions to your sketch will consume almost 1KiB.
  */
 uint8_t     ssd1306_printFixedN(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style, uint8_t factor);
@@ -291,7 +291,7 @@ void         ssd1306_putPixel(uint8_t x, uint8_t y);
  * ~~~~~~~~~~~~~~~
  *
  * @param x - horizontal position in pixels
- * @param y - vertical position in blocks (pixels/8)
+ * @param y - vertical position pixels. Should be multiply of 8.
  * @param pixels - bit-pixels to draw on display
  */
 void         ssd1306_putPixels(uint8_t x, uint8_t y, uint8_t pixels);
@@ -304,6 +304,21 @@ void         ssd1306_putPixels(uint8_t x, uint8_t y, uint8_t pixels);
  * @param y2 - bottom boundary int pixel units
  */
 void         ssd1306_drawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
+
+
+/**
+ * Draws line
+ * @param x1 - x position in pixels of start point
+ * @param y1 - y position in pixels of start point
+ * @param x2 - x position in pixels of end point
+ * @param y2 - y position in pixels of end point
+ *
+ * @warning Remember that this function draws line directly in GDRAM of oled controller.
+ *          Since there is no way to detect pixels already being displayed, some pixels
+ *          can be overwritten by black color. If you use RGB oled, based on ssd1331 controller,
+ *          use ssd1331_drawLine() function.
+ */
+void         ssd1306_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
 
 /**
  * Draws horizontal line

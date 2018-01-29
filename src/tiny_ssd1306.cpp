@@ -45,7 +45,7 @@ size_t TinySSD1306::write(uint8_t ch)
     {
         m_ypos = 0;
     }
-    ssd1306_charF6x8( m_xpos, m_ypos, str, STYLE_NORMAL );
+    ssd1306_printFixed( m_xpos, m_ypos, str, STYLE_NORMAL );
     m_xpos += FIXED_FONT_WIDTH;
 }
 

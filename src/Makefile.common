@@ -61,7 +61,9 @@ CCFLAGS += -g -Os $(INCLUDES) -Wall -Werror -ffunction-sections -fdata-sections 
 SRCS_C = \
 	font6x8.c \
 	ssd1306.c \
+	ssd1331_api.c \
 	ssd1306_menu.c \
+	hal/linux/gpio.c \
 	i2c/ssd1306_i2c_common.c \
 	i2c/ssd1306_i2c_embedded.c \
 	i2c/ssd1306_i2c_twi.c \

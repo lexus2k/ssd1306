@@ -77,7 +77,7 @@ const char *menuItems[] =
     "sprites",
     "fonts",
     "canvas gfx",
-    "sprite pool",
+    "draw lines",
 };
 
 static void bitmapDemo()
@@ -120,7 +120,7 @@ static void textDemo()
     ssd1306_positiveMode();
     delay(3000);
     ssd1306_clearScreen();
-    ssd1306_printFixedN(0, 0, "N3", STYLE_NORMAL, 3);
+    ssd1306_printFixedN(0, 0, "N3", STYLE_NORMAL, FONT_SIZE_8X);
     delay(3000);
 }
 
@@ -142,8 +142,24 @@ static void canvasDemo()
     delay(3000);
 }
 
+static void drawLinesDemo()
+{
+    ssd1306_clearScreen();
+    for (uint8_t y = 0; y < ssd1306_displayHeight(); y += 8)
+    {
+        ssd1306_drawLine(0,0, ssd1306_displayWidth() -1, y);
+    }
+    for (uint8_t x = ssd1306_displayWidth() - 1; x > 7; x -= 8)
+    {
+        ssd1306_drawLine(0,0, x, ssd1306_displayHeight() - 1);
+    }
+    delay(3000);
+}
+
 void setup()
 {
+    /* Select the font to use with menu and all font functions */
+    ssd1306_setFixedFont(ssd1306xled_font6x8);
     /* Do not init Wire library for Attiny controllers */
     ssd1306_128x64_i2c_init();
 
@@ -177,6 +193,11 @@ void loop()
         case 3:
             canvasDemo();
             break;
+
+        case 4:
+            drawLinesDemo();
+            break;
+
         default:
             break;
     }

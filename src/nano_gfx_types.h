@@ -51,6 +51,15 @@ typedef enum
     STYLE_ITALIC,
 } EFontStyle;
 
+/** Supported scale font values */
+typedef enum
+{
+    FONT_SIZE_NORMAL = 0,
+    FONT_SIZE_2X     = 1,
+    FONT_SIZE_4X     = 2,
+    FONT_SIZE_8X     = 3,
+} EFontSize;
+
 /** Structure is used for internal font presentation */
 typedef struct
 {

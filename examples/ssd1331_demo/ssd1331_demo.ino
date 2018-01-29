@@ -27,6 +27,7 @@
  */
 
 #include "ssd1306.h"
+#include "ssd1331_api.h"
 #include "sova.h"
 #include "nano_gfx.h"
 #include "font6x8.h"
@@ -69,7 +70,7 @@ const char *menuItems[] =
     "sprites",
     "fonts",
     "canvas gfx",
-    "sprite pool",
+    "draw lines",
 };
 
 static void bitmapDemo()
@@ -135,8 +136,23 @@ static void canvasDemo()
     delay(3000);
 }
 
+static void drawLinesDemo()
+{
+    ssd1306_clearScreen();
+    for (uint8_t y = 0; y < ssd1306_displayHeight(); y += 8)
+    {
+        ssd1331_drawLine(0,0, ssd1306_displayWidth() -1, y, RGB_COLOR8(0,255,0));
+    }
+    for (uint8_t x = ssd1306_displayWidth() - 1; x > 7; x -= 8)
+    {
+        ssd1331_drawLine(0,0, x, ssd1306_displayHeight() - 1, RGB_COLOR8(0,0,255));
+    }
+    delay(3000);
+}
+
 void setup()
 {
+    ssd1306_setFixedFont(ssd1306xled_font6x8);
     ssd1331_96x64_spi_init(3, 4, 5);
 
     ssd1306_fillScreen( 0x00 );
@@ -164,6 +180,11 @@ void loop()
         case 3:
             canvasDemo();
             break;
+
+        case 4:
+            drawLinesDemo();
+            break;
+
         default:
             break;
     }

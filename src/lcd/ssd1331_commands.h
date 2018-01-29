@@ -40,6 +40,7 @@ enum ESsd1331Commands
 //    SSD1331_SETHIGHCOLUMN    = 0x10,
 //    SSD1331_MEMORYMODE       = 0x20,
     SSD1331_COLUMNADDR       = 0x15,
+    SSD1331_DRAWLINE         = 0x21,
     SSD1331_ROWADDR          = 0x75,
 //    SSD1331_DEFAULT_ADDRESS  = 0x78,
     SSD1331_CONTRASTA        = 0x81,

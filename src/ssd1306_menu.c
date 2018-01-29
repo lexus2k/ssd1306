@@ -70,7 +70,7 @@ static void drawMenuItem(SAppMenu *menu, uint8_t index)
     {
         ssd1306_positiveMode();
     }
-    ssd1306_charF6x8(8, index - menu->scrollPosition + 1, menu->items[index], STYLE_NORMAL );
+    ssd1306_printFixed(8, (index - menu->scrollPosition + 1)*8, menu->items[index], STYLE_NORMAL );
     ssd1306_positiveMode();
 }
 

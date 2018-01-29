@@ -33,6 +33,8 @@
 // TODO: remove
 #include "lcd/ssd1306_commands.h"
 
+#define swap_data(a, b)  { uint8_t t = a; a = b; b = t; }
+
 uint8_t s_displayHeight;
 uint8_t s_displayWidth;
 uint8_t g_lcd_type = LCD_TYPE_SSD1306;
@@ -328,7 +330,7 @@ uint8_t ssd1306_printFixedN(uint8_t xpos, uint8_t y, const char ch[], EFontStyle
                 uint8_t mask = ~((0xFF) << (1<<factor));
                 for (uint8_t idx = 0; idx < 1<<(3-factor); idx++)
                 {
-                     accum |= ((data>>idx) & 0x01 ? (mask<<(idx<<factor)) : 0);
+                     accum |= (((data>>idx) & 0x01) ? (mask<<(idx<<factor)) : 0);
                 }
                 data = accum;
             }
@@ -509,6 +511,71 @@ void         ssd1306_putPixels(uint8_t x, uint8_t y, uint8_t pixels)
     ssd1306_dataStart();
     ssd1306_sendPixels(pixels^s_invertByte);
     ssd1306_endTransmission();
+}
+
+void         ssd1306_putPixel_delayed(uint8_t x, uint8_t y, uint8_t complete)
+{
+    static uint8_t lx = 0, ly = 0xFF;
+    static uint8_t pixels = 0;
+    if ((lx != x) || ((ly & 0xF8) != (y & 0xF8)) || (complete))
+    {
+        if (ly != 0xFF)
+        {
+            ssd1306_putPixels( lx, ly, pixels );
+        }
+        pixels = 0;
+        ly = 0xFF;
+    }
+    if ( !complete )
+    {
+        pixels |= (1 << (y & 0x07));
+        lx = x; ly = y;
+    }
+}
+
+void         ssd1306_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
+{
+    uint8_t  dx = x1 > x2 ? (x1 - x2): (x2 - x1);
+    uint8_t  dy = y1 > y2 ? (y1 - y2): (y2 - y1);
+    uint8_t  err = 0;
+    if (dy > dx)
+    {
+        if (y1 > y2)
+        {
+            swap_data(x1, x2);
+            swap_data(y1, y2);
+        }
+        for(; y1<=y2; y1++)
+        {
+            err += dx;
+            if (err >= dy)
+            {
+                 err -= dy;
+                 x1 < x2 ? x1++: x1--;
+            }
+            ssd1306_putPixel_delayed( x1, y1, 0 );
+        }
+        ssd1306_putPixel_delayed( 0, 0, 1 );
+    }
+    else
+    {
+        if (x1 > x2)
+        {
+            swap_data(x1, x2);
+            swap_data(y1, y2);
+        }
+        
+        for(; x1<=x2; x1++)
+        {
+            err += dy;
+            if (err >= dx)
+            {
+                 err -= dx;
+                 if (y1 < y2) y1++; else y1--;
+            }
+            ssd1306_putPixel( x1, y1 );
+        }
+    }
 }
 
 void         ssd1306_drawHLine(uint8_t x1, uint8_t y1, uint8_t x2)

@@ -82,8 +82,8 @@ void printResult(unsigned long ms)
 #else
     char buf[16];
     utoa(ms,buf,10);
-    ssd1306_charF6x8(32, 7, buf, STYLE_BOLD);
-    ssd1306_charF6x8(90, 7, "MS", STYLE_BOLD);
+    ssd1306_printFixedN(32, 7, buf, STYLE_BOLD, 0);
+    ssd1306_printFixedN(90, 7, "MS", STYLE_BOLD, 0);
 #endif
 }
 
