@@ -37,7 +37,9 @@
 #else
     #include <avr/pgmspace.h>
     #include <avr/interrupt.h>
+    #if !defined(ARDUINO_ARCH_SAMD)
     #include <avr/sleep.h>
+    #endif
 #endif
 
 /**
@@ -80,7 +82,8 @@
     #define SSD1306_TWI_SUPPORTED
     /** The macro is defined when SPI library is available */
     #define SSD1306_SPI_SUPPORTED
-
+    /** The macro is defined when SPI module is available */
+    #define SSD1306_AVR_SPI_SUPPORTED
 #endif
 
 /**
