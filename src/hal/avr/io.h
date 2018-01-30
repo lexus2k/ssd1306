@@ -38,8 +38,8 @@
 
 #define LOW  0
 #define HIGH 1
-#define INPUT 1
-#define OUTPUT 0
+#define INPUT 0
+#define OUTPUT 1
 
 #if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
     /** The macro is defined when software i2c implementation is available */
@@ -49,16 +49,20 @@
     #define SSD1306_I2C_SW_SUPPORTED
     /** The macro is defined when TWI module is available */
     #define SSD1306_TWI_SUPPORTED
+    /** The macro is defined when SPI module is available */
+    #define SSD1306_AVR_SPI_SUPPORTED
 #else
     /** The macro is defined when software i2c implementation is available */
     #define SSD1306_I2C_SW_SUPPORTED
     /** The macro is defined when TWI module is available */
     #define SSD1306_TWI_SUPPORTED
+    /** The macro is defined when SPI module is available */
+    #define SSD1306_AVR_SPI_SUPPORTED
 #endif
 
-static inline void digitalWrite(int pin, int level) {};
+void digitalWrite(int pin, int level);
 static inline int  digitalRead(int pin) { return LOW; };
-static inline void pinMode(int pin, int mode) {};
+void pinMode(int pin, int mode);
 static inline void delay(unsigned long ms) { _delay_ms(ms); };
 static inline int  analogRead(int pin) { return 0; };
 static inline uint32_t millis() { return 0; };

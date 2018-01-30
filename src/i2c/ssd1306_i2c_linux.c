@@ -76,6 +76,14 @@ static void ssd1306_i2cClose_Linux()
     }
 }
 
+static void empty_function()
+{
+}
+
+static void empty_function_single_arg(uint8_t arg)
+{
+}
+
 void ssd1306_i2cInit_Linux(int8_t busId, uint8_t sa)
 {
     char filename[20];
@@ -84,6 +92,12 @@ void ssd1306_i2cInit_Linux(int8_t busId, uint8_t sa)
         busId = 1;
     }
     snprintf(filename, 19, "/dev/i2c-%d", busId);
+    ssd1306_startTransmission = empty_function;
+    ssd1306_endTransmission = empty_function;
+    ssd1306_closeInterface = empty_function;
+    ssd1306_commandStart = empty_function;
+    ssd1306_dataStart = empty_function;
+    ssd1306_sendByte = empty_function_single_arg;
     if ((s_fd = open(filename, O_RDWR)) < 0)
     {
         fprintf(stderr, "Failed to open the i2c bus\n");

@@ -63,8 +63,8 @@ configurable through API.
 | ESP8266  |  X  |  X  | check [examples compatibility list](examples/ESP8266_compatibility.txt)   |
 | ESP32  |  X  |  X  | check [examples compatibility list](examples/ESP8266_compatibility.txt)   |
 | **Plain AVR** |   |     |          |
-| Attiny85, Attiny45 |  X  |     |         |
-| Atmega328p, Atmega168 |  X  |     |         |
+| Attiny85, Attiny45 |  X  |  X  |         |
+| Atmega328p, Atmega168 |  X  |  X  |         |
 | **Linux**  |    |     |          |
 | Raspberry Pi |  X  |      | i2c-dev  |
 

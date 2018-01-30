@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2018, Alexey Dynda
+    Copyright (c) 2018, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,39 +22,46 @@
     SOFTWARE.
 */
 
+/**
+ * @file ssd1306_spi_avr.h SSD1306 AVR spi communication functions
+ */
 
-#include "ssd1306_spi.h"
-#include "ssd1306_spi_hw.h"
-#include "ssd1306_spi_avr.h"
-#include "intf/ssd1306_interface.h"
-#include "lcd/lcd_common.h"
-#include "hal/io.h"
+#ifndef _SSD1306_AVR_SPI_H_
+#define _SSD1306_AVR_SPI_H_
 
-#include <stdlib.h>
+#include "ssd1306_spi_conf.h"
+#include <stdint.h>
 
-int8_t s_ssd1306_cs = 4;
-int8_t s_ssd1306_dc = 5;
-
-void ssd1306_spiInit(int8_t cesPin, int8_t dcPin)
-{
-#ifdef SSD1306_SPI_SUPPORTED
-    ssd1306_spiConfigure_hw();
-    ssd1306_spiInit_hw(cesPin, dcPin);
-#elif defined(SSD1306_AVR_SPI_SUPPORTED)
-    ssd1306_spiInit_avr(cesPin, dcPin);
+#ifdef __cplusplus
+extern "C" {
 #endif
+
+/**
+ * @defgroup LCD_INTERFACE_API LCD communication interface functions
+ * @{
+ */
+
+#ifdef SSD1306_AVR_SPI_SUPPORTED
+
+/**
+ * Inits lcd interface to use hardware SPI for communication (SPI.h library).
+ * It uses standard MOSI, SCLK pins to send data to LCD.
+ * @param cesPin - pin, controlling chip enable of LCD
+ * @param dcPin - pin, controlling data/command mode of LCD
+ *
+ * @note: after call to this function you need to initialize lcd display.
+ */
+void         ssd1306_spiInit_avr(int8_t cesPin, int8_t dcPin);
+
+#endif
+
+/**
+ * @}
+ */
+
+#ifdef __cplusplus
 }
+#endif
 
-void ssd1306_spiCommandStart()
-{
-    digitalWrite(s_ssd1306_dc, LOW);
-    ssd1306_startTransmission();
-}
-
-void ssd1306_spiDataStart()
-{
-    digitalWrite(s_ssd1306_dc, HIGH);
-    ssd1306_startTransmission();
-}
-
-
+// ----------------------------------------------------------------------------
+#endif // _SSD1306_AVR_SPI_H_
