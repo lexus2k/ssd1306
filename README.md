@@ -56,7 +56,7 @@ configurable through API.
 | **Platforms** | **I2C** | **SPI** | **Comments** |
 | :-------- |:---:|:---:|:---------|
 | **Arduino** |     |     |          |
-| Attiny85, Attiny45  |  X  |  X  | Refer to [Damellis attiny package](https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json) |
+| Attiny85, Attiny45  |  X  |     | Refer to [Damellis attiny package](https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json) |
 | Atmega328p, Atmega168  |  X  |  X  |    |
 | Atmega2560  |  X  |  X  |    |
 | Digispark, including PRO version  |  X  |  X  |  check [examples compatibility list](examples/Digispark_compatibility.txt)  |
