@@ -35,7 +35,7 @@
 static const uint8_t PROGMEM s_lcd84x48_initData[] =
 {
     PCD8544_FUNCTIONSET | PCD8544_EXTENDEDINSTRUCTION, // switch to extented commands
-    PCD8544_SETVOP | 0x12,  // Set vop contrast
+    PCD8544_SETVOP | 0x16,  // Set vop contrast
     PCD8544_SETTEMP,
     PCD8544_SETBIAS | 0x04, // Set bias mode
     PCD8544_FUNCTIONSET, // switch to basic commands

@@ -88,11 +88,19 @@ static void spriteDemo()
     SPRITE sprite;
     /* Create sprite at 0,0 position. The function initializes sprite structure. */
     sprite = ssd1306_createSprite( 0, 0, spriteWidth, heartImage );
-    for (int i=0; i<300; i++)
+    for (int i=0; i<250; i++)
     {
-        delay(10);
-        sprite.x = (sprite.x + 1) & 0x7F;
-        sprite.y = (sprite.y + 1) & 0x3F;
+        delay(15);
+        sprite.x++;
+        if (sprite.x >= ssd1306_displayWidth())
+        {
+            sprite.x = 0;
+        }
+        sprite.y++;
+        if (sprite.y >= ssd1306_displayHeight())
+        {
+            sprite.y = 0;
+        }
         /* Erase sprite on old place. The library knows old position of the sprite. */
         sprite.eraseTrace();
         /* Draw sprite on new place */
