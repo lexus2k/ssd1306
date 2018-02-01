@@ -421,6 +421,25 @@ void NanoCanvas::drawSpritePgm(uint8_t x, uint8_t y, const uint8_t sprite[])
 };
 
 
+void NanoCanvas::drawBitmap(uint8_t startX, uint8_t startY, uint8_t w, uint8_t h, const uint8_t *buf)
+{
+    uint8_t x,y;
+    for(y=0;y<h;y+=8)
+    {
+        for(x=0;x<w;x++)
+        {
+            if ((uint8_t)(x + startX) >= m_w) continue;
+            uint16_t buf_address = YADDR((y + startY)) + x - startX;
+            uint8_t d = pgm_read_byte(&buf[x + (y>>3) * w]);
+            if ((uint8_t)(y + startY) < m_h)
+                m_bytes[buf_address] |= (d << ((y + startY) & 0x7));
+            if ((uint8_t)(y + startY + 8) < m_h) {
+                m_bytes[buf_address + m_w] |= (d >> (8 - ((y + startY) & 0x7)));
+        }
+    }
+}
+
+
 void NanoCanvas::drawSprite(uint8_t x, uint8_t y, const uint8_t sprite[])
 {
     uint8_t i;
