@@ -28,7 +28,7 @@
 extern const uint8_t *s_font6x8;
 extern SFixedFontInfo s_fixedFont;
 
-#define YADDR(y) (((y) >> 3) << m_p)
+#define YADDR(y) (static_cast<uint16_t>((y) >> 3) << m_p)
 #define BADDR(b) ((b) << m_p)
 
 void NanoCanvas::putPixel(uint8_t x, uint8_t y)
@@ -428,13 +428,16 @@ void NanoCanvas::drawBitmap(uint8_t startX, uint8_t startY, uint8_t w, uint8_t h
     {
         for(x=0;x<w;x++)
         {
-            if ((uint8_t)(x + startX) >= m_w) continue;
-            uint16_t buf_address = YADDR((y + startY)) + x - startX;
-            uint8_t d = pgm_read_byte(&buf[x + (y>>3) * w]);
-            if ((uint8_t)(y + startY) < m_h)
-                m_bytes[buf_address] |= (d << ((y + startY) & 0x7));
-            if ((uint8_t)(y + startY + 8) < m_h)
-                m_bytes[buf_address + m_w] |= (d >> (8 - ((y + startY) & 0x7)));
+            uint8_t scrX = startX + x;
+            if (scrX >= m_w) continue;
+            uint8_t d = pgm_read_byte(&buf[x + static_cast<uint16_t>(y>>3) * w]);
+            uint8_t scrY = y + startY;
+            scrX = x + startX;
+            if (scrY < m_h)
+                m_bytes[YADDR(scrY) + scrX] |= (d << (scrY & 0x7));
+            scrY+=8;
+            if (scrY < m_h)
+                m_bytes[YADDR(scrY) + scrX] |= (d >> (8 - (scrY & 0x7)));
         }
     }
 }
