@@ -54,12 +54,12 @@ extern "C" {
 /**
  * Turns off display
  */
-void         ssd1306_displayOff();
+void         ssd1306_displayOff(void);
 
 /**
  * Turns on display
  */
-void         ssd1306_displayOn();
+void         ssd1306_displayOn(void);
 
 /**
  * Set display contrast, ie light intensity
@@ -72,23 +72,23 @@ void         ssd1306_setContrast(uint8_t contrast);
  * LCD will display 0-pixels as white, and 1-pixels as black.
  * @note Not supported for SSD1331
  */
-void         ssd1306_invertMode();
+void         ssd1306_invertMode(void);
 
 /**
  * Switches display to normal mode.
  * @note Not supported for SSD1331
  */
-void         ssd1306_normalMode();
+void         ssd1306_normalMode(void);
 
 /**
  * Returns display height in pixels
  */
-uint8_t      ssd1306_displayHeight();
+uint8_t      ssd1306_displayHeight(void);
 
 /**
  * Returns display width in pixels
  */
-uint8_t      ssd1306_displayWidth();
+uint8_t      ssd1306_displayWidth(void);
 
 /**
  * @}
@@ -118,19 +118,19 @@ void         ssd1306_fillScreen(uint8_t fill_Data);
 /**
  * Fills screen with zero-byte
  */
-void         ssd1306_clearScreen();
+void         ssd1306_clearScreen(void);
 
 /**
  * All drawing functions start to work in negative mode.
  * Old picture on the display remains unchanged.
  */
-void         ssd1306_negativeMode();
+void         ssd1306_negativeMode(void);
 
 /**
  * All drawing functions start to work in positive (default) mode.
  * Old picture on the display remains unchanged.
  */
-void         ssd1306_positiveMode();
+void         ssd1306_positiveMode(void);
 
 /**
  * Prints text to screen using fixed font.

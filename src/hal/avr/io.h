@@ -35,6 +35,7 @@
 #include <avr/pgmspace.h>
 #include <avr/sleep.h>
 #include <util/delay.h>
+#include <stdint.h>
 
 #define LOW  0
 #define HIGH 1

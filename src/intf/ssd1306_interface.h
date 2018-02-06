@@ -29,7 +29,7 @@
 #ifndef _SSD1306_INTERFACE_H_
 #define _SSD1306_INTERFACE_H_
 
-#include <stdint.h>
+#include "hal/io.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -43,12 +43,12 @@ extern "C" {
 /**
  * Starts communication with SSD1306 display.
  */
-extern void  (*ssd1306_startTransmission)();
+extern void  (*ssd1306_startTransmission)(void);
 
 /**
  * Ends communication with SSD1306 display.
  */
-extern void  (*ssd1306_endTransmission)();
+extern void  (*ssd1306_endTransmission)(void);
 
 /**
  * Sends byte to SSD1306 device
@@ -63,7 +63,7 @@ extern void  (*ssd1306_sendByte)(uint8_t data);
  * There is no need to use this function for microcontrollers. In general
  * the function has meaning in Linux-like systems.
  */
-extern void  (*ssd1306_closeInterface)();
+extern void  (*ssd1306_closeInterface)(void);
 
 /**
  * Sends 8 monochrome vectical pixels to OLED driver.
@@ -81,12 +81,12 @@ void ssd1306_sendCommand(uint8_t command);
 /**
  * Starts transaction for sending commands.
  */
-extern void (*ssd1306_commandStart)();
+extern void (*ssd1306_commandStart)(void);
 
 /**
  * Starts transaction for sending bitmap data.
  */
-extern void (*ssd1306_dataStart)();
+extern void (*ssd1306_dataStart)(void);
 
 /**
  * Sends byte data to SSD1306 controller memory.
@@ -114,7 +114,7 @@ extern void (*ssd1306_setRamBlock)(uint8_t x, uint8_t y, uint8_t w);
  * For ssd1306 it does nothing, while for sh1106 the function moves cursor to
  * next page.
  */
-extern void (*ssd1306_nextRamPage)();
+extern void (*ssd1306_nextRamPage)(void);
 
 /**
  * @}

@@ -28,8 +28,6 @@
 #ifndef _LCD_COMMON_H_
 #define _LCD_COMMON_H_
 
-#include <stdint.h>
-
 #include "hal/io.h"
 
 enum

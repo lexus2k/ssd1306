@@ -29,9 +29,6 @@
 #include "spi/ssd1306_spi.h"
 #include "hal/io.h"
 
-#include <stdlib.h>
-
-
 static const uint8_t PROGMEM s_lcd84x48_initData[] =
 {
     PCD8544_FUNCTIONSET | PCD8544_EXTENDEDINSTRUCTION, // switch to extented commands
@@ -58,7 +55,7 @@ static void pcd8544_setBlock(uint8_t x, uint8_t y, uint8_t w)
     ssd1306_endTransmission();
 }
 
-static void pcd8544_nextPage()
+static void pcd8544_nextPage(void)
 {
     if ( s_width != 1)
     {

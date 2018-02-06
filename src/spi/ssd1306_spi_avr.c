@@ -29,9 +29,9 @@
 #include "lcd/lcd_common.h"
 #include "hal/io.h"
 
-#include <stdlib.h>
-
 #ifdef SSD1306_AVR_SPI_SUPPORTED
+
+#include <stdlib.h>
 
 #define PORT_SPI    PORTB
 #define DDR_SPI     DDRB

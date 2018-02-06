@@ -28,7 +28,7 @@
 #ifndef _NANO_GFX_TYPES_H_
 #define _NANO_GFX_TYPES_H_
 
-#include <stdint.h>
+#include "hal/io.h"
 
 #ifndef min
 /** Macros returning minimum of 2 numbers */
@@ -41,7 +41,7 @@
 #endif
 
 /** Pointer type to LCD display initialization function */
-typedef void (*InitFunction)();
+typedef void (*InitFunction)(void);
 
 /** Supported font styles */
 typedef enum

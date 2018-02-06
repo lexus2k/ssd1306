@@ -24,7 +24,7 @@
 
 #include "ssd1331_api.h"
 #include "intf/ssd1306_interface.h"
-#include <stdlib.h>
+#include "hal/io.h"
 
 #include "lcd/ssd1331_commands.h"
 

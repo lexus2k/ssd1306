@@ -19,7 +19,6 @@
 #define FONT6x8_H
 
 #include "hal/io.h"
-#include <stdint.h>
 
 /**
  * @defgroup LCD_FONTS LCD Fonts

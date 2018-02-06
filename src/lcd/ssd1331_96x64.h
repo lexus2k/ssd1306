@@ -29,7 +29,7 @@
 #ifndef _SSD1331_96X64_H_
 #define _SSD1331_96X64_H_
 
-#include <stdint.h>
+#include "hal/io.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -71,7 +71,7 @@ void        ssd1331_setRgbColor(uint8_t r, uint8_t g, uint8_t b);
  * @see ssd1306_i2cInit()
  * @see ssd1306_spiInit()
  */
-void         ssd1331_96x64_init();
+void         ssd1331_96x64_init(void);
 
 /**
  * @brief Inits 96x64 RGB OLED display over spi (based on SSD1331 controller).

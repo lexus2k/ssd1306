@@ -64,7 +64,7 @@ static void sh1106_setBlock(uint8_t x, uint8_t y, uint8_t w)
     ssd1306_endTransmission();
 }
 
-static void sh1106_nextPage()
+static void sh1106_nextPage(void)
 {
     ssd1306_endTransmission();
     sh1106_setBlock(s_column,s_page+1,0);

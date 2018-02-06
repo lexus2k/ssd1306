@@ -20,54 +20,40 @@
 #    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #    SOFTWARE.
 #
-#################################################################
-# Makefile containing common logic for all systems
-#
-# Accepts the following parameters:
-# CC
-# CXX
-# STRIP
-# AR
 
-default: all
+SRCS_C = \
+	font6x8.c \
+	ssd1306.c \
+	ssd1331_api.c \
+	ssd1306_menu.c \
+	hal/avr/gpio.c \
+	hal/linux/gpio.c \
+	i2c/ssd1306_i2c_common.c \
+	i2c/ssd1306_i2c_embedded.c \
+	i2c/ssd1306_i2c_twi.c \
+	i2c/ssd1306_i2c_linux.c \
+	spi/ssd1306_spi.c \
+	spi/ssd1306_spi_avr.c \
+	intf/ssd1306_interface.c \
+	lcd/pcd8544_84x48.c \
+	lcd/sh1106_128x64.c \
+	lcd/ssd1306_128x32.c \
+	lcd/ssd1306_128x64.c \
+	lcd/ssd1331_96x64.c
 
-DESTDIR ?=
-BLD ?= ../bld
+SRCS_CPP = \
+	nano_gfx.cpp \
+	nano_gfx_types.cpp \
+	sprite_pool.cpp \
+	i2c/ssd1306_i2c_wire.cpp \
+	spi/ssd1306_spi_hw.cpp
 
-.SUFFIXES: .c .cpp .ino
+SRCS = $(SRCS_C) $(SRCS_CPP)
 
-$(BLD)/%.o: %.c
-	mkdir -p $(dir $@)
-	$(CC) -std=gnu11 $(CCFLAGS) -c $< -o $@
+# Due to absence of Print class tiny_ssd1306.cpp cannot be compiled without Arduino libs.
+#	tiny_ssd1306.cpp \
 
-$(BLD)/%.o: %.ino
-	mkdir -p $(dir $@)
-	$(CXX) -std=c++11 $(CCFLAGS) -x c++ -c $< -o $@
+OBJS_C = $(addprefix src/, $(addsuffix .o, $(basename $(SRCS_C))))
+ 
+OBJS = $(addprefix $(BLD)/, $(addsuffix .o, $(basename $(SRCS))))
 
-$(BLD)/%.o: %.cpp
-	mkdir -p $(dir $@)
-	$(CXX) -std=c++11 $(CCFLAGS) -c $< -o $@
-
-# ************* Common defines ********************
-
-INCLUDES += \
-        -I.
-
-CCFLAGS += -g -Os $(INCLUDES) -Wall -Werror -ffunction-sections -fdata-sections \
-	-fno-exceptions -Wno-error=deprecated-declarations
-
-.PHONY: clean ssd1306 all
-
-include Makefile.src
-
-####################### Compiling library #########################
-
-$(BLD)/libssd1306.a: $(OBJS)
-	$(AR) rcs $@ $(OBJS)
-
-ssd1306: $(BLD)/libssd1306.a
-
-all: ssd1306
-
-clean:
-	rm -rf $(BLD)

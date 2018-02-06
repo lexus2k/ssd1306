@@ -30,8 +30,6 @@
 #include "lcd/lcd_common.h"
 #include "hal/io.h"
 
-#include <stdlib.h>
-
 int8_t s_ssd1306_cs = 4;
 int8_t s_ssd1306_dc = 5;
 

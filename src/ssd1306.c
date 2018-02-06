@@ -28,7 +28,7 @@
 #include "i2c/ssd1306_i2c.h"
 #include "spi/ssd1306_spi.h"
 #include "intf/ssd1306_interface.h"
-#include <stdlib.h>
+#include "hal/io.h"
 
 // TODO: remove
 #include "lcd/ssd1306_commands.h"

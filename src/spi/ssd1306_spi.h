@@ -30,7 +30,6 @@
 #define _SSD1306_SPI_H_
 
 #include "ssd1306_spi_conf.h"
-#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -60,12 +59,12 @@ void         ssd1306_spiInit(int8_t cesPin, int8_t dcPin);
 /**
  * Switches spi chip to command transmission mode.
  */
-void         ssd1306_spiCommandStart();
+void         ssd1306_spiCommandStart(void);
 
 /**
  * Switches spi chip to data transmission mode.
  */
-void         ssd1306_spiDataStart();
+void         ssd1306_spiDataStart(void);
 
 /**
  * @}

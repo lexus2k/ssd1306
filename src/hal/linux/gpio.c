@@ -26,6 +26,8 @@
 
 #include "io.h"
 
+#ifndef __KERNEL__
+
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
@@ -35,7 +37,7 @@
  
 #define IN  0
 #define OUT 1
- 
+
 int gpio_export(int pin)
 {
     char buffer[4];
@@ -155,5 +157,6 @@ int gpio_write(int pin, int value)
     -1 == gpio_write(N, HIGH)
     -1 == gpio_unexport(N)
 */
+#endif
 
 #endif

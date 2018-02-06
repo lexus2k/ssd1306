@@ -30,7 +30,7 @@
 #ifndef _SH1106_128X64_H_
 #define _SH1106_128X64_H_
 
-#include <stdint.h>
+#include "hal/io.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -47,7 +47,7 @@ extern "C" {
  * Inits 128x64 OLED display (based on SH1106 controller).
  * User must init communication interface (i2c or spi) prior to calling this function.
  */
-void         sh1106_128x64_init();
+void         sh1106_128x64_init(void);
 
 /**
  * @brief Inits 128x64 OLED display over i2c (based on SH1106 controller).
@@ -57,7 +57,7 @@ void         sh1106_128x64_init();
  * If you use non-standard pins in your project, please perform call ssd1306_i2cInitEx() and
  * sh1106_128x64_init().
  */
-void         sh1106_128x64_i2c_init();
+void         sh1106_128x64_i2c_init(void);
 
 /**
  * @brief Inits 128x64 OLED display over spi (based on SH1106 controller).

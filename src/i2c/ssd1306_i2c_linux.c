@@ -27,7 +27,7 @@
 #include "ssd1306_i2c_conf.h"
 #include "ssd1306_i2c.h"
 
-#ifdef SSD1306_LINUX_SUPPORTED
+#if defined(SSD1306_LINUX_SUPPORTED) && !defined(__KERNEL__)
 
 #include <stdio.h>
 #include <unistd.h>

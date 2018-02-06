@@ -29,7 +29,7 @@
 #ifndef _SSD1306_I2C_TWI_H_
 #define _SSD1306_I2C_TWI_H_
 
-#include <stdint.h>
+#include "hal/io.h"
 #include "ssd1306_i2c_conf.h"
 
 #ifdef SSD1306_TWI_SUPPORTED

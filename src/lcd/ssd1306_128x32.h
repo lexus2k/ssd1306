@@ -29,7 +29,7 @@
 #ifndef _SSD1306_128X32_H_
 #define _SSD1306_128X32_H_
 
-#include <stdint.h>
+#include "hal/io.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -48,7 +48,7 @@ extern "C" {
  * If you use non-standard pins in your project, please perform call ssd1306_i2cInitEx() and
  * ssd1306_128x32_init().
  */
-void         ssd1306_128x32_i2c_init();
+void         ssd1306_128x32_i2c_init(void);
 
 /**
  * @brief Inits 128x32 OLED display (based on ssd1306 controller).
@@ -58,7 +58,7 @@ void         ssd1306_128x32_i2c_init();
  * @see ssd1306_i2cInit()
  * @see ssd1306_spiInit()
  */
-void         ssd1306_128x32_init();
+void         ssd1306_128x32_init(void);
 
 /**
  * @}

@@ -31,8 +31,12 @@
 
 #if defined(__linux__) && !defined(ARDUINO)
 
+#ifdef __KERNEL__
+#include <linux/types.h>
+#else
 #include <stdint.h>
 #include <unistd.h>
+#endif
 //#include <avr/io.h>
 //#include <avr/interrupt.h>
 //#include <avr/pgmspace.h>
@@ -63,11 +67,15 @@
 static inline void digitalWrite(int pin, int level) {};
 static inline int  digitalRead(int pin) { return LOW; };
 static inline void pinMode(int pin, int mode) {};
+#ifdef __KERNEL__
+static inline void delay(unsigned long ms) {  };
+#else
 static inline void delay(unsigned long ms) { usleep(ms*1000);  };
+#endif
 static inline int  analogRead(int pin) { return 0; };
-static inline uint32_t millis() { return 0; };
+static inline uint32_t millis(void) { return 0; };
 static inline void randomSeed(int seed) { };
-static inline void attachInterrupt(int pin, void (*interrupt)(), int level) { };
+static inline void attachInterrupt(int pin, void (*interrupt)(void), int level) { };
 static inline uint8_t pgm_read_byte(const void *ptr) { return *((const uint8_t *)ptr); };
 
 #ifdef __cplusplus

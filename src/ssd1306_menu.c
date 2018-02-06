@@ -33,7 +33,7 @@
 #define max(x,y) ((x)>(y)?(x):(y))
 #endif
 
-static uint8_t getMaxScreenItems()
+static uint8_t getMaxScreenItems(void)
 {
     return (ssd1306_displayHeight() >> 3) - 2;
 }

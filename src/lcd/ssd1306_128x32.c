@@ -29,8 +29,6 @@
 #include "i2c/ssd1306_i2c.h"
 #include "hal/io.h"
 
-#include <stdlib.h>
-
 static const uint8_t PROGMEM s_oled128x32_initData[] =
 {
     SSD1306_DISPLAYOFF, // display off
@@ -63,7 +61,7 @@ static void ssd1306_setBlock(uint8_t x, uint8_t y, uint8_t w)
     ssd1306_endTransmission();
 }
 
-static void ssd1306_nextPage()
+static void ssd1306_nextPage(void)
 {
 }
 

@@ -30,7 +30,7 @@
 #ifndef _PCD8544_84X48_H_
 #define _PCD8544_84X48_H_
 
-#include <stdint.h>
+#include "hal/io.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -49,7 +49,7 @@ extern "C" {
  * @see ssd1306_i2cInit()
  * @see ssd1306_spiInit()
  */
-void pcd8544_84x48_init();
+void pcd8544_84x48_init(void);
 
 
 /**

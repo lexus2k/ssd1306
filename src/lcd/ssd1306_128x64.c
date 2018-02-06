@@ -30,8 +30,6 @@
 #include "spi/ssd1306_spi.h"
 #include "hal/io.h"
 
-#include <stdlib.h>
-
 static const uint8_t PROGMEM s_oled128x64_initData[] =
 {
     SSD1306_DISPLAYOFF, // display off
@@ -64,7 +62,7 @@ static void ssd1306_setBlock(uint8_t x, uint8_t y, uint8_t w)
     ssd1306_endTransmission();
 }
 
-static void ssd1306_nextPage()
+static void ssd1306_nextPage(void)
 {
 }
 
@@ -104,6 +102,12 @@ void    ssd1306_128x64_init()
 void    ssd1306_128x64_i2c_init()
 {
     ssd1306_i2cInit();
+    ssd1306_128x64_init();
+}
+
+void    ssd1306_128x64_i2c_initEx(int8_t scl, int8_t sda, int8_t sa)
+{
+    ssd1306_i2cInitEx(scl, sda, sa);
     ssd1306_128x64_init();
 }
 

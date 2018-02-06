@@ -30,7 +30,6 @@
 #define _SSD1306_I2C_H_
 
 #include "ssd1306_i2c_conf.h"
-#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -53,7 +52,7 @@ extern "C" {
  *
  * @note: after call to this function you need to initialize lcd display.
  */
-void         ssd1306_i2cInit();
+void         ssd1306_i2cInit(void);
 
 /**
  * Inits display interface to use i2c bus.
@@ -81,12 +80,12 @@ void ssd1306_i2cInitEx(int8_t scl, int8_t sda, int8_t sa);
 /**
  * Switches i2c chip to command transmission mode.
  */
-void         ssd1306_i2cCommandStart();
+void         ssd1306_i2cCommandStart(void);
 
 /**
  * Switches i2c chip to data transmission mode.
  */
-void         ssd1306_i2cDataStart();
+void         ssd1306_i2cDataStart(void);
 
 /**
  * @}
