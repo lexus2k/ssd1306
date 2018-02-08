@@ -1,7 +1,7 @@
 var searchData=
 [
   ['draw',['draw',['../struct_s_p_r_i_t_e.html#af3f35eab30dd39e4434b29923f0afab6',1,'SPRITE']]],
-  ['drawbitmap',['drawBitmap',['../class_tiny_s_s_d1306.html#ad3ee43e02ee331abaa450fcbfd6aa116',1,'TinySSD1306']]],
+  ['drawbitmap',['drawBitmap',['../class_nano_canvas.html#ad28f993fce34532404c4cdbafff5ea35',1,'NanoCanvas::drawBitmap()'],['../class_tiny_s_s_d1306.html#ad3ee43e02ee331abaa450fcbfd6aa116',1,'TinySSD1306::drawBitmap()']]],
   ['drawblock',['drawBlock',['../class_sprite_pool.html#a2eeb66784ec3c511fca27cf325ff98af',1,'SpritePool']]],
   ['drawbuffer',['drawBuffer',['../class_tiny_s_s_d1306.html#a94f2dc45f302497c0b5f149ef1425b7a',1,'TinySSD1306']]],
   ['drawhline',['drawHLine',['../class_nano_canvas.html#ac36d02cfedc701bc5b87f149480cbc1a',1,'NanoCanvas::drawHLine()'],['../class_tiny_s_s_d1306.html#a9f0a9b74c85265016b1c53247d770516',1,'TinySSD1306::drawHLine()']]],

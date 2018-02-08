@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['initfunction',['InitFunction',['../nano__gfx__types_8h.html#a7308ad79b9f8248342b0a805c02366c5',1,'nano_gfx_types.h']]],
+  ['initfunction',['InitFunction',['../nano__gfx__types_8h.html#aeb51e8c3a40de7886cdc7d9c74175f05',1,'nano_gfx_types.h']]],
   ['invert',['invert',['../class_nano_canvas.html#ae25cac1c7da55ee6df1e75275b92e626',1,'NanoCanvas']]],
   ['invertmode',['invertMode',['../class_tiny_s_s_d1306.html#af622214df2004757d864a53ace3a0bd6',1,'TinySSD1306']]],
   ['io_2eh',['io.h',['../arduino_2io_8h.html',1,'(Global Namespace)'],['../avr_2io_8h.html',1,'(Global Namespace)'],['../esp_2io_8h.html',1,'(Global Namespace)'],['../io_8h.html',1,'(Global Namespace)']]],

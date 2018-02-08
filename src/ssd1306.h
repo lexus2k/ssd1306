@@ -81,6 +81,28 @@ void         ssd1306_invertMode(void);
 void         ssd1306_normalMode(void);
 
 /**
+ * @brief performs horizontal flip
+ *
+ * Performs horizontal flip. If you need to turn display by 180 degree,
+ * please use both ssd1306_flipHorizontal() and ssd1306_flipVertical().
+ *
+ * @param mode - 0 to disable horizontal flip
+ *               1 to enable horizontal flip
+ */
+void         ssd1306_flipHorizontal(uint8_t mode);
+
+/**
+ * @brief performs vertical flip
+ *
+ * Performs vertical flip. If you need to turn display by 180 degree,
+ * please use both ssd1306_flipHorizontal() and ssd1306_flipVertical().
+ *
+ * @param mode - 0 to disable vertical flip
+ *               1 to enable vertical flip
+ */
+void         ssd1306_flipVertical(uint8_t mode);
+
+/**
  * Returns display height in pixels
  */
 uint8_t      ssd1306_displayHeight(void);

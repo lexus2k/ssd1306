@@ -14,6 +14,7 @@ var searchData=
   ['ssd1306_5fi2c_5fwire_2eh',['ssd1306_i2c_wire.h',['../ssd1306__i2c__wire_8h.html',1,'']]],
   ['ssd1306_5finterface_2eh',['ssd1306_interface.h',['../ssd1306__interface_8h.html',1,'']]],
   ['ssd1306_5fspi_2eh',['ssd1306_spi.h',['../ssd1306__spi_8h.html',1,'']]],
+  ['ssd1306_5fspi_5favr_2eh',['ssd1306_spi_avr.h',['../ssd1306__spi__avr_8h.html',1,'']]],
   ['ssd1306_5fspi_5fconf_2eh',['ssd1306_spi_conf.h',['../ssd1306__spi__conf_8h.html',1,'']]],
   ['ssd1306_5fspi_5fhw_2eh',['ssd1306_spi_hw.h',['../ssd1306__spi__hw_8h.html',1,'']]],
   ['ssd1331_5f96x64_2eh',['ssd1331_96x64.h',['../ssd1331__96x64_8h.html',1,'']]],

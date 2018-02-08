@@ -805,6 +805,22 @@ void         ssd1306_normalMode()
     }
 }
 
+void         ssd1306_flipHorizontal(uint8_t mode)
+{
+    if (g_lcd_type != LCD_TYPE_SSD1331)
+    { 
+         ssd1306_sendCommand( SSD1306_SEGREMAP | (mode ? 0x00: 0x01 ) );
+    }
+}
+
+void         ssd1306_flipVertical(uint8_t mode)
+{
+    if (g_lcd_type != LCD_TYPE_SSD1331)
+    { 
+         ssd1306_sendCommand( mode ? SSD1306_COMSCANINC : SSD1306_COMSCANDEC );
+    }
+}
+ 
 void         ssd1306_negativeMode()
 {
     s_invertByte = 0xFF;

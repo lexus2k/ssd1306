@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.4.6</span>
+   &#160;<span id="projectnumber">1.4.8</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331 RGB i2c/spi OLED displays and spi PCD8544 LED display</div>
   </td>
@@ -71,7 +71,7 @@ $(function() {
 <div class="title">ssd1306_interface.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="io_8h_source.html">hal/io.h</a>&quot;</code><br />
 </div>
 <p><a href="ssd1306__interface_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -84,25 +84,25 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga1568a7f33ff881981b0d8f68e64617dc"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga1568a7f33ff881981b0d8f68e64617dc">ssd1306_startTransmission</a> )()</td></tr>
-<tr class="separator:ga1568a7f33ff881981b0d8f68e64617dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab51dec92bb34de5137d4c96a4fc1460f"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gab51dec92bb34de5137d4c96a4fc1460f">ssd1306_endTransmission</a> )()</td></tr>
-<tr class="separator:gab51dec92bb34de5137d4c96a4fc1460f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga651554687d8adda2c9e9fe228a568e47"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga651554687d8adda2c9e9fe228a568e47">ssd1306_startTransmission</a> )(void)</td></tr>
+<tr class="separator:ga651554687d8adda2c9e9fe228a568e47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4c6fb9d3594588ca5aa37e942f9a622a"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga4c6fb9d3594588ca5aa37e942f9a622a">ssd1306_endTransmission</a> )(void)</td></tr>
+<tr class="separator:ga4c6fb9d3594588ca5aa37e942f9a622a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab199e63bf66cf4a217305dbfc561186f"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gab199e63bf66cf4a217305dbfc561186f">ssd1306_sendByte</a> )(uint8_t data)</td></tr>
 <tr class="separator:gab199e63bf66cf4a217305dbfc561186f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad3b0eb07f8b7f39fd460b641f1c7cb8c"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gad3b0eb07f8b7f39fd460b641f1c7cb8c">ssd1306_closeInterface</a> )()</td></tr>
-<tr class="memdesc:gad3b0eb07f8b7f39fd460b641f1c7cb8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">deinitializes internal resources, allocated for interface.  <a href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gad3b0eb07f8b7f39fd460b641f1c7cb8c">More...</a><br /></td></tr>
-<tr class="separator:gad3b0eb07f8b7f39fd460b641f1c7cb8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8caf7796654ece8e88d853c5d580cb72"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga8caf7796654ece8e88d853c5d580cb72">ssd1306_closeInterface</a> )(void)</td></tr>
+<tr class="memdesc:ga8caf7796654ece8e88d853c5d580cb72"><td class="mdescLeft">&#160;</td><td class="mdescRight">deinitializes internal resources, allocated for interface.  <a href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga8caf7796654ece8e88d853c5d580cb72">More...</a><br /></td></tr>
+<tr class="separator:ga8caf7796654ece8e88d853c5d580cb72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7d4412279ca68cefacd2b471be3d483e"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga7d4412279ca68cefacd2b471be3d483e">ssd1306_sendPixels</a> )(uint8_t data)</td></tr>
 <tr class="separator:ga7d4412279ca68cefacd2b471be3d483e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga21f7ab77b2c88640f65830207891be6a"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga21f7ab77b2c88640f65830207891be6a">ssd1306_commandStart</a> )()</td></tr>
-<tr class="separator:ga21f7ab77b2c88640f65830207891be6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4bab894049fd128d1bb70ffe7f2b7860"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga4bab894049fd128d1bb70ffe7f2b7860">ssd1306_dataStart</a> )()</td></tr>
-<tr class="separator:ga4bab894049fd128d1bb70ffe7f2b7860"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5725b40dce23a58c2511a16b86ddf54a"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga5725b40dce23a58c2511a16b86ddf54a">ssd1306_commandStart</a> )(void)</td></tr>
+<tr class="separator:ga5725b40dce23a58c2511a16b86ddf54a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a298e013f1049e106fbb7e87e84eea0"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga5a298e013f1049e106fbb7e87e84eea0">ssd1306_dataStart</a> )(void)</td></tr>
+<tr class="separator:ga5a298e013f1049e106fbb7e87e84eea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadd0f99f7f4f9bae0c1035ada7f578a05"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gadd0f99f7f4f9bae0c1035ada7f578a05">ssd1306_setRamBlock</a> )(uint8_t x, uint8_t y, uint8_t w)</td></tr>
 <tr class="separator:gadd0f99f7f4f9bae0c1035ada7f578a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacb44b0f1d772d7a7d395ed402cb145a3"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gacb44b0f1d772d7a7d395ed402cb145a3">ssd1306_nextRamPage</a> )()</td></tr>
-<tr class="separator:gacb44b0f1d772d7a7d395ed402cb145a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadff118efa02a2fc3f14b06cfd0ba8f9f"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gadff118efa02a2fc3f14b06cfd0ba8f9f">ssd1306_nextRamPage</a> )(void)</td></tr>
+<tr class="separator:gadff118efa02a2fc3f14b06cfd0ba8f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>SSD1306 interface functions. </p>
