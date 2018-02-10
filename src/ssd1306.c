@@ -657,6 +657,64 @@ void ssd1306_drawBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_
     ssd1306_endTransmission();
 }
 
+void gfx_drawMonoBitmap(int x, int y, int w, int h, const uint8_t *buf)
+{
+    int origin_width = w;
+    uint8_t offset = y & 0x07;
+    uint8_t complexFlag = 0;
+    uint8_t mainFlag = 1;
+    if (y + h <= 0)           return;
+    if (y >= s_displayHeight) return;
+    if (x + w <= 0)           return;
+    if (x >= s_displayWidth)  return;
+    if (y < 0)
+    {
+         buf += ((-y + 7) >> 3) * w;
+         h += y;
+         y = 0;
+         complexFlag = 1;
+    }
+    if (x < 0)
+    {
+         buf += -x;
+         w += x;
+         x = 0;
+    }
+    uint8_t max_pages = (h + 7) >> 3;
+    if (y > (int)s_displayHeight - h)
+    {
+         h = (int)s_displayHeight - y;
+    }
+    if (x > (int)s_displayWidth - w)
+    {
+         w = (int)s_displayWidth - x;
+    }
+    uint8_t *buf2 = buf - origin_width;
+    uint8_t pages = (h + 7) >> 3;
+    uint8_t i, j;
+
+    ssd1306_setRamBlock(x, y >> 3, w);
+    ssd1306_dataStart();
+    for(j=0; j < pages; j++)
+    {
+        if ( j == max_pages - 1 ) mainFlag = !offset;
+        buf2 = buf - origin_width;
+        for( i=0; i < w; i++)
+        {       
+            uint8_t data = 0;
+            if ( mainFlag )  data |= (pgm_read_byte(buf) << offset);
+            if ( complexFlag )        data |= (pgm_read_byte(buf2) >> (8-offset));
+            buf++;
+            buf2++;
+            ssd1306_sendPixels(s_invertByte^data);
+        }
+        buf += origin_width - w;
+        complexFlag = offset;
+        ssd1306_nextRamPage();
+    }
+    ssd1306_endTransmission();
+}
+
 
 void ssd1306_clearBlock(uint8_t x, uint8_t y, uint8_t w, uint8_t h)
 {

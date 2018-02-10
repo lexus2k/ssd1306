@@ -392,6 +392,16 @@ void         ssd1306_drawBuffer(uint8_t x, uint8_t y, uint8_t w, uint8_t h, cons
  */
 void         ssd1306_drawBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf);
 
+/**
+ * Draws bitmap, located in Flash, on the display
+ *
+ * @param x - horizontal position in pixels
+ * @param y - vertical position in pixels
+ * @param w - width of bitmap in pixels
+ * @param h - height of bitmap in pixels (must be divided by 8)
+ * @param buf - pointer to data, located in Flash: each byte represents 8 vertical pixels.
+ */
+void         gfx_drawMonoBitmap(int x, int y, int w, int h, const uint8_t *buf);
 
 /**
  * Fills block with black pixels
