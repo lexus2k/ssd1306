@@ -341,7 +341,12 @@ void drawPlatform()
 
 void drawBlock(uint8_t x, uint8_t y)
 {
-    ssd1306_drawSpriteEx(LEFT_EDGE + 1 + (x << 4), y, 16, &blockImages[gameField[y][x]][0]);
+    uint8_t block = gameField[y][x];
+    if (block == 1) ssd1331_setColor(RGB_COLOR8(64,64,255));
+    else if (block == 2) ssd1331_setColor(RGB_COLOR8(64,255,255));
+    else if (block == 3) ssd1331_setColor(RGB_COLOR8(64,255,64));
+    else ssd1331_setColor(RGB_COLOR8(64,64,255));
+    ssd1306_drawSpriteEx(LEFT_EDGE + 1 + (x << 4), y, 16, &blockImages[block][0]);
 }
 
 
@@ -371,7 +376,6 @@ void drawBlocks()
     {
         for (uint8_t bl = 0; bl<BLOCKS_PER_ROW; bl++)
         {
-            ssd1331_setColor(RGB_COLOR8(64,64,255));
             drawBlock(bl, r);
         }
     }
