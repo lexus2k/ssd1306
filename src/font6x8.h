@@ -34,6 +34,9 @@ extern const PROGMEM uint8_t ssd1306xled_font6x8_AB [];
 /** Standard ASCII 5x7 font */
 extern const PROGMEM uint8_t ssd1306xled_font5x7 [];
 
+/** Standard ASCII 5x7 font with only capital letters */
+extern const PROGMEM uint8_t ssd1306xled_font5x7_AB [];
+
 /**
  * @}
  */
