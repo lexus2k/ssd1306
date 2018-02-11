@@ -59,7 +59,7 @@ const PROGMEM uint8_t blockImages[BLOCKS_MAX][16] =
         0B00000000,
         0B00000000
     },
-    {   /* SIMPLE */
+    {   /* SIMPLE 1 */
         0B00000000,
         0B00111100,
         0B01111110,
@@ -77,7 +77,7 @@ const PROGMEM uint8_t blockImages[BLOCKS_MAX][16] =
         0B00111100,
         0B00000000
     },
-    {   /* DASHED */
+    {   /* DASHED 2 */
         0B00000000,
         0B00111100,
         0B01010010,
@@ -95,7 +95,7 @@ const PROGMEM uint8_t blockImages[BLOCKS_MAX][16] =
         0B00111100,
         0B00000000
     },  
-    {   /* STRONG */
+    {   /* STRONG 3 */
         0B00000000,
         0B00111100,
         0B01111110,
@@ -113,7 +113,7 @@ const PROGMEM uint8_t blockImages[BLOCKS_MAX][16] =
         0B00111100,
         0B00000000
     },
-    {   /* BOMB */
+    {   /* BOMB 4 */
         0B00000000,
         0B00111100,
         0B01111110,
@@ -131,7 +131,7 @@ const PROGMEM uint8_t blockImages[BLOCKS_MAX][16] =
         0B00111100,
         0B00000000
     },
-    {   /* HEART */
+    {   /* HEART 5 */
         0B00000000,
         0B00111100,
         0B01111110,
@@ -149,7 +149,7 @@ const PROGMEM uint8_t blockImages[BLOCKS_MAX][16] =
         0B00111100,
         0B00000000
     },  
-    {   /* POWER */
+    {   /* POWER 6 */
         0B00000000,
         0B00111100,
         0B01111110,
