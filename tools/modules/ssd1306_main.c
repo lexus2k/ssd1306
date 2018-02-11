@@ -196,7 +196,7 @@ static int __init ssd1306_driver_init(void)
 {
 	int ret;
 	struct i2c_adapter *adapter = NULL;
-	struct board_info = {
+	struct i2c_board_info board_info = {
 		.type = "ssd1306",
 		.addr = addr,
 
