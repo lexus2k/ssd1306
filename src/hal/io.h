@@ -34,5 +34,13 @@
 #include "esp/io.h"
 #include "linux/io.h"
 
+#ifndef LCDINT_TYPES_DEFINED
+#define LCDINT_TYPES_DEFINED
+/** internal int type, used by ssd1306 library. Important for uC with low SRAM */
+typedef int lcdint_t;
+/** internal int type, used by ssd1306 library. Important for uC with low SRAM */
+typedef unsigned int lcduint_t;
+#endif
+
 #endif                                               
 

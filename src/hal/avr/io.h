@@ -45,6 +45,9 @@
 #if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
     /** The macro is defined when software i2c implementation is available */
     #define SSD1306_I2C_SW_SUPPORTED
+    #define LCDINT_TYPES_DEFINED
+    typedef int8_t lcdint_t;
+    typedef uint8_t lcduint_t;
 #elif defined(__AVR_ATmega328P__)
     /** The macro is defined when software i2c implementation is available */
     #define SSD1306_I2C_SW_SUPPORTED

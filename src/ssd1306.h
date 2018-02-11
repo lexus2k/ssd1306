@@ -255,7 +255,6 @@ uint8_t      ssd1306_charF6x8_eol(uint8_t left,
                                   EFontStyle style,
                                   uint8_t right) __attribute__ ((deprecated));
 
-
 /**
  * Function allows to set another fixed font for the library.
  * By default, the font supports only first 128 - 32 ascii chars.
@@ -326,7 +325,6 @@ void         ssd1306_putPixels(uint8_t x, uint8_t y, uint8_t pixels);
  * @param y2 - bottom boundary int pixel units
  */
 void         ssd1306_drawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
-
 
 /**
  * Draws line
@@ -401,7 +399,7 @@ void         ssd1306_drawBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, cons
  * @param h - height of bitmap in pixels (must be divided by 8)
  * @param buf - pointer to data, located in Flash: each byte represents 8 vertical pixels.
  */
-void         gfx_drawMonoBitmap(int x, int y, int w, int h, const uint8_t *buf);
+void         gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buf);
 
 /**
  * Fills block with black pixels
@@ -412,7 +410,6 @@ void         gfx_drawMonoBitmap(int x, int y, int w, int h, const uint8_t *buf);
  * @note usually this method is used to erase bitmap on the screen.
  */
 void         ssd1306_clearBlock(uint8_t x, uint8_t y, uint8_t w, uint8_t h);
-
 
 /**
  * Draws bitmap, located in Flash, on the display. This sprite must have wx8 size
@@ -517,7 +514,6 @@ void ssd1306_showMenu(SAppMenu *menu);
  */
 void ssd1306_updateMenu(SAppMenu *menu);
 
-
 /**
  * Returns currently selected menu item.
  * First item has zero-index.
@@ -525,7 +521,6 @@ void ssd1306_updateMenu(SAppMenu *menu);
  * @param menu - Pointer to SAppMenu structure
  */
 uint8_t ssd1306_menuSelection(SAppMenu *menu);
-
 
 /**
  * Moves selection pointer down by 1 item. If there are no items below,
@@ -535,7 +530,6 @@ uint8_t ssd1306_menuSelection(SAppMenu *menu);
  * @param menu - Pointer to SAppMenu structure
  */
 void ssd1306_menuDown(SAppMenu *menu);
-
 
 /**
  * Moves selection pointer up by 1 item. If selected item is the first one,
