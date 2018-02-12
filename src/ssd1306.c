@@ -664,9 +664,9 @@ void gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const 
     uint8_t offset = y & 0x07;
     uint8_t complexFlag = 0;
     uint8_t mainFlag = 1;
-    if (y + h <= 0)           return;
+    if (y + (lcdint_t)h <= 0) return;
     if (y >= s_displayHeight) return;
-    if (x + w <= 0)           return;
+    if (x + (lcdint_t)w <= 0) return;
     if (x >= s_displayWidth)  return;
     if (y < 0)
     {
