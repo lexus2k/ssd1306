@@ -47,6 +47,7 @@
 #if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
     /** The macro is defined when software i2c implementation is available */
     #define SSD1306_I2C_SW_SUPPORTED
+    /** The macro is defined when USI module is available for use */
     #define SSD1306_USI_SPI_SUPPORTED
     #define LCDINT_TYPES_DEFINED
     typedef int8_t lcdint_t;

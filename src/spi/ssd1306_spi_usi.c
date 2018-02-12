@@ -32,6 +32,7 @@
 #ifdef SSD1306_USI_SPI_SUPPORTED
 
 #include <stdlib.h>
+#include <util/atomic.h>
 
 #define PORT_SPI    PORTB
 #define DDR_SPI     DDRB
@@ -44,8 +45,8 @@ static void ssd1306_spiConfigure_Usi()
     DDR_SPI |= (1<<DD_DO); // as output (DO) - data out
     DDR_SPI |= (1<<DD_SCK); // as output (USISCK) - clock
     /* DI pin is still used by USI, although ssd1306 library doesn't need it */
-//    DDR_SPI &= ~(1<<PB5); // as input (DI) - data in
-//    PORT_SPI|= (1<<PB5); // pullup on (DI)
+//    DDR_SPI &= ~(1<<DD_DI); // as input (DI) - data in
+//    PORT_SPI|= (1<<DD_DI); // pullup on (DI)
 }
 
 static void ssd1306_spiClose_Usi()
@@ -58,17 +59,20 @@ static void ssd1306_spiStart_Usi()
     {
         digitalWrite(s_ssd1306_cs,LOW);
     }
+    USICR = (0<<USIWM1) | (1<<USIWM0) |
+            (1<<USICS1) | (0<<USICS0) | (1<<USICLK);
 }
 
 static void ssd1306_spiSendByte_Usi(uint8_t data)
 {
     USIDR = data;
-    USISR = (1<<USIOIF); // clear flag
-    while ( (USISR & (1<<USIOIF)) == 0 )
+    USISR = (1<<USIOIF);
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
     {
-        USICR = (0<<USIWM1)|(1<<USIWM0)|
-                (1<<USICS1)|(0<<USICS0)|(1<<USICLK)|
-                (1<<USITC);
+        while ( (USISR & (1<<USIOIF)) == 0 )
+        {
+            USICR |= (1<<USITC);
+        }
     }
 }
 
@@ -84,14 +88,23 @@ static void ssd1306_spiStop_Usi()
         ssd1306_spiSendByte_Usi( 0x00 ); // Send NOP command to allow last data byte to pass (bug in PCD8544?)
                                          // ssd1306 E3h is NOP command
     }
+//    USICR &= ~((1<<USIWM1) | (1<<USIWM0));
 }
 
 void ssd1306_spiInit_Usi(int8_t cesPin, int8_t dcPin)
 {
-    if (cesPin >=0) pinMode(cesPin, OUTPUT);
+    if (cesPin >=0)
+    {
+        pinMode(cesPin, OUTPUT);
+        digitalWrite(cesPin, HIGH);
+    }
     if (dcPin >= 0) pinMode(dcPin, OUTPUT);
-    if (cesPin) s_ssd1306_cs = cesPin;
-    if (dcPin) s_ssd1306_dc = dcPin;
+    if ((cesPin >= 0) || (dcPin >= 0))
+    {
+        /* Even if CS pin is not used we need still to set it to value passed to the function */
+        s_ssd1306_cs = cesPin;
+        s_ssd1306_dc = dcPin;
+    }
     ssd1306_spiConfigure_Usi();
     ssd1306_startTransmission = ssd1306_spiStart_Usi;
     ssd1306_endTransmission = ssd1306_spiStop_Usi;

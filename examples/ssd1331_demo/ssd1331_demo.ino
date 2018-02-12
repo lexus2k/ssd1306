@@ -23,6 +23,7 @@
 */
 /**
  *   Nano/Atmega328 PINS: connect LCD to D5 (D/C), D4 (CS), D3 (RES), D11(DIN), D13(CLK)
+ *   Attiny SPI PINS:     connect LCD to D4 (D/C), GND (CS), D3 (RES), D1(DIN), D2(CLK)
  *   ESP8266: connect LCD to D1(D/C), D2(CS), RX(RES), D7(DIN), D5(CLK)
  */
 
@@ -162,6 +163,7 @@ void setup()
 {
     ssd1306_setFixedFont(ssd1306xled_font6x8);
     ssd1331_96x64_spi_init(3, 4, 5);
+//    ssd1331_96x64_spi_init(3, -1, 4); // Use this line for ATTINY
 
     ssd1306_fillScreen( 0x00 );
     ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );

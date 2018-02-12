@@ -29,8 +29,9 @@
  *   SDA (4) -|    |- (1)
  *   GND     -|____|- (0)
  *
- *   Nano/Atmega328 PINS: connect LCD to A4/A5 (i2c)
+ *   Attiny SPI PINS:     connect LCD to D4 (D/C), GND (CS), D3 (RES), D1(DIN), D2(CLK)
  *   
+ *   Nano/Atmega328 PINS: connect LCD to A4/A5 (i2c)
  *   ESP8266: GPIO4(SDA) / GPIO5( SCL )
  */
 
@@ -171,9 +172,10 @@ void setup()
     /* Do not init Wire library for Attiny controllers */
     ssd1306_128x64_i2c_init();
 
-    /* Uncomment lines below if you want to use SPI Nokia 5110 LCD */
+    /* Uncomment line below if you want to use SPI Nokia 5110 LCD */
 /*
-    pcd8544_84x48_spi_init(3, 4, 5);
+    pcd8544_84x48_spi_init(3, 4, 5);  // FOR ATMEGA
+    pcd8544_84x48_spi_init(3, -1, 4); // FOR ATTINY
 */
 
     ssd1306_fillScreen( 0x00 );
