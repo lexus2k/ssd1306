@@ -34,8 +34,10 @@
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
 #include <avr/sleep.h>
+#include <avr/eeprom.h>
 #include <util/delay.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 #define LOW  0
 #define HIGH 1
@@ -45,6 +47,7 @@
 #if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
     /** The macro is defined when software i2c implementation is available */
     #define SSD1306_I2C_SW_SUPPORTED
+    #define SSD1306_USI_SPI_SUPPORTED
     #define LCDINT_TYPES_DEFINED
     typedef int8_t lcdint_t;
     typedef uint8_t lcduint_t;
@@ -64,6 +67,10 @@
     #define SSD1306_AVR_SPI_SUPPORTED
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void digitalWrite(int pin, int level);
 static inline int  digitalRead(int pin) { return LOW; };
 void pinMode(int pin, int mode);
@@ -72,6 +79,10 @@ static inline int  analogRead(int pin) { return 0; };
 static inline uint32_t millis() { return 0; };
 static inline void randomSeed(int seed) { };
 static inline void attachInterrupt(int pin, void (*interrupt)(), int level) { };
+
+#ifdef __cplusplus
+}
+#endif
 
 #ifdef __cplusplus
 static inline int random(int max) { return 0; };

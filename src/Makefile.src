@@ -34,6 +34,7 @@ SRCS_C = \
 	i2c/ssd1306_i2c_linux.c \
 	spi/ssd1306_spi.c \
 	spi/ssd1306_spi_avr.c \
+	spi/ssd1306_spi_usi.c \
 	intf/ssd1306_interface.c \
 	lcd/pcd8544_84x48.c \
 	lcd/sh1106_128x64.c \
