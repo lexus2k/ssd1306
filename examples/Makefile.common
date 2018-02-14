@@ -74,7 +74,7 @@ LDFLAGS += -L$(BLD) -lssd1306
 ####################### Compiling library #########################
 
 ssd1306:
-	$(MAKE) -C ../src -f Makefile.$(platform) MCU=$(MCU)
+	$(MAKE) -C ../src -f Makefile.$(platform) MCU=$(MCU) SDL_EMULATION=$(SDL_EMULATION)
 
 all: $(BLD)/$(PROJECT).out
 

@@ -21,34 +21,56 @@
 #    SOFTWARE.
 #
 #################################################################
-# Makefile to build ssd1306 examples for Linux
+# Makefile containing common logic for all systems
 #
-# Accept the following parameters:
+# Accepts the following parameters:
 # CC
 # CXX
 # STRIP
 # AR
-# MCU
-# FREQUENCY
 
 default: all
 
-platform=linux
+DESTDIR ?=
+BLD ?= ../../bld
 
-CCFLAGS += -g -Os -w -ffreestanding
+.SUFFIXES: .c .cpp .ino
 
-include Makefile.common
+$(BLD)/%.o: %.c
+	mkdir -p $(dir $@)
+	$(CC) -std=gnu11 $(CCFLAGS) -c $< -o $@
 
-ifeq ($(SDL_EMULATION),y)
-     CCFLAGS += -I../tools/sdl -DSDL_EMULATION
-     LDFLAGS +=  -lssd1306_sdl $(shell sdl2-config --libs)
-endif
+$(BLD)/%.o: %.ino
+	mkdir -p $(dir $@)
+	$(CXX) -std=c++11 $(CCFLAGS) -x c++ -c $< -o $@
 
-flash: $(BLD)/$(PROJECT).out
-	$(BLD)/$(PROJECT).out
+$(BLD)/%.o: %.cpp
+	mkdir -p $(dir $@)
+	$(CXX) -std=c++11 $(CCFLAGS) -c $< -o $@
 
-ifeq ($(SDL_EMULATION),y)
-$(BLD)/$(PROJECT).out: ssd1306_sdl
-ssd1306_sdl:
-	$(MAKE) -C ../tools/sdl -f Makefile
-endif
+# ************* Common defines ********************
+
+INCLUDES += \
+        -I.
+
+CCFLAGS += -g -Os $(INCLUDES) -Wall -Werror -ffunction-sections -fdata-sections \
+	-fno-exceptions -Wno-error=deprecated-declarations
+
+.PHONY: clean ssd1306_sdl all
+
+SRCS = \
+	sdl_core.c \
+
+OBJS = $(addprefix $(BLD)/, $(addsuffix .o, $(basename $(SRCS))))
+
+####################### Compiling library #########################
+
+$(BLD)/libssd1306_sdl.a: $(OBJS)
+	$(AR) rcs $@ $(OBJS)
+
+ssd1306_sdl: $(BLD)/libssd1306_sdl.a
+
+all: ssd1306_sdl
+
+clean:
+	rm -rf $(BLD)

@@ -56,6 +56,10 @@ INCLUDES += \
 CCFLAGS += -g -Os $(INCLUDES) -Wall -Werror -ffunction-sections -fdata-sections \
 	-fno-exceptions -Wno-error=deprecated-declarations
 
+ifeq ($(SDL_EMULATION),y)
+    CCFLAGS += -DSDL_EMULATION -I../tools/sdl
+endif
+
 .PHONY: clean ssd1306 all
 
 include Makefile.src

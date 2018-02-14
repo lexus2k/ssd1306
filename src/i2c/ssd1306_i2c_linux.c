@@ -31,6 +31,9 @@
 
 #include <stdio.h>
 #include <unistd.h>
+
+#if !defined(SDL_EMULATION)
+
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <linux/i2c-dev.h>
@@ -119,6 +122,43 @@ void ssd1306_i2cInit_Linux(int8_t busId, uint8_t sa)
     ssd1306_commandStart = ssd1306_i2cCommandStart;
     ssd1306_dataStart = ssd1306_i2cDataStart;
 }
+
+#else /* SDL_EMULATION */
+
+#include "sdl_core.h"
+
+static void ssd1306_i2cStart_Linux(void)
+{
+    sdl_send_init();
+}
+
+static void ssd1306_i2cStop_Linux(void)
+{
+    sdl_send_stop();
+}
+
+static void ssd1306_i2cSendByte_Linux(uint8_t data)
+{
+    sdl_send_byte(data);
+}
+
+static void ssd1306_i2cClose_Linux()
+{
+    sdl_core_close();
+}
+
+void ssd1306_i2cInit_Linux(int8_t busId, uint8_t sa)
+{
+    sdl_core_init();
+    ssd1306_startTransmission = ssd1306_i2cStart_Linux;
+    ssd1306_endTransmission = ssd1306_i2cStop_Linux;
+    ssd1306_sendByte = ssd1306_i2cSendByte_Linux;
+    ssd1306_closeInterface = ssd1306_i2cClose_Linux;
+    ssd1306_commandStart = ssd1306_i2cCommandStart;
+    ssd1306_dataStart = ssd1306_i2cDataStart;
+}
+
+#endif /* SDL_EMULATION */
 
 #endif
 

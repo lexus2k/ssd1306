@@ -22,46 +22,20 @@
     SOFTWARE.
 */
 
-/**
- * @file ssd1306_spi_usi.h SSD1306 SPI USI communication functions
- */
+#ifndef _SDL_CORE_H_
+#define _SDL_CORE_H_
 
-#ifndef _SSD1306_SPI_USI_H_
-#define _SSD1306_SPI_USI_H_
+#include <stdint.h>
 
-#include "ssd1306_spi_conf.h"
-#include "hal/io.h"
+extern void sdl_core_init(void);
+extern void sdl_core_draw(void);
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+extern void sdl_send_init();
+extern void sdl_send_byte(uint8_t data);
+extern void sdl_send_stop();
 
-/**
- * @defgroup LCD_INTERFACE_API LCD communication interface functions
- * @{
- */
+extern void sdl_core_close(void);
 
-#ifdef SSD1306_USI_SPI_SUPPORTED
-
-/**
- * Inits lcd interface to use USI for SPI communication.
- * It uses standard USI CLK, USI DO, USI DI pins to send data to LCD.
- * @param cesPin - pin, controlling chip enable of LCD
- * @param dcPin - pin, controlling data/command mode of LCD
- *
- * @note: after call to this function you need to initialize lcd display.
- */
-void         ssd1306_spiInit_Usi(int8_t cesPin, int8_t dcPin);
 
 #endif
 
-/**
- * @}
- */
-
-#ifdef __cplusplus
-}
-#endif
-
-// ----------------------------------------------------------------------------
-#endif // _SSD1306_SPI_USI_H_
