@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2018, Alexey Dynda
+    Copyright (c) 2018, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,43 +22,40 @@
     SOFTWARE.
 */
 
-
-#include "ssd1306_spi.h"
-#include "ssd1306_spi_hw.h"
-#include "ssd1306_spi_avr.h"
-#include "ssd1306_spi_usi.h"
 #include "ssd1306_spi_linux.h"
 #include "intf/ssd1306_interface.h"
-#include "lcd/lcd_common.h"
-#include "hal/io.h"
+#include "ssd1306_spi_conf.h"
+#include "ssd1306_spi.h"
 
-int8_t s_ssd1306_cs = 4;
-int8_t s_ssd1306_dc = 5;
+#if defined(SSD1306_LINUX_SUPPORTED) && !defined(__KERNEL__)
 
-void ssd1306_spiInit(int8_t cesPin, int8_t dcPin)
+#include <stdio.h>
+#include <unistd.h>
+
+#if !defined(SDL_EMULATION)
+
+/// NO SUPPORT FOR LINUX YET!
+void ssd1306_spiInit_Linux(int8_t cesPin, int8_t dcPin)
 {
-#ifdef SSD1306_SPI_SUPPORTED
-    ssd1306_spiConfigure_hw();
-    ssd1306_spiInit_hw(cesPin, dcPin);
-#elif defined(SSD1306_AVR_SPI_SUPPORTED)
-    ssd1306_spiInit_avr(cesPin, dcPin);
-#elif defined(SSD1306_USI_SPI_SUPPORTED)
-    ssd1306_spiInit_Usi(cesPin, dcPin);
-#elif defined(SSD1306_LINUX_SUPPORTED)
-    ssd1306_spiInit_Linux(cesPin, dcPin);
+}
+
+#else /* SDL_EMULATION */
+
+#include "sdl_core.h"
+
+void ssd1306_spiInit_Linux(int8_t cesPin, int8_t dcPin)
+{
+    sdl_core_init();
+    ssd1306_startTransmission = sdl_send_init;
+    ssd1306_endTransmission = sdl_send_stop;
+    ssd1306_sendByte = sdl_send_byte;
+    ssd1306_closeInterface = sdl_core_close;
+    ssd1306_commandStart = sdl_command_start;
+    ssd1306_dataStart = sdl_data_start;
+}
+
+#endif /* SDL_EMULATION */
+
 #endif
-}
-
-void ssd1306_spiCommandStart()
-{
-    digitalWrite(s_ssd1306_dc, LOW);
-    ssd1306_startTransmission();
-}
-
-void ssd1306_spiDataStart()
-{
-    digitalWrite(s_ssd1306_dc, HIGH);
-    ssd1306_startTransmission();
-}
 
 

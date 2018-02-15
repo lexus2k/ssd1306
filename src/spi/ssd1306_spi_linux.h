@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2018, Alexey Dynda
+    Copyright (c) 2018, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,43 +22,48 @@
     SOFTWARE.
 */
 
+/**
+ * @file ssd1306_spi_linux.h SSD1306 spi communication functions for standard Linux SPI interface
+ */
 
-#include "ssd1306_spi.h"
-#include "ssd1306_spi_hw.h"
-#include "ssd1306_spi_avr.h"
-#include "ssd1306_spi_usi.h"
-#include "ssd1306_spi_linux.h"
-#include "intf/ssd1306_interface.h"
-#include "lcd/lcd_common.h"
+#ifndef _SSD1306_SPI_LINUX_H_
+#define _SSD1306_SPI_LINUX_H_
+
 #include "hal/io.h"
+#include "ssd1306_spi_conf.h"
 
-int8_t s_ssd1306_cs = 4;
-int8_t s_ssd1306_dc = 5;
+#ifdef SSD1306_LINUX_SUPPORTED
 
-void ssd1306_spiInit(int8_t cesPin, int8_t dcPin)
-{
-#ifdef SSD1306_SPI_SUPPORTED
-    ssd1306_spiConfigure_hw();
-    ssd1306_spiInit_hw(cesPin, dcPin);
-#elif defined(SSD1306_AVR_SPI_SUPPORTED)
-    ssd1306_spiInit_avr(cesPin, dcPin);
-#elif defined(SSD1306_USI_SPI_SUPPORTED)
-    ssd1306_spiInit_Usi(cesPin, dcPin);
-#elif defined(SSD1306_LINUX_SUPPORTED)
-    ssd1306_spiInit_Linux(cesPin, dcPin);
+#ifdef __cplusplus
+extern "C" {
 #endif
-}
 
-void ssd1306_spiCommandStart()
-{
-    digitalWrite(s_ssd1306_dc, LOW);
-    ssd1306_startTransmission();
-}
+/**
+ * @defgroup LCD_INTERFACE_API LCD communication interface functions
+ * @{
+ */
 
-void ssd1306_spiDataStart()
-{
-    digitalWrite(s_ssd1306_dc, HIGH);
-    ssd1306_startTransmission();
+/**
+ * Inits lcd interface to use  SPI for communication.
+ * It uses standard MOSI, SCLK pins to send data to LCD.
+ * @param cesPin - pin, controlling chip enable of LCD
+ * @param dcPin - pin, controlling data/command mode of LCD
+ *
+ * @note: after call to this function you need to initialize lcd display.
+ * @warning: Nowadays this communication works only in SDL Emulation mode!
+ */
+void ssd1306_spiInit_Linux(int8_t cesPin, int8_t dcPin);
+
+/**
+ * @}
+ */
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif
+
+#endif /* _SSD1306_SPI_LINUX_H_ */
 
 
