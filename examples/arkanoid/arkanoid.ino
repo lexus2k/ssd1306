@@ -58,11 +58,15 @@
 #include "ssd1306.h"
 #include "i2c/ssd1306_i2c_wire.h"
 #include "i2c/ssd1306_i2c_embedded.h"
+#include "i2c/ssd1306_i2c_linux.h"
 #include "intf/ssd1306_interface.h"
 
 #include <stdlib.h>
 
 //#define ARKANOID_SSD1331
+#if defined(ESP32) || defined(ESP8266) || (defined(__linux__))
+#define DEEP_SLEEP_NOT_SUPPORTED
+#endif
 
 #include "levels.h"
 #include "blocks.h"
@@ -179,6 +183,8 @@ void setup()
     #endif
     pinMode(BUZZER, OUTPUT);
     sei();                      // enable all interrupts
+#elif defined(SSD1306_LINUX_SUPPORTED)
+    // no need to do anything here
 #elif defined(SSD1306_I2C_SW_SUPPORTED)
     #error "Not supported microcontroller or board"
 #else
@@ -244,6 +250,8 @@ void drawIntro()
     ssd1306_i2cInit_Wire(0);
 #elif defined(SSD1306_I2C_SW_SUPPORTED)
     ssd1306_i2cInit_Embedded(-1,-1,0);
+#elif defined(SSD1306_LINUX_SUPPORTED)
+    ssd1306_i2cInit_Linux(-1,-1);
 #else
     #error "Not supported microcontroller or board"
 #endif
@@ -772,7 +780,7 @@ void beep(int bCount,int bDelay)
     digitalWrite(BUZZER,LOW);
 }
 
-#if defined(ESP32) || defined(ESP8266)
+#ifdef DEEP_SLEEP_NOT_SUPPORTED
 
 void system_sleep()
 {
