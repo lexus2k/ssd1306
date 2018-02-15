@@ -42,5 +42,6 @@ typedef int lcdint_t;
 typedef unsigned int lcduint_t;
 #endif
 
-#endif                                               
+#endif
+
 
