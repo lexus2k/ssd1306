@@ -112,7 +112,7 @@ public:
      * Clears canvas
      */
     void clear();
-    
+
     /**
      * Prints text to canvas buffer
      * @param x - start position X
