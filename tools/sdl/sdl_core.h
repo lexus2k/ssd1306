@@ -30,6 +30,8 @@
 extern void sdl_core_init(void);
 extern void sdl_core_draw(void);
 
+extern void sdl_command_start();
+extern void sdl_data_start();
 extern void sdl_send_init();
 extern void sdl_send_byte(uint8_t data);
 extern void sdl_send_stop();
