@@ -35,14 +35,16 @@ print_help_and_exit()
     echo "        -p      platform to compile for: avr, linux"
     echo "        -m      mcu to compiler for: atmega328p, attiny85, etc.."
     echo "        -f      flash controller after build or run executable for Linux"
+    echo "        -e      start OLED emulation mode with SDL (Linux only)"
     exit 1
 }
 
-while getopts ":p::m::f" opt; do
+while getopts ":f:e:p::m:" opt; do
   case $opt in
     p) platform=$OPTARG;;
     m) mcu=$OPTARG;;
     f) flash_target=flash;;
+    e) extra_args="$extra_args SDL_EMULATION=y";;
     \?)
       echo "Invalid option: -$OPTARG" >&2
       print_help_and_exit
