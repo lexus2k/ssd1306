@@ -80,11 +80,9 @@ static void ssd1306_i2cSendByte_Wire(uint8_t data)
 #endif
     {
         ssd1306_i2cStop_Wire();
-        ssd1306_i2cStart_Wire();
+        ssd1306_i2cDataStart();
         /* Commands never require many bytes. Thus assume that user tries to send data */
-        Wire.write(0x40);
-        s_bytesWritten++;
-    }        
+    }
     Wire.write(data);
     s_bytesWritten++;
 }
