@@ -58,15 +58,16 @@ static uint16_t s_color = 0xFF;
 
 static void ssd1331_setBlock(uint8_t x, uint8_t y, uint8_t w)
 {
+    uint8_t rx = w ? (x + w - 1) : (s_displayWidth - 1);
     s_column = x;
     s_page = y;
     ssd1306_commandStart();
     ssd1306_sendByte(SSD1331_COLUMNADDR);
     ssd1306_sendByte(x);
-    ssd1306_sendByte(w ? (x + w - 1) : (s_displayWidth - 1));
+    ssd1306_sendByte(rx < s_displayWidth ? rx : (s_displayWidth - 1));
     ssd1306_sendByte(SSD1331_ROWADDR);
     ssd1306_sendByte(y<<3);
-    ssd1306_sendByte((y<<3) + 7);
+    ssd1306_sendByte(((y<<3) + 7) < s_displayHeight ? ((y<<3) + 7) : (s_displayHeight - 1));
     ssd1306_endTransmission();
 }
 
