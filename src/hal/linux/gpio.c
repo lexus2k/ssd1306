@@ -37,13 +37,13 @@
 
 #ifdef IN
 #undef IN
-#define IN  0
 #endif
+#define IN  0
 
 #ifdef OUT
 #undef OUT
-#define OUT 1
 #endif
+#define OUT 1
 
 int gpio_export(int pin)
 {
