@@ -33,7 +33,7 @@
 
 default: all
 
-platform=linux
+platform?=linux
 
 CCFLAGS += -g -Os -w -ffreestanding
 
@@ -41,14 +41,14 @@ include Makefile.common
 
 ifeq ($(SDL_EMULATION),y)
      CCFLAGS += -I../tools/sdl -DSDL_EMULATION
-     LDFLAGS +=  -lssd1306_sdl $(shell sdl2-config --libs)
+     LDFLAGS += -L/mingw/lib -lssd1306_sdl $(shell sdl2-config --libs)
 endif
 
-flash: $(BLD)/$(PROJECT).out
-	$(BLD)/$(PROJECT).out
+flash: $(OUTFILE)
+	$(OUTFILE)
 
 ifeq ($(SDL_EMULATION),y)
-$(BLD)/$(PROJECT).out: ssd1306_sdl
+$(OUTFILE): ssd1306_sdl
 ssd1306_sdl:
-	$(MAKE) -C ../tools/sdl -f Makefile
+	$(MAKE) -C ../tools/sdl -f Makefile.$(platform)
 endif

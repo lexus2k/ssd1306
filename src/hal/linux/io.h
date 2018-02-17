@@ -29,10 +29,14 @@
 #ifndef _SSD1306_LINUX_IO_H_
 #define _SSD1306_LINUX_IO_H_
 
-#if defined(__linux__) && !defined(ARDUINO)
+#if (defined(__linux__) || defined(__MINGW32__)) && !defined(ARDUINO)
 
-#ifdef __KERNEL__
+#if defined(__KERNEL__)
 #include <linux/types.h>
+#elif defined(__MINGW32__)
+#include <windows.h>
+#include <stdint.h>
+#include <unistd.h>
 #else
 #include <stdint.h>
 #include <unistd.h>
@@ -53,8 +57,10 @@ extern "C" {
 static inline void digitalWrite(int pin, int level) {};
 static inline int  digitalRead(int pin) { return LOW; };
 static inline void pinMode(int pin, int mode) {};
-#ifdef __KERNEL__
+#if defined(__KERNEL__)
 static inline void delay(unsigned long ms) {  };
+#elif defined(__MINGW32__)
+static inline void delay(unsigned long ms) { Sleep(ms);  };
 #else
 static inline void delay(unsigned long ms) { usleep(ms*1000);  };
 #endif
@@ -66,12 +72,14 @@ static inline uint8_t pgm_read_byte(const void *ptr) { return *((const uint8_t *
 static inline uint16_t eeprom_read_word(const void *ptr) { return 0; };
 static inline void eeprom_write_word(const void *ptr, uint16_t val) { };
 
+#if !defined(__MINGW32__)
 /* For some reason defines do not work accross the libraries *
  * Didn't yet figure out, what is the reason fo this issue */
 //#define min(a,b) (((a)<(b))?(a):(b))
 //#define max(a,b) (((a)>(b))?(a):(b))
 static inline int min(int a, int b) { return a<b?a:b; };
 static inline int max(int a, int b) { return a>b?a:b; };
+#endif
 
 static inline char *utoa(unsigned int num, char *str, int radix) {
     char temp[17];  //an int can only be 16 bits long

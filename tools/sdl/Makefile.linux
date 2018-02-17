@@ -33,19 +33,22 @@ default: all
 
 DESTDIR ?=
 BLD ?= ../../bld
+BACKSLASH?=/
+MKDIR?=mkdir -p
+convert=$(subst /,$(BACKSLASH),$1)
 
 .SUFFIXES: .c .cpp .ino
 
 $(BLD)/%.o: %.c
-	mkdir -p $(dir $@)
+	-$(MKDIR) $(call convert,$(dir $@))
 	$(CC) -std=gnu11 $(CCFLAGS) -c $< -o $@
 
 $(BLD)/%.o: %.ino
-	mkdir -p $(dir $@)
+	-$(MKDIR) $(call convert,$(dir $@))
 	$(CXX) -std=c++11 $(CCFLAGS) -x c++ -c $< -o $@
 
 $(BLD)/%.o: %.cpp
-	mkdir -p $(dir $@)
+	-$(MKDIR) $(call convert,$(dir $@))
 	$(CXX) -std=c++11 $(CCFLAGS) -c $< -o $@
 
 # ************* Common defines ********************

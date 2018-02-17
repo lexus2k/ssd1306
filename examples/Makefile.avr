@@ -47,10 +47,10 @@ include Makefile.common
 
 all: $(BLD)/$(PROJECT).bin $(BLD)/$(PROJECT).hex
 
-$(BLD)/$(PROJECT).bin: $(BLD)/$(PROJECT).out
+$(BLD)/$(PROJECT).bin: $(OUTFILE)
 	avr-objcopy -O binary $< $@
 
-$(BLD)/$(PROJECT).hex: $(BLD)/$(PROJECT).out
+$(BLD)/$(PROJECT).hex: $(OUTFILE)
 	avr-objcopy -O ihex $< $@
 
 flash: $(BLD)/$(PROJECT).hex

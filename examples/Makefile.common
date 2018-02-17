@@ -37,19 +37,23 @@ DESTDIR ?=
 BLD ?= ../bld
 PROJECT ?= ssd1306_demo
 PROJECTS = $(subst /,,$(wildcard */))
+BACKSLASH?=/
+OUTFILE?=$(BLD)/$(PROJECT).out
+MKDIR?=mkdir -p
+convert=$(subst /,$(BACKSLASH),$1)
 
 .SUFFIXES: .bin .out .hex .srec
 
 $(BLD)/%.o: %.c
-	mkdir -p $(dir $@)
+	-$(MKDIR) $(call convert,$(dir $@))
 	$(CC) -std=gnu11 $(CCFLAGS) -c $< -o $@
 
 $(BLD)/%.o: %.ino
-	mkdir -p $(dir $@)
+	-$(MKDIR) $(call convert,$(dir $@))
 	$(CXX) -std=c++11 $(CCFLAGS) -x c++ -c $< -o $@
 
 $(BLD)/%.o: %.cpp
-	mkdir -p $(dir $@)
+	-$(MKDIR) $(call convert,$(dir $@))
 	$(CXX) -std=c++11 $(CCFLAGS) -c $< -o $@
 
 # ************* Common defines ********************
@@ -76,10 +80,10 @@ LDFLAGS += -L$(BLD) -lssd1306
 ssd1306:
 	$(MAKE) -C ../src -f Makefile.$(platform) MCU=$(MCU) SDL_EMULATION=$(SDL_EMULATION)
 
-all: $(BLD)/$(PROJECT).out
+all: $(OUTFILE)
 
-$(BLD)/$(PROJECT).out: $(OBJS) ssd1306
-	$(CC) -o $(BLD)/$(PROJECT).out $(CCFLAGS) $(OBJS) $(LDFLAGS)
+$(OUTFILE): $(OBJS) ssd1306
+	$(CC) -o $(OUTFILE) $(CCFLAGS) $(OBJS) $(LDFLAGS)
 
 clean:
 	rm -rf $(BLD)

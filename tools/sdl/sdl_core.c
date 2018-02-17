@@ -25,6 +25,7 @@
 #include "sdl_core.h"
 #include <unistd.h>
 #include <SDL2/SDL.h>
+#include <stdlib.h> 
 #include <stdio.h>
 
 #define PIXEL_SIZE 2
@@ -180,17 +181,14 @@ void sdl_send_byte(uint8_t data)
 
 void sdl_send_stop()
 {
-    if (!s_ssdMode)
-    {
-        sdl_core_draw();
-    }
+    sdl_core_draw();
     s_ssdMode = -1;
 }
 
 
 static void sdl_ssd1306_commands(uint8_t data)
 {
-    //printf("%02X\n", data);
+//    printf("%02X\n", data);
     switch (s_commandId)
     {
         case 0x21:
@@ -220,6 +218,7 @@ static void sdl_ssd1306_commands(uint8_t data)
                      break;
                 default: break;
             }
+            break;
         default:
             /* Other ssd1306 commands, many commands are combined with data */
             if ((s_commandId >= 0xb0) && (s_commandId <= 0xbf))
@@ -305,6 +304,7 @@ static void sdl_ssd1331_commands(uint8_t data)
                      break;
                 default: break;
             }
+            break;
         default:
             /* Other ssd1306 commands, many commands are combined with data */
             if ((s_commandId >= 0xb0) && (s_commandId <= 0xbf))

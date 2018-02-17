@@ -29,52 +29,8 @@
 # STRIP
 # AR
 
-default: all
+CC=gcc
+MKDIR=mkdir
+BACKSLASH=\\
 
-DESTDIR ?=
-BLD ?= ../bld
-BACKSLASH?=/
-MKDIR?=mkdir -p
-convert=$(subst /,$(BACKSLASH),$1)
-
-.SUFFIXES: .c .cpp .ino
-
-$(BLD)/%.o: %.c
-	-$(MKDIR) $(call convert,$(dir $@))
-	$(CC) -std=gnu11 $(CCFLAGS) -c $< -o $@
-
-$(BLD)/%.o: %.ino
-	-$(MKDIR) $(call convert,$(dir $@))
-	$(CXX) -std=c++11 $(CCFLAGS) -x c++ -c $< -o $@
-
-$(BLD)/%.o: %.cpp
-	-$(MKDIR) $(call convert,$(dir $@))
-	$(CXX) -std=c++11 $(CCFLAGS) -c $< -o $@
-
-# ************* Common defines ********************
-
-INCLUDES += \
-        -I.
-
-CCFLAGS += -g -Os $(INCLUDES) -Wall -Werror -ffunction-sections -fdata-sections \
-	-fno-exceptions -Wno-error=deprecated-declarations
-
-ifeq ($(SDL_EMULATION),y)
-    CCFLAGS += -DSDL_EMULATION -I../tools/sdl
-endif
-
-.PHONY: clean ssd1306 all
-
-include Makefile.src
-
-####################### Compiling library #########################
-
-$(BLD)/libssd1306.a: $(OBJS)
-	$(AR) rcs $@ $(OBJS)
-
-ssd1306: $(BLD)/libssd1306.a
-
-all: ssd1306
-
-clean:
-	rm -rf $(BLD)
+include Makefile.linux

@@ -22,7 +22,7 @@
     SOFTWARE.
 */
 
-#if defined(__linux__) && !defined(ARDUINO)
+#if (defined(__linux__) || defined(__MINGW32__)) && !defined(ARDUINO)
 
 #include "io.h"
 
@@ -35,8 +35,15 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#ifdef IN
+#undef IN
 #define IN  0
+#endif
+
+#ifdef OUT
+#undef OUT
 #define OUT 1
+#endif
 
 int gpio_export(int pin)
 {

@@ -64,7 +64,7 @@
 #include <stdlib.h>
 
 //#define ARKANOID_SSD1331
-#if defined(ESP32) || defined(ESP8266) || (defined(__linux__))
+#if defined(ESP32) || defined(ESP8266) || (defined(__linux__)) || defined(__MINGW32__)
 #define DEEP_SLEEP_NOT_SUPPORTED
 #endif
 
