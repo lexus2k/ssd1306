@@ -15,8 +15,6 @@ Prior to submitting pull request, create issue first.
     change, which situation would trigger the breaking change and what is the exact change.
     - If you change behaviour of public API function, please describe new behavior in doxygen format very carefully.
       In most cases changing behaviour of public API function is subject to reject pull-request.
-  - Trivial changes are not the subject to update copyright headers. Updating copyright header makes licensing process
-    more complicated.
   - When adding new functionality, please provide example sketch in the examples/ folder, or modify existing example.
   - Trivial pull requests or pull requests that refactor the code with no clear benefits may be immediately closed
     by the maintainers to reduce unnecessary workload on reviewing.
@@ -25,8 +23,7 @@ Prior to submitting pull request, create issue first.
 
 1. Submit issue first and discuss the changes, you're going to make.
 2. Check via [cppcheck tool](http://cppcheck.sourceforge.net/), that no warning messages are displayed.
-3. Check that Arkanoid sketch can be compiled for Arduino Nano (Atmega328p), Attiny85, ESP8266, ESP32 
-   without any issues.
+3. Check that Arkanoid sketch can be compiled for Arduino Nano (Atmega328p), Attiny85 without any issues.
 4. Check that ssd1306_demo sketch can be compiled and **run** for Arduino Nano (Atmega328p), Attiny85, ESP8266, ESP32 and
    without any issues. If you don't have a chance to run ssd1306_demo on the listed platforms, please, clearly inform about that
    in your pull request.
