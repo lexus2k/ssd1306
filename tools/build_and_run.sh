@@ -48,7 +48,8 @@ print_help_and_exit()
     exit 1
 }
 
-while getopts ":f:e:p::m:" opt; do
+while getopts "fep:m:" opt; do
+  echo $opt, $OPTARG
   case $opt in
     p) platform=$OPTARG;;
     m) mcu=$OPTARG;;
