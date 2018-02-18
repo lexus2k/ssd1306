@@ -22,7 +22,7 @@
     SOFTWARE.
 */
 
-#include "pcd8544_84x48.h"
+#include "lcd_pcd8544.h"
 #include "lcd_common.h"
 #include "pcd8544_commands.h"
 #include "intf/ssd1306_interface.h"

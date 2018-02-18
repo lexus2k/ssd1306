@@ -37,10 +37,12 @@
 #include <windows.h>
 #include <stdint.h>
 #include <unistd.h>
+#include "sdl_core.h"
 #else
 #include <stdint.h>
 #include <unistd.h>
 #endif
+#include <time.h>
 
 #define LOW  0
 #define HIGH 1
@@ -64,8 +66,47 @@ static inline void delay(unsigned long ms) { Sleep(ms);  };
 #else
 static inline void delay(unsigned long ms) { usleep(ms*1000);  };
 #endif
+
+#if defined(__KERNEL__)
 static inline int  analogRead(int pin) { return 0; };
+#elif defined(__MINGW32__)
+static inline int  analogRead(int pin) { return sdl_read_analog(pin); };
+#else
+static inline int  analogRead(int pin) { return 0; };
+#endif
+
+#if defined(__KERNEL__)
 static inline uint32_t millis(void) { return 0; };
+static inline uint32_t micros(void) { return 0; };
+
+#elif defined(__MINGW32__)
+static inline uint32_t millis(void)
+{
+    return GetTickCount();
+};
+
+static inline uint32_t micros(void)
+{
+    return GetTickCount()*1000;
+};
+
+#else
+static inline uint32_t millis(void)
+{
+   struct timespec ts;
+   clock_gettime(CLOCK_MONOTONIC, &ts);
+   return ts.tv_sec * 1000 + ts.tv_nsec / 1000000;
+};
+
+static inline uint32_t micros(void)
+{
+   struct timespec ts;
+   clock_gettime(CLOCK_MONOTONIC, &ts);
+   return ts.tv_sec * 1000000 + ts.tv_nsec / 1000;
+};
+#endif
+
+
 static inline void randomSeed(int seed) { };
 static inline void attachInterrupt(int pin, void (*interrupt)(void), int level) { };
 static inline uint8_t pgm_read_byte(const void *ptr) { return *((const uint8_t *)ptr); };

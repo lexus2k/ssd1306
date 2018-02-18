@@ -162,7 +162,9 @@ void setup()
 {
     ssd1306_setFixedFont(ssd1306xled_font6x8_AB);
     randomSeed(analogRead(0));
-#if defined(ARKANOID_SSD1331)
+#if defined(SSD1306_LINUX_SUPPORTED)
+    // no need to do anything here
+#elif defined(ARKANOID_SSD1331)
     #ifndef USE_Z_KEYPAD
         pinMode(LEFT_BTN, INPUT);
         pinMode(RIGHT_BTN, INPUT);
@@ -183,8 +185,6 @@ void setup()
     #endif
     pinMode(BUZZER, OUTPUT);
     sei();                      // enable all interrupts
-#elif defined(SSD1306_LINUX_SUPPORTED)
-    // no need to do anything here
 #elif defined(SSD1306_I2C_SW_SUPPORTED)
     #error "Not supported microcontroller or board"
 #else
@@ -263,6 +263,7 @@ void drawIntro()
     for (int8_t y=-24; y<16; y++)
     {
         gfx_drawMonoBitmap(16 - OUTPUT_OFFSET, y, 96, 24, arkanoid_2);
+        delay(20);
     }
     ssd1331_setColor(RGB_COLOR8(255,255,0));
     ssd1306_printFixed(40 - OUTPUT_OFFSET, 40, "BREAKOUT", STYLE_NORMAL);

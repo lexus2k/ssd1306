@@ -30,13 +30,13 @@
 #define _SSD1306_H_
 
 #include "nano_gfx_types.h"
+#include "ssd1306_fonts.h"
 #include "i2c/ssd1306_i2c_conf.h"
 #include "spi/ssd1306_spi_conf.h"
-#include "lcd/ssd1306_128x64.h"
-#include "lcd/ssd1306_128x32.h"
-#include "lcd/ssd1331_96x64.h"
-#include "lcd/sh1106_128x64.h"
-#include "lcd/pcd8544_84x48.h"
+#include "lcd/oled_ssd1306.h"
+#include "lcd/oled_ssd1331.h"
+#include "lcd/oled_sh1106.h"
+#include "lcd/lcd_pcd8544.h"
 
 #ifdef __cplusplus
 extern "C" {

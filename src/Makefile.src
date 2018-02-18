@@ -22,7 +22,7 @@
 #
 
 SRCS_C = \
-	font6x8.c \
+	ssd1306_fonts.c \
 	ssd1306.c \
 	ssd1331_api.c \
 	ssd1306_menu.c \
@@ -37,15 +37,13 @@ SRCS_C = \
 	spi/ssd1306_spi_usi.c \
 	spi/ssd1306_spi_linux.c \
 	intf/ssd1306_interface.c \
-	lcd/pcd8544_84x48.c \
-	lcd/sh1106_128x64.c \
-	lcd/ssd1306_128x32.c \
-	lcd/ssd1306_128x64.c \
-	lcd/ssd1331_96x64.c
+	lcd/lcd_pcd8544.c \
+	lcd/oled_sh1106.c \
+	lcd/oled_ssd1306.c \
+	lcd/oled_ssd1331.c
 
 SRCS_CPP = \
 	nano_gfx.cpp \
-	nano_gfx_types.cpp \
 	sprite_pool.cpp \
 	i2c/ssd1306_i2c_wire.cpp \
 	spi/ssd1306_spi_hw.cpp

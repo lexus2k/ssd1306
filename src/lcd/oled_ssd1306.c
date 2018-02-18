@@ -22,7 +22,7 @@
     SOFTWARE.
 */
 
-#include "ssd1306_128x64.h"
+#include "oled_ssd1306.h"
 #include "lcd_common.h"
 #include "ssd1306_commands.h"
 #include "intf/ssd1306_interface.h"
@@ -47,6 +47,26 @@ static const uint8_t PROGMEM s_oled128x64_initData[] =
     SSD1306_SETVCOMDETECT, 0x20,    // vcom deselect to 0x20 // 0x40
     SSD1306_CHARGEPUMP, 0x14,       // Enable charge pump
     SSD1306_DISPLAYALLON_RESUME,
+    SSD1306_DISPLAYON 
+};
+
+static const uint8_t PROGMEM s_oled128x32_initData[] =
+{
+    SSD1306_DISPLAYOFF, // display off
+    SSD1306_SETDISPLAYCLOCKDIV, 0x80,
+    SSD1306_SETMULTIPLEX, 31,
+    SSD1306_SETDISPLAYOFFSET, 0x00, // --no offset
+    SSD1306_SETSTARTLINE,
+    SSD1306_CHARGEPUMP, 0x14, // 0x10
+    SSD1306_SEGREMAP | 0x01,  // Reverse mapping
+    SSD1306_COMSCANDEC,
+    SSD1306_SETCOMPINS, 0x02,
+    SSD1306_SETCONTRAST, 0x7F, // contast value
+    SSD1306_SETPRECHARGE, 0x22, // 0x1F
+    SSD1306_SETVCOMDETECT, 0x40,
+    SSD1306_MEMORYMODE, HORIZONTAL_ADDRESSING_MODE,
+    SSD1306_DISPLAYALLON_RESUME,
+    SSD1306_NORMALDISPLAY,
     SSD1306_DISPLAYON 
 };
 
@@ -78,6 +98,10 @@ static void ssd1306_setPos(uint8_t x, uint8_t y)
     ssd1306_endTransmission();
 }
 */
+
+///////////////////////////////////////////////////////////////////////////////
+//  I2C SSD1306 128x64
+///////////////////////////////////////////////////////////////////////////////
 
 void    ssd1306_init()
 {
@@ -111,6 +135,10 @@ void    ssd1306_128x64_i2c_initEx(int8_t scl, int8_t sda, int8_t sa)
     ssd1306_128x64_init();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//  SPI SSD1306 128x64
+///////////////////////////////////////////////////////////////////////////////
+
 void   ssd1306_128x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
 {
     if (rstPin >=0)
@@ -126,4 +154,29 @@ void   ssd1306_128x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
     }
     ssd1306_spiInit(cesPin, dcPin);
     ssd1306_128x64_init();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//  I2C SSD1306 128x32
+///////////////////////////////////////////////////////////////////////////////
+
+void    ssd1306_128x32_init()
+{
+    g_lcd_type = LCD_TYPE_SSD1306;
+    s_displayHeight = 32;
+    s_displayWidth = 128;
+    ssd1306_setRamBlock = ssd1306_setBlock;
+    ssd1306_nextRamPage = ssd1306_nextPage;
+    ssd1306_sendPixels  = ssd1306_sendByte;
+    for( uint8_t i=0; i < sizeof(s_oled128x32_initData); i++)
+    {
+        ssd1306_sendCommand(pgm_read_byte(&s_oled128x32_initData[i]));
+    }
+}
+
+
+void    ssd1306_128x32_i2c_init()
+{
+    ssd1306_i2cInit();
+    ssd1306_128x32_init();
 }

@@ -493,3 +493,28 @@ void NanoCanvas::flipH()
            m_bytes[YADDR(y) + m_w - x -1] = temp;
        }
 }
+
+////////////////////////////////////////////////////////////////////////////////
+//                              SPRITE OBJECT
+////////////////////////////////////////////////////////////////////////////////
+
+void SPRITE::setPos(uint8_t x, uint8_t y)
+{
+    this->x = x;
+    this->y = y;
+}
+
+void SPRITE::draw()
+{
+    ssd1306_drawSprite(this);
+}
+
+void SPRITE::eraseTrace()
+{
+    ssd1306_eraseTrace(this);
+}
+
+void SPRITE::erase()
+{
+    ssd1306_eraseSprite(this);
+}

@@ -22,7 +22,7 @@
     SOFTWARE.
 */
 
-#include "ssd1331_96x64.h"
+#include "oled_ssd1331.h"
 #include "lcd_common.h"
 #include "ssd1331_commands.h"
 #include "intf/ssd1306_interface.h"

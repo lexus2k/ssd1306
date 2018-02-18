@@ -28,7 +28,6 @@
 #include <stdlib.h> 
 #include <stdio.h>
 
-#define PIXEL_SIZE 2
 #define CANVAS_REFRESH_RATE  60
 
 #define SSD_COMMAND_NONE -1
@@ -47,23 +46,36 @@ enum
     SSD_MODE_DATA,
 };
 
-const static int screenWidth = 258;
-const static int screenHeight = 130;
+const static int BORDER_SIZE = 8;
+const static int TOP_HEADER = 16;
+const static int RECT_THICKNESS = 2;
+const static int PIXEL_SIZE = 2;
+static int screenWidth = 128;
+static int screenHeight = 64;
 SDL_Window     *g_window = NULL;
 SDL_Renderer   *g_renderer = NULL;
+static int s_analogInput[128];
+
+static int windowWidth() { return screenWidth * PIXEL_SIZE + BORDER_SIZE * 2; };
+static int windowHeight() { return screenHeight * PIXEL_SIZE + BORDER_SIZE * 2 + TOP_HEADER; };
 
 void sdl_core_init(void)
 {
+    if ((g_window != NULL) && (g_renderer != NULL))
+    {
+         /* SDL engine is already initialize */
+         return;
+    }
     SDL_Init(SDL_INIT_EVERYTHING);
     g_window = SDL_CreateWindow
     (
         "AVR SIMULATOR", SDL_WINDOWPOS_UNDEFINED,
         SDL_WINDOWPOS_UNDEFINED,
-        screenWidth,
-        screenHeight,
+        windowWidth(),
+        windowHeight(),
         SDL_WINDOW_SHOWN
     );
-    g_renderer =  SDL_CreateRenderer( g_window, -1, SDL_RENDERER_ACCELERATED);
+    g_renderer =  SDL_CreateRenderer( g_window, -1, SDL_RENDERER_ACCELERATED );
     // Set render color to black ( background will be rendered in this color )
     SDL_SetRenderDrawColor( g_renderer, 20, 20, 20, 255 );
 
@@ -76,20 +88,55 @@ void sdl_core_init(void)
     SDL_Rect r;
     r.x = 0;
     r.y = 0;
-    r.w = screenWidth;
-    r.h = screenHeight;
+    r.w = windowWidth();
+    r.h = windowHeight();
 
     SDL_RenderFillRect( g_renderer, &r );
 }
 
-void sdl_core_draw(void)
+static void sdl_poll_event(void)
 {
     SDL_Event event;
-    SDL_RenderPresent(g_renderer);
     if (SDL_PollEvent(&event))
     {
         if (event.type == SDL_QUIT) exit(0);
     }
+    else
+    {
+        event.type = SDL_USEREVENT;
+        event.user.code = 0;
+    }
+    switch (event.type)
+    {
+        case SDL_KEYDOWN:
+            if (event.key.keysym.scancode == SDL_SCANCODE_DOWN)  s_analogInput[0] = 300;
+            if (event.key.keysym.scancode == SDL_SCANCODE_UP)    s_analogInput[0] = 150;
+            if (event.key.keysym.scancode == SDL_SCANCODE_LEFT)  s_analogInput[0] = 500;
+            if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) s_analogInput[0] = 50;
+            if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) s_analogInput[0] = 700;
+            break;
+        case SDL_KEYUP:
+            if ((event.key.keysym.scancode == SDL_SCANCODE_DOWN)  ||
+                (event.key.keysym.scancode == SDL_SCANCODE_UP) ||
+                (event.key.keysym.scancode == SDL_SCANCODE_LEFT) ||
+                (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) ||
+                (event.key.keysym.scancode == SDL_SCANCODE_SPACE)) s_analogInput[0] = 1023;
+            break;
+        default:
+            break;
+    };
+}
+
+int sdl_read_analog(int pin)
+{
+    sdl_poll_event();
+    return s_analogInput[pin];
+}
+
+void sdl_core_draw(void)
+{
+    sdl_poll_event();
+    SDL_RenderPresent(g_renderer);
 }
 
 void sdl_core_close(void)
@@ -97,6 +144,42 @@ void sdl_core_close(void)
     SDL_DestroyWindow(g_window);
     SDL_Quit();
 }
+
+static void sdl_core_resize(void)
+{
+    SDL_Rect r;
+    SDL_SetWindowSize(g_window, windowWidth(), windowHeight());
+    SDL_SetRenderDrawColor( g_renderer, 60, 128, 192, 255 );
+    r.x = 0;
+    r.y = 0;
+    r.w = windowWidth();
+    r.h = windowHeight();
+    SDL_RenderFillRect( g_renderer, &r );
+    SDL_SetRenderDrawColor( g_renderer, 0, 0, 0, 255 );
+    r.x += BORDER_SIZE - RECT_THICKNESS;
+    r.y += BORDER_SIZE - RECT_THICKNESS + TOP_HEADER;
+    r.w -= (BORDER_SIZE - RECT_THICKNESS)*2;
+    r.h -= ((BORDER_SIZE - RECT_THICKNESS)*2 + TOP_HEADER);
+    SDL_RenderFillRect( g_renderer, &r );
+    SDL_SetRenderDrawColor( g_renderer, 20, 20, 20, 255 );
+    r.x += RECT_THICKNESS;
+    r.y += RECT_THICKNESS;
+    r.w -= RECT_THICKNESS*2;
+    r.h -= RECT_THICKNESS*2;
+    SDL_RenderFillRect( g_renderer, &r );
+    SDL_SetRenderDrawColor( g_renderer, 200, 200, 200, 255 );
+    r.x = 4;
+    r.y = 4;
+    r.w = 16;
+    r.h = 12;
+    SDL_RenderFillRect( g_renderer, &r );
+    r.x = windowWidth() - 4 - 16;
+    r.y = 4;
+    r.w = 16;
+    r.h = 12;
+    SDL_RenderFillRect( g_renderer, &r );
+}
+
 
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
@@ -146,8 +229,18 @@ void sdl_send_byte(uint8_t data)
     {
         if (s_oled == SDL_AUTODETECT)
         {
-            if (data == 0xBE) s_oled = SDL_SSD1331;
-            if ((data == 0xC0) || (data == 0xC8)) s_oled = SDL_SSD1306;
+            if (data == 0xBE)
+            {
+                screenWidth = 96;
+                screenHeight = 64;
+                s_oled = SDL_SSD1331;
+                sdl_core_resize();
+            }
+            if ((data == 0xC0) || (data == 0xC8))
+            {
+                s_oled = SDL_SSD1306;
+                sdl_core_resize();
+            }
         }
         else
         {
@@ -253,8 +346,8 @@ void sdl_ssd1306_data(uint8_t data)
             SDL_SetRenderDrawColor( g_renderer, 20, 20, 20, 255 );
         }
         SDL_Rect r;
-        r.x = x * PIXEL_SIZE + 1;
-        r.y = ((y<<3) + i) * PIXEL_SIZE + 1;
+        r.x = x * PIXEL_SIZE + BORDER_SIZE;
+        r.y = ((y<<3) + i) * PIXEL_SIZE + BORDER_SIZE + TOP_HEADER;
         r.w = PIXEL_SIZE;
         r.h = PIXEL_SIZE;
         // Render rect
@@ -334,8 +427,8 @@ void sdl_ssd1331_data(uint8_t data)
                                         (data & 0b00000011)<<6,
                                         255 );
     SDL_Rect r;
-    r.x = x * PIXEL_SIZE + 1;
-    r.y = y * PIXEL_SIZE + 1;
+    r.x = x * PIXEL_SIZE + BORDER_SIZE;
+    r.y = y * PIXEL_SIZE + BORDER_SIZE + TOP_HEADER;
     r.w = PIXEL_SIZE;
     r.h = PIXEL_SIZE;
     // Render rect

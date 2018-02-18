@@ -63,7 +63,8 @@ INCLUDES += \
 	-I../src
 
 CCFLAGS += -g -Os -w -ffreestanding $(INCLUDES) -Wall -Werror \
-	-Wl,--gc-sections -ffunction-sections -fdata-sections
+	-Wl,--gc-sections -ffunction-sections -fdata-sections \
+	$(EXTRA_CCFLAGS)
 
 .PHONY: clean ssd1306 all
 

@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2017-2018, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -21,29 +21,52 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
+
 /**
- * @file fontx16.h Fonts 11x16
+ * @file lcd_pcd8544.h support for LED 84x48 display (PCD8544)
  */
 
-#ifndef FONTx16_H
-#define FONTx16_H
+
+#ifndef _LCD_PCD8544_H_
+#define _LCD_PCD8544_H_
 
 #include "hal/io.h"
-#include <stdint.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /**
- * @defgroup LCD_FONTS LCD Fonts
+ * @defgroup LCD_DISPLAY_API LCD Display control functions
  * @{
  */
 
 /**
- * Standard ASCII font 11x16 with digits only (Ascii codes 32 - 64).
- * @warning can be used only with ssd1306_printFixed() and ssd1306_setFixedFont() functions.
+ * @brief Inits 84x48 LED display (based on PCD8544 controller).
+ *
+ * Inits 84x48 LED display (based on PCD8544 controller).
+ * User must init communication interface (i2c, spi) prior to calling this function.
+ * @see ssd1306_i2cInit()
+ * @see ssd1306_spiInit()
  */
-extern const PROGMEM uint8_t courier_new_font11x16_digits [];
+void pcd8544_84x48_init(void);
+
+
+/**
+ * Inits 84x48 LED display over spi (based on PCD8544 controller)
+ * @param rstPin - pin controlling LCD reset (-1 if not used)
+ * @param cesPin - chip enable pin to LCD slave (-1 if not used)
+ * @param dcPin - data/command pin to control LCD dc (required)
+ */
+void pcd8544_84x48_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin);
 
 /**
  * @}
  */
 
-#endif // FONTx16_H
+#ifdef __cplusplus
+}
+#endif
+
+// ----------------------------------------------------------------------------
+#endif // _LCD_PCD8544_H_

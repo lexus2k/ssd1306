@@ -27,6 +27,10 @@
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 extern void sdl_core_init(void);
 extern void sdl_core_draw(void);
 
@@ -35,9 +39,13 @@ extern void sdl_data_start();
 extern void sdl_send_init();
 extern void sdl_send_byte(uint8_t data);
 extern void sdl_send_stop();
+extern int  sdl_read_analog(int pin);
 
 extern void sdl_core_close(void);
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

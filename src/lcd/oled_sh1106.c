@@ -22,7 +22,7 @@
     SOFTWARE.
 */
 
-#include "sh1106_128x64.h"
+#include "oled_sh1106.h"
 #include "lcd_common.h"
 #include "ssd1306_commands.h"
 #include "intf/ssd1306_interface.h"

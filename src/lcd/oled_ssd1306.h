@@ -22,12 +22,12 @@
     SOFTWARE.
 */
 /**
- * @file ssd1306_128x64.h support for OLED 128x64 display
+ * @file oled_ssd1306.h support for OLED ssd1306-based displays
  */
 
 
-#ifndef _SSD1306_128X64_H_
-#define _SSD1306_128X64_H_
+#ifndef _OLED_SSD1306_H_
+#define _OLED_SSD1306_H_
 
 #include "hal/io.h"
 
@@ -93,6 +93,28 @@ void         ssd1306_128x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
 void         ssd1306_init(void) __attribute__((deprecated));
 
 /**
+ * @brief Inits 128x32 OLED display over i2c (based on SSD1306 controller).
+ *
+ * Inits 128x32 OLED display over i2c (based on SSD1306 controller)
+ * This function uses hardcoded pins for i2c communication, depending on your hardware.
+ * If you use non-standard pins in your project, please perform call ssd1306_i2cInitEx() and
+ * ssd1306_128x32_init().
+ */
+void         ssd1306_128x32_i2c_init(void);
+
+/**
+ * @brief Inits 128x32 OLED display (based on ssd1306 controller).
+ *
+ * Inits 128x32 OLED display (based on ssd1306 controller)
+ * spi or i2c bus must be initialized prior to calling this function.
+ * @see ssd1306_i2cInit()
+ * @see ssd1306_spiInit()
+ */
+void         ssd1306_128x32_init(void);
+
+
+
+/**
  * @}
  */
 
@@ -101,4 +123,4 @@ void         ssd1306_init(void) __attribute__((deprecated));
 #endif
 
 // ----------------------------------------------------------------------------
-#endif // _SSD1306_128X64_H_
+#endif // _OLED_SSD1306_H_

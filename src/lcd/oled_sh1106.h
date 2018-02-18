@@ -21,13 +21,14 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
+
 /**
- * @file ssd1306_128x32.h support for OLED 128x32 display
+ * @file oled_sh1106.h support for OLED 128x64 display
  */
 
 
-#ifndef _SSD1306_128X32_H_
-#define _SSD1306_128X32_H_
+#ifndef _OLED_SH1106_H_
+#define _OLED_SH1106_H_
 
 #include "hal/io.h"
 
@@ -41,24 +42,32 @@ extern "C" {
  */
 
 /**
- * @brief Inits 128x32 OLED display over i2c (based on SSD1306 controller).
+ * @brief Inits 128x64 OLED display (based on SH1106 controller).
  *
- * Inits 128x32 OLED display over i2c (based on SSD1306 controller)
- * This function uses hardcoded pins for i2c communication, depending on your hardware.
- * If you use non-standard pins in your project, please perform call ssd1306_i2cInitEx() and
- * ssd1306_128x32_init().
+ * Inits 128x64 OLED display (based on SH1106 controller).
+ * User must init communication interface (i2c or spi) prior to calling this function.
  */
-void         ssd1306_128x32_i2c_init(void);
+void         sh1106_128x64_init(void);
 
 /**
- * @brief Inits 128x32 OLED display (based on ssd1306 controller).
+ * @brief Inits 128x64 OLED display over i2c (based on SH1106 controller).
  *
- * Inits 128x32 OLED display (based on ssd1306 controller)
- * spi or i2c bus must be initialized prior to calling this function.
- * @see ssd1306_i2cInit()
- * @see ssd1306_spiInit()
+ * Inits 128x64 OLED display over i2c (based on SH1106 controller)
+ * This function uses hardcoded pins for i2c communication, depending on your hardware.
+ * If you use non-standard pins in your project, please perform call ssd1306_i2cInitEx() and
+ * sh1106_128x64_init().
  */
-void         ssd1306_128x32_init(void);
+void         sh1106_128x64_i2c_init(void);
+
+/**
+ * @brief Inits 128x64 OLED display over spi (based on SH1106 controller).
+ *
+ * Inits 128x64 OLED display over spi (based on SH1106 controller)
+ * @param rstPin - pin controlling LCD reset (-1 if not used)
+ * @param cesPin - chip enable pin to LCD slave (-1 if not used)
+ * @param dcPin - data/command pin to control LCD dc (required)
+ */
+void         sh1106_128x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin);
 
 /**
  * @}
@@ -69,4 +78,4 @@ void         ssd1306_128x32_init(void);
 #endif
 
 // ----------------------------------------------------------------------------
-#endif // _SSD1306_128X32_H_
+#endif // _OLED_SH1106_H_

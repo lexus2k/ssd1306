@@ -22,12 +22,12 @@
     SOFTWARE.
 */
 /**
- * @file ssd1331_96x64.h support for RGB OLED 96x64 display
+ * @file oled_ssd1331.h support for RGB OLED 96x64 display
  */
 
 
-#ifndef _SSD1331_96X64_H_
-#define _SSD1331_96X64_H_
+#ifndef _OLED_SSD1331_H_
+#define _OLED_SSD1331_H_
 
 #include "hal/io.h"
 
@@ -92,4 +92,4 @@ void         ssd1331_96x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin);
 #endif
 
 // ----------------------------------------------------------------------------
-#endif // _SSD1331_96X64_H_
+#endif // _OLED_SSD1331_H_
