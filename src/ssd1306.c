@@ -681,7 +681,7 @@ void gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const 
          w += x;
          x = 0;
     } 
-    uint8_t max_pages = (lcduint_t)(h + 7) >> 3;
+    uint8_t max_pages = (lcduint_t)(h + 15 - offset) >> 3;
     if ((lcduint_t)((lcduint_t)y + h) > (lcduint_t)s_displayHeight)
     {                                                  
          h = (lcduint_t)(s_displayHeight - (lcduint_t)y);
@@ -690,7 +690,7 @@ void gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const 
     {
          w = (lcduint_t)(s_displayWidth - (lcduint_t)x);
     }
-    uint8_t pages = (h + 7) >> 3;
+    uint8_t pages = ((y + h - 1) >> 3) - (y >> 3) + 1;
     lcduint_t i, j;
 
     ssd1306_setRamBlock(x, y >> 3, w);
@@ -702,7 +702,7 @@ void gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const 
         {       
             uint8_t data = 0;
             if ( mainFlag )    data |= (pgm_read_byte(buf) << offset);
-            if ( complexFlag ) data |= (pgm_read_byte(buf - origin_width) >> (8-offset));
+            if ( complexFlag ) data |= (pgm_read_byte(buf - origin_width) >> (8 - offset));
             buf++;
             ssd1306_sendPixels(s_invertByte^data);
         }
