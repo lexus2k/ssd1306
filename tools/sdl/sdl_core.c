@@ -97,34 +97,29 @@ void sdl_core_init(void)
 static void sdl_poll_event(void)
 {
     SDL_Event event;
-    if (SDL_PollEvent(&event))
+    while (SDL_PollEvent(&event))
     {
         if (event.type == SDL_QUIT) exit(0);
+        switch (event.type)
+        {
+            case SDL_KEYDOWN:
+                if (event.key.keysym.scancode == SDL_SCANCODE_DOWN)  s_analogInput[0] = 300;
+                if (event.key.keysym.scancode == SDL_SCANCODE_UP)    s_analogInput[0] = 150;
+                if (event.key.keysym.scancode == SDL_SCANCODE_LEFT)  s_analogInput[0] = 500;
+                if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) s_analogInput[0] = 50;
+                if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) s_analogInput[0] = 700;
+                break;
+            case SDL_KEYUP:
+                if ((event.key.keysym.scancode == SDL_SCANCODE_DOWN)  ||
+                    (event.key.keysym.scancode == SDL_SCANCODE_UP) ||
+                    (event.key.keysym.scancode == SDL_SCANCODE_LEFT) ||
+                    (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) ||
+                    (event.key.keysym.scancode == SDL_SCANCODE_SPACE)) s_analogInput[0] = 1023;
+                break;
+            default:
+                break;
+        };
     }
-    else
-    {
-        event.type = SDL_USEREVENT;
-        event.user.code = 0;
-    }
-    switch (event.type)
-    {
-        case SDL_KEYDOWN:
-            if (event.key.keysym.scancode == SDL_SCANCODE_DOWN)  s_analogInput[0] = 300;
-            if (event.key.keysym.scancode == SDL_SCANCODE_UP)    s_analogInput[0] = 150;
-            if (event.key.keysym.scancode == SDL_SCANCODE_LEFT)  s_analogInput[0] = 500;
-            if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) s_analogInput[0] = 50;
-            if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) s_analogInput[0] = 700;
-            break;
-        case SDL_KEYUP:
-            if ((event.key.keysym.scancode == SDL_SCANCODE_DOWN)  ||
-                (event.key.keysym.scancode == SDL_SCANCODE_UP) ||
-                (event.key.keysym.scancode == SDL_SCANCODE_LEFT) ||
-                (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) ||
-                (event.key.keysym.scancode == SDL_SCANCODE_SPACE)) s_analogInput[0] = 1023;
-            break;
-        default:
-            break;
-    };
 }
 
 int sdl_read_analog(int pin)
