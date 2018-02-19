@@ -195,7 +195,7 @@ void setup()
 
 void loop()
 {
-    if ( ((uint16_t)millis()) - lastDrawTimestamp > 30 )
+    if ( (uint16_t)(((uint16_t)millis()) - lastDrawTimestamp) > 30 )
     {
         uint8_t lastx = (ballx >> SPEED_SHIFT);
         uint8_t lasty = (bally >> SPEED_SHIFT);
