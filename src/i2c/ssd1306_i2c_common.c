@@ -43,13 +43,13 @@ void ssd1306_i2cDataStart()
 
 void ssd1306_i2cInitEx(int8_t scl, int8_t sda, int8_t sa)
 {
-#ifdef SSD1306_WIRE_SUPPORTED
+#if defined(SSD1306_WIRE_SUPPORTED)
     ssd1306_i2cConfigure_Wire(scl, sda);
     ssd1306_i2cInit_Wire(sa);
 #elif defined(SSD1306_TWI_SUPPORTED)
     ssd1306_i2cConfigure_Twi(0);
     ssd1306_i2cInit_Twi(sa);
-#elif defined(SSD1306_SW_SUPPORTED)
+#elif defined(SSD1306_I2C_SW_SUPPORTED)
     ssd1306_i2cInit_Embedded(scl, sda, sa);
 #elif defined(SSD1306_LINUX_SUPPORTED) && !defined(__KERNEL__)
     ssd1306_i2cInit_Linux(scl, sa);
