@@ -21,12 +21,17 @@
 @rem    SOFTWARE.
 @rem
 
-if "%1" == "" goto error
+@if "%1" == "" goto error
 
-mkdir ..\bld\
-copy /Y sdl\SDL2.dll ..\bld\
-mingw32-make.exe -C ../examples -f Makefile.mingw32 EXTRA_CCFLAGS="%2" SDL_EMULATION=y PROJECT=%1 flash
-exit /0
+@mkdir ..\bld\
+@copy /Y sdl\SDL2.dll ..\bld\
+@mingw32-make.exe -C ../examples -f Makefile.mingw32 EXTRA_CCFLAGS='%2' SDL_EMULATION=y PROJECT=%1 flash
+@exit /0
 
 :error
-echo "Usage: build_and_run.bat <project_name>"
+@echo "Usage: build_and_run.bat <project_name> ["flags"]"
+@echo "       flags:"
+@echo "           -DARKANOID_SSD1331   to run in SSD1331 RGB color mode"
+@echo "           -DSDL_NO_BORDER      to not draw border around oled display emulator"
+@echo -
+@echo "Example: build_and_run.bat arkanoid "-DARKANOID_SSD1331 -DSDL_NO_BORDER""

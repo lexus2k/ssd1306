@@ -57,7 +57,8 @@ INCLUDES += \
         -I.
 
 CCFLAGS += -g -Os $(INCLUDES) -Wall -Werror -ffunction-sections -fdata-sections \
-	-fno-exceptions -Wno-error=deprecated-declarations
+	-fno-exceptions -Wno-error=deprecated-declarations \
+	$(EXTRA_CCFLAGS)
 
 .PHONY: clean ssd1306_sdl all
 

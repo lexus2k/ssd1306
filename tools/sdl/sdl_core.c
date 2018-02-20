@@ -46,9 +46,15 @@ enum
     SSD_MODE_DATA,
 };
 
+#if defined(SDL_NO_BORDER)
+const static int BORDER_SIZE = 0;
+const static int TOP_HEADER = 0;
+const static int RECT_THICKNESS = 0;
+#else
 const static int BORDER_SIZE = 8;
 const static int TOP_HEADER = 16;
 const static int RECT_THICKNESS = 2;
+#endif
 const static int PIXEL_SIZE = 2;
 static int screenWidth = 128;
 static int screenHeight = 64;
@@ -162,6 +168,7 @@ static void sdl_core_resize(void)
     r.w -= RECT_THICKNESS*2;
     r.h -= RECT_THICKNESS*2;
     SDL_RenderFillRect( g_renderer, &r );
+#if !defined(SDL_NO_BORDER)
     SDL_SetRenderDrawColor( g_renderer, 200, 200, 200, 255 );
     r.x = 4;
     r.y = 4;
@@ -173,6 +180,7 @@ static void sdl_core_resize(void)
     r.w = 16;
     r.h = 12;
     SDL_RenderFillRect( g_renderer, &r );
+#endif
 }
 
 
