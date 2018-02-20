@@ -28,21 +28,16 @@
 
 uint8_t getPressedButton(uint8_t analogPin)
 {
-  int buttonValue = analogRead(analogPin);
-  if (buttonValue < 100) {
-    return BUTTON_RIGHT;  
-  }
-  else if (buttonValue < 200) {
-    return BUTTON_UP;
-  }
-  else if (buttonValue < 400){
-    return BUTTON_DOWN;
-  }
-  else if (buttonValue < 600){
-    return BUTTON_LEFT;
-  }
-  else if (buttonValue < 800){
-    return BUTTON_SELECT;
-  }
-  return BUTTON_NONE;
+#ifdef USE_Z_KEYPAD
+    int buttonValue = analogRead(analogPin);
+    if (buttonValue < 100) return BUTTON_RIGHT;  
+    if (buttonValue < 200) return BUTTON_UP;
+    if (buttonValue < 400) return BUTTON_DOWN;
+    if (buttonValue < 600) return BUTTON_LEFT;
+    if (buttonValue < 800) return BUTTON_SELECT;
+#else
+    if (digitalRead(RIGHT_BTN) != LOW) return BUTTON_RIGHT;
+    if (digitalRead(LEFT_BTN) != LOW) return  BUTTON_LEFT;
+#endif
+    return BUTTON_NONE;
 }

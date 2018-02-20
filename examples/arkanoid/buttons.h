@@ -26,6 +26,17 @@
 
 #include <stdint.h>
 
+#if defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)
+#    define LEFT_BTN    2
+#    define RIGHT_BTN   0
+#else // For Arduino Nano/Atmega328 we use different pins
+#    define USE_Z_KEYPAD // use analog Z-keypad ADC module on A0 pin.
+#    ifndef USE_Z_KEYPAD
+#        define LEFT_BTN    4
+#        define RIGHT_BTN   2
+#    endif
+#endif
+
 const uint8_t BUTTON_NONE   = 0;
 const uint8_t BUTTON_RIGHT  = 1;
 const uint8_t BUTTON_UP     = 2;

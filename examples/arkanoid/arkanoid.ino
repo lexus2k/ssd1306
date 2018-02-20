@@ -42,7 +42,7 @@
  *            PD1  3|    |26  PC3                  
  * RIGHT(D 2) PD2  4|    |25  PC2                   
  * BUZZ (D 3) PD3  5|    |24  PC1               
- * LEFT (D 4) PD4  6|    |23  PC0  Z-KEYPAD (A 0) if USE_Z_KEYPAD is defined (see below)
+ * LEFT (D 4) PD4  6|    |23  PC0  Z-KEYPAD (A 0) if USE_Z_KEYPAD is defined (refer to buttons.h)
  *            VCC  7|    |22  GND
  *            GND  8|    |21  AREF
  * BUZZ (D 6) PB6  9|    |20  AVCC
@@ -86,15 +86,8 @@ typedef struct
 uint16_t *EEPROM_ADDR = (uint16_t*)0;
 
 #if defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)
-#    define LEFT_BTN    2
 #    define BUZZER      1
-#    define RIGHT_BTN   0
 #else // For Arduino Nano/Atmega328 we use different pins
-#    define USE_Z_KEYPAD // use analog Z-keypad ADC module on A0 pin.
-#    ifndef USE_Z_KEYPAD
-#        define LEFT_BTN    4
-#        define RIGHT_BTN   2
-#    endif
 #    ifdef ARKANOID_SSD1331
 #        define BUZZER      6
 #    else
@@ -141,22 +134,206 @@ uint8_t    level = 1;
 uint8_t    blocksLeft = 0;
 uint8_t    platformPower;
 
-
-void resetGame();
 void nextLevel();
-void drawPlatform();
 void beep(int bCount,int bDelay);
 void movePlatform();
 bool moveObjects();
 void drawBall(uint8_t lastx, uint8_t lasty);
 bool moveBall();
-void drawBlocks();
 void drawObjects();
 void system_sleep();
-void resetBlocks();
-void drawFieldEdges();
-void drawStatusPanel();
 void onKill();
+
+static char tempStr[4] = {0};
+void arkanoidUtoa(uint16_t b)
+{
+    utoa(b,tempStr,10);
+}
+
+
+void drawIntro()
+{
+#ifdef ARKANOID_SSD1331
+    ssd1331_96x64_spi_init(3,4,5);
+#elif defined(__AVR_ATtiny85__)
+    ssd1306_i2cInit_Embedded(-1,-1,0);
+#elif defined(SSD1306_WIRE_SUPPORTED)
+    ssd1306_i2cInit_Wire(0);
+#elif defined(SSD1306_I2C_SW_SUPPORTED)
+    ssd1306_i2cInit_Embedded(-1,-1,0);
+#elif defined(SSD1306_LINUX_SUPPORTED)
+    ssd1306_i2cInit_Linux(-1,-1);
+#else
+    #error "Not supported microcontroller or board"
+#endif
+#ifndef ARKANOID_SSD1331
+    ssd1306_128x64_init();
+#endif
+    ssd1306_clearScreen( );
+    ssd1331_setColor(RGB_COLOR8(255,0,0));
+    for (int8_t y=-24; y<16; y++)
+    {
+        gfx_drawMonoBitmap(16 - OUTPUT_OFFSET, y, 96, 24, arkanoid_2);
+        delay(20);
+    }
+    ssd1331_setColor(RGB_COLOR8(255,255,0));
+    ssd1306_printFixed(40 - OUTPUT_OFFSET, 40, "BREAKOUT", STYLE_NORMAL);
+    beep(200,600);
+    beep(300,200);
+    beep(400,300);
+}
+
+void drawStatusPanel()
+{
+    ssd1331_setColor(RGB_COLOR8(255,0,0));
+    for(uint8_t i=0; i<min(hearts,3); i++)
+    {
+        SPRITE heart = ssd1306_createSprite( RIGHT_EDGE + 4, 16 + (i<<3), 8, heartSprite );
+        heart.draw();
+    }
+    ssd1331_setColor(RGB_COLOR8(255,255,0));
+    arkanoidUtoa(score);
+    tempStr[2] = '\0';
+    ssd1306_printFixed(RIGHT_EDGE + 1, 8, tempStr, STYLE_NORMAL);
+    ssd1331_setColor(RGB_COLOR8(0,255,255));
+    SPRITE power = ssd1306_createSprite( RIGHT_EDGE + 4, 40, 8, powerSprite );
+    if (platformPower)
+        power.draw();
+    else
+        power.erase();
+}
+
+/* Draws and clears platform */
+void drawPlatform()
+{
+    uint8_t pos = (platformPos < PLATFORM_SPEED) ? 0: (platformPos - PLATFORM_SPEED);
+    ssd1331_setColor(RGB_COLOR8(255,255,0));
+    ssd1306_setRamBlock( pos + LEFT_EDGE + 1, PLATFORM_ROW, platformWidth + PLATFORM_SPEED * 2 );
+    ssd1306_dataStart();
+    while (pos < platformPos)
+    {
+       ssd1306_sendPixels(0B00000000);
+       pos++;
+    }
+    ssd1306_sendPixels(0B00001110);
+    pos++;
+    while (pos < platformPos + platformWidth - 1)
+    {
+      ssd1306_sendPixels(0B00000111);
+      pos++;
+    }
+    ssd1306_sendPixels(0B00001110);
+    while (pos < platformPos + platformWidth + PLATFORM_SPEED - 1)
+    {
+       if (pos >= (RIGHT_EDGE - LEFT_EDGE - 2))
+       {
+          break;
+       }
+       ssd1306_sendPixels(0B00000000);
+       pos++;
+    }
+    ssd1306_endTransmission();
+}
+
+void drawFieldEdges()
+{
+    uint8_t i=8;
+    ssd1331_setColor(RGB_COLOR8(255,0,0));
+    while (i)
+    {
+        i--;
+        ssd1306_setRamBlock(LEFT_EDGE, i, 1);
+        ssd1306_sendData( 0B01010101 );
+        ssd1306_setRamBlock(RIGHT_EDGE, i, 1);
+        ssd1306_sendData( 0B01010101 );
+    }
+}
+
+void drawBlock(uint8_t x, uint8_t y)
+{
+    uint8_t block = gameField[y][x];
+    switch(block)
+    {
+        case 1: ssd1331_setColor(RGB_COLOR8(64,64,255)); break;
+        case 2: ssd1331_setColor(RGB_COLOR8(64,255,255)); break;
+        case 3: ssd1331_setColor(RGB_COLOR8(64,255,64)); break;
+        default: ssd1331_setColor(RGB_COLOR8(64,64,255)); break;
+    }
+    ssd1306_drawSpriteEx(LEFT_EDGE + 1 + (x << 4), y, 16, &blockImages[block][0]);
+}
+
+
+void resetBlocks()
+{
+    if (level > MAX_LEVELS)
+    {
+       level = MAX_LEVELS;
+    }
+    blocksLeft = 0;
+    for (uint8_t i =0; i<BLOCKS_PER_ROW; i++)
+    {
+        for (int j=0; j<BLOCK_NUM_ROWS; j++)
+        {
+            gameField[j][i] = pgm_read_byte( &levels[level-1][j][i] );
+            if ((gameField[j][i]) && (gameField[j][i] != BLOCK_STRONG))
+            {
+                blocksLeft++;
+            }
+        }
+    }
+}
+
+void drawBlocks()
+{
+    for (uint8_t r=0; r<BLOCK_NUM_ROWS; r++)
+    {
+        for (uint8_t bl = 0; bl<BLOCKS_PER_ROW; bl++)
+        {
+            drawBlock(bl, r);
+        }
+    }
+}
+
+void drawStartScreen()
+{
+    ssd1306_clearScreen( );
+    drawBlocks();
+    drawFieldEdges();
+    updateStatusPanel = true;
+}
+
+void startLevel()
+{
+    ssd1331_setColor(RGB_COLOR8(255,128,0));
+    arkanoidUtoa(level); 
+    ssd1306_clearScreen();
+    ssd1306_printFixed(40 - OUTPUT_OFFSET, 24, "LEVEL ", STYLE_BOLD);
+    ssd1306_printFixed(76 - OUTPUT_OFFSET, 24, tempStr, STYLE_BOLD);
+    delay(2000);
+    resetBlocks();
+    hSpeed = INITIAL_H_SPEED;
+    vSpeed = INITIAL_V_SPEED;
+    platformPos = random(0, (RIGHT_EDGE - LEFT_EDGE - 1 - platformWidth));
+    ballx = ( platformPos + ( platformWidth >> 1 ) ) << SPEED_SHIFT;
+    bally = ( SCREEN_HEIGHT - PLATFORM_HEIGHT ) << SPEED_SHIFT;
+    for(uint8_t i=0; i<MAX_GAME_OBJECTS; i++)
+    {
+        objects[i].type = 0;
+    }
+    drawStartScreen();
+    lastDrawTimestamp = millis();
+}
+
+void resetGame()
+{
+    score = 0;
+//    platformWidth = INITIAL_PLATFORM_WIDTH;
+    platformPower = 0;
+    hearts = 2;
+    drawIntro();
+    delay(3000);
+    startLevel();
+}
 
 void setup()
 {
@@ -195,11 +372,11 @@ void setup()
 
 void loop()
 {
-    if ( (uint16_t)(((uint16_t)millis()) - lastDrawTimestamp) > 30 )
+    if ( (uint16_t)(((uint16_t)millis()) - lastDrawTimestamp) > 28 )
     {
         uint8_t lastx = (ballx >> SPEED_SHIFT);
         uint8_t lasty = (bally >> SPEED_SHIFT);
-        lastDrawTimestamp += 30;
+        lastDrawTimestamp += 28;
         // continue moving after the interrupt
         movePlatform();
         // bounce off the sides of the screen
@@ -221,189 +398,13 @@ void loop()
     }
 }
 
-void drawStatusPanel()
-{
-    ssd1331_setColor(RGB_COLOR8(255,255,0));
-    for(uint8_t i=0; i<min(hearts,3); i++)
-    {
-        SPRITE heart = ssd1306_createSprite( RIGHT_EDGE + 4, 16 + (i<<3), 8, heartSprite );
-        heart.draw();
-    }
-    char temp[6] = {'0',0,0,0,0,0};
-    utoa(score,temp + (score<10?1:0),10);
-    temp[2] = '\0';
-    ssd1306_printFixed(RIGHT_EDGE + 1, 8, temp, STYLE_NORMAL);
-    SPRITE power = ssd1306_createSprite( RIGHT_EDGE + 4, 40, 8, powerSprite );
-    if (platformPower)
-        power.draw();
-    else
-        power.erase();
-}
-
-void drawIntro()
-{
-#ifdef ARKANOID_SSD1331
-    ssd1331_96x64_spi_init(3,4,5);
-#elif defined(__AVR_ATtiny85__)
-    ssd1306_i2cInit_Embedded(-1,-1,0);
-#elif defined(SSD1306_WIRE_SUPPORTED)
-    ssd1306_i2cInit_Wire(0);
-#elif defined(SSD1306_I2C_SW_SUPPORTED)
-    ssd1306_i2cInit_Embedded(-1,-1,0);
-#elif defined(SSD1306_LINUX_SUPPORTED)
-    ssd1306_i2cInit_Linux(-1,-1);
-#else
-    #error "Not supported microcontroller or board"
-#endif
-#ifndef ARKANOID_SSD1331
-    ssd1306_128x64_init();
-#endif
-    ssd1306_clearScreen( );
-    ssd1331_setColor(RGB_COLOR8(255,0,0));
-    for (int8_t y=-24; y<16; y++)
-    {
-        gfx_drawMonoBitmap(16 - OUTPUT_OFFSET, y, 96, 24, arkanoid_2);
-        delay(20);
-    }
-    ssd1331_setColor(RGB_COLOR8(255,255,0));
-    ssd1306_printFixed(40 - OUTPUT_OFFSET, 40, "BREAKOUT", STYLE_NORMAL);
-    beep(200,600);
-    beep(300,200);
-    beep(400,300);
-}
-
-void drawStartScreen()
-{
-    ssd1306_clearScreen( );
-    drawBlocks();
-    drawFieldEdges();
-    updateStatusPanel = true;
-}
-
-void startLevel()
-{
-    resetBlocks();
-    hSpeed = INITIAL_H_SPEED;
-    vSpeed = INITIAL_V_SPEED;
-    platformPos = random(0, (RIGHT_EDGE - LEFT_EDGE - 1 - platformWidth));
-    ballx = ( platformPos + ( platformWidth >> 1 ) ) << SPEED_SHIFT;
-    bally = ( SCREEN_HEIGHT - PLATFORM_HEIGHT ) << SPEED_SHIFT;
-    for(uint8_t i=0; i<MAX_GAME_OBJECTS; i++)
-    {
-        objects[i].type = 0;
-    }
-    drawStartScreen();
-    lastDrawTimestamp = millis();
-}
-
-void resetGame()
-{
-    score = 0;
-//    platformWidth = INITIAL_PLATFORM_WIDTH;
-    platformPower = 0;
-    hearts = 2;
-    drawIntro();
-    delay(3000);
-    startLevel();
-}
-
-/* Draws and clears platform */
-void drawPlatform()
-{
-  uint8_t pos = (platformPos < PLATFORM_SPEED) ? 0: (platformPos - PLATFORM_SPEED);
-  ssd1331_setColor(RGB_COLOR8(255,255,0));
-  ssd1306_setRamBlock( pos + LEFT_EDGE + 1, PLATFORM_ROW, platformWidth + PLATFORM_SPEED * 2 );
-  ssd1306_dataStart();
-  while (pos < platformPos)
-  {
-     ssd1306_sendPixels(0B00000000);
-     pos++;
-  }
-  ssd1306_sendPixels(0B00001110);
-  pos++;
-  while (pos < platformPos + platformWidth - 1)
-  {
-    ssd1306_sendPixels(0B00000111);
-    pos++;
-  }
-  ssd1306_sendPixels(0B00001110);
-  while (pos < platformPos + platformWidth + PLATFORM_SPEED - 1)
-  {
-     if (pos >= (RIGHT_EDGE - LEFT_EDGE - 2))
-     {
-        break;
-     }
-     ssd1306_sendPixels(0B00000000);
-     pos++;
-  }
-  ssd1306_endTransmission();
-}
-
-
-void drawBlock(uint8_t x, uint8_t y)
-{
-    uint8_t block = gameField[y][x];
-    if (block == 1) ssd1331_setColor(RGB_COLOR8(64,64,255));
-    else if (block == 2) ssd1331_setColor(RGB_COLOR8(64,255,255));
-    else if (block == 3) ssd1331_setColor(RGB_COLOR8(64,255,64));
-    else ssd1331_setColor(RGB_COLOR8(64,64,255));
-    ssd1306_drawSpriteEx(LEFT_EDGE + 1 + (x << 4), y, 16, &blockImages[block][0]);
-}
-
-
-void resetBlocks()
-{
-    if (level > MAX_LEVELS)
-    {
-       level = MAX_LEVELS;
-    }
-    blocksLeft = 0;
-    for (uint8_t i =0; i<BLOCKS_PER_ROW; i++)
-    {
-        for (int j=0; j<BLOCK_NUM_ROWS; j++)
-        {
-            gameField[j][i] = pgm_read_byte( &levels[level-1][j][i] );
-            if ((gameField[j][i]) && (gameField[j][i] != BLOCK_STRONG))
-            {
-                blocksLeft++;
-            }
-        }
-    }
-}
-
-void drawBlocks()
-{
-    for (uint8_t r=0; r<BLOCK_NUM_ROWS; r++)
-    {
-        for (uint8_t bl = 0; bl<BLOCKS_PER_ROW; bl++)
-        {
-            drawBlock(bl, r);
-        }
-    }
-}
-
-void drawFieldEdges()
-{
-    uint8_t i=8;
-    ssd1331_setColor(RGB_COLOR8(255,0,0));
-    while (i)
-    {
-        i--;
-        ssd1306_setRamBlock(LEFT_EDGE, i, 1);
-        ssd1306_sendData( 0B01010101 );
-        ssd1306_setRamBlock(RIGHT_EDGE, i, 1);
-        ssd1306_sendData( 0B01010101 );
-    }
-}
-
-
 void drawBall(uint8_t lastx, uint8_t lasty)
 {
     uint8_t newx = ballx >> SPEED_SHIFT;
     uint8_t newy = bally >> SPEED_SHIFT;
     uint8_t temp;
     temp = 0B00000001 << (newy & 0x07);
-    ssd1331_setColor(RGB_COLOR8(0,255,0));
+    ssd1331_setColor(RGB_COLOR8(255,255,255));
     ssd1306_setRamBlock(LEFT_EDGE + 1 + newx, newy >> 3, 1);
     ssd1306_sendData( temp );
     if ((newx != lastx) || ((newy >> 3) != (lasty >> 3)))
@@ -582,21 +583,13 @@ bool moveObjects()
 // continues moving after interrupt
 void movePlatform()
 {
-#ifdef USE_Z_KEYPAD
-    // Use A0 ADC input (channel 0)
+    // Use A0 ADC input (channel 0) if Z_KEYPAD is attached
     uint8_t buttonCode = getPressedButton(0);
     if (buttonCode == BUTTON_RIGHT)
-#else
-    if (digitalRead(RIGHT_BTN) != LOW)
-#endif
     {
         platformPos = min(RIGHT_EDGE - LEFT_EDGE - 1 - platformWidth, platformPos + PLATFORM_SPEED);
     }
-#ifdef USE_Z_KEYPAD    
     if (buttonCode == BUTTON_LEFT)
-#else
-    if (digitalRead(LEFT_BTN) != LOW)
-#endif
     {
         platformPos = max(0, platformPos - PLATFORM_SPEED);
     }
@@ -642,12 +635,11 @@ void gameOver()
     ssd1306_clearScreen( );
     ssd1306_printFixed(32 - OUTPUT_OFFSET, 16, "GAME OVER", STYLE_NORMAL);
     ssd1306_printFixed(32 - OUTPUT_OFFSET, 32, "SCORE ", STYLE_NORMAL);
-    char temp[6] = {0,0,0,0,0,0};
-    utoa(score,temp,10);
-    ssd1306_printFixed(70 - OUTPUT_OFFSET, 32, temp, STYLE_NORMAL);
+    arkanoidUtoa(score);
+    ssd1306_printFixed(70 - OUTPUT_OFFSET, 32, tempStr, STYLE_NORMAL);
     ssd1306_printFixed(32 - OUTPUT_OFFSET, 40, "TOP SCORE ", STYLE_NORMAL);
-    utoa(topScore,temp,10);
-    ssd1306_printFixed(90 - OUTPUT_OFFSET, 40, temp, STYLE_NORMAL);
+    arkanoidUtoa(topScore);
+    ssd1306_printFixed(90 - OUTPUT_OFFSET, 40, tempStr, STYLE_NORMAL);
     for (int i = 0; i<1000; i++)
     {
        beep(1,random(0,i*2));
@@ -715,7 +707,7 @@ bool moveBall()
   {
      int middle = platformPos + (platformWidth >> 1);
      hSpeed = (nextx - middle) / (platformWidth >> (SPEED_SHIFT + 1));
-     vSpeed = -max(4 - abs(hSpeed), 1);
+     vSpeed = -max(4 - abs(hSpeed), 2);
      beep(20,600);
   }
   /* Check screen hit */
