@@ -26,7 +26,6 @@
 
 #include "sprite_pool.h"
 #include "level_sprites.h"
-#include <stdint.h>
 
 extern uint8_t gameField[];
 

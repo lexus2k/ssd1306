@@ -45,11 +45,11 @@ $(BLD)/%.o: %.c
 
 $(BLD)/%.o: %.ino
 	-$(MKDIR) $(call convert,$(dir $@))
-	$(CXX) -std=c++11 $(CCFLAGS) -x c++ -c $< -o $@
+	$(CXX) -std=c++11 $(CCFLAGS) $(CXXFLAGS) -x c++ -c $< -o $@
 
 $(BLD)/%.o: %.cpp
 	-$(MKDIR) $(call convert,$(dir $@))
-	$(CXX) -std=c++11 $(CCFLAGS) -c $< -o $@
+	$(CXX) -std=c++11 $(CCFLAGS) $(CXXFLAGS) -c $< -o $@
 
 # ************* Common defines ********************
 
@@ -58,6 +58,8 @@ INCLUDES += \
 
 CCFLAGS += -g -Os $(INCLUDES) -Wall -Werror -ffunction-sections -fdata-sections \
 	-fno-exceptions -Wno-error=deprecated-declarations
+
+CXXFLAGS += -fno-rtti
 
 ifeq ($(SDL_EMULATION),y)
     CCFLAGS += -DSDL_EMULATION -I../tools/sdl

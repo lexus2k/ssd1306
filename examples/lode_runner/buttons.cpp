@@ -24,8 +24,6 @@
 
 #include "buttons.h"
 
-#include "Arduino.h"
-
 uint8_t getPressedButton(uint8_t analogPin)
 {
   int buttonValue = analogRead(analogPin);

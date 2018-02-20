@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include <Arduino.h>
+#include "ssd1306.h"
 
 extern const PROGMEM uint8_t coinImage[8];
 

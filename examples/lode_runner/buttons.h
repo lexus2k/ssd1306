@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include <stdint.h>
+#include "ssd1306.h"
 
 const uint8_t BUTTON_NONE   = 0;
 const uint8_t BUTTON_RIGHT  = 1;

@@ -26,7 +26,7 @@
 
 #include "hero_states.h"
 
-#include <Arduino.h>
+#include "ssd1306.h"
 
 extern const PROGMEM uint8_t playerFlyingImage[MAN_ANIM_MAX][2][8];
 

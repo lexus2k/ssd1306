@@ -24,6 +24,6 @@
 
 #pragma once
 
-#include "Arduino.h"
+#include "ssd1306.h"
 
 extern PROGMEM const uint8_t bgSprites[5][8];

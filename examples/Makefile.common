@@ -50,17 +50,19 @@ $(BLD)/%.o: %.c
 
 $(BLD)/%.o: %.ino
 	-$(MKDIR) $(call convert,$(dir $@))
-	$(CXX) -std=c++11 $(CCFLAGS) -x c++ -c $< -o $@
+	$(CXX) -std=c++11 $(CCFLAGS) $(CXXFLAGS) -x c++ -c $< -o $@
 
 $(BLD)/%.o: %.cpp
 	-$(MKDIR) $(call convert,$(dir $@))
-	$(CXX) -std=c++11 $(CCFLAGS) -c $< -o $@
+	$(CXX) -std=c++11 $(CCFLAGS) $(CXXFLAGS) -c $< -o $@
 
 # ************* Common defines ********************
 
 INCLUDES += \
 	-I./$(PROJECT) \
 	-I../src
+
+CXXFLAGS +=  -fno-rtti
 
 CCFLAGS += -g -Os -w -ffreestanding $(INCLUDES) -Wall -Werror \
 	-Wl,--gc-sections -ffunction-sections -fdata-sections \

@@ -41,8 +41,8 @@
  *   LCD BL to  VCC
  */
 
-#include "game_field.h"
 #include "ssd1306.h"
+#include "game_field.h"
 #include "player_sprites.h"
 #include "coin_sprite.h"
 #include "hero_states.h"
@@ -50,10 +50,10 @@
 
 #if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)
 #define BUZZER      1
-#define BUTTON_PIN  A0
+#define BUTTON_PIN  0
 #else // For Arduino Nano/Atmega328 we use different pins
 #define BUZZER      8
-#define BUTTON_PIN  A0
+#define BUTTON_PIN  0
 #endif
 
 /**
@@ -177,6 +177,7 @@ void movePlayer(SPRITE &playerSprite, uint8_t direction)
     }
 }
 
+static uint32_t lastTs;
 
 void setup()
 {
@@ -195,12 +196,11 @@ void setup()
     field.refreshScreen();
     showGameInfo();
     pinMode(BUZZER, OUTPUT);
+    lastTs = millis();
 }
-
 
 void loop()
 {
-    static unsigned long lastTs = millis();
     /* Move sprite every 40 milliseconds */
     if ((unsigned long)(millis() - lastTs) >= 40)
     {
