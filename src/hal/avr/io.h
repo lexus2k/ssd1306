@@ -76,6 +76,7 @@ void digitalWrite(int pin, int level);
 static inline int  digitalRead(int pin) { return LOW; };
 void pinMode(int pin, int mode);
 static inline void delay(unsigned long ms) { _delay_ms(ms); };
+static inline void delayMicroseconds(unsigned long us) { _delay_us(us); };
 static inline int  analogRead(int pin) { return 0; };
 static inline uint32_t millis() { return 0; };
 static inline void randomSeed(int seed) { };

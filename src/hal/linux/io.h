@@ -63,8 +63,10 @@ static inline void pinMode(int pin, int mode) {};
 static inline void delay(unsigned long ms) {  };
 #elif defined(__MINGW32__)
 static inline void delay(unsigned long ms) { Sleep(ms);  };
+static inline void delayMicroseconds(unsigned long us) { Sleep((us+500)/1000); };
 #else
 static inline void delay(unsigned long ms) { usleep(ms*1000);  };
+static inline void delayMicroseconds(unsigned long us) { usleep(us); };
 #endif
 
 #if defined(__KERNEL__)

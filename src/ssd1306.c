@@ -103,7 +103,7 @@ void ssd1306_setContrast(uint8_t contrast)
     ssd1306_endTransmission();
 }
 
-uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style)
+uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle style)
 {
     uint8_t i, j=0;
     uint8_t text_index = 0;
