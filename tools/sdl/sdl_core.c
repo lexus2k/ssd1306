@@ -368,11 +368,19 @@ void sdl_ssd1306_data(uint8_t data)
     }
 }
 
+uint8_t s_verticalMode = 1;
 
 static void sdl_ssd1331_commands(uint8_t data)
 {
     switch (s_commandId)
     {
+        case 0xA0:
+            if (s_cmdArgIndex == 0)
+            {
+                s_verticalMode = data & 0x01;
+                s_commandId = SSD_COMMAND_NONE;
+            }
+            break;
         case 0x15:
             switch (s_cmdArgIndex)
             {
@@ -437,14 +445,30 @@ void sdl_ssd1331_data(uint8_t data)
     // Render rect
     SDL_RenderFillRect( g_renderer, &r );
 
-    s_activePage++;
-    if (s_activePage > s_pageEnd)
+    if (s_verticalMode)
     {
-        s_activePage = s_pageStart;
+        s_activePage++;
+        if (s_activePage > s_pageEnd)
+        {
+            s_activePage = s_pageStart;
+            s_activeColumn++;
+            if (s_activeColumn > s_columnEnd)
+            {
+                s_activeColumn = s_columnStart;
+            }
+        }
+    }
+    else
+    {
         s_activeColumn++;
         if (s_activeColumn > s_columnEnd)
         {
             s_activeColumn = s_columnStart;
+            s_activePage++;
+            if (s_activePage > s_pageEnd)
+            {
+                s_activePage = s_pageStart;
+            }
         }
     }
 }
