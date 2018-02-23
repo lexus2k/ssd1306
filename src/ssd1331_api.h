@@ -69,6 +69,8 @@ extern "C" {
  */
 void         ssd1331_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint16_t color);
 
+void         ssd1331_fastDrawBuffer8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data);
+
 /**
  * @}
  */

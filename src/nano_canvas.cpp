@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2016-2018, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,35 +22,35 @@
     SOFTWARE.
 */
 
+#include "nano_canvas.h"
 #include "ssd1331_api.h"
-#include "intf/ssd1306_interface.h"
-#include "hal/io.h"
 
-#include "lcd/ssd1331_commands.h"
+#define YADDR8(y) (static_cast<uint16_t>(y) << m_p)
+#define BADDR8(b) ((b) << m_p)
 
-void         ssd1331_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint16_t color)
+
+void NanoCanvas8::putPixel(lcdint_t x, lcdint_t y, uint8_t color)
 {
-    ssd1306_commandStart();
-    ssd1306_sendByte(SSD1331_DRAWLINE);
-    ssd1306_sendByte(x1);
-    ssd1306_sendByte(y1);
-    ssd1306_sendByte(x2);
-    ssd1306_sendByte(y2);
-    ssd1306_sendByte( (color & 0x03) << 4 );
-    ssd1306_sendByte( (color & 0x1C) << 2 );
-    ssd1306_sendByte( (color & 0xE0) >> 2 );
-    ssd1306_endTransmission();
+    x += m_offsetx;
+    y += m_offsety;
+    if ((x < 0) || (y < 0)) return;
+    if ((x >= (lcdint_t)m_w) || (y >= (lcdint_t)m_h)) return;
+    m_buf[YADDR8(y) + x] = color;
 }
 
-void         ssd1331_fastDrawBuffer8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data)
+void NanoCanvas8::clear()
 {
-    ssd1306_setRamBlock(x, y, w);
-    ssd1306_dataStart();
-    uint16_t count = (uint16_t)w * (uint16_t)h;
-    while (count--)
+    uint8_t *buf = m_buf;
+    for(uint16_t n = 0; n < YADDR8(m_h); n++)
     {
-        ssd1306_sendByte( *data );
-        data++;
+        *buf = 0;
+        buf++;
     }
-    ssd1306_endTransmission();
 }
+
+void NanoCanvas8::blt(lcdint_t x, lcdint_t y)
+{
+    ssd1331_fastDrawBuffer8( x, y, m_w, m_h, m_buf);
+}
+
+

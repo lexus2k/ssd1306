@@ -43,6 +43,7 @@ SRCS_C = \
 	lcd/oled_ssd1331.c
 
 SRCS_CPP = \
+	nano_canvas.cpp \
 	nano_gfx.cpp \
 	sprite_pool.cpp \
 	i2c/ssd1306_i2c_wire.cpp \

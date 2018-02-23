@@ -71,6 +71,19 @@ static void ssd1331_setBlock(uint8_t x, uint8_t y, uint8_t w)
     ssd1306_endTransmission();
 }
 
+static void ssd1331_setBlock2(uint8_t x, uint8_t y, uint8_t w)
+{
+    uint8_t rx = w ? (x + w - 1) : (s_displayWidth - 1);
+    ssd1306_commandStart();
+    ssd1306_sendByte(SSD1331_COLUMNADDR);
+    ssd1306_sendByte(x);
+    ssd1306_sendByte(rx < s_displayWidth ? rx : (s_displayWidth - 1));
+    ssd1306_sendByte(SSD1331_ROWADDR);
+    ssd1306_sendByte(y);
+    ssd1306_sendByte(s_displayHeight - 1);
+    ssd1306_endTransmission();
+}
+
 static void ssd1331_nextPage(void)
 {
     ssd1306_endTransmission();
@@ -102,6 +115,22 @@ void    ssd1331_setColor(uint16_t color)
 void    ssd1331_setRgbColor(uint8_t r, uint8_t g, uint8_t b)
 {
     s_color = RGB_COLOR8(r,g,b);
+}
+
+void    ssd1331_setMode(uint8_t vertical)
+{
+    ssd1306_commandStart();
+    ssd1306_sendByte( SSD1331_SEGREMAP );
+    ssd1306_sendByte( 0x00 | 0x20 | 0x10 | 0x02 | vertical /* 8-bit rgb color mode */ );
+    ssd1306_endTransmission();
+    if (vertical)
+    {
+        ssd1306_setRamBlock = ssd1331_setBlock;
+    }
+    else
+    {
+        ssd1306_setRamBlock = ssd1331_setBlock2;
+    }
 }
 
 void    ssd1331_96x64_init()

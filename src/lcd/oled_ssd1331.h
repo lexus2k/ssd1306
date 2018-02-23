@@ -58,6 +58,9 @@ void        ssd1331_setColor(uint16_t color);
  */
 void        ssd1331_setRgbColor(uint8_t r, uint8_t g, uint8_t b);
 
+void        ssd1331_setMode(uint8_t vertical);
+
+
 /**
  * @defgroup LCD_DISPLAY_API LCD Display control functions
  * @{
