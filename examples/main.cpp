@@ -22,11 +22,22 @@
     SOFTWARE.
 */
 
+#ifdef SDL_EMULATION
+#include "sdl_core.h"
+#endif
+
 extern void setup(void);
 extern void loop(void);
 
 void main(void)
 {
     setup();
-    for(;;) loop();
+    for(;;)
+    {
+        
+        loop();
+#ifdef SDL_EMULATION
+        sdl_read_analog(0);
+#endif
+    }
 }
