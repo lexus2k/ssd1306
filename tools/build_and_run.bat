@@ -25,7 +25,7 @@
 
 @mkdir ..\bld\
 @copy /Y sdl\SDL2.dll ..\bld\
-@mingw32-make.exe -C ../examples -f Makefile.mingw32 EXTRA_CCFLAGS='%2' SDL_EMULATION=y PROJECT=%1 flash
+@mingw32-make.exe -C ../examples -f Makefile.mingw32 EXTRA_CCFLAGS="%2" SDL_EMULATION=y PROJECT=%1 flash
 @exit /0
 
 :error
