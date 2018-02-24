@@ -32,6 +32,12 @@
 #include "hal/io.h"
 #include "nano_gfx_types.h"
 
+enum
+{
+    TEXT_MODE_WRAP = 1,
+    TEXT_MODE_TRANSPARENT = 2,
+};
+
 /**
  * NanoCanvas represents objects for drawing in memory buffer
  */
@@ -54,11 +60,22 @@ public:
         m_h = h;
         m_offsetx = 0;
         m_offsety = 0;
+        m_cursorX = 0;
+        m_cursorY = 0;
+        m_color = 0xFF;
+        m_textMode = 0;
         m_p = 3;
         while (w >> (m_p+1)) { m_p++; };
         m_buf = bytes;
         clear();
     };
+
+    /**
+     * Sets offset
+     * @param ox - X offset in pixels
+     * @param oy - Y offset in pixels
+     */
+    void setOffset(lcdint_t ox, lcdint_t oy) { m_offsetx = ox; m_offsety = oy; };
 
     /**
      * Draws pixel on specified position
@@ -69,9 +86,80 @@ public:
     void putPixel(lcdint_t x, lcdint_t y, uint8_t color);
 
     /**
+     * Draws horizontal or vertical line 
+     * @param x1 - position X
+     * @param y1 - position Y
+     * @param y2 - position Y
+     * @param color - color
+     */
+    void drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2, uint8_t color);
+
+    /**
+     * Draws horizontal or vertical line 
+     * @param x1 - position X
+     * @param y1 - position Y
+     * @param x2 - position X
+     * @param color - color
+     */
+    void drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, uint8_t color);
+
+    /**
+     * Draws rectangle 
+     * @param x1 - position X
+     * @param y1 - position Y
+     * @param x2 - position X
+     * @param y2 - position Y
+     * @param color - color
+     */
+    void drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, uint8_t color);
+
+    /**
+     * Fills rectangle area 
+     * @param x1 - position X
+     * @param y1 - position Y
+     * @param x2 - position X
+     * @param y2 - position Y
+     * @param color - color
+     */
+    void fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, uint8_t color);
+
+    /**
      * Clears canvas
      */
     void clear();
+
+    /**
+     * Writes single character to canvas
+     * @param c - character code to print
+     */
+    void write(uint8_t c);
+
+    /**
+     * Draws single character to canvas
+     * @param c - character code to print
+     */
+    void printChar(uint8_t c);
+
+    /**
+     * Print text at specified position to canvas
+     * @param xpos - position in pixels
+     * @param y    - position in pixels
+     * @param ch - pointer to NULL-terminated string.
+     * @param style - font style (EFontStyle), normal by default
+     */
+    void printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style);
+
+    /**
+     * Sets text output mode
+     * @param modeFlags - combination of flags: TEXT_MODE_WRAP, TEXT_MODE_TRANSPARENT
+     */
+    void setTextMode(uint8_t modeFlags) { m_textMode = modeFlags; };
+
+    /**
+     * Sets color for monochrome operations
+     * @param color - color to set (refer to RGB_COLOR8 definition)
+     */
+    void setColor(uint8_t color) { m_color = color; };
 
     /**
      * Draws canvas on the LCD display
@@ -80,13 +168,22 @@ public:
      */
     void blt(lcdint_t x, lcdint_t y);
 
+    /**
+     * Draws canvas on the LCD display using offset values.
+     */
+    void blt();
+
 private:
     lcduint_t m_w;
     lcduint_t m_h;
     lcduint_t m_p;
     lcdint_t  m_offsetx;
     lcdint_t  m_offsety;
+    lcdint_t  m_cursorX;
+    lcdint_t  m_cursorY;
+    uint8_t   m_textMode;
     uint8_t * m_buf;
+    uint8_t   m_color;
 };
 
 #endif

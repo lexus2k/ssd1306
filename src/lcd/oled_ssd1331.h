@@ -58,6 +58,18 @@ void        ssd1331_setColor(uint16_t color);
  */
 void        ssd1331_setRgbColor(uint8_t r, uint8_t g, uint8_t b);
 
+/**
+ * @brief Sets GDRAM autoincrement mode
+ *
+ * Sets GDRAM autoincrement mode. By default, to make
+ * ssd1306_xxx functions compatible with RGB oled display, 
+ * RGB oled is initialized in vertical auto-increment mode.
+ * But for pure rbg oled operations horizontal auto-increment mode is more suitable.
+ * So, if you're going to use NanoCanvas8 functions, please call
+ * ssd1331_setMode(0) prior to using pure RGB methods.
+ *
+ * @param vertical - 0 or 1
+ */
 void        ssd1331_setMode(uint8_t vertical);
 
 

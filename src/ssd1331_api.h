@@ -69,6 +69,16 @@ extern "C" {
  */
 void         ssd1331_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint16_t color);
 
+/**
+ * Draws 8-bit bitmap, located in SRAM, on the display
+ * Each byte represents separate pixel: refer to RGB_COLOR8 to understand RGB scheme, being used.
+ *
+ * @param x - horizontal position in pixels
+ * @param y - vertical position in pixels
+ * @param w - width of bitmap in pixels
+ * @param h - height of bitmap in pixels
+ * @param data - pointer to data, located in SRAM.
+ */
 void         ssd1331_fastDrawBuffer8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data);
 
 /**
