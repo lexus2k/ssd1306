@@ -30,16 +30,17 @@
 #include "ssd1306.h"
 #include "ssd1331_api.h"
 #include "nano_canvas.h"
+#include "sova.h"
 
-/* Do not include SPI.h for Attiny controllers */
-#ifdef SSD1306_SPI_SUPPORTED
-    #include <SPI.h>
-#endif
+#define TILE_SIZE   16
 
-uint8_t buffer[32*32];
+uint8_t buffer[TILE_SIZE*TILE_SIZE];
 
-NanoCanvas8 canvas(32,32,buffer);
+NanoCanvas8 canvas(TILE_SIZE,TILE_SIZE,buffer);
+
 int x = 72;
+int b_x = -128;
+int b_y = -128;
 int textx = 10;
 
 void setup()
@@ -55,7 +56,9 @@ void drawAll()
 {
     canvas.clear();
     canvas.drawRect(15,12,x,55,RGB_COLOR8(255,255,0));
-    canvas.fillRect(16,13,x-1,54,RGB_COLOR8(0,255,255));
+    canvas.fillRect(16,13,x-1,54,RGB_COLOR8(64,64,64));
+    canvas.setColor(RGB_COLOR8(0,255,255));
+    canvas.drawBitmap1(b_x, b_y, 128, 64, Sova);
     canvas.putPixel(5,5,RGB_COLOR8(255,255,255));
     canvas.putPixel(10,10,RGB_COLOR8(255,0,0));
     canvas.putPixel(20,15,RGB_COLOR8(0,255,0));
@@ -66,18 +69,23 @@ void drawAll()
 
 void refreshDisplay()
 {
-    canvas.setOffset(0,0); drawAll(); canvas.blt();
-    canvas.setOffset(32,0); drawAll(); canvas.blt();
-    canvas.setOffset(64,0); drawAll(); canvas.blt();
-    canvas.setOffset(0,32); drawAll(); canvas.blt();
-    canvas.setOffset(32,32); drawAll(); canvas.blt();
-    canvas.setOffset(64,32); drawAll(); canvas.blt();
+    for (int y=0; y<64; y = y + TILE_SIZE)
+    {
+        for(int x=0; x<96; x = x + TILE_SIZE)
+        {
+            canvas.setOffset(x,y);
+            drawAll();
+            canvas.blt();
+        }
+    }
 }
 
 
 void loop()
 {
     refreshDisplay();
-    delay(20);
+    delay(30);
     textx++; if (textx ==96) textx = -192;
+    b_x++;
+    b_y++;
 }

@@ -123,6 +123,69 @@ void NanoCanvas8::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, u
     }
 }
 
+//#include <stdio.h>
+
+void NanoCanvas8::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+{
+    uint8_t offset = 0;
+    /* calculate char rectangle */
+    lcdint_t x1 = xpos - m_offsetx;
+    lcdint_t y1 = ypos - m_offsety;
+    lcdint_t x2 = x1 + (lcdint_t)w - 1;
+    lcdint_t y2 = y1 + (lcdint_t)h - 1;
+    /* clip char */
+    if ((x2 < 0) || (x1 >= (lcdint_t)m_w)) return;
+    if ((y2 < 0) || (y1 >= (lcdint_t)m_h)) return;
+
+    if (x1 < 0)
+    {
+        bitmap -= x1;
+        x1 = 0;
+    }
+    if (y1 < 0)
+    {
+        bitmap += ((lcduint_t)(-y1) >> 3) * w;
+        offset = ((-y1) & 0x07);
+        y1 = 0;
+    }
+    if (y2 >= (lcdint_t)m_h)
+    {
+         y2 = (lcdint_t)m_h - 1;
+    }
+    if (x2 >= (lcdint_t)m_w)
+    {
+         x2 = (lcdint_t)m_w - 1;
+    }
+    uint8_t offset2 = 8 - offset;
+    lcdint_t y = y1;
+//    printf("[%d;%d] + [%d;%d], P1[%d;%d], P2[%d;%d]\n", xpos, ypos, m_offsetx, m_offsety, x1,y1,x2,y2);
+//    printf("offset: 1=%d, 2=%d\n", offset, offset2);
+    while ( y <= y2)
+    {
+        for ( lcdint_t x = x1; x <= x2; x++ )
+        {
+            uint8_t data = pgm_read_byte( bitmap );
+//            for (uint8_t n = offset; n < min(y2 - y + 1 + offset,8); n++)
+            for (uint8_t n = 0; n < min(y2 - y + 1, 8); n++)
+            {
+//                if ( data & (1<<n) )
+//                    m_buf[YADDR8(y + n - offset ) + x] = m_color;
+//                else if (!(m_textMode & TEXT_MODE_TRANSPARENT))
+//                    m_buf[YADDR8(y + n - offset ) + x] = 0x00;
+                if ( data & (1<<(n + offset)) )
+                    m_buf[YADDR8(y + n) + x] = m_color;
+                else if (!(m_textMode & TEXT_MODE_TRANSPARENT))
+                    m_buf[YADDR8(y + n) + x] = 0x00;
+            }
+            bitmap++;
+        }
+        bitmap += (w - (x2 - x1 + 1));
+        y = y + offset2;
+        offset = 0;
+        offset2 = 8;
+    }
+}
+
 void NanoCanvas8::printChar(uint8_t c)
 {
     /* calculate char rectangle */
@@ -210,5 +273,6 @@ void NanoCanvas8::blt(lcdint_t x, lcdint_t y)
 void NanoCanvas8::blt()
 {
     ssd1331_fastDrawBuffer8( m_offsetx, m_offsety, m_w, m_h, m_buf);
+//    printf("==================================\n");
 }
 

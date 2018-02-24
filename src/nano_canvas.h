@@ -123,6 +123,8 @@ public:
      */
     void fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, uint8_t color);
 
+    void drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
+
     /**
      * Clears canvas
      */
