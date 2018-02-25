@@ -34,8 +34,8 @@
 
 enum
 {
-    TEXT_MODE_WRAP = 1,
-    TEXT_MODE_TRANSPARENT = 2,
+    CANVAS_TEXT_WRAP = 1,
+    CANVAS_MODE_TRANSPARENT = 2,
 };
 
 /**
@@ -170,10 +170,11 @@ public:
     void printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style);
 
     /**
-     * Sets text output mode
-     * @param modeFlags - combination of flags: TEXT_MODE_WRAP, TEXT_MODE_TRANSPARENT
+     * @brief Sets canvas drawing mode
+     * Sets canvas drawing mode. The set flags define transparency of output images
+     * @param modeFlags - combination of flags: CANVAS_TEXT_WRAP, CANVAS_MODE_TRANSPARENT
      */
-    void setTextMode(uint8_t modeFlags) { m_textMode = modeFlags; };
+    void setMode(uint8_t modeFlags) { m_textMode = modeFlags; };
 
     /**
      * Sets color for monochrome operations

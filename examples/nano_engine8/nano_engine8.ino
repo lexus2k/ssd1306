@@ -48,7 +48,7 @@ void displayStats()
 {
     if (frames >= FRAMES_CAPTURE)
     {
-        engine.canvas.setTextMode(0);
+        engine.canvas.setMode(0);
         utoa(totalDuration/frames,bufStr,10);
         engine.canvas.setColor(RGB_COLOR8(255,0,255));
         engine.canvas.printFixed(0, 0, "MS: ", STYLE_NORMAL);
@@ -62,7 +62,7 @@ void displayStats()
 bool drawAll()
 {
     engine.canvas.clear();
-    engine.canvas.setTextMode(TEXT_MODE_TRANSPARENT);
+    engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
     engine.canvas.drawRect(15,12,x,55,RGB_COLOR8(255,255,0));
     engine.canvas.fillRect(16,13,x-1,54,RGB_COLOR8(64,64,64));
     engine.canvas.setColor(RGB_COLOR8(0,255,255));

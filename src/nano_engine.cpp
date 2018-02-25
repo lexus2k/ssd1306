@@ -30,6 +30,7 @@ NanoEngine8::NanoEngine8()
    : canvas(NE_TILE_SIZE, NE_TILE_SIZE, m_buffer)
    , m_buffer{}
    , m_onDraw( nullptr )
+   , m_onButtons( nullptr )
 {
     refreshAll();
 }
@@ -61,3 +62,59 @@ void NanoEngine8::refreshAll()
     }
 }
 
+bool NanoEngine8::pressed(uint8_t buttons)
+{
+    return (m_onButtons() & buttons) == buttons;
+}
+
+bool NanoEngine8::notPressed(uint8_t buttons)
+{
+    return (m_onButtons() & buttons) == 0;
+}
+
+void NanoEngine8::connectCustomKeys(TNanoEngineGetButtons handler)
+{
+    m_onButtons = handler;
+}
+
+void NanoEngine8::connectArduboyKeys()
+{
+    m_onButtons = arduboyButtons;
+}
+
+uint8_t NanoEngine8::s_zkeypadPin;
+
+uint8_t NanoEngine8::zkeypadButtons()
+{
+    int buttonValue = analogRead(s_zkeypadPin);
+    if (buttonValue < 100) return BUTTON_RIGHT;  
+    if (buttonValue < 200) return BUTTON_UP;
+    if (buttonValue < 400) return BUTTON_DOWN;
+    if (buttonValue < 600) return BUTTON_LEFT;
+    if (buttonValue < 800) return BUTTON_A;
+    /** Z-keypad has only 5 analog buttons: no button B */
+    return BUTTON_NONE;
+}
+
+void NanoEngine8::connectZKeypad(uint8_t analogPin)
+{
+    NanoEngine8::s_zkeypadPin = analogPin;
+    m_onButtons = zkeypadButtons;
+}
+
+uint8_t NanoEngine8::arduboyButtons()
+{
+    uint8_t buttons;
+    /* Arduboy buttons available only for Atmega32U4 platform */
+    #if defined(__AVR_ATmega32U4__)
+    // down, up, left right
+    buttons = (((~PINF) & 0B11110000)>>4);
+    // A (left)
+    buttons |= (((~PINE) & 0B01000000) >> 2);
+    // B (right)
+    buttons |= (((~PINB) & 0B00010000) << 1);
+    #else
+    buttons = 0;
+    #endif
+    return buttons;
+}

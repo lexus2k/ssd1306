@@ -170,11 +170,11 @@ void NanoCanvas8::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint
             {
 //                if ( data & (1<<n) )
 //                    m_buf[YADDR8(y + n - offset ) + x] = m_color;
-//                else if (!(m_textMode & TEXT_MODE_TRANSPARENT))
+//                else if (!(m_textMode & CANVAS_MODE_TRANSPARENT))
 //                    m_buf[YADDR8(y + n - offset ) + x] = 0x00;
                 if ( data & (1<<(n + offset)) )
                     m_buf[YADDR8(y + n) + x] = m_color;
-                else if (!(m_textMode & TEXT_MODE_TRANSPARENT))
+                else if (!(m_textMode & CANVAS_MODE_TRANSPARENT))
                     m_buf[YADDR8(y + n) + x] = 0x00;
             }
             bitmap++;
@@ -213,7 +213,7 @@ void NanoCanvas8::printChar(uint8_t c)
             {
                 if ( data & (1<<n) )
                     putPixel(x1 + i, y1 + page * 8 + n, m_color);
-                else if (!(m_textMode & TEXT_MODE_TRANSPARENT))
+                else if (!(m_textMode & CANVAS_MODE_TRANSPARENT))
                     putPixel(x1 + i, y1 + page * 8 + n, 0x00);
             }
             font_offset++;
@@ -236,7 +236,7 @@ void NanoCanvas8::write(uint8_t c)
     {
         printChar( c );
         m_cursorX += (lcdint_t)s_fixedFont.width;
-        if ((m_textMode & TEXT_MODE_WRAP) && (m_cursorX > ((lcdint_t)s_displayWidth - (lcdint_t)s_fixedFont.width)))
+        if ((m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)s_displayWidth - (lcdint_t)s_fixedFont.width)))
         {
             m_cursorY += (lcdint_t)(s_fixedFont.pages << 3);
             m_cursorX = 0;

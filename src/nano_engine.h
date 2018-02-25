@@ -33,6 +33,19 @@
 
 /** Type of user-specified draw callback */
 typedef bool (*TNanoEngineOnDraw)(void);
+/** Type of user-specified keyboard callback */
+typedef uint8_t (*TNanoEngineGetButtons)(void);
+
+enum
+{
+    BUTTON_NONE   = 0B00000000,
+    BUTTON_DOWN   = 0B00000001,
+    BUTTON_LEFT   = 0B00000010,
+    BUTTON_RIGHT  = 0B00000100,
+    BUTTON_UP     = 0B00001000,
+    BUTTON_A      = 0B00010000,
+    BUTTON_B      = 0B00100000,
+};
 
 /**
  * NanoEngine8 is simple graphics engine, that implements double buffering work
@@ -96,10 +109,50 @@ public:
      */
     void drawCallback(TNanoEngineOnDraw callback) { m_onDraw = callback; };
 
+    /**
+     * @brief Returns true if button or specific combination of buttons is not pressed.
+     * Returns true if button or specific combination of buttons is pressed.
+     * @param buttons - buttons to check
+     * @return true or false
+     */
+    bool pressed(uint8_t buttons);
+
+    /**
+     * @brief Returns true if button or specific combination of buttons is not pressed.
+     * Returns true if button or specific combination of buttons is not pressed.
+     * @param buttons - buttons to check
+     * @return true of false
+     */
+    bool notPressed(uint8_t buttons);
+
+    /**
+     * Configures NanoEngine8 to use custom key handler.
+     * You can implement in your handler any keyboard layout, you use in your schematics.
+     */
+    void connectCustomKeys(TNanoEngineGetButtons handler);
+
+    /**
+     * @brief Enables engine to use Z-Keypad.
+     * Enables engine to use Z-Keypad. Please refer to arkanoid example for schematics.
+     * @param analogPin - pin, which Z-Keypad is connected to.
+     */
+    void connectZKeypad(uint8_t analogPin);
+
+    /**
+     * @brief Configures NanoEngine8 to use Arduboy keys layout.
+     * Configures NanoEngine8 to use Arduboy keys layout.
+     */
+    void connectArduboyKeys();
+
 private:
     uint8_t   m_buffer[NE_TILE_SIZE * NE_TILE_SIZE];
     uint8_t   m_refreshFlags[NE_MAX_TILES_NUM];
     TNanoEngineOnDraw m_onDraw;
+    TNanoEngineGetButtons m_onButtons;
+
+    static uint8_t s_zkeypadPin;
+    static uint8_t zkeypadButtons();
+    static uint8_t arduboyButtons();
 };
 
 #endif
