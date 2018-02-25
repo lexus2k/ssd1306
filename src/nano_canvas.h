@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2016-2018, Alexey Dynda
+    Copyright (c) 2018, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,9 @@ enum
 };
 
 /**
- * NanoCanvas represents objects for drawing in memory buffer
+ * NanoCanvas8 represents objects for drawing in memory buffer
+ * NanoCanvas8 represents each pixel as single byte with RGB bits: RRRGGGBB
+ * For details refer to SSD1331 datasheet
  */
 class NanoCanvas8
 {
@@ -76,6 +78,13 @@ public:
      * @param oy - Y offset in pixels
      */
     void setOffset(lcdint_t ox, lcdint_t oy) { m_offsetx = ox; m_offsety = oy; };
+
+    /**
+     * Gets offset
+     * @param ox - pointer to hold X offset in pixels
+     * @param oy - pointer to hold Y offset in pixels
+     */
+    void getOffset(lcdint_t *ox, lcdint_t *oy) { *ox = m_offsetx; *oy = m_offsety; };
 
     /**
      * Draws pixel on specified position
@@ -123,6 +132,15 @@ public:
      */
     void fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, uint8_t color);
 
+    /**
+     * @brief Draws monochrome bitmap in color buffer using color, specified via setColor() method
+     * Draws monochrome bitmap in color buffer using color, specified via setColor() method
+     * @param x - position X in pixels
+     * @param y - position Y in pixels
+     * @param w - width in pixels
+     * @param h - height in pixels
+     * @param bitmap - monochrome bitmap data, located in flash
+     */
     void drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
 
     /**

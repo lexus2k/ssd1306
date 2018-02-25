@@ -44,6 +44,7 @@ SRCS_C = \
 
 SRCS_CPP = \
 	nano_canvas.cpp \
+	nano_engine.cpp \
 	nano_gfx.cpp \
 	sprite_pool.cpp \
 	i2c/ssd1306_i2c_wire.cpp \

@@ -29,61 +29,53 @@
 
 #include "ssd1306.h"
 #include "ssd1331_api.h"
-#include "nano_canvas.h"
-#include "sova.h"
+#include "nano_engine.h"
+#include "nano_bitmaps.h"
 
-#define TILE_SIZE   16
 
-uint8_t buffer[TILE_SIZE*TILE_SIZE];
-
-NanoCanvas8 canvas(TILE_SIZE,TILE_SIZE,buffer);
+NanoEngine8 engine;
 
 int x = 72;
 int b_x = -128;
 int b_y = -128;
 int textx = 10;
 
+
+bool drawAll()
+{
+    engine.canvas.setTextMode(TEXT_MODE_TRANSPARENT);
+    engine.canvas.clear();
+    engine.canvas.drawRect(15,12,x,55,RGB_COLOR8(255,255,0));
+    engine.canvas.fillRect(16,13,x-1,54,RGB_COLOR8(64,64,64));
+    engine.canvas.setColor(RGB_COLOR8(0,255,255));
+    engine.canvas.drawBitmap1(b_x, b_y, 128, 64, Sova);
+    engine.canvas.putPixel(5,5,RGB_COLOR8(255,255,255));
+    engine.canvas.putPixel(10,10,RGB_COLOR8(255,0,0));
+    engine.canvas.putPixel(20,15,RGB_COLOR8(0,255,0));
+    engine.canvas.putPixel(30,20,RGB_COLOR8(0,0,255));
+    engine.canvas.setColor(RGB_COLOR8(255,0,0));
+    engine.canvas.printFixed(textx, 30, "This is example of text output", STYLE_NORMAL);
+    return true;
+}
+
 void setup()
 {
     ssd1306_setFixedFont(ssd1306xled_font6x8);
     ssd1331_96x64_spi_init(3, 4, 5);
-    ssd1306_fillScreen( 0x00 );
+
+    /* 8-bit engine works only in Horizontal addressing mode */
     ssd1331_setMode(0);
-    canvas.setTextMode(TEXT_MODE_TRANSPARENT);
-}
 
-void drawAll()
-{
-    canvas.clear();
-    canvas.drawRect(15,12,x,55,RGB_COLOR8(255,255,0));
-    canvas.fillRect(16,13,x-1,54,RGB_COLOR8(64,64,64));
-    canvas.setColor(RGB_COLOR8(0,255,255));
-    canvas.drawBitmap1(b_x, b_y, 128, 64, Sova);
-    canvas.putPixel(5,5,RGB_COLOR8(255,255,255));
-    canvas.putPixel(10,10,RGB_COLOR8(255,0,0));
-    canvas.putPixel(20,15,RGB_COLOR8(0,255,0));
-    canvas.putPixel(30,20,RGB_COLOR8(0,0,255));
-    canvas.setColor(RGB_COLOR8(255,0,0));
-    canvas.printFixed(textx, 30, "This is example of text output", STYLE_NORMAL);
-}
-
-void refreshDisplay()
-{
-    for (int y=0; y<64; y = y + TILE_SIZE)
-    {
-        for(int x=0; x<96; x = x + TILE_SIZE)
-        {
-            canvas.setOffset(x,y);
-            drawAll();
-            canvas.blt();
-        }
-    }
+    /* Set draw callback, it will be called by engine every time, *
+     * when it needs to refresh some area on the lcd display.     */
+    engine.drawCallback( drawAll );
 }
 
 
 void loop()
 {
-    refreshDisplay();
+    engine.refreshAll();
+    engine.display();
     delay(30);
     textx++; if (textx ==96) textx = -192;
     b_x++;
