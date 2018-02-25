@@ -32,6 +32,7 @@
 #include "nano_engine.h"
 #include "nano_bitmaps.h"
 
+#define FRAMES_CAPTURE  128
 
 NanoEngine8 engine;
 
@@ -39,12 +40,29 @@ int x = 72;
 int b_x = -128;
 int b_y = -128;
 int textx = 10;
+char bufStr[16] = {0};
+uint32_t totalDuration = 0;
+uint32_t frames = 0;
 
+void displayStats()
+{
+    if (frames >= FRAMES_CAPTURE)
+    {
+        engine.canvas.setTextMode(0);
+        utoa(totalDuration/frames,bufStr,10);
+        engine.canvas.setColor(RGB_COLOR8(255,0,255));
+        engine.canvas.printFixed(0, 0, "MS: ", STYLE_NORMAL);
+        engine.canvas.printFixed(24, 0, bufStr, STYLE_NORMAL);
+        utoa(1000/(totalDuration/frames),bufStr,10);
+        engine.canvas.printFixed(0, 8, "FPS: ", STYLE_NORMAL);
+        engine.canvas.printFixed(32, 8, bufStr, STYLE_NORMAL);
+    }
+}
 
 bool drawAll()
 {
-    engine.canvas.setTextMode(TEXT_MODE_TRANSPARENT);
     engine.canvas.clear();
+    engine.canvas.setTextMode(TEXT_MODE_TRANSPARENT);
     engine.canvas.drawRect(15,12,x,55,RGB_COLOR8(255,255,0));
     engine.canvas.fillRect(16,13,x-1,54,RGB_COLOR8(64,64,64));
     engine.canvas.setColor(RGB_COLOR8(0,255,255));
@@ -55,6 +73,7 @@ bool drawAll()
     engine.canvas.putPixel(30,20,RGB_COLOR8(0,0,255));
     engine.canvas.setColor(RGB_COLOR8(255,0,0));
     engine.canvas.printFixed(textx, 30, "This is example of text output", STYLE_NORMAL);
+    displayStats();
     return true;
 }
 
@@ -72,10 +91,19 @@ void setup()
 }
 
 
+uint32_t lastTs;
+
 void loop()
 {
+    uint32_t lastTs = millis();
+    uint32_t updateDuration;
     engine.refreshAll();
     engine.display();
+    if ( frames < FRAMES_CAPTURE ) 
+    {
+        totalDuration += millis() - lastTs;
+        frames++;
+    }
     delay(30);
     textx++; if (textx ==96) textx = -192;
     b_x++;

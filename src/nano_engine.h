@@ -52,7 +52,7 @@ class NanoEngine8
 {
 public:
     /** Number of bits in tile size. 5 corresponds to 1<<5 = 32 tile size */
-    static const uint8_t NE_TILE_SIZE_BITS = 4;
+    static const uint8_t NE_TILE_SIZE_BITS = 5;
     /** Tile size in pixels */
     static const uint8_t NE_TILE_SIZE = (1<<NE_TILE_SIZE_BITS);
     /** Max tiles supported in X */
