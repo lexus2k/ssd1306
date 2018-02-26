@@ -55,7 +55,7 @@ void displayStats()
         engine.canvas.printFixed(24, 0, bufStr, STYLE_NORMAL);
         utoa(1000/(totalDuration/frames),bufStr,10);
         engine.canvas.printFixed(0, 8, "FPS: ", STYLE_NORMAL);
-        engine.canvas.printFixed(32, 8, bufStr, STYLE_NORMAL);
+        engine.canvas.printFixed(30, 8, bufStr, STYLE_NORMAL);
     }
 }
 
