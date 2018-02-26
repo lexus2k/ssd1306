@@ -29,14 +29,51 @@
 NanoEngine8::NanoEngine8()
    : canvas(NE_TILE_SIZE, NE_TILE_SIZE, m_buffer)
    , m_buffer{}
+   , m_frameDurationMs(33)
+   , m_fps(30)
    , m_onDraw( nullptr )
    , m_onButtons( nullptr )
+   , m_loop( nullptr )
 {
     refreshAll();
 }
 
+void NanoEngine8::begin()
+{
+    m_lastFrameTs = millis();
+}
+
+void NanoEngine8::setFrameRate(uint8_t fps)
+{
+    m_fps = fps;
+    m_frameDurationMs = 1000/fps;
+}
+
+bool NanoEngine8::nextFrame()
+{
+    return (uint32_t)(millis() - m_lastFrameTs) >= m_frameDurationMs;
+}
+
+void NanoEngine8::refreshRect(NanoRect &rect)
+{
+    refreshRect(rect.left, rect.top, rect.right, rect.bottom);
+}
+
+void NanoEngine8::refreshRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+{
+    for(uint8_t y=(y1>>NE_TILE_SIZE_BITS); y<=(y2>>NE_TILE_SIZE_BITS); y++)
+    {
+        for(uint8_t x=(x1>>NE_TILE_SIZE_BITS); x<=(x2>>NE_TILE_SIZE_BITS); x++)
+        {
+            m_refreshFlags[y] |= (1<<x);
+        }
+    }
+}
+
 void NanoEngine8::display()
 {
+    if (m_loop) m_loop();
+    m_lastFrameTs = millis();
     for (uint8_t y = 0; y < (s_displayHeight >> NE_TILE_SIZE_BITS); y++)
     {
         for (uint8_t x = 0; x < (s_displayWidth >> NE_TILE_SIZE_BITS); x++)

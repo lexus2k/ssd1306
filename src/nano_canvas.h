@@ -38,6 +38,18 @@ enum
     CANVAS_MODE_TRANSPARENT = 2,
 };
 
+typedef struct
+{
+    lcdint_t left;
+    lcdint_t top;
+    lcdint_t right;
+    lcdint_t bottom;
+    void shift(lcdint_t dx, lcdint_t dy) { left+=dx; right+=dx; top+=dy; bottom+=dy; };
+    void shiftH(lcdint_t dx) { left+=dx; right+=dx; };
+    void shiftV(lcdint_t dy) { top+=dy; bottom+=dy; };
+    void setRect(lcdint_t l, lcdint_t t, lcdint_t r, lcdint_t b) { left=l; top=t; right=r; bottom=b; };
+} NanoRect;
+
 /**
  * NanoCanvas8 represents objects for drawing in memory buffer
  * NanoCanvas8 represents each pixel as single byte with RGB bits: RRRGGGBB
@@ -46,6 +58,9 @@ enum
 class NanoCanvas8
 {
 public:
+    lcdint_t  offsetx;
+    lcdint_t  offsety;
+
     /**
      * Creates new canvas object.
      * Width can be of any value.
@@ -60,8 +75,8 @@ public:
     {
         m_w = w;
         m_h = h;
-        m_offsetx = 0;
-        m_offsety = 0;
+        offsetx = 0;
+        offsety = 0;
         m_cursorX = 0;
         m_cursorY = 0;
         m_color = 0xFF;
@@ -77,14 +92,7 @@ public:
      * @param ox - X offset in pixels
      * @param oy - Y offset in pixels
      */
-    void setOffset(lcdint_t ox, lcdint_t oy) { m_offsetx = ox; m_offsety = oy; };
-
-    /**
-     * Gets offset
-     * @param ox - pointer to hold X offset in pixels
-     * @param oy - pointer to hold Y offset in pixels
-     */
-    void getOffset(lcdint_t *ox, lcdint_t *oy) { *ox = m_offsetx; *oy = m_offsety; };
+    void setOffset(lcdint_t ox, lcdint_t oy) { offsetx = ox; offsety = oy; };
 
     /**
      * Draws pixel on specified position
@@ -123,6 +131,13 @@ public:
     void drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, uint8_t color);
 
     /**
+     * Draws rectangle 
+     * @param rect - structure, describing rectangle area
+     * @param color - color
+     */
+    void drawRect(const NanoRect &rect, uint8_t color);
+
+    /**
      * Fills rectangle area 
      * @param x1 - position X
      * @param y1 - position Y
@@ -131,6 +146,13 @@ public:
      * @param color - color
      */
     void fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, uint8_t color);
+
+    /**
+     * Fills rectangle area
+     * @param rect - structure, describing rectangle area
+     * @param color - color
+     */
+    void fillRect(const NanoRect &rect, uint8_t color);
 
     /**
      * @brief Draws monochrome bitmap in color buffer using color, specified via setColor() method
@@ -198,8 +220,6 @@ private:
     lcduint_t m_w;
     lcduint_t m_h;
     lcduint_t m_p;
-    lcdint_t  m_offsetx;
-    lcdint_t  m_offsety;
     lcdint_t  m_cursorX;
     lcdint_t  m_cursorY;
     uint8_t   m_textMode;

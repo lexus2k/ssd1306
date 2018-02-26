@@ -33,8 +33,12 @@
 
 /** Type of user-specified draw callback */
 typedef bool (*TNanoEngineOnDraw)(void);
+
 /** Type of user-specified keyboard callback */
 typedef uint8_t (*TNanoEngineGetButtons)(void);
+
+/** Type of user-specified loop callback */
+typedef void (*TLoopCallback)(void);
 
 enum
 {
@@ -46,6 +50,12 @@ enum
     BUTTON_A      = 0B00010000,
     BUTTON_B      = 0B00100000,
 };
+
+typedef struct
+{
+    lcdint_t x;
+    lcdint_t y;
+} NanoPoint;
 
 /**
  * NanoEngine8 is simple graphics engine, that implements double buffering work
@@ -65,7 +75,7 @@ class NanoEngine8
 {
 public:
     /** Number of bits in tile size. 5 corresponds to 1<<5 = 32 tile size */
-    static const uint8_t NE_TILE_SIZE_BITS = 5;
+    static const uint8_t NE_TILE_SIZE_BITS = 4;
     /** Tile size in pixels */
     static const uint8_t NE_TILE_SIZE = (1<<NE_TILE_SIZE_BITS);
     /** Max tiles supported in X */
@@ -78,6 +88,14 @@ public:
      * Creates new Graphics Engine object.
      */
     NanoEngine8();
+
+    void begin();
+
+    void setFrameRate(uint8_t fps);
+ 
+    uint8_t getFrameRate() { return m_fps; };
+
+    bool nextFrame();
 
     /**
      * @brief refreshes content on oled display.
@@ -99,6 +117,10 @@ public:
      */
     void refreshTile(uint8_t tileX, uint8_t tileY) { m_refreshFlags[tileY] |= (1<<tileX); };
 
+    void refreshRect(NanoRect &rect);
+
+    void refreshRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
+
     /**
      * Sets user-defined draw callback. This callback will be called everytime, engine needs
      * to update display content. If callback returns false, engine will not update those area.
@@ -108,6 +130,8 @@ public:
      * @note you can change draw callback anytime you need.
      */
     void drawCallback(TNanoEngineOnDraw callback) { m_onDraw = callback; };
+
+    void loopCallback(TLoopCallback callback) { m_loop = callback; };
 
     /**
      * @brief Returns true if button or specific combination of buttons is not pressed.
@@ -147,8 +171,12 @@ public:
 private:
     uint8_t   m_buffer[NE_TILE_SIZE * NE_TILE_SIZE];
     uint8_t   m_refreshFlags[NE_MAX_TILES_NUM];
+    uint8_t   m_frameDurationMs;
+    uint8_t   m_fps;
+    uint32_t  m_lastFrameTs;
     TNanoEngineOnDraw m_onDraw;
     TNanoEngineGetButtons m_onButtons;
+    TLoopCallback m_loop;
 
     static uint8_t s_zkeypadPin;
     static uint8_t zkeypadButtons();

@@ -34,8 +34,8 @@ extern SFixedFontInfo s_fixedFont;
 
 void NanoCanvas8::putPixel(lcdint_t x, lcdint_t y, uint8_t color)
 {
-    x -= m_offsetx;
-    y -= m_offsety;
+    x -= offsetx;
+    y -= offsety;
     if ((x < 0) || (y < 0)) return;
     if ((x >= (lcdint_t)m_w) || (y >= (lcdint_t)m_h)) return;
     m_buf[YADDR8(y) + x] = color;
@@ -43,9 +43,9 @@ void NanoCanvas8::putPixel(lcdint_t x, lcdint_t y, uint8_t color)
 
 void NanoCanvas8::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2, uint8_t color)
 {
-    x1 -= m_offsetx;
-    y1 -= m_offsety;
-    y2 -= m_offsety;
+    x1 -= offsetx;
+    y1 -= offsety;
+    y2 -= offsety;
     if (y1 > y2)
     {
         swap_data(y1, y2, lcdint_t);
@@ -64,9 +64,9 @@ void NanoCanvas8::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2, uint8_t color
 
 void NanoCanvas8::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, uint8_t color)
 {
-    x1 -= m_offsetx;
-    y1 -= m_offsety;
-    x2 -= m_offsetx;
+    x1 -= offsetx;
+    y1 -= offsety;
+    x2 -= offsetx;
     if (x1 > x2)
     {
         swap_data(x1, x2, lcdint_t);
@@ -91,6 +91,11 @@ void NanoCanvas8::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, u
     drawVLine(x2,y1,y2, color);
 }
 
+void NanoCanvas8::drawRect(const NanoRect &rect, uint8_t color)
+{
+    drawRect(rect.left, rect.top, rect.right, rect.bottom, color);
+}
+
 void NanoCanvas8::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, uint8_t color)
 {
     if (y1 > y2)
@@ -101,10 +106,10 @@ void NanoCanvas8::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, u
     {
         swap_data(x1, x2, lcdint_t);
     }
-    x1 -= m_offsetx;
-    y1 -= m_offsety;
-    x2 -= m_offsetx;
-    y2 -= m_offsety;
+    x1 -= offsetx;
+    y1 -= offsety;
+    x2 -= offsetx;
+    y2 -= offsety;
     if ((x2 < 0) || (x1 >= (lcdint_t)m_w)) return;
     if ((y2 < 0) || (y1 >= (lcdint_t)m_h)) return;
     x1 = max(x1,0);
@@ -123,14 +128,19 @@ void NanoCanvas8::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, u
     }
 }
 
+void NanoCanvas8::fillRect(const NanoRect &rect, uint8_t color)
+{
+    fillRect(rect.left, rect.top, rect.right, rect.bottom, color);
+}
+
 //#include <stdio.h>
 
 void NanoCanvas8::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
     uint8_t offset = 0;
     /* calculate char rectangle */
-    lcdint_t x1 = xpos - m_offsetx;
-    lcdint_t y1 = ypos - m_offsety;
+    lcdint_t x1 = xpos - offsetx;
+    lcdint_t y1 = ypos - offsety;
     lcdint_t x2 = x1 + (lcdint_t)w - 1;
     lcdint_t y2 = y1 + (lcdint_t)h - 1;
     /* clip char */
@@ -158,24 +168,21 @@ void NanoCanvas8::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint
     }
     uint8_t offset2 = 8 - offset;
     lcdint_t y = y1;
-//    printf("[%d;%d] + [%d;%d], P1[%d;%d], P2[%d;%d]\n", xpos, ypos, m_offsetx, m_offsety, x1,y1,x2,y2);
+//    printf("[%d;%d] + [%d;%d], P1[%d;%d], P2[%d;%d]\n", xpos, ypos, offsetx, offsety, x1,y1,x2,y2);
 //    printf("offset: 1=%d, 2=%d\n", offset, offset2);
     while ( y <= y2)
     {
         for ( lcdint_t x = x1; x <= x2; x++ )
         {
             uint8_t data = pgm_read_byte( bitmap );
-//            for (uint8_t n = offset; n < min(y2 - y + 1 + offset,8); n++)
+            uint16_t addr = YADDR8(y) + x;
             for (uint8_t n = 0; n < min(y2 - y + 1, 8); n++)
             {
-//                if ( data & (1<<n) )
-//                    m_buf[YADDR8(y + n - offset ) + x] = m_color;
-//                else if (!(m_textMode & CANVAS_MODE_TRANSPARENT))
-//                    m_buf[YADDR8(y + n - offset ) + x] = 0x00;
                 if ( data & (1<<(n + offset)) )
-                    m_buf[YADDR8(y + n) + x] = m_color;
+                    m_buf[addr] = m_color;
                 else if (!(m_textMode & CANVAS_MODE_TRANSPARENT))
-                    m_buf[YADDR8(y + n) + x] = 0x00;
+                    m_buf[addr] = 0x00;
+                addr += (lcduint_t)m_w;
             }
             bitmap++;
         }
@@ -195,8 +202,8 @@ void NanoCanvas8::printChar(uint8_t c)
     lcdint_t x2 = x1 + (lcdint_t)s_fixedFont.width - 1;
     lcdint_t y2 = y1 + (lcdint_t)(s_fixedFont.pages << 3) - 1;
     /* clip char */
-    if ((x2 < m_offsetx) || (x1 >= (lcdint_t)m_w + m_offsetx)) return;
-    if ((y2 < m_offsety) || (y1 >= (lcdint_t)m_h + m_offsety)) return;
+    if ((x2 < offsetx) || (x1 >= (lcdint_t)m_w + offsetx)) return;
+    if ((y2 < offsety) || (y1 >= (lcdint_t)m_h + offsety)) return;
 
     c -= s_fixedFont.ascii_offset;
     if ( c > 224 )
@@ -272,7 +279,7 @@ void NanoCanvas8::blt(lcdint_t x, lcdint_t y)
 
 void NanoCanvas8::blt()
 {
-    ssd1331_fastDrawBuffer8( m_offsetx, m_offsety, m_w, m_h, m_buf);
+    ssd1331_fastDrawBuffer8( offsetx, offsety, m_w, m_h, m_buf);
 //    printf("==================================\n");
 }
 
