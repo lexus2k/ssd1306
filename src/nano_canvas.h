@@ -38,15 +38,42 @@ enum
     CANVAS_MODE_TRANSPARENT = 2,
 };
 
+/**
+ * NanoRect structure describes rectangle area.
+ */
 typedef struct
 {
+    /** left position in pixels */
     lcdint_t left;
+    /** top position in pixels */
     lcdint_t top;
+    /** right position in pixels */
     lcdint_t right;
+    /** bottom position in pixels */
     lcdint_t bottom;
+    /**
+     * Shifts rectangle area by dx;dy pixels.
+     * @param dx - delta on x-axis
+     * @param dy - delta on y-axis
+     */
     void shift(lcdint_t dx, lcdint_t dy) { left+=dx; right+=dx; top+=dy; bottom+=dy; };
+    /**
+     * Shifts rectangle area by dx pixels.
+     * @param dx - delta on x-axis
+     */
     void shiftH(lcdint_t dx) { left+=dx; right+=dx; };
+    /**
+     * Shifts rectangle area by dy pixels.
+     * @param dy - delta on y-axis
+     */
     void shiftV(lcdint_t dy) { top+=dy; bottom+=dy; };
+    /**
+     * Initializes NanoRect with specified values
+     * @param l - left position
+     * @param t - top position
+     * @param r - right position
+     * @param b - bottom position
+     */
     void setRect(lcdint_t l, lcdint_t t, lcdint_t r, lcdint_t b) { left=l; top=t; right=r; bottom=b; };
 } NanoRect;
 
@@ -58,7 +85,9 @@ typedef struct
 class NanoCanvas8
 {
 public:
+    /** Fixed offset for all operation of NanoCanvas8 in pixels */
     lcdint_t  offsetx;
+    /** Fixed offset for all operation of NanoCanvas8 in pixels */
     lcdint_t  offsety;
 
     /**

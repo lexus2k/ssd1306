@@ -51,6 +51,7 @@ union
         NanoRect platform;
         uint8_t  blocks[BLOCK_NUM_ROWS][MAX_BLOCKS_PER_ROW];
         uint8_t  blocksLeft;
+        uint8_t  frames;
     } battleField;
 } gameState;
 
@@ -102,37 +103,51 @@ bool drawBattleField(void)
         engine.canvas.drawRect(gameState.battleField.platform, RGB_COLOR8(0,128,255));
         engine.canvas.putPixel(gameState.battleField.platform.left, gameState.battleField.platform.top, 0);
         engine.canvas.putPixel(gameState.battleField.platform.right, gameState.battleField.platform.top, 0);
-        for (uint8_t r=0; r<BLOCK_NUM_ROWS; r++)
+        if (engine.canvas.offsety < 64)
         {
-            for (uint8_t bl = 0; bl<BLOCKS_PER_ROW; bl++)
+            for (uint8_t r= 0 /*engine.canvas.offsetx >> 3*/; r<BLOCK_NUM_ROWS; r++)
             {
-                uint8_t block = gameState.battleField.blocks[r][bl];
-                if (block)
+                for (uint8_t bl = 0; bl<BLOCKS_PER_ROW; bl++)
                 {
-                     engine.canvas.fillRect(bl*8,r*4 + 8,bl*8+6,r*4+2 + 8,blockColors[block]);
+                    uint8_t block = gameState.battleField.blocks[r][bl];
+                    if (block)
+                    {
+                         engine.canvas.fillRect(bl*8,r*4 + 8,bl*8+8,r*4+4 + 8,blockColors[block]);
+                         engine.canvas.drawRect(bl*8,r*4 + 8,bl*8+8,r*4+4 + 8,0);
+                    }
                 }
             }
-        }
+         }
     }
     else
     {
+        char str[4] = {0};
         engine.canvas.drawVLine(65,0,64, RGB_COLOR8(255,255,255));
+        utoa(engine.getCpuLoad( ), str, 10);
+        engine.canvas.printFixed(70, 16, str, STYLE_NORMAL );
     }
     return true;
 }
 
 void battleFieldLoop(void)
 {
-    engine.refreshRect( gameState.battleField.platform );
     if (engine.pressed( BUTTON_LEFT ) && (gameState.battleField.platform.left > 0))
     {
+        engine.refreshRect( gameState.battleField.platform );
         gameState.battleField.platform.shift(-1, 0);
+        engine.refreshRect( gameState.battleField.platform );
     }
     if (engine.pressed( BUTTON_RIGHT ) && (gameState.battleField.platform.right < 63))
     {
+        engine.refreshRect( gameState.battleField.platform );
         gameState.battleField.platform.shift(+1, 0);
+        engine.refreshRect( gameState.battleField.platform );
     }
-    engine.refreshRect( gameState.battleField.platform );
+    gameState.battleField.frames++;
+    if ( (gameState.battleField.frames & 0x3F) == 0 )
+    {
+        engine.refreshRect( 64, 0, 95, 63 );
+    }
 }
 
 void startBattleField(void)
@@ -157,6 +172,7 @@ void startBattleField(void)
             }
         }
     }
+    gameState.battleField.frames = 0;
 }
 
 void setup()

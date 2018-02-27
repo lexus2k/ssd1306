@@ -51,29 +51,26 @@ enum
     BUTTON_B      = 0B00100000,
 };
 
+/** Describes point */
 typedef struct
 {
+    /** x position in pixels */
     lcdint_t x;
+    /** y position in pixels */
     lcdint_t y;
 } NanoPoint;
 
 /**
- * NanoEngine8 is simple graphics engine, that implements double buffering work
- * for the systems with very low resources. That is, memory buffer for SSD1331 oled
- * display needs at least 96x64x1 bytes (6144 bytes), and this is inacceptable for
- * microcontrollers like atmega328p (it has only 2KiB of RAM). So, to workaround
- * issue with low resources, NanoEngine8 uses small tile buffer (NE_TILE_SIZE x NE_TILE_SIZE)
- * and updates only part of oled screen at once. It makes system slow, but it is
- * possible to run NanoEngine8 on simple controllers.
- * If tile size is 32x32, then 96x64 oled display is devided into 6 tiles:
- *    [0,0] [1,0] [2,0]
- *    [0,1] [1,1] [2,1]
- * In your application you can choose, if you want to refresh whole screen (refreshAll()), or you
- * need to refresh only part of oled display (refreshTile()).
+ * Base class for NanoEngine.
  */
-class NanoEngine8
+class NanoEngineBase
 {
 public:
+    /**
+     * Initializes Nano Engine Base object.
+     */
+    NanoEngineBase();
+
     /** Number of bits in tile size. 5 corresponds to 1<<5 = 32 tile size */
     static const uint8_t NE_TILE_SIZE_BITS = 4;
     /** Tile size in pixels */
@@ -81,29 +78,34 @@ public:
     /** Max tiles supported in X */
     static const uint8_t NE_MAX_TILES_NUM = 8 >> (NE_TILE_SIZE_BITS - 4);
 
-    /** object, representing canvas. Use it in your draw handler */
-    NanoCanvas8 canvas;
-
     /**
-     * Creates new Graphics Engine object.
+     * Initializes internal timestamps.
      */
-    NanoEngine8();
-
     void begin();
 
+    /**
+     * Sets working frame-rate for the engine
+     * @param fps - frame rate to set between [1-255]
+     */
     void setFrameRate(uint8_t fps);
  
+    /**
+     * Returns current frame rate
+     */
     uint8_t getFrameRate() { return m_fps; };
 
-    bool nextFrame();
+    /**
+     * Returns cpu load in percents [0-255].
+     * 100 means maximum normal CPU load.
+     * 0 means, CPU has nothing to do.
+     * >100 means that CPU is not enough to perform all operations
+     */
+    uint8_t getCpuLoad() { return m_cpuLoad; };
 
     /**
-     * @brief refreshes content on oled display.
-     * Refreshes content on oled display. Call it, if you want to update the screen.
-     * Engine will update only those areas, which are marked by refreshAll()/refreshTile()
-     * methods.
+     * Returns true if it is time to render next frame
      */
-    void display();
+    bool nextFrame();
 
     /**
      * Marks all tiles for update. Actual update will take place in display() method.
@@ -117,8 +119,16 @@ public:
      */
     void refreshTile(uint8_t tileX, uint8_t tileY) { m_refreshFlags[tileY] |= (1<<tileX); };
 
+    /**
+     * Mark specified area in pixels for redrawing by NanoEngine.
+     * Actual update will take place in display() method.
+     */
     void refreshRect(NanoRect &rect);
 
+    /**
+     * Mark specified area in pixels for redrawing by NanoEngine.
+     * Actual update will take place in display() method.
+     */
     void refreshRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
 
     /**
@@ -131,6 +141,10 @@ public:
      */
     void drawCallback(TNanoEngineOnDraw callback) { m_onDraw = callback; };
 
+    /**
+     * Sets user-defined loop callback. This callback will be called once every time
+     * new frame needs to be refreshed on oled display.
+     */
     void loopCallback(TLoopCallback callback) { m_loop = callback; };
 
     /**
@@ -168,19 +182,68 @@ public:
      */
     void connectArduboyKeys();
 
-private:
-    uint8_t   m_buffer[NE_TILE_SIZE * NE_TILE_SIZE];
+protected:
+    /**
+     * Contains information on tiles to be updated.
+     * Elements of array are rows and bits are columns.
+     */
     uint8_t   m_refreshFlags[NE_MAX_TILES_NUM];
+    /** Duration between frames in milliseconds */
     uint8_t   m_frameDurationMs;
+    /** Current fps */
     uint8_t   m_fps;
+    /** Current cpu load in percents */
+    uint8_t   m_cpuLoad;
+    /** Last timestamp in milliseconds the frame was updated on oled display */
     uint32_t  m_lastFrameTs;
+    /** Callback to call if specific tile needs to be updated */
     TNanoEngineOnDraw m_onDraw;
+    /** Callback to call if buttons state needs to be updated */
     TNanoEngineGetButtons m_onButtons;
+    /** Callback to call before starting oled update */
     TLoopCallback m_loop;
 
+private:
     static uint8_t s_zkeypadPin;
     static uint8_t zkeypadButtons();
     static uint8_t arduboyButtons();
+};
+
+/**
+ * NanoEngine8 is simple graphics engine, that implements double buffering work
+ * for the systems with very low resources. That is, memory buffer for SSD1331 oled
+ * display needs at least 96x64x1 bytes (6144 bytes), and this is inacceptable for
+ * microcontrollers like atmega328p (it has only 2KiB of RAM). So, to workaround
+ * issue with low resources, NanoEngine8 uses small tile buffer (NE_TILE_SIZE x NE_TILE_SIZE)
+ * and updates only part of oled screen at once. It makes system slow, but it is
+ * possible to run NanoEngine8 on simple controllers.
+ * If tile size is 32x32, then 96x64 oled display is devided into 6 tiles:
+ *    [0,0] [1,0] [2,0]
+ *    [0,1] [1,1] [2,1]
+ * In your application you can choose, if you want to refresh whole screen (refreshAll()), or you
+ * need to refresh only part of oled display (refreshTile()).
+ */
+class NanoEngine8: public NanoEngineBase
+{
+public:
+    /** object, representing canvas. Use it in your draw handler */
+    NanoCanvas8 canvas;
+
+    /**
+     * Creates new Graphics Engine object.
+     */
+    NanoEngine8();
+
+    /**
+     * @brief refreshes content on oled display.
+     * Refreshes content on oled display. Call it, if you want to update the screen.
+     * Engine will update only those areas, which are marked by refreshAll()/refreshTile()
+     * methods.
+     */
+    void display();
+
+private:
+    uint8_t   m_buffer[NE_TILE_SIZE * NE_TILE_SIZE];
 };
 
 #endif

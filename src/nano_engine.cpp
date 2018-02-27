@@ -25,49 +25,15 @@
 #include "nano_engine.h"
 #include "lcd/lcd_common.h"
 
+///////////////////////////////////////////////////////////////////////////////
+////// NANO ENGINE RGB        /////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 NanoEngine8::NanoEngine8()
-   : canvas(NE_TILE_SIZE, NE_TILE_SIZE, m_buffer)
+   : NanoEngineBase()
+   , canvas(NE_TILE_SIZE, NE_TILE_SIZE, m_buffer)
    , m_buffer{}
-   , m_frameDurationMs(33)
-   , m_fps(30)
-   , m_onDraw( nullptr )
-   , m_onButtons( nullptr )
-   , m_loop( nullptr )
 {
-    refreshAll();
-}
-
-void NanoEngine8::begin()
-{
-    m_lastFrameTs = millis();
-}
-
-void NanoEngine8::setFrameRate(uint8_t fps)
-{
-    m_fps = fps;
-    m_frameDurationMs = 1000/fps;
-}
-
-bool NanoEngine8::nextFrame()
-{
-    return (uint32_t)(millis() - m_lastFrameTs) >= m_frameDurationMs;
-}
-
-void NanoEngine8::refreshRect(NanoRect &rect)
-{
-    refreshRect(rect.left, rect.top, rect.right, rect.bottom);
-}
-
-void NanoEngine8::refreshRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
-{
-    for(uint8_t y=(y1>>NE_TILE_SIZE_BITS); y<=(y2>>NE_TILE_SIZE_BITS); y++)
-    {
-        for(uint8_t x=(x1>>NE_TILE_SIZE_BITS); x<=(x2>>NE_TILE_SIZE_BITS); x++)
-        {
-            m_refreshFlags[y] |= (1<<x);
-        }
-    }
 }
 
 void NanoEngine8::display()
@@ -89,9 +55,58 @@ void NanoEngine8::display()
         }
         m_refreshFlags[y] = 0;
     }
+    m_cpuLoad = ((millis() - m_lastFrameTs)*100)/m_frameDurationMs;
 }
 
-void NanoEngine8::refreshAll()
+///////////////////////////////////////////////////////////////////////////////
+////// NANO ENGINE BASE CLASS /////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+NanoEngineBase::NanoEngineBase()
+   : m_frameDurationMs(33)
+   , m_fps(30)
+   , m_cpuLoad(0)
+   , m_lastFrameTs(0)
+   , m_onDraw( nullptr )
+   , m_onButtons( nullptr )
+   , m_loop( nullptr )
+{
+    refreshAll();
+}
+
+void NanoEngineBase::begin()
+{
+    m_lastFrameTs = millis();
+}
+
+void NanoEngineBase::setFrameRate(uint8_t fps)
+{
+    m_fps = fps;
+    m_frameDurationMs = 1000/fps;
+}
+
+bool NanoEngineBase::nextFrame()
+{
+    return (uint32_t)(millis() - m_lastFrameTs) >= m_frameDurationMs;
+}
+
+void NanoEngineBase::refreshRect(NanoRect &rect)
+{
+    refreshRect(rect.left, rect.top, rect.right, rect.bottom);
+}
+
+void NanoEngineBase::refreshRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+{
+    for(uint8_t y=(y1>>NE_TILE_SIZE_BITS); y<=(y2>>NE_TILE_SIZE_BITS); y++)
+    {
+        for(uint8_t x=(x1>>NE_TILE_SIZE_BITS); x<=(x2>>NE_TILE_SIZE_BITS); x++)
+        {
+            m_refreshFlags[y] |= (1<<x);
+        }
+    }
+}
+
+void NanoEngineBase::refreshAll()
 {
     for(uint8_t i=0; i<NE_MAX_TILES_NUM; i++)
     {
@@ -99,29 +114,29 @@ void NanoEngine8::refreshAll()
     }
 }
 
-bool NanoEngine8::pressed(uint8_t buttons)
+bool NanoEngineBase::pressed(uint8_t buttons)
 {
     return (m_onButtons() & buttons) == buttons;
 }
 
-bool NanoEngine8::notPressed(uint8_t buttons)
+bool NanoEngineBase::notPressed(uint8_t buttons)
 {
     return (m_onButtons() & buttons) == 0;
 }
 
-void NanoEngine8::connectCustomKeys(TNanoEngineGetButtons handler)
+void NanoEngineBase::connectCustomKeys(TNanoEngineGetButtons handler)
 {
     m_onButtons = handler;
 }
 
-void NanoEngine8::connectArduboyKeys()
+void NanoEngineBase::connectArduboyKeys()
 {
     m_onButtons = arduboyButtons;
 }
 
-uint8_t NanoEngine8::s_zkeypadPin;
+uint8_t NanoEngineBase::s_zkeypadPin;
 
-uint8_t NanoEngine8::zkeypadButtons()
+uint8_t NanoEngineBase::zkeypadButtons()
 {
     int buttonValue = analogRead(s_zkeypadPin);
     if (buttonValue < 100) return BUTTON_RIGHT;  
@@ -133,13 +148,13 @@ uint8_t NanoEngine8::zkeypadButtons()
     return BUTTON_NONE;
 }
 
-void NanoEngine8::connectZKeypad(uint8_t analogPin)
+void NanoEngineBase::connectZKeypad(uint8_t analogPin)
 {
-    NanoEngine8::s_zkeypadPin = analogPin;
+    NanoEngineBase::s_zkeypadPin = analogPin;
     m_onButtons = zkeypadButtons;
 }
 
-uint8_t NanoEngine8::arduboyButtons()
+uint8_t NanoEngineBase::arduboyButtons()
 {
     uint8_t buttons;
     /* Arduboy buttons available only for Atmega32U4 platform */
