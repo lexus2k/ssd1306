@@ -4,7 +4,7 @@
 
 SSD1306 driver is Arduino style C/C++ library. it can be compiled with plain avr-gcc compiler
 without Arduino libraries and supports monochrome and RGB oleds. It is intended for use with
-very small microcontrollers (with a little of SRAM). It was developed to use as
+very small microcontrollers (with a little of RAM). It was developed to use as
 few resources as possible. Since ATTiny controllers have no division and multiply
 operations, the library uses shift operation to speed up calculations.
 
@@ -16,14 +16,14 @@ Do not forget pull-up resistors for i2c lines.
  * Supports many interfaces:
    * i2c (software implementation, via Wire library, AVR Twi, Linux i2c-dev)
    * spi (4-wire spi via Arduino SPI library, AVR Spi, AVR USI module)
- * Usage of very little of SRAM:
-   * Attiny85 with Damellis package (minimum 25 bytes of SRAM)
-   * Atmega328p (minimum 56 bytes of SRAM)
-   * ESP8266 (minimum 26 bytes of SRAM)
+ * Usage of very little of RAM:
+   * Attiny85 with Damellis package (minimum 25 bytes of RAM)
+   * Atmega328p (minimum 56 bytes of RAM)
+   * ESP8266 (minimum 26 bytes of RAM)
  * Fast implementation to provide reasonable speed on slow microcontrollers
  * Primitive graphics functions (line,rectangle,pixels)
  * Printing text to display (using fonts of different size)
- * Drawing bitmap images, located in SRAM or Flash memory (PROGMEM)
+ * Drawing bitmap images, located in RAM or Flash memory (PROGMEM)
  * Work with sprite objects
  * Creating and controlling menu items (see ssd1306_demo example)
  * Memory-buffered operations (nano_gfx.h) for flickering-free output.
