@@ -38,6 +38,22 @@ enum
     CANVAS_MODE_TRANSPARENT = 2,
 };
 
+/** Describes point */
+typedef struct
+{
+    /** x position in pixels */
+    lcdint_t x;
+    /** y position in pixels */
+    lcdint_t y;
+
+    /**
+     * Initializes NanoPoint with specified values
+     * @param px - x position
+     * @param py - y position
+     */
+    void setPoint(lcdint_t px, lcdint_t py) { x=px; y=py; };
+} NanoPoint;
+
 /**
  * NanoRect structure describes rectangle area.
  */
@@ -130,6 +146,13 @@ public:
      * @param color - color
      */
     void putPixel(lcdint_t x, lcdint_t y, uint8_t color);
+
+    /**
+     * Draws pixel on specified position
+     * @param p - NanoPoint
+     * @param color - color
+     */
+    void putPixel(const NanoPoint &p, uint8_t color);
 
     /**
      * Draws horizontal or vertical line 

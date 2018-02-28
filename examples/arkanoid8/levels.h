@@ -33,6 +33,17 @@ const int BLOCKS_PER_ROW      = 8;
 const int MAX_BLOCKS_PER_ROW  = 8;
 const int BLOCK_NUM_ROWS      = 5;
 
+const PROGMEM uint8_t bgTile[] =
+{
+     0B00000001,
+     0B11000010,
+     0B00101100,
+     0B00010000,
+     0B00101100,
+     0B01000010,
+     0B10000001,
+     0B00000001,
+};
 
 const PROGMEM uint8_t levels[MAX_LEVELS][BLOCK_NUM_ROWS][MAX_BLOCKS_PER_ROW] =
 {

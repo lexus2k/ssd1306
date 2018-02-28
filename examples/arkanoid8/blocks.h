@@ -42,8 +42,9 @@ const uint8_t blockColors[]=
 {
     0,
     RGB_COLOR8(64,64,255),
-    RGB_COLOR8(64,255,255),
+    RGB_COLOR8(255,255,64),
     RGB_COLOR8(64,255,64),
+    RGB_COLOR8(64,255,255),
     RGB_COLOR8(64,64,255),
 };
 

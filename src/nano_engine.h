@@ -51,15 +51,6 @@ enum
     BUTTON_B      = 0B00100000,
 };
 
-/** Describes point */
-typedef struct
-{
-    /** x position in pixels */
-    lcdint_t x;
-    /** y position in pixels */
-    lcdint_t y;
-} NanoPoint;
-
 /**
  * Base class for NanoEngine.
  */
@@ -72,11 +63,9 @@ public:
     NanoEngineBase();
 
     /** Number of bits in tile size. 5 corresponds to 1<<5 = 32 tile size */
-    static const uint8_t NE_TILE_SIZE_BITS = 4;
-    /** Tile size in pixels */
-    static const uint8_t NE_TILE_SIZE = (1<<NE_TILE_SIZE_BITS);
+    static const uint8_t NE_TILE_SIZE_BITS = 3;
     /** Max tiles supported in X */
-    static const uint8_t NE_MAX_TILES_NUM = 8 >> (NE_TILE_SIZE_BITS - 4);
+    static const uint8_t NE_MAX_TILES_NUM = 16 >> (NE_TILE_SIZE_BITS - 3);
 
     /**
      * Initializes internal timestamps.
@@ -124,6 +113,12 @@ public:
      * Actual update will take place in display() method.
      */
     void refreshRect(NanoRect &rect);
+
+    /**
+     * Mark specified area in pixels for redrawing by NanoEngine.
+     * Actual update will take place in display() method.
+     */
+    void refreshPoint(NanoPoint &point);
 
     /**
      * Mark specified area in pixels for redrawing by NanoEngine.
@@ -187,7 +182,7 @@ protected:
      * Contains information on tiles to be updated.
      * Elements of array are rows and bits are columns.
      */
-    uint8_t   m_refreshFlags[NE_MAX_TILES_NUM];
+    uint16_t   m_refreshFlags[NE_MAX_TILES_NUM];
     /** Duration between frames in milliseconds */
     uint8_t   m_frameDurationMs;
     /** Current fps */
@@ -243,7 +238,7 @@ public:
     void display();
 
 private:
-    uint8_t   m_buffer[NE_TILE_SIZE * NE_TILE_SIZE];
+    uint8_t   m_buffer[(1<<NE_TILE_SIZE_BITS) * (1<<NE_TILE_SIZE_BITS)];
 };
 
 #endif

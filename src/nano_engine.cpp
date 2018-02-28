@@ -31,7 +31,7 @@
 
 NanoEngine8::NanoEngine8()
    : NanoEngineBase()
-   , canvas(NE_TILE_SIZE, NE_TILE_SIZE, m_buffer)
+   , canvas(1<<NE_TILE_SIZE_BITS, 1<<NE_TILE_SIZE_BITS, m_buffer)
    , m_buffer{}
 {
 }
@@ -106,11 +106,16 @@ void NanoEngineBase::refreshRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t
     }
 }
 
+void NanoEngineBase::refreshPoint(NanoPoint &point)
+{
+    m_refreshFlags[(point.y>>NE_TILE_SIZE_BITS)] |= (1<<(point.x>>NE_TILE_SIZE_BITS));
+}
+
 void NanoEngineBase::refreshAll()
 {
     for(uint8_t i=0; i<NE_MAX_TILES_NUM; i++)
     {
-        m_refreshFlags[i] = 0xFF;
+        m_refreshFlags[i] = ~(0);
     }
 }
 

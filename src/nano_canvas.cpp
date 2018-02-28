@@ -41,6 +41,11 @@ void NanoCanvas8::putPixel(lcdint_t x, lcdint_t y, uint8_t color)
     m_buf[YADDR8(y) + x] = color;
 }
 
+void NanoCanvas8::putPixel(const NanoPoint &p, uint8_t color)
+{
+    putPixel(p.x, p.y, color);
+}
+
 void NanoCanvas8::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2, uint8_t color)
 {
     x1 -= offsetx;
