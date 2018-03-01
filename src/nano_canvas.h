@@ -55,6 +55,11 @@ typedef struct _NanoPoint
     void setPoint(lcdint_t px, lcdint_t py) { x=px; y=py; };
 
     void add(const _NanoPoint &p) { x+=p.x; y+=p.y; };
+
+    void sub(const _NanoPoint &p) { x-=p.x; y-=p.y; };
+
+    _NanoPoint operator-(const _NanoPoint &p) { return {x-p.x, y-p.y}; };
+
 } NanoPoint;
 
 /**
@@ -112,6 +117,12 @@ typedef struct
     bool hasX(lcdint_t x) const { return (x >= p1.x) && (x <= p2.x); };
 
     bool hasY(lcdint_t y) const { return (y >= p1.y) && (y <= p2.y); };
+
+    bool has(const NanoPoint &p) const { return hasX(p.x) && hasY(p.y); };
+
+    bool above(const NanoPoint &p) const { return (p.y < p1.y); };
+
+    bool below(const NanoPoint &p) const { return (p.y > p2.y); };
 } NanoRect;
 
 /**
@@ -123,9 +134,7 @@ class NanoCanvas8
 {
 public:
     /** Fixed offset for all operation of NanoCanvas8 in pixels */
-    lcdint_t  offsetx;
-    /** Fixed offset for all operation of NanoCanvas8 in pixels */
-    lcdint_t  offsety;
+    NanoPoint offset;
 
     /**
      * Creates new canvas object.
@@ -141,8 +150,8 @@ public:
     {
         m_w = w;
         m_h = h;
-        offsetx = 0;
-        offsety = 0;
+        offset.x = 0;
+        offset.y = 0;
         m_cursorX = 0;
         m_cursorY = 0;
         m_color = 0xFF;
@@ -158,7 +167,7 @@ public:
      * @param ox - X offset in pixels
      * @param oy - Y offset in pixels
      */
-    void setOffset(lcdint_t ox, lcdint_t oy) { offsetx = ox; offsety = oy; };
+    void setOffset(lcdint_t ox, lcdint_t oy) { offset.x = ox; offset.y = oy; };
 
     /**
      * Draws pixel on specified position

@@ -90,14 +90,16 @@ bool NanoEngineBase::nextFrame()
     return (uint32_t)(millis() - m_lastFrameTs) >= m_frameDurationMs;
 }
 
-void NanoEngineBase::refreshRect(NanoRect &rect)
+void NanoEngineBase::refreshRect(const NanoRect &rect)
 {
     refreshRect(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
 }
 
 void NanoEngineBase::refreshRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
 {
-    for(uint8_t y=(y1>>NE_TILE_SIZE_BITS); y<=(y2>>NE_TILE_SIZE_BITS); y++)
+    y1 = max(0,y1);
+    y2 = min((y2>>NE_TILE_SIZE_BITS), NE_MAX_TILES_NUM - 1);
+    for(uint8_t y=(y1>>NE_TILE_SIZE_BITS); y<=y2; y++)
     {
         for(uint8_t x=(x1>>NE_TILE_SIZE_BITS); x<=(x2>>NE_TILE_SIZE_BITS); x++)
         {
@@ -106,7 +108,7 @@ void NanoEngineBase::refreshRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t
     }
 }
 
-void NanoEngineBase::refreshPoint(NanoPoint &point)
+void NanoEngineBase::refreshPoint(const NanoPoint &point)
 {
     m_refreshFlags[(point.y>>NE_TILE_SIZE_BITS)] |= (1<<(point.x>>NE_TILE_SIZE_BITS));
 }

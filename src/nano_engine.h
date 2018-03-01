@@ -112,13 +112,13 @@ public:
      * Mark specified area in pixels for redrawing by NanoEngine.
      * Actual update will take place in display() method.
      */
-    void refreshRect(NanoRect &rect);
+    void refreshRect(const NanoRect &rect);
 
     /**
      * Mark specified area in pixels for redrawing by NanoEngine.
      * Actual update will take place in display() method.
      */
-    void refreshPoint(NanoPoint &point);
+    void refreshPoint(const NanoPoint &point);
 
     /**
      * Mark specified area in pixels for redrawing by NanoEngine.

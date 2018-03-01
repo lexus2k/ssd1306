@@ -39,7 +39,9 @@
 NanoEngine8 engine;
 
 static uint8_t g_level = 0;
-static const NanoRect gameArea = { {0, 1}, {63, 55} };
+static const NanoRect gameArea = { {16, 0}, {79, 63} };
+static const NanoRect blockArea = { {gameArea.p1.x, 8},
+                                    {gameArea.p1.x + BLOCKS_PER_ROW*8 - 1, 8 + BLOCK_NUM_ROWS*4 - 1} };
 
 union
 {
@@ -73,8 +75,8 @@ void introLoop(void)
 {
     if (gameState.intro.intro_y < 16)
     {
+        engine.refreshRect( 0, gameState.intro.intro_y, 95, gameState.intro.intro_y + 24 );
         gameState.intro.intro_y++;
-        engine.refreshAll();
     }
     else
     {
@@ -100,28 +102,29 @@ void startIntro(void)
 bool drawBattleField(void)
 {
     /* If engine requests to redraw main game field */
-    if (engine.canvas.offsetx < 64)
+    if (gameArea.has(engine.canvas.offset))
     {
         engine.canvas.setMode(0);
         engine.canvas.setColor(RGB_COLOR8(0,0,64));
-        engine.canvas.drawBitmap1(engine.canvas.offsetx, engine.canvas.offsety, 8, 8, bgTile);
-//        engine.canvas.clear();
-        engine.canvas.drawHLine(0,0,63, RGB_COLOR8(255,255,255));
+        engine.canvas.drawBitmap1(engine.canvas.offset.x, engine.canvas.offset.y, 8, 8, bgTile);
+        engine.canvas.drawHLine(gameArea.p1.x,gameArea.p1.y,gameArea.p2.x, RGB_COLOR8(255,255,255));
         engine.canvas.drawRect(gameState.battleField.platform, RGB_COLOR8(0,128,255));
         engine.canvas.putPixel(gameState.battleField.platform.p1, 0);
         engine.canvas.putPixel(gameState.battleField.platform.p2.x,
                                gameState.battleField.platform.p1.y, 0);
-        if (engine.canvas.offsety < 64)
+        if (gameArea.has(engine.canvas.offset))
         {
-            for (uint8_t r= 0 /*engine.canvas.offsetx >> 3*/; r<BLOCK_NUM_ROWS; r++)
+            for (uint8_t r = 0; r<BLOCK_NUM_ROWS; r++)
             {
                 for (uint8_t bl = 0; bl<BLOCKS_PER_ROW; bl++)
                 {
                     uint8_t block = gameState.battleField.blocks[r][bl];
                     if (block)
                     {
-                         engine.canvas.fillRect(bl*8,r*4 + 8,bl*8+8,r*4+4 + 8,blockColors[block]);
-                         engine.canvas.drawRect(bl*8,r*4 + 8,bl*8+8,r*4+4 + 8,0);
+                         NanoRect rect;
+                         rect.setRect(bl*8 + gameArea.p1.x, r*4 + 8, bl*8 + gameArea.p1.x + 8, r*4+4 + 8);
+                         engine.canvas.fillRect(rect,blockColors[block]);
+                         engine.canvas.drawRect(rect,0);
                     }
                 }
             }
@@ -132,11 +135,38 @@ bool drawBattleField(void)
     {
         char str[4] = {0};
         engine.canvas.clear();
-        engine.canvas.drawVLine(65,0,64, RGB_COLOR8(255,255,255));
+        engine.canvas.drawVLine(gameArea.p1.x-1,0,64, RGB_COLOR8(255,255,255));
+        engine.canvas.drawVLine(gameArea.p2.x+1,0,64, RGB_COLOR8(255,255,255));
         utoa(engine.getCpuLoad( ), str, 10);
         engine.canvas.setColor(RGB_COLOR8(192,192,192));
-        engine.canvas.printFixed(70, 16, str, STYLE_NORMAL );
+        engine.canvas.printFixed(gameArea.p2.x+3, 16, str, STYLE_NORMAL );
     }
+    return true;
+}
+
+bool checkBlockHit(void)
+{
+    if (!blockArea.has(gameState.battleField.ball))
+    {
+        return false;
+    }
+    NanoPoint p = gameState.battleField.ball - blockArea.p1;
+    uint8_t row = p.y >> 2;
+    uint8_t column = p.x >> 3;
+    if (!gameState.battleField.blocks[row][column])
+    {
+        return false;
+    }
+    gameState.battleField.blocks[row][column] = 0;
+    if (((p.y & 3) == 2) || (p.y & 3) == 1)
+    {
+        gameState.battleField.ballSpeed.x = -gameState.battleField.ballSpeed.x;
+    }
+    else
+    {
+        gameState.battleField.ballSpeed.y = -gameState.battleField.ballSpeed.y;
+    }
+    engine.refreshPoint( gameState.battleField.ball );
     return true;
 }
 
@@ -157,14 +187,16 @@ void battleFieldLoop(void)
     gameState.battleField.frames++;
     if ( (gameState.battleField.frames & 0x3F) == 0 )
     {
-        engine.refreshRect( 64, 0, 95, 63 );
+        engine.refreshRect( gameArea.p2.x + 1, 0, 95, 63 );
     }
     engine.refreshPoint( gameState.battleField.ball );
+    
     bool moveBall;
     do
     {
+        NanoPoint speed = gameState.battleField.ballSpeed;
         moveBall = false;
-        gameState.battleField.ball.add( gameState.battleField.ballSpeed );
+        gameState.battleField.ball.add( speed );
         if (!gameArea.hasX(gameState.battleField.ball.x))
         {
             moveBall = true;
@@ -175,19 +207,24 @@ void battleFieldLoop(void)
             moveBall = true;
             gameState.battleField.ballSpeed.y = -gameState.battleField.ballSpeed.y;
         }
+        if (gameState.battleField.platform.hasX( gameState.battleField.ball.x ) && 
+            !gameState.battleField.platform.above( gameState.battleField.ball ) &&
+            !gameState.battleField.platform.below( gameState.battleField.ball ) )
+        {
+            moveBall = true;
+            gameState.battleField.ballSpeed.y = -gameState.battleField.ballSpeed.y;
+        }
+        if (checkBlockHit())
+        {
+            moveBall = true;
+        }
     }
     while (moveBall);
     engine.refreshPoint( gameState.battleField.ball );
 }
 
-void startBattleField(void)
+void loadLevel(void)
 {
-    engine.refreshAll();
-    gameState.battleField.platform.setRect( 20, 56, 31, 58 );
-    gameState.battleField.ball.setPoint( 25, 55);
-    gameState.battleField.ballSpeed.setPoint( 1, -1);
-    engine.drawCallback( drawBattleField );
-    engine.loopCallback( battleFieldLoop );
     /* Loading level */
     if (g_level > MAX_LEVELS)
     {
@@ -207,18 +244,36 @@ void startBattleField(void)
     gameState.battleField.frames = 0;
 }
 
+void startBattleField(void)
+{
+    engine.refreshAll();
+    gameState.battleField.platform.setRect( 20, 56, 31, 58 );
+    gameState.battleField.ball.setPoint( 25, 55);
+    gameState.battleField.ballSpeed.setPoint( 1, -1);
+    engine.drawCallback( drawBattleField );
+    engine.loopCallback( battleFieldLoop );
+    loadLevel();
+}
+
 void setup()
 {
-    ssd1306_setFixedFont(ssd1306xled_font6x8);
+    /* Set font to use in the game. The font has only capital letters and digits */
+    ssd1306_setFixedFont(ssd1306xled_font6x8_AB);
+    /* Init SPI 96x64 RBG oled. 3 - RESET, 4 - CS (can be omitted, oled CS must be pulled down), 5 - D/C */
     ssd1331_96x64_spi_init(3, 4, 5);
 
     /* 8-bit engine works only in Horizontal addressing mode */
     ssd1331_setMode(0);
 
+    /* Configure engine to use ZKeypand on A0 as control board. */
     engine.connectZKeypad(0);
 
+    /* Start engine */
     engine.begin();
-    engine.setFrameRate(60);
+
+    /* Set frame rate. 30 fps is too slow */
+    engine.setFrameRate(45);
+
     startIntro();
 }
 
