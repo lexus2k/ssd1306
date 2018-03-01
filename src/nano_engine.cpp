@@ -92,7 +92,7 @@ bool NanoEngineBase::nextFrame()
 
 void NanoEngineBase::refreshRect(NanoRect &rect)
 {
-    refreshRect(rect.left, rect.top, rect.right, rect.bottom);
+    refreshRect(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
 }
 
 void NanoEngineBase::refreshRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)

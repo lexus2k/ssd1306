@@ -38,8 +38,9 @@ enum
     CANVAS_MODE_TRANSPARENT = 2,
 };
 
+
 /** Describes point */
-typedef struct
+typedef struct _NanoPoint
 {
     /** x position in pixels */
     lcdint_t x;
@@ -52,6 +53,8 @@ typedef struct
      * @param py - y position
      */
     void setPoint(lcdint_t px, lcdint_t py) { x=px; y=py; };
+
+    void add(const _NanoPoint &p) { x+=p.x; y+=p.y; };
 } NanoPoint;
 
 /**
@@ -59,30 +62,40 @@ typedef struct
  */
 typedef struct
 {
-    /** left position in pixels */
-    lcdint_t left;
-    /** top position in pixels */
-    lcdint_t top;
-    /** right position in pixels */
-    lcdint_t right;
-    /** bottom position in pixels */
-    lcdint_t bottom;
+    NanoPoint p1;
+
+    NanoPoint p2;
+
     /**
      * Shifts rectangle area by dx;dy pixels.
      * @param dx - delta on x-axis
      * @param dy - delta on y-axis
      */
-    void shift(lcdint_t dx, lcdint_t dy) { left+=dx; right+=dx; top+=dy; bottom+=dy; };
+    void add(lcdint_t dx, lcdint_t dy)
+    {
+        p1.x += dx; p2.x += dx;
+        p1.y += dy; p2.y += dy;
+    }
+
     /**
      * Shifts rectangle area by dx pixels.
      * @param dx - delta on x-axis
      */
-    void shiftH(lcdint_t dx) { left+=dx; right+=dx; };
+    void addH(lcdint_t dx)
+    {
+        p1.x += dx; p2.x += dx;
+    };
+
     /**
      * Shifts rectangle area by dy pixels.
      * @param dy - delta on y-axis
      */
-    void shiftV(lcdint_t dy) { top+=dy; bottom+=dy; };
+    void addV(lcdint_t dy)
+    {
+        p1.y += dy;
+        p2.y += dy;
+    };
+
     /**
      * Initializes NanoRect with specified values
      * @param l - left position
@@ -90,7 +103,15 @@ typedef struct
      * @param r - right position
      * @param b - bottom position
      */
-    void setRect(lcdint_t l, lcdint_t t, lcdint_t r, lcdint_t b) { left=l; top=t; right=r; bottom=b; };
+    void setRect(lcdint_t l, lcdint_t t, lcdint_t r, lcdint_t b)
+    {
+        p1.x = l; p1.y = t;
+        p2.x = r; p2.y = b;
+    };
+
+    bool hasX(lcdint_t x) const { return (x >= p1.x) && (x <= p2.x); };
+
+    bool hasY(lcdint_t y) const { return (y >= p1.y) && (y <= p2.y); };
 } NanoRect;
 
 /**

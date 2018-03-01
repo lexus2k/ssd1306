@@ -98,7 +98,7 @@ void NanoCanvas8::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, u
 
 void NanoCanvas8::drawRect(const NanoRect &rect, uint8_t color)
 {
-    drawRect(rect.left, rect.top, rect.right, rect.bottom, color);
+    drawRect(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y, color);
 }
 
 void NanoCanvas8::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, uint8_t color)
@@ -135,7 +135,7 @@ void NanoCanvas8::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, u
 
 void NanoCanvas8::fillRect(const NanoRect &rect, uint8_t color)
 {
-    fillRect(rect.left, rect.top, rect.right, rect.bottom, color);
+    fillRect(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y, color);
 }
 
 //#include <stdio.h>

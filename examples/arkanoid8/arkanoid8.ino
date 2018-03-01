@@ -38,7 +38,8 @@
 
 NanoEngine8 engine;
 
-uint8_t g_level = 0;
+static uint8_t g_level = 0;
+static const NanoRect gameArea = { {0, 1}, {63, 55} };
 
 union
 {
@@ -107,8 +108,9 @@ bool drawBattleField(void)
 //        engine.canvas.clear();
         engine.canvas.drawHLine(0,0,63, RGB_COLOR8(255,255,255));
         engine.canvas.drawRect(gameState.battleField.platform, RGB_COLOR8(0,128,255));
-        engine.canvas.putPixel(gameState.battleField.platform.left, gameState.battleField.platform.top, 0);
-        engine.canvas.putPixel(gameState.battleField.platform.right, gameState.battleField.platform.top, 0);
+        engine.canvas.putPixel(gameState.battleField.platform.p1, 0);
+        engine.canvas.putPixel(gameState.battleField.platform.p2.x,
+                               gameState.battleField.platform.p1.y, 0);
         if (engine.canvas.offsety < 64)
         {
             for (uint8_t r= 0 /*engine.canvas.offsetx >> 3*/; r<BLOCK_NUM_ROWS; r++)
@@ -140,16 +142,16 @@ bool drawBattleField(void)
 
 void battleFieldLoop(void)
 {
-    if (engine.pressed( BUTTON_LEFT ) && (gameState.battleField.platform.left > 0))
+    if (engine.pressed( BUTTON_LEFT ) && (gameState.battleField.platform.p1.x > gameArea.p1.x))
     {
         engine.refreshRect( gameState.battleField.platform );
-        gameState.battleField.platform.shift(-1, 0);
+        gameState.battleField.platform.add(-1, 0);
         engine.refreshRect( gameState.battleField.platform );
     }
-    if (engine.pressed( BUTTON_RIGHT ) && (gameState.battleField.platform.right < 63))
+    if (engine.pressed( BUTTON_RIGHT ) && (gameState.battleField.platform.p2.x < gameArea.p2.x))
     {
         engine.refreshRect( gameState.battleField.platform );
-        gameState.battleField.platform.shift(+1, 0);
+        gameState.battleField.platform.add(+1, 0);
         engine.refreshRect( gameState.battleField.platform );
     }
     gameState.battleField.frames++;
@@ -158,10 +160,23 @@ void battleFieldLoop(void)
         engine.refreshRect( 64, 0, 95, 63 );
     }
     engine.refreshPoint( gameState.battleField.ball );
-    gameState.battleField.ball.x += gameState.battleField.ballSpeed.x;
-    gameState.battleField.ball.y += gameState.battleField.ballSpeed.y;
-    if ((gameState.battleField.ball.y < 1) || (gameState.battleField.ball.y>55)) gameState.battleField.ballSpeed.y = -gameState.battleField.ballSpeed.y;
-    if ((gameState.battleField.ball.x < 1) || (gameState.battleField.ball.x>62)) gameState.battleField.ballSpeed.x = -gameState.battleField.ballSpeed.x;
+    bool moveBall;
+    do
+    {
+        moveBall = false;
+        gameState.battleField.ball.add( gameState.battleField.ballSpeed );
+        if (!gameArea.hasX(gameState.battleField.ball.x))
+        {
+            moveBall = true;
+            gameState.battleField.ballSpeed.x = -gameState.battleField.ballSpeed.x;
+        }
+        if (!gameArea.hasY(gameState.battleField.ball.y))
+        {
+            moveBall = true;
+            gameState.battleField.ballSpeed.y = -gameState.battleField.ballSpeed.y;
+        }
+    }
+    while (moveBall);
     engine.refreshPoint( gameState.battleField.ball );
 }
 
