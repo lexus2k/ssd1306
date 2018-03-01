@@ -55,6 +55,8 @@ union
         NanoRect  platform;
         NanoPoint ball;
         NanoPoint ballSpeed;
+        int8_t   ratioCounter;
+        int8_t   xratio;
         uint8_t   blocks[BLOCK_NUM_ROWS][MAX_BLOCKS_PER_ROW];
         uint8_t   blocksLeft;
         uint8_t   frames;
@@ -190,11 +192,12 @@ void battleFieldLoop(void)
         engine.refreshRect( gameArea.p2.x + 1, 0, 95, 63 );
     }
     engine.refreshPoint( gameState.battleField.ball );
-    
+    gameState.battleField.ratioCounter -= gameState.battleField.xratio;
     bool moveBall;
     do
     {
         NanoPoint speed = gameState.battleField.ballSpeed;
+        if (gameState.battleField.ratioCounter > 0) speed.x = 0;
         moveBall = false;
         gameState.battleField.ball.add( speed );
         if (!gameArea.hasX(gameState.battleField.ball.x))
@@ -213,6 +216,19 @@ void battleFieldLoop(void)
         {
             moveBall = true;
             gameState.battleField.ballSpeed.y = -gameState.battleField.ballSpeed.y;
+            gameState.battleField.xratio = 2;
+            if (gameState.battleField.ball.x < gameState.battleField.platform.p1.x + 3)
+            {
+                gameState.battleField.ballSpeed.x = -1;
+            }
+            else if (gameState.battleField.ball.x > gameState.battleField.platform.p2.x - 3)
+            {
+                gameState.battleField.ballSpeed.x = +1;
+            }
+            else
+            {
+                gameState.battleField.xratio = 1;
+            }
         }
         if (checkBlockHit())
         {
@@ -221,6 +237,10 @@ void battleFieldLoop(void)
     }
     while (moveBall);
     engine.refreshPoint( gameState.battleField.ball );
+    if (gameState.battleField.ratioCounter <= 0)
+    {
+        gameState.battleField.ratioCounter += 2;
+    }
 }
 
 void loadLevel(void)
@@ -250,6 +270,8 @@ void startBattleField(void)
     gameState.battleField.platform.setRect( 20, 56, 31, 58 );
     gameState.battleField.ball.setPoint( 25, 55);
     gameState.battleField.ballSpeed.setPoint( 1, -1);
+    gameState.battleField.xratio = 2;
+    gameState.battleField.ratioCounter = gameState.battleField.xratio;
     engine.drawCallback( drawBattleField );
     engine.loopCallback( battleFieldLoop );
     loadLevel();
