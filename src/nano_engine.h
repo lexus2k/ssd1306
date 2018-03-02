@@ -99,7 +99,7 @@ public:
     /**
      * Marks all tiles for update. Actual update will take place in display() method.
      */
-    void refreshAll();
+    void refresh();
 
     /**
      * Marks specific tile for update. Actual update will take place in display() method.
@@ -112,19 +112,19 @@ public:
      * Mark specified area in pixels for redrawing by NanoEngine.
      * Actual update will take place in display() method.
      */
-    void refreshRect(const NanoRect &rect);
+    void refresh(const NanoRect &rect);
 
     /**
      * Mark specified area in pixels for redrawing by NanoEngine.
      * Actual update will take place in display() method.
      */
-    void refreshPoint(const NanoPoint &point);
+    void refresh(const NanoPoint &point);
 
     /**
      * Mark specified area in pixels for redrawing by NanoEngine.
      * Actual update will take place in display() method.
      */
-    void refreshRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
+    void refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
 
     /**
      * Sets user-defined draw callback. This callback will be called everytime, engine needs

@@ -60,12 +60,14 @@ typedef struct _NanoPoint
 
     _NanoPoint operator-(const _NanoPoint &p) { return {x-p.x, y-p.y}; };
 
+    _NanoPoint operator+(const _NanoPoint &p) { return {x+p.x, y+p.y}; };
+
 } NanoPoint;
 
 /**
  * NanoRect structure describes rectangle area.
  */
-typedef struct
+typedef struct _NanoRect
 {
     NanoPoint p1;
 
@@ -123,6 +125,28 @@ typedef struct
     bool above(const NanoPoint &p) const { return (p.y < p1.y); };
 
     bool below(const NanoPoint &p) const { return (p.y > p2.y); };
+
+    _NanoRect operator-(const _NanoPoint &p)
+    {
+        return {{p1.x-p.x, p1.y-p.y},
+                {p2.x - p.x, p2.y - p.y}};
+    };
+
+    _NanoRect operator+(const _NanoPoint &p)
+    {
+        return {{p1.x+p.x, p1.y+p.y},
+                {p2.x + p.x, p2.y + p.y}};
+    };
+
+    _NanoRect& operator+=(const _NanoPoint &p)
+    {
+        p1.x += p.x;
+        p1.y += p.y;
+        p2.x += p.x;
+        p2.y += p.y;
+        return *this;
+    };
+
 } NanoRect;
 
 /**

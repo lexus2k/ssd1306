@@ -71,7 +71,7 @@ NanoEngineBase::NanoEngineBase()
    , m_onButtons( nullptr )
    , m_loop( nullptr )
 {
-    refreshAll();
+    refresh();
 }
 
 void NanoEngineBase::begin()
@@ -90,12 +90,12 @@ bool NanoEngineBase::nextFrame()
     return (uint32_t)(millis() - m_lastFrameTs) >= m_frameDurationMs;
 }
 
-void NanoEngineBase::refreshRect(const NanoRect &rect)
+void NanoEngineBase::refresh(const NanoRect &rect)
 {
-    refreshRect(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
+    refresh(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
 }
 
-void NanoEngineBase::refreshRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+void NanoEngineBase::refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
 {
     y1 = max(0,y1);
     y2 = min((y2>>NE_TILE_SIZE_BITS), NE_MAX_TILES_NUM - 1);
@@ -108,12 +108,12 @@ void NanoEngineBase::refreshRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t
     }
 }
 
-void NanoEngineBase::refreshPoint(const NanoPoint &point)
+void NanoEngineBase::refresh(const NanoPoint &point)
 {
     m_refreshFlags[(point.y>>NE_TILE_SIZE_BITS)] |= (1<<(point.x>>NE_TILE_SIZE_BITS));
 }
 
-void NanoEngineBase::refreshAll()
+void NanoEngineBase::refresh()
 {
     for(uint8_t i=0; i<NE_MAX_TILES_NUM; i++)
     {
