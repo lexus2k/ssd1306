@@ -27,7 +27,9 @@
 #include "ssd1331_api.h"
 
 #define YADDR8(y) (static_cast<uint16_t>(y) << m_p)
+
 #define BADDR8(b) ((b) << m_p)
+
 #define swap_data(a, b ,type)  { type t = a; a = b; b = t; }
 
 extern SFixedFontInfo s_fixedFont;
@@ -36,9 +38,10 @@ void NanoCanvas8::putPixel(lcdint_t x, lcdint_t y, uint8_t color)
 {
     x -= offset.x;
     y -= offset.y;
-    if ((x < 0) || (y < 0)) return;
-    if ((x >= (lcdint_t)m_w) || (y >= (lcdint_t)m_h)) return;
-    m_buf[YADDR8(y) + x] = color;
+    if ((x >= 0) && (y >= 0) && (x < (lcdint_t)m_w) && (y < (lcdint_t)m_h))
+    {
+        m_buf[YADDR8(y) + x] = color;
+    }
 }
 
 void NanoCanvas8::putPixel(const NanoPoint &p, uint8_t color)
@@ -58,13 +61,14 @@ void NanoCanvas8::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2, uint8_t color
     if ((x1 < 0) || (x1 >= (lcdint_t)m_w)) return;
     if ((y2 < 0) || (y1 >= (lcdint_t)m_h)) return;
     y1 = max(y1,0);
-    y2 = min(y2,(lcdint_t)m_h-1);
     uint8_t *buf = m_buf + YADDR8(y1) + x1;
-    for (lcdint_t y = y1; y <= y2; y++)
+    y2 = min(y2,(lcdint_t)m_h-1) - y1;
+    do
     {
         *buf = color;
         buf += m_w;
     }
+    while (y2--);
 }
 
 void NanoCanvas8::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, uint8_t color)
@@ -81,7 +85,7 @@ void NanoCanvas8::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, uint8_t color
     x1 = max(x1,0);
     x2 = min(x2,(lcdint_t)m_w-1);
     uint8_t *buf = m_buf + YADDR8(y1) + x1;
-    for (lcdint_t x = x1; x <= x2; x++)
+    for (lcdint_t x = 0; x <= x2 - x1; x++)
     {
         *buf = color;
         buf++;
@@ -148,7 +152,7 @@ void NanoCanvas8::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint
     lcdint_t y1 = ypos - offset.y;
     lcdint_t x2 = x1 + (lcdint_t)w - 1;
     lcdint_t y2 = y1 + (lcdint_t)h - 1;
-    /* clip char */
+    /* clip bitmap */
     if ((x2 < 0) || (x1 >= (lcdint_t)m_w)) return;
     if ((y2 < 0) || (y1 >= (lcdint_t)m_h)) return;
 
@@ -198,10 +202,56 @@ void NanoCanvas8::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint
     }
 }
 
+void NanoCanvas8::drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+{
+    /* calculate char rectangle */
+    lcdint_t x1 = xpos - offset.x;
+    lcdint_t y1 = ypos - offset.y;
+    lcdint_t x2 = x1 + (lcdint_t)w - 1;
+    lcdint_t y2 = y1 + (lcdint_t)h - 1;
+    /* clip bitmap */
+    if ((x2 < 0) || (x1 >= (lcdint_t)m_w)) return;
+    if ((y2 < 0) || (y1 >= (lcdint_t)m_h)) return;
+
+    if (x1 < 0)
+    {
+        bitmap -= x1;
+        x1 = 0;
+    }
+    if (y1 < 0)
+    {
+        bitmap += (lcduint_t)(-y1) * w;
+        y1 = 0;
+    }
+    if (y2 >= (lcdint_t)m_h)
+    {
+         y2 = (lcdint_t)m_h - 1;
+    }
+    if (x2 >= (lcdint_t)m_w)
+    {
+         x2 = (lcdint_t)m_w - 1;
+    }
+    lcdint_t y = y1;
+    while ( y <= y2 )
+    {
+        for ( lcdint_t x = x1; x <= x2; x++ )
+        {
+            uint8_t data = pgm_read_byte( bitmap );
+            if ( (data) || (!(m_textMode & CANVAS_MODE_TRANSPARENT)) )
+            {
+                m_buf[YADDR8(y) + x] = data;
+            }
+            bitmap++;
+        }
+        bitmap += (w - (x2 - x1 + 1));
+        y++;
+    }
+}
+
 void NanoCanvas8::printChar(uint8_t c)
 {
     /* calculate char rectangle */
-    
+
     lcdint_t x1 = m_cursorX;
     lcdint_t y1 = m_cursorY;
     lcdint_t x2 = x1 + (lcdint_t)s_fixedFont.width - 1;

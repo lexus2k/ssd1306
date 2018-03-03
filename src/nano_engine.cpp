@@ -42,9 +42,10 @@ void NanoEngine8::display()
     m_lastFrameTs = millis();
     for (uint8_t y = 0; y < (s_displayHeight >> NE_TILE_SIZE_BITS); y++)
     {
+        uint8_t flag = m_refreshFlags[y];
         for (uint8_t x = 0; x < (s_displayWidth >> NE_TILE_SIZE_BITS); x++)
         {
-            if (m_refreshFlags[y] & (1<<x))
+            if (flag & 0x01)
             {
                 canvas.setOffset(x<<NE_TILE_SIZE_BITS, y<<NE_TILE_SIZE_BITS);
                 if (m_onDraw)
@@ -52,6 +53,7 @@ void NanoEngine8::display()
                     if (m_onDraw()) canvas.blt();
                 }
             }
+            flag >>=1;
         }
         m_refreshFlags[y] = 0;
     }

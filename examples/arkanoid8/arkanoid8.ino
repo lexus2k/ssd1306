@@ -200,7 +200,7 @@ void battleFieldLoop(void)
         NanoPoint speed = gameState.battleField.ballSpeed;
         if (gameState.battleField.ratioCounter > 0) speed.x = 0;
         moveBall = false;
-        gameState.battleField.ball.add( speed );
+        gameState.battleField.ball += speed;
         if (!gameArea.hasX(gameState.battleField.ball.x))
         {
             moveBall = true;

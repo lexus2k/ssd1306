@@ -54,13 +54,31 @@ typedef struct _NanoPoint
      */
     void setPoint(lcdint_t px, lcdint_t py) { x=px; y=py; };
 
-    void add(const _NanoPoint &p) { x+=p.x; y+=p.y; };
+    _NanoPoint& operator+=(const _NanoPoint &p)
+    {
+        x += p.x;
+        y += p.y;
+        return *this;
+    };
 
-    void sub(const _NanoPoint &p) { x-=p.x; y-=p.y; };
+    _NanoPoint& operator-=(const _NanoPoint &p)
+    {
+        x -= p.x;
+        y -= p.y;
+        return *this;
+    };
 
-    _NanoPoint operator-(const _NanoPoint &p) { return {x-p.x, y-p.y}; };
+    _NanoPoint operator-(const _NanoPoint &p)
+    {
+        return { static_cast<lcdint_t>(x - p.x),
+                 static_cast<lcdint_t>(y - p.y) };
+    };
 
-    _NanoPoint operator+(const _NanoPoint &p) { return {x+p.x, y+p.y}; };
+    _NanoPoint operator+(const _NanoPoint &p)
+    {
+        return { static_cast<lcdint_t>(x + p.x),
+                 static_cast<lcdint_t>(y + p.y) };
+    };
 
 } NanoPoint;
 
@@ -128,14 +146,14 @@ typedef struct _NanoRect
 
     _NanoRect operator-(const _NanoPoint &p)
     {
-        return {{p1.x-p.x, p1.y-p.y},
-                {p2.x - p.x, p2.y - p.y}};
+        return { {static_cast<lcdint_t>(p1.x - p.x), static_cast<lcdint_t>(p1.y - p.y) },
+                 {static_cast<lcdint_t>(p2.x - p.x), static_cast<lcdint_t>(p2.y - p.y) } };
     };
 
     _NanoRect operator+(const _NanoPoint &p)
     {
-        return {{p1.x+p.x, p1.y+p.y},
-                {p2.x + p.x, p2.y + p.y}};
+        return { {static_cast<lcdint_t>(p1.x + p.x), static_cast<lcdint_t>(p1.y + p.y) },
+                 {static_cast<lcdint_t>(p2.x + p.x), static_cast<lcdint_t>(p2.y + p.y) } };
     };
 
     _NanoRect& operator+=(const _NanoPoint &p)
@@ -270,6 +288,17 @@ public:
      * @param bitmap - monochrome bitmap data, located in flash
      */
     void drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
+
+    /**
+     * @brief Draws 8-bit color bitmap in color buffer.
+     * Draws 8-bit color bitmap in color buffer.
+     * @param x - position X in pixels
+     * @param y - position Y in pixels
+     * @param w - width in pixels
+     * @param h - height in pixels
+     * @param bitmap - 8-bit color bitmap data, located in flash
+     */
+    void drawBitmap8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
 
     /**
      * Clears canvas
