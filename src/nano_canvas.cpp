@@ -261,10 +261,6 @@ void NanoCanvas8::printChar(uint8_t c)
     if ((y2 < offset.y) || (y1 >= (lcdint_t)m_h + offset.y)) return;
 
     c -= s_fixedFont.ascii_offset;
-    if ( c > 224 )
-    {
-        c = 0;
-    }
     uint16_t font_offset = c * s_fixedFont.pages * s_fixedFont.width;
     for (uint8_t page = 0; page < s_fixedFont.pages; page++ )
     {

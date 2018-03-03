@@ -42,7 +42,8 @@ void NanoEngine8::display()
     m_lastFrameTs = millis();
     for (uint8_t y = 0; y < (s_displayHeight >> NE_TILE_SIZE_BITS); y++)
     {
-        uint8_t flag = m_refreshFlags[y];
+        uint16_t flag = m_refreshFlags[y];
+        m_refreshFlags[y] = 0;
         for (uint8_t x = 0; x < (s_displayWidth >> NE_TILE_SIZE_BITS); x++)
         {
             if (flag & 0x01)
@@ -55,7 +56,6 @@ void NanoEngine8::display()
             }
             flag >>=1;
         }
-        m_refreshFlags[y] = 0;
     }
     m_cpuLoad = ((millis() - m_lastFrameTs)*100)/m_frameDurationMs;
 }
