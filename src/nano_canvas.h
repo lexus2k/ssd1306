@@ -54,6 +54,20 @@ typedef struct _NanoPoint
      */
     void setPoint(lcdint_t px, lcdint_t py) { x=px; y=py; };
 
+    _NanoPoint& operator>>=(const uint8_t bits)
+    {
+        x >>= bits;
+        y >>= bits;
+        return *this;
+    }
+
+    _NanoPoint& operator<<=(const uint8_t bits)
+    {
+        x <<= bits;
+        y <<= bits;
+        return *this;
+    }
+
     _NanoPoint& operator+=(const _NanoPoint &p)
     {
         x += p.x;
@@ -78,6 +92,18 @@ typedef struct _NanoPoint
     {
         return { static_cast<lcdint_t>(x + p.x),
                  static_cast<lcdint_t>(y + p.y) };
+    };
+
+    _NanoPoint operator>>(const uint8_t bits)
+    {
+        return { static_cast<lcdint_t>(x >> bits),
+                 static_cast<lcdint_t>(y >> bits) };
+    };
+
+    _NanoPoint operator<<(const uint8_t bits)
+    {
+        return { static_cast<lcdint_t>(x << bits),
+                 static_cast<lcdint_t>(y << bits) };
     };
 
 } NanoPoint;
