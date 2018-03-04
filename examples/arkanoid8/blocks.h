@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2016-2018, Alexey Dynda
+    Copyright (c) 2018, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -36,16 +36,6 @@ enum
     BLOCK_POWER,  // 6
     BLOCKS_MAX,
     BLOCK_BONUS = BLOCK_BOMB,
-};
-
-const uint8_t blockColors[]=
-{
-    0,
-    RGB_COLOR8(64,64,255),
-    RGB_COLOR8(255,255,64),
-    RGB_COLOR8(64,255,64),
-    RGB_COLOR8(64,255,255),
-    RGB_COLOR8(64,64,255),
 };
 
 const PROGMEM uint8_t blockImages[BLOCKS_MAX][16] =

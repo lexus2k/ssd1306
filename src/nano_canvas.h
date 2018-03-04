@@ -54,6 +54,10 @@ typedef struct _NanoPoint
      */
     void setPoint(lcdint_t px, lcdint_t py) { x=px; y=py; };
 
+    /**
+     * Shifts right x,y value of the point by bits value.
+     * @param bits - number of bits to shift
+     */
     _NanoPoint& operator>>=(const uint8_t bits)
     {
         x >>= bits;
@@ -61,6 +65,10 @@ typedef struct _NanoPoint
         return *this;
     }
 
+    /**
+     * Shifts left x,y value of the point by bits value.
+     * @param bits - number of bits to shift
+     */
     _NanoPoint& operator<<=(const uint8_t bits)
     {
         x <<= bits;
@@ -68,6 +76,10 @@ typedef struct _NanoPoint
         return *this;
     }
 
+    /**
+     * Adds point.
+     * @param p - point values to add to the point. 
+     */
     _NanoPoint& operator+=(const _NanoPoint &p)
     {
         x += p.x;
@@ -75,6 +87,10 @@ typedef struct _NanoPoint
         return *this;
     };
 
+    /**
+     * Subtracts point.
+     * @param p - point values to subtract from the point. 
+     */
     _NanoPoint& operator-=(const _NanoPoint &p)
     {
         x -= p.x;
@@ -82,24 +98,40 @@ typedef struct _NanoPoint
         return *this;
     };
 
+    /**
+     * Subtracts point.
+     * @param p - point values to subtract from the point. 
+     */
     _NanoPoint operator-(const _NanoPoint &p)
     {
         return { static_cast<lcdint_t>(x - p.x),
                  static_cast<lcdint_t>(y - p.y) };
     };
 
+    /**
+     * Adds point.
+     * @param p - point values to add to the point. 
+     */
     _NanoPoint operator+(const _NanoPoint &p)
     {
         return { static_cast<lcdint_t>(x + p.x),
                  static_cast<lcdint_t>(y + p.y) };
     };
 
+    /**
+     * Shifts right x,y value of the point by bits value.
+     * @param bits - number of bits to shift
+     */
     _NanoPoint operator>>(const uint8_t bits)
     {
         return { static_cast<lcdint_t>(x >> bits),
                  static_cast<lcdint_t>(y >> bits) };
     };
 
+    /**
+     * Shifts left x,y value of the point by bits value.
+     * @param bits - number of bits to shift
+     */
     _NanoPoint operator<<(const uint8_t bits)
     {
         return { static_cast<lcdint_t>(x << bits),
@@ -113,8 +145,10 @@ typedef struct _NanoPoint
  */
 typedef struct _NanoRect
 {
+    /** top-left point of the rectangle area */
     NanoPoint p1;
 
+    /** right-bottom point of the rectangle area */
     NanoPoint p2;
 
     /**
@@ -122,7 +156,7 @@ typedef struct _NanoRect
      * @param dx - delta on x-axis
      * @param dy - delta on y-axis
      */
-    void add(lcdint_t dx, lcdint_t dy)
+    void move(lcdint_t dx, lcdint_t dy)
     {
         p1.x += dx; p2.x += dx;
         p1.y += dy; p2.y += dy;
@@ -160,28 +194,60 @@ typedef struct _NanoRect
         p2.x = r; p2.y = b;
     };
 
+    /**
+     * Returns true if specified x position is between left and right borders.
+     * @param x - position to check
+     */
     bool hasX(lcdint_t x) const { return (x >= p1.x) && (x <= p2.x); };
 
+    /**
+     * Returns true if specified y position is between left and right borders.
+     * @param y - position to check
+     */
     bool hasY(lcdint_t y) const { return (y >= p1.y) && (y <= p2.y); };
 
+    /**
+     * Returns true if specified point is inside rectangle area.
+     * @param p - point to check.
+     */
     bool has(const NanoPoint &p) const { return hasX(p.x) && hasY(p.y); };
 
+    /**
+     * Returns true if specified point is above rectangle area.
+     * @param p - point to check.
+     */
     bool above(const NanoPoint &p) const { return (p.y < p1.y); };
 
+    /**
+     * Returns true if specified point is below rectangle area.
+     * @param p - point to check.
+     */
     bool below(const NanoPoint &p) const { return (p.y > p2.y); };
 
+    /**
+     * Returns true if specified point is above rectangle area.
+     * @param p - point to check.
+     */
     _NanoRect operator-(const _NanoPoint &p)
     {
         return { {static_cast<lcdint_t>(p1.x - p.x), static_cast<lcdint_t>(p1.y - p.y) },
                  {static_cast<lcdint_t>(p2.x - p.x), static_cast<lcdint_t>(p2.y - p.y) } };
     };
 
+    /**
+     * Add point to all points of rectangle.
+     * @param p - point to add.
+     */
     _NanoRect operator+(const _NanoPoint &p)
     {
         return { {static_cast<lcdint_t>(p1.x + p.x), static_cast<lcdint_t>(p1.y + p.y) },
                  {static_cast<lcdint_t>(p2.x + p.x), static_cast<lcdint_t>(p2.y + p.y) } };
     };
 
+    /**
+     * Subtracts point to all points of rectangle.
+     * @param p - point to subtract.
+     */
     _NanoRect& operator+=(const _NanoPoint &p)
     {
         p1.x += p.x;

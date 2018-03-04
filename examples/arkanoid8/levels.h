@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2018, Alexey Dynda
+    Copyright (c) 2018, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -24,75 +24,18 @@
 
 #pragma once
 
-const int MAX_LEVELS          = 9;
+static const int MAX_LEVELS          = 3;
 #ifdef ARKANOID_SSD1331
-const int BLOCKS_PER_ROW      = 8;
+static const int BLOCKS_PER_ROW      = 8;
 #else
-const int BLOCKS_PER_ROW      = 8;
+static const int BLOCKS_PER_ROW      = 8;
 #endif
-const int MAX_BLOCKS_PER_ROW  = 8;
-const int BLOCK_NUM_ROWS      = 5;
+static const int MAX_BLOCKS_PER_ROW  = 8;
+static const int BLOCK_NUM_ROWS      = 5;
 
-const PROGMEM uint8_t bgTile[] =
-{
-     0B00000001,
-     0B11000010,
-     0B00101100,
-     0B00010000,
-     0B00101100,
-     0B01000010,
-     0B10000001,
-     0B00000001,
-};
+extern const uint8_t blockColors[];
 
-const PROGMEM uint8_t levels[MAX_LEVELS][BLOCK_NUM_ROWS][MAX_BLOCKS_PER_ROW] =
-{
-    {
-        { 1,1,1,1,1,1,1,1 },
-        { 1,2,2,2,2,2,2,1 },
-        { 1,1,1,1,1,1,1,1 },
-        { 1,2,2,2,2,2,2,1 },
-        { 1,1,1,1,1,1,1,1 },
-    },
-    {
-        { 0,3,3,3,3,3,3,0 },
-        { 0,1,2,2,2,2,1,0 },
-        { 0,0,1,1,1,1,0,0 }
-    },
-    {
-        { 2,1,3,1,3,1,2,0 },
-        { 0,2,2,5,2,2,0,0 },
-        { 2,1,1,1,1,1,2,0 }
-    },
-    {
-        { 2,1,4,3,3,4,2,0 },
-        { 1,2,2,2,2,2,1,0 },
-        { 0,3,3,3,3,3,0,0 }
-    },
-    {
-        { 0,0,1,0,1,0,0,0 },
-        { 0,1,2,6,2,1,0,0 },
-        { 0,0,1,5,1,0,0,0 }
-    },
-    {
-        { 0,4,0,4,0,4,0,0 },
-        { 4,5,4,5,4,5,4,0 },
-        { 0,4,0,4,0,4,0,0 }
-    },
-    {
-        { 2,1,1,5,1,1,2,0 },
-        { 2,6,4,1,4,6,2,0 },
-        { 2,3,0,0,0,3,2,0 }
-    },
-    {
-        { 0,0,0,0,0,0,0,0 },
-        { 0,0,0,0,0,0,0,0 },
-        { 0,0,0,0,0,0,0,0 }
-    },
-    {
-        { 2,2,2,2,2,2,2,0 },
-        { 2,2,3,1,3,2,2,0 },
-        { 3,3,0,0,0,3,3,0 }
-    },
-};
+extern const PROGMEM uint8_t bgTile[];
+
+extern const PROGMEM uint8_t levels[MAX_LEVELS][BLOCK_NUM_ROWS][MAX_BLOCKS_PER_ROW];
 
