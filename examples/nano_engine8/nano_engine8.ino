@@ -97,7 +97,7 @@ void loop()
 {
     uint32_t lastTs = millis();
     uint32_t updateDuration;
-    engine.refreshAll();
+    engine.refresh();
     engine.display();
     if ( frames < FRAMES_CAPTURE ) 
     {

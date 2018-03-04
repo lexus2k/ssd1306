@@ -25,6 +25,9 @@
 #include "nano_engine.h"
 #include "lcd/lcd_common.h"
 
+// TODO: Remove the line below
+#include "lcd/oled_ssd1331.h"
+
 ///////////////////////////////////////////////////////////////////////////////
 ////// NANO ENGINE RGB        /////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -79,6 +82,7 @@ NanoEngineBase::NanoEngineBase()
 void NanoEngineBase::begin()
 {
     m_lastFrameTs = millis();
+    ssd1331_setMode(0);
 }
 
 void NanoEngineBase::setFrameRate(uint8_t fps)

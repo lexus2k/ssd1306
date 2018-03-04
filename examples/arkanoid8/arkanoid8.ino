@@ -356,9 +356,6 @@ void setup()
     /* Init SPI 96x64 RBG oled. 3 - RESET, 4 - CS (can be omitted, oled CS must be pulled down), 5 - D/C */
     ssd1331_96x64_spi_init(3, 4, 5);
 
-    /* 8-bit engine works only in Horizontal addressing mode */
-    ssd1331_setMode(0);
-
     /* Configure engine to use ZKeypand on A0 as control board. */
     engine.connectZKeypad(0);
 
