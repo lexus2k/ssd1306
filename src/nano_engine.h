@@ -51,11 +51,15 @@ enum
     BUTTON_B      = 0B00100000,
 };
 
-
-class NanoEngineRenderer
+/**
+ * This class is responsible for holding and updating data about areas to be refreshed
+ * on LCD display.
+ */
+class NanoEngineTiler
 {
 protected:
-    NanoEngineRenderer();
+    /* Only child classes can initialize the engine */
+    NanoEngineTiler();
 
 public:
     /** Number of bits in tile size. 5 corresponds to 1<<5 = 32 tile size */
@@ -225,14 +229,19 @@ private:
  * If tile size is 32x32, then 96x64 oled display is devided into 6 tiles:
  *    [0,0] [1,0] [2,0]
  *    [0,1] [1,1] [2,1]
- * In your application you can choose, if you want to refresh whole screen (refreshAll()), or you
+ * In your application you can choose, if you want to refresh whole screen (refresh()), or you
  * need to refresh only part of oled display (refreshTile()).
  */
-class NanoEngine8: public NanoEngineBase, public NanoEngineRenderer
+class NanoEngine8: public NanoEngineBase, public NanoEngineTiler
 {
 public:
     /** object, representing canvas. Use it in your draw handler */
     NanoCanvas8 canvas;
+
+    /**
+     * Initializes engine, sets required mode for OLED display
+     */
+    void begin();
 
     /**
      * Creates new Graphics Engine object.
@@ -249,6 +258,48 @@ public:
 
 private:
     uint8_t   m_buffer[(1<<NE_TILE_SIZE_BITS) * (1<<NE_TILE_SIZE_BITS)];
+};
+
+/**
+ * NanoEngine1 is simple graphics engine, that implements double buffering work
+ * for the systems with very low resources. That is, memory buffer for SSD1306 oled
+ * display needs at least 128x64/8 bytes (1024 bytes), and this is inacceptable for
+ * microcontrollers like attiny85 (it has only 512B of RAM). So, to workaround
+ * issue with low resources, NanoEngine1 uses small tile buffer (NE_TILE_SIZE x NE_TILE_SIZE)
+ * and updates only part of oled screen at once. It makes system slow, but it is
+ * possible to run NanoEngine1 on simple controllers.
+ * If tile size is 32x32, then 128x64 oled display is devided into 8 tiles:
+ *    [0,0] [1,0] [2,0], [3,0]
+ *    [0,1] [1,1] [2,1], [3,1]
+ * In your application you can choose, if you want to refresh whole screen (refresh()), or you
+ * need to refresh only part of oled display (refreshTile()).
+ */
+class NanoEngine1: public NanoEngineBase, public NanoEngineTiler
+{
+public:
+    /** object, representing canvas. Use it in your draw handler */
+    NanoCanvas1 canvas;
+
+    /**
+     * Creates new Graphics Engine object.
+     */
+    NanoEngine1();
+
+    /**
+     * Initializes engine, sets required mode for OLED display
+     */
+    void begin();
+
+    /**
+     * @brief refreshes content on oled display.
+     * Refreshes content on oled display. Call it, if you want to update the screen.
+     * Engine will update only those areas, which are marked by refreshAll()/refreshTile()
+     * methods.
+     */
+    void display();
+
+private:
+    uint8_t   m_buffer[(1<<NE_TILE_SIZE_BITS) * (1<<NE_TILE_SIZE_BITS) / 8];
 };
 
 #endif

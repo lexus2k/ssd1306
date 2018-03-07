@@ -313,14 +313,14 @@ public:
      * Draws pixel on specified position
      * @param x - position X
      * @param y - position Y
-     * @param color - color
+     * @note color can be set via setColor()
      */
     void putPixel(lcdint_t x, lcdint_t y);
 
     /**
      * Draws pixel on specified position
      * @param p - NanoPoint
-     * @param color - color
+     * @note color can be set via setColor()
      */
     void putPixel(const NanoPoint &p);
 
@@ -329,7 +329,7 @@ public:
      * @param x1 - position X
      * @param y1 - position Y
      * @param y2 - position Y
-     * @param color - color
+     * @note color can be set via setColor()
      */
     void drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2);
 
@@ -338,7 +338,7 @@ public:
      * @param x1 - position X
      * @param y1 - position Y
      * @param x2 - position X
-     * @param color - color
+     * @note color can be set via setColor()
      */
     void drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2);
 
@@ -348,14 +348,14 @@ public:
      * @param y1 - position Y
      * @param x2 - position X
      * @param y2 - position Y
-     * @param color - color
+     * @note color can be set via setColor()
      */
     void drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
 
     /**
      * Draws rectangle
      * @param rect - structure, describing rectangle area
-     * @param color - color
+     * @note color can be set via setColor()
      */
     void drawRect(const NanoRect &rect);
 
@@ -365,14 +365,14 @@ public:
      * @param y1 - position Y
      * @param x2 - position X
      * @param y2 - position Y
-     * @param color - color
+     * @note color can be set via setColor()
      */
     void fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
 
     /**
      * Fills rectangle area
      * @param rect - structure, describing rectangle area
-     * @param color - color
+     * @note color can be set via setColor()
      */
     void fillRect(const NanoRect &rect);
 
@@ -514,14 +514,14 @@ public:
      * Draws pixel on specified position
      * @param x - position X
      * @param y - position Y
-     * @param color - color
+     * @note color can be set via setColor()
      */
     void putPixel(lcdint_t x, lcdint_t y);
 
     /**
      * Draws pixel on specified position
      * @param p - NanoPoint
-     * @param color - color
+     * @note color can be set via setColor()
      */
     void putPixel(const NanoPoint &p);
 
@@ -530,7 +530,7 @@ public:
      * @param x1 - position X
      * @param y1 - position Y
      * @param y2 - position Y
-     * @param color - color
+     * @note color can be set via setColor()
      */
     void drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2);
 
@@ -539,7 +539,7 @@ public:
      * @param x1 - position X
      * @param y1 - position Y
      * @param x2 - position X
-     * @param color - color
+     * @note color can be set via setColor()
      */
     void drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2);
 
@@ -549,14 +549,14 @@ public:
      * @param y1 - position Y
      * @param x2 - position X
      * @param y2 - position Y
-     * @param color - color
+     * @note color can be set via setColor()
      */
     void drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
 
     /**
      * Draws rectangle
      * @param rect - structure, describing rectangle area
-     * @param color - color
+     * @note color can be set via setColor()
      */
     void drawRect(const NanoRect &rect);
 
@@ -566,14 +566,14 @@ public:
      * @param y1 - position Y
      * @param x2 - position X
      * @param y2 - position Y
-     * @param color - color
+     * @note color can be set via setColor()
      */
     void fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
 
     /**
      * Fills rectangle area
      * @param rect - structure, describing rectangle area
-     * @param color - color
+     * @note color can be set via setColor()
      */
     void fillRect(const NanoRect &rect);
 
@@ -586,9 +586,9 @@ public:
      * @param h - height in pixels
      * @param bitmap - monochrome bitmap data, located in flash
      */
-//    void drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
+    void drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
 
-    /**
+    /*
      * @brief Draws 8-bit color bitmap in color buffer.
      * Draws 8-bit color bitmap in color buffer.
      * @param x - position X in pixels
@@ -608,13 +608,13 @@ public:
      * Writes single character to canvas
      * @param c - character code to print
      */
-//    void write(uint8_t c);
+    void write(uint8_t c);
 
     /**
      * Draws single character to canvas
      * @param c - character code to print
      */
-//    void printChar(uint8_t c);
+    void printChar(uint8_t c);
 
     /**
      * Print text at specified position to canvas
@@ -623,18 +623,21 @@ public:
      * @param ch - pointer to NULL-terminated string.
      * @param style - font style (EFontStyle), normal by default
      */
-//    void printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style);
+    void printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style);
 
     /**
      * @brief Sets canvas drawing mode
      * Sets canvas drawing mode. The set flags define transparency of output images
      * @param modeFlags - combination of flags: CANVAS_TEXT_WRAP, CANVAS_MODE_TRANSPARENT
      */
-//    void setMode(uint8_t modeFlags) { m_textMode = modeFlags; };
+    void setMode(uint8_t modeFlags) { m_textMode = modeFlags; };
 
     /**
      * Sets color for monochrome operations
      * @param color - color to set (refer to RGB_COLOR8 definition)
+     *
+     * @note 0 means black color
+     *       1-255 means white color
      */
     void setColor(uint8_t color) { m_color = color; };
 

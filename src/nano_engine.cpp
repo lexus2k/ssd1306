@@ -34,10 +34,18 @@
 
 NanoEngine8::NanoEngine8()
    : NanoEngineBase()
-   , NanoEngineRenderer()
+   , NanoEngineTiler()
    , canvas(1<<NE_TILE_SIZE_BITS, 1<<NE_TILE_SIZE_BITS, m_buffer)
    , m_buffer{}
 {
+}
+
+void NanoEngine8::begin()
+{
+    // TODO: Maybe, this is not good place for this, but
+    // TODO: ssd1331 must be initialized in Horizontal addressing mode
+    ssd1331_setMode(0);
+    NanoEngineBase::begin();
 }
 
 void NanoEngine8::display()
@@ -65,20 +73,61 @@ void NanoEngine8::display()
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-////// NANO ENGINE RENDERER CLASS /////////////////////////////////////////////
+////// NANO ENGINE MONOCHROME /////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-NanoEngineRenderer::NanoEngineRenderer()
+NanoEngine1::NanoEngine1()
+   : NanoEngineBase()
+   , NanoEngineTiler()
+   , canvas(1<<NE_TILE_SIZE_BITS, 1<<NE_TILE_SIZE_BITS, m_buffer)
+   , m_buffer{}
+{
+}
+
+void NanoEngine1::begin()
+{
+    NanoEngineBase::begin();
+}
+
+void NanoEngine1::display()
+{
+    if (m_loop) m_loop();
+    m_lastFrameTs = millis();
+    for (uint8_t y = 0; y < (s_displayHeight >> NE_TILE_SIZE_BITS); y++)
+    {
+        uint16_t flag = m_refreshFlags[y];
+        m_refreshFlags[y] = 0;
+        for (uint8_t x = 0; x < (s_displayWidth >> NE_TILE_SIZE_BITS); x++)
+        {
+            if (flag & 0x01)
+            {
+                canvas.setOffset(x<<NE_TILE_SIZE_BITS, y<<NE_TILE_SIZE_BITS);
+                if (m_onDraw)
+                {
+                    if (m_onDraw()) canvas.blt();
+                }
+            }
+            flag >>=1;
+        }
+    }
+    m_cpuLoad = ((millis() - m_lastFrameTs)*100)/m_frameDurationMs;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+////// NANO ENGINE TILER CLASS ////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+NanoEngineTiler::NanoEngineTiler()
 {
     refresh();
 }
 
-void NanoEngineRenderer::refresh(const NanoRect &rect)
+void NanoEngineTiler::refresh(const NanoRect &rect)
 {
     refresh(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
 }
 
-void NanoEngineRenderer::refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+void NanoEngineTiler::refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
 {
     y1 = max(0,y1);
     y2 = min((y2>>NE_TILE_SIZE_BITS), NE_MAX_TILES_NUM - 1);
@@ -91,12 +140,12 @@ void NanoEngineRenderer::refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t
     }
 }
 
-void NanoEngineRenderer::refresh(const NanoPoint &point)
+void NanoEngineTiler::refresh(const NanoPoint &point)
 {
     m_refreshFlags[(point.y>>NE_TILE_SIZE_BITS)] |= (1<<(point.x>>NE_TILE_SIZE_BITS));
 }
 
-void NanoEngineRenderer::refresh()
+void NanoEngineTiler::refresh()
 {
     for(uint8_t i=0; i<NE_MAX_TILES_NUM; i++)
     {
@@ -123,7 +172,6 @@ NanoEngineBase::NanoEngineBase()
 void NanoEngineBase::begin()
 {
     m_lastFrameTs = millis();
-    ssd1331_setMode(0);
 }
 
 void NanoEngineBase::setFrameRate(uint8_t fps)
