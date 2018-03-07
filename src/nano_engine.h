@@ -51,50 +51,17 @@ enum
     BUTTON_B      = 0B00100000,
 };
 
-/**
- * Base class for NanoEngine.
- */
-class NanoEngineBase
-{
-public:
-    /**
-     * Initializes Nano Engine Base object.
-     */
-    NanoEngineBase();
 
+class NanoEngineRenderer
+{
+protected:
+    NanoEngineRenderer();
+
+public:
     /** Number of bits in tile size. 5 corresponds to 1<<5 = 32 tile size */
     static const uint8_t NE_TILE_SIZE_BITS = 3;
     /** Max tiles supported in X */
     static const uint8_t NE_MAX_TILES_NUM = 16 >> (NE_TILE_SIZE_BITS - 3);
-
-    /**
-     * Initializes internal timestamps.
-     */
-    void begin();
-
-    /**
-     * Sets working frame-rate for the engine
-     * @param fps - frame rate to set between [1-255]
-     */
-    void setFrameRate(uint8_t fps);
- 
-    /**
-     * Returns current frame rate
-     */
-    uint8_t getFrameRate() { return m_fps; };
-
-    /**
-     * Returns cpu load in percents [0-255].
-     * 100 means maximum normal CPU load.
-     * 0 means, CPU has nothing to do.
-     * >100 means that CPU is not enough to perform all operations
-     */
-    uint8_t getCpuLoad() { return m_cpuLoad; };
-
-    /**
-     * Returns true if it is time to render next frame
-     */
-    bool nextFrame();
 
     /**
      * Marks all tiles for update. Actual update will take place in display() method.
@@ -125,6 +92,54 @@ public:
      * Actual update will take place in display() method.
      */
     void refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
+
+protected:
+    /**
+     * Contains information on tiles to be updated.
+     * Elements of array are rows and bits are columns.
+     */
+    uint16_t   m_refreshFlags[NE_MAX_TILES_NUM];
+};
+
+/**
+ * Base class for NanoEngine.
+ */
+class NanoEngineBase
+{
+public:
+    /**
+     * Initializes Nano Engine Base object.
+     */
+    NanoEngineBase();
+
+    /**
+     * Initializes internal timestamps.
+     */
+    void begin();
+
+    /**
+     * Sets working frame-rate for the engine
+     * @param fps - frame rate to set between [1-255]
+     */
+    void setFrameRate(uint8_t fps);
+ 
+    /**
+     * Returns current frame rate
+     */
+    uint8_t getFrameRate() { return m_fps; };
+
+    /**
+     * Returns cpu load in percents [0-255].
+     * 100 means maximum normal CPU load.
+     * 0 means, CPU has nothing to do.
+     * >100 means that CPU is not enough to perform all operations
+     */
+    uint8_t getCpuLoad() { return m_cpuLoad; };
+
+    /**
+     * Returns true if it is time to render next frame
+     */
+    bool nextFrame();
 
     /**
      * Sets user-defined draw callback. This callback will be called everytime, engine needs
@@ -178,11 +193,6 @@ public:
     void connectArduboyKeys();
 
 protected:
-    /**
-     * Contains information on tiles to be updated.
-     * Elements of array are rows and bits are columns.
-     */
-    uint16_t   m_refreshFlags[NE_MAX_TILES_NUM];
     /** Duration between frames in milliseconds */
     uint8_t   m_frameDurationMs;
     /** Current fps */
@@ -218,7 +228,7 @@ private:
  * In your application you can choose, if you want to refresh whole screen (refreshAll()), or you
  * need to refresh only part of oled display (refreshTile()).
  */
-class NanoEngine8: public NanoEngineBase
+class NanoEngine8: public NanoEngineBase, public NanoEngineRenderer
 {
 public:
     /** object, representing canvas. Use it in your draw handler */

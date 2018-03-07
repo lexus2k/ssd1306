@@ -34,6 +34,7 @@
 
 NanoEngine8::NanoEngine8()
    : NanoEngineBase()
+   , NanoEngineRenderer()
    , canvas(1<<NE_TILE_SIZE_BITS, 1<<NE_TILE_SIZE_BITS, m_buffer)
    , m_buffer{}
 {
@@ -64,6 +65,47 @@ void NanoEngine8::display()
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+////// NANO ENGINE RENDERER CLASS /////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+NanoEngineRenderer::NanoEngineRenderer()
+{
+    refresh();
+}
+
+void NanoEngineRenderer::refresh(const NanoRect &rect)
+{
+    refresh(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
+}
+
+void NanoEngineRenderer::refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+{
+    y1 = max(0,y1);
+    y2 = min((y2>>NE_TILE_SIZE_BITS), NE_MAX_TILES_NUM - 1);
+    for(uint8_t y=(y1>>NE_TILE_SIZE_BITS); y<=y2; y++)
+    {
+        for(uint8_t x=(x1>>NE_TILE_SIZE_BITS); x<=(x2>>NE_TILE_SIZE_BITS); x++)
+        {
+            m_refreshFlags[y] |= (1<<x);
+        }
+    }
+}
+
+void NanoEngineRenderer::refresh(const NanoPoint &point)
+{
+    m_refreshFlags[(point.y>>NE_TILE_SIZE_BITS)] |= (1<<(point.x>>NE_TILE_SIZE_BITS));
+}
+
+void NanoEngineRenderer::refresh()
+{
+    for(uint8_t i=0; i<NE_MAX_TILES_NUM; i++)
+    {
+        m_refreshFlags[i] = ~(0);
+    }
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
 ////// NANO ENGINE BASE CLASS /////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -76,7 +118,6 @@ NanoEngineBase::NanoEngineBase()
    , m_onButtons( nullptr )
    , m_loop( nullptr )
 {
-    refresh();
 }
 
 void NanoEngineBase::begin()
@@ -94,37 +135,6 @@ void NanoEngineBase::setFrameRate(uint8_t fps)
 bool NanoEngineBase::nextFrame()
 {
     return (uint32_t)(millis() - m_lastFrameTs) >= m_frameDurationMs;
-}
-
-void NanoEngineBase::refresh(const NanoRect &rect)
-{
-    refresh(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
-}
-
-void NanoEngineBase::refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
-{
-    y1 = max(0,y1);
-    y2 = min((y2>>NE_TILE_SIZE_BITS), NE_MAX_TILES_NUM - 1);
-    for(uint8_t y=(y1>>NE_TILE_SIZE_BITS); y<=y2; y++)
-    {
-        for(uint8_t x=(x1>>NE_TILE_SIZE_BITS); x<=(x2>>NE_TILE_SIZE_BITS); x++)
-        {
-            m_refreshFlags[y] |= (1<<x);
-        }
-    }
-}
-
-void NanoEngineBase::refresh(const NanoPoint &point)
-{
-    m_refreshFlags[(point.y>>NE_TILE_SIZE_BITS)] |= (1<<(point.x>>NE_TILE_SIZE_BITS));
-}
-
-void NanoEngineBase::refresh()
-{
-    for(uint8_t i=0; i<NE_MAX_TILES_NUM; i++)
-    {
-        m_refreshFlags[i] = ~(0);
-    }
 }
 
 bool NanoEngineBase::pressed(uint8_t buttons)
