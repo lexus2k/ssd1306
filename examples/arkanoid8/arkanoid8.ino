@@ -143,11 +143,14 @@ bool drawBattleField(void)
         engine.canvas.setMode(0);
         engine.canvas.setColor(RGB_COLOR8(0,0,64));
         engine.canvas.drawBitmap1(engine.canvas.offset.x, engine.canvas.offset.y, 8, 8, bgTile);
-        engine.canvas.drawHLine(gameArea.p1.x,gameArea.p1.y,gameArea.p2.x, RGB_COLOR8(255,255,255));
-        engine.canvas.drawRect(gameState.battleField.platform, RGB_COLOR8(0,128,255));
-        engine.canvas.putPixel(gameState.battleField.platform.p1, 0);
+        engine.canvas.setColor(RGB_COLOR8(255,255,255));
+        engine.canvas.drawHLine(gameArea.p1.x,gameArea.p1.y,gameArea.p2.x);
+        engine.canvas.setColor(RGB_COLOR8(0,128,255));
+        engine.canvas.drawRect(gameState.battleField.platform);
+        engine.canvas.setColor(RGB_COLOR8(0,0,0));
+        engine.canvas.putPixel(gameState.battleField.platform.p1);
         engine.canvas.putPixel(gameState.battleField.platform.p2.x,
-                               gameState.battleField.platform.p1.y, 0);
+                               gameState.battleField.platform.p1.y);
         if (gameArea.has(engine.canvas.offset))
         {
             for (uint8_t r = 0; r<BLOCK_NUM_ROWS; r++)
@@ -159,20 +162,24 @@ bool drawBattleField(void)
                     {
                          NanoRect rect = {{bl*8, r*4}, {bl*8 + 8, r*4+4}};
                          rect += blockArea.p1;
-                         engine.canvas.fillRect(rect,blockColors[block]);
-                         engine.canvas.drawRect(rect,0);
+                         engine.canvas.setColor(blockColors[block]);
+                         engine.canvas.fillRect(rect);
+                         engine.canvas.setColor(0);
+                         engine.canvas.drawRect(rect);
                     }
                 }
             }
          }
-         engine.canvas.putPixel(gameState.battleField.ball, 0xFF);
+         engine.canvas.setColor(RGB_COLOR8(255,255,255));
+         engine.canvas.putPixel(gameState.battleField.ball);
     }
     else
     {
         char str[4] = {0};
         engine.canvas.clear();
-        engine.canvas.drawVLine(gameArea.p1.x-1,0,64, RGB_COLOR8(255,255,255));
-        engine.canvas.drawVLine(gameArea.p2.x+1,0,64, RGB_COLOR8(255,255,255));
+        engine.canvas.setColor(RGB_COLOR8(255,255,255));
+        engine.canvas.drawVLine(gameArea.p1.x-1,0,64);
+        engine.canvas.drawVLine(gameArea.p2.x+1,0,64);
         utoa(engine.getCpuLoad( ), str, 10);
         engine.canvas.setColor(RGB_COLOR8(192,192,192));
         engine.canvas.printFixed(gameArea.p2.x+3, 16, str, STYLE_NORMAL );

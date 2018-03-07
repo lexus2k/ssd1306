@@ -63,14 +63,12 @@ bool drawAll()
 {
     engine.canvas.clear();
     engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
-    engine.canvas.drawRect(15,12,x,55,RGB_COLOR8(255,255,0));
-    engine.canvas.fillRect(16,13,x-1,54,RGB_COLOR8(64,64,64));
+    engine.canvas.setColor(RGB_COLOR8(255,255,0));
+    engine.canvas.drawRect(15,12,x,55);
+    engine.canvas.setColor(RGB_COLOR8(64,64,64));
+    engine.canvas.fillRect(16,13,x-1,54);
     engine.canvas.setColor(RGB_COLOR8(0,255,255));
     engine.canvas.drawBitmap1(b_x, b_y, 128, 64, Sova);
-    engine.canvas.putPixel(5,5,RGB_COLOR8(255,255,255));
-    engine.canvas.putPixel(10,10,RGB_COLOR8(255,0,0));
-    engine.canvas.putPixel(20,15,RGB_COLOR8(0,255,0));
-    engine.canvas.putPixel(30,20,RGB_COLOR8(0,0,255));
     engine.canvas.setColor(RGB_COLOR8(255,0,0));
     engine.canvas.printFixed(textx, 30, "This is example of text output", STYLE_NORMAL);
     displayStats();
