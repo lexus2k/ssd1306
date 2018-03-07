@@ -358,8 +358,8 @@ void NanoCanvas8::blt()
 
 void NanoCanvas1::putPixel(lcdint_t x, lcdint_t y)
 {
-    x += offset.x;
-    y += offset.y;
+    x -= offset.x;
+    y -= offset.y;
     if ((x<0) || (y<0)) return;
     if (((lcduint_t)x>=m_w) || ((lcduint_t)y>=m_h)) return;
     if (m_color)
@@ -375,9 +375,9 @@ void NanoCanvas1::putPixel(lcdint_t x, lcdint_t y)
 void NanoCanvas1::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
 {
     if (x2 < x1) swap_data(x2, x1, lcdint_t);
-    x1 += offset.x;
-    x2 += offset.x;
-    y1 += offset.y;
+    x1 -= offset.x;
+    x2 -= offset.x;
+    y1 -= offset.y;
     if (((lcduint_t)y1 >= m_h) || (y1 < 0)) return;
     if ((x2 < 0) || ((lcduint_t)x1 >= m_w)) return;
     x1 = max(0, x1);
@@ -398,9 +398,9 @@ void NanoCanvas1::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
 void NanoCanvas1::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
 {
     if (y2 < y1) swap_data(y2, y1, lcdint_t);
-    x1 += offset.x;
-    y1 += offset.y;
-    y2 += offset.y;
+    x1 -= offset.x;
+    y1 -= offset.y;
+    y2 -= offset.y;
     if (((lcduint_t)x1 >= m_w) || (x1 < 0)) return;
     if ((y2 < 0) || ((lcduint_t)y1 >= m_h)) return;
     y1 = max(0, y1);
@@ -431,10 +431,10 @@ void NanoCanvas1::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
 {
     if (x2 < x1) swap_data(x2, x1, lcdint_t);
     if (y2 < y1) swap_data(y2, y1, lcdint_t);
-    x1 += offset.x;
-    x2 += offset.x;
-    y1 += offset.y;
-    y2 += offset.y;
+    x1 -= offset.x;
+    x2 -= offset.x;
+    y1 -= offset.y;
+    y2 -= offset.y;
     if ((x2 < 0) || ((lcduint_t)x1 >= m_w)) return;
     if ((y2 < 0) || ((lcduint_t)y1 >= m_h)) return;
     x1 = max(0, x1);
