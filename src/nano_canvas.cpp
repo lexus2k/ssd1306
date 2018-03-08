@@ -545,10 +545,15 @@ void NanoCanvas1::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, 
         for( i=w; i > 0; i--)
         {       
             uint8_t data = 0;
-            if ( mainFlag )    data |= (pgm_read_byte(bitmap) << offs);
-            if ( complexFlag ) data |= (pgm_read_byte(bitmap - origin_width) >> (8 - offs));
+            uint8_t mask = 0;
+            if ( mainFlag )    { data |= (pgm_read_byte(bitmap) << offs); mask |= (0xFF << offs); }
+            if ( complexFlag ) { data |= (pgm_read_byte(bitmap - origin_width) >> (8 - offs)); mask |= (0xFF >> (8 - offs)); }
             bitmap++;
-            m_buf[addr] = data;
+            if (!(m_textMode & CANVAS_MODE_TRANSPARENT))
+            {
+                m_buf[addr] &= ~mask;
+            }
+            m_buf[addr] |= data;
             addr++;
         }
         bitmap += origin_width - w;

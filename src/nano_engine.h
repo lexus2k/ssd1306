@@ -178,6 +178,15 @@ public:
     bool notPressed(uint8_t buttons);
 
     /**
+     * @brief Returns bits of all pressed buttons
+     * Returns bits of all pressed buttons
+     */
+    uint8_t buttonsState()
+    {
+        return m_onButtons();
+    }
+
+    /**
      * Configures NanoEngine8 to use custom key handler.
      * You can implement in your handler any keyboard layout, you use in your schematics.
      */
