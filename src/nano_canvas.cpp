@@ -631,11 +631,11 @@ void NanoCanvas1::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontSty
 
 void NanoCanvas1::blt(lcdint_t x, lcdint_t y)
 {
-    gfx_drawMonoBitmap( x, y, m_w, m_h, m_buf);
+    ssd1306_drawBuffer( x, y >> 3, m_w, m_h, m_buf);
 }
 
 void NanoCanvas1::blt()
 {
-    gfx_drawMonoBitmap( offset.x, offset.y, m_w, m_h, m_buf);
+    ssd1306_drawBuffer( offset.x, offset.y >> 3, m_w, m_h, m_buf);
 }
 
