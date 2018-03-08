@@ -50,7 +50,6 @@ void NanoEngine8::begin()
 
 void NanoEngine8::display()
 {
-    if (m_loop) m_loop();
     m_lastFrameTs = millis();
     for (uint8_t y = 0; y < (s_displayHeight >> NE_TILE_SIZE_BITS); y++)
     {
@@ -91,7 +90,6 @@ void NanoEngine1::begin()
 
 void NanoEngine1::display()
 {
-    if (m_loop) m_loop();
     m_lastFrameTs = millis();
     for (uint8_t y = 0; y < (s_displayHeight >> NE_TILE_SIZE_BITS); y++)
     {
@@ -182,7 +180,9 @@ void NanoEngineBase::setFrameRate(uint8_t fps)
 
 bool NanoEngineBase::nextFrame()
 {
-    return (uint32_t)(millis() - m_lastFrameTs) >= m_frameDurationMs;
+    bool needUpdate = (uint32_t)(millis() - m_lastFrameTs) >= m_frameDurationMs;
+    if (needUpdate && m_loop) m_loop();
+    return needUpdate;
 }
 
 bool NanoEngineBase::pressed(uint8_t buttons)

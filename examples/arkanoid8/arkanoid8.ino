@@ -33,8 +33,6 @@
 
 #include "arkanoid.h"
 #include "levels.h"
-#include "blocks.h"
-
 
 NanoEngine8 engine;
 
@@ -59,8 +57,8 @@ union
     {
         NanoRect  platform;  // platform position on the screen
         NanoPoint ball;      // ball position on the screen
-        uint16_t  ballX;     // ball position in *2 coordinates
-        uint16_t  ballY;     // ball position in *2 coordinates
+        int16_t   ballX;     // ball position in *2 coordinates
+        int16_t   ballY;     // ball position in *2 coordinates
         NanoPoint ballSpeed; // ball speed in *2 coordinates
         uint8_t   blocks[BLOCK_NUM_ROWS][MAX_BLOCKS_PER_ROW];
         uint8_t   blocksLeft;
@@ -334,7 +332,7 @@ void loadLevel(void)
         {
             uint8_t block = pgm_read_byte( &levels[g_level][j][i] );
             gameState.battleField.blocks[j][i] = block;
-            if ((block) && (block != BLOCK_STRONG))
+            if (block)
             {
                 gameState.battleField.blocksLeft++;
             }
