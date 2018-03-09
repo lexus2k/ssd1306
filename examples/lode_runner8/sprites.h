@@ -26,4 +26,21 @@
 
 #include "ssd1306.h"
 
+enum
+{
+    MAN_ANIM_FLYING   = 0,
+    MAN_ANIM_UP       = 1,
+    MAN_ANIM_DOWN     = 1,
+    MAN_ANIM_LEFT     = 2,
+    MAN_ANIM_RIGHT    = 3,
+    MAN_ANIM_RIGHT_PIPE = 4,
+    MAN_ANIM_LEFT_PIPE  = 5,
+
+    MAN_ANIM_MAX      = 6,
+};
+
 extern PROGMEM const uint8_t bgSprites[5][8];
+
+extern const PROGMEM uint8_t playerFlyingImage[MAN_ANIM_MAX][2][8];
+
+extern const PROGMEM uint8_t coinImage[8];
