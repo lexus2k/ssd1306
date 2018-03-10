@@ -51,11 +51,11 @@ void displayStats()
         engine.canvas.setMode(0);
         utoa(totalDuration/frames,bufStr,10);
         engine.canvas.setColor(RGB_COLOR8(255,0,255));
-        engine.canvas.printFixed(0, 0, "MS: ", STYLE_NORMAL);
-        engine.canvas.printFixed(24, 0, bufStr, STYLE_NORMAL);
+        engine.canvas.printFixed(0, 0, "MS: ");
+        engine.canvas.printFixed(24, 0, bufStr);
         utoa(1000/(totalDuration/frames),bufStr,10);
-        engine.canvas.printFixed(0, 8, "FPS: ", STYLE_NORMAL);
-        engine.canvas.printFixed(30, 8, bufStr, STYLE_NORMAL);
+        engine.canvas.printFixed(0, 8, "FPS: ");
+        engine.canvas.printFixed(30, 8, bufStr);
     }
 }
 
@@ -70,7 +70,7 @@ bool drawAll()
     engine.canvas.setColor(RGB_COLOR8(0,255,255));
     engine.canvas.drawBitmap1(b_x, b_y, 128, 64, Sova);
     engine.canvas.setColor(RGB_COLOR8(255,0,0));
-    engine.canvas.printFixed(textx, 30, "This is example of text output", STYLE_NORMAL);
+    engine.canvas.printFixed(textx, 30, "This is example of text output");
     displayStats();
     return true;
 }
@@ -86,6 +86,8 @@ void setup()
     /* Set draw callback, it will be called by engine every time, *
      * when it needs to refresh some area on the lcd display.     */
     engine.drawCallback( drawAll );
+
+    engine.begin();
 }
 
 

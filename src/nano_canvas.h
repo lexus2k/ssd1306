@@ -444,9 +444,11 @@ public:
      * @param xpos - position in pixels
      * @param y    - position in pixels
      * @param ch - pointer to NULL-terminated string.
-     * @param style - font style (EFontStyle), normal by default
+     *
+     * @note No font style support anymore, sorry for that. Font styles
+     *       increase code size.
      */
-    void printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style);
+    void printFixed(lcdint_t xpos, lcdint_t y, const char *ch);
 
     /**
      * @brief Sets canvas drawing mode
@@ -667,9 +669,11 @@ public:
      * @param xpos - position in pixels
      * @param y    - position in pixels
      * @param ch - pointer to NULL-terminated string.
-     * @param style - font style (EFontStyle), normal by default
+     *
+     * @note No font style support anymore, sorry for that. Font styles
+     *       increase code size.
      */
-    void printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style);
+    void printFixed(lcdint_t xpos, lcdint_t y, const char *ch);
 
     /**
      * @brief Sets canvas drawing mode

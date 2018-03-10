@@ -109,9 +109,9 @@ bool drawLevelInfo(void)
     engine.canvas.clear();
     char str[2] = {0};
     engine.canvas.setColor(RGB_COLOR8(192,192,192));
-    engine.canvas.printFixed(24, 24, "LEVEL", STYLE_BOLD );
+    engine.canvas.printFixed(24, 24, "LEVEL" );
     str[0] = g_level + '0';
-    engine.canvas.printFixed(60, 24, str, STYLE_BOLD );
+    engine.canvas.printFixed(60, 24, str );
     return true;
 }
 
@@ -180,7 +180,7 @@ bool drawBattleField(void)
         engine.canvas.drawVLine(gameArea.p2.x+1,0,64);
         utoa(engine.getCpuLoad( ), str, 10);
         engine.canvas.setColor(RGB_COLOR8(192,192,192));
-        engine.canvas.printFixed(gameArea.p2.x+3, 16, str, STYLE_NORMAL );
+        engine.canvas.printFixed(gameArea.p2.x+3, 16, str );
     }
     return true;
 }

@@ -256,8 +256,14 @@ void NanoCanvas8::drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint
 
 void NanoCanvas8::printChar(uint8_t c)
 {
+    c -= s_fixedFont.ascii_offset;
+    drawBitmap1(m_cursorX,
+                m_cursorY,
+                s_fixedFont.width,
+                s_fixedFont.pages << 3,
+                &s_fixedFont.data[ c * s_fixedFont.pages * s_fixedFont.width ] );
     /* calculate char rectangle */
-
+#if 0
     lcdint_t x1 = m_cursorX;
     lcdint_t y1 = m_cursorY;
     lcdint_t x2 = x1 + (lcdint_t)s_fixedFont.width - 1;
@@ -291,6 +297,7 @@ void NanoCanvas8::printChar(uint8_t c)
         }
     }
     m_color = color;
+#endif
 }
 
 void NanoCanvas8::write(uint8_t c)
@@ -316,7 +323,7 @@ void NanoCanvas8::write(uint8_t c)
     }
 }
 
-void NanoCanvas8::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style)
+void NanoCanvas8::printFixed(lcdint_t xpos, lcdint_t y, const char *ch)
 {
     m_cursorX = xpos;
     m_cursorY = y;
@@ -563,8 +570,14 @@ void NanoCanvas1::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, 
 
 void NanoCanvas1::printChar(uint8_t c)
 {
+    c -= s_fixedFont.ascii_offset;
+    drawBitmap1(m_cursorX,
+                m_cursorY,
+                s_fixedFont.width,
+                s_fixedFont.pages << 3,
+                &s_fixedFont.data[ c * s_fixedFont.pages * s_fixedFont.width ] );
     /* calculate char rectangle */
-
+#if 0
     lcdint_t x1 = m_cursorX;
     lcdint_t y1 = m_cursorY;
     lcdint_t x2 = x1 + (lcdint_t)s_fixedFont.width - 1;
@@ -598,6 +611,7 @@ void NanoCanvas1::printChar(uint8_t c)
         }
     }
     m_color = color;
+#endif
 }
 
 void NanoCanvas1::write(uint8_t c)
@@ -623,7 +637,7 @@ void NanoCanvas1::write(uint8_t c)
     }
 }
 
-void NanoCanvas1::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style)
+void NanoCanvas1::printFixed(lcdint_t xpos, lcdint_t y, const char *ch)
 {
     m_cursorX = xpos;
     m_cursorY = y;
