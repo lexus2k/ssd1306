@@ -70,39 +70,39 @@ public:
     /**
      * Marks all tiles for update. Actual update will take place in display() method.
      */
-    void refresh();
+    static void refresh();
 
     /**
      * Marks specific tile for update. Actual update will take place in display() method.
      * @param tileX - x index of tile to update
      * @param tileY - y index of tile to update
      */
-    void refreshTile(uint8_t tileX, uint8_t tileY) { m_refreshFlags[tileY] |= (1<<tileX); };
+    static void refreshTile(uint8_t tileX, uint8_t tileY) { m_refreshFlags[tileY] |= (1<<tileX); };
 
     /**
      * Mark specified area in pixels for redrawing by NanoEngine.
      * Actual update will take place in display() method.
      */
-    void refresh(const NanoRect &rect);
+    static void refresh(const NanoRect &rect);
 
     /**
      * Mark specified area in pixels for redrawing by NanoEngine.
      * Actual update will take place in display() method.
      */
-    void refresh(const NanoPoint &point);
+    static void refresh(const NanoPoint &point);
 
     /**
      * Mark specified area in pixels for redrawing by NanoEngine.
      * Actual update will take place in display() method.
      */
-    void refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
+    static void refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
 
 protected:
     /**
      * Contains information on tiles to be updated.
      * Elements of array are rows and bits are columns.
      */
-    uint16_t   m_refreshFlags[NE_MAX_TILES_NUM];
+    static uint16_t   m_refreshFlags[NE_MAX_TILES_NUM];
 };
 
 /**
@@ -119,18 +119,18 @@ public:
     /**
      * Initializes internal timestamps.
      */
-    void begin();
+    static void begin();
 
     /**
      * Sets working frame-rate for the engine
      * @param fps - frame rate to set between [1-255]
      */
-    void setFrameRate(uint8_t fps);
+    static void setFrameRate(uint8_t fps);
  
     /**
      * Returns current frame rate
      */
-    uint8_t getFrameRate() { return m_fps; };
+    static uint8_t getFrameRate() { return m_fps; };
 
     /**
      * Returns cpu load in percents [0-255].
@@ -138,12 +138,12 @@ public:
      * 0 means, CPU has nothing to do.
      * >100 means that CPU is not enough to perform all operations
      */
-    uint8_t getCpuLoad() { return m_cpuLoad; };
+    static uint8_t getCpuLoad() { return m_cpuLoad; };
 
     /**
      * Returns true if it is time to render next frame
      */
-    bool nextFrame();
+    static bool nextFrame();
 
     /**
      * Sets user-defined draw callback. This callback will be called everytime, engine needs
@@ -153,13 +153,13 @@ public:
      * @param callback - user-defined draw callback.
      * @note you can change draw callback anytime you need.
      */
-    void drawCallback(TNanoEngineOnDraw callback) { m_onDraw = callback; };
+    static void drawCallback(TNanoEngineOnDraw callback) { m_onDraw = callback; };
 
     /**
      * Sets user-defined loop callback. This callback will be called once every time
      * new frame needs to be refreshed on oled display.
      */
-    void loopCallback(TLoopCallback callback) { m_loop = callback; };
+    static void loopCallback(TLoopCallback callback) { m_loop = callback; };
 
     /**
      * @brief Returns true if button or specific combination of buttons is not pressed.
@@ -167,7 +167,7 @@ public:
      * @param buttons - buttons to check
      * @return true or false
      */
-    bool pressed(uint8_t buttons);
+    static bool pressed(uint8_t buttons);
 
     /**
      * @brief Returns true if button or specific combination of buttons is not pressed.
@@ -175,13 +175,13 @@ public:
      * @param buttons - buttons to check
      * @return true of false
      */
-    bool notPressed(uint8_t buttons);
+    static bool notPressed(uint8_t buttons);
 
     /**
      * @brief Returns bits of all pressed buttons
      * Returns bits of all pressed buttons
      */
-    uint8_t buttonsState()
+    static uint8_t buttonsState()
     {
         return m_onButtons();
     }
@@ -190,36 +190,36 @@ public:
      * Configures NanoEngine8 to use custom key handler.
      * You can implement in your handler any keyboard layout, you use in your schematics.
      */
-    void connectCustomKeys(TNanoEngineGetButtons handler);
+    static void connectCustomKeys(TNanoEngineGetButtons handler);
 
     /**
      * @brief Enables engine to use Z-Keypad.
      * Enables engine to use Z-Keypad. Please refer to arkanoid example for schematics.
      * @param analogPin - pin, which Z-Keypad is connected to.
      */
-    void connectZKeypad(uint8_t analogPin);
+    static void connectZKeypad(uint8_t analogPin);
 
     /**
      * @brief Configures NanoEngine8 to use Arduboy keys layout.
      * Configures NanoEngine8 to use Arduboy keys layout.
      */
-    void connectArduboyKeys();
+    static void connectArduboyKeys();
 
 protected:
     /** Duration between frames in milliseconds */
-    uint8_t   m_frameDurationMs;
+    static uint8_t   m_frameDurationMs;
     /** Current fps */
-    uint8_t   m_fps;
+    static uint8_t   m_fps;
     /** Current cpu load in percents */
-    uint8_t   m_cpuLoad;
+    static uint8_t   m_cpuLoad;
     /** Last timestamp in milliseconds the frame was updated on oled display */
-    uint32_t  m_lastFrameTs;
+    static uint32_t  m_lastFrameTs;
     /** Callback to call if specific tile needs to be updated */
-    TNanoEngineOnDraw m_onDraw;
+    static TNanoEngineOnDraw m_onDraw;
     /** Callback to call if buttons state needs to be updated */
-    TNanoEngineGetButtons m_onButtons;
+    static TNanoEngineGetButtons m_onButtons;
     /** Callback to call before starting oled update */
-    TLoopCallback m_loop;
+    static TLoopCallback m_loop;
 
 private:
     static uint8_t s_zkeypadPin;
@@ -245,12 +245,7 @@ class NanoEngine8: public NanoEngineBase, public NanoEngineTiler
 {
 public:
     /** object, representing canvas. Use it in your draw handler */
-    NanoCanvas8 canvas;
-
-    /**
-     * Initializes engine, sets required mode for OLED display
-     */
-    void begin();
+    static NanoCanvas8 canvas;
 
     /**
      * Creates new Graphics Engine object.
@@ -258,15 +253,20 @@ public:
     NanoEngine8();
 
     /**
+     * Initializes engine, sets required mode for OLED display
+     */
+    static void begin();
+
+    /**
      * @brief refreshes content on oled display.
      * Refreshes content on oled display. Call it, if you want to update the screen.
      * Engine will update only those areas, which are marked by refreshAll()/refreshTile()
      * methods.
      */
-    void display();
+    static void display();
 
 private:
-    uint8_t   m_buffer[(1<<NE_TILE_SIZE_BITS) * (1<<NE_TILE_SIZE_BITS)];
+    static uint8_t   m_buffer[(1<<NE_TILE_SIZE_BITS) * (1<<NE_TILE_SIZE_BITS)];
 };
 
 /**
@@ -287,7 +287,7 @@ class NanoEngine1: public NanoEngineBase, public NanoEngineTiler
 {
 public:
     /** object, representing canvas. Use it in your draw handler */
-    NanoCanvas1 canvas;
+    static NanoCanvas1 canvas;
 
     /**
      * Creates new Graphics Engine object.
@@ -297,7 +297,7 @@ public:
     /**
      * Initializes engine, sets required mode for OLED display
      */
-    void begin();
+    static void begin();
 
     /**
      * @brief refreshes content on oled display.
@@ -305,10 +305,10 @@ public:
      * Engine will update only those areas, which are marked by refreshAll()/refreshTile()
      * methods.
      */
-    void display();
+    static void display();
 
 private:
-    uint8_t   m_buffer[(1<<NE_TILE_SIZE_BITS) * (1<<NE_TILE_SIZE_BITS) / 8];
+    static uint8_t   m_buffer[(1<<NE_TILE_SIZE_BITS) * (1<<NE_TILE_SIZE_BITS) / 8];
 };
 
 #endif

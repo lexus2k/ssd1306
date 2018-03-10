@@ -277,6 +277,15 @@ public:
     NanoPoint offset;
 
     /**
+     * Creates new empty canvas object.
+     * If you this constructor is used, you must call begin() method before
+     * working with canvas.
+     */
+    NanoCanvas8()
+    {
+    }
+
+    /**
      * Creates new canvas object.
      * Width can be of any value.
      * Height should be divided by 8.
@@ -287,6 +296,21 @@ public:
      * @param bytes - pointer to memory buffer to use
      */
     NanoCanvas8(lcdint_t w, lcdint_t h, uint8_t *bytes)
+    {
+        begin(w, h, bytes);
+    }
+
+    /**
+     * Initializes canvas object.
+     * Width can be of any value.
+     * Height should be divided by 8.
+     * Memory buffer must be not less than w * h.
+     *
+     * @param w - width
+     * @param h - height
+     * @param bytes - pointer to memory buffer to use
+     */
+    void begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
     {
         m_w = w;
         m_h = h;
@@ -478,16 +502,38 @@ public:
     NanoPoint offset;
 
     /**
+     * Creates new empty canvas object.
+     * If you this constructor is used, you must call begin() method before
+     * working with canvas.
+     */
+    NanoCanvas1() { };
+
+    /**
      * Creates new canvas object.
      * Width can be of any value.
      * Height should be divided by 8.
-     * Memory buffer must be not less than w * h.
+     * Memory buffer must be not less than w * h / 8.
      *
      * @param w - width
      * @param h - height
      * @param bytes - pointer to memory buffer to use
      */
     NanoCanvas1(lcdint_t w, lcdint_t h, uint8_t *bytes)
+    {
+        begin(w, h, bytes);
+    };
+
+    /**
+     * Initializes canvas object.
+     * Width can be of any value.
+     * Height should be divided by 8.
+     * Memory buffer must be not less than w * h / 8.
+     *
+     * @param w - width
+     * @param h - height
+     * @param bytes - pointer to memory buffer to use
+     */
+    void begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
     {
         m_w = w;
         m_h = h;

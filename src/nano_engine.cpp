@@ -32,11 +32,13 @@
 ////// NANO ENGINE RGB        /////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
+NanoCanvas8 NanoEngine8::canvas;
+
+uint8_t NanoEngine8::m_buffer[(1<<NE_TILE_SIZE_BITS) * (1<<NE_TILE_SIZE_BITS)];
+
 NanoEngine8::NanoEngine8()
    : NanoEngineBase()
    , NanoEngineTiler()
-   , canvas(1<<NE_TILE_SIZE_BITS, 1<<NE_TILE_SIZE_BITS, m_buffer)
-   , m_buffer{}
 {
 }
 
@@ -45,6 +47,7 @@ void NanoEngine8::begin()
     // TODO: Maybe, this is not good place for this, but
     // TODO: ssd1331 must be initialized in Horizontal addressing mode
     ssd1331_setMode(0);
+    canvas.begin(1<<NE_TILE_SIZE_BITS, 1<<NE_TILE_SIZE_BITS, m_buffer);
     NanoEngineBase::begin();
 }
 
@@ -75,16 +78,20 @@ void NanoEngine8::display()
 ////// NANO ENGINE MONOCHROME /////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
+/** object, representing canvas. Use it in your draw handler */
+NanoCanvas1 NanoEngine1::canvas;
+
+uint8_t   NanoEngine1::m_buffer[(1<<NE_TILE_SIZE_BITS) * (1<<NE_TILE_SIZE_BITS) / 8];
+
 NanoEngine1::NanoEngine1()
    : NanoEngineBase()
    , NanoEngineTiler()
-   , canvas(1<<NE_TILE_SIZE_BITS, 1<<NE_TILE_SIZE_BITS, m_buffer)
-   , m_buffer{}
 {
 }
 
 void NanoEngine1::begin()
 {
+    canvas.begin(1<<NE_TILE_SIZE_BITS, 1<<NE_TILE_SIZE_BITS, m_buffer);
     NanoEngineBase::begin();
 }
 
@@ -114,6 +121,8 @@ void NanoEngine1::display()
 ///////////////////////////////////////////////////////////////////////////////
 ////// NANO ENGINE TILER CLASS ////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
+
+uint16_t NanoEngineTiler::m_refreshFlags[NanoEngineTiler::NE_MAX_TILES_NUM];
 
 NanoEngineTiler::NanoEngineTiler()
 {
@@ -156,14 +165,24 @@ void NanoEngineTiler::refresh()
 ////// NANO ENGINE BASE CLASS /////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
+static const uint8_t ENGINE_DEFAULT_FPS = 30;
+
+/** Duration between frames in milliseconds */
+uint8_t   NanoEngineBase::m_frameDurationMs = 1000/ENGINE_DEFAULT_FPS;
+/** Current fps */
+uint8_t   NanoEngineBase::m_fps = ENGINE_DEFAULT_FPS;
+/** Current cpu load in percents */
+uint8_t   NanoEngineBase::m_cpuLoad = 0;
+/** Last timestamp in milliseconds the frame was updated on oled display */
+uint32_t  NanoEngineBase::m_lastFrameTs;
+/** Callback to call if specific tile needs to be updated */
+TNanoEngineOnDraw NanoEngineBase::m_onDraw = nullptr;
+/** Callback to call if buttons state needs to be updated */
+TNanoEngineGetButtons NanoEngineBase::m_onButtons = nullptr;
+/** Callback to call before starting oled update */
+TLoopCallback NanoEngineBase::m_loop = nullptr;
+
 NanoEngineBase::NanoEngineBase()
-   : m_frameDurationMs(33)
-   , m_fps(30)
-   , m_cpuLoad(0)
-   , m_lastFrameTs(0)
-   , m_onDraw( nullptr )
-   , m_onButtons( nullptr )
-   , m_loop( nullptr )
 {
 }
 
