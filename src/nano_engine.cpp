@@ -63,15 +63,47 @@ void NanoEngine8::display()
             if (flag & 0x01)
             {
                 canvas.setOffset(x<<NE_TILE_SIZE_BITS, y<<NE_TILE_SIZE_BITS);
-                if (m_onDraw)
+                if ((m_onDraw) && (m_onDraw()))
                 {
-                    if (m_onDraw()) canvas.blt();
+                    canvas.blt();
                 }
             }
             flag >>=1;
         }
     }
     m_cpuLoad = ((millis() - m_lastFrameTs)*100)/m_frameDurationMs;
+}
+
+void NanoEngine8::notify(const char *str)
+{
+    NanoRect rect = { 8, (s_displayHeight>>1) - 8, s_displayWidth - 8, (s_displayHeight>>1) + 8 };
+    // TODO: 6 needs to be replaced with real font width, it would be nice to calculate message height
+    NanoPoint textPos = { (s_displayWidth - (lcdint_t)strlen(str)*6) >> 1, (s_displayHeight>>1) - 4 };
+    refresh(rect);
+    for (uint8_t y = 0; y < (s_displayHeight >> NE_TILE_SIZE_BITS); y++)
+    {
+        uint16_t flag = m_refreshFlags[y];
+        m_refreshFlags[y] = 0;
+        for (uint8_t x = 0; x < (s_displayWidth >> NE_TILE_SIZE_BITS); x++)
+        {
+            if (flag & 0x01)
+            {
+                canvas.setOffset(x<<NE_TILE_SIZE_BITS, y<<NE_TILE_SIZE_BITS);
+                if (m_onDraw) m_onDraw();
+                canvas.setColor(RGB_COLOR8(0,0,0));
+                canvas.fillRect(rect);
+                canvas.setColor(RGB_COLOR8(192,192,192));
+                canvas.drawRect(rect);
+                canvas.printFixed( textPos.x, textPos.y, str);
+
+                canvas.blt();
+            }
+            flag >>=1;
+        }
+    }
+    delay(2000);
+    m_lastFrameTs = millis();
+    refresh();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -116,6 +148,38 @@ void NanoEngine1::display()
         }
     }
     m_cpuLoad = ((millis() - m_lastFrameTs)*100)/m_frameDurationMs;
+}
+
+void NanoEngine1::notify(const char *str)
+{
+    NanoRect rect = { 8, (s_displayHeight>>1) - 8, s_displayWidth - 8, (s_displayHeight>>1) + 8 };
+    // TODO: 6 needs to be replaced with real font width, it would be nice to calculate message height
+    NanoPoint textPos = { (s_displayWidth - (lcdint_t)strlen(str)*6) >> 1, (s_displayHeight>>1) - 4 };
+    refresh(rect);
+    for (uint8_t y = 0; y < (s_displayHeight >> NE_TILE_SIZE_BITS); y++)
+    {
+        uint16_t flag = m_refreshFlags[y];
+        m_refreshFlags[y] = 0;
+        for (uint8_t x = 0; x < (s_displayWidth >> NE_TILE_SIZE_BITS); x++)
+        {
+            if (flag & 0x01)
+            {
+                canvas.setOffset(x<<NE_TILE_SIZE_BITS, y<<NE_TILE_SIZE_BITS);
+                if (m_onDraw) m_onDraw();
+                canvas.setColor(RGB_COLOR8(0,0,0));
+                canvas.fillRect(rect);
+                canvas.setColor(RGB_COLOR8(192,192,192));
+                canvas.drawRect(rect);
+                canvas.printFixed( textPos.x, textPos.y, str);
+
+                canvas.blt();
+            }
+            flag >>=1;
+        }
+    }
+    delay(2000);
+    m_lastFrameTs = millis();
+    refresh();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

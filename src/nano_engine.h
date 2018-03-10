@@ -265,6 +265,13 @@ public:
      */
     static void display();
 
+    /**
+     * @brief shows notification to a user for 2 seconds
+     * Shows notification to a user for 2 seconds
+     * @param str - pointer to null-terminated string to show
+     */
+    static void notify(const char *str);
+
 private:
     static uint8_t   m_buffer[(1<<NE_TILE_SIZE_BITS) * (1<<NE_TILE_SIZE_BITS)];
 };
@@ -306,6 +313,13 @@ public:
      * methods.
      */
     static void display();
+
+    /**
+     * @brief shows notification to a user for 2 seconds
+     * Shows notification to a user for 2 seconds
+     * @param str - pointer to null-terminated string to show
+     */
+    static void notify(const char *str);
 
 private:
     static uint8_t   m_buffer[(1<<NE_TILE_SIZE_BITS) * (1<<NE_TILE_SIZE_BITS) / 8];
