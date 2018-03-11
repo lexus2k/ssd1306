@@ -487,8 +487,9 @@ uint8_t      ssd1306_charF6x8_eol(uint8_t left,
 
 void         ssd1306_setFixedFont(const uint8_t * progmemFont)
 {
-    s_fixedFont.width = pgm_read_byte(&progmemFont[1]);
-    s_fixedFont.pages = (pgm_read_byte(&progmemFont[2]) + 7) >> 3;
+    s_fixedFont.width  = pgm_read_byte(&progmemFont[1]);
+    s_fixedFont.height = pgm_read_byte(&progmemFont[2]);
+    s_fixedFont.pages = (s_fixedFont.height + 7) >> 3;
     s_fixedFont.ascii_offset = pgm_read_byte(&progmemFont[3]);
     s_fixedFont.data = progmemFont + 4;
 }

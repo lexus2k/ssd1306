@@ -260,14 +260,14 @@ void NanoCanvas8::printChar(uint8_t c)
     drawBitmap1(m_cursorX,
                 m_cursorY,
                 s_fixedFont.width,
-                s_fixedFont.pages << 3,
+                s_fixedFont.height,
                 &s_fixedFont.data[ c * s_fixedFont.pages * s_fixedFont.width ] );
     /* calculate char rectangle */
 #if 0
     lcdint_t x1 = m_cursorX;
     lcdint_t y1 = m_cursorY;
     lcdint_t x2 = x1 + (lcdint_t)s_fixedFont.width - 1;
-    lcdint_t y2 = y1 + (lcdint_t)(s_fixedFont.pages << 3) - 1;
+    lcdint_t y2 = y1 + (lcdint_t)s_fixedFont.height - 1;
     /* clip char */
     if ((x2 < offset.x) || (x1 >= (lcdint_t)m_w + offset.x)) return;
     if ((y2 < offset.y) || (y1 >= (lcdint_t)m_h + offset.y)) return;
@@ -304,7 +304,7 @@ void NanoCanvas8::write(uint8_t c)
 {
     if (c == '\n')
     {
-        m_cursorY += (lcdint_t)(s_fixedFont.pages << 3);
+        m_cursorY += (lcdint_t)s_fixedFont.height;
         m_cursorX = 0;
     }
     else if (c == '\r')
@@ -317,7 +317,7 @@ void NanoCanvas8::write(uint8_t c)
         m_cursorX += (lcdint_t)s_fixedFont.width;
         if ((m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)s_displayWidth - (lcdint_t)s_fixedFont.width)))
         {
-            m_cursorY += (lcdint_t)(s_fixedFont.pages << 3);
+            m_cursorY += (lcdint_t)s_fixedFont.height;
             m_cursorX = 0;
         }
     }
@@ -574,14 +574,14 @@ void NanoCanvas1::printChar(uint8_t c)
     drawBitmap1(m_cursorX,
                 m_cursorY,
                 s_fixedFont.width,
-                s_fixedFont.pages << 3,
+                s_fixedFont.height,
                 &s_fixedFont.data[ c * s_fixedFont.pages * s_fixedFont.width ] );
     /* calculate char rectangle */
 #if 0
     lcdint_t x1 = m_cursorX;
     lcdint_t y1 = m_cursorY;
     lcdint_t x2 = x1 + (lcdint_t)s_fixedFont.width - 1;
-    lcdint_t y2 = y1 + (lcdint_t)(s_fixedFont.pages << 3) - 1;
+    lcdint_t y2 = y1 + (lcdint_t)s_fixedFont.height - 1;
     /* clip char */
     if ((x2 < offset.x) || (x1 >= (lcdint_t)m_w + offset.x)) return;
     if ((y2 < offset.y) || (y1 >= (lcdint_t)m_h + offset.y)) return;
@@ -618,7 +618,7 @@ void NanoCanvas1::write(uint8_t c)
 {
     if (c == '\n')
     {
-        m_cursorY += (lcdint_t)(s_fixedFont.pages << 3);
+        m_cursorY += (lcdint_t)s_fixedFont.height;
         m_cursorX = 0;
     }
     else if (c == '\r')
@@ -631,7 +631,7 @@ void NanoCanvas1::write(uint8_t c)
         m_cursorX += (lcdint_t)s_fixedFont.width;
         if ((m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)s_displayWidth - (lcdint_t)s_fixedFont.width)))
         {
-            m_cursorY += (lcdint_t)(s_fixedFont.pages << 3);
+            m_cursorY += (lcdint_t)s_fixedFont.height;
             m_cursorX = 0;
         }
     }
