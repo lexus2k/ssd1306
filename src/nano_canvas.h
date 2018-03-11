@@ -408,6 +408,11 @@ public:
      * @param w - width in pixels
      * @param h - height in pixels
      * @param bitmap - monochrome bitmap data, located in flash
+     * 
+     * @note There are 2 modes: transparent and non-transparent mode, - and 2 colors available: black and white.
+     *       In non-transparent mode, when black color is selected, the monochrome image just inverted.
+     *       In transparent mode, those pixels of source monochrome image, which are black, do not overwrite pixels
+     *       in the screen buffer.
      */
     void drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
 
@@ -503,6 +508,12 @@ private:
 //
 /////////////////////////////////////////////////////////////////////////////////
 
+enum
+{
+    BLACK = 0x00,  ///< Black color
+    WHITE = 0xFF,  ///< White color
+};
+
 /**
  * NanoCanvas1 represents objects for drawing in memory buffer
  * NanoCanvas1 represents each pixel as single bit: 0/1
@@ -554,7 +565,7 @@ public:
         offset.y = 0;
         m_cursorX = 0;
         m_cursorY = 0;
-        m_color = 0xFF;
+        m_color = WHITE;
         m_textMode = 0;
         m_p = 3;
         while (w >> (m_p+1)) { m_p++; };
@@ -644,6 +655,11 @@ public:
      * @param w - width in pixels
      * @param h - height in pixels
      * @param bitmap - monochrome bitmap data, located in flash
+     * 
+     * @note There are 2 modes: transparent and non-transparent mode, - and 2 colors available: black and white.
+     *       In non-transparent mode, when black color is selected, the monochrome image just inverted.
+     *       In transparent mode, those pixels of source monochrome image, which are black, do not overwrite pixels
+     *       in the screen buffer.
      */
     void drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
 
