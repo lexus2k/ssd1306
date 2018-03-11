@@ -214,6 +214,7 @@ void movePlayer(uint8_t direction)
         beep(10,20);
         if (isGold(centerBlock))
         {
+            engine.notify( "GOLD COIN" );
             gameField[blockIdx(player.x + 3,player.y + 3)] = 0;
             goldCollection++;
             showGameInfo();
@@ -231,6 +232,9 @@ void movePlayer(uint8_t direction)
 
 void setup()
 {
+    /* Set font to use in the game. The font has only capital letters and digits */
+    ssd1306_setFixedFont(ssd1306xled_font6x8_AB);
+
     /* Do not init Wire library for Attiny controllers */
 //    ssd1306_128x64_i2c_init();
 

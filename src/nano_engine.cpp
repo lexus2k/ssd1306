@@ -101,7 +101,7 @@ void NanoEngine8::notify(const char *str)
             flag >>=1;
         }
     }
-    delay(2000);
+    delay(1000);
     m_lastFrameTs = millis();
     refresh();
 }
@@ -177,7 +177,7 @@ void NanoEngine1::notify(const char *str)
             flag >>=1;
         }
     }
-    delay(2000);
+    delay(1000);
     m_lastFrameTs = millis();
     refresh();
 }

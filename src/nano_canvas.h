@@ -451,6 +451,17 @@ public:
     void printFixed(lcdint_t xpos, lcdint_t y, const char *ch);
 
     /**
+     * Print text at specified position to canvas
+     * @param xpos - position in pixels
+     * @param y    - position in pixels
+     * @param ch - pointer to NULL-terminated string, located in flash
+     *
+     * @note No font style support anymore, sorry for that. Font styles
+     *       increase code size.
+     */
+    void printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch);
+
+    /**
      * @brief Sets canvas drawing mode
      * Sets canvas drawing mode. The set flags define transparency of output images
      * @param modeFlags - combination of flags: CANVAS_TEXT_WRAP, CANVAS_MODE_TRANSPARENT
@@ -674,6 +685,17 @@ public:
      *       increase code size.
      */
     void printFixed(lcdint_t xpos, lcdint_t y, const char *ch);
+
+    /**
+     * Print text at specified position to canvas
+     * @param xpos - position in pixels
+     * @param y    - position in pixels
+     * @param ch - pointer to NULL-terminated string, located in flash
+     *
+     * @note No font style support anymore, sorry for that. Font styles
+     *       increase code size.
+     */
+    void printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch);
 
     /**
      * @brief Sets canvas drawing mode

@@ -334,6 +334,19 @@ void NanoCanvas8::printFixed(lcdint_t xpos, lcdint_t y, const char *ch)
     }
 }
 
+void NanoCanvas8::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch)
+{
+    m_cursorX = xpos;
+    m_cursorY = y;
+    for (;;)
+    {
+        char c = pgm_read_byte(ch);
+        if (!c) break;
+        write(c);
+        ch++;
+    }
+}
+
 void NanoCanvas8::clear()
 {
     uint8_t *buf = m_buf;
@@ -644,6 +657,19 @@ void NanoCanvas1::printFixed(lcdint_t xpos, lcdint_t y, const char *ch)
     while (*ch)
     {
         write(*ch);
+        ch++;
+    }
+}
+
+void NanoCanvas1::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch)
+{
+    m_cursorX = xpos;
+    m_cursorY = y;
+    for (;;)
+    {
+        char c = pgm_read_byte(ch);
+        if (!c) break;
+        write(c);
         ch++;
     }
 }
