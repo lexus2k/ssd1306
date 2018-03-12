@@ -56,7 +56,7 @@ $(BLD)/%.o: %.cpp
 INCLUDES += \
         -I.
 
-CCFLAGS += -g -Os $(INCLUDES) -Wall -Werror -ffunction-sections -fdata-sections \
+CCFLAGS += -MD -g -Os $(INCLUDES) -Wall -Werror -ffunction-sections -fdata-sections \
 	-fno-exceptions -Wno-error=deprecated-declarations
 
 CXXFLAGS += -fno-rtti
@@ -80,3 +80,5 @@ all: ssd1306
 
 clean:
 	rm -rf $(BLD)
+
+-include $(OBJS:%.o=%.d)

@@ -43,6 +43,7 @@
 #include <unistd.h>
 #endif
 #include <time.h>
+#include <string.h>
 
 #define LOW  0
 #define HIGH 1

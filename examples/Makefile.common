@@ -64,7 +64,7 @@ INCLUDES += \
 
 CXXFLAGS +=  -fno-rtti
 
-CCFLAGS += -g -Os -w -ffreestanding $(INCLUDES) -Wall -Werror \
+CCFLAGS += -MD -g -Os -w -ffreestanding $(INCLUDES) -Wall -Werror \
 	-Wl,--gc-sections -ffunction-sections -fdata-sections \
 	$(EXTRA_CCFLAGS)
 
@@ -91,3 +91,5 @@ $(OUTFILE): $(OBJS) ssd1306
 clean:
 	rm -rf $(BLD)
 	rm -f *~ *.out *.bin *.hex *.srec *.s *.o *.pdf *core
+
+-include $(OBJS:%.o=%.d)
