@@ -75,13 +75,6 @@ public:
     static void refresh();
 
     /**
-     * Marks specific tile for update. Actual update will take place in display() method.
-     * @param tileX - x index of tile to update
-     * @param tileY - y index of tile to update
-     */
-    static void refreshTile(uint8_t tileX, uint8_t tileY) { m_refreshFlags[tileY] |= (1<<tileX); };
-
-    /**
      * Mark specified area in pixels for redrawing by NanoEngine.
      * Actual update will take place in display() method.
      */
@@ -250,7 +243,7 @@ private:
  *    [0,0] [1,0] [2,0]
  *    [0,1] [1,1] [2,1]
  * In your application you can choose, if you want to refresh whole screen (refresh()), or you
- * need to refresh only part of oled display (refreshTile()).
+ * need to refresh only part of oled display.
  */
 class NanoEngine8: public NanoEngineBase, public NanoEngineTiler
 {
@@ -271,7 +264,7 @@ public:
     /**
      * @brief refreshes content on oled display.
      * Refreshes content on oled display. Call it, if you want to update the screen.
-     * Engine will update only those areas, which are marked by refreshAll()/refreshTile()
+     * Engine will update only those areas, which are marked by refresh()
      * methods.
      */
     static void display();
@@ -299,7 +292,7 @@ private:
  *    [0,0] [1,0] [2,0], [3,0]
  *    [0,1] [1,1] [2,1], [3,1]
  * In your application you can choose, if you want to refresh whole screen (refresh()), or you
- * need to refresh only part of oled display (refreshTile()).
+ * need to refresh only part of oled display.
  */
 class NanoEngine1: public NanoEngineBase, public NanoEngineTiler
 {
@@ -320,7 +313,7 @@ public:
     /**
      * @brief refreshes content on oled display.
      * Refreshes content on oled display. Call it, if you want to update the screen.
-     * Engine will update only those areas, which are marked by refreshAll()/refreshTile()
+     * Engine will update only those areas, which are marked by refresh()
      * methods.
      */
     static void display();
