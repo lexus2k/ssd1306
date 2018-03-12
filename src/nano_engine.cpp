@@ -28,13 +28,15 @@
 // TODO: Remove the line below
 #include "lcd/oled_ssd1331.h"
 
+extern SFixedFontInfo s_fixedFont;
+
 ///////////////////////////////////////////////////////////////////////////////
 ////// NANO ENGINE RGB        /////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
 NanoCanvas8 NanoEngine8::canvas;
 
-uint8_t NanoEngine8::m_buffer[(1<<NE_TILE_SIZE_BITS) * (1<<NE_TILE_SIZE_BITS)];
+uint8_t NanoEngine8::m_buffer[NE_TILE_SIZE * NE_TILE_SIZE];
 
 NanoEngine8::NanoEngine8()
    : NanoEngineBase()
@@ -47,22 +49,22 @@ void NanoEngine8::begin()
     // TODO: Maybe, this is not good place for this, but
     // TODO: ssd1331 must be initialized in Horizontal addressing mode
     ssd1331_setMode(0);
-    canvas.begin(1<<NE_TILE_SIZE_BITS, 1<<NE_TILE_SIZE_BITS, m_buffer);
+    canvas.begin(NE_TILE_SIZE, NE_TILE_SIZE, m_buffer);
     NanoEngineBase::begin();
 }
 
 void NanoEngine8::display()
 {
     m_lastFrameTs = millis();
-    for (uint8_t y = 0; y <= ((s_displayHeight-1) >> NE_TILE_SIZE_BITS); y++)
+    for (uint8_t y = 0; y < s_displayHeight; y = y + NE_TILE_SIZE)
     {
-        uint16_t flag = m_refreshFlags[y];
-        m_refreshFlags[y] = 0;
-        for (uint8_t x = 0; x <= ((s_displayWidth-1) >> NE_TILE_SIZE_BITS); x++)
+        uint16_t flag = m_refreshFlags[y >> NE_TILE_SIZE_BITS];
+        m_refreshFlags[y >> NE_TILE_SIZE_BITS] = 0;
+        for (uint8_t x = 0; x < s_displayWidth; x = x + NE_TILE_SIZE)
         {
             if (flag & 0x01)
             {
-                canvas.setOffset(x<<NE_TILE_SIZE_BITS, y<<NE_TILE_SIZE_BITS);
+                canvas.setOffset(x, y);
                 if ((m_onDraw) && (m_onDraw()))
                 {
                     canvas.blt();
@@ -77,18 +79,18 @@ void NanoEngine8::display()
 void NanoEngine8::notify(const char *str)
 {
     NanoRect rect = { 8, (s_displayHeight>>1) - 8, s_displayWidth - 8, (s_displayHeight>>1) + 8 };
-    // TODO: 6 needs to be replaced with real font width, it would be nice to calculate message height
-    NanoPoint textPos = { (s_displayWidth - (lcdint_t)strlen(str)*6) >> 1, (s_displayHeight>>1) - 4 };
+    // TODO: It would be nice to calculate message height
+    NanoPoint textPos = { (s_displayWidth - (lcdint_t)strlen(str)*s_fixedFont.width) >> 1, (s_displayHeight>>1) - 4 };
     refresh(rect);
-    for (uint8_t y = 0; y <= ((s_displayHeight-1) >> NE_TILE_SIZE_BITS); y++)
+    for (uint8_t y = 0; y < s_displayHeight; y = y + NE_TILE_SIZE)
     {
-        uint16_t flag = m_refreshFlags[y];
-        m_refreshFlags[y] = 0;
-        for (uint8_t x = 0; x <= ((s_displayWidth-1) >> NE_TILE_SIZE_BITS); x++)
+        uint16_t flag = m_refreshFlags[y >> NE_TILE_SIZE_BITS];
+        m_refreshFlags[y >> NE_TILE_SIZE_BITS] = 0;
+        for (uint8_t x = 0; x < s_displayWidth; x = x + NE_TILE_SIZE)
         {
             if (flag & 0x01)
             {
-                canvas.setOffset(x<<NE_TILE_SIZE_BITS, y<<NE_TILE_SIZE_BITS);
+                canvas.setOffset(x, y);
                 if (m_onDraw) m_onDraw();
                 canvas.setColor(RGB_COLOR8(0,0,0));
                 canvas.fillRect(rect);
@@ -113,7 +115,7 @@ void NanoEngine8::notify(const char *str)
 /** object, representing canvas. Use it in your draw handler */
 NanoCanvas1 NanoEngine1::canvas;
 
-uint8_t   NanoEngine1::m_buffer[(1<<NE_TILE_SIZE_BITS) * (1<<NE_TILE_SIZE_BITS) / 8];
+uint8_t   NanoEngine1::m_buffer[NE_TILE_SIZE * NE_TILE_SIZE / 8];
 
 NanoEngine1::NanoEngine1()
    : NanoEngineBase()
@@ -123,22 +125,22 @@ NanoEngine1::NanoEngine1()
 
 void NanoEngine1::begin()
 {
-    canvas.begin(1<<NE_TILE_SIZE_BITS, 1<<NE_TILE_SIZE_BITS, m_buffer);
+    canvas.begin(NE_TILE_SIZE, NE_TILE_SIZE, m_buffer);
     NanoEngineBase::begin();
 }
 
 void NanoEngine1::display()
 {
     m_lastFrameTs = millis();
-    for (uint8_t y = 0; y <= ((s_displayHeight-1) >> NE_TILE_SIZE_BITS); y++)
+    for (uint8_t y = 0; y < s_displayHeight; y = y + NE_TILE_SIZE)
     {
-        uint16_t flag = m_refreshFlags[y];
-        m_refreshFlags[y] = 0;
-        for (uint8_t x = 0; x <= ((s_displayWidth-1) >> NE_TILE_SIZE_BITS); x++)
+        uint16_t flag = m_refreshFlags[y >> NE_TILE_SIZE_BITS];
+        m_refreshFlags[y >> NE_TILE_SIZE_BITS] = 0;
+        for (uint8_t x = 0; x < s_displayWidth; x = x + NE_TILE_SIZE)
         {
             if (flag & 0x01)
             {
-                canvas.setOffset(x<<NE_TILE_SIZE_BITS, y<<NE_TILE_SIZE_BITS);
+                canvas.setOffset(x, y);
                 if (m_onDraw)
                 {
                     if (m_onDraw()) canvas.blt();
@@ -153,18 +155,18 @@ void NanoEngine1::display()
 void NanoEngine1::notify(const char *str)
 {
     NanoRect rect = { 8, (s_displayHeight>>1) - 8, s_displayWidth - 8, (s_displayHeight>>1) + 8 };
-    // TODO: 6 needs to be replaced with real font width, it would be nice to calculate message height
-    NanoPoint textPos = { (s_displayWidth - (lcdint_t)strlen(str)*6) >> 1, (s_displayHeight>>1) - 4 };
+    // TODO: It would be nice to calculate message height
+    NanoPoint textPos = { (s_displayWidth - (lcdint_t)strlen(str)*s_fixedFont.width) >> 1, (s_displayHeight>>1) - 4 };
     refresh(rect);
-    for (uint8_t y = 0; y <= ((s_displayHeight-1) >> NE_TILE_SIZE_BITS); y++)
+    for (uint8_t y = 0; y < s_displayHeight; y = y + NE_TILE_SIZE)
     {
-        uint16_t flag = m_refreshFlags[y];
-        m_refreshFlags[y] = 0;
-        for (uint8_t x = 0; x <= ((s_displayWidth-1) >> NE_TILE_SIZE_BITS); x++)
+        uint16_t flag = m_refreshFlags[y >> NE_TILE_SIZE_BITS];
+        m_refreshFlags[y >> NE_TILE_SIZE_BITS] = 0;
+        for (uint8_t x = 0; x < s_displayWidth; x = x + NE_TILE_SIZE)
         {
             if (flag & 0x01)
             {
-                canvas.setOffset(x<<NE_TILE_SIZE_BITS, y<<NE_TILE_SIZE_BITS);
+                canvas.setOffset(x, y);
                 if (m_onDraw) m_onDraw();
                 canvas.setColor(RGB_COLOR8(0,0,0));
                 canvas.fillRect(rect);
