@@ -54,11 +54,11 @@ void NanoEngine8::begin()
 void NanoEngine8::display()
 {
     m_lastFrameTs = millis();
-    for (uint8_t y = 0; y < (s_displayHeight >> NE_TILE_SIZE_BITS); y++)
+    for (uint8_t y = 0; y <= ((s_displayHeight-1) >> NE_TILE_SIZE_BITS); y++)
     {
         uint16_t flag = m_refreshFlags[y];
         m_refreshFlags[y] = 0;
-        for (uint8_t x = 0; x < (s_displayWidth >> NE_TILE_SIZE_BITS); x++)
+        for (uint8_t x = 0; x <= ((s_displayWidth-1) >> NE_TILE_SIZE_BITS); x++)
         {
             if (flag & 0x01)
             {
@@ -80,11 +80,11 @@ void NanoEngine8::notify(const char *str)
     // TODO: 6 needs to be replaced with real font width, it would be nice to calculate message height
     NanoPoint textPos = { (s_displayWidth - (lcdint_t)strlen(str)*6) >> 1, (s_displayHeight>>1) - 4 };
     refresh(rect);
-    for (uint8_t y = 0; y < (s_displayHeight >> NE_TILE_SIZE_BITS); y++)
+    for (uint8_t y = 0; y <= ((s_displayHeight-1) >> NE_TILE_SIZE_BITS); y++)
     {
         uint16_t flag = m_refreshFlags[y];
         m_refreshFlags[y] = 0;
-        for (uint8_t x = 0; x < (s_displayWidth >> NE_TILE_SIZE_BITS); x++)
+        for (uint8_t x = 0; x <= ((s_displayWidth-1) >> NE_TILE_SIZE_BITS); x++)
         {
             if (flag & 0x01)
             {
@@ -130,11 +130,11 @@ void NanoEngine1::begin()
 void NanoEngine1::display()
 {
     m_lastFrameTs = millis();
-    for (uint8_t y = 0; y < (s_displayHeight >> NE_TILE_SIZE_BITS); y++)
+    for (uint8_t y = 0; y <= ((s_displayHeight-1) >> NE_TILE_SIZE_BITS); y++)
     {
         uint16_t flag = m_refreshFlags[y];
         m_refreshFlags[y] = 0;
-        for (uint8_t x = 0; x < (s_displayWidth >> NE_TILE_SIZE_BITS); x++)
+        for (uint8_t x = 0; x <= ((s_displayWidth-1) >> NE_TILE_SIZE_BITS); x++)
         {
             if (flag & 0x01)
             {
@@ -156,11 +156,11 @@ void NanoEngine1::notify(const char *str)
     // TODO: 6 needs to be replaced with real font width, it would be nice to calculate message height
     NanoPoint textPos = { (s_displayWidth - (lcdint_t)strlen(str)*6) >> 1, (s_displayHeight>>1) - 4 };
     refresh(rect);
-    for (uint8_t y = 0; y < (s_displayHeight >> NE_TILE_SIZE_BITS); y++)
+    for (uint8_t y = 0; y <= ((s_displayHeight-1) >> NE_TILE_SIZE_BITS); y++)
     {
         uint16_t flag = m_refreshFlags[y];
         m_refreshFlags[y] = 0;
-        for (uint8_t x = 0; x < (s_displayWidth >> NE_TILE_SIZE_BITS); x++)
+        for (uint8_t x = 0; x <= ((s_displayWidth-1) >> NE_TILE_SIZE_BITS); x++)
         {
             if (flag & 0x01)
             {
@@ -200,9 +200,9 @@ void NanoEngineTiler::refresh(const NanoRect &rect)
 
 void NanoEngineTiler::refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
 {
-    y1 = max(0,y1);
+    y1 = max(0,y1>>NE_TILE_SIZE_BITS);
     y2 = min((y2>>NE_TILE_SIZE_BITS), NE_MAX_TILES_NUM - 1);
-    for(uint8_t y=(y1>>NE_TILE_SIZE_BITS); y<=y2; y++)
+    for(uint8_t y=y1; y<=y2; y++)
     {
         for(uint8_t x=(x1>>NE_TILE_SIZE_BITS); x<=(x2>>NE_TILE_SIZE_BITS); x++)
         {
@@ -213,7 +213,7 @@ void NanoEngineTiler::refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2
 
 void NanoEngineTiler::refresh(const NanoPoint &point)
 {
-    if ((point.y<0) || (point.y>=NE_MAX_TILES_NUM)) return;
+    if ((point.y<0) || ((point.y>>NE_TILE_SIZE_BITS)>=NE_MAX_TILES_NUM)) return;
     m_refreshFlags[(point.y>>NE_TILE_SIZE_BITS)] |= (1<<(point.x>>NE_TILE_SIZE_BITS));
 }
 
@@ -224,7 +224,6 @@ void NanoEngineTiler::refresh()
         m_refreshFlags[i] = ~(0);
     }
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 ////// NANO ENGINE BASE CLASS /////////////////////////////////////////////////
