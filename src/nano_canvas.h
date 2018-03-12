@@ -198,19 +198,19 @@ typedef struct _NanoRect
      * Returns true if specified x position is between left and right borders.
      * @param x - position to check
      */
-    bool hasX(lcdint_t x) const { return (x >= p1.x) && (x <= p2.x); };
+    bool collisionX(lcdint_t x) const { return (x >= p1.x) && (x <= p2.x); };
 
     /**
      * Returns true if specified y position is between left and right borders.
      * @param y - position to check
      */
-    bool hasY(lcdint_t y) const { return (y >= p1.y) && (y <= p2.y); };
+    bool collisionY(lcdint_t y) const { return (y >= p1.y) && (y <= p2.y); };
 
     /**
      * Returns true if specified point is inside rectangle area.
      * @param p - point to check.
      */
-    bool has(const NanoPoint &p) const { return hasX(p.x) && hasY(p.y); };
+    bool collision(const NanoPoint &p) const { return collisionX(p.x) && collisionY(p.y); };
 
     /**
      * Returns true if specified point is above rectangle area.

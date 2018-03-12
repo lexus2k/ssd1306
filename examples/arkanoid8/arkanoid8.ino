@@ -106,7 +106,7 @@ void startIntro(void)
 bool drawBattleField(void)
 {
     /* If engine requests to redraw main game field */
-    if (gameArea.has(engine.canvas.offset))
+    if (gameArea.collision(engine.canvas.offset))
     {
         /* Set non-transparent mode */
         engine.canvas.setMode(0);
@@ -120,7 +120,7 @@ bool drawBattleField(void)
         engine.canvas.putPixel(gameState.battleField.platform.p1);
         engine.canvas.putPixel(gameState.battleField.platform.p2.x,
                                gameState.battleField.platform.p1.y);
-        if (gameArea.has(engine.canvas.offset))
+        if (gameArea.collision(engine.canvas.offset))
         {
             for (uint8_t r = 0; r<BLOCK_NUM_ROWS; r++)
             {
@@ -175,7 +175,7 @@ void movePlatform(void)
 
 bool checkBlockHit(void)
 {
-    if (!blockArea.has(gameState.battleField.ball))
+    if (!blockArea.collision(gameState.battleField.ball))
     {
         return false;
     }
@@ -202,7 +202,7 @@ bool checkBlockHit(void)
 
 bool checkPlatformHit()
 {
-    if (gameState.battleField.platform.hasX( gameState.battleField.ball.x ) &&
+    if (gameState.battleField.platform.collisionX( gameState.battleField.ball.x ) &&
         !gameState.battleField.platform.above( gameState.battleField.ball ) &&
         !gameState.battleField.platform.below( gameState.battleField.ball ) )
     {
@@ -229,12 +229,12 @@ bool checkPlatformHit()
 bool checkGameAreaHit(void)
 {
     bool hit = false;
-    if (!gameArea.hasX(gameState.battleField.ball.x))
+    if (!gameArea.collisionX(gameState.battleField.ball.x))
     {
         hit = true;
         gameState.battleField.ballSpeed.x = -gameState.battleField.ballSpeed.x;
     }
-    if (!gameArea.hasY(gameState.battleField.ball.y))
+    if (!gameArea.collisionY(gameState.battleField.ball.y))
     {
         hit = true;
         gameState.battleField.ballSpeed.y = -gameState.battleField.ballSpeed.y;
@@ -336,6 +336,7 @@ void setup()
     ssd1306_setFixedFont(ssd1306xled_font6x8_AB);
     /* Init SPI 96x64 RBG oled. 3 - RESET, 4 - CS (can be omitted, oled CS must be pulled down), 5 - D/C */
     ssd1331_96x64_spi_init(3, 4, 5);
+//    ssd1306_128x64_spi_init(3, 4, 5);
 
     /* Configure engine to use ZKeypand on A0 as control board. */
     engine.connectZKeypad(0);

@@ -97,6 +97,15 @@ public:
      */
     static void refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
 
+    /**
+     * @brief Returns true if point is inside the rectangle area.
+     * Returns true if point is inside the rectangle area.
+     * @param p - point to check
+     * @param rect - rectangle, describing the region to check with the point
+     * @returns true if point is inside the rectangle area.
+     */
+    static bool collision(NanoPoint &p, NanoRect &rect) { return rect.collision( p ); }
+
 protected:
     /**
      * Contains information on tiles to be updated.

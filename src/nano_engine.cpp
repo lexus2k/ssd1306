@@ -213,6 +213,7 @@ void NanoEngineTiler::refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2
 
 void NanoEngineTiler::refresh(const NanoPoint &point)
 {
+    if ((point.y<0) || (point.y>=NE_MAX_TILES_NUM)) return;
     m_refreshFlags[(point.y>>NE_TILE_SIZE_BITS)] |= (1<<(point.x>>NE_TILE_SIZE_BITS));
 }
 
