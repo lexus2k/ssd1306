@@ -273,6 +273,9 @@ typedef struct _NanoRect
 class NanoCanvas8
 {
 public:
+    /** number of bits per single pixel in buffer */
+    static const uint8_t BITS_PER_PIXEL = 8;
+
     /** Fixed offset for all operation of NanoCanvas8 in pixels */
     NanoPoint offset;
 
@@ -522,6 +525,9 @@ enum
 class NanoCanvas1
 {
 public:
+    /** number of bits per single pixel in buffer */
+    static const uint8_t BITS_PER_PIXEL = 1;
+
     /** Fixed offset for all operation of NanoCanvas1 in pixels */
     NanoPoint offset;
 

@@ -38,7 +38,9 @@ extern SFixedFontInfo s_fixedFont;
 //
 /////////////////////////////////////////////////////////////////////////////////
 
-#define YADDR8(y) (static_cast<uint16_t>(y) << m_p)
+/* We need to use multiply operation, because there are displays on the market *
+ * with resolution different from 2^N (160x128, 96x64, etc.)                   */
+#define YADDR8(y) (static_cast<uint16_t>(y) * m_w)
 
 void NanoCanvas8::putPixel(lcdint_t x, lcdint_t y)
 {
