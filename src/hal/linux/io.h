@@ -56,7 +56,6 @@
 extern "C" {
 #endif
 
-static inline void digitalWrite(int pin, int level) {};
 static inline int  digitalRead(int pin) { return LOW; };
 static inline void pinMode(int pin, int mode) {};
 #if defined(__KERNEL__)
@@ -71,10 +70,13 @@ static inline void delayMicroseconds(unsigned long us) { usleep(us); };
 
 #if defined(__KERNEL__)
 static inline int  analogRead(int pin) { return 0; };
-#elif defined(__MINGW32__)
+static inline void digitalWrite(int pin, int level) {};
+#elif defined(__MINGW32__) || defined(SDL_EMULATION)
 static inline int  analogRead(int pin) { return sdl_read_analog(pin); };
+static inline void digitalWrite(int pin, int level) {  sdl_write_digital(pin, level); };
 #else
 static inline int  analogRead(int pin) { return 0; };
+static inline void digitalWrite(int pin, int level) {};
 #endif
 
 #if defined(__KERNEL__)

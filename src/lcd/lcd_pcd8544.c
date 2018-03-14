@@ -52,7 +52,7 @@ static void pcd8544_setBlock(uint8_t x, uint8_t y, uint8_t w)
     if (w == 1) ssd1306_sendByte( 0x22 ); else ssd1306_sendByte( 0x20 );
     ssd1306_sendByte(0x80 | x);
     ssd1306_sendByte(0x40 | y);
-    ssd1306_endTransmission();
+    ssd1306_spiDataMode(1);
 }
 
 static void pcd8544_nextPage(void)
@@ -61,7 +61,6 @@ static void pcd8544_nextPage(void)
     {
         ssd1306_endTransmission();
         pcd8544_setBlock(s_column, s_page+1, s_width);
-        ssd1306_dataStart();
     }
 }
 

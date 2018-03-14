@@ -28,6 +28,8 @@
 #include "lcd/lcd_common.h"
 #include <stddef.h>
 
+uint8_t ssd1306_dcQuickSwitch = 0;
+
 void  (*ssd1306_startTransmission)(void) = NULL;
 void  (*ssd1306_endTransmission)(void) = NULL;
 void  (*ssd1306_sendByte)(uint8_t data) = NULL;

@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2018, Alexey Dynda
+    Copyright (c) 2018, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -21,57 +21,44 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-
 /**
- * @file ssd1306_spi.h SSD1306 spi communication functions
+ * @file oled_ssd1351.h support for RGB OLED 128x128 display
  */
 
-#ifndef _SSD1306_SPI_H_
-#define _SSD1306_SPI_H_
 
-#include "ssd1306_spi_conf.h"
+#ifndef _OLED_SSD1351_H_
+#define _OLED_SSD1351_H_
+
+#include "hal/io.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /**
- * @defgroup LCD_INTERFACE_API LCD communication interface functions
+ * @defgroup LCD_DISPLAY_API LCD Display control functions
  * @{
  */
 
-/** chip enable pin to controll lcd display over spi */
-extern int8_t s_ssd1306_cs;
-/** data/command control pin for spi interface of lcd display */
-extern int8_t s_ssd1306_dc;
-
 /**
- * Inits lcd interface to use hardware spi for communication.
- * The function automatically selects available type of spi implementation
- * 1. SPI library (ssd1306_spiInit_hw())
- * @param cesPin - pin, controlling chip enable of LCD
- * @param dcPin - pin, controlling data/command mode of LCD
+ * @brief Inits 128x128 RGB OLED display (based on SSD1351 controller).
  *
- * @note: after call to this function you need to initialize lcd display.
+ * Inits 128x128 RGB OLED display (based on SSD1351 controller).
+ * User must init communication interface (i2c, spi) prior to calling this function.
+ * @see ssd1306_i2cInit()
+ * @see ssd1306_spiInit()
  */
-void         ssd1306_spiInit(int8_t cesPin, int8_t dcPin);
+void         ssd1351_128x128_init(void);
 
 /**
- * Switches spi chip to command transmission mode.
+ * @brief Inits 128x128 RGB OLED display over spi (based on SSD1351 controller).
+ *
+ * Inits 128x128 RGB OLED display over spi (based on SSD1351 controller)
+ * @param rstPin - pin controlling LCD reset (-1 if not used)
+ * @param cesPin - chip enable pin to LCD slave (-1 if not used)
+ * @param dcPin - data/command pin to control LCD dc (required)
  */
-void         ssd1306_spiCommandStart(void);
-
-/**
- * Switches spi chip to data transmission mode.
- */
-void         ssd1306_spiDataStart(void);
-
-/**
- * Switches spi to data(1) or command(0) mode.
- * @param mode - 1 data mode
- *               0 command mode
- */
-void         ssd1306_spiDataMode(uint8_t mode);
+void         ssd1351_128x128_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin);
 
 /**
  * @}
@@ -82,4 +69,4 @@ void         ssd1306_spiDataMode(uint8_t mode);
 #endif
 
 // ----------------------------------------------------------------------------
-#endif // _SSD1306_SPI_H_
+#endif // _OLED_SSD1351_H_

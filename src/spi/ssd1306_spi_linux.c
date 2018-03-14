@@ -46,6 +46,8 @@ void ssd1306_spiInit_Linux(int8_t cesPin, int8_t dcPin)
 void ssd1306_spiInit_Linux(int8_t cesPin, int8_t dcPin)
 {
     sdl_core_init();
+    ssd1306_dcQuickSwitch = 0;
+    sdl_set_dc_pin(dcPin);
     ssd1306_startTransmission = sdl_send_init;
     ssd1306_endTransmission = sdl_send_stop;
     ssd1306_sendByte = sdl_send_byte;

@@ -105,6 +105,7 @@ void ssd1306_spiInit_Usi(int8_t cesPin, int8_t dcPin)
         s_ssd1306_cs = cesPin;
         s_ssd1306_dc = dcPin;
     }
+    ssd1306_dcQuickSwitch = 1;
     ssd1306_spiConfigure_Usi();
     ssd1306_startTransmission = ssd1306_spiStart_Usi;
     ssd1306_endTransmission = ssd1306_spiStop_Usi;

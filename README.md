@@ -49,6 +49,7 @@ configurable through API.
  * i2c ssd1306 128x32 oled display
  * spi ssd1306 128x64 oled display
  * spi ssd1331 96x64 RGB oled display
+ * spi ssd1351 128x128 RGB oled display
  * spi pcd8544 84x48 nokia 5110 led display
 
 ## Supported platforms

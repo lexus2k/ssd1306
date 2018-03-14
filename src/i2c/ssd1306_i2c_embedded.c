@@ -167,6 +167,7 @@ void ssd1306_i2cInit_Embedded(int8_t scl, int8_t sda, uint8_t sa)
     if (scl>=0) s_scl = (1<<scl);
     if (sda>=0) s_sda = (1<<sda);
     if (sa)  s_sa  = sa;
+    ssd1306_dcQuickSwitch = 0;
     ssd1306_startTransmission = ssd1306_i2cStart_Embedded;
     ssd1306_endTransmission = ssd1306_i2cStop_Embedded;
     ssd1306_sendByte = ssd1306_i2cSendByte_Embedded;

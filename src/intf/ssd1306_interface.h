@@ -41,6 +41,16 @@ extern "C" {
  */
 
 /**
+ * Indicates if display driver supports quick switching between data and command modes:
+ * 0 means "not supported quick switching", 1 means "quick switching is supported".
+ * Quick switching allows to switch driver between data and command modes without
+ * reestablishing communication session. For all i2c interfaces quick switching is not supported,
+ * because data or command mode is defined by first sent byte in i2c session.
+ * All spi interfaces support quick switching.
+ */
+extern uint8_t ssd1306_dcQuickSwitch;
+
+/**
  * Starts communication with SSD1306 display.
  */
 extern void  (*ssd1306_startTransmission)(void);
@@ -94,7 +104,7 @@ extern void (*ssd1306_dataStart)(void);
  * @param data - byte to send to the controller memory
  * @note At present this function is used only in Arkanoid demo.
  */
-void         ssd1306_sendData(uint8_t data);
+void         ssd1306_sendData(uint8_t data) __attribute__ ((deprecated));
 
 /**
  * Sets block in RAM of lcd display controller to write data to.
@@ -105,6 +115,9 @@ void         ssd1306_sendData(uint8_t data);
  * @param x - column (left region)
  * @param y - page (top page of the block)
  * @param w - width of the block in pixels to control
+ *
+ * @warning - this function initiates session (i2c or spi) and do not close it.
+ *            To close session, please, use ssd1306_endTransmission().
  */
 extern void (*ssd1306_setRamBlock)(uint8_t x, uint8_t y, uint8_t w);
 
