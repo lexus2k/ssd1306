@@ -82,7 +82,7 @@ static void ssd1331_setBlock2(uint8_t x, uint8_t y, uint8_t w)
     ssd1306_sendByte(SSD1331_ROWADDR);
     ssd1306_sendByte(y);
     ssd1306_sendByte(s_displayHeight - 1);
-    ssd1306_endTransmission();
+    ssd1306_spiDataMode(1);
 }
 
 static void ssd1331_nextPage(void)

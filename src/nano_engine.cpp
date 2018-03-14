@@ -24,9 +24,7 @@
 
 #include "nano_engine.h"
 #include "lcd/lcd_common.h"
-
-// TODO: Remove the line below
-#include "lcd/oled_ssd1331.h"
+#include "ssd1306.h"
 
 extern SFixedFontInfo s_fixedFont;
 
@@ -36,7 +34,7 @@ extern SFixedFontInfo s_fixedFont;
 
 NanoCanvas8 NanoEngine8::canvas;
 
-uint8_t NanoEngine8::m_buffer[NE_TILE_SIZE * NE_TILE_SIZE];
+//uint8_t NanoEngine8::m_buffer[NE_TILE_SIZE * NE_TILE_SIZE];
 
 NanoEngine8::NanoEngine8()
    : NanoEngineBase()
@@ -49,18 +47,18 @@ void NanoEngine8::begin()
     // TODO: Maybe, this is not good place for this, but
     // TODO: ssd1331 must be initialized in Horizontal addressing mode
     ssd1331_setMode(0);
-    canvas.begin(NE_TILE_SIZE, NE_TILE_SIZE, m_buffer);
+    canvas.begin(NE_TILE_WIDTH, NE_TILE_HEIGHT, m_buffer);
     NanoEngineBase::begin();
 }
 
 void NanoEngine8::display()
 {
     m_lastFrameTs = millis();
-    for (uint8_t y = 0; y < s_displayHeight; y = y + NE_TILE_SIZE)
+    for (uint8_t y = 0; y < s_displayHeight; y = y + NE_TILE_HEIGHT)
     {
         uint16_t flag = m_refreshFlags[y >> NE_TILE_SIZE_BITS];
         m_refreshFlags[y >> NE_TILE_SIZE_BITS] = 0;
-        for (uint8_t x = 0; x < s_displayWidth; x = x + NE_TILE_SIZE)
+        for (uint8_t x = 0; x < s_displayWidth; x = x + NE_TILE_WIDTH)
         {
             if (flag & 0x01)
             {
@@ -82,11 +80,11 @@ void NanoEngine8::notify(const char *str)
     // TODO: It would be nice to calculate message height
     NanoPoint textPos = { (s_displayWidth - (lcdint_t)strlen(str)*s_fixedFont.width) >> 1, (s_displayHeight>>1) - 4 };
     refresh(rect);
-    for (uint8_t y = 0; y < s_displayHeight; y = y + NE_TILE_SIZE)
+    for (uint8_t y = 0; y < s_displayHeight; y = y + NE_TILE_HEIGHT)
     {
         uint16_t flag = m_refreshFlags[y >> NE_TILE_SIZE_BITS];
         m_refreshFlags[y >> NE_TILE_SIZE_BITS] = 0;
-        for (uint8_t x = 0; x < s_displayWidth; x = x + NE_TILE_SIZE)
+        for (uint8_t x = 0; x < s_displayWidth; x = x + NE_TILE_WIDTH)
         {
             if (flag & 0x01)
             {
@@ -115,7 +113,7 @@ void NanoEngine8::notify(const char *str)
 /** object, representing canvas. Use it in your draw handler */
 NanoCanvas1 NanoEngine1::canvas;
 
-uint8_t   NanoEngine1::m_buffer[NE_TILE_SIZE * NE_TILE_SIZE / 8];
+//uint8_t   NanoEngine1::m_buffer[NE_TILE_SIZE * NE_TILE_SIZE / 8];
 
 NanoEngine1::NanoEngine1()
    : NanoEngineBase()
@@ -125,18 +123,18 @@ NanoEngine1::NanoEngine1()
 
 void NanoEngine1::begin()
 {
-    canvas.begin(NE_TILE_SIZE, NE_TILE_SIZE, m_buffer);
+    canvas.begin(NE_TILE_WIDTH, NE_TILE_HEIGHT, m_buffer);
     NanoEngineBase::begin();
 }
 
 void NanoEngine1::display()
 {
     m_lastFrameTs = millis();
-    for (uint8_t y = 0; y < s_displayHeight; y = y + NE_TILE_SIZE)
+    for (uint8_t y = 0; y < s_displayHeight; y = y + NE_TILE_HEIGHT)
     {
         uint16_t flag = m_refreshFlags[y >> NE_TILE_SIZE_BITS];
         m_refreshFlags[y >> NE_TILE_SIZE_BITS] = 0;
-        for (uint8_t x = 0; x < s_displayWidth; x = x + NE_TILE_SIZE)
+        for (uint8_t x = 0; x < s_displayWidth; x = x + NE_TILE_WIDTH)
         {
             if (flag & 0x01)
             {
@@ -158,11 +156,11 @@ void NanoEngine1::notify(const char *str)
     // TODO: It would be nice to calculate message height
     NanoPoint textPos = { (s_displayWidth - (lcdint_t)strlen(str)*s_fixedFont.width) >> 1, (s_displayHeight>>1) - 4 };
     refresh(rect);
-    for (uint8_t y = 0; y < s_displayHeight; y = y + NE_TILE_SIZE)
+    for (uint8_t y = 0; y < s_displayHeight; y = y + NE_TILE_HEIGHT)
     {
         uint16_t flag = m_refreshFlags[y >> NE_TILE_SIZE_BITS];
         m_refreshFlags[y >> NE_TILE_SIZE_BITS] = 0;
-        for (uint8_t x = 0; x < s_displayWidth; x = x + NE_TILE_SIZE)
+        for (uint8_t x = 0; x < s_displayWidth; x = x + NE_TILE_WIDTH)
         {
             if (flag & 0x01)
             {
@@ -187,6 +185,8 @@ void NanoEngine1::notify(const char *str)
 ///////////////////////////////////////////////////////////////////////////////
 ////// NANO ENGINE TILER CLASS ////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
+
+#if 0
 
 uint16_t NanoEngineTiler::m_refreshFlags[NanoEngineTiler::NE_MAX_TILES_NUM];
 
@@ -226,6 +226,8 @@ void NanoEngineTiler::refresh()
         m_refreshFlags[i] = ~(0);
     }
 }
+
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 ////// NANO ENGINE BASE CLASS /////////////////////////////////////////////////

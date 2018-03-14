@@ -22,7 +22,7 @@
     SOFTWARE.
 */
 
-#include "lcd/oled_ssd1331.h"
+#include "ssd1306.h"
 #include "levels.h"
 
 const uint8_t blockColors[]=

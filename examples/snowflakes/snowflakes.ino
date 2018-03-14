@@ -148,6 +148,8 @@ const PROGMEM uint8_t snowFlakeImage[8][8] =
  * block, defined by column and row.                          */
 SpritePool s_pool;
 
+static uint32_t ts;
+
 void setup()
 {
     /* Do not init Wire library for Attiny controllers */
@@ -163,6 +165,7 @@ void setup()
     s_pool.setRect( (SSD1306_RECT) { 0, 0, (ssd1306_displayWidth()>>3) - 1, (ssd1306_displayHeight()>>3) - 1 } );
     /* Redraw whole LCD-display */
     s_pool.refreshScreen();
+    ts = millis();
 }
 
 /* Lets make no more than 10 snow flakes at once. Always remember that each snow flake needs SRAM memory: 19 bytes.
@@ -238,7 +241,6 @@ static uint8_t globalTimer=4;
 
 void loop()
 {
-    static uint32_t ts = millis();
     if (0 == (--globalTimer))
     {
         /* Try to add new snowflake every ~ 120ms */
@@ -246,7 +248,7 @@ void loop()
         addSnowFlake();
     }
     /* Move sprites every 33 milliseconds */
-    while (millis() - ts < 33);
+    while ((uint32_t)(millis() - ts) < 33);
     ts += 33;
     moveSnowFlakes();
     /* Redraw only those areas, affected by sprites */
