@@ -36,10 +36,12 @@ extern void sdl_core_draw(void);
 
 extern void sdl_command_start();
 extern void sdl_data_start();
+extern void sdl_set_dc_pin(int pin);
 extern void sdl_send_init();
 extern void sdl_send_byte(uint8_t data);
 extern void sdl_send_stop();
 extern int  sdl_read_analog(int pin);
+extern void sdl_write_digital(int pin, int value);
 
 extern void sdl_core_close(void);
 

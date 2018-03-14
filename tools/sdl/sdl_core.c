@@ -61,6 +61,8 @@ static int screenHeight = 64;
 SDL_Window     *g_window = NULL;
 SDL_Renderer   *g_renderer = NULL;
 static int s_analogInput[128];
+static int s_digitalPins[128];
+static int s_dcPin = -1;
 
 static int windowWidth() { return screenWidth * PIXEL_SIZE + BORDER_SIZE * 2; };
 static int windowHeight() { return screenHeight * PIXEL_SIZE + BORDER_SIZE * 2 + TOP_HEADER; };
@@ -128,10 +130,20 @@ static void sdl_poll_event(void)
     }
 }
 
+void sdl_set_dc_pin(int pin)
+{
+    s_dcPin = pin;
+}
+
 int sdl_read_analog(int pin)
 {
     sdl_poll_event();
     return s_analogInput[pin];
+}
+
+void sdl_write_digital(int pin, int value)
+{
+    s_digitalPins[pin] = value;
 }
 
 void sdl_core_draw(void)
@@ -207,12 +219,14 @@ void sdl_send_init()
 void sdl_data_start()
 {
     s_ssdMode = SSD_MODE_DATA;
+    if (s_dcPin>=0) s_digitalPins[s_dcPin] = 1;
     s_commandId = -1;
 }
 
 void sdl_command_start()
 {
     s_ssdMode = SSD_MODE_COMMAND;
+    if (s_dcPin>=0) s_digitalPins[s_dcPin] = 0;
     s_commandId = -1;
 }
 
@@ -224,6 +238,10 @@ static void sdl_ssd1331_data(uint8_t data);
 
 void sdl_send_byte(uint8_t data)
 {
+    if (s_dcPin>=0)
+    {
+        s_ssdMode = s_digitalPins[s_dcPin] ? SSD_MODE_DATA : SSD_MODE_COMMAND;
+    }
     if (s_ssdMode == SSD_MODE_NONE)
     {
         s_ssdMode = data == 0x00 ? SSD_MODE_COMMAND : SSD_MODE_DATA;

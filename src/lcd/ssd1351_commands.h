@@ -22,43 +22,48 @@
     SOFTWARE.
 */
 /**
- * @file ssd1331_commands.h SSD1331 commands definitions
+ * @file ssd1351_commands.h SSD1331 commands definitions
  */
 
-#ifndef _SSD1331_COMMANDS_H_
-#define _SSD1331_COMMANDS_H_
+#ifndef _SSD1351_COMMANDS_H_
+#define _SSD1351_COMMANDS_H_
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-/** SSD1331 LCD driver commands */
-enum ESsd1331Commands
+/** SSD1351 LCD driver commands */
+enum ESsd1351Commands
 {
-    SSD1331_COLUMNADDR       = 0x15,
-    SSD1331_DRAWLINE         = 0x21,
-    SSD1331_ROWADDR          = 0x75,
-    SSD1331_CONTRASTA        = 0x81,
-    SSD1331_CONTRASTB        = 0x82,
-    SSD1331_CONTRASTC        = 0x83,
-    SSD1331_MASTERCURRENT    = 0x87,
-    SSD1331_PRECHARGEA       = 0x8A,
-    SSD1331_PRECHARGEB       = 0x8B,
-    SSD1331_SEGREMAP         = 0xA0,
-    SSD1331_SETSTARTLINE     = 0xA1,
-    SSD1331_SETDISPLAYOFFSET = 0xA2,
-    SSD1331_NORMALDISPLAY    = 0xA4,
-    SSD1331_SETMULTIPLEX     = 0xA8,
-    SSD1331_SETMASTER        = 0xAD,
-    SSD1331_DISPLAYOFF       = 0xAE,
-    SSD1331_DISPLAYON        = 0xAF,
-    SSD1331_POWERMODE        = 0xB0,
-    SSD1331_SETPRECHARGE     = 0xB1,
-    SSD1331_CLOCKDIV         = 0xB3,
-    SSD1331_PRECHARGELEVEL   = 0xBB,
-    SSD1331_VCOMH            = 0xBE,
-    SSD1331_NOP              = 0xE3,
+    SSD1351_COLUMNADDR       = 0x15,
+    SSD1351_ROWADDR          = 0x75,
+    SSD1351_SEGREMAP         = 0xA0,
+    SSD1351_SETSTARTLINE     = 0xA1,
+    SSD1351_SETDISPLAYOFFSET = 0xA2,
+    SSD1351_SETFUNCTION      = 0xAB,
+    SSD1351_NOP              = 0xAD,
+    SSD1351_ALLOFF           = 0xA4,
+    SSD1351_DISPLAYON        = 0xA5,
+    SSD1351_NORMALDISPLAY    = 0xA6,
+    SSD1351_DISPLAYINVERSE   = 0xA7,
+    SSD1351_SLEEP_ON         = 0xAE,
+    SSD1351_SLEEP_OFF        = 0xAF,
+    SSD1351_NOP2             = 0xB0,
+    SSD1351_SETPRECHARGE     = 0xB1,
+    SSD1351_CLOCKDIV         = 0xB3,
+    SSD1351_EXTVSL           = 0xB4,
+    SSD1351_SETGPIO          = 0xB5,
+    SSD1351_PRECHARGESECOND  = 0xB6,
+    SSD1351_PRECHARGELEVEL   = 0xBB,
+    SSD1351_VCOMH            = 0xBE,
+    SSD1351_CONTRAST         = 0xC1,
+    SSD1351_MASTERCURRENT    = 0xC7,
+    SSD1351_SETMULTIPLEX     = 0xCA,
+    SSD1351_PRECHARGEA       = 0x8A,
+    SSD1351_PRECHARGEB       = 0x8B,
+    SSD1351_NOP3             = 0xE3,
+    SSD1351_UNLOCK           = 0xFD,
 };
 
 #ifdef __cplusplus
@@ -66,4 +71,4 @@ enum ESsd1331Commands
 #endif
 
 // ----------------------------------------------------------------------------
-#endif // _SSD1331_COMMANDS_H_
+#endif // _SSD1351_COMMANDS_H_

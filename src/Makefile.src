@@ -40,7 +40,8 @@ SRCS_C = \
 	lcd/lcd_pcd8544.c \
 	lcd/oled_sh1106.c \
 	lcd/oled_ssd1306.c \
-	lcd/oled_ssd1331.c
+	lcd/oled_ssd1331.c \
+	lcd/oled_ssd1351.c \
 
 SRCS_CPP = \
 	nano_canvas.cpp \

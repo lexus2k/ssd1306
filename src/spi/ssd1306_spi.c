@@ -61,4 +61,14 @@ void ssd1306_spiDataStart()
     ssd1306_startTransmission();
 }
 
-
+void ssd1306_spiDataMode(uint8_t mode)
+{
+    if (mode)
+    {
+        digitalWrite(s_ssd1306_dc, HIGH);
+    }
+    else
+    {
+        digitalWrite(s_ssd1306_dc, LOW);
+    }
+}

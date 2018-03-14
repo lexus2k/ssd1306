@@ -61,14 +61,21 @@ static void sh1106_setBlock(uint8_t x, uint8_t y, uint8_t w)
     ssd1306_sendByte(SSD1306_SETPAGE | y);
     ssd1306_sendByte((x>>4) | SSD1306_SETHIGHCOLUMN);
     ssd1306_sendByte((x & 0x0f) | SSD1306_SETLOWCOLUMN);
-    ssd1306_endTransmission();
+    if (ssd1306_dcQuickSwitch)
+    {
+        ssd1306_spiDataMode(1);
+    }    
+    else
+    {
+        ssd1306_endTransmission();
+        ssd1306_dataStart();
+    }
 }
 
 static void sh1106_nextPage(void)
 {
     ssd1306_endTransmission();
     sh1106_setBlock(s_column,s_page+1,0);
-    ssd1306_dataStart();
 }
 
 void    sh1106_128x64_init()

@@ -81,6 +81,7 @@ void ssd1306_spiInit_hw(int8_t cesPin, int8_t dcPin)
     if (dcPin >= 0) pinMode(dcPin, OUTPUT);
     if (cesPin) s_ssd1306_cs = cesPin;
     if (dcPin) s_ssd1306_dc = dcPin;
+    ssd1306_dcQuickSwitch = 1;
     ssd1306_startTransmission = ssd1306_spiStart_hw;
     ssd1306_endTransmission = ssd1306_spiStop_hw;
     ssd1306_sendByte = ssd1306_spiSendByte_hw;

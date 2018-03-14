@@ -29,6 +29,8 @@
 #include "spi/ssd1306_spi.h"
 #include "hal/io.h"
 
+extern uint16_t ssd1306_color;
+
 static const PROGMEM uint8_t s_oled96x64_initData[] =
 {
     SSD1331_DISPLAYOFF,             // display off
@@ -54,7 +56,6 @@ static const PROGMEM uint8_t s_oled96x64_initData[] =
 
 static uint8_t s_column;
 static uint8_t s_page;
-static uint16_t s_color = 0xFF;
 
 static void ssd1331_setBlock(uint8_t x, uint8_t y, uint8_t w)
 {
@@ -68,7 +69,7 @@ static void ssd1331_setBlock(uint8_t x, uint8_t y, uint8_t w)
     ssd1306_sendByte(SSD1331_ROWADDR);
     ssd1306_sendByte(y<<3);
     ssd1306_sendByte(((y<<3) + 7) < s_displayHeight ? ((y<<3) + 7) : (s_displayHeight - 1));
-    ssd1306_endTransmission();
+    ssd1306_spiDataMode(1);
 }
 
 static void ssd1331_setBlock2(uint8_t x, uint8_t y, uint8_t w)
@@ -88,7 +89,6 @@ static void ssd1331_nextPage(void)
 {
     ssd1306_endTransmission();
     ssd1331_setBlock(s_column,s_page+1,0);
-    ssd1306_dataStart();
 }
 
 static void ssd1331_sendPixels(uint8_t data)
@@ -97,7 +97,7 @@ static void ssd1331_sendPixels(uint8_t data)
     {
         if ( data & 0x01 )
         {
-            ssd1306_sendByte( (uint8_t)s_color );
+            ssd1306_sendByte( (uint8_t)ssd1306_color );
         }
         else
         {
@@ -105,16 +105,6 @@ static void ssd1331_sendPixels(uint8_t data)
         }
         data >>= 1;
     }
-}
-
-void    ssd1331_setColor(uint16_t color)
-{
-    s_color = color;
-}
-
-void    ssd1331_setRgbColor(uint8_t r, uint8_t g, uint8_t b)
-{
-    s_color = RGB_COLOR8(r,g,b);
 }
 
 void    ssd1331_setMode(uint8_t vertical)

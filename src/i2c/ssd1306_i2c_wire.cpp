@@ -94,6 +94,7 @@ static void ssd1306_i2cClose_Wire()
 void ssd1306_i2cInit_Wire(uint8_t sa)
 {
     if (sa) s_sa = sa;
+    ssd1306_dcQuickSwitch = 0;
     ssd1306_startTransmission = ssd1306_i2cStart_Wire;
     ssd1306_endTransmission = ssd1306_i2cStop_Wire;
     ssd1306_sendByte = ssd1306_i2cSendByte_Wire;

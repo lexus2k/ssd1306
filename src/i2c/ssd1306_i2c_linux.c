@@ -130,6 +130,7 @@ void ssd1306_i2cInit_Linux(int8_t busId, uint8_t sa)
 void ssd1306_i2cInit_Linux(int8_t busId, uint8_t sa)
 {
     sdl_core_init();
+    ssd1306_dcQuickSwitch = 0;
     ssd1306_startTransmission = sdl_send_init;
     ssd1306_endTransmission = sdl_send_stop;
     ssd1306_sendByte = sdl_send_byte;

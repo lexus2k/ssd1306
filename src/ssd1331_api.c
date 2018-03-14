@@ -22,11 +22,24 @@
     SOFTWARE.
 */
 
+#include "ssd1306.h"
 #include "ssd1331_api.h"
 #include "intf/ssd1306_interface.h"
 #include "hal/io.h"
 
 #include "lcd/ssd1331_commands.h"
+
+extern uint16_t ssd1306_color;
+
+void    ssd1331_setColor(uint16_t color)
+{
+    ssd1306_color = color;
+}
+
+void    ssd1331_setRgbColor(uint8_t r, uint8_t g, uint8_t b)
+{
+    ssd1306_color = RGB_COLOR8(r,g,b);
+}
 
 void         ssd1331_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint16_t color)
 {
@@ -45,7 +58,6 @@ void         ssd1331_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, ui
 void         ssd1331_fastDrawBuffer8(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *data)
 {
     ssd1306_setRamBlock(x, y, w);
-    ssd1306_dataStart();
     uint16_t count = w * h;
     while (count--)
     {

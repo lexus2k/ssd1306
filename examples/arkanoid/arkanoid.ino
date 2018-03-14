@@ -209,7 +209,6 @@ void drawPlatform()
     uint8_t pos = (platformPos < PLATFORM_SPEED) ? 0: (platformPos - PLATFORM_SPEED);
     ssd1331_setColor(RGB_COLOR8(255,255,0));
     ssd1306_setRamBlock( pos + LEFT_EDGE + 1, PLATFORM_ROW, platformWidth + PLATFORM_SPEED * 2 );
-    ssd1306_dataStart();
     while (pos < platformPos)
     {
        ssd1306_sendPixels(0B00000000);
@@ -243,9 +242,11 @@ void drawFieldEdges()
     {
         i--;
         ssd1306_setRamBlock(LEFT_EDGE, i, 1);
-        ssd1306_sendData( 0B01010101 );
+        ssd1306_sendPixels( 0B01010101 );
+        ssd1306_endTransmission();
         ssd1306_setRamBlock(RIGHT_EDGE, i, 1);
-        ssd1306_sendData( 0B01010101 );
+        ssd1306_sendPixels( 0B01010101 );
+        ssd1306_endTransmission();
     }
 }
 
@@ -406,11 +407,13 @@ void drawBall(uint8_t lastx, uint8_t lasty)
     temp = 0B00000001 << (newy & 0x07);
     ssd1331_setColor(RGB_COLOR8(255,255,255));
     ssd1306_setRamBlock(LEFT_EDGE + 1 + newx, newy >> 3, 1);
-    ssd1306_sendData( temp );
+    ssd1306_sendPixels( temp );
+    ssd1306_endTransmission();
     if ((newx != lastx) || ((newy >> 3) != (lasty >> 3)))
     {
         ssd1306_setRamBlock(LEFT_EDGE + 1 + lastx, lasty >> 3, 1);
-        ssd1306_sendData( 0B00000000 );
+        ssd1306_sendPixels( 0B00000000 );
+        ssd1306_endTransmission();
     }
 }
 
@@ -654,7 +657,8 @@ void platformCrashAnimation()
         for ( uint8_t i = 0; i < platformWidth >> 2; i++ )
         {
             ssd1306_setRamBlock( platformPos + ((j & 0x01)<<1) + ((j & 0x02)>>1) + (i<<2) + LEFT_EDGE + 1, PLATFORM_ROW, platformWidth );
-            ssd1306_sendData( 0B00000000 );
+            ssd1306_sendPixels( 0B00000000 );
+            ssd1306_endTransmission();
         }
         delay(150);
     }

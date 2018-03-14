@@ -29,18 +29,26 @@
 #ifndef _SSD1306_H_
 #define _SSD1306_H_
 
+#include "ssd1331_api.h"
 #include "nano_gfx_types.h"
 #include "ssd1306_fonts.h"
 #include "i2c/ssd1306_i2c_conf.h"
 #include "spi/ssd1306_spi_conf.h"
 #include "lcd/oled_ssd1306.h"
 #include "lcd/oled_ssd1331.h"
+#include "lcd/oled_ssd1351.h"
 #include "lcd/oled_sh1106.h"
 #include "lcd/lcd_pcd8544.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/** Macro to generate 8-bit color for SSD1331 OLED display */
+#define RGB_COLOR8(r,g,b)    ( (r & 0xE0) | ((g >> 3)&0x1C) | (b>>6) )
+
+/** Macro to generate 16-bit color for SSD1351 OLED display */
+#define RGB_COLOR16(r,g,b)    ( ((r<<8) & 0xF800) | ((g << 3)&0x07E0) | (b>>3) )
 
 ///////////////////////////////////////////////////////////////////////
 //                 DISPLAY CONTROL FUNCTIONS

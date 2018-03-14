@@ -79,7 +79,15 @@ static void ssd1306_setBlock(uint8_t x, uint8_t y, uint8_t w)
     ssd1306_sendByte(SSD1306_PAGEADDR);
     ssd1306_sendByte(y);
     ssd1306_sendByte((s_displayHeight >> 3) - 1);
-    ssd1306_endTransmission();
+    if (ssd1306_dcQuickSwitch)
+    {
+        ssd1306_spiDataMode(1);
+    }    
+    else
+    {
+        ssd1306_endTransmission();
+        ssd1306_dataStart();
+    }
 }
 
 static void ssd1306_nextPage(void)

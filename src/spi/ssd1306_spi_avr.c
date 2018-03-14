@@ -93,6 +93,7 @@ void ssd1306_spiInit_avr(int8_t cesPin, int8_t dcPin)
     if (dcPin >= 0) pinMode(dcPin, OUTPUT);
     if (cesPin) s_ssd1306_cs = cesPin;
     if (dcPin) s_ssd1306_dc = dcPin;
+    ssd1306_dcQuickSwitch = 1;
     ssd1306_spiConfigure_avr();
     ssd1306_startTransmission = ssd1306_spiStart_avr;
     ssd1306_endTransmission = ssd1306_spiStop_avr;
