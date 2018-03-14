@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.4.10</span>
+   &#160;<span id="projectnumber">1.4.12</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331 RGB i2c/spi OLED displays and spi PCD8544 LED display</div>
   </td>
@@ -100,17 +100,21 @@ Functions</h2></td></tr>
 <tr class="separator:ga5bdb592a9f02287a8743b922d51e957b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf63dd3db50389223a46d7c4eb716ef83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaf63dd3db50389223a46d7c4eb716ef83">ssd1306_sendCommand</a> (uint8_t command)</td></tr>
 <tr class="separator:gaf63dd3db50389223a46d7c4eb716ef83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga943f99ae0f9206ee743fb414eecba0f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga943f99ae0f9206ee743fb414eecba0f9">ssd1306_sendData</a> (uint8_t data)</td></tr>
-<tr class="separator:ga943f99ae0f9206ee743fb414eecba0f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga223fdc8edd9172690f961922f46d330c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga223fdc8edd9172690f961922f46d330c">ssd1306_sendData</a> (uint8_t data) __attribute__((deprecated))</td></tr>
+<tr class="separator:ga223fdc8edd9172690f961922f46d330c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0e21371367897c0f86480cfccc100b5c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga0e21371367897c0f86480cfccc100b5c">ssd1306_spiInit</a> (int8_t cesPin, int8_t dcPin)</td></tr>
 <tr class="separator:ga0e21371367897c0f86480cfccc100b5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac7712122b0b76b67b841344d269b567b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gac7712122b0b76b67b841344d269b567b">ssd1306_spiCommandStart</a> (void)</td></tr>
 <tr class="separator:gac7712122b0b76b67b841344d269b567b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7824df0a63ca32ec5fdb0f7ce9652e24"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga7824df0a63ca32ec5fdb0f7ce9652e24">ssd1306_spiDataStart</a> (void)</td></tr>
 <tr class="separator:ga7824df0a63ca32ec5fdb0f7ce9652e24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa6e3e3fd6e5bc89180176c40f9455ea2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa6e3e3fd6e5bc89180176c40f9455ea2">ssd1306_spiDataMode</a> (uint8_t mode)</td></tr>
+<tr class="separator:gaa6e3e3fd6e5bc89180176c40f9455ea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:gaa37393f9d8e76b0c6bbcb09e3433da64"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa37393f9d8e76b0c6bbcb09e3433da64">ssd1306_dcQuickSwitch</a></td></tr>
+<tr class="separator:gaa37393f9d8e76b0c6bbcb09e3433da64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga651554687d8adda2c9e9fe228a568e47"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga651554687d8adda2c9e9fe228a568e47">ssd1306_startTransmission</a> )(void)</td></tr>
 <tr class="separator:ga651554687d8adda2c9e9fe228a568e47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4c6fb9d3594588ca5aa37e942f9a622a"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga4c6fb9d3594588ca5aa37e942f9a622a">ssd1306_endTransmission</a> )(void)</td></tr>
@@ -408,12 +412,12 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00042">42</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00044">44</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
 
 </div>
 </div>
-<a id="ga943f99ae0f9206ee743fb414eecba0f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga943f99ae0f9206ee743fb414eecba0f9">&#9670;&nbsp;</a></span>ssd1306_sendData()</h2>
+<a id="ga223fdc8edd9172690f961922f46d330c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga223fdc8edd9172690f961922f46d330c">&#9670;&nbsp;</a></span>ssd1306_sendData()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -435,7 +439,7 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
 </dl>
 <dl class="section note"><dt>Note</dt><dd>At present this function is used only in Arkanoid demo. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00049">49</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00051">51</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
 
 </div>
 </div>
@@ -457,6 +461,32 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
 <p>Switches spi chip to command transmission mode. </p>
 
 <p class="definition">Definition at line <a class="el" href="ssd1306__spi_8c_source.html#l00052">52</a> of file <a class="el" href="ssd1306__spi_8c_source.html">ssd1306_spi.c</a>.</p>
+
+</div>
+</div>
+<a id="gaa6e3e3fd6e5bc89180176c40f9455ea2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa6e3e3fd6e5bc89180176c40f9455ea2">&#9670;&nbsp;</a></span>ssd1306_spiDataMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1306_spiDataMode </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>mode</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Switches spi to data(1) or command(0) mode. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mode</td><td>- 1 data mode 0 command mode </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="ssd1306__spi_8c_source.html#l00064">64</a> of file <a class="el" href="ssd1306__spi_8c_source.html">ssd1306_spi.c</a>.</p>
 
 </div>
 </div>
@@ -572,7 +602,7 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
 <p>deinitializes internal resources, allocated for interface. </p>
 <p>Deinitializes internal resources, allocated for interface. There is no need to use this function for microcontrollers. In general the function has meaning in Linux-like systems. </p>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00036">36</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00038">38</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
 
 </div>
 </div>
@@ -589,7 +619,7 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
 </div><div class="memdoc">
 <p>Starts transaction for sending commands. </p>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00034">34</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00036">36</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
 
 </div>
 </div>
@@ -606,7 +636,24 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
 </div><div class="memdoc">
 <p>Starts transaction for sending bitmap data. </p>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00035">35</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00037">37</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+
+</div>
+</div>
+<a id="gaa37393f9d8e76b0c6bbcb09e3433da64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa37393f9d8e76b0c6bbcb09e3433da64">&#9670;&nbsp;</a></span>ssd1306_dcQuickSwitch</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ssd1306_dcQuickSwitch</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indicates if display driver supports quick switching between data and command modes: 0 means "not supported quick switching", 1 means "quick switching is supported". Quick switching allows to switch driver between data and command modes without reestablishing communication session. For all i2c interfaces quick switching is not supported, because data or command mode is defined by first sent byte in i2c session. All spi interfaces support quick switching. </p>
+
+<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00031">31</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
 
 </div>
 </div>
@@ -623,7 +670,7 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
 </div><div class="memdoc">
 <p>Ends communication with SSD1306 display. </p>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00032">32</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00034">34</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
 
 </div>
 </div>
@@ -640,7 +687,7 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
 </div><div class="memdoc">
 <p>Switches to the start of next RAM page for the block, specified by <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gadd0f99f7f4f9bae0c1035ada7f578a05">ssd1306_setRamBlock()</a>. For ssd1306 it does nothing, while for sh1106 the function moves cursor to next page. </p>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00039">39</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00041">41</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
 
 </div>
 </div>
@@ -662,7 +709,7 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00033">33</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00035">35</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
 
 </div>
 </div>
@@ -684,7 +731,7 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00040">40</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00042">42</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
 
 </div>
 </div>
@@ -703,12 +750,13 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
   <table class="params">
     <tr><td class="paramname">x</td><td>- column (left region) </td></tr>
     <tr><td class="paramname">y</td><td>- page (top page of the block) </td></tr>
-    <tr><td class="paramname">w</td><td>- width of the block in pixels to control </td></tr>
+    <tr><td class="paramname">w</td><td>- width of the block in pixels to control</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section warning"><dt>Warning</dt><dd>- this function initiates session (i2c or spi) and do not close it. To close session, please, use <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga4c6fb9d3594588ca5aa37e942f9a622a">ssd1306_endTransmission()</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00038">38</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00040">40</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
 
 </div>
 </div>
@@ -725,7 +773,7 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
 </div><div class="memdoc">
 <p>Starts communication with SSD1306 display. </p>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00031">31</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8c_source.html#l00033">33</a> of file <a class="el" href="ssd1306__interface_8c_source.html">ssd1306_interface.c</a>.</p>
 
 </div>
 </div>
