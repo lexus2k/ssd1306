@@ -49,7 +49,6 @@ extern "C" {
  */
 void        ssd1331_setMode(uint8_t vertical);
 
-
 /**
  * @defgroup LCD_DISPLAY_API LCD Display control functions
  * @{

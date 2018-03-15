@@ -25,71 +25,35 @@
 #include "core.h"
 
 ///////////////////////////////////////////////////////////////////////////////
-////// NANO ENGINE BASE CLASS /////////////////////////////////////////////////
+////// NANO ENGINE INPUTS CLASS ///////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-static const uint8_t ENGINE_DEFAULT_FPS = 30;
-
-/** Duration between frames in milliseconds */
-uint8_t   NanoEngineBase::m_frameDurationMs = 1000/ENGINE_DEFAULT_FPS;
-/** Current fps */
-uint8_t   NanoEngineBase::m_fps = ENGINE_DEFAULT_FPS;
-/** Current cpu load in percents */
-uint8_t   NanoEngineBase::m_cpuLoad = 0;
-/** Last timestamp in milliseconds the frame was updated on oled display */
-uint32_t  NanoEngineBase::m_lastFrameTs;
-/** Callback to call if specific tile needs to be updated */
-TNanoEngineOnDraw NanoEngineBase::m_onDraw = nullptr;
 /** Callback to call if buttons state needs to be updated */
-TNanoEngineGetButtons NanoEngineBase::m_onButtons = nullptr;
-/** Callback to call before starting oled update */
-TLoopCallback NanoEngineBase::m_loop = nullptr;
+TNanoEngineGetButtons NanoEngineInputs::m_onButtons = nullptr;
 
-NanoEngineBase::NanoEngineBase()
-{
-}
-
-void NanoEngineBase::begin()
-{
-    m_lastFrameTs = millis();
-}
-
-void NanoEngineBase::setFrameRate(uint8_t fps)
-{
-    m_fps = fps;
-    m_frameDurationMs = 1000/fps;
-}
-
-bool NanoEngineBase::nextFrame()
-{
-    bool needUpdate = (uint32_t)(millis() - m_lastFrameTs) >= m_frameDurationMs;
-    if (needUpdate && m_loop) m_loop();
-    return needUpdate;
-}
-
-bool NanoEngineBase::pressed(uint8_t buttons)
+bool NanoEngineInputs::pressed(uint8_t buttons)
 {
     return (m_onButtons() & buttons) == buttons;
 }
 
-bool NanoEngineBase::notPressed(uint8_t buttons)
+bool NanoEngineInputs::notPressed(uint8_t buttons)
 {
     return (m_onButtons() & buttons) == 0;
 }
 
-void NanoEngineBase::connectCustomKeys(TNanoEngineGetButtons handler)
+void NanoEngineInputs::connectCustomKeys(TNanoEngineGetButtons handler)
 {
     m_onButtons = handler;
 }
 
-void NanoEngineBase::connectArduboyKeys()
+void NanoEngineInputs::connectArduboyKeys()
 {
     m_onButtons = arduboyButtons;
 }
 
-uint8_t NanoEngineBase::s_zkeypadPin;
+uint8_t NanoEngineInputs::s_zkeypadPin;
 
-uint8_t NanoEngineBase::zkeypadButtons()
+uint8_t NanoEngineInputs::zkeypadButtons()
 {
     int buttonValue = analogRead(s_zkeypadPin);
     if (buttonValue < 100) return BUTTON_RIGHT;
@@ -101,13 +65,13 @@ uint8_t NanoEngineBase::zkeypadButtons()
     return BUTTON_NONE;
 }
 
-void NanoEngineBase::connectZKeypad(uint8_t analogPin)
+void NanoEngineInputs::connectZKeypad(uint8_t analogPin)
 {
-    NanoEngineBase::s_zkeypadPin = analogPin;
+    NanoEngineInputs::s_zkeypadPin = analogPin;
     m_onButtons = zkeypadButtons;
 }
 
-uint8_t NanoEngineBase::arduboyButtons()
+uint8_t NanoEngineInputs::arduboyButtons()
 {
     uint8_t buttons;
     /* Arduboy buttons available only for Atmega32U4 platform */

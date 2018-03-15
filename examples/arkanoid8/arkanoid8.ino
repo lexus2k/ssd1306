@@ -336,6 +336,8 @@ void setup()
     ssd1306_setFixedFont(ssd1306xled_font6x8_AB);
     /* Init SPI 96x64 RBG oled. 3 - RESET, 4 - CS (can be omitted, oled CS must be pulled down), 5 - D/C */
     ssd1331_96x64_spi_init(3, 4, 5);
+    /* ssd1331 must be initialized in Horizontal addressing mode */
+    ssd1331_setMode(0);
 //    ssd1306_128x64_spi_init(3, 4, 5);
 
     /* Configure engine to use ZKeypand on A0 as control board. */

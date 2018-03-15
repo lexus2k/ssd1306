@@ -29,10 +29,8 @@
 #ifndef _NANO_ENGINE_CORE_H_
 #define _NANO_ENGINE_CORE_H_
 
+#include "tiler.h"
 #include "nano_canvas.h"
-
-/** Type of user-specified draw callback */
-typedef bool (*TNanoEngineOnDraw)(void);
 
 /** Type of user-specified keyboard callback */
 typedef uint8_t (*TNanoEngineGetButtons)(void);
@@ -52,61 +50,16 @@ enum
 };
 
 /**
- * Base class for NanoEngine.
+ * Class for keys processing functionality
  */
-class NanoEngineBase
+class NanoEngineInputs
 {
+protected:
+    /**
+     * Initializes Nano Engine Inputs object.
+     */
+    NanoEngineInputs() {};
 public:
-    /**
-     * Initializes Nano Engine Base object.
-     */
-    NanoEngineBase();
-
-    /**
-     * Initializes internal timestamps.
-     */
-    static void begin();
-
-    /**
-     * Sets working frame-rate for the engine
-     * @param fps - frame rate to set between [1-255]
-     */
-    static void setFrameRate(uint8_t fps);
- 
-    /**
-     * Returns current frame rate
-     */
-    static uint8_t getFrameRate() { return m_fps; };
-
-    /**
-     * Returns cpu load in percents [0-255].
-     * 100 means maximum normal CPU load.
-     * 0 means, CPU has nothing to do.
-     * >100 means that CPU is not enough to perform all operations
-     */
-    static uint8_t getCpuLoad() { return m_cpuLoad; };
-
-    /**
-     * Returns true if it is time to render next frame
-     */
-    static bool nextFrame();
-
-    /**
-     * Sets user-defined draw callback. This callback will be called everytime, engine needs
-     * to update display content. If callback returns false, engine will not update those area.
-     * You always have a way to find out, which area is being updated by engine via
-     * NanoEngine8::canvas::getOffset() and NE_TILE_SIZE.
-     * @param callback - user-defined draw callback.
-     * @note you can change draw callback anytime you need.
-     */
-    static void drawCallback(TNanoEngineOnDraw callback) { m_onDraw = callback; };
-
-    /**
-     * Sets user-defined loop callback. This callback will be called once every time
-     * new frame needs to be refreshed on oled display.
-     */
-    static void loopCallback(TLoopCallback callback) { m_loop = callback; };
-
     /**
      * @brief Returns true if button or specific combination of buttons is not pressed.
      * Returns true if button or specific combination of buttons is pressed.
@@ -152,6 +105,78 @@ public:
     static void connectArduboyKeys();
 
 protected:
+    /** Callback to call if buttons state needs to be updated */
+    static TNanoEngineGetButtons m_onButtons;
+
+private:
+    static uint8_t s_zkeypadPin;
+    static uint8_t zkeypadButtons();
+    static uint8_t arduboyButtons();
+};
+
+/**
+ * Base class for NanoEngine.
+ */
+template<class C, uint8_t W, uint8_t H, uint8_t B>
+class NanoEngineCore: public NanoEngineInputs, public NanoEngineTiler<C,W,H,B>
+{
+public:
+    /**
+     * Initializes Nano Engine Base object.
+     */
+    NanoEngineCore();
+
+    /**
+     * Initializes internal timestamps.
+     */
+    static void begin();
+
+    /**
+     * Sets working frame-rate for the engine
+     * @param fps - frame rate to set between [1-255]
+     */
+    static void setFrameRate(uint8_t fps);
+ 
+    /**
+     * Returns current frame rate
+     */
+    static uint8_t getFrameRate() { return m_fps; };
+
+    /**
+     * Returns cpu load in percents [0-255].
+     * 100 means maximum normal CPU load.
+     * 0 means, CPU has nothing to do.
+     * >100 means that CPU is not enough to perform all operations
+     */
+    static uint8_t getCpuLoad() { return m_cpuLoad; };
+
+    /**
+     * Returns true if it is time to render next frame
+     */
+    static bool nextFrame();
+
+    /**
+     * Sets user-defined loop callback. This callback will be called once every time
+     * new frame needs to be refreshed on oled display.
+     */
+    static void loopCallback(TLoopCallback callback) { m_loop = callback; };
+
+    /**
+     * @brief refreshes content on oled display.
+     * Refreshes content on oled display. Call it, if you want to update the screen.
+     * Engine will update only those areas, which are marked by refresh()
+     * methods.
+     */
+    static void display();
+
+    /**
+     * @brief shows notification to a user for 1 seconds
+     * Shows notification to a user for 1 seconds
+     * @param str - pointer to null-terminated string to show
+     */
+    static void notify(const char *str);
+
+protected:
     /** Duration between frames in milliseconds */
     static uint8_t   m_frameDurationMs;
     /** Current fps */
@@ -160,18 +185,73 @@ protected:
     static uint8_t   m_cpuLoad;
     /** Last timestamp in milliseconds the frame was updated on oled display */
     static uint32_t  m_lastFrameTs;
-    /** Callback to call if specific tile needs to be updated */
-    static TNanoEngineOnDraw m_onDraw;
-    /** Callback to call if buttons state needs to be updated */
-    static TNanoEngineGetButtons m_onButtons;
     /** Callback to call before starting oled update */
     static TLoopCallback m_loop;
-
-private:
-    static uint8_t s_zkeypadPin;
-    static uint8_t zkeypadButtons();
-    static uint8_t arduboyButtons();
 };
+
+/** Defaut frame rate for all engines */
+static const uint8_t ENGINE_DEFAULT_FPS = 30;
+
+/** Duration between frames in milliseconds */
+template<class C, uint8_t W, uint8_t H, uint8_t B>
+uint8_t   NanoEngineCore<C,W,H,B>::m_frameDurationMs = 1000/ENGINE_DEFAULT_FPS;
+/** Current fps */
+template<class C, uint8_t W, uint8_t H, uint8_t B>
+uint8_t   NanoEngineCore<C,W,H,B>::m_fps = ENGINE_DEFAULT_FPS;
+/** Current cpu load in percents */
+template<class C, uint8_t W, uint8_t H, uint8_t B>
+uint8_t   NanoEngineCore<C,W,H,B>::m_cpuLoad = 0;
+/** Last timestamp in milliseconds the frame was updated on oled display */
+template<class C, uint8_t W, uint8_t H, uint8_t B>
+uint32_t  NanoEngineCore<C,W,H,B>::m_lastFrameTs;
+/** Callback to call before starting oled update */
+template<class C, uint8_t W, uint8_t H, uint8_t B>
+TLoopCallback NanoEngineCore<C,W,H,B>::m_loop = nullptr;
+
+template<class C, uint8_t W, uint8_t H, uint8_t B>
+NanoEngineCore<C,W,H,B>::NanoEngineCore()
+    : NanoEngineInputs()
+{
+}
+
+template<class C, uint8_t W, uint8_t H, uint8_t B>
+void NanoEngineCore<C,W,H,B>::begin()
+{
+    m_lastFrameTs = millis();
+}
+
+template<class C, uint8_t W, uint8_t H, uint8_t B>
+void NanoEngineCore<C,W,H,B>::setFrameRate(uint8_t fps)
+{
+    m_fps = fps;
+    m_frameDurationMs = 1000/fps;
+}
+
+template<class C, uint8_t W, uint8_t H, uint8_t B>
+bool NanoEngineCore<C,W,H,B>::nextFrame()
+{
+    bool needUpdate = (uint32_t)(millis() - m_lastFrameTs) >= m_frameDurationMs;
+    if (needUpdate && m_loop) m_loop();
+    return needUpdate;
+}
+
+template<class C, uint8_t W, uint8_t H, uint8_t B>
+void NanoEngineCore<C,W,H,B>::display()
+{
+    m_lastFrameTs = millis();
+    NanoEngineTiler<C,W,H,B>::displayBuffer();
+    m_cpuLoad = ((millis() - m_lastFrameTs)*100)/m_frameDurationMs;
+}
+
+template<class C, uint8_t W, uint8_t H, uint8_t B>
+void NanoEngineCore<C,W,H,B>::notify(const char *str)
+{
+    NanoEngineTiler<C,W,H,B>::displayPopup(str);
+    delay(1000);
+    m_lastFrameTs = millis();
+    NanoEngineTiler<C,W,H,B>::refresh();
+}
+
 
 #endif
 

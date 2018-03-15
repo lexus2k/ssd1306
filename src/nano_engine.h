@@ -47,39 +47,13 @@
  * In your application you can choose, if you want to refresh whole screen (refresh()), or you
  * need to refresh only part of oled display.
  */
-class NanoEngine8: public NanoEngineBase, public NanoEngineTiler<TILE_8x8_RGB8>
+class NanoEngine8: public NanoEngineCore<TILE_8x8_RGB8>
 {
 public:
-    /** object, representing canvas. Use it in your draw handler */
-    static NanoCanvas8 canvas;
-
     /**
      * Creates new Graphics Engine object.
      */
-    NanoEngine8();
-
-    /**
-     * Initializes engine, sets required mode for OLED display
-     */
-    static void begin();
-
-    /**
-     * @brief refreshes content on oled display.
-     * Refreshes content on oled display. Call it, if you want to update the screen.
-     * Engine will update only those areas, which are marked by refresh()
-     * methods.
-     */
-    static void display();
-
-    /**
-     * @brief shows notification to a user for 2 seconds
-     * Shows notification to a user for 2 seconds
-     * @param str - pointer to null-terminated string to show
-     */
-    static void notify(const char *str);
-
-private:
-//    static uint8_t   m_buffer[(1<<NE_TILE_SIZE_BITS) * (1<<NE_TILE_SIZE_BITS)];
+    NanoEngine8(): NanoEngineCore() {};
 };
 
 /**
@@ -96,39 +70,13 @@ private:
  * In your application you can choose, if you want to refresh whole screen (refresh()), or you
  * need to refresh only part of oled display.
  */
-class NanoEngine1: public NanoEngineBase, public NanoEngineTiler<TILE_8x8_MONO>
+class NanoEngine1: public NanoEngineCore<TILE_8x8_MONO>
 {
 public:
-    /** object, representing canvas. Use it in your draw handler */
-    static NanoCanvas1 canvas;
-
     /**
      * Creates new Graphics Engine object.
      */
-    NanoEngine1();
-
-    /**
-     * Initializes engine, sets required mode for OLED display
-     */
-    static void begin();
-
-    /**
-     * @brief refreshes content on oled display.
-     * Refreshes content on oled display. Call it, if you want to update the screen.
-     * Engine will update only those areas, which are marked by refresh()
-     * methods.
-     */
-    static void display();
-
-    /**
-     * @brief shows notification to a user for 2 seconds
-     * Shows notification to a user for 2 seconds
-     * @param str - pointer to null-terminated string to show
-     */
-    static void notify(const char *str);
-
-private:
-//    static uint8_t   m_buffer[(1<<NE_TILE_SIZE_BITS) * (1<<NE_TILE_SIZE_BITS) / 8];
+    NanoEngine1(): NanoEngineCore() {};
 };
 
 #endif

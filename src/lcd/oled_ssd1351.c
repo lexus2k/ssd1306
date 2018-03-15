@@ -80,10 +80,45 @@ static void ssd1351_setBlock(uint8_t x, uint8_t y, uint8_t w)
     ssd1306_spiDataMode(1);
 }
 
+static void ssd1351_setBlock2(uint8_t x, uint8_t y, uint8_t w)
+{
+    uint8_t rx = w ? (x + w - 1) : (s_displayWidth - 1);
+    ssd1306_commandStart();
+    ssd1306_sendByte(SSD1351_COLUMNADDR);
+    ssd1306_spiDataMode(1);
+    ssd1306_sendByte(x);
+    ssd1306_sendByte(rx < s_displayWidth ? rx : (s_displayWidth - 1));
+    ssd1306_spiDataMode(0);
+    ssd1306_sendByte(SSD1351_ROWADDR);
+    ssd1306_spiDataMode(1);
+    ssd1306_sendByte(y);
+    ssd1306_sendByte(s_displayHeight - 1);
+    ssd1306_spiDataMode(0);
+    ssd1306_sendByte(0x5C);
+    ssd1306_spiDataMode(1);
+}
+
 static void ssd1351_nextPage(void)
 {
     ssd1306_endTransmission();
     ssd1351_setBlock(s_column,s_page+1,0);
+}
+
+void    ssd1351_setMode(uint8_t vertical)
+{
+    ssd1306_commandStart();
+    ssd1306_sendByte( SSD1351_SEGREMAP );
+    ssd1306_spiDataMode(1);
+    ssd1306_sendByte( 0B00110100 | vertical );
+    ssd1306_endTransmission();
+    if (vertical)
+    {
+        ssd1306_setRamBlock = ssd1351_setBlock;
+    }
+    else
+    {
+        ssd1306_setRamBlock = ssd1351_setBlock2;
+    }
 }
 
 static void ssd1351_sendPixels(uint8_t data)
