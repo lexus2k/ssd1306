@@ -39,6 +39,9 @@
 #include <unistd.h>
 #include "sdl_core.h"
 #else
+#if defined(SDL_EMULATION)
+#include "sdl_core.h"
+#endif
 #include <stdint.h>
 #include <unistd.h>
 #endif
