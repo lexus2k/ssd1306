@@ -87,3 +87,41 @@ uint8_t NanoEngineInputs::arduboyButtons()
     #endif
     return buttons;
 }
+
+///////////////////////////////////////////////////////////////////////////////
+////// NANO ENGINE TASK CLASS /////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+/** Defaut frame rate for all engines */
+static const uint8_t ENGINE_DEFAULT_FPS = 30;
+
+/** Duration between frames in milliseconds */
+uint8_t   NanoEngineCore::m_frameDurationMs = 1000/ENGINE_DEFAULT_FPS;
+/** Current fps */
+uint8_t   NanoEngineCore::m_fps = ENGINE_DEFAULT_FPS;
+/** Current cpu load in percents */
+uint8_t   NanoEngineCore::m_cpuLoad = 0;
+/** Last timestamp in milliseconds the frame was updated on oled display */
+uint32_t  NanoEngineCore::m_lastFrameTs;
+/** Callback to call before starting oled update */
+TLoopCallback NanoEngineCore::m_loop = nullptr;
+
+
+void NanoEngineCore::begin()
+{
+    m_lastFrameTs = millis();
+}
+
+void NanoEngineCore::setFrameRate(uint8_t fps)
+{
+    m_fps = fps;
+    m_frameDurationMs = 1000/fps;
+}
+
+bool NanoEngineCore::nextFrame()
+{
+    bool needUpdate = (uint32_t)(millis() - m_lastFrameTs) >= m_frameDurationMs;
+    if (needUpdate && m_loop) m_loop();
+    return needUpdate;
+}
+

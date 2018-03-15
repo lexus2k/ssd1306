@@ -47,13 +47,13 @@
  * In your application you can choose, if you want to refresh whole screen (refresh()), or you
  * need to refresh only part of oled display.
  */
-class NanoEngine8: public NanoEngineCore<TILE_8x8_RGB8>
+class NanoEngine8: public NanoEngine<TILE_8x8_RGB8>
 {
 public:
     /**
      * Creates new Graphics Engine object.
      */
-    NanoEngine8(): NanoEngineCore() {};
+    NanoEngine8(): NanoEngine() {};
 };
 
 /**
@@ -70,13 +70,13 @@ public:
  * In your application you can choose, if you want to refresh whole screen (refresh()), or you
  * need to refresh only part of oled display.
  */
-class NanoEngine1: public NanoEngineCore<TILE_8x8_MONO>
+class NanoEngine1: public NanoEngine<TILE_8x8_MONO>
 {
 public:
     /**
      * Creates new Graphics Engine object.
      */
-    NanoEngine1(): NanoEngineCore() {};
+    NanoEngine1(): NanoEngine() {};
 };
 
 #endif
