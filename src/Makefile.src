@@ -45,6 +45,7 @@ SRCS_C = \
 
 SRCS_CPP = \
 	nano_canvas.cpp \
+	nano_engine/core.cpp \
 	nano_engine.cpp \
 	nano_gfx.cpp \
 	sprite_pool.cpp \
@@ -57,6 +58,6 @@ SRCS = $(SRCS_C) $(SRCS_CPP)
 #	tiny_ssd1306.cpp \
 
 OBJS_C = $(addprefix src/, $(addsuffix .o, $(basename $(SRCS_C))))
- 
+
 OBJS = $(addprefix $(BLD)/, $(addsuffix .o, $(basename $(SRCS))))
 
