@@ -40,6 +40,7 @@ extern "C" SFixedFontInfo s_fixedFont;
 
 /* The table below defines arguments for NanoEngineTiler.          *
  *                            canvas        width   height  bits   */
+#define TILE_8x8_RGB16        NanoCanvas16, 8,      8,      3    ///< Standard 16-bit RGB tile 8x8
 #define TILE_8x8_RGB8         NanoCanvas8,  8,      8,      3    ///< Standard 8-bit RGB tile 8x8
 #define TILE_8x8_MONO         NanoCanvas1,  8,      8,      3    ///< Standard 1-bit tile 8x8
 

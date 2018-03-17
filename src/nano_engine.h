@@ -41,9 +41,9 @@
  * issue with low resources, NanoEngine8 uses small tile buffer (NE_TILE_SIZE x NE_TILE_SIZE)
  * and updates only part of oled screen at once. It makes system slow, but it is
  * possible to run NanoEngine8 on simple controllers.
- * If tile size is 32x32, then 96x64 oled display is devided into 6 tiles:
- *    [0,0] [1,0] [2,0]
- *    [0,1] [1,1] [2,1]
+ * If tile size is 32x32, then 96x64 oled display is devided into 6 tiles: <br>
+ *    [0,0] [1,0] [2,0] <br>
+ *    [0,1] [1,1] [2,1] <br>
  * In your application you can choose, if you want to refresh whole screen (refresh()), or you
  * need to refresh only part of oled display.
  */
@@ -64,9 +64,9 @@ public:
  * issue with low resources, NanoEngine1 uses small tile buffer (NE_TILE_SIZE x NE_TILE_SIZE)
  * and updates only part of oled screen at once. It makes system slow, but it is
  * possible to run NanoEngine1 on simple controllers.
- * If tile size is 32x32, then 128x64 oled display is devided into 8 tiles:
- *    [0,0] [1,0] [2,0], [3,0]
- *    [0,1] [1,1] [2,1], [3,1]
+ * If tile size is 32x32, then 128x64 oled display is devided into 8 tiles: <br>
+ *    [0,0] [1,0] [2,0], [3,0] <br>
+ *    [0,1] [1,1] [2,1], [3,1] <br>
  * In your application you can choose, if you want to refresh whole screen (refresh()), or you
  * need to refresh only part of oled display.
  */
@@ -78,6 +78,31 @@ public:
      */
     NanoEngine1(): NanoEngine() {};
 };
+
+/**
+ * NanoEngine16 is simple graphics engine, that implements double buffering work
+ * for the systems with very low resources. That is, memory buffer for SSD1351 oled
+ * display needs at least 128x128x2 bytes (32768 bytes), and this is inacceptable for
+ * microcontrollers like atmega328p (it has only 2KiB of RAM). So, to workaround
+ * issue with low resources, NanoEngine16 uses small tile buffer (NE_TILE_SIZE x NE_TILE_SIZE)
+ * and updates only part of oled screen at once. It makes system slow, but it is
+ * possible to run NanoEngine16 on simple controllers.
+ * If tile size is 16x16, then 128x128 oled display is devided into 64 tiles: <br>
+ *    [0,0] [1,0] [2,0] [3,0] [4,0] [5,0] [6,0] [7,0] <br>
+ *    [0,1] [1,1] [2,1] [3,1] [4,1] [5,1] [6,1] [7,1] <br>
+ *    etc. <br>
+ * In your application you can choose, if you want to refresh whole screen (refresh()), or you
+ * need to refresh only part of oled display.
+ */
+class NanoEngine16: public NanoEngine<TILE_8x8_RGB16>
+{
+public:
+    /**
+     * Creates new Graphics Engine object.
+     */
+    NanoEngine16(): NanoEngine() {};
+};
+
 
 #endif
 

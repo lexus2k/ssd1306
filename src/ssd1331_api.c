@@ -66,3 +66,15 @@ void         ssd1331_fastDrawBuffer8(uint8_t x, uint8_t y, uint8_t w, uint8_t h,
     }
     ssd1306_endTransmission();
 }
+
+void         ssd1331_fastDrawBuffer16(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *data)
+{
+    ssd1306_setRamBlock(x, y, w);
+    uint16_t count = (w * h) << 1;
+    while (count--)
+    {
+        ssd1306_sendByte( *data );
+        data++;
+    }
+    ssd1306_endTransmission();
+}
