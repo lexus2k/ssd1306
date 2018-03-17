@@ -165,8 +165,15 @@ static inline char *utoa(unsigned int num, char *str, int radix) {
 #endif
 
 #ifdef __cplusplus
-static inline int random(int max) { return 0; };
-static inline int random(int min, int max) { return 0; };
+static inline long random(long v)
+{
+    return rand() % v;
+}
+
+static inline long random(long min, long max)
+{
+    return rand() % (max - min + 1) + min;
+}
 #endif
 
 #endif
