@@ -37,6 +37,7 @@ enum
     SDL_AUTODETECT,
     SDL_SSD1306,
     SDL_SSD1331,
+    SDL_SSD1351,
 };
 
 enum
@@ -209,6 +210,7 @@ static int s_activeColumn = 0;
 static int s_activePage = 0;
 static int s_commandId;
 static int s_cmdArgIndex;
+static uint8_t s_ssd1351_writedata = 0;
 
 void sdl_send_init()
 {
@@ -250,6 +252,13 @@ void sdl_send_byte(uint8_t data)
     {
         if (s_oled == SDL_AUTODETECT)
         {
+            if (data == 0xFD)
+            {
+                screenWidth = 128;
+                screenHeight = 128;
+                s_oled = SDL_SSD1351;
+                sdl_core_resize();
+            }
             if (data == 0xBE)
             {
                 screenWidth = 96;
@@ -278,6 +287,7 @@ void sdl_send_byte(uint8_t data)
             {
                 case SDL_SSD1306: sdl_ssd1306_commands(data); break;
                 case SDL_SSD1331: sdl_ssd1331_commands(data); break;
+                case SDL_SSD1351: sdl_ssd1331_commands(data); break;
                 default: break;
             }
         }
@@ -288,6 +298,7 @@ void sdl_send_byte(uint8_t data)
         {
             case SDL_SSD1306: sdl_ssd1306_data(data); break;
             case SDL_SSD1331: sdl_ssd1331_data(data); break;
+            case SDL_SSD1351: sdl_ssd1331_data(data); break;
             default: break;
         }
     }
@@ -297,6 +308,7 @@ void sdl_send_stop()
 {
     sdl_core_draw();
     s_ssdMode = -1;
+    s_ssd1351_writedata = 0;
 }
 
 
@@ -427,20 +439,12 @@ static void sdl_ssd1331_commands(uint8_t data)
                 default: break;
             }
             break;
+        case 0x5C:
+            if (s_oled == SDL_SSD1351)
+            {
+                s_ssd1351_writedata = 1;
+            }
         default:
-            /* Other ssd1306 commands, many commands are combined with data */
-            if ((s_commandId >= 0xb0) && (s_commandId <= 0xbf))
-            {
-                s_activePage =  (uint16_t)(s_commandId & 0x0F);
-            }
-            if ((s_commandId <= 0x0F))
-            {
-                s_activeColumn = (s_activeColumn & 0xFFF0) | (uint16_t)s_commandId;
-            }
-            if ((s_commandId <= 0x1F) && (s_commandId >= 0x10))
-            {
-                s_activeColumn = (s_activeColumn & 0x000F) | ((int16_t)(s_commandId & 0x0F) << 4);
-            }
             s_commandId = SSD_COMMAND_NONE;
             break;
     }
@@ -449,12 +453,46 @@ static void sdl_ssd1331_commands(uint8_t data)
 
 void sdl_ssd1331_data(uint8_t data)
 {
+    static uint8_t firstByte = 1;  /// SSD1351
+    static uint8_t dataFirst = 0x00;  /// SSD1351
     int y = s_activePage;
     int x = s_activeColumn;
-    SDL_SetRenderDrawColor( g_renderer, (data & 0b11100000)<<0,
-                                        (data & 0b00011100)<<3,
-                                        (data & 0b00000011)<<6,
-                                        255 );
+    if (s_oled == SDL_SSD1351)
+    {
+        if (!s_ssd1351_writedata)
+        {
+            if (s_commandId == SSD_COMMAND_NONE)
+            {
+                s_commandId = data;
+                s_cmdArgIndex = -1; // no argument
+            }
+            else
+            {
+                s_cmdArgIndex++;
+            }
+            sdl_ssd1331_commands(data);
+            return;
+        }
+        if (firstByte)
+        {
+            dataFirst = data;
+            firstByte = 0;
+            return;
+        }
+        firstByte = 1;
+        SDL_SetRenderDrawColor( g_renderer, (dataFirst & 0b11111000)<<0,
+                                            ((dataFirst & 0b00000111)<<5) | ((data&0b11100000)>>3),
+                                            (data & 0b00011111)<<3,
+                                            255 );
+    }
+    else
+    {
+        SDL_SetRenderDrawColor( g_renderer, (data & 0b11100000)<<0,
+                                            (data & 0b00011100)<<3,
+                                            (data & 0b00000011)<<6,
+                                            255 );
+    }
+
     SDL_Rect r;
     r.x = x * PIXEL_SIZE + BORDER_SIZE;
     r.y = y * PIXEL_SIZE + BORDER_SIZE + TOP_HEADER;
