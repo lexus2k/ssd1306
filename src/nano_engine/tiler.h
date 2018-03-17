@@ -115,7 +115,7 @@ public:
         y2 = min((y2>>B), NE_MAX_TILES_NUM - 1);
         for(uint8_t y=y1; y<=y2; y++)
         {
-            for(uint8_t x=(x1>>B); x<=(x2>>B); x++)
+            for(uint8_t x=max(0,(x1>>B)); x<=(x2>>B); x++)
             {
                 m_refreshFlags[y] |= (1<<x);
             }
