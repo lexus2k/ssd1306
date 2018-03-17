@@ -29,7 +29,7 @@
 #ifndef _NANO_ENGINE_H_
 #define _NANO_ENGINE_H_
 
-#include "nano_canvas.h"
+#include "nano_engine/canvas.h"
 #include "nano_engine/tiler.h"
 #include "nano_engine/core.h"
 

@@ -29,7 +29,7 @@
 #ifndef _NANO_ENGINE_TILER_H_
 #define _NANO_ENGINE_TILER_H_
 
-#include "nano_canvas.h"
+#include "canvas.h"
 #include "lcd/lcd_common.h"
 
 /**

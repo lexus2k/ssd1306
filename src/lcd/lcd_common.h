@@ -30,6 +30,11 @@
 
 #include "hal/io.h"
 
+/**
+ * @ingroup LCD_INTERFACE_API
+ * @{
+ */
+
 enum
 {
     /** Default type of LCD display: ssd1306 oled */
@@ -52,5 +57,9 @@ extern uint8_t s_displayWidth;
 
 /** Current selected lcd display type */
 extern uint8_t g_lcd_type;
+
+/**
+ * @}
+ */
 
 #endif /* _LCD_COMMON_H_ */

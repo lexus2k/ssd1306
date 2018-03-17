@@ -36,8 +36,16 @@ extern "C" {
 #endif
 
 /**
- * @defgroup LCD_INTERFACE_API LCD communication interface functions
+ * @defgroup LCD_HW_INTERFACE_API LCD physical interface functions
  * @{
+ *
+ * @brief i2c/spi initialization functions for different platforms
+ *
+ * @details This group of API functions serves to prepare the library to work via specific hardware
+ *          interface. There are a bunch of functions for different platforms. In general display
+ *          initialization goes in two steps: hardware interface initialization, and then display 
+ *          driver initialization. But there are functions, which combine 2 steps in single call:
+ *          ssd1306_128x64_i2c_initEx(), ssd1351_128x128_spi_init(), etc.
  */
 
 /**
@@ -76,17 +84,23 @@ extern void  (*ssd1306_sendByte)(uint8_t data);
 extern void  (*ssd1306_closeInterface)(void);
 
 /**
- * Sends 8 monochrome vectical pixels to OLED driver.
- * @param data - byte, representing 8 pixels.
- */
-extern void  (*ssd1306_sendPixels)(uint8_t data);
-
-/**
  * Sends command to SSD1306 device: includes initiating of
  * transaction, sending data and completing transaction.
  * @param command - command to send
  */
 void ssd1306_sendCommand(uint8_t command);
+
+/**
+ * @}
+ *
+ * @defgroup LCD_INTERFACE_API LCD High level API
+ * @{
+ * @brief LCD high level API for setup and programming GDRAM
+ *
+ * @details This group contains API functions for OLED displays initialization and
+ *          direct programming of GDRAM. This API can be used to create your own
+ *          graphics functions.
+ */
 
 /**
  * Starts transaction for sending commands.
@@ -128,6 +142,12 @@ extern void (*ssd1306_setRamBlock)(uint8_t x, uint8_t y, uint8_t w);
  * next page.
  */
 extern void (*ssd1306_nextRamPage)(void);
+
+/**
+ * Sends 8 monochrome vectical pixels to OLED driver.
+ * @param data - byte, representing 8 pixels.
+ */
+extern void  (*ssd1306_sendPixels)(uint8_t data);
 
 /**
  * @}

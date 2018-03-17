@@ -36,7 +36,7 @@ extern "C" {
 #endif
 
 /**
- * @defgroup LCD_DISPLAY_API LCD Display control functions
+ * @ingroup LCD_INTERFACE_API
  * @{
  */
 

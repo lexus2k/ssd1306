@@ -22,7 +22,7 @@
     SOFTWARE.
 */
 
-#include "nano_canvas.h"
+#include "canvas.h"
 #include "lcd/lcd_common.h"
 #include "ssd1306.h"
 #include "ssd1331_api.h"

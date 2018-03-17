@@ -30,7 +30,7 @@
 #define _NANO_ENGINE_CORE_H_
 
 #include "tiler.h"
-#include "nano_canvas.h"
+#include "canvas.h"
 
 /** Type of user-specified keyboard callback */
 typedef uint8_t (*TNanoEngineGetButtons)(void);
@@ -123,6 +123,9 @@ private:
 ////// NANO ENGINE CORE CLASS /////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
+/**
+ * Nano Engine Core class, contains generic frame-rate control functions
+ */
 class NanoEngineCore: public NanoEngineInputs
 {
 protected:

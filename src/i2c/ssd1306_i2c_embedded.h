@@ -39,11 +39,8 @@ extern "C" {
 #endif
 
 /**
- * @defgroup LCD_INTERFACE_API LCD communication interface functions
- * @{
- */
-
-/**
+ * @ingroup LCD_HW_INTERFACE_API
+ *
  * Initializes software implementation of i2c.
  * If you do not know i2c parameters, try ssd1306_i2cInit_Embedded(0,0,0).
  * @warning the function disables interrupts.
@@ -54,10 +51,6 @@ extern "C" {
  * @note: after call to this function you need to initialize lcd display.
  */
 void ssd1306_i2cInit_Embedded(int8_t scl, int8_t sda, uint8_t sa);
-
-/**
- * @}
- */
 
 #ifdef __cplusplus
 }

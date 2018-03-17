@@ -23,7 +23,7 @@
 
 SRCS_C = \
 	ssd1306_fonts.c \
-	ssd1306.c \
+	ssd1306_generic.c \
 	ssd1331_api.c \
 	ssd1306_menu.c \
 	hal/avr/gpio.c \
@@ -44,7 +44,7 @@ SRCS_C = \
 	lcd/oled_ssd1351.c \
 
 SRCS_CPP = \
-	nano_canvas.cpp \
+	nano_engine/canvas.cpp \
 	nano_engine/core.cpp \
 	nano_gfx.cpp \
 	sprite_pool.cpp \

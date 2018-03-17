@@ -36,14 +36,11 @@
 extern "C" {
 #endif
 
-/**
- * @defgroup LCD_INTERFACE_API LCD communication interface functions
- * @{
- */
-
 #ifdef SSD1306_AVR_SPI_SUPPORTED
 
 /**
+ * @ingroup LCD_HW_INTERFACE_API
+ *
  * Inits lcd interface to use hardware SPI for communication (SPI.h library).
  * It uses standard MOSI, SCLK pins to send data to LCD.
  * @param cesPin - pin, controlling chip enable of LCD
@@ -54,10 +51,6 @@ extern "C" {
 void         ssd1306_spiInit_avr(int8_t cesPin, int8_t dcPin);
 
 #endif
-
-/**
- * @}
- */
 
 #ifdef __cplusplus
 }

@@ -49,8 +49,12 @@ extern "C" {
 ///////////////////////////////////////////////////////////////////////
 
 /**
- * @defgroup LCD_DISPLAY_API LCD Display control functions
+ * @defgroup LCD_SSD1306_API only ssd1306 display driver control functions
  * @{
+ *
+ * @brief The functions can be used only for OLEDs with ssd1306 controller
+ * @details Use this functions if you have ssd1306-based display and need
+ * to change display orientation, invert display content in hardware.
  */
 
 /**
@@ -105,11 +109,13 @@ void         ssd1306_flipHorizontal(uint8_t mode);
 void         ssd1306_flipVertical(uint8_t mode);
 
 /**
+ * @ingroup LCD_INTERFACE_API
  * Returns display height in pixels
  */
 uint8_t      ssd1306_displayHeight(void);
 
 /**
+ * @ingroup LCD_INTERFACE_API
  * Returns display width in pixels
  */
 uint8_t      ssd1306_displayWidth(void);
@@ -123,8 +129,16 @@ uint8_t      ssd1306_displayWidth(void);
 ///////////////////////////////////////////////////////////////////////
 
 /**
- * @defgroup LCD_GRAPHICS_API LCD direct graphics functions
+ * @defgroup LCD_GRAPHICS_GENERIC_API LCD direct graphics functions for all display types
  * @{
+ * @brief LCD direct graphics functions for all display types: color and monochrome.
+ *
+ * @details LCD Direct graphics functions applicable for all display types. These functions will work
+ *        both for monochrome and 8-bit/16-bit color OLED displays. You need remember, that for RGB
+ *        oled displays these functions work only in vertical addressing mode. If you're going to
+ *        combine NanoEngine capabilities with these fucntions, don't forget to switch addressing
+ *        mode via ssd1331_setMode(), ssd1351_setMode() and etc. This function draws directly in GDRAM
+ *        and do not use any pre-buffering.
  */
 
 /**
@@ -459,18 +473,9 @@ SPRITE       ssd1306_createSprite(uint8_t x, uint8_t y, uint8_t w, const uint8_t
  */
 void         ssd1306_replaceSprite(SPRITE *sprite, const uint8_t *data);
 
-/**
- * @}
- */
-
 ///////////////////////////////////////////////////////////////////////
 //                 HIGH-LEVEL GRAPH FUNCTIONS
 ///////////////////////////////////////////////////////////////////////
-
-/**
- * @defgroup LCD_APP_API LCD menu control functions
- * @{
- */
 
 /**
  * Describes menu object

@@ -22,7 +22,7 @@
     SOFTWARE.
 */
 /**
- * @file nano_canvas.h Drawing in memory buffer
+ * @file canvas.h Drawing in memory buffer
  */
 
 

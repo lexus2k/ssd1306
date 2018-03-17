@@ -39,11 +39,8 @@ extern "C" {
 #endif
 
 /**
- * @defgroup LCD_INTERFACE_API LCD communication interface functions
- * @{
- */
-
-/**
+ * @ingroup LCD_HW_INTERFACE_API
+ *
  * Initializes ssd1306 library to use Linux i2c-dev interface.
  * If you do not know i2c parameters, try ssd1306_i2cInit_Linux(-1,0).
  *
@@ -53,10 +50,6 @@ extern "C" {
  * @note: after call to this function you need to initialize lcd display.
  */
 void ssd1306_i2cInit_Linux(int8_t busId, uint8_t sa);
-
-/**
- * @}
- */
 
 #ifdef __cplusplus
 }

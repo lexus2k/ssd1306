@@ -39,11 +39,8 @@ extern "C" {
 #endif
 
 /**
- * @defgroup LCD_INTERFACE_API LCD communication interface functions
- * @{
- */
-
-/**
+ * @ingroup LCD_HW_INTERFACE_API
+ *
  * Configures standard TWI AVR module (at 400kHz).
  * This function is called by ssd1306_i2cInit().
  * @param arg - has no meaning for now. Should be zero
@@ -53,6 +50,8 @@ extern "C" {
 void ssd1306_i2cConfigure_Twi(uint8_t arg);
 
 /**
+ * @ingroup LCD_HW_INTERFACE_API
+ *
  * Initializes ssd1306 library to use TWI AVR module for i2c.
  * If you do not know i2c parameters, try ssd1306_i2cInit_Twi(0).
  * SCL and SDA pins depend on platform.
@@ -61,10 +60,6 @@ void ssd1306_i2cConfigure_Twi(uint8_t arg);
  * @note: after call to this function you need to initialize lcd display.
  */
 void ssd1306_i2cInit_Twi(uint8_t sa);
-
-/**
- * @}
- */
 
 #ifdef __cplusplus
 }
