@@ -40,6 +40,7 @@ extern "C" SFixedFontInfo s_fixedFont;
 
 /* The table below defines arguments for NanoEngineTiler.          *
  *                            canvas        width   height  bits   */
+#define BUFFER_128x64_MONO    NanoCanvas1,  128,    64,     7    ///< Full-screen 1-bit tile for SSD1306
 #define TILE_8x8_RGB16        NanoCanvas16, 8,      8,      3    ///< Standard 16-bit RGB tile 8x8
 #define TILE_8x8_RGB8         NanoCanvas8,  8,      8,      3    ///< Standard 8-bit RGB tile 8x8
 #define TILE_8x8_MONO         NanoCanvas1,  8,      8,      3    ///< Standard 1-bit tile 8x8
@@ -186,6 +187,11 @@ TNanoEngineOnDraw NanoEngineTiler<C,W,H,B>::m_onDraw = nullptr;
 template<class C, uint8_t W, uint8_t H, uint8_t B>
 void NanoEngineTiler<C,W,H,B>::displayBuffer()
 {
+    if (!m_onDraw)  // If onDraw handler is not set, just output current canvas
+    {
+        canvas.blt();
+        return;
+    }
     for (uint8_t y = 0; y < s_displayHeight; y = y + NE_TILE_HEIGHT)
     {
         uint16_t flag = m_refreshFlags[y >> NE_TILE_SIZE_BITS];
@@ -195,10 +201,7 @@ void NanoEngineTiler<C,W,H,B>::displayBuffer()
             if (flag & 0x01)
             {
                 canvas.setOffset(x, y);
-                if (m_onDraw)
-                {
-                    if (m_onDraw()) canvas.blt();
-                }
+                if (m_onDraw()) canvas.blt();
             }
             flag >>=1;
         }
