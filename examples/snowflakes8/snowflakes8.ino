@@ -166,6 +166,7 @@ void setup()
     ssd1306_128x64_i2c_init();
 //    ssd1331_96x64_spi_init(3,4,5);
 //    ssd1351_128x128_spi_init(3,4,5);
+//    ssd1351_setMode(0);
 
     engine.setFrameRate( 30 );
     engine.begin();
