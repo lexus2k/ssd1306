@@ -44,7 +44,12 @@
 #define RGB_COLOR8(r,g,b)    ( (r & 0xE0) | ((g >> 3)&0x1C) | (b>>6) )
 
 /** Macro to generate 16-bit color for SSD1351 OLED display */
-#define RGB_COLOR16(r,g,b)    ( ((r<<8) & 0xF800) | ((g << 3)&0x07E0) | (b>>3) )
+#define RGB_COLOR16(r,g,b)   ( ((r<<8) & 0xF800) | ((g << 3)&0x07E0) | (b>>3) )
+
+/** Macro to convert 3-3-2 color to 5-6-5 color */
+#define RGB8_TO_RGB16(c)     ( (((uint16_t)c & 0b11100000) << 8) | \
+                               (((uint16_t)c & 0b00011100) << 6) | \
+                               (((uint16_t)c & 0b00000011) << 3) )
 
 /** Pointer type to LCD display initialization function */
 typedef void (*InitFunction)(void);

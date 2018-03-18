@@ -28,6 +28,7 @@
 #include "hal/io.h"
 
 #include "lcd/ssd1331_commands.h"
+#include "lcd/lcd_common.h"
 
 extern uint16_t ssd1306_color;
 
@@ -61,7 +62,7 @@ void         ssd1331_fastDrawBuffer8(uint8_t x, uint8_t y, uint8_t w, uint8_t h,
     uint16_t count = w * h;
     while (count--)
     {
-        ssd1306_sendByte( *data );
+        ssd1306_sendPixel8( *data );
         data++;
     }
     ssd1306_endTransmission();

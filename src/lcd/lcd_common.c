@@ -22,21 +22,18 @@
     SOFTWARE.
 */
 
-#include "ssd1306_interface.h"
+#include "lcd/lcd_common.h"
+#include "intf/ssd1306_interface.h"
 #include <stddef.h>
 
-uint8_t ssd1306_dcQuickSwitch = 0;
+void  (*ssd1306_setRamBlock)(uint8_t x, uint8_t y, uint8_t w) = NULL;
+void  (*ssd1306_nextRamPage)(void) = NULL;
+void  (*ssd1306_sendPixels)(uint8_t data) = NULL;
+void  (*ssd1306_sendPixel8)(uint8_t data) = NULL;
 
-void  (*ssd1306_startTransmission)(void) = NULL;
-void  (*ssd1306_endTransmission)(void) = NULL;
-void  (*ssd1306_sendByte)(uint8_t data) = NULL;
-void  (*ssd1306_commandStart)(void) = NULL;
-void  (*ssd1306_dataStart)(void) = NULL;
-void  (*ssd1306_closeInterface)(void) = NULL;
-
-void ssd1306_sendCommand(uint8_t command)
+void ssd1306_sendData(uint8_t data)
 {
-    ssd1306_commandStart();
-    ssd1306_sendByte(command);
+    ssd1306_dataStart();
+    ssd1306_sendPixels( data );
     ssd1306_endTransmission();
 }
