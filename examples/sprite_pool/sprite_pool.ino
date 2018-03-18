@@ -21,6 +21,9 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
+///////////////////////////////////////////////////////////////////////////////
+// !!! SPRITE_POOL IS DEPRECATED, PLEASE USE NanoEngine examples !!!
+///////////////////////////////////////////////////////////////////////////////
 /**
  *   Attiny85 PINS
  *             ____
