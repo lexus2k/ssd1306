@@ -508,11 +508,11 @@ void NanoCanvas1::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, 
          x = 0;
     } 
     uint8_t max_pages = (lcduint_t)(h + 15 - offs) >> 3;
-    if ((lcduint_t)((lcduint_t)y + h) > (lcduint_t)m_h)
+    if ((lcduint_t)(y + (lcdint_t)h) > (lcduint_t)m_h)
     {                                                  
          h = (lcduint_t)(m_h - (lcduint_t)y);
     }
-    if ((lcduint_t)((lcduint_t)x + w) > (lcduint_t)m_w)
+    if ((lcduint_t)(x + (lcdint_t)w) > (lcduint_t)m_w)
     {
          w = (lcduint_t)(m_w - (lcduint_t)x);
     }
@@ -522,7 +522,7 @@ void NanoCanvas1::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, 
 
     for(j=0; j < pages; j++)
     {
-        uint16_t addr = YADDR1(y + j) + x;
+        uint16_t addr = YADDR1(y + ((uint16_t)j<<3)) + x;
         if ( j == max_pages - 1 ) mainFlag = !offs;
         for( i=w; i > 0; i--)
         {       
@@ -530,7 +530,6 @@ void NanoCanvas1::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, 
             uint8_t mask = 0;
             if ( mainFlag )    { data |= (pgm_read_byte(bitmap) << offs); mask |= (0xFF << offs); }
             if ( complexFlag ) { data |= (pgm_read_byte(bitmap - origin_width) >> (8 - offs)); mask |= (0xFF >> (8 - offs)); }
-            bitmap++;
             if (CANVAS_MODE_TRANSPARENT != (m_textMode & CANVAS_MODE_TRANSPARENT))
             {
                 m_buf[addr] &= ~mask;
@@ -543,6 +542,7 @@ void NanoCanvas1::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, 
                 else
                     m_buf[addr] |= data;
             }
+            bitmap++;
             addr++;
         }
         bitmap += origin_width - w;
