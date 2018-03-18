@@ -165,6 +165,7 @@ static inline char *utoa(unsigned int num, char *str, int radix) {
 #endif
 
 #ifdef __cplusplus
+#include <cstdlib>
 static inline long random(long v)
 {
     return rand() % v;
