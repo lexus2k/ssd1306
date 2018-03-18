@@ -167,7 +167,7 @@ void setup()
 //    ssd1331_96x64_spi_init(3,4,5);
 //    ssd1351_128x128_spi_init(3,4,5);
 
-    engine.setFrameRate( 40 );
+    engine.setFrameRate( 30 );
     engine.begin();
     engine.drawCallback( onDraw );
 

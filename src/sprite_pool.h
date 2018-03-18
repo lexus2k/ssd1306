@@ -123,7 +123,7 @@ private:
     uint8_t m_count;
 
     void updateRegion(SSD1306_RECT ur);
-};
+} __attribute__ ((deprecated));
 
 #endif
 
