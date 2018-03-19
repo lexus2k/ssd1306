@@ -41,7 +41,7 @@ static int bus = 1;
 static int addr = 0x3C;
 static struct i2c_client *s_client = NULL;
 static struct ssd1306_data *s_data = NULL;
-static struct class *ssd1306_class = NULL;
+//static struct class *ssd1306_class = NULL;
 
 module_param(bus, int, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP);
 module_param(addr, int, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP);

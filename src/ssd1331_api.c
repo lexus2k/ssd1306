@@ -58,8 +58,8 @@ void         ssd1331_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, ui
 
 void         ssd1331_fastDrawBuffer8(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *data)
 {
-    ssd1306_setRamBlock(x, y, w);
     uint16_t count = w * h;
+    ssd1306_setRamBlock(x, y, w);
     while (count--)
     {
         ssd1306_sendPixel8( *data );
@@ -70,8 +70,8 @@ void         ssd1331_fastDrawBuffer8(uint8_t x, uint8_t y, uint8_t w, uint8_t h,
 
 void         ssd1331_fastDrawBuffer16(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *data)
 {
-    ssd1306_setRamBlock(x, y, w);
     uint16_t count = (w * h) << 1;
+    ssd1306_setRamBlock(x, y, w);
     while (count--)
     {
         ssd1306_sendByte( *data );
