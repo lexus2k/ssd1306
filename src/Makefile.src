@@ -23,7 +23,7 @@
 
 SRCS_C = \
 	ssd1306_fonts.c \
-	ssd1306.c \
+	ssd1306_generic.c \
 	ssd1331_api.c \
 	ssd1306_menu.c \
 	hal/avr/gpio.c \
@@ -37,6 +37,7 @@ SRCS_C = \
 	spi/ssd1306_spi_usi.c \
 	spi/ssd1306_spi_linux.c \
 	intf/ssd1306_interface.c \
+	lcd/lcd_common.c \
 	lcd/lcd_pcd8544.c \
 	lcd/oled_sh1106.c \
 	lcd/oled_ssd1306.c \
@@ -44,6 +45,8 @@ SRCS_C = \
 	lcd/oled_ssd1351.c \
 
 SRCS_CPP = \
+	nano_engine/canvas.cpp \
+	nano_engine/core.cpp \
 	nano_gfx.cpp \
 	sprite_pool.cpp \
 	i2c/ssd1306_i2c_wire.cpp \
@@ -55,6 +58,6 @@ SRCS = $(SRCS_C) $(SRCS_CPP)
 #	tiny_ssd1306.cpp \
 
 OBJS_C = $(addprefix src/, $(addsuffix .o, $(basename $(SRCS_C))))
- 
+
 OBJS = $(addprefix $(BLD)/, $(addsuffix .o, $(basename $(SRCS))))
 

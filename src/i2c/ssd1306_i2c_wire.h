@@ -39,11 +39,8 @@ extern "C" {
 #endif
 
 /**
- * @defgroup LCD_INTERFACE_API LCD communication interface functions
- * @{
- */
-
-/**
+ * @ingroup LCD_HW_INTERFACE_API
+ *
  * Configures speed for standard Wire library (via Wire.begin()).
  * This function is called by ssd1306_i2cInit().
  * @param scl - i2c clock pin. Use -1 if you don't need to change default pin number
@@ -55,6 +52,8 @@ extern "C" {
 void ssd1306_i2cConfigure_Wire(int8_t scl, int8_t sda);
 
 /**
+ * @ingroup LCD_HW_INTERFACE_API
+ *
  * Initializes ssd1306 library to use Wire lib for i2c.
  * If you do not know i2c parameters, try ssd1306_i2cInit_Wire(0).
  * SCL and SDA pins depend on platform and Wire library implementation.
@@ -63,10 +62,6 @@ void ssd1306_i2cConfigure_Wire(int8_t scl, int8_t sda);
  * @note: after call to this function you need to initialize lcd display.
  */
 void ssd1306_i2cInit_Wire(uint8_t sa);
-
-/**
- * @}
- */
 
 #ifdef __cplusplus
 }

@@ -31,26 +31,37 @@
 
 #if (defined(__linux__) || defined(__MINGW32__)) && !defined(ARDUINO)
 
-#if defined(__KERNEL__)
+#define SSD1306_LINUX_SUPPORTED
+
+#if defined(SDL_EMULATION)  // SDL Emulation mode includes
+#include "sdl_core.h"
+#endif
+
+#if defined(__KERNEL__)     // KERNEL includes
 #include <linux/types.h>
-#elif defined(__MINGW32__)
+
+#elif defined(__MINGW32__)  // MINGW32 includes
 #include <windows.h>
 #include <stdint.h>
 #include <unistd.h>
 #include "sdl_core.h"
-#else
+#include <time.h>
+#include <string.h>
+
+#else                       // LINUX includes
 #include <stdint.h>
 #include <unistd.h>
-#endif
 #include <time.h>
+#include <string.h>
+#endif
 
+/** Standard defines */
 #define LOW  0
 #define HIGH 1
 #define INPUT 1
 #define OUTPUT 0
+/** Pure linux implementation of the library doesn't support data, located in code area */
 #define PROGMEM
-
-#define SSD1306_LINUX_SUPPORTED
 
 #ifdef __cplusplus
 extern "C" {
@@ -58,32 +69,17 @@ extern "C" {
 
 static inline int  digitalRead(int pin) { return LOW; };
 static inline void pinMode(int pin, int mode) {};
-#if defined(__KERNEL__)
+#if defined(__KERNEL__)      // ============== KERNEL
 static inline void delay(unsigned long ms) {  };
-#elif defined(__MINGW32__)
-static inline void delay(unsigned long ms) { Sleep(ms);  };
-static inline void delayMicroseconds(unsigned long us) { Sleep((us+500)/1000); };
-#else
-static inline void delay(unsigned long ms) { usleep(ms*1000);  };
-static inline void delayMicroseconds(unsigned long us) { usleep(us); };
-#endif
-
-#if defined(__KERNEL__)
+static inline void delayMicroseconds(unsigned long us) {  };
 static inline int  analogRead(int pin) { return 0; };
-static inline void digitalWrite(int pin, int level) {};
-#elif defined(__MINGW32__) || defined(SDL_EMULATION)
-static inline int  analogRead(int pin) { return sdl_read_analog(pin); };
-static inline void digitalWrite(int pin, int level) {  sdl_write_digital(pin, level); };
-#else
-static inline int  analogRead(int pin) { return 0; };
-static inline void digitalWrite(int pin, int level) {};
-#endif
-
-#if defined(__KERNEL__)
+static inline void digitalWrite(int pin, int level) { };
 static inline uint32_t millis(void) { return 0; };
 static inline uint32_t micros(void) { return 0; };
 
-#elif defined(__MINGW32__)
+#elif defined(__MINGW32__)   // ============== MINGW32
+static inline void delay(unsigned long ms) { Sleep(ms);  };
+static inline void delayMicroseconds(unsigned long us) { Sleep((us+500)/1000); };
 static inline uint32_t millis(void)
 {
     return GetTickCount();
@@ -94,7 +90,9 @@ static inline uint32_t micros(void)
     return GetTickCount()*1000;
 };
 
-#else
+#else                         // ============== LINUX
+static inline void delay(unsigned long ms) { usleep(ms*1000);  };
+static inline void delayMicroseconds(unsigned long us) { usleep(us); };
 static inline uint32_t millis(void)
 {
    struct timespec ts;
@@ -108,23 +106,28 @@ static inline uint32_t micros(void)
    clock_gettime(CLOCK_MONOTONIC, &ts);
    return ts.tv_sec * 1000000 + ts.tv_nsec / 1000;
 };
+
+/* For some reason defines do not work accross the libraries *
+ * Didn't yet figure out, what is the reason fo this issue */
+//define min(a,b) (((a)<(b))?(a):(b))
+//define max(a,b) (((a)>(b))?(a):(b))
+static inline int min(int a, int b) { return a<b?a:b; };
+static inline int max(int a, int b) { return a>b?a:b; };
 #endif
 
+#if defined(__MINGW32__) || defined(SDL_EMULATION)
+static inline int  analogRead(int pin) { return sdl_read_analog(pin); };
+static inline void digitalWrite(int pin, int level) {  sdl_write_digital(pin, level); };
+#elif !defined(__KERNEL__)
+static inline int  analogRead(int pin) { return 0; };
+static inline void digitalWrite(int pin, int level) {};
+#endif
 
 static inline void randomSeed(int seed) { };
 static inline void attachInterrupt(int pin, void (*interrupt)(void), int level) { };
 static inline uint8_t pgm_read_byte(const void *ptr) { return *((const uint8_t *)ptr); };
 static inline uint16_t eeprom_read_word(const void *ptr) { return 0; };
 static inline void eeprom_write_word(const void *ptr, uint16_t val) { };
-
-#if !defined(__MINGW32__)
-/* For some reason defines do not work accross the libraries *
- * Didn't yet figure out, what is the reason fo this issue */
-//#define min(a,b) (((a)<(b))?(a):(b))
-//#define max(a,b) (((a)>(b))?(a):(b))
-static inline int min(int a, int b) { return a<b?a:b; };
-static inline int max(int a, int b) { return a>b?a:b; };
-#endif
 
 static inline char *utoa(unsigned int num, char *str, int radix) {
     char temp[17];  //an int can only be 16 bits long
@@ -161,8 +164,16 @@ static inline char *utoa(unsigned int num, char *str, int radix) {
 #endif
 
 #ifdef __cplusplus
-static inline int random(int max) { return 0; };
-static inline int random(int min, int max) { return 0; };
+#include <cstdlib>
+static inline long random(long v)
+{
+    return rand() % v;
+}
+
+static inline long random(long min, long max)
+{
+    return rand() % (max - min + 1) + min;
+}
 #endif
 
 #endif

@@ -37,6 +37,7 @@ extern "C" {
 enum ESsd1351Commands
 {
     SSD1351_COLUMNADDR       = 0x15,
+    SSD1331_WRITEDATA        = 0x5C,
     SSD1351_ROWADDR          = 0x75,
     SSD1351_SEGREMAP         = 0xA0,
     SSD1351_SETSTARTLINE     = 0xA1,

@@ -22,6 +22,10 @@
     SOFTWARE.
 */
 
+///////////////////////////////////////////////////////////////////////////////
+////// GENERIC FUNCTIONS APPLICABLE FOR ALL DISPLAY TYPES /////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
 #include "font6x8.h"
 #include "ssd1306.h"
 #include "lcd/lcd_common.h"
@@ -113,6 +117,8 @@ uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle s
     for(;;)
     {
         uint8_t c;
+        uint8_t ldata;
+        uint16_t offset;
         if( (x > s_displayWidth - s_fixedFont.width) || (ch[j] == '\0') )
         {
             x = xpos;
@@ -143,8 +149,8 @@ uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle s
         {
             c -= s_fixedFont.ascii_offset;
         }
-        uint8_t ldata = 0;
-        uint16_t offset = (c * s_fixedFont.pages + page_offset) * s_fixedFont.width;
+        ldata = 0;
+        offset = (c * s_fixedFont.pages + page_offset) * s_fixedFont.width;
         for( i=s_fixedFont.width; i>0; i--)
         {
             uint8_t data;
@@ -184,6 +190,9 @@ uint8_t ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontStyl
     ssd1306_setRamBlock(xpos, y, s_displayWidth - xpos);
     for(;;)
     {
+        uint8_t c;
+        uint8_t ldata;
+        uint16_t offset;
         if( (x > s_displayWidth - (s_fixedFont.width << 1)) || (ch[j] == '\0') )
         {
             x = xpos;
@@ -209,13 +218,13 @@ uint8_t ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontStyl
             ssd1306_endTransmission();
             ssd1306_setRamBlock(xpos, y, s_displayWidth - xpos);
         }
-        uint8_t c = ch[j];
+        c = ch[j];
         if ( c >= s_fixedFont.ascii_offset )
         {
             c -= s_fixedFont.ascii_offset;
         }
-        uint8_t ldata = 0;
-        uint16_t offset = (c * s_fixedFont.pages + (page_offset >> 1)) * s_fixedFont.width;
+        ldata = 0;
+        offset = (c * s_fixedFont.pages + (page_offset >> 1)) * s_fixedFont.width;
         for( i=s_fixedFont.width; i>0; i--)
         {
             uint8_t data;
@@ -262,6 +271,9 @@ uint8_t ssd1306_printFixedN(uint8_t xpos, uint8_t y, const char ch[], EFontStyle
     ssd1306_setRamBlock(xpos, y, s_displayWidth - xpos);
     for(;;)
     {
+        uint8_t c;
+        uint8_t ldata;
+        uint16_t offset;
         if( (x > s_displayWidth - (s_fixedFont.width << factor)) || (ch[j] == '\0') )
         {
             x = xpos;
@@ -287,13 +299,13 @@ uint8_t ssd1306_printFixedN(uint8_t xpos, uint8_t y, const char ch[], EFontStyle
             ssd1306_endTransmission();
             ssd1306_setRamBlock(xpos, y, s_displayWidth - xpos);
         }
-        uint8_t c = ch[j];
+        c = ch[j];
         if ( c >= s_fixedFont.ascii_offset )
         {
             c -= s_fixedFont.ascii_offset;
         }
-        uint8_t ldata = 0;
-        uint16_t offset = (c * s_fixedFont.pages + (page_offset >> factor)) * s_fixedFont.width;
+        ldata = 0;
+        offset = (c * s_fixedFont.pages + (page_offset >> factor)) * s_fixedFont.width;
         for( i=s_fixedFont.width; i>0; i--)
         {
             uint8_t data;
@@ -315,13 +327,13 @@ uint8_t ssd1306_printFixedN(uint8_t xpos, uint8_t y, const char ch[], EFontStyle
             }
             if ( factor > 0 )
             {
+                uint8_t accum = 0;
+                uint8_t mask = ~((0xFF) << (1<<factor));
                 // N=0  ->   right shift is always 0
                 // N=1  ->   right shift goes through 0, 4
                 // N=2  ->   right shift goes through 0, 2, 4, 6
                 // N=3  ->   right shift goes through 0, 1, 2, 3, 4, 5, 6, 7
                 data >>= ((page_offset & ((1<<factor) - 1))<<(3-factor));
-                uint8_t accum = 0;
-                uint8_t mask = ~((0xFF) << (1<<factor));
                 for (uint8_t idx = 0; idx < 1<<(3-factor); idx++)
                 {
                      accum |= (((data>>idx) & 0x01) ? (mask<<(idx<<factor)) : 0);
@@ -348,6 +360,7 @@ uint8_t ssd1306_charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style
     ssd1306_setRamBlock(x, y, s_displayWidth - x);
     while(ch[j] != '\0')
     {
+        uint8_t ldata;
         uint8_t c = ch[j] - 32;
         if ( c > 224 )
         {
@@ -358,7 +371,7 @@ uint8_t ssd1306_charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style
             x=0;
             y++;
         }
-        uint8_t ldata = 0;
+        ldata = 0;
         for(i=0;i<6;i++)
         {
             uint8_t data;
@@ -396,6 +409,8 @@ uint8_t ssd1306_charF12x16(uint8_t xpos, uint8_t y, const char ch[], EFontStyle 
     ssd1306_setRamBlock(xpos, y, s_displayWidth - xpos);
     for(;;)
     {
+        uint8_t c;
+        uint8_t ldata;
         if( (x > s_displayWidth-12) || (ch[j] == '\0') )
         {
             x = xpos;
@@ -420,12 +435,12 @@ uint8_t ssd1306_charF12x16(uint8_t xpos, uint8_t y, const char ch[], EFontStyle 
             ssd1306_endTransmission();
             ssd1306_setRamBlock(xpos, y, s_displayWidth - xpos);
         }
-        uint8_t c = ch[j] - 32;
+        c = ch[j] - 32;
         if ( c > 224 )
         {
             c = 0;
         }
-        uint8_t ldata = 0;
+        ldata = 0;
         for(i=0;i<6;i++)
         {
             uint8_t data;
@@ -477,8 +492,9 @@ uint8_t      ssd1306_charF6x8_eol(uint8_t left,
 
 void         ssd1306_setFixedFont(const uint8_t * progmemFont)
 {
-    s_fixedFont.width = pgm_read_byte(&progmemFont[1]);
-    s_fixedFont.pages = (pgm_read_byte(&progmemFont[2]) + 7) >> 3;
+    s_fixedFont.width  = pgm_read_byte(&progmemFont[1]);
+    s_fixedFont.height = pgm_read_byte(&progmemFont[2]);
+    s_fixedFont.pages = (s_fixedFont.height + 7) >> 3;
     s_fixedFont.ascii_offset = pgm_read_byte(&progmemFont[3]);
     s_fixedFont.data = progmemFont + 4;
 }
@@ -582,15 +598,15 @@ void         ssd1306_drawVLine(uint8_t x1, uint8_t y1, uint8_t y2)
     uint8_t topPage = y1 >> 3;
     uint8_t bottomPage = y2 >> 3;
     uint8_t height = y2-y1;
+    uint8_t y;
     ssd1306_setRamBlock(x1, topPage, 1);
     if (topPage == bottomPage)
     {
         ssd1306_sendPixels( ((0xFF >> (0x07 - height)) << (y1 & 0x07))^s_invertByte );
         ssd1306_endTransmission();
         return;
-    }    
+    }
     ssd1306_sendPixels( (0xFF << (y1 & 0x07))^s_invertByte );
-    uint8_t y;
     for ( y = (topPage + 1); y <= (bottomPage - 1); y++)
     {
         ssd1306_nextRamPage();
@@ -648,6 +664,9 @@ void gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const 
     uint8_t offset = y & 0x07;
     uint8_t complexFlag = 0;
     uint8_t mainFlag = 1;
+    uint8_t max_pages;
+    uint8_t pages;
+    lcduint_t i, j;
     if (y + (lcdint_t)h <= 0) return;
     if (y >= s_displayHeight) return;
     if (x + (lcdint_t)w <= 0) return;
@@ -664,25 +683,24 @@ void gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const 
          buf += -x;
          w += x;
          x = 0;
-    } 
-    uint8_t max_pages = (lcduint_t)(h + 15 - offset) >> 3;
+    }
+    max_pages = (lcduint_t)(h + 15 - offset) >> 3;
     if ((lcduint_t)((lcduint_t)y + h) > (lcduint_t)s_displayHeight)
-    {                                                  
+    {
          h = (lcduint_t)(s_displayHeight - (lcduint_t)y);
     }
     if ((lcduint_t)((lcduint_t)x + w) > (lcduint_t)s_displayWidth)
     {
          w = (lcduint_t)(s_displayWidth - (lcduint_t)x);
     }
-    uint8_t pages = ((y + h - 1) >> 3) - (y >> 3) + 1;
-    lcduint_t i, j;
+    pages = ((y + h - 1) >> 3) - (y >> 3) + 1;
 
     ssd1306_setRamBlock(x, y >> 3, w);
     for(j=0; j < pages; j++)
     {
         if ( j == max_pages - 1 ) mainFlag = !offset;
         for( i=w; i > 0; i--)
-        {       
+        {
             uint8_t data = 0;
             if ( mainFlag )    data |= (pgm_read_byte(buf) << offset);
             if ( complexFlag ) data |= (pgm_read_byte(buf - origin_width) >> (8 - offset));

@@ -37,7 +37,6 @@
 
 #include "ssd1306.h"
 #include "sova.h"
-#include "nano_gfx.h"
 #include "font6x8.h"
 
 /* Do not include SPI.h for Attiny controllers */

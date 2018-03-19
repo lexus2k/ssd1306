@@ -39,11 +39,8 @@ extern "C" {
 #endif
 
 /**
- * @defgroup LCD_INTERFACE_API LCD communication interface functions
- * @{
- */
-
-/**
+ * @ingroup LCD_HW_INTERFACE_API
+ *
  * Inits lcd interface to use  SPI for communication.
  * It uses standard MOSI, SCLK pins to send data to LCD.
  * @param cesPin - pin, controlling chip enable of LCD
@@ -53,10 +50,6 @@ extern "C" {
  * @warning: Nowadays this communication works only in SDL Emulation mode!
  */
 void ssd1306_spiInit_Linux(int8_t cesPin, int8_t dcPin);
-
-/**
- * @}
- */
 
 #ifdef __cplusplus
 }

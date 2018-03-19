@@ -12,7 +12,7 @@
  *
  */
 /**
- * @file font6x8.h Fonts 6x8. Header file is here only for compatibility with older library releases
+ * @file font6x8.h Fonts 6x8. Header file is here only for compatibility with previous library releases
  */
 
 #ifndef FONT6x8_H

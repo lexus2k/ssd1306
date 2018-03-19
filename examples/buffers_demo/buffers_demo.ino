@@ -33,7 +33,7 @@
  */
 
 #include "ssd1306.h"
-#include "nano_gfx.h"
+#include "nano_engine.h"
 
 /* 
  * Heart image below is defined directly in flash memory.
@@ -66,9 +66,8 @@ const int spritesCount = 4;
 /* Declare variable that represents our 4 objects */
 struct
 {
-    SPRITE sprite;
-    int8_t speedX;
-    int8_t speedY;
+    NanoPoint pos;
+    NanoPoint speed;
 } objects[ spritesCount ];
 
 /*
@@ -82,7 +81,7 @@ const int canvasWidth = 32; // Width must be power of 2, i.e. 16, 32, 64, 128...
 const int canvasHeight = 32; // Height must be divided on 8, i.e. 8, 16, 24, 32...
 uint8_t canvasData[canvasWidth*(canvasHeight/8)];
 /* Create canvas object */
-NanoCanvas canvas(canvasWidth, canvasHeight, canvasData);
+NanoCanvas1 canvas(canvasWidth, canvasHeight, canvasData);
 
 void setup()
 {
@@ -93,10 +92,10 @@ void setup()
     /* Create 4 "hearts", and place them at different positions and give different movement direction */
     for(uint8_t i = 0; i < spritesCount; i++)
     {
-        objects[i].speedX = (i & 1) ? -1:  1;
-        objects[i].speedY = (i & 2) ? -1:  1;
-        objects[i].sprite = ssd1306_createSprite( i*4, 2 + i*4, spriteWidth, heartImage );
+        objects[i].speed = { .x = (i & 1) ? -1:  1, .y = (i & 2) ? -1:  1 };
+        objects[i].pos = { .x = i*4, .y = i*4 + 2 };
     }
+    canvas.setMode( CANVAS_MODE_TRANSPARENT );
 }
 
 
@@ -107,16 +106,13 @@ void loop()
     /* Recalculate position and movement direction of all 4 "hearts" */
     for (uint8_t i = 0; i < spritesCount; i++)
     {
-        objects[i].sprite.x += objects[i].speedX;
-        objects[i].sprite.y += objects[i].speedY;
-        /* If right boundary is reached, reverse X direction */
-        if (objects[i].sprite.x == (canvasWidth - spriteWidth)) objects[i].speedX = -objects[i].speedX;
-        /* If left boundary is reached, reverse X direction */ 
-        if (objects[i].sprite.x == 0) objects[i].speedX = -objects[i].speedX;
-        /* Sprite height is always 8 pixels. Reverse Y direction if bottom boundary is reached. */
-        if (objects[i].sprite.y == (canvasHeight - 8)) objects[i].speedY = -objects[i].speedY;
-        /* If top boundary is reached, reverse Y direction */
-        if (objects[i].sprite.y == 0) objects[i].speedY = -objects[i].speedY;
+        objects[i].pos += objects[i].speed;
+        /* If left or right boundary is reached, reverse X direction */
+        if ((objects[i].pos.x == (canvasWidth - 8)) || (objects[i].pos.x == 0))
+            objects[i].speed.x = -objects[i].speed.x;
+        /* Sprite height is always 8 pixels. Reverse Y direction if bottom or top boundary is reached. */
+        if ((objects[i].pos.y == (canvasHeight - 8)) || (objects[i].pos.y == 0))
+            objects[i].speed.y = -objects[i].speed.y;
     }
 
     /* Clear canvas surface */
@@ -126,7 +122,7 @@ void loop()
     /* Draw all 4 sprites on the canvas */
     for (uint8_t i = 0; i < spritesCount; i++)
     {
-        canvas.drawSprite( &objects[i].sprite );
+        canvas.drawBitmap1( objects[i].pos.x, objects[i].pos.y, 8, 8, heartImage );
     }
     /* Now, draw canvas on the display */
     canvas.blt(48, 0);

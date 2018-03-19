@@ -22,11 +22,18 @@
     SOFTWARE.
 */
 
-#pragma once
+#include "lcd/lcd_common.h"
+#include "intf/ssd1306_interface.h"
+#include <stddef.h>
 
-#include "hero_states.h"
+void  (*ssd1306_setRamBlock)(uint8_t x, uint8_t y, uint8_t w) = NULL;
+void  (*ssd1306_nextRamPage)(void) = NULL;
+void  (*ssd1306_sendPixels)(uint8_t data) = NULL;
+void  (*ssd1306_sendPixel8)(uint8_t data) = NULL;
 
-#include "ssd1306.h"
-
-extern const PROGMEM uint8_t playerFlyingImage[MAN_ANIM_MAX][2][8];
-
+void ssd1306_sendData(uint8_t data)
+{
+    ssd1306_dataStart();
+    ssd1306_sendPixels( data );
+    ssd1306_endTransmission();
+}

@@ -36,14 +36,11 @@
 extern "C" {
 #endif
 
-/**
- * @defgroup LCD_INTERFACE_API LCD communication interface functions
- * @{
- */
-
 #ifdef SSD1306_USI_SPI_SUPPORTED
 
 /**
+ * @ingroup LCD_HW_INTERFACE_API
+ *
  * Inits lcd interface to use USI for SPI communication.
  * It uses standard USI CLK, USI DO, USI DI pins to send data to LCD.
  * @param cesPin - pin, controlling chip enable of LCD
@@ -54,10 +51,6 @@ extern "C" {
 void         ssd1306_spiInit_Usi(int8_t cesPin, int8_t dcPin);
 
 #endif
-
-/**
- * @}
- */
 
 #ifdef __cplusplus
 }

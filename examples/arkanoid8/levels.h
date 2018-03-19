@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2018, Alexey Dynda
+    Copyright (c) 2018, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,59 +22,20 @@
     SOFTWARE.
 */
 
-#include "level_sprites.h"
+#pragma once
 
-PROGMEM const uint8_t bgSprites[5][8] =
-{
-    {
-        0B01110111,
-        0B01110111,
-        0B01110000,
-        0B01110111,
-        0B01110111,
-        0B00000111,
-        0B01110111,
-        0B01110111,
-    },
-    {
-        0B00010001,
-        0B11111111,
-        0B00010001,
-        0B00010001,
-        0B00010001,
-        0B11111111,
-        0B00010001,
-        0B00000000,
-    },
-    {
-        0B00000010,
-        0B00000010,
-        0B00000010,
-        0B00000010,
-        0B00000010,
-        0B00000010,
-        0B00000010,
-        0B00000010,
-    },
-    {
-        0B00000000,
-        0B11000000,
-        0B11100000,
-        0B10110000,
-        0B11010000,
-        0B10100000,
-        0B11000000,
-        0B00000000,
-    },
-    {
-        0B01111111,
-        0B01111111,
-        0B01111111,
-        0B01110111,
-        0B01111111,
-        0B01111111,
-        0B01111111,
-        0B00000000,
-    },
-};
+static const int MAX_LEVELS          = 3;
+#ifdef ARKANOID_SSD1331
+static const int BLOCKS_PER_ROW      = 8;
+#else
+static const int BLOCKS_PER_ROW      = 8;
+#endif
+static const int MAX_BLOCKS_PER_ROW  = 8;
+static const int BLOCK_NUM_ROWS      = 5;
+
+extern const uint8_t blockColors[];
+
+extern const PROGMEM uint8_t bgTile[];
+
+extern const PROGMEM uint8_t levels[MAX_LEVELS][BLOCK_NUM_ROWS][MAX_BLOCKS_PER_ROW];
 

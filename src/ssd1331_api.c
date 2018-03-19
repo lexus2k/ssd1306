@@ -28,6 +28,7 @@
 #include "hal/io.h"
 
 #include "lcd/ssd1331_commands.h"
+#include "lcd/lcd_common.h"
 
 extern uint16_t ssd1306_color;
 
@@ -55,3 +56,26 @@ void         ssd1331_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, ui
     ssd1306_endTransmission();
 }
 
+void         ssd1331_fastDrawBuffer8(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *data)
+{
+    uint16_t count = w * h;
+    ssd1306_setRamBlock(x, y, w);
+    while (count--)
+    {
+        ssd1306_sendPixel8( *data );
+        data++;
+    }
+    ssd1306_endTransmission();
+}
+
+void         ssd1331_fastDrawBuffer16(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *data)
+{
+    uint16_t count = (w * h) << 1;
+    ssd1306_setRamBlock(x, y, w);
+    while (count--)
+    {
+        ssd1306_sendByte( *data );
+        data++;
+    }
+    ssd1306_endTransmission();
+}

@@ -30,6 +30,16 @@
 
 #include "hal/io.h"
 
+/**
+ * @defgroup LCD_INTERFACE_API LCD High level API
+ * @{
+ * @brief LCD high level API for setup and programming GDRAM
+ *
+ * @details This group contains API functions for OLED displays initialization and
+ *          direct programming of GDRAM. This API can be used to create your own
+ *          graphics functions.
+ */
+
 enum
 {
     /** Default type of LCD display: ssd1306 oled */
@@ -52,5 +62,58 @@ extern uint8_t s_displayWidth;
 
 /** Current selected lcd display type */
 extern uint8_t g_lcd_type;
+
+/**
+ * Sends byte data to SSD1306 controller memory.
+ * Performs 3 operations at once: ssd1306_dataStart(); ssd1306_sendPixels( data ); ssd1306_endTransmission();
+ * @param data - byte to send to the controller memory
+ * @note At present this function is used only in Arkanoid demo.
+ */
+void         ssd1306_sendData(uint8_t data) __attribute__ ((deprecated));
+
+/**
+ * Sets block in RAM of lcd display controller to write data to.
+ * For ssd1306 it uses horizontal addressing mode, while for
+ * sh1106 the function uses page addressing mode.
+ * Width can be specified as 0, thus the library will set the right
+ * region of RAM block to the right column of the display.
+ * @param x - column (left region)
+ * @param y - page (top page of the block)
+ * @param w - width of the block in pixels to control
+ *
+ * @warning - this function initiates session (i2c or spi) and do not close it.
+ *            To close session, please, use ssd1306_endTransmission().
+ */
+extern void (*ssd1306_setRamBlock)(uint8_t x, uint8_t y, uint8_t w);
+
+/**
+ * Switches to the start of next RAM page for the block, specified by
+ * ssd1306_setRamBlock().
+ * For ssd1306 it does nothing, while for sh1106 the function moves cursor to
+ * next page.
+ */
+extern void (*ssd1306_nextRamPage)(void);
+
+/**
+ * Sends 8 monochrome vectical pixels to OLED driver.
+ * @param data - byte, representing 8 pixels.
+ */
+extern void (*ssd1306_sendPixels)(uint8_t data);
+
+/**
+ * @brief Sends RGB pixel encoded in 3-3-2 format to OLED driver.
+ * Sends RGB pixel encoded in 3-3-2 format to OLED driver.
+ * @param data - byte, representing RGB8 pixel.
+ */
+extern void (*ssd1306_sendPixel8)(uint8_t data);
+
+/**
+ * @}
+ */
+
+
+/**
+ * @}
+ */
 
 #endif /* _LCD_COMMON_H_ */

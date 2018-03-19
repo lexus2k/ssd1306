@@ -72,6 +72,19 @@ static void ssd1331_setBlock(uint8_t x, uint8_t y, uint8_t w)
     ssd1306_spiDataMode(1);
 }
 
+static void ssd1331_setBlock2(uint8_t x, uint8_t y, uint8_t w)
+{
+    uint8_t rx = w ? (x + w - 1) : (s_displayWidth - 1);
+    ssd1306_commandStart();
+    ssd1306_sendByte(SSD1331_COLUMNADDR);
+    ssd1306_sendByte(x);
+    ssd1306_sendByte(rx < s_displayWidth ? rx : (s_displayWidth - 1));
+    ssd1306_sendByte(SSD1331_ROWADDR);
+    ssd1306_sendByte(y);
+    ssd1306_sendByte(s_displayHeight - 1);
+    ssd1306_spiDataMode(1);
+}
+
 static void ssd1331_nextPage(void)
 {
     ssd1306_endTransmission();
@@ -94,6 +107,22 @@ static void ssd1331_sendPixels(uint8_t data)
     }
 }
 
+void    ssd1331_setMode(uint8_t vertical)
+{
+    ssd1306_commandStart();
+    ssd1306_sendByte( SSD1331_SEGREMAP );
+    ssd1306_sendByte( 0x00 | 0x20 | 0x10 | 0x02 | vertical /* 8-bit rgb color mode */ );
+    ssd1306_endTransmission();
+    if (vertical)
+    {
+        ssd1306_setRamBlock = ssd1331_setBlock;
+    }
+    else
+    {
+        ssd1306_setRamBlock = ssd1331_setBlock2;
+    }
+}
+
 void    ssd1331_96x64_init()
 {
     g_lcd_type = LCD_TYPE_SSD1331;
@@ -102,6 +131,7 @@ void    ssd1331_96x64_init()
     ssd1306_setRamBlock = ssd1331_setBlock;
     ssd1306_nextRamPage = ssd1331_nextPage;
     ssd1306_sendPixels  = ssd1331_sendPixels;
+    ssd1306_sendPixel8 = ssd1306_sendByte;
     for( uint8_t i=0; i<sizeof(s_oled96x64_initData); i++)
     {
         ssd1306_sendCommand(pgm_read_byte(&s_oled96x64_initData[i]));

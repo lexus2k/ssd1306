@@ -31,7 +31,7 @@
 #include "hal/io.h"
 
 /**
- * @defgroup LCD_FONTS LCD Fonts
+ * @defgroup LCD_FONTS Supported LCD fonts
  * @{
  */
 

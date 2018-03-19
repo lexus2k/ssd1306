@@ -35,13 +35,10 @@
 extern "C" {
 #endif
 
-/**
- * @defgroup LCD_INTERFACE_API LCD communication interface functions
- * @{
- */
-
 #ifndef SSD1306_SA
     /**
+     * @ingroup LCD_HW_INTERFACE_API
+     *
      * SSD1306_SA defines default i2c address of LCD display. Please, check your device.
      * If you LCD device has different address, you can set different one via
      * ssd1306_i2cInit_Wire() or ssd1306_i2cInit_Embedded() functions.
@@ -65,10 +62,6 @@ extern "C" {
         #define SSD1306_SDA   4 // SDA, Pin A4 on SSD1306 Board
     #endif
 #endif
-
-/**
- * @}
- */
 
 #ifdef __cplusplus
 }

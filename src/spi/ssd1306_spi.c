@@ -34,6 +34,7 @@
 
 int8_t s_ssd1306_cs = 4;
 int8_t s_ssd1306_dc = 5;
+uint32_t s_ssd1306_spi_clock = 8000000;
 
 void ssd1306_spiInit(int8_t cesPin, int8_t dcPin)
 {
