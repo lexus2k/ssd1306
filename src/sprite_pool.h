@@ -36,6 +36,7 @@
  * It remembers pointers to SPRITE objects, and carefully
  * updates only the areas, touched by the sprites. So, it
  * reduces number of i2c calls to SSD1306 display.
+ * @warning this class is deprecated and not supported anymore.
  */
 class SpritePool
 {
@@ -123,7 +124,7 @@ private:
     uint8_t m_count;
 
     void updateRegion(SSD1306_RECT ur);
-} __attribute__ ((deprecated));
+};
 
 #endif
 

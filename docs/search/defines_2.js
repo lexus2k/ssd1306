@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['sh1106_5f128x64',['SH1106_128x64',['../tiny__ssd1306_8h.html#a80e33e4023f52a96740f521855a77cfb',1,'tiny_ssd1306.h']]],
-  ['ssd1306_5f128x32',['SSD1306_128x32',['../tiny__ssd1306_8h.html#ac300d8639ea4a7025eee9d60b549055f',1,'tiny_ssd1306.h']]],
-  ['ssd1306_5f128x64',['SSD1306_128x64',['../tiny__ssd1306_8h.html#a353e095e4452703115646c0e8f2148a1',1,'tiny_ssd1306.h']]]
+  ['rgb8_5fto_5frgb16',['RGB8_TO_RGB16',['../nano__gfx__types_8h.html#a4ab6a81b88d852058c6522940bc236c5',1,'nano_gfx_types.h']]],
+  ['rgb_5fcolor16',['RGB_COLOR16',['../nano__gfx__types_8h.html#a5ffae889173a34bb16146d3a3b869c04',1,'RGB_COLOR16():&#160;nano_gfx_types.h'],['../ssd1306_8h.html#a5ffae889173a34bb16146d3a3b869c04',1,'RGB_COLOR16():&#160;ssd1306.h']]],
+  ['rgb_5fcolor8',['RGB_COLOR8',['../nano__gfx__types_8h.html#ade80ecbb039cb905f9e27cf08657dedc',1,'RGB_COLOR8():&#160;nano_gfx_types.h'],['../ssd1306_8h.html#ade80ecbb039cb905f9e27cf08657dedc',1,'RGB_COLOR8():&#160;ssd1306.h']]]
 ];

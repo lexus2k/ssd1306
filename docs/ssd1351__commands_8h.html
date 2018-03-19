@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.4.12</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331 RGB i2c/spi OLED displays and spi PCD8544 LED display</div>
   </td>
@@ -77,39 +77,41 @@ $(function() {
 Enumerations</h2></td></tr>
 <tr class="memitem:ab85f57d1e36f8ed6a1c0fe53d0ec4232"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1351__commands_8h.html#ab85f57d1e36f8ed6a1c0fe53d0ec4232">ESsd1351Commands</a> { <br />
 &#160;&#160;<b>SSD1351_COLUMNADDR</b> = 0x15, 
+<b>SSD1331_WRITEDATA</b> = 0x5C, 
 <b>SSD1351_ROWADDR</b> = 0x75, 
 <b>SSD1351_SEGREMAP</b> = 0xA0, 
-<b>SSD1351_SETSTARTLINE</b> = 0xA1, 
 <br />
-&#160;&#160;<b>SSD1351_SETDISPLAYOFFSET</b> = 0xA2, 
+&#160;&#160;<b>SSD1351_SETSTARTLINE</b> = 0xA1, 
+<b>SSD1351_SETDISPLAYOFFSET</b> = 0xA2, 
 <b>SSD1351_SETFUNCTION</b> = 0xAB, 
 <b>SSD1351_NOP</b> = 0xAD, 
-<b>SSD1351_ALLOFF</b> = 0xA4, 
 <br />
-&#160;&#160;<b>SSD1351_DISPLAYON</b> = 0xA5, 
+&#160;&#160;<b>SSD1351_ALLOFF</b> = 0xA4, 
+<b>SSD1351_DISPLAYON</b> = 0xA5, 
 <b>SSD1351_NORMALDISPLAY</b> = 0xA6, 
 <b>SSD1351_DISPLAYINVERSE</b> = 0xA7, 
-<b>SSD1351_SLEEP_ON</b> = 0xAE, 
 <br />
-&#160;&#160;<b>SSD1351_SLEEP_OFF</b> = 0xAF, 
+&#160;&#160;<b>SSD1351_SLEEP_ON</b> = 0xAE, 
+<b>SSD1351_SLEEP_OFF</b> = 0xAF, 
 <b>SSD1351_NOP2</b> = 0xB0, 
 <b>SSD1351_SETPRECHARGE</b> = 0xB1, 
-<b>SSD1351_CLOCKDIV</b> = 0xB3, 
 <br />
-&#160;&#160;<b>SSD1351_EXTVSL</b> = 0xB4, 
+&#160;&#160;<b>SSD1351_CLOCKDIV</b> = 0xB3, 
+<b>SSD1351_EXTVSL</b> = 0xB4, 
 <b>SSD1351_SETGPIO</b> = 0xB5, 
 <b>SSD1351_PRECHARGESECOND</b> = 0xB6, 
-<b>SSD1351_PRECHARGELEVEL</b> = 0xBB, 
 <br />
-&#160;&#160;<b>SSD1351_VCOMH</b> = 0xBE, 
+&#160;&#160;<b>SSD1351_PRECHARGELEVEL</b> = 0xBB, 
+<b>SSD1351_VCOMH</b> = 0xBE, 
 <b>SSD1351_CONTRAST</b> = 0xC1, 
 <b>SSD1351_MASTERCURRENT</b> = 0xC7, 
-<b>SSD1351_SETMULTIPLEX</b> = 0xCA, 
 <br />
-&#160;&#160;<b>SSD1351_PRECHARGEA</b> = 0x8A, 
+&#160;&#160;<b>SSD1351_SETMULTIPLEX</b> = 0xCA, 
+<b>SSD1351_PRECHARGEA</b> = 0x8A, 
 <b>SSD1351_PRECHARGEB</b> = 0x8B, 
 <b>SSD1351_NOP3</b> = 0xE3, 
-<b>SSD1351_UNLOCK</b> = 0xFD
+<br />
+&#160;&#160;<b>SSD1351_UNLOCK</b> = 0xFD
 <br />
  }</td></tr>
 <tr class="separator:ab85f57d1e36f8ed6a1c0fe53d0ec4232"><td class="memSeparator" colspan="2">&#160;</td></tr>

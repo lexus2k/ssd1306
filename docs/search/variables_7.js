@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['m_5fcanvas',['m_canvas',['../class_sprite_pool.html#aacf3c183566ace3d39ace8755a2a60aa',1,'SpritePool']]],
-  ['m_5frect',['m_rect',['../class_sprite_pool.html#a4a3cbbd6bbd5c9c74f1ed5dd8e631589',1,'SpritePool']]],
-  ['max_5fsprites',['MAX_SPRITES',['../class_sprite_pool.html#aa7522b59d079d63cfbb0612aaaee58df',1,'SpritePool']]]
+  ['left',['left',['../struct_s_s_d1306___r_e_c_t.html#a596b6b6cce11df484877b63db7d0a5b5',1,'SSD1306_RECT']]],
+  ['lx',['lx',['../struct_s_p_r_i_t_e.html#afc5ed686d6064db045512fc72bc02dd3',1,'SPRITE']]],
+  ['ly',['ly',['../struct_s_p_r_i_t_e.html#aab3453c2a4cf02976c6d53fa79e5e051',1,'SPRITE']]]
 ];

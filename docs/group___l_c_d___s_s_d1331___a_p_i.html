@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.4.12</span>
+   &#160;<span id="projectnumber">1.5.0</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331 RGB i2c/spi OLED displays and spi PCD8544 LED display</div>
   </td>
@@ -77,6 +77,10 @@ Functions</h2></td></tr>
 <tr class="separator:gacff343d6288cebda87d589f47fd6f5e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafa4c239fd99c5541b06d46ac9ed88b6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___s_s_d1331___a_p_i.html#gafa4c239fd99c5541b06d46ac9ed88b6d">ssd1331_drawLine</a> (uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint16_t color)</td></tr>
 <tr class="separator:gafa4c239fd99c5541b06d46ac9ed88b6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga11a89b4119758899196bf7a7f2a7fd7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___s_s_d1331___a_p_i.html#ga11a89b4119758899196bf7a7f2a7fd7a">ssd1331_fastDrawBuffer8</a> (uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *data)</td></tr>
+<tr class="separator:ga11a89b4119758899196bf7a7f2a7fd7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b5ca3953762cf16ed75efa1908ba41f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___s_s_d1331___a_p_i.html#ga2b5ca3953762cf16ed75efa1908ba41f">ssd1331_fastDrawBuffer16</a> (uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *data)</td></tr>
+<tr class="separator:ga2b5ca3953762cf16ed75efa1908ba41f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
@@ -135,7 +139,125 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>This API can be used only with ssd1331 RGB oled displays </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1331__api_8c_source.html#l00044">44</a> of file <a class="el" href="ssd1331__api_8c_source.html">ssd1331_api.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1331__api_8c_source.html#l00045">45</a> of file <a class="el" href="ssd1331__api_8c_source.html">ssd1331_api.c</a>.</p>
+
+</div>
+</div>
+<a id="ga2b5ca3953762cf16ed75efa1908ba41f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2b5ca3953762cf16ed75efa1908ba41f">&#9670;&nbsp;</a></span>ssd1331_fastDrawBuffer16()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1331_fastDrawBuffer16 </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>w</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>h</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Draws 16-bit bitmap, located in SRAM, on the display Each byte represents separate pixel: refer to RGB_COLOR16 to understand RGB scheme, being used.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>- horizontal position in pixels </td></tr>
+    <tr><td class="paramname">y</td><td>- vertical position in pixels </td></tr>
+    <tr><td class="paramname">w</td><td>- width of bitmap in pixels </td></tr>
+    <tr><td class="paramname">h</td><td>- height of bitmap in pixels </td></tr>
+    <tr><td class="paramname">data</td><td>- pointer to data, located in SRAM. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="ssd1331__api_8c_source.html#l00071">71</a> of file <a class="el" href="ssd1331__api_8c_source.html">ssd1331_api.c</a>.</p>
+
+</div>
+</div>
+<a id="ga11a89b4119758899196bf7a7f2a7fd7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga11a89b4119758899196bf7a7f2a7fd7a">&#9670;&nbsp;</a></span>ssd1331_fastDrawBuffer8()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1331_fastDrawBuffer8 </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>w</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>h</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Draws 8-bit bitmap, located in SRAM, on the display Each byte represents separate pixel: refer to RGB_COLOR8 to understand RGB scheme, being used.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>- horizontal position in pixels </td></tr>
+    <tr><td class="paramname">y</td><td>- vertical position in pixels </td></tr>
+    <tr><td class="paramname">w</td><td>- width of bitmap in pixels </td></tr>
+    <tr><td class="paramname">h</td><td>- height of bitmap in pixels </td></tr>
+    <tr><td class="paramname">data</td><td>- pointer to data, located in SRAM. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="ssd1331__api_8c_source.html#l00059">59</a> of file <a class="el" href="ssd1331__api_8c_source.html">ssd1331_api.c</a>.</p>
 
 </div>
 </div>
@@ -163,7 +285,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1331__api_8c_source.html#l00034">34</a> of file <a class="el" href="ssd1331__api_8c_source.html">ssd1331_api.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1331__api_8c_source.html#l00035">35</a> of file <a class="el" href="ssd1331__api_8c_source.html">ssd1331_api.c</a>.</p>
 
 </div>
 </div>
@@ -209,7 +331,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1331__api_8c_source.html#l00039">39</a> of file <a class="el" href="ssd1331__api_8c_source.html">ssd1331_api.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1331__api_8c_source.html#l00040">40</a> of file <a class="el" href="ssd1331__api_8c_source.html">ssd1331_api.c</a>.</p>
 
 </div>
 </div>

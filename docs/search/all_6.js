@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['g_5flcd_5ftype',['g_lcd_type',['../lcd__common_8h.html#adfa899a135c3bfee48624a3820864b33',1,'ssd1306.c']]],
-  ['getlrect',['getLRect',['../struct_s_p_r_i_t_e.html#a6ee73688f564cc3a894ed9516e30c448',1,'SPRITE']]],
-  ['getrect',['getRect',['../struct_s_p_r_i_t_e.html#a9e207e844a61cf781260fef142bc6aa0',1,'SPRITE']]],
-  ['getupdaterect',['getUpdateRect',['../struct_s_p_r_i_t_e.html#a7e3987f9f24d964797a7b0e28a231366',1,'SPRITE']]],
-  ['gfx_5fdrawmonobitmap',['gfx_drawMonoBitmap',['../group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#gac47f2a6a1e4c3f78fd4b793f49694f53',1,'gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buf):&#160;ssd1306.c'],['../group___l_c_d___g_r_a_p_h_i_c_s___a_p_i.html#gac47f2a6a1e4c3f78fd4b793f49694f53',1,'gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buf):&#160;ssd1306.c']]]
+  ['fill',['fill',['../class_tiny_s_s_d1306.html#a52909e996c609ce5d73d271036c5778e',1,'TinySSD1306']]],
+  ['fillrect',['fillRect',['../class_nano_canvas8.html#a64b18a0bac8a1dc1d8eb8ef1b8582175',1,'NanoCanvas8::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)'],['../class_nano_canvas8.html#a1b690a3be55e610fddb0e2cafed2d33d',1,'NanoCanvas8::fillRect(const NanoRect &amp;rect)'],['../class_nano_canvas1.html#a7eac952ad08c5b2069a42470d5f34d04',1,'NanoCanvas1::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)'],['../class_nano_canvas1.html#a2455eb3c6ab33fc72f7df31d86ec522a',1,'NanoCanvas1::fillRect(const NanoRect &amp;rect)'],['../class_nano_canvas16.html#a9f3d0c2b69905c5e1fe47b9b484f674e',1,'NanoCanvas16::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)'],['../class_nano_canvas16.html#a0fb2034c2b9c5f61ff012cafe63921f8',1,'NanoCanvas16::fillRect(const NanoRect &amp;rect)'],['../class_nano_canvas.html#a3f987bce72b865a483c4a65922b7cc45',1,'NanoCanvas::fillRect()']]],
+  ['fliph',['flipH',['../class_nano_canvas.html#a3f069cfd24e79cb420f2fe2af5e51857',1,'NanoCanvas']]],
+  ['font6x8_2eh',['font6x8.h',['../font6x8_8h.html',1,'']]]
 ];

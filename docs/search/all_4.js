@@ -1,13 +1,21 @@
 var searchData=
 [
-  ['efontsize',['EFontSize',['../nano__gfx__types_8h.html#a153dd3fa628c68400edc68fa1949e696',1,'nano_gfx_types.h']]],
-  ['efontstyle',['EFontStyle',['../nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88',1,'nano_gfx_types.h']]],
-  ['epcd8544displaymode',['EPcd8544DisplayMode',['../pcd8544__commands_8h.html#aaf039e90032f99220d95ce92e204888d',1,'pcd8544_commands.h']]],
-  ['epcd8544functionmode',['EPcd8544FunctionMode',['../pcd8544__commands_8h.html#a690e6d030da4ba01db54d4a55c140337',1,'pcd8544_commands.h']]],
-  ['erase',['erase',['../struct_s_p_r_i_t_e.html#ab08b9b2831224d69a19d992819d100a2',1,'SPRITE']]],
-  ['erasetrace',['eraseTrace',['../struct_s_p_r_i_t_e.html#ada52ad2a7aae3bdb62c6dc66ccb8765c',1,'SPRITE']]],
-  ['essd1306commands',['ESsd1306Commands',['../pcd8544__commands_8h.html#a17072415863307f9ad2ccfc1970dcde9',1,'ESsd1306Commands():&#160;pcd8544_commands.h'],['../ssd1306__commands_8h.html#a17072415863307f9ad2ccfc1970dcde9',1,'ESsd1306Commands():&#160;ssd1306_commands.h']]],
-  ['essd1306memorymode',['ESsd1306MemoryMode',['../ssd1306__commands_8h.html#a337d19ca9c99ea935db8c7b6117b7b38',1,'ssd1306_commands.h']]],
-  ['essd1331commands',['ESsd1331Commands',['../ssd1331__commands_8h.html#a8370f4d426c46475fa72d703e1920853',1,'ssd1331_commands.h']]],
-  ['essd1351commands',['ESsd1351Commands',['../ssd1351__commands_8h.html#ab85f57d1e36f8ed6a1c0fe53d0ec4232',1,'ssd1351_commands.h']]]
+  ['data',['data',['../struct_s_fixed_font_info.html#a0f7b369b22f547c125f83c708d8a6c39',1,'SFixedFontInfo::data()'],['../struct_s_p_r_i_t_e.html#ac56b0c16d0bcd810ae1289350df821c3',1,'SPRITE::data()']]],
+  ['display',['display',['../class_nano_engine.html#aa62679199db111eeaf01a4235c72ecd0',1,'NanoEngine']]],
+  ['displaybuffer',['displayBuffer',['../class_nano_engine_tiler.html#a6f7ba05a46f9033d548390d5c8107110',1,'NanoEngineTiler']]],
+  ['displaypopup',['displayPopup',['../class_nano_engine_tiler.html#ac9642cbeff5b4de207b379d4bbb07ba8',1,'NanoEngineTiler']]],
+  ['draw',['draw',['../struct_s_p_r_i_t_e.html#af3f35eab30dd39e4434b29923f0afab6',1,'SPRITE']]],
+  ['drawbitmap',['drawBitmap',['../class_nano_canvas.html#ad28f993fce34532404c4cdbafff5ea35',1,'NanoCanvas::drawBitmap()'],['../class_tiny_s_s_d1306.html#ad3ee43e02ee331abaa450fcbfd6aa116',1,'TinySSD1306::drawBitmap()']]],
+  ['drawbitmap1',['drawBitmap1',['../class_nano_canvas8.html#af9e10e75604906d1c295b67caf0be339',1,'NanoCanvas8::drawBitmap1()'],['../class_nano_canvas1.html#a4490750cbd4c33b6f8b75e477d5e21d4',1,'NanoCanvas1::drawBitmap1()'],['../class_nano_canvas16.html#a2bbdac8e790548da8e1758fbf863f5b2',1,'NanoCanvas16::drawBitmap1()']]],
+  ['drawbitmap8',['drawBitmap8',['../class_nano_canvas8.html#a36a9a4216dbce30e308e25d473c1a7c1',1,'NanoCanvas8::drawBitmap8()'],['../class_nano_canvas16.html#aef75f2d83a28f834668e23351b9c94b1',1,'NanoCanvas16::drawBitmap8()']]],
+  ['drawblock',['drawBlock',['../class_sprite_pool.html#a2eeb66784ec3c511fca27cf325ff98af',1,'SpritePool']]],
+  ['drawbuffer',['drawBuffer',['../class_tiny_s_s_d1306.html#a94f2dc45f302497c0b5f149ef1425b7a',1,'TinySSD1306']]],
+  ['drawcallback',['drawCallback',['../class_nano_engine_tiler.html#acb00c2eb51df5d80ca2e0004efae05a6',1,'NanoEngineTiler']]],
+  ['drawhline',['drawHLine',['../class_nano_canvas8.html#a7b4d809f37ee6387abdd5b87b4ec5409',1,'NanoCanvas8::drawHLine()'],['../class_nano_canvas1.html#af9e1108e02edc99036733a6826326693',1,'NanoCanvas1::drawHLine()'],['../class_nano_canvas16.html#ad96c2c46879c5f8e943cffe51001ccd7',1,'NanoCanvas16::drawHLine()'],['../class_nano_canvas.html#ac36d02cfedc701bc5b87f149480cbc1a',1,'NanoCanvas::drawHLine()'],['../class_tiny_s_s_d1306.html#a9f0a9b74c85265016b1c53247d770516',1,'TinySSD1306::drawHLine()']]],
+  ['drawpixel',['drawPixel',['../class_nano_canvas.html#ac7daa4b41c3c0e91627bad1c0bb1f789',1,'NanoCanvas']]],
+  ['drawrect',['drawRect',['../class_nano_canvas8.html#a7dc04c8580d0ad39d86ef557eb890325',1,'NanoCanvas8::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)'],['../class_nano_canvas8.html#a4def2d7da11731e01b5f76655f3f1569',1,'NanoCanvas8::drawRect(const NanoRect &amp;rect)'],['../class_nano_canvas1.html#ac2cf5826aa1e78ce9e3525b9073f65fe',1,'NanoCanvas1::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)'],['../class_nano_canvas1.html#a6813e2942984c71a036b25272dfc8d33',1,'NanoCanvas1::drawRect(const NanoRect &amp;rect)'],['../class_nano_canvas16.html#acbf46ff247bc09aaa1dda65d4bf22f84',1,'NanoCanvas16::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)'],['../class_nano_canvas16.html#a08e7f84db277aa471b67651a5d529a9e',1,'NanoCanvas16::drawRect(const NanoRect &amp;rect)'],['../class_nano_canvas.html#a9e9cd572ae05ee2316a366566c327e6a',1,'NanoCanvas::drawRect()'],['../class_tiny_s_s_d1306.html#a20aee236aa83ccc84fdd9f50b4168f23',1,'TinySSD1306::drawRect()']]],
+  ['drawsprite',['drawSprite',['../class_nano_canvas.html#a6a6a7006f415cbf2db983b1c41acde17',1,'NanoCanvas::drawSprite(uint8_t x, uint8_t y, const uint8_t sprite[])'],['../class_nano_canvas.html#a54ce488014dd316543d3ae9acba03e12',1,'NanoCanvas::drawSprite(SPRITE *sprite)']]],
+  ['drawspritepgm',['drawSpritePgm',['../class_nano_canvas.html#a599f8d8cdaba51b639f8ed8531ecba91',1,'NanoCanvas']]],
+  ['drawsprites',['drawSprites',['../class_sprite_pool.html#af3736a90cef87f0a61b260e6b196d289',1,'SpritePool']]],
+  ['drawvline',['drawVLine',['../class_nano_canvas8.html#a9cdafff4bc8b8fa3b01021f1b9e2c2fe',1,'NanoCanvas8::drawVLine()'],['../class_nano_canvas1.html#a882eb56e6209a2713245fc434f4b7462',1,'NanoCanvas1::drawVLine()'],['../class_nano_canvas16.html#a3c8db4691eb00c13327e813d6264fdfe',1,'NanoCanvas16::drawVLine()'],['../class_nano_canvas.html#a18f6ca61bb4830ef65a2c0aa67bcedcc',1,'NanoCanvas::drawVLine()'],['../class_tiny_s_s_d1306.html#ae60247aba0f7294151d6a0c9d587e758',1,'TinySSD1306::drawVLine()']]]
 ];
