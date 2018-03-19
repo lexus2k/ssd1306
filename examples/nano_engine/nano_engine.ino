@@ -21,6 +21,9 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
+/////////////////////////////////////////////////////////////////////////
+// THIS SKETCH IS FOR TEST PURPOSES ONLY
+/////////////////////////////////////////////////////////////////////////
 /**
  *   Nano/Atmega328 PINS: connect LCD to D5 (D/C), D4 (CS), D3 (RES), D11(DIN), D13(CLK)
  *   Attiny SPI PINS:     connect LCD to D4 (D/C), GND (CS), D3 (RES), D1(DIN), D2(CLK)
