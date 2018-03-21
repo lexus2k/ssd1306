@@ -48,8 +48,8 @@ void setup()
 
     engine.begin();
     engine.setFrameRate(45);
-    engine.drawCallback( drawAll );  // Set callback to draw parts, when NanoEngine8 asks
-    engine.connectArduboyKeys();        // Connect ADC-buttons Z-keypad to analog A0 pin
+    engine.drawCallback( drawAll );  // Set callback to draw content
+    engine.connectArduboyKeys();     // Connect Arduboy keypad
     engine.refresh();                // Makes engine to refresh whole display content at start-up
 }
 
