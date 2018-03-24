@@ -1,5 +1,17 @@
 # SSD1306/SSD1331 OLED display driver, PCD8544 LED display driver
 
+[tocstart]: # (toc start)
+
+  * [Introduction](#introduction)
+  * [Key Features](#key-features)
+  * [Supported displays](#supported-displays)
+  * [Supported platforms](#supported-platforms)
+  * [Setting up](#setting-up)
+  * [License](#license)
+
+[tocend]: # (toc end)
+
+
 ## Introduction
 
 SSD1306 driver is Arduino style C/C++ library. it can be compiled with plain avr-gcc compiler
