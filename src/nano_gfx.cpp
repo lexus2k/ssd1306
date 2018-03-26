@@ -110,10 +110,7 @@ void NanoCanvas::fillRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_
 
 void NanoCanvas::clear()
 {
-    for(uint16_t i=0; i< static_cast<uint16_t>(m_w) * (m_h >> 3); i++)
-    {
-       m_bytes[i] = m_invertByte;
-    }
+    memset(m_bytes, m_invertByte, static_cast<uint16_t>(m_w) * (m_h >> 3));
 }
 
 

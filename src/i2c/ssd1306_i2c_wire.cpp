@@ -74,7 +74,7 @@ static void ssd1306_i2cSendByte_Wire(uint8_t data)
 #elif defined(ARDUINO_ARCH_SAMD)
     if (s_bytesWritten >= 64)
 #elif defined(BUFFER_LENGTH)
-    if (s_bytesWritten >= (BUFFER_LENGTH >> 1))
+    if (s_bytesWritten >= (BUFFER_LENGTH - 2))
 #else
     if (s_bytesWritten >= (USI_BUF_SIZE -2))
 #endif

@@ -315,12 +315,7 @@ void NanoCanvas8::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch)
 
 void NanoCanvas8::clear()
 {
-    uint8_t *buf = m_buf;
-    for(uint16_t n = 0; n < YADDR8(m_h); n++)
-    {
-        *buf = 0;
-        buf++;
-    }
+    memset(m_buf, 0, YADDR8(m_h));
 }
 
 void NanoCanvas8::blt(lcdint_t x, lcdint_t y)
@@ -475,10 +470,7 @@ void NanoCanvas1::fillRect(const NanoRect &rect)
 
 void NanoCanvas1::clear()
 {
-    for(uint16_t i=0; i< YADDR1(m_h); i++)
-    {
-       m_buf[i] = 0;
-    }
+    memset(m_buf, 0, YADDR1(m_h));
 }
 
 // TODO: Not so fast implementation. needs to be optimized
@@ -914,12 +906,7 @@ void NanoCanvas16::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch)
 
 void NanoCanvas16::clear()
 {
-    uint8_t *buf = m_buf;
-    for(uint16_t n = 0; n < YADDR16(m_h); n++)
-    {
-        *buf = 0;
-        buf++;
-    }
+    memset(m_buf, 0, YADDR16(m_h));
 }
 
 void NanoCanvas16::blt(lcdint_t x, lcdint_t y)
