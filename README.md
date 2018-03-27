@@ -40,8 +40,8 @@ Do not forget pull-up resistors for i2c lines.
    * Simple [Lode runner](examples/lode_runner) game in old style API, [Lode runner8](examples/lode_runner8) in new style API
    * [Snowflakes](examples/snowflakes)
 
-![Image of arkanoid intro](examples/arkanoid/screenshots/introscreen.png)
-![Image of lode runner](examples/lode_runner/screenshots/main_screen.png)
+![Image of arkanoid intro](examples/games/arkanoid/screenshots/introscreen.png)
+![Image of lode runner](examples/games/lode_runner/screenshots/main_screen.png)
 
 ![Image of menu example](examples/ssd1306_demo/screenshots/mainmenu_top.png)
 ![Image of color oled](examples/ssd1331_demo/screenshots/fonts.png)
