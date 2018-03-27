@@ -60,6 +60,7 @@
 #include "i2c/ssd1306_i2c_embedded.h"
 #include "i2c/ssd1306_i2c_linux.h"
 #include "intf/ssd1306_interface.h"
+#include "lcd/lcd_common.h"
 
 #include <stdlib.h>
 
