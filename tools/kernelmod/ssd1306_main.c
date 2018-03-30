@@ -75,6 +75,14 @@ static void ssd1306_smbus_send(u8 data) {
 	s_data->index++;
 }
 
+static void ssd1306_smbus_send_bytes(const u8 *buffer, u16 size)
+{
+	while (size--) {
+		ssd1306_smbus_send(*buffer);
+		buffer++;
+	}
+}
+
 static void ssd1306_smbus_end(void) {
 	if (s_data->index) {
 		i2c_smbus_write_i2c_block_data(s_client, s_data->data[0], s_data->index - 1, &s_data->data[1]);
@@ -144,6 +152,7 @@ static int ssd1306_probe(struct i2c_client *client,
 	ssd1306_startTransmission = ssd1306_smbus_start;
 	ssd1306_endTransmission = ssd1306_smbus_end;
 	ssd1306_sendByte = ssd1306_smbus_send;
+	ssd1306_sendBytes = ssd1306_smbus_send_bytes;
 	ssd1306_closeInterface = ssd1306_smbus_close;
 	ssd1306_commandStart = ssd1306_i2cCommandStart;
 	ssd1306_dataStart = ssd1306_i2cDataStart;

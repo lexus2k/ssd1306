@@ -23,9 +23,16 @@
 
 @if "%1" == "" goto error
 
-@mkdir ..\bld\
-@copy /Y sdl\SDL2.dll ..\bld\
-mingw32-make.exe -C ../examples -f Makefile.mingw32 EXTRA_CCFLAGS=%2 SDL_EMULATION=y PROJECT=%1 flash
+set project=%1
+@rem remove quotes and replace backslash
+@set sketch_path=%project:"=%
+@set sketch_path=%sketch_path:/=\%
+
+@rem mkdir ..\bld\
+@mkdir ..\bld\%sketch_path%
+@copy /Y sdl\SDL2.dll ..\bld\%sketch_path%\..\
+
+mingw32-make.exe -C ../examples -f Makefile.mingw32 EXTRA_CCFLAGS=%2 SDL_EMULATION=y PROJECT=%project% flash
 @exit /0
 
 :error
@@ -34,4 +41,4 @@ mingw32-make.exe -C ../examples -f Makefile.mingw32 EXTRA_CCFLAGS=%2 SDL_EMULATI
 @echo "           -DARKANOID_SSD1331   to run in SSD1331 RGB color mode"
 @echo "           -DSDL_NO_BORDER      to not draw border around oled display emulator"
 @echo -
-@echo "Example: build_and_run.bat arkanoid "-DARKANOID_SSD1331 -DSDL_NO_BORDER""
+@echo "Example: build_and_run.bat "games/arkanoid" "-DARKANOID_SSD1331 -DSDL_NO_BORDER""
