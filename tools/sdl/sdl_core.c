@@ -453,12 +453,12 @@ static void sdl_ssd1331_commands(uint8_t data)
 
 void sdl_ssd1331_data(uint8_t data)
 {
-    static uint8_t firstByte = 1;  /// SSD1351
-    static uint8_t dataFirst = 0x00;  /// SSD1351
     int y = s_activePage;
     int x = s_activeColumn;
     if (s_oled == SDL_SSD1351)
     {
+        static uint8_t firstByte = 1;  /// SSD1351
+        static uint8_t dataFirst = 0x00;  /// SSD1351
         if (!s_ssd1351_writedata)
         {
             if (s_commandId == SSD_COMMAND_NONE)
