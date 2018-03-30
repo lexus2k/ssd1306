@@ -33,6 +33,7 @@
  */
 
 #include "ssd1306.h"
+#include "nano_gfx.h"
 #include "sprite_pool.h"
 
 /* 
