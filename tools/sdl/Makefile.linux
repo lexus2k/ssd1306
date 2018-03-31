@@ -64,6 +64,9 @@ CCFLAGS += -g -Os $(INCLUDES) -Wall -Werror -ffunction-sections -fdata-sections 
 
 SRCS = \
 	sdl_core.c \
+	sdl_ssd1306.c \
+	sdl_ssd1331.c \
+	sdl_ssd1351.c \
 
 OBJS = $(addprefix $(BLD)/, $(addsuffix .o, $(basename $(SRCS))))
 

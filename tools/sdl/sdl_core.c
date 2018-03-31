@@ -23,14 +23,16 @@
 */
 
 #include "sdl_core.h"
+#include "sdl_oled_basic.h"
+#include "sdl_ssd1306.h"
+#include "sdl_ssd1331.h"
+#include "sdl_ssd1351.h"
 #include <unistd.h>
 #include <SDL2/SDL.h>
 #include <stdlib.h> 
 #include <stdio.h>
 
 #define CANVAS_REFRESH_RATE  60
-
-#define SSD_COMMAND_NONE -1
 
 enum
 {
@@ -40,36 +42,31 @@ enum
     SDL_SSD1351,
 };
 
-enum
-{
-    SSD_MODE_NONE,
-    SSD_MODE_COMMAND,
-    SSD_MODE_DATA,
-};
-
-#if defined(SDL_NO_BORDER)
-const static int BORDER_SIZE = 0;
-const static int TOP_HEADER = 0;
-const static int RECT_THICKNESS = 0;
-#else
-const static int BORDER_SIZE = 8;
-const static int TOP_HEADER = 16;
-const static int RECT_THICKNESS = 2;
-#endif
-const static int PIXEL_SIZE = 2;
-static int screenWidth = 128;
-static int screenHeight = 64;
+int sdl_screenWidth = 128;
+int sdl_screenHeight = 64;
 SDL_Window     *g_window = NULL;
 SDL_Renderer   *g_renderer = NULL;
 static int s_analogInput[128];
 static int s_digitalPins[128];
 static int s_dcPin = -1;
 
-static int windowWidth() { return screenWidth * PIXEL_SIZE + BORDER_SIZE * 2; };
-static int windowHeight() { return screenHeight * PIXEL_SIZE + BORDER_SIZE * 2 + TOP_HEADER; };
+static sdl_oled_info *p_oled_db[128] = { NULL };
+
+static int windowWidth() { return sdl_screenWidth * PIXEL_SIZE + BORDER_SIZE * 2; };
+static int windowHeight() { return sdl_screenHeight * PIXEL_SIZE + BORDER_SIZE * 2 + TOP_HEADER; };
+
+static void register_oled(sdl_oled_info *oled_info)
+{
+    sdl_oled_info **p = p_oled_db;
+    while (*p) (p++);
+    *p = oled_info;
+}
 
 void sdl_core_init(void)
 {
+    register_oled( &sdl_ssd1306 );
+    register_oled( &sdl_ssd1331 );
+    register_oled( &sdl_ssd1351 );
     if ((g_window != NULL) && (g_renderer != NULL))
     {
          /* SDL engine is already initialize */
@@ -200,17 +197,13 @@ static void sdl_core_resize(void)
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
 
-static int s_oled = SDL_AUTODETECT;
+int s_commandId;
+int s_cmdArgIndex;
 static int s_ssdMode = SSD_MODE_NONE;
-static int s_columnStart = 0;
-static int s_columnEnd = 127;
-static int s_pageStart = 0;
-static int s_pageEnd = 7;
-static int s_activeColumn = 0;
-static int s_activePage = 0;
-static int s_commandId;
-static int s_cmdArgIndex;
-static uint8_t s_ssd1351_writedata = 0;
+static     sdl_oled_info *p_active_driver = NULL;
+uint8_t s_ssd1351_writedata = 0;
+
+static int s_oled = SDL_AUTODETECT;
 
 void sdl_send_init()
 {
@@ -232,12 +225,6 @@ void sdl_command_start()
     s_commandId = -1;
 }
 
-
-static void sdl_ssd1306_commands(uint8_t data);
-static void sdl_ssd1306_data(uint8_t data);
-static void sdl_ssd1331_commands(uint8_t data);
-static void sdl_ssd1331_data(uint8_t data);
-
 void sdl_send_byte(uint8_t data)
 {
     if (s_dcPin>=0)
@@ -252,24 +239,19 @@ void sdl_send_byte(uint8_t data)
     {
         if (s_oled == SDL_AUTODETECT)
         {
-            if (data == 0xFD)
+            sdl_oled_info **p = p_oled_db;
+            while (*p)
             {
-                screenWidth = 128;
-                screenHeight = 128;
-                s_oled = SDL_SSD1351;
-                sdl_core_resize();
-            }
-            if (data == 0xBE)
-            {
-                screenWidth = 96;
-                screenHeight = 64;
-                s_oled = SDL_SSD1331;
-                sdl_core_resize();
-            }
-            if ((data == 0xC0) || (data == 0xC8))
-            {
-                s_oled = SDL_SSD1306;
-                sdl_core_resize();
+                if ((*p)->detect(data))
+                {
+                    p_active_driver = *p;
+                    sdl_screenWidth = p_active_driver->width;
+                    sdl_screenHeight = p_active_driver->height;
+                    s_oled = SDL_SSD1306;
+                    sdl_core_resize();
+                    break;
+                }
+                p++;
             }
         }
         else
@@ -283,23 +265,17 @@ void sdl_send_byte(uint8_t data)
             {
                 s_cmdArgIndex++;
             }
-            switch (s_oled)
+            if (p_active_driver)
             {
-                case SDL_SSD1306: sdl_ssd1306_commands(data); break;
-                case SDL_SSD1331: sdl_ssd1331_commands(data); break;
-                case SDL_SSD1351: sdl_ssd1331_commands(data); break;
-                default: break;
+                p_active_driver->run_cmd( data );
             }
         }
     }
     else
     {
-        switch (s_oled)
+        if (p_active_driver)
         {
-            case SDL_SSD1306: sdl_ssd1306_data(data); break;
-            case SDL_SSD1331: sdl_ssd1331_data(data); break;
-            case SDL_SSD1351: sdl_ssd1331_data(data); break;
-            default: break;
+            p_active_driver->run_data( data );
         }
     }
 }
@@ -312,220 +288,4 @@ void sdl_send_stop()
 }
 
 
-static void sdl_ssd1306_commands(uint8_t data)
-{
-//    printf("%02X\n", data);
-    switch (s_commandId)
-    {
-        case 0x21:
-            switch (s_cmdArgIndex)
-            {
-                case 0:
-                     s_columnStart = data;
-                     s_activeColumn = data;
-                     break;
-                case 1:
-                     s_columnEnd = data;
-                     s_commandId = SSD_COMMAND_NONE;
-                     break;
-                default: break;
-            }
-            break;
-        case 0x22:
-            switch (s_cmdArgIndex)
-            {
-                case 0:
-                     s_activePage = data;
-                     s_pageStart = data;
-                     break;
-                case 1:
-                     s_pageEnd = data;
-                     s_commandId = SSD_COMMAND_NONE;
-                     break;
-                default: break;
-            }
-            break;
-        default:
-            /* Other ssd1306 commands, many commands are combined with data */
-            if ((s_commandId >= 0xb0) && (s_commandId <= 0xbf))
-            {
-                s_activePage =  (uint16_t)(s_commandId & 0x0F);
-            }
-            if ((s_commandId <= 0x0F))
-            {
-                s_activeColumn = (s_activeColumn & 0xFFF0) | (uint16_t)s_commandId;
-            }
-            if ((s_commandId <= 0x1F) && (s_commandId >= 0x10))
-            {
-                s_activeColumn = (s_activeColumn & 0x000F) | ((int16_t)(s_commandId & 0x0F) << 4);
-            }
-            s_commandId = SSD_COMMAND_NONE;
-            break;
-    }
-}
-
-void sdl_ssd1306_data(uint8_t data)
-{
-    int y = s_activePage;
-    int x = s_activeColumn;
-    for (int i=0; i<8; i++)
-    {
-        if (data & (1<<i))
-        {
-            SDL_SetRenderDrawColor( g_renderer, 170, 170, 205, 255 );
-        }
-        else
-        {
-            SDL_SetRenderDrawColor( g_renderer, 20, 20, 20, 255 );
-        }
-        SDL_Rect r;
-        r.x = x * PIXEL_SIZE + BORDER_SIZE;
-        r.y = ((y<<3) + i) * PIXEL_SIZE + BORDER_SIZE + TOP_HEADER;
-        r.w = PIXEL_SIZE;
-        r.h = PIXEL_SIZE;
-        // Render rect
-        SDL_RenderFillRect( g_renderer, &r );
-    }
-    s_activeColumn++;
-    if (s_activeColumn > s_columnEnd)
-    {
-        s_activeColumn = s_columnStart;
-        s_activePage++;
-        if (s_activePage > s_pageEnd)
-        {
-            s_activePage = s_pageStart;
-        }
-    }
-}
-
-uint8_t s_verticalMode = 1;
-
-static void sdl_ssd1331_commands(uint8_t data)
-{
-    switch (s_commandId)
-    {
-        case 0xA0:
-            if (s_cmdArgIndex == 0)
-            {
-                s_verticalMode = data & 0x01;
-                s_commandId = SSD_COMMAND_NONE;
-            }
-            break;
-        case 0x15:
-            switch (s_cmdArgIndex)
-            {
-                case 0:
-                     s_columnStart = data;
-                     s_activeColumn = data;
-                     break;
-                case 1:
-                     s_columnEnd = data;
-                     s_commandId = SSD_COMMAND_NONE;
-                     break;
-                default: break;
-            }
-            break;
-        case 0x75:
-            switch (s_cmdArgIndex)
-            {
-                case 0:
-                     s_activePage = data;
-                     s_pageStart = data;
-                     break;
-                case 1:
-                     s_pageEnd = data;
-                     s_commandId = SSD_COMMAND_NONE;
-                     break;
-                default: break;
-            }
-            break;
-        case 0x5C:
-            if (s_oled == SDL_SSD1351)
-            {
-                s_ssd1351_writedata = 1;
-            }
-        default:
-            s_commandId = SSD_COMMAND_NONE;
-            break;
-    }
-}
-
-
-void sdl_ssd1331_data(uint8_t data)
-{
-    int y = s_activePage;
-    int x = s_activeColumn;
-    if (s_oled == SDL_SSD1351)
-    {
-        static uint8_t firstByte = 1;  /// SSD1351
-        static uint8_t dataFirst = 0x00;  /// SSD1351
-        if (!s_ssd1351_writedata)
-        {
-            if (s_commandId == SSD_COMMAND_NONE)
-            {
-                s_commandId = data;
-                s_cmdArgIndex = -1; // no argument
-            }
-            else
-            {
-                s_cmdArgIndex++;
-            }
-            sdl_ssd1331_commands(data);
-            return;
-        }
-        if (firstByte)
-        {
-            dataFirst = data;
-            firstByte = 0;
-            return;
-        }
-        firstByte = 1;
-        SDL_SetRenderDrawColor( g_renderer, (dataFirst & 0b11111000)<<0,
-                                            ((dataFirst & 0b00000111)<<5) | ((data&0b11100000)>>3),
-                                            (data & 0b00011111)<<3,
-                                            255 );
-    }
-    else
-    {
-        SDL_SetRenderDrawColor( g_renderer, (data & 0b11100000)<<0,
-                                            (data & 0b00011100)<<3,
-                                            (data & 0b00000011)<<6,
-                                            255 );
-    }
-
-    SDL_Rect r;
-    r.x = x * PIXEL_SIZE + BORDER_SIZE;
-    r.y = y * PIXEL_SIZE + BORDER_SIZE + TOP_HEADER;
-    r.w = PIXEL_SIZE;
-    r.h = PIXEL_SIZE;
-    // Render rect
-    SDL_RenderFillRect( g_renderer, &r );
-
-    if (s_verticalMode)
-    {
-        s_activePage++;
-        if (s_activePage > s_pageEnd)
-        {
-            s_activePage = s_pageStart;
-            s_activeColumn++;
-            if (s_activeColumn > s_columnEnd)
-            {
-                s_activeColumn = s_columnStart;
-            }
-        }
-    }
-    else
-    {
-        s_activeColumn++;
-        if (s_activeColumn > s_columnEnd)
-        {
-            s_activeColumn = s_columnStart;
-            s_activePage++;
-            if (s_activePage > s_pageEnd)
-            {
-                s_activePage = s_pageStart;
-            }
-        }
-    }
-}
 
