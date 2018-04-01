@@ -42,7 +42,8 @@ extern SFixedFontInfo s_fixedFont;
  * with resolution different from 2^N (160x128, 96x64, etc.)                   */
 #define YADDR8(y) (static_cast<uint16_t>(y) * m_w)
 
-void NanoCanvas8::putPixel(lcdint_t x, lcdint_t y)
+template <>
+void NanoCanvasOps<8>::putPixel(lcdint_t x, lcdint_t y)
 {
     x -= offset.x;
     y -= offset.y;
@@ -52,12 +53,14 @@ void NanoCanvas8::putPixel(lcdint_t x, lcdint_t y)
     }
 }
 
-void NanoCanvas8::putPixel(const NanoPoint &p)
+template <>
+void NanoCanvasOps<8>::putPixel(const NanoPoint &p)
 {
     putPixel(p.x, p.y);
 }
 
-void NanoCanvas8::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
+template <>
+void NanoCanvasOps<8>::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
 {
     x1 -= offset.x;
     y1 -= offset.y;
@@ -79,7 +82,8 @@ void NanoCanvas8::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
     while (y2--);
 }
 
-void NanoCanvas8::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
+template <>
+void NanoCanvasOps<8>::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
 {
     x1 -= offset.x;
     y1 -= offset.y;
@@ -100,7 +104,8 @@ void NanoCanvas8::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
     }
 }
 
-void NanoCanvas8::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+template <>
+void NanoCanvasOps<8>::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
 {
     drawHLine(x1,y1,x2);
     drawHLine(x1,y2,x2);
@@ -108,12 +113,14 @@ void NanoCanvas8::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
     drawVLine(x2,y1,y2);
 }
 
-void NanoCanvas8::drawRect(const NanoRect &rect)
+template <>
+void NanoCanvasOps<8>::drawRect(const NanoRect &rect)
 {
     drawRect(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
 }
 
-void NanoCanvas8::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+template <>
+void NanoCanvasOps<8>::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
 {
     if (y1 > y2)
     {
@@ -145,14 +152,16 @@ void NanoCanvas8::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
     }
 }
 
-void NanoCanvas8::fillRect(const NanoRect &rect)
+template <>
+void NanoCanvasOps<8>::fillRect(const NanoRect &rect)
 {
     fillRect(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
 }
 
 //#include <stdio.h>
 
-void NanoCanvas8::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+template <>
+void NanoCanvasOps<8>::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
     uint8_t offs = 0;
     /* calculate char rectangle */
@@ -210,7 +219,8 @@ void NanoCanvas8::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint
     }
 }
 
-void NanoCanvas8::drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+template <>
+void NanoCanvasOps<8>::drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
     /* calculate char rectangle */
     lcdint_t x1 = xpos - offset.x;
@@ -256,7 +266,8 @@ void NanoCanvas8::drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint
     }
 }
 
-void NanoCanvas8::printChar(uint8_t c)
+template <>
+void NanoCanvasOps<8>::printChar(uint8_t c)
 {
     c -= s_fixedFont.ascii_offset;
     drawBitmap1(m_cursorX,
@@ -266,7 +277,8 @@ void NanoCanvas8::printChar(uint8_t c)
                 &s_fixedFont.data[ c * s_fixedFont.pages * s_fixedFont.width ] );
 }
 
-void NanoCanvas8::write(uint8_t c)
+template <>
+void NanoCanvasOps<8>::write(uint8_t c)
 {
     if (c == '\n')
     {
@@ -289,7 +301,8 @@ void NanoCanvas8::write(uint8_t c)
     }
 }
 
-void NanoCanvas8::printFixed(lcdint_t xpos, lcdint_t y, const char *ch)
+template <>
+void NanoCanvasOps<8>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch)
 {
     m_cursorX = xpos;
     m_cursorY = y;
@@ -300,7 +313,8 @@ void NanoCanvas8::printFixed(lcdint_t xpos, lcdint_t y, const char *ch)
     }
 }
 
-void NanoCanvas8::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch)
+template <>
+void NanoCanvasOps<8>::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch)
 {
     m_cursorX = xpos;
     m_cursorY = y;
@@ -313,9 +327,28 @@ void NanoCanvas8::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch)
     }
 }
 
-void NanoCanvas8::clear()
+template <>
+void NanoCanvasOps<8u>::clear()
 {
     memset(m_buf, 0, YADDR8(m_h));
+}
+
+/* This method must be implemented always after clear() */
+template <>
+void NanoCanvasOps<8>::begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
+{
+    m_w = w;
+    m_h = h;
+    offset.x = 0;
+    offset.y = 0;
+    m_cursorX = 0;
+    m_cursorY = 0;
+    m_color = 0xFF; // white color by default
+    m_textMode = 0;
+    m_p = 3;
+    while (w >> (m_p+1)) { m_p++; };
+    m_buf = bytes;
+    clear();
 }
 
 void NanoCanvas8::blt(lcdint_t x, lcdint_t y)
@@ -338,7 +371,8 @@ void NanoCanvas8::blt()
 #define YADDR1(y) (static_cast<uint16_t>((y) >> 3) << m_p)
 #define BANK_ADDR1(b) ((b) << m_p)
 
-void NanoCanvas1::putPixel(lcdint_t x, lcdint_t y)
+template <>
+void NanoCanvasOps<1>::putPixel(lcdint_t x, lcdint_t y)
 {
     x -= offset.x;
     y -= offset.y;
@@ -354,12 +388,14 @@ void NanoCanvas1::putPixel(lcdint_t x, lcdint_t y)
     }
 }
 
-void NanoCanvas1::putPixel(const NanoPoint &p)
+template <>
+void NanoCanvasOps<1>::putPixel(const NanoPoint &p)
 {
     putPixel(p.x, p.y);
 }
 
-void NanoCanvas1::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
+template <>
+void NanoCanvasOps<1>::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
 {
     if (x2 < x1) swap_data(x2, x1, lcdint_t);
     x1 -= offset.x;
@@ -382,7 +418,8 @@ void NanoCanvas1::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
     }
 }
 
-void NanoCanvas1::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
+template <>
+void NanoCanvasOps<1>::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
 {
     if (y2 < y1) swap_data(y2, y1, lcdint_t);
     x1 -= offset.x;
@@ -405,7 +442,8 @@ void NanoCanvas1::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
     }
 };
 
-void NanoCanvas1::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+template <>
+void NanoCanvasOps<1>::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
 {
     drawHLine(x1, y1, x2);
     drawHLine(x1, y2, x2);
@@ -413,12 +451,14 @@ void NanoCanvas1::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
     drawVLine(x2, y1, y2);
 };
 
-void NanoCanvas1::drawRect(const NanoRect &rect)
+template <>
+void NanoCanvasOps<1>::drawRect(const NanoRect &rect)
 {
     drawRect(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
 }
 
-void NanoCanvas1::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+template <>
+void NanoCanvasOps<1>::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
 {
     if (x2 < x1) swap_data(x2, x1, lcdint_t);
     if (y2 < y1) swap_data(y2, y1, lcdint_t);
@@ -463,18 +503,21 @@ void NanoCanvas1::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
     }
 };
 
-void NanoCanvas1::fillRect(const NanoRect &rect)
+template <>
+void NanoCanvasOps<1>::fillRect(const NanoRect &rect)
 {
     fillRect(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
 }
 
-void NanoCanvas1::clear()
+template <>
+void NanoCanvasOps<1>::clear()
 {
     memset(m_buf, 0, YADDR1(m_h));
 }
 
 // TODO: Not so fast implementation. needs to be optimized
-void NanoCanvas1::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+template <>
+void NanoCanvasOps<1>::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
     x -= offset.x;
     y -= offset.y;
@@ -542,7 +585,8 @@ void NanoCanvas1::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, 
     }
 }
 
-void NanoCanvas1::printChar(uint8_t c)
+template <>
+void NanoCanvasOps<1>::printChar(uint8_t c)
 {
     c -= s_fixedFont.ascii_offset;
     drawBitmap1(m_cursorX,
@@ -553,7 +597,8 @@ void NanoCanvas1::printChar(uint8_t c)
     /* calculate char rectangle */
 }
 
-void NanoCanvas1::write(uint8_t c)
+template <>
+void NanoCanvasOps<1>::write(uint8_t c)
 {
     if (c == '\n')
     {
@@ -576,7 +621,8 @@ void NanoCanvas1::write(uint8_t c)
     }
 }
 
-void NanoCanvas1::printFixed(lcdint_t xpos, lcdint_t y, const char *ch)
+template <>
+void NanoCanvasOps<1>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch)
 {
     m_cursorX = xpos;
     m_cursorY = y;
@@ -587,7 +633,8 @@ void NanoCanvas1::printFixed(lcdint_t xpos, lcdint_t y, const char *ch)
     }
 }
 
-void NanoCanvas1::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch)
+template <>
+void NanoCanvasOps<1>::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch)
 {
     m_cursorX = xpos;
     m_cursorY = y;
@@ -599,6 +646,23 @@ void NanoCanvas1::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch)
         ch++;
     }
 }
+
+template <>
+void NanoCanvasOps<1>::begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
+{
+    m_w = w;
+    m_h = h;
+    offset.x = 0;
+    offset.y = 0;
+    m_cursorX = 0;
+    m_cursorY = 0;
+    m_color = WHITE;
+    m_textMode = 0;
+    m_p = 3;
+    while (w >> (m_p+1)) { m_p++; };
+    m_buf = bytes;
+    clear();
+};
 
 void NanoCanvas1::blt(lcdint_t x, lcdint_t y)
 {
@@ -620,7 +684,8 @@ void NanoCanvas1::blt()
  * with resolution different from 2^N (160x128, 96x64, etc.)                   */
 #define YADDR16(y) (static_cast<uint16_t>(y) * (m_w << 1))
 
-void NanoCanvas16::putPixel(lcdint_t x, lcdint_t y)
+template <>
+void NanoCanvasOps<16>::putPixel(lcdint_t x, lcdint_t y)
 {
     x -= offset.x;
     y -= offset.y;
@@ -631,12 +696,14 @@ void NanoCanvas16::putPixel(lcdint_t x, lcdint_t y)
     }
 }
 
-void NanoCanvas16::putPixel(const NanoPoint &p)
+template <>
+void NanoCanvasOps<16>::putPixel(const NanoPoint &p)
 {
     putPixel(p.x, p.y);
 }
 
-void NanoCanvas16::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
+template <>
+void NanoCanvasOps<16>::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
 {
     x1 -= offset.x;
     y1 -= offset.y;
@@ -659,7 +726,8 @@ void NanoCanvas16::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
     while (y2--);
 }
 
-void NanoCanvas16::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
+template <>
+void NanoCanvasOps<16>::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
 {
     x1 -= offset.x;
     y1 -= offset.y;
@@ -681,7 +749,8 @@ void NanoCanvas16::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
     }
 }
 
-void NanoCanvas16::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+template <>
+void NanoCanvasOps<16>::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
 {
     drawHLine(x1,y1,x2);
     drawHLine(x1,y2,x2);
@@ -689,12 +758,14 @@ void NanoCanvas16::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
     drawVLine(x2,y1,y2);
 }
 
-void NanoCanvas16::drawRect(const NanoRect &rect)
+template <>
+void NanoCanvasOps<16>::drawRect(const NanoRect &rect)
 {
     drawRect(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
 }
 
-void NanoCanvas16::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+template <>
+void NanoCanvasOps<16>::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
 {
     if (y1 > y2)
     {
@@ -727,14 +798,16 @@ void NanoCanvas16::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
     }
 }
 
-void NanoCanvas16::fillRect(const NanoRect &rect)
+template <>
+void NanoCanvasOps<16>::fillRect(const NanoRect &rect)
 {
     fillRect(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
 }
 
 //#include <stdio.h>
 
-void NanoCanvas16::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+template <>
+void NanoCanvasOps<16>::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
     uint8_t offs = 0;
     /* calculate char rectangle */
@@ -798,7 +871,8 @@ void NanoCanvas16::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduin
     }
 }
 
-void NanoCanvas16::drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+template <>
+void NanoCanvasOps<16>::drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
     /* calculate char rectangle */
     lcdint_t x1 = xpos - offset.x;
@@ -847,7 +921,8 @@ void NanoCanvas16::drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduin
     }
 }
 
-void NanoCanvas16::printChar(uint8_t c)
+template <>
+void NanoCanvasOps<16>::printChar(uint8_t c)
 {
     c -= s_fixedFont.ascii_offset;
     drawBitmap1(m_cursorX,
@@ -857,7 +932,8 @@ void NanoCanvas16::printChar(uint8_t c)
                 &s_fixedFont.data[ c * s_fixedFont.pages * s_fixedFont.width ] );
 }
 
-void NanoCanvas16::write(uint8_t c)
+template <>
+void NanoCanvasOps<16>::write(uint8_t c)
 {
     if (c == '\n')
     {
@@ -880,7 +956,8 @@ void NanoCanvas16::write(uint8_t c)
     }
 }
 
-void NanoCanvas16::printFixed(lcdint_t xpos, lcdint_t y, const char *ch)
+template <>
+void NanoCanvasOps<16>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch)
 {
     m_cursorX = xpos;
     m_cursorY = y;
@@ -891,7 +968,8 @@ void NanoCanvas16::printFixed(lcdint_t xpos, lcdint_t y, const char *ch)
     }
 }
 
-void NanoCanvas16::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch)
+template <>
+void NanoCanvasOps<16>::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch)
 {
     m_cursorX = xpos;
     m_cursorY = y;
@@ -904,9 +982,28 @@ void NanoCanvas16::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch)
     }
 }
 
-void NanoCanvas16::clear()
+template <>
+void NanoCanvasOps<16>::clear()
 {
     memset(m_buf, 0, YADDR16(m_h));
+}
+
+template <>
+void NanoCanvasOps<16>::begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
+{
+    m_w = w;
+    m_h = h;
+    offset.x = 0;
+    offset.y = 0;
+    m_cursorX = 0;
+    m_cursorY = 0;
+    m_color = 0xFFFF; // white color by default
+    m_textMode = 0;
+    m_p = 3;
+    while (w >> (m_p+1)) { m_p++; };
+    m_p++;
+    m_buf = bytes;
+    clear();
 }
 
 void NanoCanvas16::blt(lcdint_t x, lcdint_t y)
