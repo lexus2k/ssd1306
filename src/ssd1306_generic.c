@@ -625,7 +625,7 @@ void         ssd1306_drawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
     ssd1306_drawVLine(x2, y1, y2);
 }
 
-void ssd1306_drawBuffer(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)
+void ssd1306_drawBuffer(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buf)
 {
     uint8_t i, j;
     ssd1306_setRamBlock(x, y, w);

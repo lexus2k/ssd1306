@@ -394,7 +394,7 @@ void         ssd1306_drawVLine(uint8_t x1, uint8_t y1, uint8_t y2);
  * @param h - height of bitmap in pixels (must be divided by 8)
  * @param buf - pointer to data, located in SRAM: each byte represents 8 vertical pixels.
  */
-void         ssd1306_drawBuffer(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf);
+void         ssd1306_drawBuffer(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buf);
 
 /**
  * @copydoc ssd1306_drawBuffer

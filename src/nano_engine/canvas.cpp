@@ -351,17 +351,6 @@ void NanoCanvasOps<8>::begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
     clear();
 }
 
-void NanoCanvas8::blt(lcdint_t x, lcdint_t y)
-{
-    ssd1331_fastDrawBuffer8( x, y, m_w, m_h, m_buf);
-}
-
-void NanoCanvas8::blt()
-{
-    ssd1331_fastDrawBuffer8( offset.x, offset.y, m_w, m_h, m_buf);
-//    printf("==================================\n");
-}
-
 /////////////////////////////////////////////////////////////////////////////////
 //
 //                             1-BIT GRAPHICS
@@ -541,10 +530,10 @@ void NanoCanvasOps<1>::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_
          bitmap += -x;
          w += x;
          x = 0;
-    } 
+    }
     uint8_t max_pages = (lcduint_t)(h + 15 - offs) >> 3;
     if ((lcduint_t)(y + (lcdint_t)h) > (lcduint_t)m_h)
-    {                                                  
+    {
          h = (lcduint_t)(m_h - (lcduint_t)y);
     }
     if ((lcduint_t)(x + (lcdint_t)w) > (lcduint_t)m_w)
@@ -560,7 +549,7 @@ void NanoCanvasOps<1>::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_
         uint16_t addr = YADDR1(y + ((uint16_t)j<<3)) + x;
         if ( j == max_pages - 1 ) mainFlag = !offs;
         for( i=w; i > 0; i--)
-        {       
+        {
             uint8_t data = 0;
             uint8_t mask = 0;
             if ( mainFlag )    { data |= (pgm_read_byte(bitmap) << offs); mask |= (0xFF << offs); }
@@ -663,16 +652,6 @@ void NanoCanvasOps<1>::begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
     m_buf = bytes;
     clear();
 };
-
-void NanoCanvas1::blt(lcdint_t x, lcdint_t y)
-{
-    ssd1306_drawBuffer( x, y >> 3, m_w, m_h, m_buf);
-}
-
-void NanoCanvas1::blt()
-{
-    ssd1306_drawBuffer( offset.x, offset.y >> 3, m_w, m_h, m_buf);
-}
 
 /////////////////////////////////////////////////////////////////////////////////
 //
@@ -1004,15 +983,4 @@ void NanoCanvasOps<16>::begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
     m_p++;
     m_buf = bytes;
     clear();
-}
-
-void NanoCanvas16::blt(lcdint_t x, lcdint_t y)
-{
-    ssd1331_fastDrawBuffer16( x, y, m_w, m_h, m_buf);
-}
-
-void NanoCanvas16::blt()
-{
-    ssd1331_fastDrawBuffer16( offset.x, offset.y, m_w, m_h, m_buf);
-//    printf("==================================\n");
 }
