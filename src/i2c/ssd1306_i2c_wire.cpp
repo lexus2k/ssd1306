@@ -87,6 +87,15 @@ static void ssd1306_i2cSendByte_Wire(uint8_t data)
     s_bytesWritten++;
 }
 
+static void ssd1306_i2cSendBytes_Wire(const uint8_t *buffer, uint16_t size)
+{
+    while (size--)
+    {
+        ssd1306_i2cSendByte_Wire(*buffer);
+        buffer++;
+    }
+}
+
 static void ssd1306_i2cClose_Wire()
 {
 }
@@ -98,6 +107,7 @@ void ssd1306_i2cInit_Wire(uint8_t sa)
     ssd1306_startTransmission = ssd1306_i2cStart_Wire;
     ssd1306_endTransmission = ssd1306_i2cStop_Wire;
     ssd1306_sendByte = ssd1306_i2cSendByte_Wire;
+    ssd1306_sendBytes = ssd1306_i2cSendBytes_Wire;
     ssd1306_closeInterface = ssd1306_i2cClose_Wire;
     ssd1306_commandStart = ssd1306_i2cCommandStart;
     ssd1306_dataStart = ssd1306_i2cDataStart;

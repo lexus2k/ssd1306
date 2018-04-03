@@ -29,6 +29,7 @@
 void  (*ssd1306_setRamBlock)(uint8_t x, uint8_t y, uint8_t w) = NULL;
 void  (*ssd1306_nextRamPage)(void) = NULL;
 void  (*ssd1306_sendPixels)(uint8_t data) = NULL;
+void  (*ssd1306_sendPixelsBuffer)(const uint8_t *buffer, uint16_t len) = NULL;
 void  (*ssd1306_sendPixel8)(uint8_t data) = NULL;
 
 void ssd1306_sendData(uint8_t data)

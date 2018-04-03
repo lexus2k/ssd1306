@@ -143,6 +143,15 @@ static void ssd1351_sendPixels(uint8_t data)
     }
 }
 
+static void ssd1351_sendPixelsBuffer(const uint8_t *buffer, uint16_t len)
+{
+    while(len--)
+    {
+        ssd1351_sendPixels(*buffer);
+        buffer++;
+    }
+}
+
 static void ssd1351_sendPixel8(uint8_t data)
 {
     uint16_t color = RGB8_TO_RGB16(data);
@@ -158,6 +167,7 @@ void    ssd1351_128x128_init()
     ssd1306_setRamBlock = ssd1351_setBlock;
     ssd1306_nextRamPage = ssd1351_nextPage;
     ssd1306_sendPixels  = ssd1351_sendPixels;
+    ssd1306_sendPixelsBuffer = ssd1351_sendPixelsBuffer;
     ssd1306_sendPixel8 = ssd1351_sendPixel8;
     ssd1306_commandStart();
     for( uint8_t i=0; i<sizeof(s_oled128x128_initData); i++)

@@ -39,9 +39,29 @@
 #define DD_MOSI     DDB3
 #define DD_SS       DDB2
 #define DD_SCK      DDB5
+#define SPI_CLOCK_MASK   0x03
+#define SPI_2XCLOCK_MASK 0x01
+
+extern uint32_t s_ssd1306_spi_clock;
 
 static void ssd1306_spiConfigure_avr()
 {
+    uint8_t clockDiv;
+    uint32_t clockSetting = F_CPU / 2;
+    clockDiv = 0;
+    while (clockDiv < 6 && s_ssd1306_spi_clock < clockSetting)
+    {
+        clockSetting /= 2;
+        clockDiv++;
+    }
+    if (clockDiv == 6)
+    {
+        clockDiv = 7;
+    }
+    // Invert the SPI2X bit
+    clockDiv ^= 0x1;
+
+
     DDR_SPI &= ~((1<<DD_MOSI)|(1<<DD_MISO)|(1<<DD_SS)|(1<<DD_SCK));
     /* Define the following pins as output */
     DDR_SPI |= ((1<<DD_MOSI)|(1<<DD_SS)|(1<<DD_SCK));
@@ -49,10 +69,10 @@ static void ssd1306_spiConfigure_avr()
             (0<<SPIE)|              // SPI Interupt Enable
             (0<<DORD)|              // Data Order (0:MSB first / 1:LSB first)
             (1<<MSTR)|              // Master/Slave select   
-            (0<<SPR1)|(1<<SPR0)|    // SPI Clock Rate
+            ((clockDiv >> 1) & SPI_CLOCK_MASK)|    // SPI Clock Rate
             (0<<CPOL)|              // Clock Polarity (0:SCK low / 1:SCK hi when idle)
             (0<<CPHA));             // Clock Phase (0:leading / 1:trailing edge sampling)
-    SPSR = (1<<SPI2X);              // Double Clock Rate
+    SPSR = clockDiv & SPI_2XCLOCK_MASK; // Double Clock Rate
 }
 
 static void ssd1306_spiClose_avr()
@@ -71,6 +91,18 @@ static void ssd1306_spiSendByte_avr(uint8_t data)
 {
     SPDR = data;
     while((SPSR & (1<<SPIF))==0);
+}
+
+static void ssd1306_spiSendBytes_avr(const uint8_t * buffer, uint16_t size)
+{
+    const uint8_t *p = buffer;
+    while (size--)
+    {
+        SPDR = *p;
+        while((SPSR & (1<<SPIF))==0);
+        SPDR; // read SPI input
+        p++;
+    }
 }
 
 static void ssd1306_spiStop_avr()
@@ -98,6 +130,7 @@ void ssd1306_spiInit_avr(int8_t cesPin, int8_t dcPin)
     ssd1306_startTransmission = ssd1306_spiStart_avr;
     ssd1306_endTransmission = ssd1306_spiStop_avr;
     ssd1306_sendByte = ssd1306_spiSendByte_avr;
+    ssd1306_sendBytes = ssd1306_spiSendBytes_avr;
     ssd1306_closeInterface = ssd1306_spiClose_avr;
     ssd1306_commandStart = ssd1306_spiCommandStart;
     ssd1306_dataStart = ssd1306_spiDataStart;

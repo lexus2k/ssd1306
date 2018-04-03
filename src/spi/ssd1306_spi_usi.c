@@ -76,6 +76,23 @@ static void ssd1306_spiSendByte_Usi(uint8_t data)
     }
 }
 
+static void ssd1306_spiSendBytes_Usi(uint8_t *buffer, uint16_t size)
+{
+    while (size--)
+    {
+        USIDR = *buffer;
+        USISR = (1<<USIOIF);
+        ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+        {
+            while ( (USISR & (1<<USIOIF)) == 0 )
+            {
+                USICR |= (1<<USITC);
+            }
+        }
+        buffer++;
+    };
+}
+
 static void ssd1306_spiStop_Usi()
 {
     if (s_ssd1306_cs >= 0)
@@ -110,6 +127,7 @@ void ssd1306_spiInit_Usi(int8_t cesPin, int8_t dcPin)
     ssd1306_startTransmission = ssd1306_spiStart_Usi;
     ssd1306_endTransmission = ssd1306_spiStop_Usi;
     ssd1306_sendByte = ssd1306_spiSendByte_Usi;
+    ssd1306_sendBytes = ssd1306_spiSendBytes_Usi;
     ssd1306_closeInterface = ssd1306_spiClose_Usi;
     ssd1306_commandStart = ssd1306_spiCommandStart;
     ssd1306_dataStart = ssd1306_spiDataStart;

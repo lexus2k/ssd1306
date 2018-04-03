@@ -43,12 +43,17 @@ static void empty_function_arg(uint8_t byte)
 {
 }
 
+static void empty_function_arg(const uint8_t *buffer, uint16_t bytes)
+{
+}
+
 void ssd1306_spiInit_Linux(int8_t cesPin, int8_t dcPin)
 {
     ssd1306_dcQuickSwitch = 0;
     ssd1306_startTransmission = empty_function;
     ssd1306_endTransmission = empty_function;
     ssd1306_sendByte = empty_function_arg;
+    ssd1306_sendBytes = empty_function_args;
     ssd1306_closeInterface = empty_function;
     ssd1306_commandStart = empty_function;
     ssd1306_dataStart = empty_function;
@@ -58,6 +63,15 @@ void ssd1306_spiInit_Linux(int8_t cesPin, int8_t dcPin)
 
 #include "sdl_core.h"
 
+static void sdl_send_bytes(const uint8_t *buffer, uint16_t size)
+{
+    while (size--)
+    {
+        sdl_send_byte(*buffer);
+        buffer++;
+    };
+}
+
 void ssd1306_spiInit_Linux(int8_t cesPin, int8_t dcPin)
 {
     sdl_core_init();
@@ -66,6 +80,7 @@ void ssd1306_spiInit_Linux(int8_t cesPin, int8_t dcPin)
     ssd1306_startTransmission = sdl_send_init;
     ssd1306_endTransmission = sdl_send_stop;
     ssd1306_sendByte = sdl_send_byte;
+    ssd1306_sendBytes = sdl_send_bytes;
     ssd1306_closeInterface = sdl_core_close;
     ssd1306_commandStart = sdl_command_start;
     ssd1306_dataStart = sdl_data_start;

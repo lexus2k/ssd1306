@@ -85,6 +85,17 @@ extern void  (*ssd1306_endTransmission)(void);
 extern void  (*ssd1306_sendByte)(uint8_t data);
 
 /**
+ * @brief Sends bytes to SSD1306 device
+ *
+ * Sends bytes to SSD1306 device. This functions gives
+ * ~ 30% performance increase than ssd1306_sendByte.
+ *
+ * @param buffer - bytes to send
+ * @param size - number of bytes to send
+ */
+extern void  (*ssd1306_sendBytes)(const uint8_t *buffer, uint16_t size);
+
+/**
  * @brief deinitializes internal resources, allocated for interface.
  *
  * Deinitializes internal resources, allocated for interface.

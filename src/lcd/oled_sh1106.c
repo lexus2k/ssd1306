@@ -86,6 +86,7 @@ void    sh1106_128x64_init()
     ssd1306_setRamBlock = sh1106_setBlock;
     ssd1306_nextRamPage = sh1106_nextPage;
     ssd1306_sendPixels = ssd1306_sendByte;
+    ssd1306_sendPixelsBuffer = ssd1306_sendBytes;
     for( uint8_t i=0; i<sizeof(s_oled128x64_initData); i++)
     {
         ssd1306_sendCommand(pgm_read_byte(&s_oled128x64_initData[i]));

@@ -95,10 +95,17 @@ extern void (*ssd1306_setRamBlock)(uint8_t x, uint8_t y, uint8_t w);
 extern void (*ssd1306_nextRamPage)(void);
 
 /**
- * Sends 8 monochrome vectical pixels to OLED driver.
+ * Sends 8 monochrome vertical pixels to OLED driver.
  * @param data - byte, representing 8 pixels.
  */
 extern void (*ssd1306_sendPixels)(uint8_t data);
+
+/**
+ * Sends buffer containing 8 monochrome vertical pixels, encoded in each byte.
+ * @param buffer - buffer containing monochrome pixels.
+ * @param len - length of buffer in bytes.
+ */
+extern void (*ssd1306_sendPixelsBuffer)(const uint8_t *buffer, uint16_t len);
 
 /**
  * @brief Sends RGB pixel encoded in 3-3-2 format to OLED driver.

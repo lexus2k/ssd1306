@@ -107,6 +107,15 @@ static void ssd1331_sendPixels(uint8_t data)
     }
 }
 
+static void ssd1331_sendPixelsBuffer(const uint8_t *buffer, uint16_t len)
+{
+    while(len--)
+    {
+        ssd1331_sendPixels(*buffer);
+        buffer++;
+    }
+}
+
 void    ssd1331_setMode(uint8_t vertical)
 {
     ssd1306_commandStart();
@@ -131,6 +140,7 @@ void    ssd1331_96x64_init()
     ssd1306_setRamBlock = ssd1331_setBlock;
     ssd1306_nextRamPage = ssd1331_nextPage;
     ssd1306_sendPixels  = ssd1331_sendPixels;
+    ssd1306_sendPixelsBuffer = ssd1331_sendPixelsBuffer;
     ssd1306_sendPixel8 = ssd1306_sendByte;
     for( uint8_t i=0; i<sizeof(s_oled96x64_initData); i++)
     {
