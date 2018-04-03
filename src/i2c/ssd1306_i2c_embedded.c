@@ -128,6 +128,15 @@ static void ssd1306_i2cSendByte_Embedded(uint8_t data)
     ssd1306_delay(I2C_HALF_CLOCK);
 }
 
+static void ssd1306_i2cSendBytes_Embedded(const uint8_t *buffer, uint16_t size)
+{
+    while (size--)
+    {
+        ssd1306_i2cSendByte_Embedded(*buffer);
+        buffer++;
+    }
+}
+
 /**
  * SCL remains HIGH on EXIT, Low SDA means start transmission
  */
@@ -171,6 +180,7 @@ void ssd1306_i2cInit_Embedded(int8_t scl, int8_t sda, uint8_t sa)
     ssd1306_startTransmission = ssd1306_i2cStart_Embedded;
     ssd1306_endTransmission = ssd1306_i2cStop_Embedded;
     ssd1306_sendByte = ssd1306_i2cSendByte_Embedded;
+    ssd1306_sendBytes = ssd1306_i2cSendBytes_Embedded;
     ssd1306_closeInterface = ssd1306_i2cClose_Embedded;
     ssd1306_commandStart = ssd1306_i2cCommandStart;
     ssd1306_dataStart = ssd1306_i2cDataStart;

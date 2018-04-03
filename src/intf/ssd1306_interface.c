@@ -30,6 +30,7 @@ uint8_t ssd1306_dcQuickSwitch = 0;
 void  (*ssd1306_startTransmission)(void) = NULL;
 void  (*ssd1306_endTransmission)(void) = NULL;
 void  (*ssd1306_sendByte)(uint8_t data) = NULL;
+void  (*ssd1306_sendBytes)(const uint8_t * buffer, uint16_t size) = NULL;
 void  (*ssd1306_commandStart)(void) = NULL;
 void  (*ssd1306_dataStart)(void) = NULL;
 void  (*ssd1306_closeInterface)(void) = NULL;

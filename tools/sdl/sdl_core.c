@@ -37,9 +37,7 @@
 enum
 {
     SDL_AUTODETECT,
-    SDL_SSD1306,
-    SDL_SSD1331,
-    SDL_SSD1351,
+    SDL_DETECTED,
 };
 
 int sdl_screenWidth = 128;
@@ -247,7 +245,7 @@ void sdl_send_byte(uint8_t data)
                     p_active_driver = *p;
                     sdl_screenWidth = p_active_driver->width;
                     sdl_screenHeight = p_active_driver->height;
-                    s_oled = SDL_SSD1306;
+                    s_oled = SDL_DETECTED;
                     sdl_core_resize();
                     break;
                 }

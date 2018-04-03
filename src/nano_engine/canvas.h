@@ -513,7 +513,7 @@ public:
  * NanoCanvas8 represents each pixel as single byte with RGB bits: RRRGGGBB
  * For details refer to SSD1331 datasheet
  */
-#define NanoCanvas8 NanoCanvasBase<8,ssd1331_fastDrawBuffer8>
+#define NanoCanvas8 NanoCanvasBase<8,ssd1331_drawBufferFast8>
 
 /////////////////////////////////////////////////////////////////////////////////
 //
@@ -532,7 +532,7 @@ enum
  * NanoCanvas1 represents each pixel as single bit: 0/1
  * For details refer to SSD1306 datasheet
  */
-#define NanoCanvas1 NanoCanvasBase<1,ssd1306_drawBuffer>
+#define NanoCanvas1 NanoCanvasBase<1,ssd1306_drawBufferFast>
 
 /////////////////////////////////////////////////////////////////////////////////
 //
@@ -545,7 +545,7 @@ enum
  * NanoCanvas16 represents each pixel as 2-bytes with RGB bits: RRRRRGGG-GGGBBBBB
  * For details refer to SSD1351 datasheet
  */
-#define NanoCanvas16 NanoCanvasBase<16,ssd1331_fastDrawBuffer16>
+#define NanoCanvas16 NanoCanvasBase<16,ssd1331_drawBufferFast16>
 
 #endif
 

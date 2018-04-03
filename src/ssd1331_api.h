@@ -99,7 +99,7 @@ void         ssd1331_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, ui
  * @param h - height of bitmap in pixels
  * @param data - pointer to data, located in SRAM.
  */
-void         ssd1331_fastDrawBuffer8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data);
+void         ssd1331_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data);
 
 /**
  * Draws 16-bit bitmap, located in SRAM, on the display
@@ -111,7 +111,7 @@ void         ssd1331_fastDrawBuffer8(lcdint_t x, lcdint_t y, lcduint_t w, lcduin
  * @param h - height of bitmap in pixels
  * @param data - pointer to data, located in SRAM.
  */
-void         ssd1331_fastDrawBuffer16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data);
+void         ssd1331_drawBufferFast16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data);
 
 /**
  * @}

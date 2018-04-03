@@ -394,16 +394,15 @@ void NanoCanvasOps<1>::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
     if ((x2 < 0) || (x1 >= (lcdint_t)m_w)) return;
     x1 = max(0, x1);
     x2 = min(x2, (lcdint_t)(m_w -1));
-    for(lcdint_t x = x1; x<=x2; x++)
+    uint16_t addr = YADDR1(y1) + x1;
+    uint8_t mask = (1 << (y1 & 0x7));
+    if (m_color)
     {
-        if (m_color)
-        {
-            m_buf[YADDR1(y1) + x] |= (1 << (y1 & 0x7));
-        }
-        else
-        {
-            m_buf[YADDR1(y1) + x] &= ~(1 << (y1 & 0x7));
-        }
+        do { m_buf[addr++] |= mask; } while (x2>x1++);
+    }
+    else
+    {
+        do { m_buf[addr++] &= ~mask; } while (x2>x1++);
     }
 }
 
@@ -418,18 +417,40 @@ void NanoCanvasOps<1>::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
     if ((y2 < 0) || (y1 >= (lcdint_t)m_h)) return;
     y1 = max(0, y1);
     y2 = min(y2, (lcdint_t)(m_h -1));
-    for(lcdint_t y = y1; y<=y2; y++)
+
+    uint16_t addr = YADDR1(y1) + x1;
+    if ((y1 & 0xFFF8) == (y2 & 0xFFF8))
     {
+        uint8_t mask = ((0xFF >> (0x07 + y1 - y2)) << (y1 & 0x07));
         if (m_color)
-        {
-            m_buf[YADDR1(y) + x1] |= (1 << (y & 0x7));
-        }
+            m_buf[addr] |= mask;
         else
-        {
-            m_buf[YADDR1(y) + x1] &= ~(1 << (y & 0x7));
-        }
+            m_buf[addr] &= ~mask;
+        return;
     }
-};
+    if (m_color)
+    {
+        m_buf[addr] |= (0xFF << (y1 & 0x07));
+        addr += m_w;
+        while (addr<YADDR1(y2) + x1)
+        {
+            m_buf[addr] |= 0xFF;
+            addr += m_w;
+        }
+        m_buf[addr] |= (0xFF >> (0x07 - (y2 & 0x07)));
+    }
+    else
+    {
+        m_buf[addr] &= ~(0xFF << (y1 & 0x07));
+        addr += m_w;
+        while (addr<YADDR1(y2) + x1)
+        {
+            m_buf[addr] &= 0;
+            addr += m_w;
+        }
+        m_buf[addr] &= ~(0xFF >> (0x07 - (y2 & 0x07)));
+    }
+}
 
 template <>
 void NanoCanvasOps<1>::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
@@ -438,7 +459,7 @@ void NanoCanvasOps<1>::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t 
     drawHLine(x1, y2, x2);
     drawVLine(x1, y1, y2);
     drawVLine(x2, y1, y2);
-};
+}
 
 template <>
 void NanoCanvasOps<1>::drawRect(const NanoRect &rect)
@@ -651,7 +672,7 @@ void NanoCanvasOps<1>::begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
     while (w >> (m_p+1)) { m_p++; };
     m_buf = bytes;
     clear();
-};
+}
 
 /////////////////////////////////////////////////////////////////////////////////
 //

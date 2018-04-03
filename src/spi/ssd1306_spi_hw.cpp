@@ -78,6 +78,16 @@ static void ssd1306_spiSendByte_hw(uint8_t data)
     SPI.transfer(data);
 }
 
+static void ssd1306_spiSendBytes_hw(uint8_t *buffer, uint16_t size)
+{
+    /* Do not use SPI.transfer(buffer, size)! this method corrupts buffer content */
+    while (size--) 
+    {
+        SPI.transfer(*buffer);
+        buffer++;
+    };
+}
+
 void ssd1306_spiInit_hw(int8_t cesPin, int8_t dcPin)
 {
     if (cesPin >=0) pinMode(cesPin, OUTPUT);
@@ -88,6 +98,7 @@ void ssd1306_spiInit_hw(int8_t cesPin, int8_t dcPin)
     ssd1306_startTransmission = ssd1306_spiStart_hw;
     ssd1306_endTransmission = ssd1306_spiStop_hw;
     ssd1306_sendByte = ssd1306_spiSendByte_hw;
+    ssd1306_sendBytes = ssd1306_spiSendBytes_hw;
     ssd1306_closeInterface = ssd1306_spiClose_hw;
     ssd1306_commandStart = ssd1306_spiCommandStart;
     ssd1306_dataStart = ssd1306_spiDataStart;
