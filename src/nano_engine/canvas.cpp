@@ -320,12 +320,12 @@ void NanoCanvas8::clear()
 
 void NanoCanvas8::blt(lcdint_t x, lcdint_t y)
 {
-    ssd1331_fastDrawBuffer8( x, y, m_w, m_h, m_buf);
+    ssd1331_drawBufferFast8( x, y, m_w, m_h, m_buf);
 }
 
 void NanoCanvas8::blt()
 {
-    ssd1331_fastDrawBuffer8( offset.x, offset.y, m_w, m_h, m_buf);
+    ssd1331_drawBufferFast8( offset.x, offset.y, m_w, m_h, m_buf);
 //    printf("==================================\n");
 }
 
@@ -369,16 +369,15 @@ void NanoCanvas1::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
     if ((x2 < 0) || (x1 >= (lcdint_t)m_w)) return;
     x1 = max(0, x1);
     x2 = min(x2, (lcdint_t)(m_w -1));
-    for(lcdint_t x = x1; x<=x2; x++)
+    uint16_t addr = YADDR1(y1) + x1;
+    uint8_t mask = (1 << (y1 & 0x7));
+    if (m_color)
     {
-        if (m_color)
-        {
-            m_buf[YADDR1(y1) + x] |= (1 << (y1 & 0x7));
-        }
-        else
-        {
-            m_buf[YADDR1(y1) + x] &= ~(1 << (y1 & 0x7));
-        }
+        do { m_buf[addr++] |= mask; } while (x2>x1++);
+    }
+    else
+    {
+        do { m_buf[addr++] &= ~mask; } while (x2>x1++);
     }
 }
 
@@ -392,18 +391,40 @@ void NanoCanvas1::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
     if ((y2 < 0) || (y1 >= (lcdint_t)m_h)) return;
     y1 = max(0, y1);
     y2 = min(y2, (lcdint_t)(m_h -1));
-    for(lcdint_t y = y1; y<=y2; y++)
+
+    uint16_t addr = YADDR1(y1) + x1;
+    if ((y1 & 0xFFF8) == (y2 & 0xFFF8))
     {
+        uint8_t mask = ((0xFF >> (0x07 + y1 - y2)) << (y1 & 0x07));
         if (m_color)
-        {
-            m_buf[YADDR1(y) + x1] |= (1 << (y & 0x7));
-        }
+            m_buf[addr] |= mask;
         else
-        {
-            m_buf[YADDR1(y) + x1] &= ~(1 << (y & 0x7));
-        }
+            m_buf[addr] &= ~mask;
+        return;
     }
-};
+    if (m_color)
+    {
+        m_buf[addr] |= (0xFF << (y1 & 0x07));
+        addr += m_w;
+        while (addr<YADDR1(y2) + x1)
+        {
+            m_buf[addr] |= 0xFF;
+            addr += m_w;
+        }
+        m_buf[addr] |= (0xFF >> (0x07 - (y2 & 0x07)));
+    }
+    else
+    {
+        m_buf[addr] &= ~(0xFF << (y1 & 0x07));
+        addr += m_w;
+        while (addr<YADDR1(y2) + x1)
+        {
+            m_buf[addr] &= 0;
+            addr += m_w;
+        }
+        m_buf[addr] &= ~(0xFF >> (0x07 - (y2 & 0x07)));
+    }
+}
 
 void NanoCanvas1::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
 {
@@ -411,7 +432,7 @@ void NanoCanvas1::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
     drawHLine(x1, y2, x2);
     drawVLine(x1, y1, y2);
     drawVLine(x2, y1, y2);
-};
+}
 
 void NanoCanvas1::drawRect(const NanoRect &rect)
 {
@@ -602,12 +623,12 @@ void NanoCanvas1::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch)
 
 void NanoCanvas1::blt(lcdint_t x, lcdint_t y)
 {
-    ssd1306_drawBuffer( x, y >> 3, m_w, m_h, m_buf);
+    ssd1306_drawBufferFast( x, y, m_w, m_h, m_buf);
 }
 
 void NanoCanvas1::blt()
 {
-    ssd1306_drawBuffer( offset.x, offset.y >> 3, m_w, m_h, m_buf);
+    ssd1306_drawBufferFast( offset.x, offset.y, m_w, m_h, m_buf);
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -911,11 +932,11 @@ void NanoCanvas16::clear()
 
 void NanoCanvas16::blt(lcdint_t x, lcdint_t y)
 {
-    ssd1331_fastDrawBuffer16( x, y, m_w, m_h, m_buf);
+    ssd1331_drawBufferFast16( x, y, m_w, m_h, m_buf);
 }
 
 void NanoCanvas16::blt()
 {
-    ssd1331_fastDrawBuffer16( offset.x, offset.y, m_w, m_h, m_buf);
+    ssd1331_drawBufferFast16( offset.x, offset.y, m_w, m_h, m_buf);
 //    printf("==================================\n");
 }

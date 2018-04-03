@@ -56,7 +56,7 @@ void         ssd1331_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, ui
     ssd1306_endTransmission();
 }
 
-void         ssd1331_fastDrawBuffer8(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *data)
+void         ssd1331_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data)
 {
     uint16_t count = w * h;
     ssd1306_setRamBlock(x, y, w);
@@ -68,7 +68,7 @@ void         ssd1331_fastDrawBuffer8(uint8_t x, uint8_t y, uint8_t w, uint8_t h,
     ssd1306_endTransmission();
 }
 
-void         ssd1331_fastDrawBuffer16(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *data)
+void         ssd1331_drawBufferFast16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data)
 {
     uint16_t count = (w * h) << 1;
     ssd1306_setRamBlock(x, y, w);

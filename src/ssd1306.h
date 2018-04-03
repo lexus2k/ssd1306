@@ -397,6 +397,26 @@ void         ssd1306_drawVLine(uint8_t x1, uint8_t y1, uint8_t y2);
 void         ssd1306_drawBuffer(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf);
 
 /**
+ * Draws bitmap, located in SRAM, on the display
+ * Each byte represents 8 vertical pixels. 
+ *
+ * ~~~~~~~~~~~~~~~{.c}
+ * // Draw small rectangle 3x8 at position 10,8
+ * uint8_t buffer[3] = { 0xFF, 0x81, 0xFF };
+ * ssd1306_drawBuffer(10, 1, 3, 8, buffer);
+ * ~~~~~~~~~~~~~~~
+ *
+ * @param x - horizontal position in pixels
+ * @param y - vertical position in pixels (must be devided by 8)
+ * @param w - width of bitmap in pixels
+ * @param h - height of bitmap in pixels (must be divided by 8)
+ * @param buf - pointer to data, located in SRAM: each byte represents 8 vertical pixels.
+ *
+ * @note ssd1306_drawBufferFast() doesn't support negative draw mode. Use ssd1306_drawBuffer() instead.
+ */
+void         ssd1306_drawBufferFast(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buf);
+
+/**
  * @copydoc ssd1306_drawBuffer
  */
 #define      ssd1306_drawCanvas(x, y, w, h, buf)   ssd1306_drawBuffer(x, y, w, h, buf)
