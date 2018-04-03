@@ -24,7 +24,7 @@
 
 #pragma once
 
-const int MAX_LEVELS          = 9;
+const int MAX_LEVELS          = 8;
 #ifdef ARKANOID_SSD1331
 const int BLOCKS_PER_ROW      = 5;
 #else
@@ -75,11 +75,6 @@ const PROGMEM uint8_t levels[MAX_LEVELS][BLOCK_NUM_ROWS][MAX_BLOCKS_PER_ROW] =
         { 0,0,0,0,0,0,0,0 },
         { 0,0,0,0,0,0,0,0 },
         { 0,0,0,0,0,0,0,0 }
-    },
-    {
-        { 2,2,2,2,2,2,2,0 },
-        { 2,2,3,1,3,2,2,0 },
-        { 3,3,0,0,0,3,3,0 }
     },
 };
 
