@@ -34,7 +34,7 @@ static int s_pageEnd = 7;
 
 static int sdl_ssd1306_detect(uint8_t data)
 {
-    return (data == 0xC0) || (data == 0xC8);
+    return (data == 0xC0) || (data == 0xC8) || (data == 0xD5);
 }
 
 static void sdl_ssd1306_commands(uint8_t data)
@@ -68,6 +68,14 @@ static void sdl_ssd1306_commands(uint8_t data)
                      s_commandId = SSD_COMMAND_NONE;
                      break;
                 default: break;
+            }
+            break;
+        case 0xA8:
+            if (s_cmdArgIndex == 0)
+            {
+                sdl_ssd1306.height = data + 1;
+                sdl_core_resize();
+                s_commandId = SSD_COMMAND_NONE;
             }
             break;
         default:

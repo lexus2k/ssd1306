@@ -32,7 +32,7 @@
 extern "C" {
 #endif
 
-#define SSD_COMMAND_NONE -1
+#define SSD_COMMAND_NONE   -1
 
 enum
 {
@@ -68,6 +68,8 @@ extern int sdl_screenHeight;
 extern int s_commandId;
 extern int s_cmdArgIndex;
 extern uint8_t s_ssd1351_writedata;
+
+extern void sdl_core_resize(void);
 
 #ifdef __cplusplus
 }

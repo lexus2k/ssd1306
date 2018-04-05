@@ -42,7 +42,7 @@ enum
 };
 
 int sdl_screenWidth = 128;
-int sdl_screenHeight = 64;
+int sdl_screenHeight = 32;
 SDL_Window     *g_window = NULL;
 SDL_Renderer   *g_renderer = NULL;
 static int s_analogInput[128];
@@ -50,6 +50,7 @@ static int s_digitalPins[128];
 static int s_dcPin = -1;
 
 static sdl_oled_info *p_oled_db[128] = { NULL };
+static sdl_oled_info *p_active_driver = NULL;
 
 static int windowWidth() { return sdl_screenWidth * PIXEL_SIZE + BORDER_SIZE * 2; };
 static int windowHeight() { return sdl_screenHeight * PIXEL_SIZE + BORDER_SIZE * 2 + TOP_HEADER; };
@@ -156,9 +157,14 @@ void sdl_core_close(void)
     SDL_Quit();
 }
 
-static void sdl_core_resize(void)
+void sdl_core_resize(void)
 {
     SDL_Rect r;
+    if (p_active_driver)
+    {
+        sdl_screenWidth = p_active_driver->width;
+        sdl_screenHeight = p_active_driver->height;
+    }
     SDL_SetWindowSize(g_window, windowWidth(), windowHeight());
     SDL_SetRenderDrawColor( g_renderer, 60, 128, 192, 255 );
     r.x = 0;
@@ -200,7 +206,6 @@ static void sdl_core_resize(void)
 int s_commandId;
 int s_cmdArgIndex;
 static int s_ssdMode = SSD_MODE_NONE;
-static     sdl_oled_info *p_active_driver = NULL;
 uint8_t s_ssd1351_writedata = 0;
 
 static int s_oled = SDL_AUTODETECT;
@@ -208,6 +213,7 @@ static int s_oled = SDL_AUTODETECT;
 void sdl_send_init()
 {
     s_ssdMode = -1;
+    s_commandId = -1;
     s_commandId = SSD_MODE_NONE;
 }
 
@@ -222,7 +228,7 @@ void sdl_command_start()
 {
     s_ssdMode = SSD_MODE_COMMAND;
     if (s_dcPin>=0) s_digitalPins[s_dcPin] = 0;
-    s_commandId = -1;
+//    s_commandId = -1;
 }
 
 void sdl_send_byte(uint8_t data)
@@ -245,8 +251,6 @@ void sdl_send_byte(uint8_t data)
                 if ((*p)->detect(data))
                 {
                     p_active_driver = *p;
-                    sdl_screenWidth = p_active_driver->width;
-                    sdl_screenHeight = p_active_driver->height;
                     s_oled = SDL_DETECTED;
                     sdl_core_resize();
                     break;

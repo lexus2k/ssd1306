@@ -43,8 +43,8 @@ Do not forget pull-up resistors for i2c lines.
 ![Image of arkanoid intro](examples/games/arkanoid/screenshots/introscreen.png)
 ![Image of lode runner](examples/games/lode_runner/screenshots/main_screen.png)
 
-![Image of menu example](examples/ssd1306_demo/screenshots/mainmenu_top.png)
-![Image of color oled](examples/ssd1331_demo/screenshots/fonts.png)
+![Image of menu example](examples/demos/ssd1306_demo/screenshots/mainmenu_top.png)
+![Image of color oled](examples/demos/ssd1331_demo/screenshots/fonts.png)
 
 The default i2c pins for embedded implementation can be modified in ssd1306_i2c_conf.h file.
 For other controllers pins are defined by standard Wire library.
