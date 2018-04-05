@@ -31,10 +31,14 @@
 
 #ifdef ARDUINO
 
-#include <Arduino.h>
-#if defined(ESP8266) || defined(ESP32) || defined(ESP31B)
+#if defined(ARDUINO_ARCH_STM32)   // stm32duino support
+    #include <Arduino.h>
+    #include <avr/pgmspace.h>
+#elif defined(ESP8266) || defined(ESP32) || defined(ESP31B)  // esp arduino support
+    #include <Arduino.h>
     #include <pgmspace.h>
-#else
+#else  // AVR support
+    #include <Arduino.h>
     #include <avr/pgmspace.h>
     #include <avr/interrupt.h>
     #if !defined(ARDUINO_ARCH_SAMD)
@@ -47,7 +51,15 @@
  * @{
  */
 
-#if defined(ARDUINO_AVR_DIGISPARK) || defined(ARDUINO_AVR_DIGISPARKPRO)
+#if defined(ARDUINO_ARCH_STM32)
+    /** The macro is defined when i2c Wire library is available */
+    #define SSD1306_WIRE_SUPPORTED
+    /** The macro is defined when Wire library speed can be configured */
+    #define SSD1306_WIRE_CLOCK_CONFIGURABLE
+    /** The macro is defined when SPI library is available */
+    #define SSD1306_SPI_SUPPORTED
+
+#elif defined(ARDUINO_AVR_DIGISPARK) || defined(ARDUINO_AVR_DIGISPARKPRO)
     /** The macro is defined when i2c Wire library is available */
     #define SSD1306_WIRE_SUPPORTED
     #if defined(ARDUINO_AVR_DIGISPARKPRO)
@@ -86,11 +98,11 @@
     #define SSD1306_WIRE_SUPPORTED
     /** The macro is defined when Wire library speed can be configured */
     #define SSD1306_WIRE_CLOCK_CONFIGURABLE
-    /** The macro is defined when TWI module is available */
+    /** The macro is defined when TWI module is available (ATTINY) */
     #define SSD1306_TWI_SUPPORTED
     /** The macro is defined when SPI library is available */
     #define SSD1306_SPI_SUPPORTED
-    /** The macro is defined when SPI module is available */
+    /** The macro is defined when SPI module is available (ATMEGA) */
     #define SSD1306_AVR_SPI_SUPPORTED
 #endif
 
