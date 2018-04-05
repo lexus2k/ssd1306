@@ -78,7 +78,7 @@ static void ssd1306_spiSendByte_hw(uint8_t data)
     SPI.transfer(data);
 }
 
-static void ssd1306_spiSendBytes_hw(uint8_t *buffer, uint16_t size)
+static void ssd1306_spiSendBytes_hw(const uint8_t *buffer, uint16_t size)
 {
     /* Do not use SPI.transfer(buffer, size)! this method corrupts buffer content */
     while (size--) 
