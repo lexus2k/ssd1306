@@ -1,4 +1,4 @@
-# SSD1306/SSD1331 OLED display driver, PCD8544 LED display driver
+# SSD1306/SSD1331/SSD1351/IL9163 OLED display driver, PCD8544 LED display driver
 
 [tocstart]: # (toc start)
 
@@ -58,6 +58,7 @@ configurable through API.
  * spi ssd1306 128x64 oled display
  * spi ssd1331 96x64 RGB oled display
  * spi ssd1351 128x128 RGB oled display
+ * spi il9163 128x128 RGB TFT display
  * spi pcd8544 84x48 nokia 5110 led display
 
 ## Supported platforms

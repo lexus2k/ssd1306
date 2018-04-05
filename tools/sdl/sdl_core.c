@@ -27,6 +27,7 @@
 #include "sdl_ssd1306.h"
 #include "sdl_ssd1331.h"
 #include "sdl_ssd1351.h"
+#include "sdl_il9163.h"
 #include <unistd.h>
 #include <SDL2/SDL.h>
 #include <stdlib.h> 
@@ -65,6 +66,7 @@ void sdl_core_init(void)
     register_oled( &sdl_ssd1306 );
     register_oled( &sdl_ssd1331 );
     register_oled( &sdl_ssd1351 );
+    register_oled( &sdl_il9163 );
     if ((g_window != NULL) && (g_renderer != NULL))
     {
          /* SDL engine is already initialize */
