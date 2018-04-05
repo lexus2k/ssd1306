@@ -1,4 +1,4 @@
-# SSD1306/SSD1331 OLED display driver, PCD8544 LED display driver
+# SSD1306/SSD1331/SSD1351/IL9163 OLED display driver, PCD8544 LED display driver
 
 [tocstart]: # (toc start)
 
@@ -58,6 +58,7 @@ configurable through API.
  * spi ssd1306 128x64 oled display
  * spi ssd1331 96x64 RGB oled display
  * spi ssd1351 128x128 RGB oled display
+ * spi il9163 128x128 RGB TFT display
  * spi pcd8544 84x48 nokia 5110 led display
 
 ## Supported platforms
@@ -72,6 +73,7 @@ configurable through API.
 | Digispark, including PRO version  |  X  |  X  |  check [examples compatibility list](examples/Digispark_compatibility.txt)  |
 | ESP8266  |  X  |  X  | check [examples compatibility list](examples/ESP8266_compatibility.txt)   |
 | ESP32  |  X  |  X  | check [examples compatibility list](examples/ESP8266_compatibility.txt)   |
+| STM32  |  X  |  X  | [stm32duino](https://github.com/stm32duino/wiki/wiki)  |
 | **Plain AVR** |   |     |          |
 | Attiny85, Attiny45 |  X  |  X  |         |
 | Atmega328p, Atmega168 |  X  |  X  |         |

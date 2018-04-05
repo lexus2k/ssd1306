@@ -39,6 +39,7 @@ SRCS_C = \
 	intf/ssd1306_interface.c \
 	lcd/lcd_common.c \
 	lcd/lcd_pcd8544.c \
+	lcd/lcd_il9163.c \
 	lcd/oled_sh1106.c \
 	lcd/oled_ssd1306.c \
 	lcd/oled_ssd1331.c \
