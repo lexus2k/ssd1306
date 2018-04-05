@@ -341,6 +341,10 @@ void setup()
 //    ssd1351_128x128_spi_init(3, 4, 5);
 //    ssd1351_setMode(0);
 
+    /* il9163 must be initialized in Horizontal addressing mode */
+//    il9163_128x128_spi_init(3, 4, 5);
+//    il9163_setMode(0);
+
     /* ssd1331 must be initialized in Horizontal addressing mode */
     ssd1331_96x64_spi_init(3, 4, 5);
     ssd1331_setMode(0);
