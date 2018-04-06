@@ -68,6 +68,7 @@ SRCS = \
 	sdl_ssd1331.c \
 	sdl_ssd1351.c \
 	sdl_il9163.c \
+	sdl_pcd8544.c \
 
 OBJS = $(addprefix $(BLD)/, $(addsuffix .o, $(basename $(SRCS))))
 

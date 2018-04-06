@@ -28,9 +28,10 @@
 #include "sdl_ssd1331.h"
 #include "sdl_ssd1351.h"
 #include "sdl_il9163.h"
+#include "sdl_pcd8544.h"
 #include <unistd.h>
 #include <SDL2/SDL.h>
-#include <stdlib.h> 
+#include <stdlib.h>
 #include <stdio.h>
 
 #define CANVAS_REFRESH_RATE  60
@@ -42,7 +43,7 @@ enum
 };
 
 int sdl_screenWidth = 128;
-int sdl_screenHeight = 32;
+int sdl_screenHeight = 64;
 SDL_Window     *g_window = NULL;
 SDL_Renderer   *g_renderer = NULL;
 static int s_analogInput[128];
@@ -68,6 +69,7 @@ void sdl_core_init(void)
     register_oled( &sdl_ssd1331 );
     register_oled( &sdl_ssd1351 );
     register_oled( &sdl_il9163 );
+    register_oled( &sdl_pcd8544 );
     if ((g_window != NULL) && (g_renderer != NULL))
     {
          /* SDL engine is already initialize */
