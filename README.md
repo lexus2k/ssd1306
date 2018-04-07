@@ -32,7 +32,7 @@ Do not forget pull-up resistors for i2c lines.
    * i2c (software implementation, Wire library, AVR Twi, Linux i2c-dev)
    * spi (4-wire spi via Arduino SPI library, AVR Spi, AVR USI module)
  * Primitive graphics functions (line,rectangle,pixels, bitmaps)
- * Printing text to display (using fonts of different size)
+ * Printing text to display (using fonts of different size, you can use GLCD Font Creator to create new fonts)
  * Includes [graphics engine](https://github.com/lexus2k/ssd1306/wiki/Using-NanoEngine-for-systems-with-low-resources) to support
    double buffering on tiny microcontrollers.
  * Can be used for game development (bonus examples):
