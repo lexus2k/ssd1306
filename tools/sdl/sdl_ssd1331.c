@@ -134,6 +134,7 @@ sdl_oled_info sdl_ssd1331 =
 {
     .width = 96,
     .height = 64,
+    .dataMode = SDM_AUTO,
     .detect = sdl_ssd1331_detect,
     .run_cmd = sdl_ssd1331_commands,
     .run_data = sdl_ssd1331_data,

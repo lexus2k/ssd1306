@@ -208,7 +208,7 @@ void sdl_core_resize(void)
 int s_commandId;
 int s_cmdArgIndex;
 static int s_ssdMode = SSD_MODE_NONE;
-uint8_t s_ssd1351_writedata = 0;
+uint8_t s_sdl_writeDataMode = 0;
 
 static int s_oled = SDL_AUTODETECT;
 
@@ -281,7 +281,30 @@ void sdl_send_byte(uint8_t data)
     {
         if (p_active_driver)
         {
-            p_active_driver->run_data( data );
+            if (p_active_driver->dataMode == SDM_AUTO)
+            {
+                p_active_driver->run_data( data );
+            }
+            else if (p_active_driver->dataMode == SDM_CONTROLLER)
+            {
+                if (!s_sdl_writeDataMode)
+                {
+                    if (s_commandId == SSD_COMMAND_NONE)
+                    {
+                        s_commandId = data;
+                        s_cmdArgIndex = -1; // no argument
+                    }
+                    else
+                    {
+                        s_cmdArgIndex++;
+                    }
+                    p_active_driver->run_cmd( data );
+                }
+                else
+                {
+                    p_active_driver->run_data( data );
+                }
+            }
         }
     }
 }
@@ -290,7 +313,7 @@ void sdl_send_stop()
 {
     sdl_core_draw();
     s_ssdMode = -1;
-    s_ssd1351_writedata = 0;
+    s_sdl_writeDataMode = 0;
 }
 
 

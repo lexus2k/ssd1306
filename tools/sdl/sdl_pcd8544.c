@@ -111,6 +111,7 @@ sdl_oled_info sdl_pcd8544 =
 {
     .width = 84,
     .height = 48,
+    .dataMode = SDM_AUTO,
     .detect = sdl_pcd8544_detect,
     .run_cmd = sdl_pcd8544_commands,
     .run_data = sdl_pcd8544_data,

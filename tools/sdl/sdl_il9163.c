@@ -91,7 +91,9 @@ static void sdl_il9163_commands(uint8_t data)
             }
             break;
         case 0x2C:
-            s_ssd1351_writedata = 1;
+            s_sdl_writeDataMode = 1;
+            s_commandId = SSD_COMMAND_NONE;
+            break;
         default:
             s_commandId = SSD_COMMAND_NONE;
             break;
@@ -105,20 +107,6 @@ void sdl_il9163_data(uint8_t data)
     int x = s_activeColumn;
     static uint8_t firstByte = 1;  /// il9163
     static uint8_t dataFirst = 0x00;  /// il9163
-    if (!s_ssd1351_writedata)
-    {
-        if (s_commandId == SSD_COMMAND_NONE)
-        {
-            s_commandId = data;
-            s_cmdArgIndex = -1; // no argument
-        }
-        else
-        {
-            s_cmdArgIndex++;
-        }
-        sdl_il9163_commands(data);
-        return;
-    }
     if (firstByte)
     {
         dataFirst = data;
@@ -171,6 +159,7 @@ sdl_oled_info sdl_il9163 =
 {
     .width = 128,
     .height = 128,
+    .dataMode = SDM_CONTROLLER,
     .detect = sdl_il9163_detect,
     .run_cmd = sdl_il9163_commands,
     .run_data = sdl_il9163_data,

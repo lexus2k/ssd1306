@@ -79,7 +79,7 @@ static void sdl_ssd1351_commands(uint8_t data)
             }
             break;
         case 0x5C:
-            s_ssd1351_writedata = 1;
+            s_sdl_writeDataMode = 1;
         default:
             s_commandId = SSD_COMMAND_NONE;
             break;
@@ -93,20 +93,6 @@ void sdl_ssd1351_data(uint8_t data)
     int x = s_activeColumn;
     static uint8_t firstByte = 1;  /// SSD1351
     static uint8_t dataFirst = 0x00;  /// SSD1351
-    if (!s_ssd1351_writedata)
-    {
-        if (s_commandId == SSD_COMMAND_NONE)
-        {
-            s_commandId = data;
-            s_cmdArgIndex = -1; // no argument
-        }
-        else
-        {
-            s_cmdArgIndex++;
-        }
-        sdl_ssd1351_commands(data);
-        return;
-    }
     if (firstByte)
     {
         dataFirst = data;
@@ -159,6 +145,7 @@ sdl_oled_info sdl_ssd1351 =
 {
     .width = 128,
     .height = 128,
+    .dataMode = SDM_CONTROLLER,
     .detect = sdl_ssd1351_detect,
     .run_cmd = sdl_ssd1351_commands,
     .run_data = sdl_ssd1351_data,
