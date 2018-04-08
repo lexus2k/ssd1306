@@ -208,7 +208,7 @@ void sdl_core_resize(void)
 int s_commandId;
 int s_cmdArgIndex;
 static int s_ssdMode = SSD_MODE_NONE;
-uint8_t s_sdl_writeDataMode = 0;
+static sdl_data_mode s_active_data_mode = SDM_COMMAND_ARG;
 
 static int s_oled = SDL_AUTODETECT;
 
@@ -221,6 +221,7 @@ void sdl_send_init()
 
 void sdl_data_start()
 {
+    s_active_data_mode = SDM_COMMAND_ARG;
     s_ssdMode = SSD_MODE_DATA;
     if (s_dcPin>=0) s_digitalPins[s_dcPin] = 1;
     s_commandId = -1;
@@ -228,9 +229,36 @@ void sdl_data_start()
 
 void sdl_command_start()
 {
+    s_active_data_mode = SDM_COMMAND_ARG;
     s_ssdMode = SSD_MODE_COMMAND;
     if (s_dcPin>=0) s_digitalPins[s_dcPin] = 0;
 //    s_commandId = -1;
+}
+
+
+static void sdl_send_command_or_arg(uint8_t data)
+{
+    if (s_commandId == SSD_COMMAND_NONE)
+    {
+        s_commandId = data;
+        s_cmdArgIndex = -1; // no argument
+    }
+    else
+    {
+        s_cmdArgIndex++;
+    }
+    if (p_active_driver)
+    {
+        p_active_driver->run_cmd( data );
+    }
+}
+
+static void sdl_write_data(uint8_t data)
+{
+    if (p_active_driver)
+    {
+        p_active_driver->run_data( data );
+    }
 }
 
 void sdl_send_byte(uint8_t data)
@@ -262,48 +290,27 @@ void sdl_send_byte(uint8_t data)
         }
         else
         {
-            if (s_commandId == SSD_COMMAND_NONE)
-            {
-                s_commandId = data;
-                s_cmdArgIndex = -1; // no argument
-            }
-            else
-            {
-                s_cmdArgIndex++;
-            }
-            if (p_active_driver)
-            {
-                p_active_driver->run_cmd( data );
-            }
+            sdl_send_command_or_arg( data );
         }
     }
     else
     {
         if (p_active_driver)
         {
-            if (p_active_driver->dataMode == SDM_AUTO)
+            if (p_active_driver->dataMode == SDMS_AUTO)
             {
-                p_active_driver->run_data( data );
+                s_active_data_mode = SDM_WRITE_DATA;
             }
-            else if (p_active_driver->dataMode == SDM_CONTROLLER)
+            switch ( s_active_data_mode )
             {
-                if (!s_sdl_writeDataMode)
-                {
-                    if (s_commandId == SSD_COMMAND_NONE)
-                    {
-                        s_commandId = data;
-                        s_cmdArgIndex = -1; // no argument
-                    }
-                    else
-                    {
-                        s_cmdArgIndex++;
-                    }
-                    p_active_driver->run_cmd( data );
-                }
-                else
-                {
-                    p_active_driver->run_data( data );
-                }
+                case SDM_COMMAND_ARG:
+                    sdl_send_command_or_arg( data );
+                    break;
+                case SDM_WRITE_DATA:
+                    sdl_write_data( data );
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -313,8 +320,12 @@ void sdl_send_stop()
 {
     sdl_core_draw();
     s_ssdMode = -1;
-    s_sdl_writeDataMode = 0;
+//    s_active_data_mode = SDM_COMMAND_ARG;
 }
 
+void sdl_set_data_mode(sdl_data_mode mode)
+{
+    s_active_data_mode = mode;
+}
 
 

@@ -79,7 +79,9 @@ static void sdl_ssd1351_commands(uint8_t data)
             }
             break;
         case 0x5C:
-            s_sdl_writeDataMode = 1;
+            sdl_set_data_mode( SDM_WRITE_DATA );
+            s_commandId = SSD_COMMAND_NONE;
+            break;
         default:
             s_commandId = SSD_COMMAND_NONE;
             break;
@@ -145,7 +147,7 @@ sdl_oled_info sdl_ssd1351 =
 {
     .width = 128,
     .height = 128,
-    .dataMode = SDM_CONTROLLER,
+    .dataMode = SDMS_CONTROLLER,
     .detect = sdl_ssd1351_detect,
     .run_cmd = sdl_ssd1351_commands,
     .run_data = sdl_ssd1351_data,

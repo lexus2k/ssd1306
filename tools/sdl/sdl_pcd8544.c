@@ -52,9 +52,9 @@ static void sdl_pcd8544_commands(uint8_t data)
             s_commandId = SSD_COMMAND_NONE;
             break;
         default:
-            if ((s_commandId & 0xC0) == 0x80 )
+            if ((s_commandId & 0x80) == 0x80 )
             {
-                s_activeColumn = s_commandId & 0x3F;
+                s_activeColumn = s_commandId & 0x7F;
                 if (s_activeColumn > s_columnEnd) s_activeColumn = s_columnEnd;
             }
             if ((s_commandId & 0xC0) == 0x40 )
@@ -111,7 +111,7 @@ sdl_oled_info sdl_pcd8544 =
 {
     .width = 84,
     .height = 48,
-    .dataMode = SDM_AUTO,
+    .dataMode = SDMS_AUTO,
     .detect = sdl_pcd8544_detect,
     .run_cmd = sdl_pcd8544_commands,
     .run_data = sdl_pcd8544_data,

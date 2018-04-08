@@ -135,7 +135,7 @@ sdl_oled_info sdl_ssd1306 =
 {
     .width = 128,
     .height = 64,
-    .dataMode = SDM_AUTO,
+    .dataMode = SDMS_AUTO,
     .detect = sdl_ssd1306_detect,
     .run_cmd = sdl_ssd1306_commands,
     .run_data = sdl_ssd1306_data,

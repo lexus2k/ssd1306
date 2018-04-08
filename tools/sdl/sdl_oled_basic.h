@@ -43,15 +43,21 @@ enum
 
 typedef enum
 {
-    SDM_AUTO,          // Command arg/write data mode is selected by DC pin or i2c command
-    SDM_CONTROLLER,    // Command arg/write data mode is controlled by LCD controller special command
+    SDMS_AUTO,          // Command arg/write data mode is selected by DC pin or i2c command
+    SDMS_CONTROLLER,    // Command arg/write data mode is controlled by LCD controller special command
+} sdl_data_mode_selection;
+
+typedef enum
+{
+    SDM_COMMAND_ARG,    // data mode interprets all data as command args 
+    SDM_WRITE_DATA,     // data mode sends all data to GDRAM
 } sdl_data_mode;
 
 typedef struct
 {
     int width;
     int height;
-    sdl_data_mode dataMode;
+    sdl_data_mode_selection dataMode;
     int   (*detect)(uint8_t data);
     void  (*run_cmd)(uint8_t data);
     void  (*run_data)(uint8_t data);
@@ -74,9 +80,9 @@ extern int sdl_screenWidth;
 extern int sdl_screenHeight;
 extern int s_commandId;
 extern int s_cmdArgIndex;
-extern uint8_t s_sdl_writeDataMode;
 
 extern void sdl_core_resize(void);
+extern void sdl_set_data_mode(sdl_data_mode mode);
 
 #ifdef __cplusplus
 }

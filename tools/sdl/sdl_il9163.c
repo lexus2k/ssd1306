@@ -51,7 +51,6 @@ static void sdl_il9163_commands(uint8_t data)
         case 0x36:
             if (s_cmdArgIndex == 0)
             {
-//               0b00101000
                 s_verticalMode = data;
                 s_commandId = SSD_COMMAND_NONE;
             }
@@ -91,7 +90,7 @@ static void sdl_il9163_commands(uint8_t data)
             }
             break;
         case 0x2C:
-            s_sdl_writeDataMode = 1;
+            sdl_set_data_mode( SDM_WRITE_DATA );
             s_commandId = SSD_COMMAND_NONE;
             break;
         default:
@@ -159,7 +158,7 @@ sdl_oled_info sdl_il9163 =
 {
     .width = 128,
     .height = 128,
-    .dataMode = SDM_CONTROLLER,
+    .dataMode = SDMS_CONTROLLER,
     .detect = sdl_il9163_detect,
     .run_cmd = sdl_il9163_commands,
     .run_data = sdl_il9163_data,
