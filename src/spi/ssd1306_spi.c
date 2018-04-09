@@ -46,7 +46,8 @@ void ssd1306_spiInit(int8_t cesPin, int8_t dcPin)
 #elif defined(SSD1306_USI_SPI_SUPPORTED)
     ssd1306_spiInit_Usi(cesPin, dcPin);
 #elif defined(SSD1306_LINUX_SUPPORTED)
-    ssd1306_spiInit_Linux(cesPin, dcPin);
+    /* -1 means SPI bus is selected by default */
+    ssd1306_spiInit_Linux(-1, cesPin, dcPin);
 #endif
 }
 

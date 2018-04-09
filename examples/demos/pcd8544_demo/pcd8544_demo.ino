@@ -170,6 +170,7 @@ void setup()
     ssd1306_setFixedFont(ssd1306xled_font6x8);
 
     pcd8544_84x48_spi_init(3, 4, 5);  // FOR ATMEGA
+//    pcd8544_84x48_spi_init(24, 0, 23); // Use this line for Raspberry  (gpio24=RST, 0=CE, gpio23=D/C)
 //    pcd8544_84x48_spi_init(3, -1, 4); // FOR ATTINY
 
     ssd1306_fillScreen( 0x00 );

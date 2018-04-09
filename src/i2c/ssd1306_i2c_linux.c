@@ -34,9 +34,11 @@
 
 #if !defined(SDL_EMULATION)
 
+#include <errno.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <linux/i2c-dev.h>
+#include <stdlib.h>
 
 static uint8_t s_sa = SSD1306_SA;
 static int     s_fd = -1;
@@ -52,7 +54,7 @@ static void ssd1306_i2cStop_Linux(void)
 {
     if (write(s_fd, s_buffer, s_dataSize) != s_dataSize)
     {
-        fprintf(stderr, "Failed to write to the i2c bus.\n");
+        fprintf(stderr, "Failed to write to the i2c bus: %s.\n", strerror(errno));
     }
     s_dataSize = 0;
 }

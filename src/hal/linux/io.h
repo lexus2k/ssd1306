@@ -68,7 +68,6 @@ extern "C" {
 #endif
 
 static inline int  digitalRead(int pin) { return LOW; };
-static inline void pinMode(int pin, int mode) {};
 #if defined(__KERNEL__)      // ============== KERNEL
 static inline void delay(unsigned long ms) {  };
 static inline void delayMicroseconds(unsigned long us) {  };
@@ -76,10 +75,12 @@ static inline int  analogRead(int pin) { return 0; };
 static inline void digitalWrite(int pin, int level) { };
 static inline uint32_t millis(void) { return 0; };
 static inline uint32_t micros(void) { return 0; };
+static inline void pinMode(int pin, int mode) {};
 
 #elif defined(__MINGW32__)   // ============== MINGW32
 static inline void delay(unsigned long ms) { Sleep(ms);  };
 static inline void delayMicroseconds(unsigned long us) { Sleep((us+500)/1000); };
+static inline void pinMode(int pin, int mode) {};
 static inline uint32_t millis(void)
 {
     return GetTickCount();
@@ -91,6 +92,7 @@ static inline uint32_t micros(void)
 };
 
 #else                         // ============== LINUX
+void pinMode(int pin, int mode);
 static inline void delay(unsigned long ms) { usleep(ms*1000);  };
 static inline void delayMicroseconds(unsigned long us) { usleep(us); };
 static inline uint32_t millis(void)
@@ -120,7 +122,7 @@ static inline int  analogRead(int pin) { return sdl_read_analog(pin); };
 static inline void digitalWrite(int pin, int level) {  sdl_write_digital(pin, level); };
 #elif !defined(__KERNEL__)
 static inline int  analogRead(int pin) { return 0; };
-static inline void digitalWrite(int pin, int level) {};
+void digitalWrite(int pin, int level);
 #endif
 
 static inline void randomSeed(int seed) { };

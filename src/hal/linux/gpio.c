@@ -30,10 +30,13 @@
 
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+#define MAX_GPIO_COUNT   256
 
 #ifdef IN
 #undef IN
@@ -45,23 +48,36 @@
 #endif
 #define OUT 1
 
+static uint8_t s_exported_pin[MAX_GPIO_COUNT] = {0};
+static uint8_t s_pin_mode[MAX_GPIO_COUNT] = {0};
+
 int gpio_export(int pin)
 {
     char buffer[4];
     ssize_t bytes_written;
     int fd;
+    char path[64];
+
+    snprintf(path, sizeof(path), "/sys/class/gpio/gpio%d", pin);
+
+    if (access(path, F_OK) == 0)
+    {
+        return 0;
+    }
 
     fd = open("/sys/class/gpio/export", O_WRONLY);
     if (-1 == fd)
     {
-        fprintf(stderr, "Failed to allocate gpio pin resources!\n");
+        fprintf(stderr, "Failed to allocate gpio pin resources[%d]: %s!\n", pin, strerror (errno));
         return(-1);
     }
 
     bytes_written = snprintf(buffer, sizeof(buffer), "%d", pin);
     if (write(fd, buffer, bytes_written) < 0)
     {
-        fprintf(stderr, "Failed to allocate gpio pin resources!\n");
+        fprintf(stderr, "Failed to allocate gpio pin resources[%d]: %s!\n", pin, strerror (errno));
+        close(fd);
+        return -1;
     }
     close(fd);
     return(0);
@@ -100,26 +116,26 @@ int gpio_direction(int pin, int dir)
     fd = open(path, O_WRONLY);
     if (-1 == fd)
     {
-        fprintf(stderr, "Failed to set gpio pin direction!\n");
+        fprintf(stderr, "Failed to set gpio pin direction1[%d]: %s!\n", pin, strerror(errno));
         return(-1);
     }
- 
+
     if (-1 == write(fd, &s_directions_str[IN == dir ? 0 : 3], IN == dir ? 2 : 3))
     {
-        fprintf(stderr, "Failed to set gpio pin direction!\n");
+        fprintf(stderr, "Failed to set gpio pin direction2[%d]: %s!\n", pin, strerror(errno));
         return(-1);
     }
- 
+
     close(fd);
     return(0);
 }
- 
+
 int gpio_read(int pin)
 {
     char path[32];
     char value_str[3];
     int fd;
- 
+
     snprintf(path, sizeof(path), "/sys/class/gpio/gpio%d/value", pin);
     fd = open(path, O_RDONLY);
     if (-1 == fd)
@@ -127,49 +143,82 @@ int gpio_read(int pin)
         fprintf(stderr, "Failed to read gpio pin value!\n");
         return(-1);
     }
- 
+
     if (-1 == read(fd, value_str, 3))
     {
         fprintf(stderr, "Failed to read gpio pin value!\n");
         return(-1);
     }
- 
+
     close(fd);
- 
+
     return(atoi(value_str));
 }
- 
+
 int gpio_write(int pin, int value)
 {
     static const char s_values_str[] = "01";
- 
+
     char path[64];
     int fd;
- 
+
     snprintf(path, sizeof(path), "/sys/class/gpio/gpio%d/value", pin);
     fd = open(path, O_WRONLY);
     if (-1 == fd)
     {
-        fprintf(stderr, "Failed to set gpio pin value!\n");
+        fprintf(stderr, "Failed to set gpio pin value[%d]: %s!\n", pin, strerror(errno));
         return(-1);
     }
- 
+
     if (1 != write(fd, &s_values_str[LOW == value ? 0 : 1], 1))
     {
-        fprintf(stderr, "Failed to set gpio pin value!\n");
+        fprintf(stderr, "Failed to set gpio pin value[%d]: %s!\n", pin, strerror (errno));
         return(-1);
     }
- 
+
     close(fd);
     return(0);
 }
 
-/* 
-    -1 == gpio_export(N)
-    -1 == gpio_direction(N, OUT)
-    -1 == gpio_write(N, HIGH)
-    -1 == gpio_unexport(N)
-*/
+void pinMode(int pin, int mode)
+{
+    if (!s_exported_pin[pin])
+    {
+        if ( gpio_export(pin)<0 )
+        {
+            return;
+        }
+        s_exported_pin[pin] = 1;
+    }
+    if (mode == OUTPUT)
+    {
+        gpio_direction(pin, OUT);
+        s_pin_mode[pin] = 1;
+    }
+    if (mode == INPUT)
+    {
+        gpio_direction(pin, IN);
+        s_pin_mode[pin] = 0;
+    }
+}
+
+void digitalWrite(int pin, int level)
+{
+    if (!s_exported_pin[pin])
+    {
+        if ( gpio_export(pin)<0 )
+        {
+            return;
+        }
+        s_exported_pin[pin] = 1;
+    }
+    if (!s_pin_mode[pin])
+    {
+        pinMode(pin, OUTPUT);
+    }
+    gpio_write( pin, level );
+}
+
 #endif
 
 #endif
