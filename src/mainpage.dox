@@ -77,7 +77,7 @@ configurable through API.
 | Atmega328p, Atmega168 |  X  |  X  |         |
 | Atmega32u4  |  X  |  X  |  compilation verified  |
 | **Linux**  |    |     |          |
-| Raspberry Pi |  X  |      | i2c-dev  |
+| Raspberry Pi |  X  |  X   | i2c-dev, spidev, /sys/class/gpio  |
 | [SDL Emulation](https://github.com/lexus2k/ssd1306/wiki/How-to-run-emulator-mode) |  X  |  X  | demo code can be run without real OLED HW via SDL library |
 | **Windows**  |    |     |          |
 | [SDL Emulation](https://github.com/lexus2k/ssd1306/wiki/How-to-run-emulator-mode) |  X  |  X  | demo code can be run without real OLED HW via MinGW32 + SDL library |
