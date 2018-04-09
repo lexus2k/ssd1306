@@ -232,7 +232,6 @@ void sdl_command_start()
     s_active_data_mode = SDM_COMMAND_ARG;
     s_ssdMode = SSD_MODE_COMMAND;
     if (s_dcPin>=0) s_digitalPins[s_dcPin] = 0;
-//    s_commandId = -1;
 }
 
 
@@ -320,7 +319,6 @@ void sdl_send_stop()
 {
     sdl_core_draw();
     s_ssdMode = -1;
-//    s_active_data_mode = SDM_COMMAND_ARG;
 }
 
 void sdl_set_data_mode(sdl_data_mode mode)
