@@ -22,7 +22,7 @@
     SOFTWARE.
 */
 
-#if (defined(__linux__) || defined(__MINGW32__)) && !defined(ARDUINO)
+#if (defined(__linux__) && !defined(__MINGW32__)) && !defined(ARDUINO)
 
 #include "io.h"
 
