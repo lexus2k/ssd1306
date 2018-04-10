@@ -61,18 +61,19 @@ static void ssd1306_spiConfigure_avr()
     // Invert the SPI2X bit
     clockDiv ^= 0x1;
 
-
-    DDR_SPI &= ~((1<<DD_MOSI)|(1<<DD_MISO)|(1<<DD_SS)|(1<<DD_SCK));
+    // SS pin must be HIGH, when enabling MASTER SPI mode
+    // Otherwise, SPI will drop automatically to SLAVE mode
+    DDR_SPI &= ~((1<<DD_SCK)|(1<<DD_SS)|(1<<DD_MOSI));
+    PORT_SPI |= (1<<DD_SS);
     /* Define the following pins as output */
-    DDR_SPI |= ((1<<DD_MOSI)|(1<<DD_SS)|(1<<DD_SCK));
-    SPCR = ((1<<SPE)|               // SPI Enable
-            (0<<SPIE)|              // SPI Interupt Enable
-            (0<<DORD)|              // Data Order (0:MSB first / 1:LSB first)
-            (1<<MSTR)|              // Master/Slave select   
-            ((clockDiv >> 1) & SPI_CLOCK_MASK)|    // SPI Clock Rate
-            (0<<CPOL)|              // Clock Polarity (0:SCK low / 1:SCK hi when idle)
-            (0<<CPHA));             // Clock Phase (0:leading / 1:trailing edge sampling)
+    DDR_SPI |= ((1<<DD_MOSI)|(1<<DD_SCK)|(1<<DD_SS));
+    PORT_SPI |= (1<<DD_SS);
+
+    SPCR =  (1<<SPE)|(1<<MSTR)|(0<<CPOL)|(0<<CPHA)|
+            ((clockDiv >> 1) & SPI_CLOCK_MASK);
     SPSR = clockDiv & SPI_2XCLOCK_MASK; // Double Clock Rate
+    // Wait for some time to give SPI HW module to initialize
+    delay(10);
 }
 
 static void ssd1306_spiClose_avr()
@@ -90,6 +91,7 @@ static void ssd1306_spiStart_avr()
 static void ssd1306_spiSendByte_avr(uint8_t data)
 {
     SPDR = data;
+    asm volatile("nop");
     while((SPSR & (1<<SPIF))==0);
 }
 
@@ -99,6 +101,7 @@ static void ssd1306_spiSendBytes_avr(const uint8_t * buffer, uint16_t size)
     while (size--)
     {
         SPDR = *p;
+        asm volatile("nop");
         while((SPSR & (1<<SPIF))==0);
         SPDR; // read SPI input
         p++;
