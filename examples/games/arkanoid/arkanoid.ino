@@ -58,6 +58,7 @@
 #include "ssd1306.h"
 #include "i2c/ssd1306_i2c_wire.h"
 #include "i2c/ssd1306_i2c_embedded.h"
+#include "i2c/ssd1306_i2c_twi.h"
 #include "i2c/ssd1306_i2c_linux.h"
 #include "intf/ssd1306_interface.h"
 #include "lcd/lcd_common.h"
@@ -164,6 +165,8 @@ void drawIntro()
     ssd1306_i2cInit_Embedded(-1,-1,0);
 #elif defined(SSD1306_LINUX_SUPPORTED)
     ssd1306_i2cInit_Linux(-1,-1);
+#elif defined(SSD1306_TWI_SUPPORTED)
+    ssd1306_i2cInit_Twi(0);
 #else
     #error "Not supported microcontroller or board"
 #endif

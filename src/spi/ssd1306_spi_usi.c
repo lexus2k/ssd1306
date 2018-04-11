@@ -76,7 +76,7 @@ static void ssd1306_spiSendByte_Usi(uint8_t data)
     }
 }
 
-static void ssd1306_spiSendBytes_Usi(uint8_t *buffer, uint16_t size)
+static void ssd1306_spiSendBytes_Usi(const uint8_t *buffer, uint16_t size)
 {
     while (size--)
     {
