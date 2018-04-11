@@ -182,4 +182,8 @@ void ssd1306_spiInit_Linux(int8_t busId, int8_t ces, int8_t dcPin)
 
 #endif
 
-
+#if defined(__KERNEL__) && defined(SSD1306_LINUX_SUPPORTED)
+void ssd1306_spiInit_Linux(int8_t busId, int8_t ces, int8_t dcPin)
+{
+}
+#endif

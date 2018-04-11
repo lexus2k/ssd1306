@@ -154,8 +154,6 @@ static int ssd1306_probe(struct i2c_client *client,
 	ssd1306_sendByte = ssd1306_smbus_send;
 	ssd1306_sendBytes = ssd1306_smbus_send_bytes;
 	ssd1306_closeInterface = ssd1306_smbus_close;
-	ssd1306_commandStart = ssd1306_i2cCommandStart;
-	ssd1306_dataStart = ssd1306_i2cDataStart;
 
 	mutex_lock(&data->lock);
 	s_client = client;
