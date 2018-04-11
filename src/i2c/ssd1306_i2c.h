@@ -76,20 +76,6 @@ void         ssd1306_i2cInit(void);
  */
 void ssd1306_i2cInitEx(int8_t scl, int8_t sda, int8_t sa);
 
-/**
- * @ingroup LCD_HW_INTERFACE_API
- *
- * Switches i2c chip to command transmission mode.
- */
-void         ssd1306_i2cCommandStart(void);
-
-/**
- * @ingroup LCD_HW_INTERFACE_API
- *
- * Switches i2c chip to data transmission mode.
- */
-void         ssd1306_i2cDataStart(void);
-
 #ifdef __cplusplus
 }
 #endif

@@ -72,60 +72,63 @@ static void il9163_setBlock(uint8_t x, uint8_t y, uint8_t w)
     uint8_t rx = w ? (x + w - 1) : (s_displayWidth - 1);
     s_column = x;
     s_page = y;
-    ssd1306_commandStart();
-    ssd1306_sendByte(0x2B);
-    ssd1306_spiDataMode(1);  // According to datasheet all args must be passed in data mode
-    ssd1306_sendByte(0);
-    ssd1306_sendByte(x);
-    ssd1306_sendByte(0);
-    ssd1306_sendByte(rx < s_displayWidth ? rx : (s_displayWidth - 1));
+    ssd1306_intf.start();
     ssd1306_spiDataMode(0);
-    ssd1306_sendByte(0x2A);
+    ssd1306_intf.send(0x2B);
     ssd1306_spiDataMode(1);  // According to datasheet all args must be passed in data mode
-    ssd1306_sendByte(0);
-    ssd1306_sendByte(y<<3);
-    ssd1306_sendByte(0);
-    ssd1306_sendByte(((y<<3) + 7) < s_displayHeight ? ((y<<3) + 7) : (s_displayHeight - 1));
+    ssd1306_intf.send(0);
+    ssd1306_intf.send(x);
+    ssd1306_intf.send(0);
+    ssd1306_intf.send(rx < s_displayWidth ? rx : (s_displayWidth - 1));
     ssd1306_spiDataMode(0);
-    ssd1306_sendByte(0x2C);
+    ssd1306_intf.send(0x2A);
+    ssd1306_spiDataMode(1);  // According to datasheet all args must be passed in data mode
+    ssd1306_intf.send(0);
+    ssd1306_intf.send(y<<3);
+    ssd1306_intf.send(0);
+    ssd1306_intf.send(((y<<3) + 7) < s_displayHeight ? ((y<<3) + 7) : (s_displayHeight - 1));
+    ssd1306_spiDataMode(0);
+    ssd1306_intf.send(0x2C);
     ssd1306_spiDataMode(1);
 }
 
 static void il9163_setBlock2(uint8_t x, uint8_t y, uint8_t w)
 {
     uint8_t rx = w ? (x + w - 1) : (s_displayWidth - 1);
-    ssd1306_commandStart();
-    ssd1306_sendByte(0x2A);
-    ssd1306_spiDataMode(1);  // According to datasheet all args must be passed in data mode
-    ssd1306_sendByte(0);
-    ssd1306_sendByte(x);
-    ssd1306_sendByte(0);
-    ssd1306_sendByte(rx < s_displayWidth ? rx : (s_displayWidth - 1));
+    ssd1306_intf.start();
     ssd1306_spiDataMode(0);
-    ssd1306_sendByte(0x2B);
+    ssd1306_intf.send(0x2A);
     ssd1306_spiDataMode(1);  // According to datasheet all args must be passed in data mode
-    ssd1306_sendByte(0);
-    ssd1306_sendByte(y);
-    ssd1306_sendByte(0);
-    ssd1306_sendByte(s_displayHeight - 1);
+    ssd1306_intf.send(0);
+    ssd1306_intf.send(x);
+    ssd1306_intf.send(0);
+    ssd1306_intf.send(rx < s_displayWidth ? rx : (s_displayWidth - 1));
     ssd1306_spiDataMode(0);
-    ssd1306_sendByte(0x2C);
+    ssd1306_intf.send(0x2B);
+    ssd1306_spiDataMode(1);  // According to datasheet all args must be passed in data mode
+    ssd1306_intf.send(0);
+    ssd1306_intf.send(y);
+    ssd1306_intf.send(0);
+    ssd1306_intf.send(s_displayHeight - 1);
+    ssd1306_spiDataMode(0);
+    ssd1306_intf.send(0x2C);
     ssd1306_spiDataMode(1);
 }
 
 static void il9163_nextPage(void)
 {
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
     il9163_setBlock(s_column,s_page+1,0);
 }
 
 void    il9163_setMode(uint8_t vertical)
 {
-    ssd1306_commandStart();
-    ssd1306_sendByte( 0x36 );
+    ssd1306_intf.start();
+    ssd1306_spiDataMode(0);
+    ssd1306_intf.send( 0x36 );
     ssd1306_spiDataMode(1);
-    ssd1306_sendByte( vertical ? 0b00101000 : 0b00001000 );
-    ssd1306_endTransmission();
+    ssd1306_intf.send( vertical ? 0b00101000 : 0b00001000 );
+    ssd1306_intf.stop();
     if (vertical)
     {
         ssd1306_setRamBlock = il9163_setBlock;
@@ -142,13 +145,13 @@ static void il9163_sendPixels(uint8_t data)
     {
         if ( data & 0x01 )
         {
-            ssd1306_sendByte( (uint8_t)(ssd1306_color>>8) );
-            ssd1306_sendByte( (uint8_t)(ssd1306_color) );
+            ssd1306_intf.send( (uint8_t)(ssd1306_color>>8) );
+            ssd1306_intf.send( (uint8_t)(ssd1306_color) );
         }
         else
         {
-            ssd1306_sendByte( 0B00000000 );
-            ssd1306_sendByte( 0B00000000 );
+            ssd1306_intf.send( 0B00000000 );
+            ssd1306_intf.send( 0B00000000 );
         }
         data >>= 1;
     }
@@ -166,8 +169,8 @@ static void il9163_sendPixelsBuffer(const uint8_t *buffer, uint16_t len)
 static void il9163_sendPixel8(uint8_t data)
 {
     uint16_t color = RGB8_TO_RGB16(data);
-    ssd1306_sendByte( color >> 8 );
-    ssd1306_sendByte( color & 0xFF );
+    ssd1306_intf.send( color >> 8 );
+    ssd1306_intf.send( color & 0xFF );
 }
 
 void    il9163_128x128_init()
@@ -180,7 +183,8 @@ void    il9163_128x128_init()
     ssd1306_sendPixels  = il9163_sendPixels;
     ssd1306_sendPixelsBuffer = il9163_sendPixelsBuffer;
     ssd1306_sendPixel8 = il9163_sendPixel8;
-    ssd1306_commandStart();
+    ssd1306_intf.start();
+    ssd1306_spiDataMode(0);
     for( uint8_t i=0; i<sizeof(s_oled128x128_initData); i++)
     {
         uint8_t data = pgm_read_byte(&s_oled128x128_initData[i]);
@@ -188,15 +192,15 @@ void    il9163_128x128_init()
         {
             data = pgm_read_byte(&s_oled128x128_initData[++i]);
             ssd1306_spiDataMode(1);
-            ssd1306_sendByte(data);
+            ssd1306_intf.send(data);
             ssd1306_spiDataMode(0);
         }
         else
         {
-            ssd1306_sendByte(data);
+            ssd1306_intf.send(data);
         }
     }
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
 }
 
 void   il9163_128x128_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)

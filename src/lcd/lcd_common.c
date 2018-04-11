@@ -36,5 +36,5 @@ void ssd1306_sendData(uint8_t data)
 {
     ssd1306_dataStart();
     ssd1306_sendPixels( data );
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
 }

@@ -94,14 +94,12 @@ void ssd1306_spiInit_hw(int8_t cesPin, int8_t dcPin)
     if (dcPin >= 0) pinMode(dcPin, OUTPUT);
     if (cesPin) s_ssd1306_cs = cesPin;
     if (dcPin) s_ssd1306_dc = dcPin;
-    ssd1306_dcQuickSwitch = 1;
-    ssd1306_startTransmission = ssd1306_spiStart_hw;
-    ssd1306_endTransmission = ssd1306_spiStop_hw;
-    ssd1306_sendByte = ssd1306_spiSendByte_hw;
-    ssd1306_sendBytes = ssd1306_spiSendBytes_hw;
-    ssd1306_closeInterface = ssd1306_spiClose_hw;
-    ssd1306_commandStart = ssd1306_spiCommandStart;
-    ssd1306_dataStart = ssd1306_spiDataStart;
+    ssd1306_intf.spi = 1;
+    ssd1306_intf.start = ssd1306_spiStart_hw;
+    ssd1306_intf.stop = ssd1306_spiStop_hw;
+    ssd1306_intf.send = ssd1306_spiSendByte_hw;
+    ssd1306_intf.send_buffer = ssd1306_spiSendBytes_hw;
+    ssd1306_intf.close = ssd1306_spiClose_hw;
 }
 
 #endif

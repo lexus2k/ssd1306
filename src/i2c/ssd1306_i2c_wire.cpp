@@ -80,7 +80,8 @@ static void ssd1306_i2cSendByte_Wire(uint8_t data)
 #endif
     {
         ssd1306_i2cStop_Wire();
-        ssd1306_i2cDataStart();
+        ssd1306_i2cStart_Wire();
+        ssd1306_i2cSendByte_Wire(0x40);
         /* Commands never require many bytes. Thus assume that user tries to send data */
     }
     Wire.write(data);
@@ -103,14 +104,12 @@ static void ssd1306_i2cClose_Wire()
 void ssd1306_i2cInit_Wire(uint8_t sa)
 {
     if (sa) s_sa = sa;
-    ssd1306_dcQuickSwitch = 0;
-    ssd1306_startTransmission = ssd1306_i2cStart_Wire;
-    ssd1306_endTransmission = ssd1306_i2cStop_Wire;
-    ssd1306_sendByte = ssd1306_i2cSendByte_Wire;
-    ssd1306_sendBytes = ssd1306_i2cSendBytes_Wire;
-    ssd1306_closeInterface = ssd1306_i2cClose_Wire;
-    ssd1306_commandStart = ssd1306_i2cCommandStart;
-    ssd1306_dataStart = ssd1306_i2cDataStart;
+    ssd1306_intf.spi = 0;
+    ssd1306_intf.start = ssd1306_i2cStart_Wire;
+    ssd1306_intf.stop = ssd1306_i2cStop_Wire;
+    ssd1306_intf.send = ssd1306_i2cSendByte_Wire;
+    ssd1306_intf.send_buffer = ssd1306_i2cSendBytes_Wire;
+    ssd1306_intf.close = ssd1306_i2cClose_Wire;
 }
 
 #endif

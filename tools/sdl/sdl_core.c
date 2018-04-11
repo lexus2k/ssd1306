@@ -214,24 +214,9 @@ static int s_oled = SDL_AUTODETECT;
 
 void sdl_send_init()
 {
-    s_ssdMode = -1;
-    s_commandId = -1;
-    s_commandId = SSD_MODE_NONE;
-}
-
-void sdl_data_start()
-{
     s_active_data_mode = SDM_COMMAND_ARG;
-    s_ssdMode = SSD_MODE_DATA;
-    if (s_dcPin>=0) s_digitalPins[s_dcPin] = 1;
-    s_commandId = -1;
-}
-
-void sdl_command_start()
-{
-    s_active_data_mode = SDM_COMMAND_ARG;
-    s_ssdMode = SSD_MODE_COMMAND;
-    if (s_dcPin>=0) s_digitalPins[s_dcPin] = 0;
+    s_ssdMode = SSD_MODE_NONE;
+    s_commandId = SSD_COMMAND_NONE;
 }
 
 
@@ -264,13 +249,16 @@ void sdl_send_byte(uint8_t data)
 {
     if (s_dcPin>=0)
     {
+        // for spi
         s_ssdMode = s_digitalPins[s_dcPin] ? SSD_MODE_DATA : SSD_MODE_COMMAND;
     }
-    if (s_ssdMode == SSD_MODE_NONE)
+    else if (s_ssdMode == SSD_MODE_NONE)
     {
+        // for i2c
         s_ssdMode = data == 0x00 ? SSD_MODE_COMMAND : SSD_MODE_DATA;
+        return;
     }
-    else if (s_ssdMode == SSD_MODE_COMMAND)
+    if (s_ssdMode == SSD_MODE_COMMAND)
     {
         if (s_oled == SDL_AUTODETECT)
         {

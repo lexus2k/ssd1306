@@ -67,8 +67,9 @@ static void ssd1306_i2cSendByte_Linux(uint8_t data)
     {
         /* Send function puts all data to internal buffer.  *
          * Restart transmission if internal buffer is full. */
-        ssd1306_i2cStop_Linux();
-        ssd1306_dataStart();
+        ssd1306_intf.stop();
+        ssd1306_intf.start();
+        ssd1306_intf.send(0x40);
     }
 }
 
@@ -110,13 +111,11 @@ void ssd1306_i2cInit_Linux(int8_t busId, uint8_t sa)
         busId = 1;
     }
     snprintf(filename, 19, "/dev/i2c-%d", busId);
-    ssd1306_startTransmission = empty_function;
-    ssd1306_endTransmission = empty_function;
-    ssd1306_closeInterface = empty_function;
-    ssd1306_commandStart = empty_function;
-    ssd1306_dataStart = empty_function;
-    ssd1306_sendByte = empty_function_single_arg;
-    ssd1306_sendBytes = empty_function_two_args;
+    ssd1306_intf.start = empty_function;
+    ssd1306_intf.stop = empty_function;
+    ssd1306_intf.close = empty_function;
+    ssd1306_intf.send = empty_function_single_arg;
+    ssd1306_intf.send_buffer = empty_function_two_args;
     if ((s_fd = open(filename, O_RDWR)) < 0)
     {
         fprintf(stderr, "Failed to open the i2c bus\n");
@@ -131,13 +130,11 @@ void ssd1306_i2cInit_Linux(int8_t busId, uint8_t sa)
         fprintf(stderr, "Failed to acquire bus access and/or talk to slave.\n");
         return;
     }
-    ssd1306_startTransmission = ssd1306_i2cStart_Linux;
-    ssd1306_endTransmission = ssd1306_i2cStop_Linux;
-    ssd1306_sendByte = ssd1306_i2cSendByte_Linux;
-    ssd1306_sendBytes = ssd1306_i2cSendBytes_Linux;
-    ssd1306_closeInterface = ssd1306_i2cClose_Linux;
-    ssd1306_commandStart = ssd1306_i2cCommandStart;
-    ssd1306_dataStart = ssd1306_i2cDataStart;
+    ssd1306_intf.start = ssd1306_i2cStart_Linux;
+    ssd1306_intf.stop = ssd1306_i2cStop_Linux;
+    ssd1306_intf.send = ssd1306_i2cSendByte_Linux;
+    ssd1306_intf.send_buffer = ssd1306_i2cSendBytes_Linux;
+    ssd1306_intf.close = ssd1306_i2cClose_Linux;
 }
 
 #else /* SDL_EMULATION */
@@ -156,14 +153,12 @@ static void sdl_send_bytes(const uint8_t *buffer, uint16_t size)
 void ssd1306_i2cInit_Linux(int8_t busId, uint8_t sa)
 {
     sdl_core_init();
-    ssd1306_dcQuickSwitch = 0;
-    ssd1306_startTransmission = sdl_send_init;
-    ssd1306_endTransmission = sdl_send_stop;
-    ssd1306_sendByte = sdl_send_byte;
-    ssd1306_sendBytes = sdl_send_bytes;
-    ssd1306_closeInterface = sdl_core_close;
-    ssd1306_commandStart = sdl_command_start;
-    ssd1306_dataStart = sdl_data_start;
+    ssd1306_intf.spi = 0;
+    ssd1306_intf.start = sdl_send_init;
+    ssd1306_intf.stop = sdl_send_stop;
+    ssd1306_intf.send = sdl_send_byte;
+    ssd1306_intf.send_buffer = sdl_send_bytes;
+    ssd1306_intf.close = sdl_core_close;
 }
 
 #endif /* SDL_EMULATION */

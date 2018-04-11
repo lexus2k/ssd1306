@@ -51,18 +51,6 @@ void ssd1306_spiInit(int8_t cesPin, int8_t dcPin)
 #endif
 }
 
-void ssd1306_spiCommandStart()
-{
-    digitalWrite(s_ssd1306_dc, LOW);
-    ssd1306_startTransmission();
-}
-
-void ssd1306_spiDataStart()
-{
-    digitalWrite(s_ssd1306_dc, HIGH);
-    ssd1306_startTransmission();
-}
-
 void ssd1306_spiDataMode(uint8_t mode)
 {
     if (mode)

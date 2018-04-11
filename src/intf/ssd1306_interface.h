@@ -48,61 +48,80 @@ extern "C" {
  *          ssd1306_128x64_i2c_initEx(), ssd1351_128x128_spi_init(), etc.
  */
 
-/**
- * Indicates if display driver supports quick switching between data and command modes:
- * 0 means "not supported quick switching", 1 means "quick switching is supported".
- * Quick switching allows to switch driver between data and command modes without
- * reestablishing communication session. For all i2c interfaces quick switching is not supported,
- * because data or command mode is defined by first sent byte in i2c session.
- * All spi interfaces support quick switching.
- */
-extern uint8_t ssd1306_dcQuickSwitch;
+/** Describes low level hardware API */
+typedef struct
+{
+    /**
+     * Indicates if spi or i2c interface is used.
+     */
+    uint8_t spi;
+    /**
+     * Starts communication with SSD1306 display.
+     */
+    void (*start)(void);
+    /**
+     * Ends communication with SSD1306 display.
+     */
+    void (*stop)(void);
+    /**
+     * Sends byte to SSD1306 device
+     * @param data - byte to send
+     */
+    void (*send)(uint8_t data);
+    /**
+     * @brief Sends bytes to SSD1306 device
+     *
+     * Sends bytes to SSD1306 device. This functions gives
+     * ~ 30% performance increase than ssd1306_intf.send.
+     *
+     * @param buffer - bytes to send
+     * @param size - number of bytes to send
+     */
+    void (*send_buffer)(const uint8_t *buffer, uint16_t size);
+    /**
+     * @brief deinitializes internal resources, allocated for interface.
+     *
+     * Deinitializes internal resources, allocated for interface.
+     * There is no need to use this function for microcontrollers. In general
+     * the function has meaning in Linux-like systems.
+     */
+    void (*close)(void);
+} ssd1306_interface_t;
 
 /**
- * Indicates if display driver supports quick switching between data and command modes:
- * 0 means "not supported quick switching", 1 means "quick switching is supported".
- * Quick switching allows to switch driver between data and command modes without
- * reestablishing communication session. For all i2c interfaces quick switching is not supported,
- * because data or command mode is defined by first sent byte in i2c session.
- * All spi interfaces support quick switching.
+ * Holds pointers to functions of currently initialized interface.
  */
-extern uint8_t ssd1306_dcQuickSwitch;
+extern ssd1306_interface_t ssd1306_intf;
 
 /**
- * Starts communication with SSD1306 display.
+ * Deprecated
  */
-extern void  (*ssd1306_startTransmission)(void);
+#define ssd1306_dcQuickSwitch ssd1306_intf.spi
 
 /**
- * Ends communication with SSD1306 display.
+ * Deprecated
  */
-extern void  (*ssd1306_endTransmission)(void);
+#define ssd1306_startTransmission     ssd1306_intf.start
 
 /**
- * Sends byte to SSD1306 device
- * @param data - byte to send
+ * Deprecated
  */
-extern void  (*ssd1306_sendByte)(uint8_t data);
+#define ssd1306_endTransmission       ssd1306_intf.stop
 
 /**
- * @brief Sends bytes to SSD1306 device
- *
- * Sends bytes to SSD1306 device. This functions gives
- * ~ 30% performance increase than ssd1306_sendByte.
- *
- * @param buffer - bytes to send
- * @param size - number of bytes to send
+ * Deprecated
  */
-extern void  (*ssd1306_sendBytes)(const uint8_t *buffer, uint16_t size);
+#define ssd1306_sendByte              ssd1306_intf.send
 
 /**
- * @brief deinitializes internal resources, allocated for interface.
- *
- * Deinitializes internal resources, allocated for interface.
- * There is no need to use this function for microcontrollers. In general
- * the function has meaning in Linux-like systems.
+ * Deprecated
  */
-extern void  (*ssd1306_closeInterface)(void);
+#define ssd1306_sendBytes             ssd1306_intf.send_buffer
+
+/**
+ * Deprecated
+ */
+#define ssd1306_closeInterface        ssd1306_intf.close
 
 /**
  * Sends command to SSD1306 device: includes initiating of
@@ -114,12 +133,12 @@ void ssd1306_sendCommand(uint8_t command);
 /**
  * Starts transaction for sending commands.
  */
-extern void (*ssd1306_commandStart)(void);
+void ssd1306_commandStart(void);
 
 /**
  * Starts transaction for sending bitmap data.
  */
-extern void (*ssd1306_dataStart)(void);
+void ssd1306_dataStart(void);
 
 /**
  * @}

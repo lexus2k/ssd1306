@@ -49,7 +49,7 @@ static void ssd1306_spiConfigure_avr()
     uint8_t clockDiv;
     uint32_t clockSetting = F_CPU / 2;
     clockDiv = 0;
-    while (clockDiv < 6 && s_ssd1306_spi_clock < clockSetting)
+    while ((clockDiv < 6) && (s_ssd1306_spi_clock < clockSetting))
     {
         clockSetting /= 2;
         clockDiv++;
@@ -110,15 +110,15 @@ static void ssd1306_spiSendBytes_avr(const uint8_t * buffer, uint16_t size)
 
 static void ssd1306_spiStop_avr()
 {
-    if (s_ssd1306_cs >= 0)
-    {
-        digitalWrite(s_ssd1306_cs, HIGH);
-    }
     if (g_lcd_type == LCD_TYPE_PCD8544)
     {
         digitalWrite(s_ssd1306_dc, LOW);
         ssd1306_spiSendByte_avr( 0x00 ); // Send NOP command to allow last data byte to pass (bug in PCD8544?)
                                          // ssd1306 E3h is NOP command
+    }
+    if (s_ssd1306_cs >= 0)
+    {
+        digitalWrite(s_ssd1306_cs, HIGH);
     }
 }
 
@@ -128,15 +128,13 @@ void ssd1306_spiInit_avr(int8_t cesPin, int8_t dcPin)
     if (dcPin >= 0) pinMode(dcPin, OUTPUT);
     if (cesPin) s_ssd1306_cs = cesPin;
     if (dcPin) s_ssd1306_dc = dcPin;
-    ssd1306_dcQuickSwitch = 1;
+    ssd1306_intf.spi = 1;
     ssd1306_spiConfigure_avr();
-    ssd1306_startTransmission = ssd1306_spiStart_avr;
-    ssd1306_endTransmission = ssd1306_spiStop_avr;
-    ssd1306_sendByte = ssd1306_spiSendByte_avr;
-    ssd1306_sendBytes = ssd1306_spiSendBytes_avr;
-    ssd1306_closeInterface = ssd1306_spiClose_avr;
-    ssd1306_commandStart = ssd1306_spiCommandStart;
-    ssd1306_dataStart = ssd1306_spiDataStart;
+    ssd1306_intf.start = ssd1306_spiStart_avr;
+    ssd1306_intf.stop = ssd1306_spiStop_avr;
+    ssd1306_intf.send = ssd1306_spiSendByte_avr;
+    ssd1306_intf.send_buffer = ssd1306_spiSendBytes_avr;
+    ssd1306_intf.close = ssd1306_spiClose_avr;
 }
 
 #endif

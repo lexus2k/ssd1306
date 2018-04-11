@@ -23,21 +23,33 @@
 */
 
 #include "ssd1306_interface.h"
+#include "spi/ssd1306_spi.h"
 #include <stddef.h>
 
-uint8_t ssd1306_dcQuickSwitch = 0;
+ssd1306_interface_t ssd1306_intf = {0};
 
-void  (*ssd1306_startTransmission)(void) = NULL;
-void  (*ssd1306_endTransmission)(void) = NULL;
-void  (*ssd1306_sendByte)(uint8_t data) = NULL;
-void  (*ssd1306_sendBytes)(const uint8_t * buffer, uint16_t size) = NULL;
-void  (*ssd1306_commandStart)(void) = NULL;
-void  (*ssd1306_dataStart)(void) = NULL;
-void  (*ssd1306_closeInterface)(void) = NULL;
+void ssd1306_commandStart(void)
+{
+    ssd1306_intf.start();
+    if (ssd1306_intf.spi)
+        ssd1306_spiDataMode(0);
+    else
+        ssd1306_intf.send(0x00);
+}
+
+void ssd1306_dataStart(void)
+{
+    ssd1306_intf.start();
+    if (ssd1306_intf.spi)
+        ssd1306_spiDataMode(1);
+    else
+        ssd1306_intf.send(0x40);
+}
 
 void ssd1306_sendCommand(uint8_t command)
 {
     ssd1306_commandStart();
-    ssd1306_sendByte(command);
-    ssd1306_endTransmission();
+    ssd1306_intf.send(command);
+    ssd1306_intf.stop();
 }
+

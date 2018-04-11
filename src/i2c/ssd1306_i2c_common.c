@@ -29,18 +29,6 @@
 #include "ssd1306_i2c_twi.h"
 #include "ssd1306_i2c_linux.h"
 
-void ssd1306_i2cCommandStart()
-{
-    ssd1306_startTransmission();
-    ssd1306_sendByte(0x00);
-}
-
-void ssd1306_i2cDataStart()
-{
-    ssd1306_startTransmission();
-    ssd1306_sendByte(0x40);
-}
-
 void ssd1306_i2cInitEx(int8_t scl, int8_t sda, int8_t sa)
 {
 #if defined(SSD1306_WIRE_SUPPORTED)
