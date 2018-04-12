@@ -79,11 +79,13 @@ static void sdl_il9163_commands(uint8_t data)
                 case 2:
                      break;
                 case 1:
-                     s_activePage = data;
-                     s_pageStart = data;
+                     // emulating bug in IL9163 Black display
+                     s_activePage = (s_verticalMode & 0b10000000) ? data - 32 : data;
+                     s_pageStart = s_activePage;
                      break;
                 case 3:
-                     s_pageEnd = data;
+                     // emulating bug in IL9163 Black display
+                     s_pageEnd = (s_verticalMode & 0b10000000) ? data - 32 : data;
                      s_commandId = SSD_COMMAND_NONE;
                      break;
                 default: break;
@@ -119,8 +121,16 @@ void sdl_il9163_data(uint8_t data)
                                         255 );
 
     SDL_Rect r;
-    r.x = x * PIXEL_SIZE + BORDER_SIZE;
-    r.y = y * PIXEL_SIZE + BORDER_SIZE + TOP_HEADER;
+    if (((s_verticalMode & 0b01000000) && (s_verticalMode & 0b00100000)) ||
+        ((s_verticalMode & 0b10000000) && !(s_verticalMode & 0b00100000)))
+        r.x = (sdl_il9163.width - 1 - x) * PIXEL_SIZE + BORDER_SIZE;
+    else
+        r.x = x * PIXEL_SIZE + BORDER_SIZE;
+    if (((s_verticalMode & 0b10000000) && (s_verticalMode & 0b00100000)) ||
+        ((s_verticalMode & 0b01000000) && !(s_verticalMode & 0b00100000)))
+        r.y = (sdl_il9163.height - 1 - y) * PIXEL_SIZE + BORDER_SIZE + TOP_HEADER;
+    else
+        r.y = y * PIXEL_SIZE + BORDER_SIZE + TOP_HEADER;
     r.w = PIXEL_SIZE;
     r.h = PIXEL_SIZE;
     // Render rect
