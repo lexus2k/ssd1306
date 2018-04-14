@@ -105,19 +105,12 @@ void sdl_ssd1306_data(uint8_t data)
     {
         if (data & (1<<i))
         {
-            SDL_SetRenderDrawColor( g_renderer, 170, 170, 205, 255 );
+            sdl_put_pixel(x, (y<<3) + i, 0xAD59);
         }
         else
         {
-            SDL_SetRenderDrawColor( g_renderer, 20, 20, 20, 255 );
+            sdl_put_pixel(x, (y<<3) + i, 0x0000);
         }
-        SDL_Rect r;
-        r.x = x * PIXEL_SIZE + BORDER_SIZE;
-        r.y = ((y<<3) + i) * PIXEL_SIZE + BORDER_SIZE + TOP_HEADER;
-        r.w = PIXEL_SIZE;
-        r.h = PIXEL_SIZE;
-        // Render rect
-        SDL_RenderFillRect( g_renderer, &r );
     }
     s_activeColumn++;
     if (s_activeColumn > s_columnEnd)
@@ -135,6 +128,8 @@ sdl_oled_info sdl_ssd1306 =
 {
     .width = 128,
     .height = 64,
+    .bpp = 16,
+    .pixfmt = SDL_PIXELFORMAT_RGB565,
     .dataMode = SDMS_AUTO,
     .detect = sdl_ssd1306_detect,
     .run_cmd = sdl_ssd1306_commands,

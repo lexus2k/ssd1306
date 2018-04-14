@@ -92,7 +92,6 @@ static inline uint32_t micros(void)
 };
 
 #else                         // ============== LINUX
-void pinMode(int pin, int mode);
 static inline void delay(unsigned long ms) { usleep(ms*1000);  };
 static inline void delayMicroseconds(unsigned long us) { usleep(us); };
 static inline uint32_t millis(void)
@@ -115,11 +114,16 @@ static inline uint32_t micros(void)
 //define max(a,b) (((a)>(b))?(a):(b))
 static inline int min(int a, int b) { return a<b?a:b; };
 static inline int max(int a, int b) { return a>b?a:b; };
+#if !defined(SDL_EMULATION)
+void pinMode(int pin, int mode);
+#endif
+
 #endif
 
 #if defined(__MINGW32__) || defined(SDL_EMULATION)
 static inline int  analogRead(int pin) { return sdl_read_analog(pin); };
 static inline void digitalWrite(int pin, int level) {  sdl_write_digital(pin, level); };
+static inline void pinMode(int pin, int mode) { };
 #elif !defined(__KERNEL__)
 static inline int  analogRead(int pin) { return 0; };
 void digitalWrite(int pin, int level);

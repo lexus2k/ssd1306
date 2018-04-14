@@ -75,11 +75,11 @@ void sdl_pcd8544_data(uint8_t data)
     {
         if (data & (1<<i))
         {
-            SDL_SetRenderDrawColor( g_renderer, 170, 170, 205, 255 );
+            sdl_put_pixel(x, (y<<3) + i, 0xAD59);
         }
         else
         {
-            SDL_SetRenderDrawColor( g_renderer, 20, 20, 20, 255 );
+            sdl_put_pixel(x, (y<<3) + i, 0x0000);
         }
         SDL_Rect r;
         r.x = x * PIXEL_SIZE + BORDER_SIZE;
@@ -111,6 +111,8 @@ sdl_oled_info sdl_pcd8544 =
 {
     .width = 84,
     .height = 48,
+    .bpp = 16,
+    .pixfmt = SDL_PIXELFORMAT_RGB565,
     .dataMode = SDMS_AUTO,
     .detect = sdl_pcd8544_detect,
     .run_cmd = sdl_pcd8544_commands,

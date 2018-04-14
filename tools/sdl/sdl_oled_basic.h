@@ -57,6 +57,8 @@ typedef struct
 {
     int width;
     int height;
+    int bpp;
+    uint32_t pixfmt;
     sdl_data_mode_selection dataMode;
     int   (*detect)(uint8_t data);
     void  (*run_cmd)(uint8_t data);
@@ -83,6 +85,7 @@ extern int s_cmdArgIndex;
 
 extern void sdl_core_resize(void);
 extern void sdl_set_data_mode(sdl_data_mode mode);
+extern void sdl_put_pixel(int x, int y, uint32_t color);
 
 #ifdef __cplusplus
 }

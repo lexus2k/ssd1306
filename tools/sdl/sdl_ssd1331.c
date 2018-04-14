@@ -89,18 +89,7 @@ void sdl_ssd1331_data(uint8_t data)
 {
     int y = s_activePage;
     int x = s_activeColumn;
-    SDL_SetRenderDrawColor( g_renderer, (data & 0b11100000)<<0,
-                                        (data & 0b00011100)<<3,
-                                        (data & 0b00000011)<<6,
-                                        255 );
-
-    SDL_Rect r;
-    r.x = x * PIXEL_SIZE + BORDER_SIZE;
-    r.y = y * PIXEL_SIZE + BORDER_SIZE + TOP_HEADER;
-    r.w = PIXEL_SIZE;
-    r.h = PIXEL_SIZE;
-    // Render rect
-    SDL_RenderFillRect( g_renderer, &r );
+    sdl_put_pixel(x, y, data);
 
     if (s_verticalMode)
     {
@@ -134,6 +123,8 @@ sdl_oled_info sdl_ssd1331 =
 {
     .width = 96,
     .height = 64,
+    .bpp = 8,
+    .pixfmt = SDL_PIXELFORMAT_RGB332,
     .dataMode = SDMS_AUTO,
     .detect = sdl_ssd1331_detect,
     .run_cmd = sdl_ssd1331_commands,

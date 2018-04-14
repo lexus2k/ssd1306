@@ -48,9 +48,6 @@
 #endif
 #define OUT 1
 
-static uint8_t s_exported_pin[MAX_GPIO_COUNT] = {0};
-static uint8_t s_pin_mode[MAX_GPIO_COUNT] = {0};
-
 int gpio_export(int pin)
 {
     char buffer[4];
@@ -180,6 +177,11 @@ int gpio_write(int pin, int value)
     return(0);
 }
 
+#if !defined(SDL_EMULATION)
+
+static uint8_t s_exported_pin[MAX_GPIO_COUNT] = {0};
+static uint8_t s_pin_mode[MAX_GPIO_COUNT] = {0};
+
 void pinMode(int pin, int mode)
 {
     if (!s_exported_pin[pin])
@@ -218,6 +220,8 @@ void digitalWrite(int pin, int level)
     }
     gpio_write( pin, level );
 }
+
+#endif
 
 #endif
 

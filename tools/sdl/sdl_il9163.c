@@ -40,7 +40,7 @@ static int sdl_il9163_detect(uint8_t data)
 static uint8_t s_verticalMode = 0;
 
 static void sdl_il9163_commands(uint8_t data)
-{                                                       
+{
     if ((s_verticalMode & 0b00100000) && (s_cmdArgIndex < 0))
     {
         if (s_commandId == 0x2A) s_commandId = 0x2B;
@@ -115,26 +115,19 @@ void sdl_il9163_data(uint8_t data)
         return;
     }
     firstByte = 1;
-    SDL_SetRenderDrawColor( g_renderer, (dataFirst & 0b11111000)<<0,
-                                        ((dataFirst & 0b00000111)<<5) | ((data&0b11100000)>>3),
-                                        (data & 0b00011111)<<3,
-                                        255 );
-
-    SDL_Rect r;
+    int rx, ry;
     if (((s_verticalMode & 0b01000000) && (s_verticalMode & 0b00100000)) ||
         ((s_verticalMode & 0b10000000) && !(s_verticalMode & 0b00100000)))
-        r.x = (sdl_il9163.width - 1 - x) * PIXEL_SIZE + BORDER_SIZE;
+        rx = sdl_il9163.width - 1 - x;
     else
-        r.x = x * PIXEL_SIZE + BORDER_SIZE;
+        rx = x;
     if (((s_verticalMode & 0b10000000) && (s_verticalMode & 0b00100000)) ||
         ((s_verticalMode & 0b01000000) && !(s_verticalMode & 0b00100000)))
-        r.y = (sdl_il9163.height - 1 - y) * PIXEL_SIZE + BORDER_SIZE + TOP_HEADER;
+        ry = sdl_il9163.height - 1 - y;
     else
-        r.y = y * PIXEL_SIZE + BORDER_SIZE + TOP_HEADER;
-    r.w = PIXEL_SIZE;
-    r.h = PIXEL_SIZE;
+        ry = y;
     // Render rect
-    SDL_RenderFillRect( g_renderer, &r );
+    sdl_put_pixel(rx, ry, (dataFirst<<8) | data);
 
     if (s_verticalMode & 0b00100000)
     {
@@ -168,6 +161,8 @@ sdl_oled_info sdl_il9163 =
 {
     .width = 128,
     .height = 128,
+    .bpp = 16,
+    .pixfmt = SDL_PIXELFORMAT_RGB565,
     .dataMode = SDMS_CONTROLLER,
     .detect = sdl_il9163_detect,
     .run_cmd = sdl_il9163_commands,
