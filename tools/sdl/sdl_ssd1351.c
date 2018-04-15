@@ -24,6 +24,7 @@
 
 #include "sdl_ssd1351.h"
 #include "sdl_oled_basic.h"
+#include "sdl_graphics.h"
 
 static int s_activeColumn = 0;
 static int s_activePage = 0;
@@ -79,7 +80,9 @@ static void sdl_ssd1351_commands(uint8_t data)
             }
             break;
         case 0x5C:
-            s_ssd1351_writedata = 1;
+            sdl_set_data_mode( SDM_WRITE_DATA );
+            s_commandId = SSD_COMMAND_NONE;
+            break;
         default:
             s_commandId = SSD_COMMAND_NONE;
             break;
@@ -93,20 +96,6 @@ void sdl_ssd1351_data(uint8_t data)
     int x = s_activeColumn;
     static uint8_t firstByte = 1;  /// SSD1351
     static uint8_t dataFirst = 0x00;  /// SSD1351
-    if (!s_ssd1351_writedata)
-    {
-        if (s_commandId == SSD_COMMAND_NONE)
-        {
-            s_commandId = data;
-            s_cmdArgIndex = -1; // no argument
-        }
-        else
-        {
-            s_cmdArgIndex++;
-        }
-        sdl_ssd1351_commands(data);
-        return;
-    }
     if (firstByte)
     {
         dataFirst = data;
@@ -114,18 +103,7 @@ void sdl_ssd1351_data(uint8_t data)
         return;
     }
     firstByte = 1;
-    SDL_SetRenderDrawColor( g_renderer, (dataFirst & 0b11111000)<<0,
-                                        ((dataFirst & 0b00000111)<<5) | ((data&0b11100000)>>3),
-                                        (data & 0b00011111)<<3,
-                                        255 );
-
-    SDL_Rect r;
-    r.x = x * PIXEL_SIZE + BORDER_SIZE;
-    r.y = y * PIXEL_SIZE + BORDER_SIZE + TOP_HEADER;
-    r.w = PIXEL_SIZE;
-    r.h = PIXEL_SIZE;
-    // Render rect
-    SDL_RenderFillRect( g_renderer, &r );
+    sdl_put_pixel(x, y, (dataFirst<<8) | data);
 
     if (s_verticalMode)
     {
@@ -159,6 +137,9 @@ sdl_oled_info sdl_ssd1351 =
 {
     .width = 128,
     .height = 128,
+    .bpp = 16,
+    .pixfmt = SDL_PIXELFORMAT_RGB565,
+    .dataMode = SDMS_CONTROLLER,
     .detect = sdl_ssd1351_detect,
     .run_cmd = sdl_ssd1351_commands,
     .run_data = sdl_ssd1351_data,

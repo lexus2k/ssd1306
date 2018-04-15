@@ -34,7 +34,63 @@
 
 #if !defined(SDL_EMULATION)
 
-/// NO SUPPORT FOR LINUX YET!
+#include <stdlib.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+#include <linux/spi/spidev.h>
+
+static int     s_fd = -1;
+extern uint32_t s_ssd1306_spi_clock;
+
+static void ssd1306_spiStart_Linux(void)
+{
+}
+
+static void ssd1306_spiStop_Linux(void)
+{
+}
+
+static void ssd1306_spiSendByte_Linux(uint8_t data)
+{
+    /* TODO: Yeah, sending single bytes is too slow, but   *
+     * need to figure out how to detect data/command bytes *
+     * to send bytes as one block */
+    uint8_t buf[1];
+    struct spi_ioc_transfer mesg;
+    memset(&mesg, 0, sizeof mesg);
+    mesg.tx_buf = (unsigned long)&buf[0],
+    mesg.rx_buf = 0,
+    mesg.len = 1,
+    mesg.delay_usecs = 0,
+    mesg.speed_hz = 0,
+    mesg.bits_per_word = 8,
+    mesg.cs_change = 0,
+    buf[0] = data;
+    if (ioctl(s_fd, SPI_IOC_MESSAGE(1), &mesg) < 1)
+    {
+        fprintf(stderr, "SPI failed to send SPI message: %s\n", strerror (errno)) ;
+    }
+}
+
+static void ssd1306_spiSendBytes_Linux(const uint8_t *buffer, uint16_t size)
+{
+    while (size--)
+    {
+        ssd1306_spiSendByte_Linux(*buffer);
+        buffer++;
+    }
+}
+
+static void ssd1306_spiClose_Linux()
+{
+    if (s_fd >= 0)
+    {
+        close(s_fd);
+        s_fd = -1;
+    }
+}
+
 static void empty_function(void)
 {
 }
@@ -43,20 +99,58 @@ static void empty_function_arg(uint8_t byte)
 {
 }
 
-static void empty_function_arg(const uint8_t *buffer, uint16_t bytes)
+static void empty_function_args(const uint8_t *buffer, uint16_t bytes)
 {
 }
 
-void ssd1306_spiInit_Linux(int8_t cesPin, int8_t dcPin)
+void ssd1306_spiInit_Linux(int8_t busId, int8_t ces, int8_t dcPin)
 {
-    ssd1306_dcQuickSwitch = 0;
-    ssd1306_startTransmission = empty_function;
-    ssd1306_endTransmission = empty_function;
-    ssd1306_sendByte = empty_function_arg;
-    ssd1306_sendBytes = empty_function_args;
-    ssd1306_closeInterface = empty_function;
-    ssd1306_commandStart = empty_function;
-    ssd1306_dataStart = empty_function;
+    char filename[20];
+    if (busId < 0)
+    {
+        busId = 0;
+    }
+    if (ces < 0)
+    {
+        ces = 0;
+    }
+    s_ssd1306_cs = -1;    // SPI interface does't need separate ces pin
+    s_ssd1306_dc = dcPin;
+    ssd1306_intf.spi = 1;
+    ssd1306_intf.start = empty_function;
+    ssd1306_intf.stop = empty_function;
+    ssd1306_intf.send = empty_function_arg;
+    ssd1306_intf.send_buffer = empty_function_args;
+    ssd1306_intf.close = empty_function;
+
+    snprintf(filename, 19, "/dev/spidev%d.%d", busId, ces);
+    if ((s_fd = open(filename, O_RDWR)) < 0)
+    {
+        printf("Failed to initialize SPI: %s!\n", strerror(errno));
+        return;
+    }
+    unsigned int speed = s_ssd1306_spi_clock;
+    if (ioctl(s_fd, SPI_IOC_WR_MAX_SPEED_HZ, &speed) < 0)
+    {
+        printf("Failed to set speed on SPI line: %s!\n", strerror(errno));
+    }
+    uint8_t mode = SPI_MODE_0;
+    if (ioctl (s_fd, SPI_IOC_WR_MODE, &mode) < 0)
+    {
+        printf("Failed to set SPI mode: %s!\n", strerror(errno));
+    }
+    uint8_t spi_bpw = 8;
+    if (ioctl (s_fd, SPI_IOC_WR_BITS_PER_WORD, &spi_bpw) < 0)
+    {
+        printf("Failed to set SPI BPW: %s!\n", strerror(errno));
+    }
+
+    ssd1306_intf.spi = 1;
+    ssd1306_intf.start = ssd1306_spiStart_Linux;
+    ssd1306_intf.stop = ssd1306_spiStop_Linux;
+    ssd1306_intf.send = ssd1306_spiSendByte_Linux;
+    ssd1306_intf.send_buffer = ssd1306_spiSendBytes_Linux;
+    ssd1306_intf.close = ssd1306_spiClose_Linux;
 }
 
 #else /* SDL_EMULATION */
@@ -72,22 +166,24 @@ static void sdl_send_bytes(const uint8_t *buffer, uint16_t size)
     };
 }
 
-void ssd1306_spiInit_Linux(int8_t cesPin, int8_t dcPin)
+void ssd1306_spiInit_Linux(int8_t busId, int8_t ces, int8_t dcPin)
 {
     sdl_core_init();
-    ssd1306_dcQuickSwitch = 0;
     sdl_set_dc_pin(dcPin);
-    ssd1306_startTransmission = sdl_send_init;
-    ssd1306_endTransmission = sdl_send_stop;
-    ssd1306_sendByte = sdl_send_byte;
-    ssd1306_sendBytes = sdl_send_bytes;
-    ssd1306_closeInterface = sdl_core_close;
-    ssd1306_commandStart = sdl_command_start;
-    ssd1306_dataStart = sdl_data_start;
+    ssd1306_intf.spi = 1;
+    ssd1306_intf.start = sdl_send_init;
+    ssd1306_intf.stop = sdl_send_stop;
+    ssd1306_intf.send = sdl_send_byte;
+    ssd1306_intf.send_buffer = sdl_send_bytes;
+    ssd1306_intf.close = sdl_core_close;
 }
 
 #endif /* SDL_EMULATION */
 
 #endif
 
-
+#if defined(__KERNEL__) && defined(SSD1306_LINUX_SUPPORTED)
+void ssd1306_spiInit_Linux(int8_t busId, int8_t ces, int8_t dcPin)
+{
+}
+#endif

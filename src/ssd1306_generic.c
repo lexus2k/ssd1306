@@ -69,7 +69,7 @@ void ssd1306_fillScreen(uint8_t fill_Data)
         }
         ssd1306_nextRamPage();
     }
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
 }
 
 void ssd1306_clearScreen()
@@ -83,7 +83,7 @@ void ssd1306_clearScreen()
         }
         ssd1306_nextRamPage();
     }
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
 }
 
 
@@ -101,9 +101,9 @@ void ssd1306_displayOn()
 void ssd1306_setContrast(uint8_t contrast)
 {
     ssd1306_commandStart();
-    ssd1306_sendByte(SSD1306_SETCONTRAST);
-    ssd1306_sendByte(contrast);
-    ssd1306_endTransmission();
+    ssd1306_intf.send(SSD1306_SETCONTRAST);
+    ssd1306_intf.send(contrast);
+    ssd1306_intf.stop();
 }
 
 uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle style)
@@ -141,7 +141,7 @@ uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle s
             {
                 j = text_index;
             }
-            ssd1306_endTransmission();
+            ssd1306_intf.stop();
             ssd1306_setRamBlock(xpos, y, s_displayWidth - xpos);
         }
         c = ch[j];
@@ -176,7 +176,7 @@ uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle s
         x += s_fixedFont.width;
         j++;
     }
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
     return j;
 }
 
@@ -215,7 +215,7 @@ uint8_t ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontStyl
             {
                 j = text_index;
             }
-            ssd1306_endTransmission();
+            ssd1306_intf.stop();
             ssd1306_setRamBlock(xpos, y, s_displayWidth - xpos);
         }
         c = ch[j];
@@ -256,7 +256,7 @@ uint8_t ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontStyl
         x += (s_fixedFont.width << 1);
         j++;
     }
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
     return j;
 }
 
@@ -296,7 +296,7 @@ uint8_t ssd1306_printFixedN(uint8_t xpos, uint8_t y, const char ch[], EFontStyle
             {
                 j = text_index;
             }
-            ssd1306_endTransmission();
+            ssd1306_intf.stop();
             ssd1306_setRamBlock(xpos, y, s_displayWidth - xpos);
         }
         c = ch[j];
@@ -349,7 +349,7 @@ uint8_t ssd1306_printFixedN(uint8_t xpos, uint8_t y, const char ch[], EFontStyle
         x += (s_fixedFont.width << factor);
         j++;
     }
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
     return j;
 }
 
@@ -396,7 +396,7 @@ uint8_t ssd1306_charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style
         x += 6;
         j++;
     }
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
     return j;
 }
 
@@ -432,7 +432,7 @@ uint8_t ssd1306_charF12x16(uint8_t xpos, uint8_t y, const char ch[], EFontStyle 
                 j = text_index;
             }
             odd = !odd;
-            ssd1306_endTransmission();
+            ssd1306_intf.stop();
             ssd1306_setRamBlock(xpos, y, s_displayWidth - xpos);
         }
         c = ch[j] - 32;
@@ -471,7 +471,7 @@ uint8_t ssd1306_charF12x16(uint8_t xpos, uint8_t y, const char ch[], EFontStyle 
         x += 12;
         j++;
     }
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
     return j;
 }
 
@@ -508,14 +508,14 @@ void         ssd1306_putPixel(uint8_t x, uint8_t y)
 {
     ssd1306_setRamBlock(x, y >> 3, 1);
     ssd1306_sendPixels((1 << (y & 0x07))^s_invertByte);
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
 }
 
 void         ssd1306_putPixels(uint8_t x, uint8_t y, uint8_t pixels)
 {
     ssd1306_setRamBlock(x, y >> 3, 1);
     ssd1306_sendPixels(pixels^s_invertByte);
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
 }
 
 void         ssd1306_putPixel_delayed(uint8_t x, uint8_t y, uint8_t complete)
@@ -590,7 +590,7 @@ void         ssd1306_drawHLine(uint8_t x1, uint8_t y1, uint8_t x2)
     {
         ssd1306_sendPixels((1 << (y1 & 0x07))^s_invertByte);
     }
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
 }
 
 void         ssd1306_drawVLine(uint8_t x1, uint8_t y1, uint8_t y2)
@@ -603,7 +603,7 @@ void         ssd1306_drawVLine(uint8_t x1, uint8_t y1, uint8_t y2)
     if (topPage == bottomPage)
     {
         ssd1306_sendPixels( ((0xFF >> (0x07 - height)) << (y1 & 0x07))^s_invertByte );
-        ssd1306_endTransmission();
+        ssd1306_intf.stop();
         return;
     }
     ssd1306_sendPixels( (0xFF << (y1 & 0x07))^s_invertByte );
@@ -614,7 +614,7 @@ void         ssd1306_drawVLine(uint8_t x1, uint8_t y1, uint8_t y2)
     }
     ssd1306_nextRamPage();
     ssd1306_sendPixels( (0xFF >> (0x07 - (y2 & 0x07)))^s_invertByte );
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
 }
 
 void         ssd1306_drawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
@@ -635,7 +635,7 @@ void ssd1306_drawBufferFast(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, co
         buf+=w;
         ssd1306_nextRamPage();
     }
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
 }
 
 void ssd1306_drawBuffer(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)
@@ -650,7 +650,7 @@ void ssd1306_drawBuffer(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_
         }
         ssd1306_nextRamPage();
     }
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
 }
 
 void ssd1306_drawBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)
@@ -668,7 +668,7 @@ void ssd1306_drawBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_
         buf += remainder;
         ssd1306_nextRamPage();
     }
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
 }
 
 void gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buf)
@@ -724,7 +724,7 @@ void gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const 
         complexFlag = offset;
         ssd1306_nextRamPage();
     }
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
 }
 
 
@@ -740,7 +740,7 @@ void ssd1306_clearBlock(uint8_t x, uint8_t y, uint8_t w, uint8_t h)
         }
         ssd1306_nextRamPage();
     }
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
 }
 
 
@@ -752,7 +752,7 @@ void ssd1306_drawSpriteEx(uint8_t x, uint8_t y, uint8_t w, const uint8_t *sprite
    {
        ssd1306_sendPixels(s_invertByte^pgm_read_byte(&sprite[i]));
    }
-   ssd1306_endTransmission();
+   ssd1306_intf.stop();
 }
 
 
@@ -766,7 +766,7 @@ void ssd1306_drawSprite(SPRITE *sprite)
         {
             ssd1306_sendPixels( s_invertByte^(pgm_read_byte( &sprite->data[i] ) << offsety) );
         }
-        ssd1306_endTransmission();
+        ssd1306_intf.stop();
     }
     if (offsety && (sprite->y + 8 < s_displayHeight))
     {
@@ -775,7 +775,7 @@ void ssd1306_drawSprite(SPRITE *sprite)
         {
             ssd1306_sendPixels( s_invertByte^(pgm_read_byte( &sprite->data[i] ) >> (8 - offsety)) );
         }
-        ssd1306_endTransmission();
+        ssd1306_intf.stop();
     }
     sprite->lx = sprite->x;
     sprite->ly = sprite->y;
@@ -791,7 +791,7 @@ void ssd1306_eraseSprite(SPRITE *sprite)
     {
        ssd1306_sendPixels( s_invertByte );
     }
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
     if (offsety)
     {
         ssd1306_setRamBlock(sprite->x, posy + 1, sprite->w);
@@ -800,7 +800,7 @@ void ssd1306_eraseSprite(SPRITE *sprite)
            ssd1306_sendPixels( s_invertByte );
         }
     }
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
 }
 
 
@@ -819,7 +819,7 @@ void ssd1306_eraseTrace(SPRITE *sprite)
         {
             ssd1306_sendPixels( s_invertByte );
         }
-        ssd1306_endTransmission();
+        ssd1306_intf.stop();
     }
     if (sprite->lx != sprite->x)
     {
@@ -836,7 +836,7 @@ void ssd1306_eraseTrace(SPRITE *sprite)
             {
                 ssd1306_sendPixels( s_invertByte );
             }
-            ssd1306_endTransmission();
+            ssd1306_intf.stop();
         }
     }
 }

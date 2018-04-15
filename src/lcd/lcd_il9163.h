@@ -78,6 +78,16 @@ void         il9163_128x128_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
  * @}
  */
 
+/**
+ * @brief Sets screen orientation (rotation)
+ *
+ * Sets screen orientation (rotation): 0 - normal, 1 - 90 CW, 2 - 180 CW, 3 - 270 CW
+ * @param rotation - screen rotation 0 - normal, 1 - 90 CW, 2 - 180 CW, 3 - 270 CW
+ * @note works only with IL9163 display
+ */
+void         il9163_setRotation(uint8_t rotation);
+
+
 #ifdef __cplusplus
 }
 #endif

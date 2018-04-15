@@ -24,6 +24,7 @@
 
 #include "sdl_il9163.h"
 #include "sdl_oled_basic.h"
+#include "sdl_graphics.h"
 
 static int s_activeColumn = 0;
 static int s_activePage = 0;
@@ -40,18 +41,17 @@ static int sdl_il9163_detect(uint8_t data)
 static uint8_t s_verticalMode = 0;
 
 static void sdl_il9163_commands(uint8_t data)
-{                                                       
-    if ((s_verticalMode & 0b00100000) && (s_cmdArgIndex < 0))
-    {
-        if (s_commandId == 0x2A) s_commandId = 0x2B;
-        else if (s_commandId == 0x2B) s_commandId = 0x2A;
-    }
+{
+//    if ((s_verticalMode & 0b00100000) && (s_cmdArgIndex < 0))
+//    {
+//        if (s_commandId == 0x2A) s_commandId = 0x2B;
+//        else if (s_commandId == 0x2B) s_commandId = 0x2A;
+//    }
     switch (s_commandId)
     {
         case 0x36:
             if (s_cmdArgIndex == 0)
             {
-//               0b00101000
                 s_verticalMode = data;
                 s_commandId = SSD_COMMAND_NONE;
             }
@@ -63,11 +63,26 @@ static void sdl_il9163_commands(uint8_t data)
                 case 2:
                      break;
                 case 1:
-                     s_columnStart = data;
-                     s_activeColumn = data;
+                     if (!(s_verticalMode & 0b00100000))
+                     {
+                         s_columnStart = data;
+                         s_activeColumn = data;
+                     }
+                     else
+                     {
+                         s_pageStart = data;
+                         s_activePage = data;
+                     }
                      break;
                 case 3:
-                     s_columnEnd = data;
+                     if (!(s_verticalMode & 0b00100000))
+                     {
+                         s_columnEnd = data;
+                     }
+                     else
+                     {
+                         s_pageEnd = data;
+                     }
                      s_commandId = SSD_COMMAND_NONE;
                      break;
                 default: break;
@@ -80,18 +95,37 @@ static void sdl_il9163_commands(uint8_t data)
                 case 2:
                      break;
                 case 1:
-                     s_activePage = data;
-                     s_pageStart = data;
+                     if (!(s_verticalMode & 0b00100000))
+                     {
+                         // emulating bug in IL9163 Black display
+                         s_activePage = (s_verticalMode & 0b10000000) ? data - 32 : data;
+                         s_pageStart = s_activePage;
+                     }
+                     else
+                     {
+                         s_columnStart = data;
+                         s_activeColumn = data;
+                     }
                      break;
                 case 3:
-                     s_pageEnd = data;
+                     if (!(s_verticalMode & 0b00100000))
+                     {
+                         // emulating bug in IL9163 Black display
+                         s_pageEnd = (s_verticalMode & 0b10000000) ? data - 32 : data;
+                     }
+                     else
+                     {
+                         s_columnEnd = data;
+                     }
                      s_commandId = SSD_COMMAND_NONE;
                      break;
                 default: break;
             }
             break;
         case 0x2C:
-            s_ssd1351_writedata = 1;
+            sdl_set_data_mode( SDM_WRITE_DATA );
+            s_commandId = SSD_COMMAND_NONE;
+            break;
         default:
             s_commandId = SSD_COMMAND_NONE;
             break;
@@ -105,20 +139,6 @@ void sdl_il9163_data(uint8_t data)
     int x = s_activeColumn;
     static uint8_t firstByte = 1;  /// il9163
     static uint8_t dataFirst = 0x00;  /// il9163
-    if (!s_ssd1351_writedata)
-    {
-        if (s_commandId == SSD_COMMAND_NONE)
-        {
-            s_commandId = data;
-            s_cmdArgIndex = -1; // no argument
-        }
-        else
-        {
-            s_cmdArgIndex++;
-        }
-        sdl_il9163_commands(data);
-        return;
-    }
     if (firstByte)
     {
         dataFirst = data;
@@ -126,18 +146,18 @@ void sdl_il9163_data(uint8_t data)
         return;
     }
     firstByte = 1;
-    SDL_SetRenderDrawColor( g_renderer, (dataFirst & 0b11111000)<<0,
-                                        ((dataFirst & 0b00000111)<<5) | ((data&0b11100000)>>3),
-                                        (data & 0b00011111)<<3,
-                                        255 );
-
-    SDL_Rect r;
-    r.x = x * PIXEL_SIZE + BORDER_SIZE;
-    r.y = y * PIXEL_SIZE + BORDER_SIZE + TOP_HEADER;
-    r.w = PIXEL_SIZE;
-    r.h = PIXEL_SIZE;
-    // Render rect
-    SDL_RenderFillRect( g_renderer, &r );
+    int rx, ry;
+    if (s_verticalMode & 0b00100000)
+    {
+        rx = (s_verticalMode & 0b01000000) ? (sdl_il9163.width - 1 - x) : x;
+        ry = (s_verticalMode & 0b10000000) ? (sdl_il9163.height - 1 - y) : y;
+    }
+    else
+    {
+        rx = (s_verticalMode & 0b10000000) ? (sdl_il9163.width - 1 - x) : x;
+        ry = (s_verticalMode & 0b01000000) ? (sdl_il9163.height - 1 - y) : y;
+    }
+    sdl_put_pixel(rx, ry, (dataFirst<<8) | data);
 
     if (s_verticalMode & 0b00100000)
     {
@@ -171,6 +191,9 @@ sdl_oled_info sdl_il9163 =
 {
     .width = 128,
     .height = 128,
+    .bpp = 16,
+    .pixfmt = SDL_PIXELFORMAT_RGB565,
+    .dataMode = SDMS_CONTROLLER,
     .detect = sdl_il9163_detect,
     .run_cmd = sdl_il9163_commands,
     .run_data = sdl_il9163_data,

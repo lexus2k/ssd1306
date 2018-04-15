@@ -58,6 +58,7 @@
 #include "ssd1306.h"
 #include "i2c/ssd1306_i2c_wire.h"
 #include "i2c/ssd1306_i2c_embedded.h"
+#include "i2c/ssd1306_i2c_twi.h"
 #include "i2c/ssd1306_i2c_linux.h"
 #include "intf/ssd1306_interface.h"
 #include "lcd/lcd_common.h"
@@ -164,6 +165,8 @@ void drawIntro()
     ssd1306_i2cInit_Embedded(-1,-1,0);
 #elif defined(SSD1306_LINUX_SUPPORTED)
     ssd1306_i2cInit_Linux(-1,-1);
+#elif defined(SSD1306_TWI_SUPPORTED)
+    ssd1306_i2cInit_Twi(0);
 #else
     #error "Not supported microcontroller or board"
 #endif
@@ -232,7 +235,7 @@ void drawPlatform()
        ssd1306_sendPixels(0B00000000);
        pos++;
     }
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
 }
 
 void drawFieldEdges()
@@ -244,10 +247,10 @@ void drawFieldEdges()
         i--;
         ssd1306_setRamBlock(LEFT_EDGE, i, 1);
         ssd1306_sendPixels( 0B01010101 );
-        ssd1306_endTransmission();
+        ssd1306_intf.stop();
         ssd1306_setRamBlock(RIGHT_EDGE, i, 1);
         ssd1306_sendPixels( 0B01010101 );
-        ssd1306_endTransmission();
+        ssd1306_intf.stop();
     }
 }
 
@@ -409,12 +412,12 @@ void drawBall(uint8_t lastx, uint8_t lasty)
     ssd1331_setColor(RGB_COLOR8(255,255,255));
     ssd1306_setRamBlock(LEFT_EDGE + 1 + newx, newy >> 3, 1);
     ssd1306_sendPixels( temp );
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
     if ((newx != lastx) || ((newy >> 3) != (lasty >> 3)))
     {
         ssd1306_setRamBlock(LEFT_EDGE + 1 + lastx, lasty >> 3, 1);
         ssd1306_sendPixels( 0B00000000 );
-        ssd1306_endTransmission();
+        ssd1306_intf.stop();
     }
 }
 
@@ -659,7 +662,7 @@ void platformCrashAnimation()
         {
             ssd1306_setRamBlock( platformPos + ((j & 0x01)<<1) + ((j & 0x02)>>1) + (i<<2) + LEFT_EDGE + 1, PLATFORM_ROW, platformWidth );
             ssd1306_sendPixels( 0B00000000 );
-            ssd1306_endTransmission();
+            ssd1306_intf.stop();
         }
         delay(150);
     }

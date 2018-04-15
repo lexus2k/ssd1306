@@ -71,20 +71,6 @@ void         ssd1306_spiInit(int8_t cesPin, int8_t dcPin);
 /**
  * @ingroup LCD_HW_INTERFACE_API
  *
- * Switches spi chip to command transmission mode.
- */
-void         ssd1306_spiCommandStart(void);
-
-/**
- * @ingroup LCD_HW_INTERFACE_API
- *
- * Switches spi chip to data transmission mode.
- */
-void         ssd1306_spiDataStart(void);
-
-/**
- * @ingroup LCD_HW_INTERFACE_API
- *
  * Switches spi to data(1) or command(0) mode.
  * @param mode - 1 data mode
  *               0 command mode

@@ -32,7 +32,7 @@
 extern "C" {
 #endif
 
-#define SSD_COMMAND_NONE -1
+#define SSD_COMMAND_NONE   -1
 
 enum
 {
@@ -41,10 +41,25 @@ enum
     SSD_MODE_DATA,
 };
 
+typedef enum
+{
+    SDMS_AUTO,          // Command arg/write data mode is selected by DC pin or i2c command
+    SDMS_CONTROLLER,    // Command arg/write data mode is controlled by LCD controller special command
+} sdl_data_mode_selection;
+
+typedef enum
+{
+    SDM_COMMAND_ARG,    // data mode interprets all data as command args 
+    SDM_WRITE_DATA,     // data mode sends all data to GDRAM
+} sdl_data_mode;
+
 typedef struct
 {
     int width;
     int height;
+    int bpp;
+    uint32_t pixfmt;
+    sdl_data_mode_selection dataMode;
     int   (*detect)(uint8_t data);
     void  (*run_cmd)(uint8_t data);
     void  (*run_data)(uint8_t data);
@@ -61,13 +76,10 @@ const static int RECT_THICKNESS = 2;
 #endif
 const static int PIXEL_SIZE = 2;
 
-extern SDL_Window     *g_window;
-extern SDL_Renderer   *g_renderer;
-extern int sdl_screenWidth;
-extern int sdl_screenHeight;
 extern int s_commandId;
 extern int s_cmdArgIndex;
-extern uint8_t s_ssd1351_writedata;
+
+extern void sdl_set_data_mode(sdl_data_mode mode);
 
 #ifdef __cplusplus
 }

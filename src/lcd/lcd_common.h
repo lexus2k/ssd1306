@@ -65,7 +65,7 @@ extern uint8_t g_lcd_type;
 
 /**
  * Sends byte data to SSD1306 controller memory.
- * Performs 3 operations at once: ssd1306_dataStart(); ssd1306_sendPixels( data ); ssd1306_endTransmission();
+ * Performs 3 operations at once: start(), send(), stop();
  * @param data - byte to send to the controller memory
  * @note At present this function is used only in Arkanoid demo.
  */
@@ -82,7 +82,7 @@ void         ssd1306_sendData(uint8_t data) __attribute__ ((deprecated));
  * @param w - width of the block in pixels to control
  *
  * @warning - this function initiates session (i2c or spi) and do not close it.
- *            To close session, please, use ssd1306_endTransmission().
+ *            To close session, please, use ssd1306_intf.stop().
  */
 extern void (*ssd1306_setRamBlock)(uint8_t x, uint8_t y, uint8_t w);
 

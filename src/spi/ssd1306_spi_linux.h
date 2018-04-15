@@ -43,13 +43,14 @@ extern "C" {
  *
  * Inits lcd interface to use  SPI for communication.
  * It uses standard MOSI, SCLK pins to send data to LCD.
- * @param cesPin - pin, controlling chip enable of LCD
- * @param dcPin - pin, controlling data/command mode of LCD
+ * @param busId - number (N) of SPI bus in Linux dev (/dev/spidevN.X)
+ * @param ces - chip select number (X) in Linux dev (/dev/spidevN.X)
+ * @param dcPin - gpio pin number to control data/command mode
  *
  * @note: after call to this function you need to initialize lcd display.
  * @warning: Nowadays this communication works only in SDL Emulation mode!
  */
-void ssd1306_spiInit_Linux(int8_t cesPin, int8_t dcPin);
+void ssd1306_spiInit_Linux(int8_t busId, int8_t ces, int8_t dcPin);
 
 #ifdef __cplusplus
 }

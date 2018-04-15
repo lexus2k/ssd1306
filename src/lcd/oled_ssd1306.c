@@ -72,40 +72,32 @@ static const uint8_t PROGMEM s_oled128x32_initData[] =
 
 static void ssd1306_setBlock(uint8_t x, uint8_t y, uint8_t w)
 {
-    ssd1306_commandStart();
-    ssd1306_sendByte(SSD1306_COLUMNADDR);
-    ssd1306_sendByte(x);
-    ssd1306_sendByte(w ? (x + w - 1) : (s_displayWidth - 1));
-    ssd1306_sendByte(SSD1306_PAGEADDR);
-    ssd1306_sendByte(y);
-    ssd1306_sendByte((s_displayHeight >> 3) - 1);
-    if (ssd1306_dcQuickSwitch)
+    ssd1306_intf.start();
+    if (ssd1306_intf.spi)
+        ssd1306_spiDataMode(0);
+    else
+        ssd1306_intf.send(0x00);
+    ssd1306_intf.send(SSD1306_COLUMNADDR);
+    ssd1306_intf.send(x);
+    ssd1306_intf.send(w ? (x + w - 1) : (s_displayWidth - 1));
+    ssd1306_intf.send(SSD1306_PAGEADDR);
+    ssd1306_intf.send(y);
+    ssd1306_intf.send((s_displayHeight >> 3) - 1);
+    if (ssd1306_intf.spi)
     {
         ssd1306_spiDataMode(1);
     }    
     else
     {
-        ssd1306_endTransmission();
-        ssd1306_dataStart();
+        ssd1306_intf.stop();
+        ssd1306_intf.start();
+        ssd1306_intf.send(0x40);
     }
 }
 
 static void ssd1306_nextPage(void)
 {
 }
-
-/*
-// We do not need this function, since ssd1306 library works in Horizontal Addressing mode
-static void ssd1306_setPos(uint8_t x, uint8_t y)
-{
-    ssd1306_setBlock(0,0,s_displayWidth);
-    ssd1306_commandStart();
-    ssd1306_sendByte(SSD1306_SETPAGE | y);
-    ssd1306_sendByte((x>>4) | SSD1306_SETHIGHCOLUMN);
-    ssd1306_sendByte((x & 0x0f) | SSD1306_SETLOWCOLUMN);
-    ssd1306_endTransmission();
-}
-*/
 
 ///////////////////////////////////////////////////////////////////////////////
 //  I2C SSD1306 128x64
@@ -124,8 +116,8 @@ void    ssd1306_128x64_init()
     s_displayWidth = 128;
     ssd1306_setRamBlock = ssd1306_setBlock;
     ssd1306_nextRamPage = ssd1306_nextPage;
-    ssd1306_sendPixels  = ssd1306_sendByte;
-    ssd1306_sendPixelsBuffer = ssd1306_sendBytes;
+    ssd1306_sendPixels  = ssd1306_intf.send;
+    ssd1306_sendPixelsBuffer = ssd1306_intf.send_buffer;
     for( uint8_t i=0; i<sizeof(s_oled128x64_initData); i++)
     {
         ssd1306_sendCommand(pgm_read_byte(&s_oled128x64_initData[i]));
@@ -176,7 +168,7 @@ void    ssd1306_128x32_init()
     s_displayWidth = 128;
     ssd1306_setRamBlock = ssd1306_setBlock;
     ssd1306_nextRamPage = ssd1306_nextPage;
-    ssd1306_sendPixels  = ssd1306_sendByte;
+    ssd1306_sendPixels  = ssd1306_intf.send;
     for( uint8_t i=0; i < sizeof(s_oled128x32_initData); i++)
     {
         ssd1306_sendCommand(pgm_read_byte(&s_oled128x32_initData[i]));

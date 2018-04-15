@@ -170,6 +170,8 @@ void setup()
     ssd1306_setFixedFont(ssd1306xled_font6x8);
     /* Do not init Wire library for Attiny controllers */
     ssd1306_128x64_i2c_init();
+//    ssd1306_128x64_spi_init(3,4,5);     // Use this line for Atmega328p (3=RST, 4=CE, 5=D/C)
+//    ssd1306_128x64_spi_init(24, 0, 23); // Use this line for Raspberry  (gpio24=RST, 0=CE, gpio23=D/C)
 
     /* Uncomment line below if you want to use SPI Nokia 5110 LCD */
 /*

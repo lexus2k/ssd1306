@@ -169,6 +169,8 @@ void setup()
     ssd1306_showMenu( &menu );
 }
 
+uint8_t rotation = 0;
+
 void loop()
 {
     delay(1000);
@@ -196,6 +198,10 @@ void loop()
 
         default:
             break;
+    }
+    if ((menu.count - 1) == ssd1306_menuSelection(&menu))
+    {
+         il9163_setRotation((++rotation) & 0x03);
     }
     ssd1306_fillScreen( 0x00 );
     ssd1331_setColor(RGB_COLOR16(255,255,255));

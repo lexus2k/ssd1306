@@ -176,14 +176,12 @@ void ssd1306_i2cInit_Embedded(int8_t scl, int8_t sda, uint8_t sa)
     if (scl>=0) s_scl = (1<<scl);
     if (sda>=0) s_sda = (1<<sda);
     if (sa)  s_sa  = sa;
-    ssd1306_dcQuickSwitch = 0;
-    ssd1306_startTransmission = ssd1306_i2cStart_Embedded;
-    ssd1306_endTransmission = ssd1306_i2cStop_Embedded;
-    ssd1306_sendByte = ssd1306_i2cSendByte_Embedded;
-    ssd1306_sendBytes = ssd1306_i2cSendBytes_Embedded;
-    ssd1306_closeInterface = ssd1306_i2cClose_Embedded;
-    ssd1306_commandStart = ssd1306_i2cCommandStart;
-    ssd1306_dataStart = ssd1306_i2cDataStart;
+    ssd1306_intf.spi = 0;
+    ssd1306_intf.start = ssd1306_i2cStart_Embedded;
+    ssd1306_intf.stop = ssd1306_i2cStop_Embedded;
+    ssd1306_intf.send = ssd1306_i2cSendByte_Embedded;
+    ssd1306_intf.send_buffer = ssd1306_i2cSendBytes_Embedded;
+    ssd1306_intf.close = ssd1306_i2cClose_Embedded;
 }
 
 #endif

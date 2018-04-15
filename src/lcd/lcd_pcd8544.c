@@ -48,10 +48,11 @@ static void pcd8544_setBlock(uint8_t x, uint8_t y, uint8_t w)
     s_width = w;
     s_column = x;
     s_page = y;
-    ssd1306_commandStart();
-    if (w == 1) ssd1306_sendByte( 0x22 ); else ssd1306_sendByte( 0x20 );
-    ssd1306_sendByte(0x80 | x);
-    ssd1306_sendByte(0x40 | y);
+    ssd1306_intf.start();
+    ssd1306_spiDataMode(0);
+    if (w == 1) ssd1306_intf.send( 0x22 ); else ssd1306_intf.send( 0x20 );
+    ssd1306_intf.send(0x80 | x);
+    ssd1306_intf.send(0x40 | y);
     ssd1306_spiDataMode(1);
 }
 
@@ -59,7 +60,7 @@ static void pcd8544_nextPage(void)
 {
     if ( s_width != 1)
     {
-        ssd1306_endTransmission();
+        ssd1306_intf.stop();
         pcd8544_setBlock(s_column, s_page+1, s_width);
     }
 }
@@ -69,17 +70,18 @@ void pcd8544_84x48_init()
     g_lcd_type = LCD_TYPE_PCD8544;
     s_displayWidth = 84;
     s_displayHeight = 48;
-    ssd1306_commandStart();
+    ssd1306_intf.start();
+    ssd1306_spiDataMode(0);
     ssd1306_setRamBlock = pcd8544_setBlock;
     ssd1306_nextRamPage = pcd8544_nextPage;
-    ssd1306_sendPixels = ssd1306_sendByte;
-    ssd1306_sendPixelsBuffer = ssd1306_sendBytes;
+    ssd1306_sendPixels = ssd1306_intf.send;
+    ssd1306_sendPixelsBuffer = ssd1306_intf.send_buffer;
 
     for( uint8_t i=0; i<sizeof(s_lcd84x48_initData); i++)
     {
-        ssd1306_sendByte(pgm_read_byte(&s_lcd84x48_initData[i]));
+        ssd1306_intf.send(pgm_read_byte(&s_lcd84x48_initData[i]));
     }
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
 }
 
 void    pcd8544_84x48_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)

@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2018, Alexey Dynda
+    Copyright (c) 2016-2018, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,29 +22,13 @@
     SOFTWARE.
 */
 
-#include "ssd1306_i2c.h"
-#include "intf/ssd1306_interface.h"
-#include "ssd1306_i2c_wire.h"
-#include "ssd1306_i2c_embedded.h"
-#include "ssd1306_i2c_twi.h"
-#include "ssd1306_i2c_linux.h"
+#ifndef _SOVA_H_
+#define _SOVA_H_
 
-void ssd1306_i2cInitEx(int8_t scl, int8_t sda, int8_t sa)
-{
-#if defined(SSD1306_WIRE_SUPPORTED)
-    ssd1306_i2cConfigure_Wire(scl, sda);
-    ssd1306_i2cInit_Wire(sa);
-#elif defined(SSD1306_TWI_SUPPORTED)
-    ssd1306_i2cConfigure_Twi(0);
-    ssd1306_i2cInit_Twi(sa);
-#elif defined(SSD1306_I2C_SW_SUPPORTED)
-    ssd1306_i2cInit_Embedded(scl, sda, sa);
-#elif defined(SSD1306_LINUX_SUPPORTED) && !defined(__KERNEL__)
-    ssd1306_i2cInit_Linux(scl, sa);
+// ----------------------------------------------------------------------------
+#include "hal/io.h"
+#include <stdint.h>
+
+extern const uint8_t Sova [] PROGMEM;
+
 #endif
-}
-
-void ssd1306_i2cInit()
-{
-    ssd1306_i2cInitEx(-1, -1, SSD1306_SA);
-}

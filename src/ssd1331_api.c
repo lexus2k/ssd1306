@@ -25,6 +25,7 @@
 #include "ssd1306.h"
 #include "ssd1331_api.h"
 #include "intf/ssd1306_interface.h"
+#include "spi/ssd1306_spi.h"
 #include "hal/io.h"
 
 #include "lcd/ssd1331_commands.h"
@@ -44,16 +45,17 @@ void    ssd1331_setRgbColor(uint8_t r, uint8_t g, uint8_t b)
 
 void         ssd1331_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint16_t color)
 {
-    ssd1306_commandStart();
-    ssd1306_sendByte(SSD1331_DRAWLINE);
-    ssd1306_sendByte(x1);
-    ssd1306_sendByte(y1);
-    ssd1306_sendByte(x2);
-    ssd1306_sendByte(y2);
-    ssd1306_sendByte( (color & 0x03) << 4 );
-    ssd1306_sendByte( (color & 0x1C) << 2 );
-    ssd1306_sendByte( (color & 0xE0) >> 2 );
-    ssd1306_endTransmission();
+    ssd1306_intf.start();
+    ssd1306_spiDataMode(0);
+    ssd1306_intf.send(SSD1331_DRAWLINE);
+    ssd1306_intf.send(x1);
+    ssd1306_intf.send(y1);
+    ssd1306_intf.send(x2);
+    ssd1306_intf.send(y2);
+    ssd1306_intf.send( (color & 0x03) << 4 );
+    ssd1306_intf.send( (color & 0x1C) << 2 );
+    ssd1306_intf.send( (color & 0xE0) >> 2 );
+    ssd1306_intf.stop();
 }
 
 void         ssd1331_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data)
@@ -65,7 +67,7 @@ void         ssd1331_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduin
         ssd1306_sendPixel8( *data );
         data++;
     }
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
 }
 
 void         ssd1331_drawBufferFast16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data)
@@ -74,8 +76,8 @@ void         ssd1331_drawBufferFast16(lcdint_t x, lcdint_t y, lcduint_t w, lcdui
     ssd1306_setRamBlock(x, y, w);
     while (count--)
     {
-        ssd1306_sendByte( *data );
+        ssd1306_intf.send( *data );
         data++;
     }
-    ssd1306_endTransmission();
+    ssd1306_intf.stop();
 }

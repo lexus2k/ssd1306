@@ -86,6 +86,7 @@ ssd1306:
 all: $(OUTFILE)
 
 $(OUTFILE): $(OBJS) ssd1306
+	-$(MKDIR) $(call convert,$(dir $@))
 	$(CC) -o $(OUTFILE) $(CCFLAGS) $(OBJS) $(LDFLAGS)
 
 clean:

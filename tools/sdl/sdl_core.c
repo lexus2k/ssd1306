@@ -23,14 +23,16 @@
 */
 
 #include "sdl_core.h"
+#include "sdl_graphics.h"
 #include "sdl_oled_basic.h"
 #include "sdl_ssd1306.h"
 #include "sdl_ssd1331.h"
 #include "sdl_ssd1351.h"
 #include "sdl_il9163.h"
+#include "sdl_pcd8544.h"
 #include <unistd.h>
 #include <SDL2/SDL.h>
-#include <stdlib.h> 
+#include <stdlib.h>
 #include <stdio.h>
 
 #define CANVAS_REFRESH_RATE  60
@@ -41,18 +43,12 @@ enum
     SDL_DETECTED,
 };
 
-int sdl_screenWidth = 128;
-int sdl_screenHeight = 64;
-SDL_Window     *g_window = NULL;
-SDL_Renderer   *g_renderer = NULL;
 static int s_analogInput[128];
 static int s_digitalPins[128];
 static int s_dcPin = -1;
 
 static sdl_oled_info *p_oled_db[128] = { NULL };
-
-static int windowWidth() { return sdl_screenWidth * PIXEL_SIZE + BORDER_SIZE * 2; };
-static int windowHeight() { return sdl_screenHeight * PIXEL_SIZE + BORDER_SIZE * 2 + TOP_HEADER; };
+static sdl_oled_info *p_active_driver = NULL;
 
 static void register_oled(sdl_oled_info *oled_info)
 {
@@ -67,37 +63,8 @@ void sdl_core_init(void)
     register_oled( &sdl_ssd1331 );
     register_oled( &sdl_ssd1351 );
     register_oled( &sdl_il9163 );
-    if ((g_window != NULL) && (g_renderer != NULL))
-    {
-         /* SDL engine is already initialize */
-         return;
-    }
-    SDL_Init(SDL_INIT_EVERYTHING);
-    g_window = SDL_CreateWindow
-    (
-        "AVR SIMULATOR", SDL_WINDOWPOS_UNDEFINED,
-        SDL_WINDOWPOS_UNDEFINED,
-        windowWidth(),
-        windowHeight(),
-        SDL_WINDOW_SHOWN
-    );
-    g_renderer =  SDL_CreateRenderer( g_window, -1, SDL_RENDERER_ACCELERATED );
-    // Set render color to black ( background will be rendered in this color )
-    SDL_SetRenderDrawColor( g_renderer, 20, 20, 20, 255 );
-
-    // Clear window
-    SDL_RenderClear( g_renderer );
-
-    // Render the rect to the screen
-    SDL_RenderPresent(g_renderer);
-
-    SDL_Rect r;
-    r.x = 0;
-    r.y = 0;
-    r.w = windowWidth();
-    r.h = windowHeight();
-
-    SDL_RenderFillRect( g_renderer, &r );
+    register_oled( &sdl_pcd8544 );
+    sdl_graphics_init();
 }
 
 static void sdl_poll_event(void)
@@ -144,55 +111,11 @@ void sdl_write_digital(int pin, int value)
     s_digitalPins[pin] = value;
 }
 
-void sdl_core_draw(void)
-{
-    sdl_poll_event();
-    SDL_RenderPresent(g_renderer);
-}
-
 void sdl_core_close(void)
 {
-    SDL_DestroyWindow(g_window);
+    sdl_graphics_close();
     SDL_Quit();
 }
-
-static void sdl_core_resize(void)
-{
-    SDL_Rect r;
-    SDL_SetWindowSize(g_window, windowWidth(), windowHeight());
-    SDL_SetRenderDrawColor( g_renderer, 60, 128, 192, 255 );
-    r.x = 0;
-    r.y = 0;
-    r.w = windowWidth();
-    r.h = windowHeight();
-    SDL_RenderFillRect( g_renderer, &r );
-    SDL_SetRenderDrawColor( g_renderer, 0, 0, 0, 255 );
-    r.x += BORDER_SIZE - RECT_THICKNESS;
-    r.y += BORDER_SIZE - RECT_THICKNESS + TOP_HEADER;
-    r.w -= (BORDER_SIZE - RECT_THICKNESS)*2;
-    r.h -= ((BORDER_SIZE - RECT_THICKNESS)*2 + TOP_HEADER);
-    SDL_RenderFillRect( g_renderer, &r );
-    SDL_SetRenderDrawColor( g_renderer, 20, 20, 20, 255 );
-    r.x += RECT_THICKNESS;
-    r.y += RECT_THICKNESS;
-    r.w -= RECT_THICKNESS*2;
-    r.h -= RECT_THICKNESS*2;
-    SDL_RenderFillRect( g_renderer, &r );
-#if !defined(SDL_NO_BORDER)
-    SDL_SetRenderDrawColor( g_renderer, 200, 200, 200, 255 );
-    r.x = 4;
-    r.y = 4;
-    r.w = 16;
-    r.h = 12;
-    SDL_RenderFillRect( g_renderer, &r );
-    r.x = windowWidth() - 4 - 16;
-    r.y = 4;
-    r.w = 16;
-    r.h = 12;
-    SDL_RenderFillRect( g_renderer, &r );
-#endif
-}
-
 
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
@@ -200,42 +123,57 @@ static void sdl_core_resize(void)
 int s_commandId;
 int s_cmdArgIndex;
 static int s_ssdMode = SSD_MODE_NONE;
-static     sdl_oled_info *p_active_driver = NULL;
-uint8_t s_ssd1351_writedata = 0;
+static sdl_data_mode s_active_data_mode = SDM_COMMAND_ARG;
 
 static int s_oled = SDL_AUTODETECT;
 
 void sdl_send_init()
 {
-    s_ssdMode = -1;
-    s_commandId = SSD_MODE_NONE;
+    s_active_data_mode = SDM_COMMAND_ARG;
+    s_ssdMode = SSD_MODE_NONE;
+    s_commandId = SSD_COMMAND_NONE;
 }
 
-void sdl_data_start()
+
+static void sdl_send_command_or_arg(uint8_t data)
 {
-    s_ssdMode = SSD_MODE_DATA;
-    if (s_dcPin>=0) s_digitalPins[s_dcPin] = 1;
-    s_commandId = -1;
+    if (s_commandId == SSD_COMMAND_NONE)
+    {
+        s_commandId = data;
+        s_cmdArgIndex = -1; // no argument
+    }
+    else
+    {
+        s_cmdArgIndex++;
+    }
+    if (p_active_driver)
+    {
+        p_active_driver->run_cmd( data );
+    }
 }
 
-void sdl_command_start()
+static void sdl_write_data(uint8_t data)
 {
-    s_ssdMode = SSD_MODE_COMMAND;
-    if (s_dcPin>=0) s_digitalPins[s_dcPin] = 0;
-    s_commandId = -1;
+    if (p_active_driver)
+    {
+        p_active_driver->run_data( data );
+    }
 }
 
 void sdl_send_byte(uint8_t data)
 {
     if (s_dcPin>=0)
     {
+        // for spi
         s_ssdMode = s_digitalPins[s_dcPin] ? SSD_MODE_DATA : SSD_MODE_COMMAND;
     }
-    if (s_ssdMode == SSD_MODE_NONE)
+    else if (s_ssdMode == SSD_MODE_NONE)
     {
+        // for i2c
         s_ssdMode = data == 0x00 ? SSD_MODE_COMMAND : SSD_MODE_DATA;
+        return;
     }
-    else if (s_ssdMode == SSD_MODE_COMMAND)
+    if (s_ssdMode == SSD_MODE_COMMAND)
     {
         if (s_oled == SDL_AUTODETECT)
         {
@@ -245,10 +183,12 @@ void sdl_send_byte(uint8_t data)
                 if ((*p)->detect(data))
                 {
                     p_active_driver = *p;
-                    sdl_screenWidth = p_active_driver->width;
-                    sdl_screenHeight = p_active_driver->height;
                     s_oled = SDL_DETECTED;
-                    sdl_core_resize();
+                    sdl_graphics_set_oled_params(
+                        p_active_driver->width,
+                        p_active_driver->height,
+                        p_active_driver->bpp,
+                        p_active_driver->pixfmt);
                     break;
                 }
                 p++;
@@ -256,36 +196,42 @@ void sdl_send_byte(uint8_t data)
         }
         else
         {
-            if (s_commandId == SSD_COMMAND_NONE)
-            {
-                s_commandId = data;
-                s_cmdArgIndex = -1; // no argument
-            }
-            else
-            {
-                s_cmdArgIndex++;
-            }
-            if (p_active_driver)
-            {
-                p_active_driver->run_cmd( data );
-            }
+            sdl_send_command_or_arg( data );
         }
     }
     else
     {
         if (p_active_driver)
         {
-            p_active_driver->run_data( data );
+            if (p_active_driver->dataMode == SDMS_AUTO)
+            {
+                s_active_data_mode = SDM_WRITE_DATA;
+            }
+            switch ( s_active_data_mode )
+            {
+                case SDM_COMMAND_ARG:
+                    sdl_send_command_or_arg( data );
+                    break;
+                case SDM_WRITE_DATA:
+                    sdl_write_data( data );
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
 
 void sdl_send_stop()
 {
-    sdl_core_draw();
+    sdl_poll_event();
+    sdl_graphics_refresh();
     s_ssdMode = -1;
-    s_ssd1351_writedata = 0;
 }
 
+void sdl_set_data_mode(sdl_data_mode mode)
+{
+    s_active_data_mode = mode;
+}
 
 

@@ -161,8 +161,9 @@ static void drawLinesDemo()
 void setup()
 {
     ssd1306_setFixedFont(ssd1306xled_font6x8);
-    ssd1331_96x64_spi_init(3, 4, 5);
+    ssd1331_96x64_spi_init(3, 4, 5);  // Use this line for Atmega328p
 //    ssd1331_96x64_spi_init(3, -1, 4); // Use this line for ATTINY
+//    ssd1331_96x64_spi_init(24, 0, 23); // Use this line for Raspberry  (gpio24=RST, 0=CE, gpio23=D/C)
 
     ssd1306_fillScreen( 0x00 );
     ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );

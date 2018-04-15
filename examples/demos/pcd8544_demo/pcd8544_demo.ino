@@ -22,19 +22,27 @@
     SOFTWARE.
 */
 /**
+ *   Attiny85 PINS (i2c)
+ *             ____
+ *   RESET   -|_|  |- 3V
+ *   SCL (3) -|    |- (2)
+ *   SDA (4) -|    |- (1)
+ *   GND     -|____|- (0)
  *
- *   Atmega328 PINS & Nokia 5110:
- *      D3 to RST pin of LCD 8544
- *      D4 to CES pin of LCD 8544
- *      D5 to DC pin of LCD 8544
- *      BL pin of LCD to VCC (if you need backlight)
- *      SCK(D13) to CLK pin of LCD 8544
- *      MOSI(D11) to DIN pin of LCD 8544
+ *   Attiny SPI PINS:     connect LCD to D4 (D/C), GND (CS), D3 (RES), D1(DIN), D2(CLK)
+ *   
+ *   Nano/Atmega328 PINS: connect LCD to A4/A5 (i2c)
+ *   ESP8266: GPIO4(SDA) / GPIO5( SCL )
  */
 
 #include "ssd1306.h"
 #include "nano_gfx.h"
-#include "sprite_pool.h"
+#include "sova.h"
+
+/* Do not include SPI.h for Attiny controllers */
+#ifdef SSD1306_SPI_SUPPORTED
+    #include <SPI.h>
+#endif
 
 /* 
  * Heart image below is defined directly in flash memory.
@@ -61,61 +69,146 @@ const PROGMEM uint8_t heartImage[8] =
  */
 const int spriteWidth = sizeof(heartImage);
 
-/* Declare sprite pool object here                            *
- * Sprite pool is responsible for update LCD's areas, touched *
- * by sprites. By default, it clears area under the sprite -  *
- * see SpritePool::drawBlock() library method. But you may    *
- * override that method, and draw anything you need for the   *
- * block, defined by column and row.                          */
-SpritePool s_pool;
+SAppMenu menu;
 
+const char *menuItems[] =
+{
+    "draw bitmap",
+    "sprites",
+    "fonts",
+    "canvas gfx",
+    "draw lines",
+};
 
-/* Declare variable that represents our sprite */
-SPRITE sprite;
-int speedX = 1;
-int speedY = 1;
+static void bitmapDemo()
+{
+    ssd1306_drawBitmap(0, 0, 128, 64, Sova);
+    delay(1000);
+    ssd1306_invertMode();
+    delay(2000);
+    ssd1306_normalMode();
+}
+
+static void spriteDemo()
+{
+    ssd1306_clearScreen();
+    /* Declare variable that represents our sprite */
+    SPRITE sprite;
+    /* Create sprite at 0,0 position. The function initializes sprite structure. */
+    sprite = ssd1306_createSprite( 0, 0, spriteWidth, heartImage );
+    for (int i=0; i<250; i++)
+    {
+        delay(15);
+        sprite.x++;
+        if (sprite.x >= ssd1306_displayWidth())
+        {
+            sprite.x = 0;
+        }
+        sprite.y++;
+        if (sprite.y >= ssd1306_displayHeight())
+        {
+            sprite.y = 0;
+        }
+        /* Erase sprite on old place. The library knows old position of the sprite. */
+        sprite.eraseTrace();
+        /* Draw sprite on new place */
+        sprite.draw();
+    }
+}
+
+static void textDemo()
+{
+    ssd1306_setFixedFont(ssd1306xled_font6x8);
+    ssd1306_clearScreen();
+    ssd1306_printFixed(0,  8, "Normal text", STYLE_NORMAL);
+    ssd1306_printFixed(0, 16, "Bold text", STYLE_BOLD);
+    ssd1306_printFixed(0, 24, "Italic text", STYLE_ITALIC);
+    ssd1306_negativeMode();
+    ssd1306_printFixed(0, 32, "Inverted bold", STYLE_BOLD);
+    ssd1306_positiveMode();
+    delay(3000);
+    ssd1306_clearScreen();
+    ssd1306_printFixedN(0, 0, "N3", STYLE_NORMAL, FONT_SIZE_8X);
+    delay(3000);
+}
+
+static void canvasDemo()
+{
+    uint8_t buffer[64*16/8];
+    NanoCanvas canvas(64,16, buffer);
+    ssd1306_setFixedFont(ssd1306xled_font6x8);
+    ssd1306_clearScreen();
+    canvas.clear();
+    canvas.fillRect(10, 3, 80, 5, 0xFF);
+    canvas.blt((ssd1306_displayWidth()-64)/2, 1);
+    delay(500);
+    canvas.fillRect(50, 1, 60, 15, 0xFF);
+    canvas.blt((ssd1306_displayWidth()-64)/2, 1);
+    delay(1500);
+    canvas.printFixed(20, 1, " DEMO " );
+    canvas.blt((ssd1306_displayWidth()-64)/2, 1);
+    delay(3000);
+}
+
+static void drawLinesDemo()
+{
+    ssd1306_clearScreen();
+    for (uint8_t y = 0; y < ssd1306_displayHeight(); y += 8)
+    {
+        ssd1306_drawLine(0,0, ssd1306_displayWidth() -1, y);
+    }
+    for (uint8_t x = ssd1306_displayWidth() - 1; x > 7; x -= 8)
+    {
+        ssd1306_drawLine(0,0, x, ssd1306_displayHeight() - 1);
+    }
+    delay(3000);
+}
 
 void setup()
 {
-    pcd8544_84x48_spi_init(3, 4, 5);
-    ssd1306_fillScreen(0x0);
-    /* Set range of the SpritePool field on the screen in blocks. *
-     * Use whole LCD display                                      *
-     * 0,0   means left-top block of lcd display.                 *
-     *                         that is 0*8=0 - pixel              *
-     *                                 0*8=0 - pixel              *
-     * 9,5   means right-bottom block of lcd:                     *
-     *                         that is 9*8+7=79th pixel        *
-     *                                 5*8+7=47th pixel          */
-    s_pool.setRect( (SSD1306_RECT) { 0, 0, 9, 5 } );
-    /* Create sprite at 32,8 position in pixels. The function initializes sprite structure. */
-    sprite = ssd1306_createSprite( 32, 8, spriteWidth, heartImage );
-    /* Add created sprite to the sprite pool.                     *
-     * Sprite pool doesn't store sprites themselve, only pointers,*
-     * so, do not use local variables for the sprites.            */
-    s_pool.add( sprite );
-    /* Redraw whole LCD-display */
-    s_pool.refreshScreen();
-}
+    /* Select the font to use with menu and all font functions */
+    ssd1306_setFixedFont(ssd1306xled_font6x8);
 
+    pcd8544_84x48_spi_init(3, 4, 5);  // FOR ATMEGA
+//    pcd8544_84x48_spi_init(24, 0, 23); // Use this line for Raspberry  (gpio24=RST, 0=CE, gpio23=D/C)
+//    pcd8544_84x48_spi_init(3, -1, 4); // FOR ATTINY
+
+    ssd1306_fillScreen( 0x00 );
+    ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
+    ssd1306_showMenu( &menu );
+}
 
 void loop()
 {
-    /* Move sprite every 60 milliseconds */
-    delay(60);
-    sprite.x += speedX;
-    sprite.y += speedY;
-    /* If right boundary is reached, reverse X direction */
-    if (sprite.x == (84 - spriteWidth)) speedX = -speedX;
-    /* If left boundary is reached, reverse X direction */ 
-    if (sprite.x == 0) speedX = -speedX;
-    /* Sprite height is always 8 pixels. Reverse Y direction if bottom boundary is reached. */
-    if (sprite.y == (48 - 8)) speedY = -speedY;
-    /* If top boundary is reached, reverse Y direction */
-    if (sprite.y == 0) speedY = -speedY;
+    delay(1000);
+    switch (ssd1306_menuSelection(&menu))
+    {
+        case 0:
+            bitmapDemo();
+            break;
 
-    /* Redraw only those areas, affected by sprites */
-    s_pool.drawSprites();
+        case 1:
+            spriteDemo();
+            break;
+
+        case 2:
+            textDemo();
+            break;
+
+        case 3:
+            canvasDemo();
+            break;
+
+        case 4:
+            drawLinesDemo();
+            break;
+
+        default:
+            break;
+    }
+    ssd1306_fillScreen( 0x00 );
+    ssd1306_showMenu(&menu);
+    delay(500);
+    ssd1306_menuDown(&menu);
+    ssd1306_updateMenu(&menu);
 }
-
-

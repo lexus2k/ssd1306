@@ -32,7 +32,7 @@ Do not forget pull-up resistors for i2c lines.
    * i2c (software implementation, Wire library, AVR Twi, Linux i2c-dev)
    * spi (4-wire spi via Arduino SPI library, AVR Spi, AVR USI module)
  * Primitive graphics functions (line,rectangle,pixels, bitmaps)
- * Printing text to display (using fonts of different size)
+ * Printing text to display (using fonts of different size, you can use GLCD Font Creator to create new fonts)
  * Includes [graphics engine](https://github.com/lexus2k/ssd1306/wiki/Using-NanoEngine-for-systems-with-low-resources) to support
    double buffering on tiny microcontrollers.
  * Can be used for game development (bonus examples):
@@ -43,8 +43,8 @@ Do not forget pull-up resistors for i2c lines.
 ![Image of arkanoid intro](examples/games/arkanoid/screenshots/introscreen.png)
 ![Image of lode runner](examples/games/lode_runner/screenshots/main_screen.png)
 
-![Image of menu example](examples/ssd1306_demo/screenshots/mainmenu_top.png)
-![Image of color oled](examples/ssd1331_demo/screenshots/fonts.png)
+![Image of menu example](examples/demos/ssd1306_demo/screenshots/mainmenu_top.png)
+![Image of color oled](examples/demos/ssd1331_demo/screenshots/fonts.png)
 
 The default i2c pins for embedded implementation can be modified in ssd1306_i2c_conf.h file.
 For other controllers pins are defined by standard Wire library.
@@ -68,7 +68,7 @@ configurable through API.
 | **Arduino** |     |     |          |
 | Attiny85, Attiny45  |  X  |  X  | Refer to [Damellis attiny package](https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json) |
 | Atmega328p, Atmega168  |  X  |  X  |    |
-| Atmega32u4  |  X  |  X  |  compilation verified  |
+| Atmega32u4  |  X  |  X  |    |
 | Atmega2560  |  X  |  X  |    |
 | Digispark, including PRO version  |  X  |  X  |  check [examples compatibility list](examples/Digispark_compatibility.txt)  |
 | ESP8266  |  X  |  X  | check [examples compatibility list](examples/ESP8266_compatibility.txt)   |
@@ -77,9 +77,9 @@ configurable through API.
 | **Plain AVR** |   |     |          |
 | Attiny85, Attiny45 |  X  |  X  |         |
 | Atmega328p, Atmega168 |  X  |  X  |         |
-| Atmega32u4  |  X  |  X  |  compilation verified  |
+| Atmega32u4  |  X  |  X  |    |
 | **Linux**  |    |     |          |
-| Raspberry Pi |  X  |      | i2c-dev  |
+| Raspberry Pi |  X  |  X  | i2c-dev, spidev, sys/class/gpio  |
 | [SDL Emulation](https://github.com/lexus2k/ssd1306/wiki/How-to-run-emulator-mode) |  X  |  X  | demo code can be run without real OLED HW via SDL library |
 | **Windows**  |    |     |          |
 | [SDL Emulation](https://github.com/lexus2k/ssd1306/wiki/How-to-run-emulator-mode) |  X  |  X  | demo code can be run without real OLED HW via MinGW32 + SDL library |
