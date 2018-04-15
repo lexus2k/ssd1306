@@ -24,6 +24,7 @@
 
 #include "sdl_pcd8544.h"
 #include "sdl_oled_basic.h"
+#include "sdl_graphics.h"
 
 static int s_activeColumn = 0;
 static int s_activePage = 0;
@@ -81,13 +82,6 @@ void sdl_pcd8544_data(uint8_t data)
         {
             sdl_put_pixel(x, (y<<3) + i, 0x0000);
         }
-        SDL_Rect r;
-        r.x = x * PIXEL_SIZE + BORDER_SIZE;
-        r.y = ((y<<3) + i) * PIXEL_SIZE + BORDER_SIZE + TOP_HEADER;
-        r.w = PIXEL_SIZE;
-        r.h = PIXEL_SIZE;
-        // Render rect
-        SDL_RenderFillRect( g_renderer, &r );
     }
     if (s_verticalMode)
     {

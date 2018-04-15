@@ -24,6 +24,7 @@
 
 #include "sdl_ssd1331.h"
 #include "sdl_oled_basic.h"
+#include "sdl_graphics.h"
 
 static int s_activeColumn = 0;
 static int s_activePage = 0;

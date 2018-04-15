@@ -24,6 +24,7 @@
 
 #include "sdl_ssd1306.h"
 #include "sdl_oled_basic.h"
+#include "sdl_graphics.h"
 
 static int s_activeColumn = 0;
 static int s_activePage = 0;
@@ -46,11 +47,11 @@ static void sdl_ssd1306_commands(uint8_t data)
             switch (s_cmdArgIndex)
             {
                 case 0:
-                     s_columnStart = ( data >= sdl_screenWidth ? sdl_screenWidth - 1: data );
-                     s_activeColumn = ( data >= sdl_screenWidth ? sdl_screenWidth - 1: data );
+                     s_columnStart = ( data >= sdl_ssd1306.width ? sdl_ssd1306.width - 1: data );
+                     s_activeColumn = s_columnStart;
                      break;
                 case 1:
-                     s_columnEnd = ( data >= sdl_screenWidth ? sdl_screenWidth - 1: data );
+                     s_columnEnd = ( data >= sdl_ssd1306.width ? sdl_ssd1306.width - 1: data );
                      s_commandId = SSD_COMMAND_NONE;
                      break;
                 default: break;
@@ -60,11 +61,11 @@ static void sdl_ssd1306_commands(uint8_t data)
             switch (s_cmdArgIndex)
             {
                 case 0:
-                     s_activePage = (data >= (sdl_screenHeight >> 3) ? (sdl_screenHeight >> 3) - 1 : data);
-                     s_pageStart = (data >= (sdl_screenHeight >> 3) ? (sdl_screenHeight >> 3) - 1 : data);
+                     s_pageStart = (data >= (sdl_ssd1306.height >> 3) ? (sdl_ssd1306.height >> 3) - 1 : data);
+                     s_activePage = s_pageStart;
                      break;
                 case 1:
-                     s_pageEnd = (data >= (sdl_screenHeight >> 3) ? (sdl_screenHeight >> 3) - 1 : data);
+                     s_pageEnd = (data >= (sdl_ssd1306.height >> 3) ? (sdl_ssd1306.height >> 3) - 1 : data);
                      s_commandId = SSD_COMMAND_NONE;
                      break;
                 default: break;
@@ -74,7 +75,10 @@ static void sdl_ssd1306_commands(uint8_t data)
             if (s_cmdArgIndex == 0)
             {
                 sdl_ssd1306.height = data + 1;
-                sdl_core_resize();
+                sdl_graphics_set_oled_params(sdl_ssd1306.width,
+                                             sdl_ssd1306.height,
+                                             sdl_ssd1306.bpp,
+                                             sdl_ssd1306.pixfmt);
                 s_commandId = SSD_COMMAND_NONE;
             }
             break;

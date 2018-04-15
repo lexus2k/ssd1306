@@ -24,6 +24,7 @@
 
 #include "sdl_il9163.h"
 #include "sdl_oled_basic.h"
+#include "sdl_graphics.h"
 
 static int s_activeColumn = 0;
 static int s_activePage = 0;
@@ -41,11 +42,11 @@ static uint8_t s_verticalMode = 0;
 
 static void sdl_il9163_commands(uint8_t data)
 {
-    if ((s_verticalMode & 0b00100000) && (s_cmdArgIndex < 0))
-    {
-        if (s_commandId == 0x2A) s_commandId = 0x2B;
-        else if (s_commandId == 0x2B) s_commandId = 0x2A;
-    }
+//    if ((s_verticalMode & 0b00100000) && (s_cmdArgIndex < 0))
+//    {
+//        if (s_commandId == 0x2A) s_commandId = 0x2B;
+//        else if (s_commandId == 0x2B) s_commandId = 0x2A;
+//    }
     switch (s_commandId)
     {
         case 0x36:
@@ -62,11 +63,26 @@ static void sdl_il9163_commands(uint8_t data)
                 case 2:
                      break;
                 case 1:
-                     s_columnStart = data;
-                     s_activeColumn = data;
+                     if (!(s_verticalMode & 0b00100000))
+                     {
+                         s_columnStart = data;
+                         s_activeColumn = data;
+                     }
+                     else
+                     {
+                         s_pageStart = data;
+                         s_activePage = data;
+                     }
                      break;
                 case 3:
-                     s_columnEnd = data;
+                     if (!(s_verticalMode & 0b00100000))
+                     {
+                         s_columnEnd = data;
+                     }
+                     else
+                     {
+                         s_pageEnd = data;
+                     }
                      s_commandId = SSD_COMMAND_NONE;
                      break;
                 default: break;
@@ -79,13 +95,28 @@ static void sdl_il9163_commands(uint8_t data)
                 case 2:
                      break;
                 case 1:
-                     // emulating bug in IL9163 Black display
-                     s_activePage = (s_verticalMode & 0b10000000) ? data - 32 : data;
-                     s_pageStart = s_activePage;
+                     if (!(s_verticalMode & 0b00100000))
+                     {
+                         // emulating bug in IL9163 Black display
+                         s_activePage = (s_verticalMode & 0b10000000) ? data - 32 : data;
+                         s_pageStart = s_activePage;
+                     }
+                     else
+                     {
+                         s_columnStart = data;
+                         s_activeColumn = data;
+                     }
                      break;
                 case 3:
-                     // emulating bug in IL9163 Black display
-                     s_pageEnd = (s_verticalMode & 0b10000000) ? data - 32 : data;
+                     if (!(s_verticalMode & 0b00100000))
+                     {
+                         // emulating bug in IL9163 Black display
+                         s_pageEnd = (s_verticalMode & 0b10000000) ? data - 32 : data;
+                     }
+                     else
+                     {
+                         s_columnEnd = data;
+                     }
                      s_commandId = SSD_COMMAND_NONE;
                      break;
                 default: break;
@@ -116,17 +147,16 @@ void sdl_il9163_data(uint8_t data)
     }
     firstByte = 1;
     int rx, ry;
-    if (((s_verticalMode & 0b01000000) && (s_verticalMode & 0b00100000)) ||
-        ((s_verticalMode & 0b10000000) && !(s_verticalMode & 0b00100000)))
-        rx = sdl_il9163.width - 1 - x;
+    if (s_verticalMode & 0b00100000)
+    {
+        rx = (s_verticalMode & 0b01000000) ? (sdl_il9163.width - 1 - x) : x;
+        ry = (s_verticalMode & 0b10000000) ? (sdl_il9163.height - 1 - y) : y;
+    }
     else
-        rx = x;
-    if (((s_verticalMode & 0b10000000) && (s_verticalMode & 0b00100000)) ||
-        ((s_verticalMode & 0b01000000) && !(s_verticalMode & 0b00100000)))
-        ry = sdl_il9163.height - 1 - y;
-    else
-        ry = y;
-    // Render rect
+    {
+        rx = (s_verticalMode & 0b10000000) ? (sdl_il9163.width - 1 - x) : x;
+        ry = (s_verticalMode & 0b01000000) ? (sdl_il9163.height - 1 - y) : y;
+    }
     sdl_put_pixel(rx, ry, (dataFirst<<8) | data);
 
     if (s_verticalMode & 0b00100000)

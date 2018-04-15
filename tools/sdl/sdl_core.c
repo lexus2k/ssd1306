@@ -23,6 +23,7 @@
 */
 
 #include "sdl_core.h"
+#include "sdl_graphics.h"
 #include "sdl_oled_basic.h"
 #include "sdl_ssd1306.h"
 #include "sdl_ssd1331.h"
@@ -42,23 +43,12 @@ enum
     SDL_DETECTED,
 };
 
-int sdl_screenWidth = 128;
-int sdl_screenHeight = 64;
-
-SDL_Window     *g_window = NULL;
-SDL_Renderer   *g_renderer = NULL;
-SDL_Texture    *g_texture = NULL;
-void           *g_pixels = NULL;
-
 static int s_analogInput[128];
 static int s_digitalPins[128];
 static int s_dcPin = -1;
 
 static sdl_oled_info *p_oled_db[128] = { NULL };
 static sdl_oled_info *p_active_driver = NULL;
-
-static int windowWidth() { return sdl_screenWidth * PIXEL_SIZE + BORDER_SIZE * 2; };
-static int windowHeight() { return sdl_screenHeight * PIXEL_SIZE + BORDER_SIZE * 2 + TOP_HEADER; };
 
 static void register_oled(sdl_oled_info *oled_info)
 {
@@ -74,37 +64,7 @@ void sdl_core_init(void)
     register_oled( &sdl_ssd1351 );
     register_oled( &sdl_il9163 );
     register_oled( &sdl_pcd8544 );
-    if ((g_window != NULL) && (g_renderer != NULL))
-    {
-         /* SDL engine is already initialize */
-         return;
-    }
-    SDL_Init(SDL_INIT_EVERYTHING);
-    g_window = SDL_CreateWindow
-    (
-        "AVR SIMULATOR", SDL_WINDOWPOS_UNDEFINED,
-        SDL_WINDOWPOS_UNDEFINED,
-        windowWidth(),
-        windowHeight(),
-        SDL_WINDOW_SHOWN
-    );
-    g_renderer =  SDL_CreateRenderer( g_window, -1, SDL_RENDERER_ACCELERATED );
-    // Set render color to black ( background will be rendered in this color )
-    SDL_SetRenderDrawColor( g_renderer, 20, 20, 20, 255 );
-
-    // Clear window
-    SDL_RenderClear( g_renderer );
-
-    // Render the rect to the screen
-    SDL_RenderPresent(g_renderer);
-
-    SDL_Rect r;
-    r.x = 0;
-    r.y = 0;
-    r.w = windowWidth();
-    r.h = windowHeight();
-
-    SDL_RenderFillRect( g_renderer, &r );
+    sdl_graphics_init();
 }
 
 static void sdl_poll_event(void)
@@ -151,153 +111,10 @@ void sdl_write_digital(int pin, int value)
     s_digitalPins[pin] = value;
 }
 
-static void sdl_draw_oled_frame(void)
-{
-    SDL_Rect r;
-    SDL_SetRenderDrawColor( g_renderer, 60, 128, 192, 255 );
-
-    r.x = 0; r.y = 0;
-    r.w = windowWidth();
-    r.h = TOP_HEADER + BORDER_SIZE - RECT_THICKNESS;
-    SDL_RenderFillRect( g_renderer, &r );
-
-    r.x = 0; r.y = TOP_HEADER + BORDER_SIZE - RECT_THICKNESS;
-    r.w = BORDER_SIZE - RECT_THICKNESS;
-    r.h = windowHeight() - ((BORDER_SIZE - RECT_THICKNESS)*2 + TOP_HEADER);
-    SDL_RenderFillRect( g_renderer, &r );
-
-    r.x = windowWidth() - (BORDER_SIZE - RECT_THICKNESS); r.y = TOP_HEADER + BORDER_SIZE - RECT_THICKNESS;
-    r.w = BORDER_SIZE - RECT_THICKNESS;
-    r.h = windowHeight() - ((BORDER_SIZE - RECT_THICKNESS)*2 + TOP_HEADER);
-    SDL_RenderFillRect( g_renderer, &r );
-
-    r.x = 0; r.y = windowHeight() - ((BORDER_SIZE - RECT_THICKNESS));
-    r.w = windowWidth();
-    r.h = BORDER_SIZE - RECT_THICKNESS;
-    SDL_RenderFillRect( g_renderer, &r );
-
-    SDL_SetRenderDrawColor( g_renderer, 0, 0, 0, 255 );
-    for (int i=0; i<RECT_THICKNESS; i++)
-    {
-       r.x = BORDER_SIZE - RECT_THICKNESS + i;
-       r.y = BORDER_SIZE - RECT_THICKNESS + TOP_HEADER + i;
-       r.w = windowWidth() - (BORDER_SIZE - RECT_THICKNESS + i)*2;
-       r.h = windowHeight() - ((BORDER_SIZE - RECT_THICKNESS + i)*2 + TOP_HEADER);
-       SDL_RenderDrawRect( g_renderer, &r );
-    }
-
-#if !defined(SDL_NO_BORDER)
-    SDL_SetRenderDrawColor( g_renderer, 200, 200, 200, 255 );
-    r.x = 4;
-    r.y = 4;
-    r.w = 16;
-    r.h = 12;
-    SDL_RenderFillRect( g_renderer, &r );
-    r.x = windowWidth() - 4 - 16;
-    r.y = 4;
-    r.w = 16;
-    r.h = 12;
-    SDL_RenderFillRect( g_renderer, &r );
-#endif
-}
-
-void sdl_core_draw(void)
-{
-    sdl_poll_event();
-    sdl_draw_oled_frame();
-    if (g_texture && p_active_driver)
-    {
-        SDL_Rect r;
-        void * l_pixels;
-        int  pitch;
-        if (SDL_LockTexture(g_texture, NULL, &l_pixels, &pitch) == 0)
-        {
-            if (pitch != sdl_screenWidth * (p_active_driver->bpp/8))
-            {
-                fprintf(stderr, "Warning, pitch %d is not expected\n", pitch);
-            }
-            memcpy(l_pixels, g_pixels, sdl_screenWidth * sdl_screenHeight * (p_active_driver->bpp/8));
-            SDL_UnlockTexture(g_texture);
-        }
-        else
-        {
-            fprintf(stderr, "Something bad happened to SDL texture\n");
-            exit(1);
-        }
-        r.x = BORDER_SIZE;
-        r.y = BORDER_SIZE + TOP_HEADER;
-        r.w = windowWidth() - BORDER_SIZE * 2;
-        r.h = windowHeight() - BORDER_SIZE * 2 - TOP_HEADER;
-        SDL_RenderCopy(g_renderer, g_texture, NULL, &r);
-    }
-    SDL_RenderPresent(g_renderer);
-}
-
 void sdl_core_close(void)
 {
-    SDL_DestroyWindow(g_window);
+    sdl_graphics_close();
     SDL_Quit();
-}
-
-void sdl_core_resize(void)
-{
-    SDL_Rect r;
-    if (p_active_driver)
-    {
-        sdl_screenWidth = p_active_driver->width;
-        sdl_screenHeight = p_active_driver->height;
-        if (g_texture)
-        {
-            SDL_DestroyTexture( g_texture );
-            g_texture = NULL;
-            free(g_pixels);
-            g_pixels = NULL;
-        }
-        g_pixels = malloc(sdl_screenWidth * sdl_screenHeight * (p_active_driver->bpp/8));
-        g_texture = SDL_CreateTexture( g_renderer, p_active_driver->pixfmt,
-                                       SDL_TEXTUREACCESS_STREAMING,
-                                       p_active_driver->width, p_active_driver->height );
-        if (g_texture == NULL)
-        {
-            fprintf(stderr, "Error creating back buffer: %s\n", SDL_GetError());
-            exit(1);
-        }
-    }
-    SDL_SetWindowSize(g_window, windowWidth(), windowHeight());
-
-    SDL_SetRenderDrawColor( g_renderer, 20, 20, 20, 255 );
-    r.x = RECT_THICKNESS;
-    r.y = RECT_THICKNESS;
-    r.w = windowWidth() - RECT_THICKNESS*2;
-    r.h = windowHeight() - RECT_THICKNESS*2;
-    SDL_RenderFillRect( g_renderer, &r );
-    sdl_draw_oled_frame();
-}
-
-void sdl_put_pixel(int x, int y, uint32_t color)
-{
-    while (x >= sdl_screenWidth) x-= sdl_screenWidth;
-    while (y >= sdl_screenHeight) y-= sdl_screenHeight;
-    if (x<0) x = 0;
-    if (y<0) y = 0;
-    if (g_pixels && p_active_driver)
-    {
-        int index = x + y * sdl_screenWidth;
-        switch (p_active_driver->bpp)
-        {
-            case 8:
-                ((uint8_t *)g_pixels)[ index ] = color;
-                break;
-            case 16:
-                ((uint16_t *)g_pixels)[ index ] = color;
-                break;
-            case 32:
-                ((uint32_t *)g_pixels)[ index ] = color;
-                break;
-            default:
-                break;
-        }
-    }
 }
 
 //////////////////////////////////////////////////////////////
@@ -367,7 +184,11 @@ void sdl_send_byte(uint8_t data)
                 {
                     p_active_driver = *p;
                     s_oled = SDL_DETECTED;
-                    sdl_core_resize();
+                    sdl_graphics_set_oled_params(
+                        p_active_driver->width,
+                        p_active_driver->height,
+                        p_active_driver->bpp,
+                        p_active_driver->pixfmt);
                     break;
                 }
                 p++;
@@ -403,7 +224,8 @@ void sdl_send_byte(uint8_t data)
 
 void sdl_send_stop()
 {
-    sdl_core_draw();
+    sdl_poll_event();
+    sdl_graphics_refresh();
     s_ssdMode = -1;
 }
 
