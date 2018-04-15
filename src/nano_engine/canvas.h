@@ -473,33 +473,23 @@ protected:
     uint16_t  m_color;
 };
 
-
-typedef void (*NanoBlitter)(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data);
-
-template <uint8_t BPP, NanoBlitter BLT>
+template <uint8_t BPP>
 class NanoCanvasBase: public NanoCanvasOps<BPP>
 {
 public:
-    NanoCanvasBase(): NanoCanvasOps<BPP>() {};
-    NanoCanvasBase(lcdint_t w, lcdint_t h, uint8_t *bytes): NanoCanvasOps<BPP>(w,h,bytes) {};
+    using NanoCanvasOps<BPP>::NanoCanvasOps;
 
     /**
      * Draws canvas on the LCD display
      * @param x - horizontal position in pixels
      * @param y - vertical position in blocks (pixels/8)
      */
-    void blt(lcdint_t x, lcdint_t y)
-    {
-        BLT(x,y,NanoCanvasOps<BPP>::m_w, NanoCanvasOps<BPP>::m_h, NanoCanvasOps<BPP>::m_buf);
-    }
+    virtual void blt(lcdint_t x, lcdint_t y) = 0;
 
     /**
      * Draws canvas on the LCD display using offset values.
      */
-    void blt()
-    {
-        BLT(NanoCanvasOps<BPP>::offset.x, NanoCanvasOps<BPP>::offset.y, NanoCanvasOps<BPP>::m_w, NanoCanvasOps<BPP>::m_h, NanoCanvasOps<BPP>::m_buf);
-    }
+    virtual void blt() = 0;
 };
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -513,7 +503,23 @@ public:
  * NanoCanvas8 represents each pixel as single byte with RGB bits: RRRGGGBB
  * For details refer to SSD1331 datasheet
  */
-#define NanoCanvas8 NanoCanvasBase<8,ssd1331_drawBufferFast8>
+class NanoCanvas8: public NanoCanvasBase<8>
+{
+public:
+    using NanoCanvasBase::NanoCanvasBase;
+
+    /**
+     * Draws canvas on the LCD display
+     * @param x - horizontal position in pixels
+     * @param y - vertical position in blocks (pixels/8)
+     */
+    void blt(lcdint_t x, lcdint_t y) override;
+
+    /**
+     * Draws canvas on the LCD display using offset values.
+     */
+    void blt() override;
+};
 
 /////////////////////////////////////////////////////////////////////////////////
 //
@@ -532,7 +538,23 @@ enum
  * NanoCanvas1 represents each pixel as single bit: 0/1
  * For details refer to SSD1306 datasheet
  */
-#define NanoCanvas1 NanoCanvasBase<1,ssd1306_drawBufferFast>
+class NanoCanvas1: public NanoCanvasBase<1>
+{
+public:
+    using NanoCanvasBase::NanoCanvasBase;
+
+    /**
+     * Draws canvas on the LCD display
+     * @param x - horizontal position in pixels
+     * @param y - vertical position in blocks (pixels/8)
+     */
+    void blt(lcdint_t x, lcdint_t y) override;
+
+    /**
+     * Draws canvas on the LCD display using offset values.
+     */
+    void blt() override;
+};
 
 /////////////////////////////////////////////////////////////////////////////////
 //
@@ -545,7 +567,23 @@ enum
  * NanoCanvas16 represents each pixel as 2-bytes with RGB bits: RRRRRGGG-GGGBBBBB
  * For details refer to SSD1351 datasheet
  */
-#define NanoCanvas16 NanoCanvasBase<16,ssd1331_drawBufferFast16>
+class NanoCanvas16: public NanoCanvasBase<16>
+{
+public:
+    using NanoCanvasBase::NanoCanvasBase;
+
+    /**
+     * Draws canvas on the LCD display
+     * @param x - horizontal position in pixels
+     * @param y - vertical position in blocks (pixels/8)
+     */
+    void blt(lcdint_t x, lcdint_t y) override;
+
+    /**
+     * Draws canvas on the LCD display using offset values.
+     */
+    void blt() override;
+};
 
 #endif
 
