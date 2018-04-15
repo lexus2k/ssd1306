@@ -68,6 +68,8 @@
     #else
         /** The macro is defined when software i2c implementation is available */
         #define SSD1306_I2C_SW_SUPPORTED
+        /* Define lcdint as smallest types to reduce memo usage on tiny controllers. *
+         * Remember, that this can cause issues with large lcd displays, i.e. 320x240*/
         #define LCDINT_TYPES_DEFINED
         typedef int8_t lcdint_t;
         typedef uint8_t lcduint_t;
@@ -78,6 +80,8 @@
     #define SSD1306_I2C_SW_SUPPORTED
     /** The macro is defined when USI module is available for use */
     #define SSD1306_USI_SPI_SUPPORTED
+    /* Define lcdint as smallest types to reduce memo usage on tiny controllers. *
+     * Remember, that this can cause issues with large lcd displays, i.e. 320x240*/
     #define LCDINT_TYPES_DEFINED
     typedef int8_t lcdint_t;
     typedef uint8_t lcduint_t;
@@ -112,7 +116,7 @@
 
 #ifdef SSD1306_WIRE_SUPPORTED
 #ifdef __cplusplus
-#include <Wire.h> 
+#include <Wire.h>
 #endif
 #endif
 
