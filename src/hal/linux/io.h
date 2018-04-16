@@ -80,7 +80,6 @@ static inline void pinMode(int pin, int mode) {};
 #elif defined(__MINGW32__)   // ============== MINGW32
 static inline void delay(unsigned long ms) { Sleep(ms);  };
 static inline void delayMicroseconds(unsigned long us) { Sleep((us+500)/1000); };
-static inline void pinMode(int pin, int mode) {};
 static inline uint32_t millis(void)
 {
     return GetTickCount();

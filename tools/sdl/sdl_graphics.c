@@ -28,6 +28,7 @@
 #include <SDL2/SDL.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #define CANVAS_REFRESH_RATE  60
 
