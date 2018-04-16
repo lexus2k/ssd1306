@@ -30,7 +30,9 @@
 #define _SSD1306_ESP_IO_H_
 
 #if defined(__XTENSA__) && !defined(ARDUINO)
-//#include <avr/io.h>
+
+// TODO: To add support. Any help is welcome
+
 #endif
 
 #endif

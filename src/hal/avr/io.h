@@ -50,6 +50,8 @@
     #define SSD1306_I2C_SW_SUPPORTED
     /** The macro is defined when USI module is available for use */
     #define SSD1306_USI_SPI_SUPPORTED
+    /* Define lcdint as smallest types to reduce memo usage on tiny controllers. *
+     * Remember, that this can cause issues with large lcd displays, i.e. 320x240*/
     #define LCDINT_TYPES_DEFINED
     typedef int8_t lcdint_t;
     typedef uint8_t lcduint_t;
@@ -73,15 +75,18 @@
 extern "C" {
 #endif
 
-void digitalWrite(int pin, int level);
+// not implemented functions for plain AVR
 static inline int  digitalRead(int pin) { return LOW; };
-void pinMode(int pin, int mode);
-static inline void delay(unsigned long ms) { _delay_ms(ms); };
-static inline void delayMicroseconds(unsigned long us) { _delay_us(us); };
 static inline int  analogRead(int pin) { return 0; };
 static inline uint32_t millis() { return 0; };
 static inline void randomSeed(int seed) { };
 static inline void attachInterrupt(int pin, void (*interrupt)(), int level) { };
+
+// implemented functions for plain AVR
+static inline void delay(unsigned long ms) { _delay_ms(ms); };
+static inline void delayMicroseconds(unsigned long us) { _delay_us(us); };
+void digitalWrite(int pin, int level);
+void pinMode(int pin, int mode);
 
 #ifdef __cplusplus
 }

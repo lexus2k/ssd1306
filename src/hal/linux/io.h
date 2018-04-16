@@ -135,7 +135,8 @@ static inline uint8_t pgm_read_byte(const void *ptr) { return *((const uint8_t *
 static inline uint16_t eeprom_read_word(const void *ptr) { return 0; };
 static inline void eeprom_write_word(const void *ptr, uint16_t val) { };
 
-static inline char *utoa(unsigned int num, char *str, int radix) {
+static inline char *utoa(unsigned int num, char *str, int radix)
+{
     char temp[17];  //an int can only be 16 bits long
                     //at radix 2 (binary) the string
                     //is at most 16 + 1 null long.
