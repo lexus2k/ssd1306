@@ -67,7 +67,7 @@ static const uint8_t PROGMEM s_oled128x32_initData[] =
     SSD1306_MEMORYMODE, HORIZONTAL_ADDRESSING_MODE,
     SSD1306_DISPLAYALLON_RESUME,
     SSD1306_NORMALDISPLAY,
-    SSD1306_DISPLAYON 
+    SSD1306_DISPLAYON
 };
 
 static void ssd1306_setBlock(uint8_t x, uint8_t y, uint8_t w)
@@ -86,7 +86,7 @@ static void ssd1306_setBlock(uint8_t x, uint8_t y, uint8_t w)
     if (ssd1306_intf.spi)
     {
         ssd1306_spiDataMode(1);
-    }    
+    }
     else
     {
         ssd1306_intf.stop();

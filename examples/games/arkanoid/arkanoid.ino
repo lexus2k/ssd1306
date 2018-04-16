@@ -32,24 +32,24 @@
  *   SCL (3) -|    |- (2) LEFT
  *   SDA (4) -|    |- (1) BUZZER
  *   GND     -|____|- (0) RIGHT
- *   
- *   
+ *
+ *
  * ATMEL ATMEGA8 & 168 & 328 / ARDUINO NANO
  *
  *                   ____
- *    10kOm   PC6  1|_|  |28  PC5           
- *            PD0  2|    |27  PC4           
- *            PD1  3|    |26  PC3                  
- * RIGHT(D 2) PD2  4|    |25  PC2                   
- * BUZZ (D 3) PD3  5|    |24  PC1               
+ *    10kOm   PC6  1|_|  |28  PC5
+ *            PD0  2|    |27  PC4
+ *            PD1  3|    |26  PC3
+ * RIGHT(D 2) PD2  4|    |25  PC2
+ * BUZZ (D 3) PD3  5|    |24  PC1
  * LEFT (D 4) PD4  6|    |23  PC0  Z-KEYPAD (A 0) if USE_Z_KEYPAD is defined (refer to buttons.h)
  *            VCC  7|    |22  GND
  *            GND  8|    |21  AREF
  * BUZZ (D 6) PB6  9|    |20  AVCC
- *            PB7 10|    |19  PB5            
- *            PD5 11|    |18  PB4             
- *            PD6 12|    |17  PB3            
- *            PD7 13|    |16  PB2            
+ *            PB7 10|    |19  PB5
+ *            PD5 11|    |18  PB4
+ *            PD6 12|    |17  PB3
+ *            PD7 13|    |16  PB2
  *            PB0 14|____|15  PB1
  *
  *  IMPORTANT!!! D6 is used instead of D3 with SSD1331 display mode
@@ -310,7 +310,7 @@ void drawStartScreen()
 void startLevel()
 {
     ssd1331_setColor(RGB_COLOR8(255,128,0));
-    arkanoidUtoa(level); 
+    arkanoidUtoa(level);
     ssd1306_clearScreen();
     ssd1306_printFixed(40 - OUTPUT_OFFSET, 24, "LEVEL ", STYLE_BOLD);
     ssd1306_printFixed(76 - OUTPUT_OFFSET, 24, tempStr, STYLE_BOLD);
@@ -368,7 +368,12 @@ void setup()
     pinMode(BUZZER, OUTPUT);
     sei();                      // enable all interrupts
 #elif defined(SSD1306_I2C_SW_SUPPORTED)
-    #error "Not supported microcontroller or board"
+    #ifndef USE_Z_KEYPAD
+        pinMode(LEFT_BTN, INPUT);
+        pinMode(RIGHT_BTN, INPUT);
+    #endif
+    pinMode(BUZZER, OUTPUT);
+    sei();                      // enable all interrupts
 #else
     #error "Not supported microcontroller or board"
 #endif
