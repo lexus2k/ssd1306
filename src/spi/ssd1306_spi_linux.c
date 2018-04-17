@@ -60,13 +60,13 @@ static void ssd1306_spiSendByte_Linux(uint8_t data)
     struct spi_ioc_transfer mesg;
     buf[0] = data;
     memset(&mesg, 0, sizeof mesg);
-    mesg.tx_buf = (unsigned long)&buf[0],
-    mesg.rx_buf = 0,
-    mesg.len = 1,
-    mesg.delay_usecs = 0,
-    mesg.speed_hz = 0,
-    mesg.bits_per_word = 8,
-    mesg.cs_change = 0,
+    mesg.tx_buf = (unsigned long)&buf[0];
+    mesg.rx_buf = 0;
+    mesg.len = 1;
+    mesg.delay_usecs = 0;
+    mesg.speed_hz = 0;
+    mesg.bits_per_word = 8;
+    mesg.cs_change = 0;
     if (ioctl(s_fd, SPI_IOC_MESSAGE(1), &mesg) < 1)
     {
         fprintf(stderr, "SPI failed to send SPI message: %s\n", strerror (errno)) ;
