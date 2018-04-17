@@ -57,33 +57,33 @@ static const PROGMEM uint8_t s_oled96x64_initData[] =
 static uint8_t s_column;
 static uint8_t s_page;
 
-static void ssd1331_setBlock(uint8_t x, uint8_t y, uint8_t w)
+static void ssd1331_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 {
-    uint8_t rx = w ? (x + w - 1) : (s_displayWidth - 1);
+    uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
     s_column = x;
     s_page = y;
     ssd1306_intf.start();
     ssd1306_spiDataMode(0);
     ssd1306_intf.send(SSD1331_COLUMNADDR);
     ssd1306_intf.send(x);
-    ssd1306_intf.send(rx < s_displayWidth ? rx : (s_displayWidth - 1));
+    ssd1306_intf.send(rx < ssd1306_lcd.width ? rx : (ssd1306_lcd.width - 1));
     ssd1306_intf.send(SSD1331_ROWADDR);
     ssd1306_intf.send(y<<3);
-    ssd1306_intf.send(((y<<3) + 7) < s_displayHeight ? ((y<<3) + 7) : (s_displayHeight - 1));
+    ssd1306_intf.send(((y<<3) + 7) < ssd1306_lcd.height ? ((y<<3) + 7) : (ssd1306_lcd.height - 1));
     ssd1306_spiDataMode(1);
 }
 
-static void ssd1331_setBlock2(uint8_t x, uint8_t y, uint8_t w)
+static void ssd1331_setBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
 {
-    uint8_t rx = w ? (x + w - 1) : (s_displayWidth - 1);
+    uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
     ssd1306_intf.start();
     ssd1306_spiDataMode(0);
     ssd1306_intf.send(SSD1331_COLUMNADDR);
     ssd1306_intf.send(x);
-    ssd1306_intf.send(rx < s_displayWidth ? rx : (s_displayWidth - 1));
+    ssd1306_intf.send(rx < ssd1306_lcd.width ? rx : (ssd1306_lcd.width - 1));
     ssd1306_intf.send(SSD1331_ROWADDR);
     ssd1306_intf.send(y);
-    ssd1306_intf.send(s_displayHeight - 1);
+    ssd1306_intf.send(ssd1306_lcd.height - 1);
     ssd1306_spiDataMode(1);
 }
 
@@ -127,24 +127,24 @@ void    ssd1331_setMode(uint8_t vertical)
     ssd1306_intf.stop();
     if (vertical)
     {
-        ssd1306_setRamBlock = ssd1331_setBlock;
+        ssd1306_lcd.set_block = ssd1331_setBlock;
     }
     else
     {
-        ssd1306_setRamBlock = ssd1331_setBlock2;
+        ssd1306_lcd.set_block = ssd1331_setBlock2;
     }
 }
 
 void    ssd1331_96x64_init()
 {
-    g_lcd_type = LCD_TYPE_SSD1331;
-    s_displayHeight = 64;
-    s_displayWidth = 96;
-    ssd1306_setRamBlock = ssd1331_setBlock;
-    ssd1306_nextRamPage = ssd1331_nextPage;
-    ssd1306_sendPixels  = ssd1331_sendPixels;
-    ssd1306_sendPixelsBuffer = ssd1331_sendPixelsBuffer;
-    ssd1306_sendPixel8 = ssd1306_intf.send;
+    ssd1306_lcd.type = LCD_TYPE_SSD1331;
+    ssd1306_lcd.height = 64;
+    ssd1306_lcd.width = 96;
+    ssd1306_lcd.set_block = ssd1331_setBlock;
+    ssd1306_lcd.next_page = ssd1331_nextPage;
+    ssd1306_lcd.send_pixels1  = ssd1331_sendPixels;
+    ssd1306_lcd.send_pixels_buffer1 = ssd1331_sendPixelsBuffer;
+    ssd1306_lcd.send_pixels8 = ssd1306_intf.send;
     for( uint8_t i=0; i<sizeof(s_oled96x64_initData); i++)
     {
         ssd1306_sendCommand(pgm_read_byte(&s_oled96x64_initData[i]));

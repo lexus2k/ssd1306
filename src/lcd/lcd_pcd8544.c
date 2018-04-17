@@ -43,7 +43,7 @@ static uint8_t s_column;
 static uint8_t s_page;
 static uint8_t s_width;
 
-static void pcd8544_setBlock(uint8_t x, uint8_t y, uint8_t w)
+static void pcd8544_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     s_width = w;
     s_column = x;
@@ -67,15 +67,15 @@ static void pcd8544_nextPage(void)
 
 void pcd8544_84x48_init()
 {
-    g_lcd_type = LCD_TYPE_PCD8544;
-    s_displayWidth = 84;
-    s_displayHeight = 48;
+    ssd1306_lcd.type = LCD_TYPE_PCD8544;
+    ssd1306_lcd.width = 84;
+    ssd1306_lcd.height = 48;
     ssd1306_intf.start();
     ssd1306_spiDataMode(0);
-    ssd1306_setRamBlock = pcd8544_setBlock;
-    ssd1306_nextRamPage = pcd8544_nextPage;
-    ssd1306_sendPixels = ssd1306_intf.send;
-    ssd1306_sendPixelsBuffer = ssd1306_intf.send_buffer;
+    ssd1306_lcd.set_block = pcd8544_setBlock;
+    ssd1306_lcd.next_page = pcd8544_nextPage;
+    ssd1306_lcd.send_pixels1 = ssd1306_intf.send;
+    ssd1306_lcd.send_pixels_buffer1 = ssd1306_intf.send_buffer;
 
     for( uint8_t i=0; i<sizeof(s_lcd84x48_initData); i++)
     {

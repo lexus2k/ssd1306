@@ -40,7 +40,10 @@
  *          graphics functions.
  */
 
-enum
+/**
+ * Enumeration, describing display type
+ */
+typedef enum
 {
     /** Default type of LCD display: ssd1306 oled */
     LCD_TYPE_SSD1306,
@@ -52,67 +55,149 @@ enum
     LCD_TYPE_SSD1331,
     /** User LCD type */
     LCD_TYPE_CUSTOM,
-};
+} lcd_type_t;
 
-/** Current display height */
-extern uint8_t s_displayHeight;
+/**
+ * Structure, describing display driver configuration
+ */
+typedef struct
+{
+    /** Current selected lcd display type */
+    lcd_type_t type;
 
-/** Current display width */
-extern uint8_t s_displayWidth;
+    /** Current display width */
+    lcduint_t  width;
 
-/** Current selected lcd display type */
-extern uint8_t g_lcd_type;
+    /** Current display height */
+    lcduint_t  height;
+
+    /**
+     * @brief Sets block in RAM of lcd display controller to write data to.
+     *
+     * Sets block in RAM of lcd display controller to write data to.
+     * For ssd1306 it uses horizontal addressing mode, while for
+     * sh1106 the function uses page addressing mode.
+     * Width can be specified as 0, thus the library will set the right boundary to
+     * region of RAM block to the right column of the display.
+     * @param x - column (left region)
+     * @param y - page (top page of the block)
+     * @param w - width of the block in pixels to control
+     *
+     * @warning - this function initiates session (i2c or spi) and do not close it.
+     *            To close session, please, use ssd1306_intf.stop().
+     */
+    void (*set_block)(lcduint_t x, lcduint_t y, lcduint_t w);
+
+    /**
+     * Switches to the start of next RAM page for the block, specified by
+     * set_block().
+     * For ssd1306 it does nothing, while for sh1106 the function moves cursor to
+     * next page.
+     */
+    void (*next_page)(void);
+
+    /**
+     * Sends 8 monochrome vertical pixels to OLED driver.
+     * @param data - byte, representing 8 pixels.
+     */
+    void (*send_pixels1)(uint8_t data);
+
+    /**
+     * Sends buffer containing 8 monochrome vertical pixels, encoded in each byte.
+     * @param buffer - buffer containing monochrome pixels.
+     * @param len - length of buffer in bytes.
+     */
+    void (*send_pixels_buffer1)(const uint8_t *buffer, uint16_t len);
+
+    /**
+     * @brief Sends RGB pixel encoded in 3-3-2 format to OLED driver.
+     * Sends RGB pixel encoded in 3-3-2 format to OLED driver.
+     * @param data - byte, representing RGB8 pixel.
+     */
+    void (*send_pixels8)(uint8_t data);
+} ssd1306_lcd_t;
+
+/**
+ * Structure containing callback to low level function for currently enabled display
+ */
+extern ssd1306_lcd_t ssd1306_lcd;
+
+/**
+ * Current display height
+ * @warning Deprecated
+ */
+#define s_displayHeight   ssd1306_lcd.height
+
+/**
+ * Current display width
+ * @warning Deprecated
+ */
+#define s_displayWidth    ssd1306_lcd.width
+
+/**
+ * Current selected lcd display type
+ * @warning Deprecated
+ */
+#define g_lcd_type  ssd1306_lcd.type
 
 /**
  * Sends byte data to SSD1306 controller memory.
- * Performs 3 operations at once: start(), send(), stop();
+ * Performs 3 operations at once: ssd1306_intf.start(), ssd1306_intf.send(), ssd1306_intf.stop();
  * @param data - byte to send to the controller memory
  * @note At present this function is used only in Arkanoid demo.
+ * @warning Deprecated
  */
 void         ssd1306_sendData(uint8_t data) __attribute__ ((deprecated));
 
 /**
+ * @brief Sets block in RAM of lcd display controller to write data to.
+ *
  * Sets block in RAM of lcd display controller to write data to.
  * For ssd1306 it uses horizontal addressing mode, while for
  * sh1106 the function uses page addressing mode.
- * Width can be specified as 0, thus the library will set the right
+ * Width can be specified as 0, thus the library will set the right boundary to
  * region of RAM block to the right column of the display.
  * @param x - column (left region)
  * @param y - page (top page of the block)
  * @param w - width of the block in pixels to control
  *
+ * @warning Deprecated
  * @warning - this function initiates session (i2c or spi) and do not close it.
  *            To close session, please, use ssd1306_intf.stop().
  */
-extern void (*ssd1306_setRamBlock)(uint8_t x, uint8_t y, uint8_t w);
+#define ssd1306_setRamBlock   ssd1306_lcd.set_block
 
 /**
  * Switches to the start of next RAM page for the block, specified by
  * ssd1306_setRamBlock().
  * For ssd1306 it does nothing, while for sh1106 the function moves cursor to
  * next page.
+ * @warning Deprecated
  */
-extern void (*ssd1306_nextRamPage)(void);
+#define ssd1306_nextRamPage   ssd1306_lcd.next_page
 
 /**
  * Sends 8 monochrome vertical pixels to OLED driver.
  * @param data - byte, representing 8 pixels.
+ * @warning Deprecated
  */
-extern void (*ssd1306_sendPixels)(uint8_t data);
+#define ssd1306_sendPixels    ssd1306_lcd.send_pixels1
 
 /**
  * Sends buffer containing 8 monochrome vertical pixels, encoded in each byte.
  * @param buffer - buffer containing monochrome pixels.
  * @param len - length of buffer in bytes.
+ * @warning Deprecated
  */
-extern void (*ssd1306_sendPixelsBuffer)(const uint8_t *buffer, uint16_t len);
+#define ssd1306_sendPixelsBuffer  ssd1306_lcd.send_pixels_buffer1
 
 /**
  * @brief Sends RGB pixel encoded in 3-3-2 format to OLED driver.
  * Sends RGB pixel encoded in 3-3-2 format to OLED driver.
  * @param data - byte, representing RGB8 pixel.
+ * @warning Deprecated
  */
-extern void (*ssd1306_sendPixel8)(uint8_t data);
+#define ssd1306_sendPixel8        ssd1306_lcd.send_pixels8
 
 /**
  * @}

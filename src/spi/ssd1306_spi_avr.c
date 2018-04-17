@@ -110,7 +110,7 @@ static void ssd1306_spiSendBytes_avr(const uint8_t * buffer, uint16_t size)
 
 static void ssd1306_spiStop_avr()
 {
-    if (g_lcd_type == LCD_TYPE_PCD8544)
+    if (ssd1306_lcd.type == LCD_TYPE_PCD8544)
     {
         digitalWrite(s_ssd1306_dc, LOW);
         ssd1306_spiSendByte_avr( 0x00 ); // Send NOP command to allow last data byte to pass (bug in PCD8544?)

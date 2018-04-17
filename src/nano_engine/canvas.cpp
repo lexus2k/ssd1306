@@ -293,7 +293,7 @@ void NanoCanvasOps<8>::write(uint8_t c)
     {
         printChar( c );
         m_cursorX += (lcdint_t)s_fixedFont.width;
-        if ((m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)s_displayWidth - (lcdint_t)s_fixedFont.width)))
+        if ((m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)ssd1306_lcd.width - (lcdint_t)s_fixedFont.width)))
         {
             m_cursorY += (lcdint_t)s_fixedFont.height;
             m_cursorX = 0;
@@ -635,7 +635,7 @@ void NanoCanvasOps<1>::write(uint8_t c)
     {
         printChar( c );
         m_cursorX += (lcdint_t)s_fixedFont.width;
-        if ((m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)s_displayWidth - (lcdint_t)s_fixedFont.width)))
+        if ((m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)ssd1306_lcd.width - (lcdint_t)s_fixedFont.width)))
         {
             m_cursorY += (lcdint_t)s_fixedFont.height;
             m_cursorX = 0;
@@ -972,7 +972,7 @@ void NanoCanvasOps<16>::write(uint8_t c)
     {
         printChar( c );
         m_cursorX += (lcdint_t)s_fixedFont.width;
-        if ((m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)s_displayWidth - (lcdint_t)s_fixedFont.width)))
+        if ((m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)ssd1306_lcd.width - (lcdint_t)s_fixedFont.width)))
         {
             m_cursorY += (lcdint_t)s_fixedFont.height;
             m_cursorX = 0;

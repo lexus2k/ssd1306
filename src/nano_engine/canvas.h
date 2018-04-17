@@ -463,16 +463,19 @@ public:
     void setColor(uint16_t color) { m_color = color; };
 
 protected:
-    lcduint_t m_w;
-    lcduint_t m_h;
-    lcduint_t m_p;
-    lcdint_t  m_cursorX;
-    lcdint_t  m_cursorY;
-    uint8_t   m_textMode;
-    uint8_t * m_buf;
-    uint16_t  m_color;
+    lcduint_t m_w;    ///< width of NanoCanvas area in pixels
+    lcduint_t m_h;    ///< height of NanoCanvas area in pixels
+    lcduint_t m_p;    ///< number of bits, used by width value: 3 equals to 8 pixels width
+    lcdint_t  m_cursorX;  ///< current X cursor position for text output
+    lcdint_t  m_cursorY;  ///< current Y cursor position for text output
+    uint8_t   m_textMode; ///< Flags for current NanoCanvas mode
+    uint8_t * m_buf;      ///< Canvas data
+    uint16_t  m_color;    ///< current color for monochrome operations
 };
 
+/**
+ * Base class for all NanoCanvas childs
+ */
 template <uint8_t BPP>
 class NanoCanvasBase: public NanoCanvasOps<BPP>
 {

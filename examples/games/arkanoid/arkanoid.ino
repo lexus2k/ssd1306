@@ -212,27 +212,27 @@ void drawPlatform()
 {
     uint8_t pos = (platformPos < PLATFORM_SPEED) ? 0: (platformPos - PLATFORM_SPEED);
     ssd1331_setColor(RGB_COLOR8(255,255,0));
-    ssd1306_setRamBlock( pos + LEFT_EDGE + 1, PLATFORM_ROW, platformWidth + PLATFORM_SPEED * 2 );
+    ssd1306_lcd.set_block( pos + LEFT_EDGE + 1, PLATFORM_ROW, platformWidth + PLATFORM_SPEED * 2 );
     while (pos < platformPos)
     {
-       ssd1306_sendPixels(0B00000000);
+       ssd1306_lcd.send_pixels1(0B00000000);
        pos++;
     }
-    ssd1306_sendPixels(0B00001110);
+    ssd1306_lcd.send_pixels1(0B00001110);
     pos++;
     while (pos < platformPos + platformWidth - 1)
     {
-      ssd1306_sendPixels(0B00000111);
+      ssd1306_lcd.send_pixels1(0B00000111);
       pos++;
     }
-    ssd1306_sendPixels(0B00001110);
+    ssd1306_lcd.send_pixels1(0B00001110);
     while (pos < platformPos + platformWidth + PLATFORM_SPEED - 1)
     {
        if (pos >= (RIGHT_EDGE - LEFT_EDGE - 2))
        {
           break;
        }
-       ssd1306_sendPixels(0B00000000);
+       ssd1306_lcd.send_pixels1(0B00000000);
        pos++;
     }
     ssd1306_intf.stop();
@@ -245,11 +245,11 @@ void drawFieldEdges()
     while (i)
     {
         i--;
-        ssd1306_setRamBlock(LEFT_EDGE, i, 1);
-        ssd1306_sendPixels( 0B01010101 );
+        ssd1306_lcd.set_block(LEFT_EDGE, i, 1);
+        ssd1306_lcd.send_pixels1( 0B01010101 );
         ssd1306_intf.stop();
-        ssd1306_setRamBlock(RIGHT_EDGE, i, 1);
-        ssd1306_sendPixels( 0B01010101 );
+        ssd1306_lcd.set_block(RIGHT_EDGE, i, 1);
+        ssd1306_lcd.send_pixels1( 0B01010101 );
         ssd1306_intf.stop();
     }
 }
@@ -415,13 +415,13 @@ void drawBall(uint8_t lastx, uint8_t lasty)
     uint8_t temp;
     temp = 0B00000001 << (newy & 0x07);
     ssd1331_setColor(RGB_COLOR8(255,255,255));
-    ssd1306_setRamBlock(LEFT_EDGE + 1 + newx, newy >> 3, 1);
-    ssd1306_sendPixels( temp );
+    ssd1306_lcd.set_block(LEFT_EDGE + 1 + newx, newy >> 3, 1);
+    ssd1306_lcd.send_pixels1( temp );
     ssd1306_intf.stop();
     if ((newx != lastx) || ((newy >> 3) != (lasty >> 3)))
     {
-        ssd1306_setRamBlock(LEFT_EDGE + 1 + lastx, lasty >> 3, 1);
-        ssd1306_sendPixels( 0B00000000 );
+        ssd1306_lcd.set_block(LEFT_EDGE + 1 + lastx, lasty >> 3, 1);
+        ssd1306_lcd.send_pixels1( 0B00000000 );
         ssd1306_intf.stop();
     }
 }
@@ -665,8 +665,8 @@ void platformCrashAnimation()
     {
         for ( uint8_t i = 0; i < platformWidth >> 2; i++ )
         {
-            ssd1306_setRamBlock( platformPos + ((j & 0x01)<<1) + ((j & 0x02)>>1) + (i<<2) + LEFT_EDGE + 1, PLATFORM_ROW, platformWidth );
-            ssd1306_sendPixels( 0B00000000 );
+            ssd1306_lcd.set_block( platformPos + ((j & 0x01)<<1) + ((j & 0x02)>>1) + (i<<2) + LEFT_EDGE + 1, PLATFORM_ROW, platformWidth );
+            ssd1306_lcd.send_pixels1( 0B00000000 );
             ssd1306_intf.stop();
         }
         delay(150);
