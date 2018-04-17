@@ -22,9 +22,9 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.5.5</span>
    </div>
-   <div id="projectbrief">This library is developed to control SSD1306/SSD1331 RGB i2c/spi OLED displays and spi PCD8544 LED display</div>
+   <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
  </tr>
  </tbody>
@@ -137,8 +137,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad3ee43e02ee331abaa450fcbfd6aa116"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd46239a010280a922868e80a220f215"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tiny_s_s_d1306.html#acd46239a010280a922868e80a220f215">clearBlock</a> (uint8_t x, uint8_t y, uint8_t w, uint8_t h)</td></tr>
 <tr class="separator:acd46239a010280a922868e80a220f215"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51a6a9d6081066041ba89923348f7176"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tiny_s_s_d1306.html#a51a6a9d6081066041ba89923348f7176">write</a> (uint8_t ch)</td></tr>
-<tr class="separator:a51a6a9d6081066041ba89923348f7176"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c5dd641aab664d91b5229ee683b91ea"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tiny_s_s_d1306.html#a0c5dd641aab664d91b5229ee683b91ea">write</a> (uint8_t ch)</td></tr>
+<tr class="separator:a0c5dd641aab664d91b5229ee683b91ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="class_tiny_s_s_d1306.html">TinySSD1306</a> represents object to work with LCD display. Easy to use: </p><div class="fragment"><div class="line"><a class="code" href="class_tiny_s_s_d1306.html">TinySSD1306</a>  lcd( <a class="code" href="tiny__ssd1306_8h.html#a353e095e4452703115646c0e8f2148a1">SSD1306_128x64</a> );</div><div class="line"><span class="keywordtype">void</span> setup()</div><div class="line">{</div><div class="line">     lcd.beginI2C();</div><div class="line"></div><div class="line">     lcd.clear();</div><div class="line">     lcd.charF6x8(0,0,<span class="stringliteral">&quot;Hello&quot;</span>);</div><div class="line">}</div></div><!-- fragment --> 
@@ -621,8 +621,6 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Fills screen with zero-byte </p>
-
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8cpp_source.html#l00052">52</a> of file <a class="el" href="tiny__ssd1306_8cpp_source.html">tiny_ssd1306.cpp</a>.</p>
 
 </div>
 </div>
@@ -1386,8 +1384,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a51a6a9d6081066041ba89923348f7176"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51a6a9d6081066041ba89923348f7176">&#9670;&nbsp;</a></span>write()</h2>
+<a id="a0c5dd641aab664d91b5229ee683b91ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c5dd641aab664d91b5229ee683b91ea">&#9670;&nbsp;</a></span>write()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1396,7 +1394,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">size_t TinySSD1306::write </td>
+          <td class="memname">virtual size_t TinySSD1306::write </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>ch</em></td><td>)</td>
@@ -1416,13 +1414,10 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="tiny__ssd1306_8cpp_source.html#l00032">32</a> of file <a class="el" href="tiny__ssd1306_8cpp_source.html">tiny_ssd1306.cpp</a>.</p>
-
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/<a class="el" href="tiny__ssd1306_8h_source.html">tiny_ssd1306.h</a></li>
-<li>src/<a class="el" href="tiny__ssd1306_8cpp_source.html">tiny_ssd1306.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

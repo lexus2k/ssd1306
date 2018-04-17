@@ -22,9 +22,9 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.5.5</span>
    </div>
-   <div id="projectbrief">This library is developed to control SSD1306/SSD1331 RGB i2c/spi OLED displays and spi PCD8544 LED display</div>
+   <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
  </tr>
  </tbody>
@@ -64,7 +64,7 @@ $(function() {
 
 <h3><a id="index_b"></a>- b -</h3><ul>
 <li>BLACK
-: <a class="el" href="canvas_8h.html#a99fb83031ce9923c84392b4e92f956b5af77fb67151d0c18d397069ad8c271ba3">canvas.h</a>
+: <a class="el" href="canvas_8h.html#adf764cbdea00d65edcd07bb9953ad2b7af77fb67151d0c18d397069ad8c271ba3">canvas.h</a>
 </li>
 <li>BUFFER_128x64_MONO
 : <a class="el" href="tiler_8h.html#a37b0aad4356f722a76635e116d37125c">tiler.h</a>
@@ -110,7 +110,7 @@ $(function() {
 
 <h3><a id="index_g"></a>- g -</h3><ul>
 <li>g_lcd_type
-: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gadfa899a135c3bfee48624a3820864b33">lcd_common.h</a>
+: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga3ff73af72a351c4c58805f14a6d7e42e">lcd_common.h</a>
 </li>
 <li>gfx_drawMonoBitmap()
 : <a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___g_e_n_e_r_i_c___a_p_i.html#gac47f2a6a1e4c3f78fd4b793f49694f53">ssd1306.h</a>
@@ -119,6 +119,18 @@ $(function() {
 
 
 <h3><a id="index_i"></a>- i -</h3><ul>
+<li>il9163_128x128_init()
+: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaab951faf7291d6c038296863c3d3b05b">lcd_il9163.h</a>
+</li>
+<li>il9163_128x128_spi_init()
+: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaf487eab5aee04c6ce2eca11833992132">lcd_il9163.h</a>
+</li>
+<li>il9163_setMode()
+: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga51d65a4c849abcf0dcf45114266136c2">lcd_il9163.h</a>
+</li>
+<li>il9163_setRotation()
+: <a class="el" href="lcd__il9163_8h.html#a9810641c687840a775089f19449499c6">lcd_il9163.h</a>
+</li>
 <li>InitFunction
 : <a class="el" href="nano__gfx__types_8h.html#aeb51e8c3a40de7886cdc7d9c74175f05">nano_gfx_types.h</a>
 </li>
@@ -127,19 +139,22 @@ $(function() {
 
 <h3><a id="index_l"></a>- l -</h3><ul>
 <li>LCD_TYPE_CUSTOM
-: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gga06fc87d81c62e9abb8790b6e5713c55ba7f073223bcb6fab923d8da961abc1a7d">lcd_common.h</a>
+: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ggaf4b71961185e1fa00ee5962123a349aea7f073223bcb6fab923d8da961abc1a7d">lcd_common.h</a>
 </li>
 <li>LCD_TYPE_PCD8544
-: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gga06fc87d81c62e9abb8790b6e5713c55ba846490e1ce898baebea443873c666786">lcd_common.h</a>
+: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ggaf4b71961185e1fa00ee5962123a349aea846490e1ce898baebea443873c666786">lcd_common.h</a>
 </li>
 <li>LCD_TYPE_SH1106
-: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gga06fc87d81c62e9abb8790b6e5713c55baecd840f4bc28d78905c61044b139e73c">lcd_common.h</a>
+: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ggaf4b71961185e1fa00ee5962123a349aeaecd840f4bc28d78905c61044b139e73c">lcd_common.h</a>
 </li>
 <li>LCD_TYPE_SSD1306
-: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gga06fc87d81c62e9abb8790b6e5713c55bad95a2d5ef67df02a85a1bc3bff5129a4">lcd_common.h</a>
+: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ggaf4b71961185e1fa00ee5962123a349aead95a2d5ef67df02a85a1bc3bff5129a4">lcd_common.h</a>
 </li>
 <li>LCD_TYPE_SSD1331
-: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gga06fc87d81c62e9abb8790b6e5713c55ba332304434dfd968714082cb92fc85d33">lcd_common.h</a>
+: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ggaf4b71961185e1fa00ee5962123a349aea332304434dfd968714082cb92fc85d33">lcd_common.h</a>
+</li>
+<li>lcd_type_t
+: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaf4b71961185e1fa00ee5962123a349ae">lcd_common.h</a>
 </li>
 <li>lcdint_t
 : <a class="el" href="io_8h.html#a609c6ba2ba635102cd316b7b59af8351">io.h</a>
@@ -177,6 +192,9 @@ $(function() {
 <li>pcd8544_84x48_spi_init()
 : <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga6e5fe50f6c6bae1adb75b0008880035d">lcd_pcd8544.h</a>
 </li>
+<li>PROGMEM
+: <a class="el" href="group___l_c_d___f_o_n_t_s.html#gaf741c205e1e0016e74177fdcfd60210f">ssd1306_fonts.h</a>
+</li>
 </ul>
 
 
@@ -197,10 +215,10 @@ $(function() {
 
 <h3><a id="index_s"></a>- s -</h3><ul>
 <li>s_displayHeight
-: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga7dc8951b2749e2b329a8c589db3b05c4">lcd_common.h</a>
+: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga797782e83352e151d9be10883b5d4660">lcd_common.h</a>
 </li>
 <li>s_displayWidth
-: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga36d67d2c63cea292975a1a98caddc270">lcd_common.h</a>
+: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaecbd3a122e1a8388df911787003a9e4c">lcd_common.h</a>
 </li>
 <li>s_fixedFont
 : <a class="el" href="tiler_8h.html#a42f0bf9faab34f849a7b9de151ccf456">tiler.h</a>
@@ -269,10 +287,10 @@ $(function() {
 : <a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___g_e_n_e_r_i_c___a_p_i.html#ga96cae701774193ce8abc0f7058506723">ssd1306.h</a>
 </li>
 <li>ssd1306_closeInterface
-: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga8caf7796654ece8e88d853c5d580cb72">ssd1306_interface.h</a>
+: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaabf245b331f551cc03ab63386aa0c2ea">ssd1306_interface.h</a>
 </li>
-<li>ssd1306_commandStart
-: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga5725b40dce23a58c2511a16b86ddf54a">ssd1306_interface.h</a>
+<li>ssd1306_commandStart()
+: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga6496dfa0de1c422f00889c1341c522a6">ssd1306_interface.h</a>
 </li>
 <li>ssd1306_createMenu()
 : <a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___g_e_n_e_r_i_c___a_p_i.html#gac16788c7c32b72b3d485cf9db0929e4a">ssd1306.h</a>
@@ -280,11 +298,11 @@ $(function() {
 <li>ssd1306_createSprite()
 : <a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___g_e_n_e_r_i_c___a_p_i.html#gaa5f53fa7fbe48dc1a06e5fe4b1710c26">ssd1306.h</a>
 </li>
-<li>ssd1306_dataStart
-: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga5a298e013f1049e106fbb7e87e84eea0">ssd1306_interface.h</a>
+<li>ssd1306_dataStart()
+: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga3df07368356ac5f5af1acc77055a4aa2">ssd1306_interface.h</a>
 </li>
 <li>ssd1306_dcQuickSwitch
-: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa37393f9d8e76b0c6bbcb09e3433da64">ssd1306_interface.h</a>
+: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaeff66a04d6a58f031dbc7d8aa4e671a7">ssd1306_interface.h</a>
 </li>
 <li>ssd1306_displayHeight()
 : <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gab376d35413c6d14679a05404db259689">ssd1306.h</a>
@@ -303,6 +321,9 @@ $(function() {
 </li>
 <li>ssd1306_drawBuffer()
 : <a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___g_e_n_e_r_i_c___a_p_i.html#ga7a7f8e761a45eb4b4d53d76dd5f72a35">ssd1306.h</a>
+</li>
+<li>ssd1306_drawBufferFast()
+: <a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___g_e_n_e_r_i_c___a_p_i.html#gad490bc94008439efae8c688b6e6d3f86">ssd1306.h</a>
 </li>
 <li>ssd1306_drawCanvas
 : <a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___g_e_n_e_r_i_c___a_p_i.html#ga9c3f2c5fca79b5111a8407989a8bc1e6">ssd1306.h</a>
@@ -326,7 +347,7 @@ $(function() {
 : <a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___g_e_n_e_r_i_c___a_p_i.html#ga8d600483f434f6b117893d4b3c0dc36c">ssd1306.h</a>
 </li>
 <li>ssd1306_endTransmission
-: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga4c6fb9d3594588ca5aa37e942f9a622a">ssd1306_interface.h</a>
+: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga450686fc271e943d9e22b1cfcd06e978">ssd1306_interface.h</a>
 </li>
 <li>ssd1306_eraseSprite()
 : <a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___g_e_n_e_r_i_c___a_p_i.html#ga03d66ea573e717bf1451745586ff849b">ssd1306.h</a>
@@ -343,14 +364,8 @@ $(function() {
 <li>ssd1306_flipVertical()
 : <a class="el" href="group___l_c_d___s_s_d1306___a_p_i.html#ga238cd7dab0ae562b70e1a19ad3032caa">ssd1306.h</a>
 </li>
-<li>ssd1306_i2cCommandStart()
-: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga51ef3fd1ecbe2ff0a72f03bf35474152">ssd1306_i2c.h</a>
-</li>
 <li>ssd1306_i2cConfigure_Wire()
 : <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga93cba4fd5da49fa7eb1451294cba9b66">ssd1306_i2c_wire.h</a>
-</li>
-<li>ssd1306_i2cDataStart()
-: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga2917df141189fafafbc55530aa0b3035">ssd1306_i2c.h</a>
 </li>
 <li>ssd1306_i2cInit()
 : <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa13b9975cc9b1d9a802db4edf22baa7b">ssd1306_i2c.h</a>
@@ -367,8 +382,14 @@ $(function() {
 <li>ssd1306_init()
 : <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa7f352281f0fbef55ab6b351d2fbd631">oled_ssd1306.h</a>
 </li>
+<li>ssd1306_intf
+: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga15909bf29819391d35ecb7f4e37fbea3">ssd1306_interface.h</a>
+</li>
 <li>ssd1306_invertMode()
 : <a class="el" href="group___l_c_d___s_s_d1306___a_p_i.html#gaa6577db0a6f3385936d6db031c27f233">ssd1306.h</a>
+</li>
+<li>ssd1306_lcd
+: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">lcd_common.h</a>
 </li>
 <li>ssd1306_menuDown()
 : <a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___g_e_n_e_r_i_c___a_p_i.html#gad2a5de3ddd3260495288fa46fc9c78a0">ssd1306.h</a>
@@ -383,7 +404,7 @@ $(function() {
 : <a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___g_e_n_e_r_i_c___a_p_i.html#ga48dbae0a3d28d8708f9a5f552afdd8c0">ssd1306.h</a>
 </li>
 <li>ssd1306_nextRamPage
-: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gadff118efa02a2fc3f14b06cfd0ba8f9f">lcd_common.h</a>
+: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaaa196dbcff70f891213236cb2e25b50a">lcd_common.h</a>
 </li>
 <li>ssd1306_normalMode()
 : <a class="el" href="group___l_c_d___s_s_d1306___a_p_i.html#gabcd6b24c5dfbfeafb4d017dce5019ecf">ssd1306.h</a>
@@ -419,7 +440,10 @@ $(function() {
 : <a class="el" href="ssd1306__i2c__conf_8h.html#a87889918230a8a21e8f836f0c8fada7c">ssd1306_i2c_conf.h</a>
 </li>
 <li>ssd1306_sendByte
-: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gab199e63bf66cf4a217305dbfc561186f">ssd1306_interface.h</a>
+: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga6fc5fa1be51bd985560f29b5eb1d7d74">ssd1306_interface.h</a>
+</li>
+<li>ssd1306_sendBytes
+: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaf7d0c203fdf6410ad5224d5c5f606352">ssd1306_interface.h</a>
 </li>
 <li>ssd1306_sendCommand()
 : <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaf63dd3db50389223a46d7c4eb716ef83">ssd1306_interface.h</a>
@@ -428,10 +452,13 @@ $(function() {
 : <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga223fdc8edd9172690f961922f46d330c">lcd_common.h</a>
 </li>
 <li>ssd1306_sendPixel8
-: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga54c323e3ea39fea35d579d4bb9bfcfa3">lcd_common.h</a>
+: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga7245c64d758f2243621ec48ffa551945">lcd_common.h</a>
 </li>
 <li>ssd1306_sendPixels
-: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga7d4412279ca68cefacd2b471be3d483e">lcd_common.h</a>
+: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gac8314a54a45cc4376a8531fac45ca7c2">lcd_common.h</a>
+</li>
+<li>ssd1306_sendPixelsBuffer
+: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gad2d894db460f96246bcedd570808bb04">lcd_common.h</a>
 </li>
 <li>ssd1306_setContrast()
 : <a class="el" href="group___l_c_d___s_s_d1306___a_p_i.html#ga27852f112ebe53726badd8f4998fceab">ssd1306.h</a>
@@ -446,25 +473,19 @@ $(function() {
 : <a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___g_e_n_e_r_i_c___a_p_i.html#gad46c35ee4a2f53bee496bea6fdb23847">ssd1306.h</a>
 </li>
 <li>ssd1306_setRamBlock
-: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gadd0f99f7f4f9bae0c1035ada7f578a05">lcd_common.h</a>
+: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga13280d5cffa007c2a3ee87adbe823e41">lcd_common.h</a>
 </li>
 <li>ssd1306_showMenu()
 : <a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___g_e_n_e_r_i_c___a_p_i.html#ga4353274677f513ae61778927f110d507">ssd1306.h</a>
 </li>
-<li>ssd1306_spiCommandStart()
-: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gac7712122b0b76b67b841344d269b567b">ssd1306_spi.h</a>
-</li>
 <li>ssd1306_spiDataMode()
 : <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa6e3e3fd6e5bc89180176c40f9455ea2">ssd1306_spi.h</a>
-</li>
-<li>ssd1306_spiDataStart()
-: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga7824df0a63ca32ec5fdb0f7ce9652e24">ssd1306_spi.h</a>
 </li>
 <li>ssd1306_spiInit()
 : <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga0e21371367897c0f86480cfccc100b5c">ssd1306_spi.h</a>
 </li>
 <li>ssd1306_startTransmission
-: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga651554687d8adda2c9e9fe228a568e47">ssd1306_interface.h</a>
+: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga5079a258f12fe4797c7b78dc59196d59">ssd1306_interface.h</a>
 </li>
 <li>ssd1306_updateMenu()
 : <a class="el" href="group___l_c_d___g_r_a_p_h_i_c_s___g_e_n_e_r_i_c___a_p_i.html#ga26b4b11e4bc8b566855b2dbb3979210a">ssd1306.h</a>
@@ -487,14 +508,14 @@ $(function() {
 <li>ssd1331_96x64_spi_init()
 : <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga838896d36d56ee1619bbc9ae5d7b88a8">oled_ssd1331.h</a>
 </li>
+<li>ssd1331_drawBufferFast16()
+: <a class="el" href="group___l_c_d___s_s_d1331___a_p_i.html#gab479e8511ffaa7ddd28b8487c2f8ec48">ssd1331_api.h</a>
+</li>
+<li>ssd1331_drawBufferFast8()
+: <a class="el" href="group___l_c_d___s_s_d1331___a_p_i.html#gac7f5c79106c1aa7caddd8f9f5170152b">ssd1331_api.h</a>
+</li>
 <li>ssd1331_drawLine()
 : <a class="el" href="group___l_c_d___s_s_d1331___a_p_i.html#gafa4c239fd99c5541b06d46ac9ed88b6d">ssd1331_api.h</a>
-</li>
-<li>ssd1331_fastDrawBuffer16()
-: <a class="el" href="group___l_c_d___s_s_d1331___a_p_i.html#ga2b5ca3953762cf16ed75efa1908ba41f">ssd1331_api.h</a>
-</li>
-<li>ssd1331_fastDrawBuffer8()
-: <a class="el" href="group___l_c_d___s_s_d1331___a_p_i.html#ga11a89b4119758899196bf7a7f2a7fd7a">ssd1331_api.h</a>
 </li>
 <li>ssd1331_setColor()
 : <a class="el" href="group___l_c_d___s_s_d1331___a_p_i.html#gabf877db26754e2b5b6d0707aa206cc08">ssd1331_api.h</a>
@@ -541,7 +562,7 @@ $(function() {
 
 <h3><a id="index_w"></a>- w -</h3><ul>
 <li>WHITE
-: <a class="el" href="canvas_8h.html#a99fb83031ce9923c84392b4e92f956b5a283fc479650da98250635b9c3c0e7e50">canvas.h</a>
+: <a class="el" href="canvas_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a283fc479650da98250635b9c3c0e7e50">canvas.h</a>
 </li>
 </ul>
 </div><!-- contents -->

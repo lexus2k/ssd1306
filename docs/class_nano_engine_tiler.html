@@ -22,9 +22,9 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.5.5</span>
    </div>
-   <div id="projectbrief">This library is developed to control SSD1306/SSD1331 RGB i2c/spi OLED displays and spi PCD8544 LED display</div>
+   <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
  </tr>
  </tbody>
@@ -219,7 +219,7 @@ template&lt;class C, uint8_t W, uint8_t H, uint8_t B&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if point is inside the rectangle area. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="tiler_8h_source.html#l00144">144</a> of file <a class="el" href="tiler_8h_source.html">tiler.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiler_8h_source.html#l00143">143</a> of file <a class="el" href="tiler_8h_source.html">tiler.h</a>.</p>
 
 </div>
 </div>
@@ -257,7 +257,7 @@ template&lt;class C , uint8_t W, uint8_t H, uint8_t B&gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="tiler_8h_source.html#l00212">212</a> of file <a class="el" href="tiler_8h_source.html">tiler.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiler_8h_source.html#l00211">211</a> of file <a class="el" href="tiler_8h_source.html">tiler.h</a>.</p>
 
 </div>
 </div>
@@ -294,7 +294,7 @@ template&lt;class C, uint8_t W, uint8_t H, uint8_t B&gt; </div>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>you can change draw callback anytime you need. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="tiler_8h_source.html#l00135">135</a> of file <a class="el" href="tiler_8h_source.html">tiler.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiler_8h_source.html#l00134">134</a> of file <a class="el" href="tiler_8h_source.html">tiler.h</a>.</p>
 
 </div>
 </div>
@@ -355,7 +355,7 @@ template&lt;class C, uint8_t W, uint8_t H, uint8_t B&gt; </div>
 </div><div class="memdoc">
 <p>Mark specified area in pixels for redrawing by <a class="el" href="class_nano_engine.html">NanoEngine</a>. Actual update will take place in display() method. </p>
 
-<p class="definition">Definition at line <a class="el" href="tiler_8h_source.html#l00095">95</a> of file <a class="el" href="tiler_8h_source.html">tiler.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiler_8h_source.html#l00092">92</a> of file <a class="el" href="tiler_8h_source.html">tiler.h</a>.</p>
 
 </div>
 </div>
@@ -386,7 +386,7 @@ template&lt;class C, uint8_t W, uint8_t H, uint8_t B&gt; </div>
 </div><div class="memdoc">
 <p>Mark specified area in pixels for redrawing by <a class="el" href="class_nano_engine.html">NanoEngine</a>. Actual update will take place in display() method. </p>
 
-<p class="definition">Definition at line <a class="el" href="tiler_8h_source.html#l00104">104</a> of file <a class="el" href="tiler_8h_source.html">tiler.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiler_8h_source.html#l00101">101</a> of file <a class="el" href="tiler_8h_source.html">tiler.h</a>.</p>
 
 </div>
 </div>
@@ -439,7 +439,7 @@ template&lt;class C, uint8_t W, uint8_t H, uint8_t B&gt; </div>
 </div><div class="memdoc">
 <p>Mark specified area in pixels for redrawing by <a class="el" href="class_nano_engine.html">NanoEngine</a>. Actual update will take place in display() method. </p>
 
-<p class="definition">Definition at line <a class="el" href="tiler_8h_source.html#l00114">114</a> of file <a class="el" href="tiler_8h_source.html">tiler.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiler_8h_source.html#l00111">111</a> of file <a class="el" href="tiler_8h_source.html">tiler.h</a>.</p>
 
 </div>
 </div>
@@ -494,7 +494,7 @@ template&lt;class C, uint8_t W, uint8_t H, uint8_t B&gt; </div>
 </div><div class="memdoc">
 <p>Callback to call if specific tile needs to be updated </p>
 
-<p class="definition">Definition at line <a class="el" href="tiler_8h_source.html#l00154">154</a> of file <a class="el" href="tiler_8h_source.html">tiler.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiler_8h_source.html#l00153">153</a> of file <a class="el" href="tiler_8h_source.html">tiler.h</a>.</p>
 
 </div>
 </div>
@@ -521,7 +521,7 @@ template&lt;class C, uint8_t W, uint8_t H, uint8_t B&gt; </div>
 </div><div class="memdoc">
 <p>Contains information on tiles to be updated. Elements of array are rows and bits are columns. </p>
 
-<p class="definition">Definition at line <a class="el" href="tiler_8h_source.html#l00151">151</a> of file <a class="el" href="tiler_8h_source.html">tiler.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="tiler_8h_source.html#l00150">150</a> of file <a class="el" href="tiler_8h_source.html">tiler.h</a>.</p>
 
 </div>
 </div>

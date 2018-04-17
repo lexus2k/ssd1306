@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['w',['w',['../struct_s_p_r_i_t_e.html#abb6cdf1e159d5d3a8655d1944d4be2de',1,'SPRITE']]],
-  ['width',['width',['../struct_s_fixed_font_info.html#a3a19df1e396115c8e04256af069d7091',1,'SFixedFontInfo']]]
+  ['x',['x',['../struct___nano_point.html#aa846d48822d0fc30348ab60194f0a04c',1,'_NanoPoint::x()'],['../struct_s_p_r_i_t_e.html#a44b2c947f1c6e30f31a77b8520855841',1,'SPRITE::x()']]]
 ];

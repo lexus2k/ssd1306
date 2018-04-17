@@ -1,6 +1,22 @@
 var searchData=
 [
-  ['left',['left',['../struct_s_s_d1306___r_e_c_t.html#a596b6b6cce11df484877b63db7d0a5b5',1,'SSD1306_RECT']]],
-  ['lx',['lx',['../struct_s_p_r_i_t_e.html#afc5ed686d6064db045512fc72bc02dd3',1,'SPRITE']]],
-  ['ly',['ly',['../struct_s_p_r_i_t_e.html#aab3453c2a4cf02976c6d53fa79e5e051',1,'SPRITE']]]
+  ['m_5fbuf',['m_buf',['../class_nano_canvas_ops.html#a652509405060c8461b311a2a93a99907',1,'NanoCanvasOps']]],
+  ['m_5fcanvas',['m_canvas',['../class_sprite_pool.html#aacf3c183566ace3d39ace8755a2a60aa',1,'SpritePool']]],
+  ['m_5fcolor',['m_color',['../class_nano_canvas_ops.html#a2791c74fdd94200db0fadd7e0f42e938',1,'NanoCanvasOps']]],
+  ['m_5fcpuload',['m_cpuLoad',['../class_nano_engine_core.html#a03092e366bf50606308bd065d6de9623',1,'NanoEngineCore']]],
+  ['m_5fcursorx',['m_cursorX',['../class_nano_canvas_ops.html#aca15784dd70d1b3dbe5ec3f85757aab2',1,'NanoCanvasOps']]],
+  ['m_5fcursory',['m_cursorY',['../class_nano_canvas_ops.html#aacc78fabf65b53efb5463ad0ff7d6398',1,'NanoCanvasOps']]],
+  ['m_5ffps',['m_fps',['../class_nano_engine_core.html#a451151896bbd7e586e5f5970487bccb8',1,'NanoEngineCore']]],
+  ['m_5fframedurationms',['m_frameDurationMs',['../class_nano_engine_core.html#a22077f2a0f1ea7c897dbec7e1878d3a8',1,'NanoEngineCore']]],
+  ['m_5fh',['m_h',['../class_nano_canvas_ops.html#a1fcf1a393470cb8b0110eadf0beae905',1,'NanoCanvasOps']]],
+  ['m_5flastframets',['m_lastFrameTs',['../class_nano_engine_core.html#afd38c03005b3612e92045d2ee574166c',1,'NanoEngineCore']]],
+  ['m_5floop',['m_loop',['../class_nano_engine_core.html#a9754b6af8f57a00416094b1f0e551298',1,'NanoEngineCore']]],
+  ['m_5fonbuttons',['m_onButtons',['../class_nano_engine_inputs.html#a8c619be0d57a15ed98680ba1fb5e58a6',1,'NanoEngineInputs']]],
+  ['m_5fondraw',['m_onDraw',['../class_nano_engine_tiler.html#a184dd26abea919c6a7d84d2d20b53a75',1,'NanoEngineTiler']]],
+  ['m_5fp',['m_p',['../class_nano_canvas_ops.html#ad225695be47a6ad53c9d17db4184983c',1,'NanoCanvasOps']]],
+  ['m_5frect',['m_rect',['../class_sprite_pool.html#a4a3cbbd6bbd5c9c74f1ed5dd8e631589',1,'SpritePool']]],
+  ['m_5frefreshflags',['m_refreshFlags',['../class_nano_engine_tiler.html#aaa4fafbc1339cb6bef17d0aeabd94a44',1,'NanoEngineTiler']]],
+  ['m_5ftextmode',['m_textMode',['../class_nano_canvas_ops.html#aa1960bb47eb7a5ee51466740c6ad7b42',1,'NanoCanvasOps']]],
+  ['m_5fw',['m_w',['../class_nano_canvas_ops.html#a56d0c52199326b808ddecef112c4cb38',1,'NanoCanvasOps']]],
+  ['max_5fsprites',['MAX_SPRITES',['../class_sprite_pool.html#aa7522b59d079d63cfbb0612aaaee58df',1,'SpritePool']]]
 ];

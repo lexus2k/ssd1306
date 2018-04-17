@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['p1',['p1',['../struct___nano_rect.html#af3f18de2667af3087f7145c5a193f63b',1,'_NanoRect']]],
-  ['p2',['p2',['../struct___nano_rect.html#a4d038b4eccb575c9128b38338ad74213',1,'_NanoRect']]],
-  ['pages',['pages',['../struct_s_fixed_font_info.html#ae1f28bffdc33257500d04b8999edb9b2',1,'SFixedFontInfo']]]
+  ['right',['right',['../struct_s_s_d1306___r_e_c_t.html#a9ed468c58af55753dc61bb3dbdb6275b',1,'SSD1306_RECT']]]
 ];

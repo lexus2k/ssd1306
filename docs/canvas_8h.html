@@ -22,9 +22,9 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.5.5</span>
    </div>
-   <div id="projectbrief">This library is developed to control SSD1306/SSD1331 RGB i2c/spi OLED displays and spi PCD8544 LED display</div>
+   <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
  </tr>
  </tbody>
@@ -83,6 +83,10 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct___nano_rect.html">_NanoRect</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas_ops.html">NanoCanvasOps&lt; BPP &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas_base.html">NanoCanvasBase&lt; BPP &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas8.html">NanoCanvas8</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas1.html">NanoCanvas1</a></td></tr>
@@ -99,14 +103,14 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:adf764cbdea00d65edcd07bb9953ad2b7"><td class="memItemLeft" align="right" valign="top"><a id="adf764cbdea00d65edcd07bb9953ad2b7"></a>enum &#160;</td><td class="memItemRight" valign="bottom">{ <b>CANVAS_TEXT_WRAP</b> = 1, 
+<tr class="memitem:a06fc87d81c62e9abb8790b6e5713c55b"><td class="memItemLeft" align="right" valign="top"><a id="a06fc87d81c62e9abb8790b6e5713c55b"></a>enum &#160;</td><td class="memItemRight" valign="bottom">{ <b>CANVAS_TEXT_WRAP</b> = 1, 
 <b>CANVAS_MODE_TRANSPARENT</b> = 2
  }</td></tr>
-<tr class="separator:adf764cbdea00d65edcd07bb9953ad2b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99fb83031ce9923c84392b4e92f956b5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="canvas_8h.html#a99fb83031ce9923c84392b4e92f956b5af77fb67151d0c18d397069ad8c271ba3">BLACK</a> = 0x00, 
-<a class="el" href="canvas_8h.html#a99fb83031ce9923c84392b4e92f956b5a283fc479650da98250635b9c3c0e7e50">WHITE</a> = 0xFF
+<tr class="separator:a06fc87d81c62e9abb8790b6e5713c55b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf764cbdea00d65edcd07bb9953ad2b7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="canvas_8h.html#adf764cbdea00d65edcd07bb9953ad2b7af77fb67151d0c18d397069ad8c271ba3">BLACK</a> = 0x00, 
+<a class="el" href="canvas_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a283fc479650da98250635b9c3c0e7e50">WHITE</a> = 0xFF
  }</td></tr>
-<tr class="separator:a99fb83031ce9923c84392b4e92f956b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:adf764cbdea00d65edcd07bb9953ad2b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Drawing in memory buffer </p>
@@ -144,8 +148,8 @@ Enumerations</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="a99fb83031ce9923c84392b4e92f956b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99fb83031ce9923c84392b4e92f956b5">&#9670;&nbsp;</a></span>anonymous enum</h2>
+<a id="adf764cbdea00d65edcd07bb9953ad2b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf764cbdea00d65edcd07bb9953ad2b7">&#9670;&nbsp;</a></span>anonymous enum</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -156,13 +160,13 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a99fb83031ce9923c84392b4e92f956b5af77fb67151d0c18d397069ad8c271ba3"></a>BLACK&#160;</td><td class="fielddoc"><p>Black color. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="adf764cbdea00d65edcd07bb9953ad2b7af77fb67151d0c18d397069ad8c271ba3"></a>BLACK&#160;</td><td class="fielddoc"><p>Black color. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a99fb83031ce9923c84392b4e92f956b5a283fc479650da98250635b9c3c0e7e50"></a>WHITE&#160;</td><td class="fielddoc"><p>White color. </p>
+<tr><td class="fieldname"><a id="adf764cbdea00d65edcd07bb9953ad2b7a283fc479650da98250635b9c3c0e7e50"></a>WHITE&#160;</td><td class="fielddoc"><p>White color. </p>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="canvas_8h_source.html#l00514">514</a> of file <a class="el" href="canvas_8h_source.html">canvas.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="canvas_8h_source.html#l00533">533</a> of file <a class="el" href="canvas_8h_source.html">canvas.h</a>.</p>
 
 </div>
 </div>

@@ -12,5 +12,6 @@ var searchData=
   ['tnanoenginegetbuttons',['TNanoEngineGetButtons',['../core_8h.html#aff4934f12cf7a86959c46e57aac5ae5d',1,'core.h']]],
   ['tnanoengineondraw',['TNanoEngineOnDraw',['../tiler_8h.html#a5db298dc5fe7132d3190e5e423b6da6a',1,'tiler.h']]],
   ['top',['top',['../struct_s_s_d1306___r_e_c_t.html#ae4b7642bc9792a9eac02e19f62fe55eb',1,'SSD1306_RECT']]],
-  ['transparentmask',['transparentMask',['../struct_s_p_r_i_t_e.html#a179f75785cfe41d2aaba303536d09d26',1,'SPRITE']]]
+  ['transparentmask',['transparentMask',['../struct_s_p_r_i_t_e.html#a179f75785cfe41d2aaba303536d09d26',1,'SPRITE']]],
+  ['type',['type',['../structssd1306__lcd__t.html#aabe73540a354c4f959e4fe862167b482',1,'ssd1306_lcd_t']]]
 ];

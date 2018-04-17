@@ -2,7 +2,7 @@ var searchData=
 [
   ['only_20ssd1306_20display_20driver_20control_20functions',['only ssd1306 display driver control functions',['../group___l_c_d___s_s_d1306___a_p_i.html',1,'']]],
   ['off',['off',['../class_tiny_s_s_d1306.html#aa6a0e50bdc3ecd2973dc57fd38907a21',1,'TinySSD1306']]],
-  ['offset',['offset',['../class_nano_canvas8.html#a08e68cddd7df4fffb3630cf7ab67e3de',1,'NanoCanvas8::offset()'],['../class_nano_canvas1.html#a95b690a74b02ff3aeb21426788804a31',1,'NanoCanvas1::offset()'],['../class_nano_canvas16.html#acf597049e362e203ba1b2605dfd6e5fb',1,'NanoCanvas16::offset()']]],
+  ['offset',['offset',['../class_nano_canvas_ops.html#a0ff1def9b165746092c0c21adf420612',1,'NanoCanvasOps']]],
   ['oldselection',['oldSelection',['../struct_s_app_menu.html#ad79da4d78c16e3fbbd2e380dc5763275',1,'SAppMenu']]],
   ['oled_5fsh1106_2eh',['oled_sh1106.h',['../oled__sh1106_8h.html',1,'']]],
   ['oled_5fssd1306_2eh',['oled_ssd1306.h',['../oled__ssd1306_8h.html',1,'']]],

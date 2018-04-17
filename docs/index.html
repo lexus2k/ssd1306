@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SSD1306 OLED display driver: SSD1306/SSD1331/PCD8544 API.</title>
+<title>SSD1306 OLED display driver: SSD1306/SSD1331/SSD1351/PCD8544 API.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,9 +22,9 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.5.5</span>
    </div>
-   <div id="projectbrief">This library is developed to control SSD1306/SSD1331 RGB i2c/spi OLED displays and spi PCD8544 LED display</div>
+   <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
  </tr>
  </tbody>
@@ -61,75 +61,98 @@ $(function() {
 
 <div class="header">
   <div class="headertitle">
-<div class="title">SSD1306/SSD1331/PCD8544 API. </div>  </div>
+<div class="title">SSD1306/SSD1331/SSD1351/PCD8544 API. </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This is SSD1306/SSD1331 OLED display driver implementation for Arduino, AVR, Extensa platforms. The driver supports i2c and spi displays, and is also capable to work with pcd8544 (nokia 5110) LCD over SPI.</p>
-<h1>SSD1306 OLED display driver</h1>
+<div class="textblock"><p>This is SSD1306/SSD1331/SSD1351 OLED display driver implementation for Arduino, AVR, Extensa platforms. The driver supports i2c and spi displays, and is also capable to work with pcd8544 (nokia 5110) LCD over SPI.</p>
+<h1>SSD1306/SSD1331 OLED display driver, PCD8544 LED display driver</h1>
 <h2>Introduction</h2>
-<p>SSD1306 OLED display driver is Arduino style library, AND it can be compiled with plain avr-gcc compiler without Arduino libraries. It is intended for use with very small microcontrollers (with a little of SRAM). It was developed to use as few resources as possible. Since ATTiny controllers have no division and multiply operations, the library uses shift operation to speed up calculations.</p>
+<p>SSD1306 driver is Arduino style C/C++ library. it can be compiled with plain avr-gcc compiler without Arduino libraries and supports monochrome and RGB oleds. It is intended for use with very small microcontrollers (with a little of RAM). It was developed to use as few resources as possible. Since ATTiny controllers have no division and multiply operations, the library uses shift operation to speed up calculations.</p>
+<p>Do not forget pull-up resistors for i2c lines.</p>
 <h2>Key Features</h2>
 <ul>
-<li>Embedded i2c software implementation</li>
-<li>Standard i2c support (via Wire library)</li>
-<li>4-wire spi support (via standard SPI library)</li>
-<li>Usage of very little of SRAM (minimum 26 bytes)</li>
-<li>Usage of as little Flash as possible</li>
+<li>Supports color and monochrome OLED displays</li>
+<li>The library uses as little Flash memory as possible</li>
+<li>Needs very little RAM (Attiny85 with Damellis package needs minimum 25 bytes of RAM to communicate with OLED)</li>
 <li>Fast implementation to provide reasonable speed on slow microcontrollers</li>
-<li>Primitive graphics functions (line,rectangle,pixels)</li>
-<li>Printing text to display (using 6x8 fonts, and double size output 12x16)</li>
-<li>Drawing bitmap images, located in SRAM or Flash memory (PROGMEM)</li>
-<li>Work with sprite objects</li>
-<li>Creating and controlling menu items (see ssd1306_demo example)</li>
-<li>Memory-buffered operations (<a class="el" href="nano__gfx_8h.html">nano_gfx.h</a>) for flickering-free output.</li>
-<li>Bonus examples:<ul>
-<li>Arkanoid game</li>
-<li>Simple Lode runner game</li>
-<li>Snowflakes</li>
+<li>Supports i2c and spi interfaces:<ul>
+<li>i2c (software implementation, Wire library, AVR Twi, Linux i2c-dev)</li>
+<li>spi (4-wire spi via Arduino SPI library, AVR Spi, AVR USI module) Primitive graphics functions (line,rectangle,pixels, bitmaps) Printing text to display (using fonts of different size) Includes <a href="https://github.com/lexus2k/ssd1306/wiki/Using-NanoEngine-for-systems-with-low-resources">graphics engine</a> to support double buffering on tiny microcontrollers. Can be used for game development (bonus examples): Arkanoid game (<a href="examples/arkanoid">arkanoid</a> in old style API and <a href="examples/arkanoid8">arkanoid8</a> in new style API) Simple <a href="examples/lode_runner">Lode runner</a> game in old style API, <a href="examples/lode_runner8">Lode runner8</a> in new style API <a href="examples/snowflakes">Snowflakes</a></li>
 </ul>
 </li>
 </ul>
+<div class="image">
+<img src="examples/games/arkanoid/screenshots/introscreen.png" alt="Image of arkanoid intro"/>
+</div>
+ <div class="image">
+<img src="examples/games/lode_runner/screenshots/main_screen.png" alt="Image of lode runner"/>
+</div>
+<div class="image">
+<img src="examples/ssd1306_demo/screenshots/mainmenu_top.png" alt="Image of menu example"/>
+</div>
+ <div class="image">
+<img src="examples/ssd1331_demo/screenshots/fonts.png" alt="Image of color oled"/>
+</div>
 <p>The default i2c pins for embedded implementation can be modified in <a class="el" href="ssd1306__i2c__conf_8h.html">ssd1306_i2c_conf.h</a> file. For other controllers pins are defined by standard Wire library. The default spi SCLK and MOSI pins are defined by SPI library, and DC, RST, CES pins are configurable through API.</p>
 <h2>Supported displays:</h2>
-<ul>
-<li>i2c ssd1306 128x64 oled display</li>
-<li>i2c ssd1306 128x32 oled display</li>
-<li>spi ssd1306 128x64 oled display</li>
-<li>spi ssd1331 96x64 RGB oled display</li>
-<li>spi pcd8544 84x48 nokia 5110 led display</li>
-</ul>
+<p>i2c sh1106 128x64 oled display i2c ssd1306 128x64 oled display i2c ssd1306 128x32 oled display spi ssd1306 128x64 oled display spi ssd1331 96x64 RGB oled display spi ssd1351 128x128 RGB oled display spi il9163 128x128 RGB TFT display spi pcd8544 84x48 nokia 5110 led display</p>
 <h2>Supported platforms</h2>
-<ul>
-<li>Arduino<ul>
-<li>Attiny85, Attiny45 (Refer to <a href="https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json">Damellis attiny package</a>)</li>
-<li>Atmega328p, Atmega168</li>
-<li>Atmega2560</li>
-<li>Digispark, including PRO version (check <a href="examples/Digispark_compatibility.txt">examples compatibility list</a>)</li>
-<li>ESP8266 (check <a href="examples/ESP8266_compatibility.txt">examples compatibility list</a>)</li>
-<li>ESP32 Dev Board (check <a href="examples/ESP8266_compatibility.txt">examples compatibility list</a>)</li>
-</ul>
-</li>
-<li>AVR (ssd1306 library can be compiled and used with plain avr-gcc/avr-libc without Arduino libraries)<ul>
-<li>Attiny85, Attiny45</li>
-<li>Atmega328p, Atmega168</li>
-</ul>
-</li>
-</ul>
+<table class="doxtable">
+<tr>
+<th align="left"><b>Platforms</b> </th><th align="center"><b>I2C</b> </th><th align="center"><b>SPI</b> </th><th align="left"><b>Comments</b>  </th></tr>
+<tr>
+<td align="left"><b>Arduino</b> </td><td align="center"></td><td align="center"></td><td align="left"></td></tr>
+<tr>
+<td align="left">Attiny85, Attiny45 </td><td align="center">X </td><td align="center">X </td><td align="left">Refer to <a href="https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json">Damellis attiny package</a> </td></tr>
+<tr>
+<td align="left">Atmega328p, Atmega168 </td><td align="center">X </td><td align="center">X </td><td align="left"></td></tr>
+<tr>
+<td align="left">Atmega32u4 </td><td align="center">X </td><td align="center">X </td><td align="left">compilation verified </td></tr>
+<tr>
+<td align="left">Atmega2560 </td><td align="center">X </td><td align="center">X </td><td align="left"></td></tr>
+<tr>
+<td align="left">Digispark, including PRO version </td><td align="center">X </td><td align="center">X </td><td align="left">check <a href="examples/Digispark_compatibility.txt">examples compatibility list</a> </td></tr>
+<tr>
+<td align="left">ESP8266 </td><td align="center">X </td><td align="center">X </td><td align="left">check <a href="examples/ESP8266_compatibility.txt">examples compatibility list</a> </td></tr>
+<tr>
+<td align="left">ESP32 </td><td align="center">X </td><td align="center">X </td><td align="left">check <a href="examples/ESP8266_compatibility.txt">examples compatibility list</a> </td></tr>
+<tr>
+<td align="left">STM32 </td><td align="center">X </td><td align="center">X </td><td align="left"><a href="https://github.com/stm32duino/wiki/wiki">stm32duino</a> </td></tr>
+<tr>
+<td align="left"><b>Plain AVR</b> </td><td align="center"></td><td align="center"></td><td align="left"></td></tr>
+<tr>
+<td align="left">Attiny85, Attiny45 </td><td align="center">X </td><td align="center">X </td><td align="left"></td></tr>
+<tr>
+<td align="left">Atmega328p, Atmega168 </td><td align="center">X </td><td align="center">X </td><td align="left"></td></tr>
+<tr>
+<td align="left">Atmega32u4 </td><td align="center">X </td><td align="center">X </td><td align="left">compilation verified </td></tr>
+<tr>
+<td align="left"><b>Linux</b> </td><td align="center"></td><td align="center"></td><td align="left"></td></tr>
+<tr>
+<td align="left">Raspberry Pi </td><td align="center">X </td><td align="center">X </td><td align="left">i2c-dev, spidev, /sys/class/gpio </td></tr>
+<tr>
+<td align="left"><a href="https://github.com/lexus2k/ssd1306/wiki/How-to-run-emulator-mode">SDL Emulation</a> </td><td align="center">X </td><td align="center">X </td><td align="left">demo code can be run without real OLED HW via SDL library </td></tr>
+<tr>
+<td align="left"><b>Windows</b> </td><td align="center"></td><td align="center"></td><td align="left"></td></tr>
+<tr>
+<td align="left"><a href="https://github.com/lexus2k/ssd1306/wiki/How-to-run-emulator-mode">SDL Emulation</a> </td><td align="center">X </td><td align="center">X </td><td align="left">demo code can be run without real OLED HW via MinGW32 + SDL library </td></tr>
+</table>
+<p>Digispark users, please check compilation options in your Arduino prior to using this library. Ssd1306 library requires at least c++11 and c99 (by default Digispark package misses the options -std=gnu11, -std=gnu++11).</p>
 <h2>The goals of ssd1306 library</h2>
-<ul>
-<li>To use as few RAM as possible</li>
-<li>To use as few Flash as possible</li>
-<li>To be as fast as possible</li>
-<li>To fit <a href="examples/arkanoid">Arkanoid game example</a> to Attiny85 microcontroller</li>
-</ul>
-<h2>Adding new interface</h2>
-<p>If you need to add new not supported interface for the library, just implement interface specific functions and assign them to function pointers:</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="ssd1306__interface_8h.html">intf/ssd1306_interface.h</a>&quot;</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> setup()</div><div class="line">{</div><div class="line">    <a class="code" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga651554687d8adda2c9e9fe228a568e47">ssd1306_startTransmission</a> = &amp;myStartTransmissionFunc;</div><div class="line">    <a class="code" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga4c6fb9d3594588ca5aa37e942f9a622a">ssd1306_endTransmission</a>   = &amp;myEndTransmissionFunc;</div><div class="line">    <a class="code" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gab199e63bf66cf4a217305dbfc561186f">ssd1306_sendByte</a>          = &amp;mySendByteToInterfaceFunc;</div><div class="line">    <a class="code" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga5725b40dce23a58c2511a16b86ddf54a">ssd1306_commandStart</a>      = &amp;myStartCommandModeTransmissionFunc;</div><div class="line">    <a class="code" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga5a298e013f1049e106fbb7e87e84eea0">ssd1306_dataStart</a>         = &amp;myStartDataModeTransmissionFunc;</div><div class="line">    ...</div><div class="line">    # init your <span class="keyword">interface </span>here</div><div class="line">    myInterfaceInit();</div><div class="line">    <a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gab4435a11942917172844748956c39294">ssd1306_128x64_init</a>();</div><div class="line">}</div></div><!-- fragment --><p> Refer to SPI, I2C interfaces init function to understand required implementation.</p>
-<h2>Adding new LCD type to the library</h2>
-<p>The main requirements for LCD display to use it with this library are:</p>
-<p>Each byte, sent to LCD, represents 8 vertical pixels After sending each byte LCD controller shifts GDRAM pointer to the right by 1 pixel LCD width should not exceed 128 pixels</p>
-<p>To add new LCD type to the library, implement GDRAM address positioning functions and initialization function for you LCD:</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="lcd__common_8h.html">lcd/lcd_common.h</a>&quot;</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span>    myDisplayInit()</div><div class="line">{</div><div class="line"><span class="preprocessor">    # Use LCD_TYPE_CUSTOM constant</span></div><div class="line">    <a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gadfa899a135c3bfee48624a3820864b33">g_lcd_type</a> = <a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gga06fc87d81c62e9abb8790b6e5713c55ba7f073223bcb6fab923d8da961abc1a7d">LCD_TYPE_CUSTOM</a>;</div><div class="line"><span class="preprocessor">    # Set display size:</span></div><div class="line"><span class="preprocessor">    #     Width should be less or equal to 128</span></div><div class="line">    <a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga36d67d2c63cea292975a1a98caddc270">s_displayWidth</a> = 128;</div><div class="line"><span class="preprocessor">    #     Height should be less or equal to 128</span></div><div class="line">    <a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga7dc8951b2749e2b329a8c589db3b05c4">s_displayHeight</a> = 64;</div><div class="line">    <a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gadd0f99f7f4f9bae0c1035ada7f578a05">ssd1306_setRamBlock</a> = &amp;mySetRamBlockFunc;</div><div class="line">    <a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gadff118efa02a2fc3f14b06cfd0ba8f9f">ssd1306_nextRamPage</a> = &amp;myNextPageFunc;</div><div class="line">    ssd1306_setRamPos = mySetRamAddressFunc;</div><div class="line"><span class="preprocessor">    # Put you LCD initialization code here</span></div><div class="line">    ...</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> setup()</div><div class="line">{</div><div class="line"><span class="preprocessor">    # Init the interface here</span></div><div class="line">    ...</div><div class="line">    # Call LCD initialization here</div><div class="line">    myDisplayInit();</div><div class="line">}</div></div><!-- fragment --><p> Refer to SH1106 intialization implementation as reference code. </p>
+<p>To use as few RAM as possible To use as few Flash as possible To be as fast as possible To fit <a href="examples/arkanoid">Arkanoid game example</a> to Attiny85 microcontroller</p>
+<h2>Setting up</h2>
+<p>Hardware setup is described <a href="https://github.com/lexus2k/ssd1306/wiki/Hardware-setup">here</a></p>
+<p>Setting up for Arduino: (variant 1)* Download source from <a href="https://github.com/lexus2k/ssd1306">https://github.com/lexus2k/ssd1306</a> Put the sources to Arduino/libraries/ folder</p>
+<p>Setting up for Arduino: (variant 2)* Install ssd1306 library via Arduino IDE library manager</p>
+<p>Using with plain avr-gcc:* Download source from <a href="https://github.com/lexus2k/ssd1306">https://github.com/lexus2k/ssd1306</a> Build the library (variant 1) <code>cd ssd1306/src &amp;&amp; make -f Makefile.avr MCU=&lt;your_mcu&gt;</code> Link library to your project (refer to <a href="examples/Makefile.avr">Makefile.avr</a> in examples folder). Build demo code (variant 2) <code>cd ssd1306/tools &amp;&amp; ./build_and_run.sh -p avr -m &lt;your_mcu&gt; ssd1306_demo</code></p>
+<p>For more information about this library, please, visit <a href="https://github.com/lexus2k/ssd1306">https://github.com/lexus2k/ssd1306</a>. Doxygen documentation can be found at <a href="http://lexus2k.github.io/ssd1306">github.io site</a>. If you found any problem or have any idea, please, report to Issues section.</p>
+<h2>License</h2>
+<p>The library is free. If this project helps you, you can give me a cup of coffee. <a href="https://www.paypal.me/lexus2k"></a></p>
+<p>MIT License</p>
+<p>Copyright (c) 2016-2018, Alexey Dynda</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

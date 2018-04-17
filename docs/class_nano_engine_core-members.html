@@ -22,9 +22,9 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.5.5</span>
    </div>
-   <div id="projectbrief">This library is developed to control SSD1306/SSD1331 RGB i2c/spi OLED displays and spi PCD8544 LED display</div>
+   <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
  </tr>
  </tbody>
@@ -67,11 +67,11 @@ $(function() {
 
 <p>This is the complete list of members for <a class="el" href="class_nano_engine_core.html">NanoEngineCore</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="class_nano_engine_core.html#ab4c21ed56d8182a0f7a5c3698aa70eb8">begin</a>()</td><td class="entry"><a class="el" href="class_nano_engine_core.html">NanoEngineCore</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_nano_engine_core.html#a81e23ad6be365c1ad82e3b5751158500">begin</a>()</td><td class="entry"><a class="el" href="class_nano_engine_core.html">NanoEngineCore</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr><td class="entry"><a class="el" href="class_nano_engine_inputs.html#aedfff4527abdc43040de2696243616cd">buttonsState</a>()</td><td class="entry"><a class="el" href="class_nano_engine_inputs.html">NanoEngineInputs</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_nano_engine_inputs.html#a78a018c75f823a57ef31c57df224b89f">connectArduboyKeys</a>()</td><td class="entry"><a class="el" href="class_nano_engine_inputs.html">NanoEngineInputs</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="class_nano_engine_inputs.html#a8a03b73f7baf7363a5a1acc2479cf59d">connectCustomKeys</a>(TNanoEngineGetButtons handler)</td><td class="entry"><a class="el" href="class_nano_engine_inputs.html">NanoEngineInputs</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_nano_engine_inputs.html#a4cb93665e820c90bd9ffcec2376bf749">connectZKeypad</a>(uint8_t analogPin)</td><td class="entry"><a class="el" href="class_nano_engine_inputs.html">NanoEngineInputs</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_nano_engine_inputs.html#a44834200b3dd49442b96ea45de2aaf56">connectArduboyKeys</a>()</td><td class="entry"><a class="el" href="class_nano_engine_inputs.html">NanoEngineInputs</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_nano_engine_inputs.html#a7f509d896a9b9d1c523ac87f459f5686">connectCustomKeys</a>(TNanoEngineGetButtons handler)</td><td class="entry"><a class="el" href="class_nano_engine_inputs.html">NanoEngineInputs</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_nano_engine_inputs.html#a4b438315ca118e0721e3a8fb2f638e41">connectZKeypad</a>(uint8_t analogPin)</td><td class="entry"><a class="el" href="class_nano_engine_inputs.html">NanoEngineInputs</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr><td class="entry"><a class="el" href="class_nano_engine_core.html#a249ba97c3cff086d9837d014546867c0">getCpuLoad</a>()</td><td class="entry"><a class="el" href="class_nano_engine_core.html">NanoEngineCore</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_nano_engine_core.html#a6cc892046d837463ed7c3996baa983b5">getFrameRate</a>()</td><td class="entry"><a class="el" href="class_nano_engine_core.html">NanoEngineCore</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
   <tr><td class="entry"><a class="el" href="class_nano_engine_core.html#a0361b8a56589feb5bd2c4f6f1473a5fa">loopCallback</a>(TLoopCallback callback)</td><td class="entry"><a class="el" href="class_nano_engine_core.html">NanoEngineCore</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
@@ -83,10 +83,10 @@ $(function() {
   <tr><td class="entry"><a class="el" href="class_nano_engine_inputs.html#a8c619be0d57a15ed98680ba1fb5e58a6">m_onButtons</a></td><td class="entry"><a class="el" href="class_nano_engine_inputs.html">NanoEngineInputs</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">static</span></td></tr>
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>NanoEngineCore</b>() (defined in <a class="el" href="class_nano_engine_core.html">NanoEngineCore</a>)</td><td class="entry"><a class="el" href="class_nano_engine_core.html">NanoEngineCore</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
   <tr><td class="entry"><a class="el" href="class_nano_engine_inputs.html#a0235b5b7094b0ca2e75214e0d808e3ba">NanoEngineInputs</a>()</td><td class="entry"><a class="el" href="class_nano_engine_inputs.html">NanoEngineInputs</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_nano_engine_core.html#aaa77980b870fb444ad1bdadd3b16803b">nextFrame</a>()</td><td class="entry"><a class="el" href="class_nano_engine_core.html">NanoEngineCore</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="class_nano_engine_inputs.html#a1a431509638822da8eda57e1e5916291">notPressed</a>(uint8_t buttons)</td><td class="entry"><a class="el" href="class_nano_engine_inputs.html">NanoEngineInputs</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_nano_engine_inputs.html#a1dc6b5ec62996a9360985ef6fbdc5a33">pressed</a>(uint8_t buttons)</td><td class="entry"><a class="el" href="class_nano_engine_inputs.html">NanoEngineInputs</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="class_nano_engine_core.html#a398aa88d0dac78e9edade0d965896a96">setFrameRate</a>(uint8_t fps)</td><td class="entry"><a class="el" href="class_nano_engine_core.html">NanoEngineCore</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_nano_engine_core.html#ae5143d19cd03914f667f625735c63ec0">nextFrame</a>()</td><td class="entry"><a class="el" href="class_nano_engine_core.html">NanoEngineCore</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_nano_engine_inputs.html#aeaf2995c49b0256b18412ef38dd0891e">notPressed</a>(uint8_t buttons)</td><td class="entry"><a class="el" href="class_nano_engine_inputs.html">NanoEngineInputs</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_nano_engine_inputs.html#aaf992076a4c0e1a5aa95a9e129e8ad25">pressed</a>(uint8_t buttons)</td><td class="entry"><a class="el" href="class_nano_engine_inputs.html">NanoEngineInputs</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_nano_engine_core.html#ae3bea7e85ca03cc698dff398ff853835">setFrameRate</a>(uint8_t fps)</td><td class="entry"><a class="el" href="class_nano_engine_core.html">NanoEngineCore</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

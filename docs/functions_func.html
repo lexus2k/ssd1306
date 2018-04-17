@@ -22,9 +22,9 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.5.0</span>
+   &#160;<span id="projectnumber">1.5.5</span>
    </div>
-   <div id="projectbrief">This library is developed to control SSD1306/SSD1331 RGB i2c/spi OLED displays and spi PCD8544 LED display</div>
+   <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
  </tr>
  </tbody>
@@ -80,10 +80,8 @@ $(function() {
 
 <h3><a id="index_b"></a>- b -</h3><ul>
 <li>begin()
-: <a class="el" href="class_nano_canvas16.html#af176214f555b870949d75ea3e63f3a70">NanoCanvas16</a>
-, <a class="el" href="class_nano_canvas1.html#a1d1c2a7f59d0609cacf9620202968293">NanoCanvas1</a>
-, <a class="el" href="class_nano_canvas8.html#a1e56aac9c89b9674152ece381e34a315">NanoCanvas8</a>
-, <a class="el" href="class_nano_engine_core.html#ab4c21ed56d8182a0f7a5c3698aa70eb8">NanoEngineCore</a>
+: <a class="el" href="class_nano_canvas_ops.html#a871cb90782416c7cd87325bbdf61a33c">NanoCanvasOps&lt; BPP &gt;</a>
+, <a class="el" href="class_nano_engine_core.html#a81e23ad6be365c1ad82e3b5751158500">NanoEngineCore</a>
 , <a class="el" href="class_tiny_s_s_d1306.html#ae2551cb51b72ffc1655749bbdec4c139">TinySSD1306</a>
 </li>
 <li>beginI2C()
@@ -102,10 +100,11 @@ $(function() {
 : <a class="el" href="struct___nano_rect.html#a069b0fa94ab82987019dd3bfea973b7a">_NanoRect</a>
 </li>
 <li>blt()
-: <a class="el" href="class_nano_canvas16.html#acc9218933b03ab9548d02ed180db898a">NanoCanvas16</a>
-, <a class="el" href="class_nano_canvas1.html#a48d4822a6d1f1efaf61ae6d5bb623121">NanoCanvas1</a>
-, <a class="el" href="class_nano_canvas8.html#ad4786102468957649e85dce95a795ec5">NanoCanvas8</a>
+: <a class="el" href="class_nano_canvas16.html#a7e61f6931be31ace3e89109f79db67e8">NanoCanvas16</a>
+, <a class="el" href="class_nano_canvas1.html#a316fb462a0f5f437bb78ad18aba8827e">NanoCanvas1</a>
+, <a class="el" href="class_nano_canvas8.html#a421728b929be9dc85280f9b34499224e">NanoCanvas8</a>
 , <a class="el" href="class_nano_canvas.html#a132dfbdc24deaa8e7ce956ee40507718">NanoCanvas</a>
+, <a class="el" href="class_nano_canvas_base.html#ac32b88ebf01c6c2e869a492f43828b90">NanoCanvasBase&lt; BPP &gt;</a>
 </li>
 <li>buffer()
 : <a class="el" href="class_nano_canvas.html#a989c20b449b8d1185d820e1f21a004ed">NanoCanvas</a>
@@ -132,10 +131,8 @@ $(function() {
 : <a class="el" href="class_tiny_s_s_d1306.html#af07d4ee35c4812e5dab3ca453eb1529a">TinySSD1306</a>
 </li>
 <li>clear()
-: <a class="el" href="class_nano_canvas16.html#ac023c93d3885274ec5deb240ea27f67f">NanoCanvas16</a>
-, <a class="el" href="class_nano_canvas1.html#a7da97ee81b94e18d671b09624ed93079">NanoCanvas1</a>
-, <a class="el" href="class_nano_canvas8.html#a56f3406f55bc514f0ed8e526010f6111">NanoCanvas8</a>
-, <a class="el" href="class_nano_canvas.html#a6fe2036b269cc55d9181c727a4fb3951">NanoCanvas</a>
+: <a class="el" href="class_nano_canvas.html#a6fe2036b269cc55d9181c727a4fb3951">NanoCanvas</a>
+, <a class="el" href="class_nano_canvas_ops.html#ab5c228332af7aeebecbd953422d6b148">NanoCanvasOps&lt; BPP &gt;</a>
 , <a class="el" href="class_sprite_pool.html#a225cec38d6557f304d2279005a8aa523">SpritePool</a>
 , <a class="el" href="class_tiny_s_s_d1306.html#ae9c880933b876e0182a712348febb923">TinySSD1306</a>
 </li>
@@ -153,13 +150,13 @@ $(function() {
 : <a class="el" href="struct___nano_rect.html#a785e4fa2c6e7bcc07ee9b8c88bdcb397">_NanoRect</a>
 </li>
 <li>connectArduboyKeys()
-: <a class="el" href="class_nano_engine_inputs.html#a78a018c75f823a57ef31c57df224b89f">NanoEngineInputs</a>
+: <a class="el" href="class_nano_engine_inputs.html#a44834200b3dd49442b96ea45de2aaf56">NanoEngineInputs</a>
 </li>
 <li>connectCustomKeys()
-: <a class="el" href="class_nano_engine_inputs.html#a8a03b73f7baf7363a5a1acc2479cf59d">NanoEngineInputs</a>
+: <a class="el" href="class_nano_engine_inputs.html#a7f509d896a9b9d1c523ac87f459f5686">NanoEngineInputs</a>
 </li>
 <li>connectZKeypad()
-: <a class="el" href="class_nano_engine_inputs.html#a4cb93665e820c90bd9ffcec2376bf749">NanoEngineInputs</a>
+: <a class="el" href="class_nano_engine_inputs.html#a4b438315ca118e0721e3a8fb2f638e41">NanoEngineInputs</a>
 </li>
 </ul>
 
@@ -182,16 +179,13 @@ $(function() {
 , <a class="el" href="class_tiny_s_s_d1306.html#ad3ee43e02ee331abaa450fcbfd6aa116">TinySSD1306</a>
 </li>
 <li>drawBitmap1()
-: <a class="el" href="class_nano_canvas16.html#a2bbdac8e790548da8e1758fbf863f5b2">NanoCanvas16</a>
-, <a class="el" href="class_nano_canvas1.html#a4490750cbd4c33b6f8b75e477d5e21d4">NanoCanvas1</a>
-, <a class="el" href="class_nano_canvas8.html#af9e10e75604906d1c295b67caf0be339">NanoCanvas8</a>
+: <a class="el" href="class_nano_canvas_ops.html#aa7d2cae52276202ed1e13d17b4fa8a3a">NanoCanvasOps&lt; BPP &gt;</a>
 </li>
 <li>drawBitmap8()
-: <a class="el" href="class_nano_canvas16.html#aef75f2d83a28f834668e23351b9c94b1">NanoCanvas16</a>
-, <a class="el" href="class_nano_canvas8.html#a36a9a4216dbce30e308e25d473c1a7c1">NanoCanvas8</a>
+: <a class="el" href="class_nano_canvas_ops.html#afe3dc7128ee365101384f4233cd2838c">NanoCanvasOps&lt; BPP &gt;</a>
 </li>
 <li>drawBlock()
-: <a class="el" href="class_sprite_pool.html#a2eeb66784ec3c511fca27cf325ff98af">SpritePool</a>
+: <a class="el" href="class_sprite_pool.html#a41028a036ef9e90c6d6e89ff0f8d8db7">SpritePool</a>
 </li>
 <li>drawBuffer()
 : <a class="el" href="class_tiny_s_s_d1306.html#a94f2dc45f302497c0b5f149ef1425b7a">TinySSD1306</a>
@@ -200,20 +194,16 @@ $(function() {
 : <a class="el" href="class_nano_engine_tiler.html#acb00c2eb51df5d80ca2e0004efae05a6">NanoEngineTiler&lt; C, W, H, B &gt;</a>
 </li>
 <li>drawHLine()
-: <a class="el" href="class_nano_canvas16.html#ad96c2c46879c5f8e943cffe51001ccd7">NanoCanvas16</a>
-, <a class="el" href="class_nano_canvas1.html#af9e1108e02edc99036733a6826326693">NanoCanvas1</a>
-, <a class="el" href="class_nano_canvas8.html#a7b4d809f37ee6387abdd5b87b4ec5409">NanoCanvas8</a>
-, <a class="el" href="class_nano_canvas.html#ac36d02cfedc701bc5b87f149480cbc1a">NanoCanvas</a>
+: <a class="el" href="class_nano_canvas.html#ac36d02cfedc701bc5b87f149480cbc1a">NanoCanvas</a>
+, <a class="el" href="class_nano_canvas_ops.html#a95f2d6aadc5a8c8c595e80d8a11f7808">NanoCanvasOps&lt; BPP &gt;</a>
 , <a class="el" href="class_tiny_s_s_d1306.html#a9f0a9b74c85265016b1c53247d770516">TinySSD1306</a>
 </li>
 <li>drawPixel()
 : <a class="el" href="class_nano_canvas.html#ac7daa4b41c3c0e91627bad1c0bb1f789">NanoCanvas</a>
 </li>
 <li>drawRect()
-: <a class="el" href="class_nano_canvas16.html#acbf46ff247bc09aaa1dda65d4bf22f84">NanoCanvas16</a>
-, <a class="el" href="class_nano_canvas1.html#ac2cf5826aa1e78ce9e3525b9073f65fe">NanoCanvas1</a>
-, <a class="el" href="class_nano_canvas8.html#a7dc04c8580d0ad39d86ef557eb890325">NanoCanvas8</a>
-, <a class="el" href="class_nano_canvas.html#a9e9cd572ae05ee2316a366566c327e6a">NanoCanvas</a>
+: <a class="el" href="class_nano_canvas.html#a9e9cd572ae05ee2316a366566c327e6a">NanoCanvas</a>
+, <a class="el" href="class_nano_canvas_ops.html#ab3ef0710e10578db2de09ee47f8d115e">NanoCanvasOps&lt; BPP &gt;</a>
 , <a class="el" href="class_tiny_s_s_d1306.html#a20aee236aa83ccc84fdd9f50b4168f23">TinySSD1306</a>
 </li>
 <li>drawSprite()
@@ -226,10 +216,8 @@ $(function() {
 : <a class="el" href="class_sprite_pool.html#af3736a90cef87f0a61b260e6b196d289">SpritePool</a>
 </li>
 <li>drawVLine()
-: <a class="el" href="class_nano_canvas16.html#a3c8db4691eb00c13327e813d6264fdfe">NanoCanvas16</a>
-, <a class="el" href="class_nano_canvas1.html#a882eb56e6209a2713245fc434f4b7462">NanoCanvas1</a>
-, <a class="el" href="class_nano_canvas8.html#a9cdafff4bc8b8fa3b01021f1b9e2c2fe">NanoCanvas8</a>
-, <a class="el" href="class_nano_canvas.html#a18f6ca61bb4830ef65a2c0aa67bcedcc">NanoCanvas</a>
+: <a class="el" href="class_nano_canvas.html#a18f6ca61bb4830ef65a2c0aa67bcedcc">NanoCanvas</a>
+, <a class="el" href="class_nano_canvas_ops.html#a58b32d28a2693b98dbbd47c5d21b1c16">NanoCanvasOps&lt; BPP &gt;</a>
 , <a class="el" href="class_tiny_s_s_d1306.html#ae60247aba0f7294151d6a0c9d587e758">TinySSD1306</a>
 </li>
 </ul>
@@ -250,10 +238,8 @@ $(function() {
 : <a class="el" href="class_tiny_s_s_d1306.html#a52909e996c609ce5d73d271036c5778e">TinySSD1306</a>
 </li>
 <li>fillRect()
-: <a class="el" href="class_nano_canvas16.html#a9f3d0c2b69905c5e1fe47b9b484f674e">NanoCanvas16</a>
-, <a class="el" href="class_nano_canvas1.html#a7eac952ad08c5b2069a42470d5f34d04">NanoCanvas1</a>
-, <a class="el" href="class_nano_canvas8.html#a1b690a3be55e610fddb0e2cafed2d33d">NanoCanvas8</a>
-, <a class="el" href="class_nano_canvas.html#a3f987bce72b865a483c4a65922b7cc45">NanoCanvas</a>
+: <a class="el" href="class_nano_canvas.html#a3f987bce72b865a483c4a65922b7cc45">NanoCanvas</a>
+, <a class="el" href="class_nano_canvas_ops.html#a3db1c1ee61605a3ed9e7a9b67f988018">NanoCanvasOps&lt; BPP &gt;</a>
 </li>
 <li>flipH()
 : <a class="el" href="class_nano_canvas.html#a3f069cfd24e79cb420f2fe2af5e51857">NanoCanvas</a>
@@ -319,14 +305,8 @@ $(function() {
 <li>NanoCanvas()
 : <a class="el" href="class_nano_canvas.html#a291335ac8d57111407ea7449a2e58c7d">NanoCanvas</a>
 </li>
-<li>NanoCanvas1()
-: <a class="el" href="class_nano_canvas1.html#a6edf2169522f3a43181bdf4eb967090c">NanoCanvas1</a>
-</li>
-<li>NanoCanvas16()
-: <a class="el" href="class_nano_canvas16.html#a5164da596a296e4ed95aba6bd4cf5126">NanoCanvas16</a>
-</li>
-<li>NanoCanvas8()
-: <a class="el" href="class_nano_canvas8.html#a5fd4d5924ae8cb6102cb0985eb253024">NanoCanvas8</a>
+<li>NanoCanvasOps()
+: <a class="el" href="class_nano_canvas_ops.html#aad8023365b19eeb58fc3e8b488a8c49a">NanoCanvasOps&lt; BPP &gt;</a>
 </li>
 <li>NanoEngine()
 : <a class="el" href="class_nano_engine.html#a065b5b10f1e8e50698fbb1814623062f">NanoEngine&lt; C, W, H, B &gt;</a>
@@ -350,7 +330,7 @@ $(function() {
 : <a class="el" href="class_tiny_s_s_d1306.html#ac4cc0291791131f43719e8a51c1fb165">TinySSD1306</a>
 </li>
 <li>nextFrame()
-: <a class="el" href="class_nano_engine_core.html#aaa77980b870fb444ad1bdadd3b16803b">NanoEngineCore</a>
+: <a class="el" href="class_nano_engine_core.html#ae5143d19cd03914f667f625735c63ec0">NanoEngineCore</a>
 </li>
 <li>normalMode()
 : <a class="el" href="class_tiny_s_s_d1306.html#afdcf2fc9e0bb8d06bf16ae61290087a0">TinySSD1306</a>
@@ -359,7 +339,7 @@ $(function() {
 : <a class="el" href="class_nano_engine.html#acda55904927fb0159c44313a643cfd15">NanoEngine&lt; C, W, H, B &gt;</a>
 </li>
 <li>notPressed()
-: <a class="el" href="class_nano_engine_inputs.html#a1a431509638822da8eda57e1e5916291">NanoEngineInputs</a>
+: <a class="el" href="class_nano_engine_inputs.html#aeaf2995c49b0256b18412ef38dd0891e">NanoEngineInputs</a>
 </li>
 </ul>
 
@@ -406,32 +386,24 @@ $(function() {
 : <a class="el" href="class_tiny_s_s_d1306.html#ab25af0058dfc82355bd0dadbe57df50f">TinySSD1306</a>
 </li>
 <li>pressed()
-: <a class="el" href="class_nano_engine_inputs.html#a1dc6b5ec62996a9360985ef6fbdc5a33">NanoEngineInputs</a>
+: <a class="el" href="class_nano_engine_inputs.html#aaf992076a4c0e1a5aa95a9e129e8ad25">NanoEngineInputs</a>
 </li>
 <li>printChar()
-: <a class="el" href="class_nano_canvas16.html#a7df17bab22ca3970223f5e6bf9a9397f">NanoCanvas16</a>
-, <a class="el" href="class_nano_canvas1.html#ab2e619fd42428f3277835e5182be19fa">NanoCanvas1</a>
-, <a class="el" href="class_nano_canvas8.html#abcaf16f26f2693c763c34218a8b63313">NanoCanvas8</a>
+: <a class="el" href="class_nano_canvas_ops.html#af621b5840962eea7fa043879c29c01d7">NanoCanvasOps&lt; BPP &gt;</a>
 </li>
 <li>printFixed()
-: <a class="el" href="class_nano_canvas16.html#a84c92fd3def81080c0923beb731e32c9">NanoCanvas16</a>
-, <a class="el" href="class_nano_canvas1.html#afa8daabe2f9747332a0cc6a9d04b8439">NanoCanvas1</a>
-, <a class="el" href="class_nano_canvas8.html#a0473e185b06c7c6c4349a5c08f741446">NanoCanvas8</a>
-, <a class="el" href="class_nano_canvas.html#a6f89c3edb9833b7d79f7d1f771b44254">NanoCanvas</a>
+: <a class="el" href="class_nano_canvas.html#a6f89c3edb9833b7d79f7d1f771b44254">NanoCanvas</a>
+, <a class="el" href="class_nano_canvas_ops.html#ad71a16bf993276496a1bc599a6164596">NanoCanvasOps&lt; BPP &gt;</a>
 </li>
 <li>printFixed2x()
 : <a class="el" href="class_nano_canvas.html#a6dcb23724a60a84baaa06c189903edef">NanoCanvas</a>
 </li>
 <li>printFixedPgm()
-: <a class="el" href="class_nano_canvas16.html#af55b6a4ca31c8f465044ac83ca953fcc">NanoCanvas16</a>
-, <a class="el" href="class_nano_canvas1.html#a0da75431f90cc37c0e41d21e1028bed5">NanoCanvas1</a>
-, <a class="el" href="class_nano_canvas8.html#a3f796134c61f17bf3f86adaafc4ca091">NanoCanvas8</a>
+: <a class="el" href="class_nano_canvas_ops.html#a0665fe7b180b4247ef94c3464fb2b88e">NanoCanvasOps&lt; BPP &gt;</a>
 </li>
 <li>putPixel()
-: <a class="el" href="class_nano_canvas16.html#afff5fe37ae5b65e5764da2412863621c">NanoCanvas16</a>
-, <a class="el" href="class_nano_canvas1.html#a4d477a6bf6b20950e5f26ce275ab6ace">NanoCanvas1</a>
-, <a class="el" href="class_nano_canvas8.html#a7a924dea697e1d8a094e53bd6c8eb2a0">NanoCanvas8</a>
-, <a class="el" href="class_nano_canvas.html#a54a4d7fccec6cd25aa2651301e787241">NanoCanvas</a>
+: <a class="el" href="class_nano_canvas.html#a54a4d7fccec6cd25aa2651301e787241">NanoCanvas</a>
+, <a class="el" href="class_nano_canvas_ops.html#a3f89aff0fb6346cf67799d8695e2f535">NanoCanvasOps&lt; BPP &gt;</a>
 , <a class="el" href="class_tiny_s_s_d1306.html#af67f71d3bf2737436fc0ae0ae6b7f9e8">TinySSD1306</a>
 </li>
 <li>putPixels()
@@ -455,25 +427,19 @@ $(function() {
 
 <h3><a id="index_s"></a>- s -</h3><ul>
 <li>setColor()
-: <a class="el" href="class_nano_canvas16.html#aa93ff69ebd34a64a008c908558c883e0">NanoCanvas16</a>
-, <a class="el" href="class_nano_canvas1.html#ad4d98a894bb6ed25483c30e9cdccedf9">NanoCanvas1</a>
-, <a class="el" href="class_nano_canvas8.html#a2b6e0fb9e3cd131b666dd634d935fde3">NanoCanvas8</a>
+: <a class="el" href="class_nano_canvas_ops.html#a64f9b55e8041a118899437935f488f82">NanoCanvasOps&lt; BPP &gt;</a>
 </li>
 <li>setCursor()
 : <a class="el" href="class_tiny_s_s_d1306.html#a798ff2ae6e8bc8ae80d23375d6dd3837">TinySSD1306</a>
 </li>
 <li>setFrameRate()
-: <a class="el" href="class_nano_engine_core.html#a398aa88d0dac78e9edade0d965896a96">NanoEngineCore</a>
+: <a class="el" href="class_nano_engine_core.html#ae3bea7e85ca03cc698dff398ff853835">NanoEngineCore</a>
 </li>
 <li>setMode()
-: <a class="el" href="class_nano_canvas16.html#ae926f05c02a2486c3a3dd419c44bfd16">NanoCanvas16</a>
-, <a class="el" href="class_nano_canvas1.html#a3e8708ebe1365d61b380b8a55751080c">NanoCanvas1</a>
-, <a class="el" href="class_nano_canvas8.html#ae0d3cdfd86d6ba9e556b205c46626fcb">NanoCanvas8</a>
+: <a class="el" href="class_nano_canvas_ops.html#aeeac54bfbd5728e64755a5fe27efa1e0">NanoCanvasOps&lt; BPP &gt;</a>
 </li>
 <li>setOffset()
-: <a class="el" href="class_nano_canvas16.html#a3ad0af6396bf9bf68fc5898c3a16137a">NanoCanvas16</a>
-, <a class="el" href="class_nano_canvas1.html#a1f7f7dc2fc0e8c3c0f01b5f84ff50bc2">NanoCanvas1</a>
-, <a class="el" href="class_nano_canvas8.html#a46cfc8192500e302b29faefc7a1b4c65">NanoCanvas8</a>
+: <a class="el" href="class_nano_canvas_ops.html#a4bef3a62e787ca2390470ef95a77257e">NanoCanvasOps&lt; BPP &gt;</a>
 </li>
 <li>setPoint()
 : <a class="el" href="struct___nano_point.html#a0cca7797568bd0d06f00fd8fb54695d0">_NanoPoint</a>
@@ -507,10 +473,8 @@ $(function() {
 , <a class="el" href="class_tiny_s_s_d1306.html#af83a6e87532bb64e3d295059bb13bb1c">TinySSD1306</a>
 </li>
 <li>write()
-: <a class="el" href="class_nano_canvas16.html#a6c60bd3de76c5f3151e6ef84f760a02f">NanoCanvas16</a>
-, <a class="el" href="class_nano_canvas1.html#a5e40eb6bc1d4a1baf1312e6492d8c30d">NanoCanvas1</a>
-, <a class="el" href="class_nano_canvas8.html#a55e8e3e00748802cd98f994544985692">NanoCanvas8</a>
-, <a class="el" href="class_tiny_s_s_d1306.html#a51a6a9d6081066041ba89923348f7176">TinySSD1306</a>
+: <a class="el" href="class_nano_canvas_ops.html#aed1c84be341cbf862e37cb95d6eca3d6">NanoCanvasOps&lt; BPP &gt;</a>
+, <a class="el" href="class_tiny_s_s_d1306.html#a0c5dd641aab664d91b5229ee683b91ea">TinySSD1306</a>
 </li>
 </ul>
 </div><!-- contents -->
