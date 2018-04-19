@@ -56,8 +56,8 @@ extern const PROGMEM uint8_t courier_new_font11x16_digits [];
 /**
  * Comic Sans ASCII font 24x32 with digits only (Ascii codes 32 - 64).
  * @warning can be used only with ssd1306_printFixed() and ssd1306_setFixedFont() functions.
- */
-extern const uint8_t comic_sans_font24x32_123[] PROGMEM;
+ */ 
+extern const PROGMEM uint8_t comic_sans_font24x32_123 [];
 
 /**
  * @}
