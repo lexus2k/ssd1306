@@ -1,4 +1,4 @@
-# SSD1306/SSD1331/SSD1351/IL9163 OLED display driver, PCD8544 LED display driver
+# SSD1306/SSD1331/SSD1351/IL9163/ST7735 OLED display driver, PCD8544 LED display driver
 
 [tocstart]: # (toc start)
 
