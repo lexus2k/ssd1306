@@ -537,9 +537,9 @@ void         ssd1306_putPixel_delayed(uint8_t x, uint8_t y, uint8_t complete)
 
 void         ssd1306_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
 {
-    uint8_t  dx = x1 > x2 ? (x1 - x2): (x2 - x1);
-    uint8_t  dy = y1 > y2 ? (y1 - y2): (y2 - y1);
-    uint8_t  err = 0;
+    lcduint_t  dx = x1 > x2 ? (x1 - x2): (x2 - x1);
+    lcduint_t  dy = y1 > y2 ? (y1 - y2): (y2 - y1);
+    lcduint_t  err = 0;
     if (dy > dx)
     {
         if (y1 > y2)
