@@ -59,6 +59,7 @@ configurable through API.
  * spi ssd1331 96x64 RGB oled display
  * spi ssd1351 128x128 RGB oled display
  * spi il9163 128x128 RGB TFT display
+ * spi st7735 128x160 RGB TFT display
  * spi pcd8544 84x48 nokia 5110 led display
 
 ## Supported platforms
