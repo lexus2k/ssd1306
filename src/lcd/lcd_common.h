@@ -199,6 +199,10 @@ void         ssd1306_sendData(uint8_t data) __attribute__ ((deprecated));
  */
 #define ssd1306_sendPixel8        ssd1306_lcd.send_pixels8
 
+void ssd1306_configureI2cDisplay(const uint8_t *config, uint8_t configSize);
+
+void ssd1306_configureSpiDisplay(const uint8_t *config, uint8_t configSize);
+
 /**
  * @}
  */

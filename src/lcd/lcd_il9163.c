@@ -220,24 +220,7 @@ void    il9163_128x128_init()
     ssd1306_lcd.send_pixels1  = il9163_sendPixels;
     ssd1306_lcd.send_pixels_buffer1 = il9163_sendPixelsBuffer;
     ssd1306_lcd.send_pixels8 = il9163_sendPixel8;
-    ssd1306_intf.start();
-    ssd1306_spiDataMode(0);
-    for( uint8_t i=0; i<sizeof(s_oled128x128_initData); i++)
-    {
-        uint8_t data = pgm_read_byte(&s_oled128x128_initData[i]);
-        if (data == CMD_ARG)
-        {
-            data = pgm_read_byte(&s_oled128x128_initData[++i]);
-            ssd1306_spiDataMode(1);
-            ssd1306_intf.send(data);
-            ssd1306_spiDataMode(0);
-        }
-        else
-        {
-            ssd1306_intf.send(data);
-        }
-    }
-    ssd1306_intf.stop();
+    ssd1306_configureSpiDisplay(s_oled128x128_initData, sizeof(s_oled128x128_initData));
 }
 
 void   il9163_128x128_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
@@ -336,6 +319,7 @@ static void st7735_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
     ssd1306_spiDataMode(1);
 }
 
+#if 0
 static void st7735_setBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
@@ -358,6 +342,7 @@ static void st7735_setBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
     ssd1306_intf.send(0x2C);
     ssd1306_spiDataMode(1);
 }
+#endif
 
 void    st7735_128x160_init()
 {
@@ -370,24 +355,7 @@ void    st7735_128x160_init()
     ssd1306_lcd.send_pixels1  = il9163_sendPixels;
     ssd1306_lcd.send_pixels_buffer1 = il9163_sendPixelsBuffer;
     ssd1306_lcd.send_pixels8 = il9163_sendPixel8;
-    ssd1306_intf.start();
-    ssd1306_spiDataMode(0);
-    for( uint8_t i=0; i<sizeof(s_oled128x160_initData); i++)
-    {
-        uint8_t data = pgm_read_byte(&s_oled128x160_initData[i]);
-        if (data == CMD_ARG)
-        {
-            data = pgm_read_byte(&s_oled128x160_initData[++i]);
-            ssd1306_spiDataMode(1);
-            ssd1306_intf.send(data);
-            ssd1306_spiDataMode(0);
-        }
-        else
-        {
-            ssd1306_intf.send(data);
-        }
-    }
-    ssd1306_intf.stop();
+    ssd1306_configureSpiDisplay(s_oled128x160_initData, sizeof(s_oled128x160_initData));
 }
 
 void   st7735_128x160_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
