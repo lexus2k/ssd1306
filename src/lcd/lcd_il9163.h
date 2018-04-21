@@ -30,6 +30,7 @@
 #define _TFT_IL9163_H_
 
 #include "hal/io.h"
+#include "lcd/lcd_common.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -52,7 +53,7 @@ extern "C" {
  *
  * @param mode - 0 or 1
  */
-void        il9163_setMode(uint8_t mode);
+void        il9163_setMode(lcd_mode_t mode);
 
 /**
  * @brief Inits 128x128 RGB OLED display (based on il9163 controller).

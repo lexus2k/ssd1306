@@ -83,6 +83,10 @@ static void sh1106_nextPage(void)
     sh1106_setBlock(s_column,s_page+1,0);
 }
 
+static void sh1106_setMode(lcd_mode_t mode)
+{
+}
+
 void    sh1106_128x64_init()
 {
     ssd1306_lcd.type = LCD_TYPE_SH1106;
@@ -92,6 +96,7 @@ void    sh1106_128x64_init()
     ssd1306_lcd.next_page = sh1106_nextPage;
     ssd1306_lcd.send_pixels1 = ssd1306_intf.send;
     ssd1306_lcd.send_pixels_buffer1 = ssd1306_intf.send_buffer;
+    ssd1306_lcd.set_mode = sh1106_setMode;
     for( uint8_t i=0; i<sizeof(s_oled128x64_initData); i++)
     {
         ssd1306_sendCommand(pgm_read_byte(&s_oled128x64_initData[i]));

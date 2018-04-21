@@ -118,14 +118,14 @@ static void ssd1331_sendPixelsBuffer(const uint8_t *buffer, uint16_t len)
     }
 }
 
-void    ssd1331_setMode(uint8_t vertical)
+void    ssd1331_setMode(lcd_mode_t mode)
 {
     ssd1306_intf.start();
     ssd1306_spiDataMode(0);
     ssd1306_intf.send( SSD1331_SEGREMAP );
-    ssd1306_intf.send( 0x00 | 0x20 | 0x10 | 0x02 | vertical /* 8-bit rgb color mode */ );
+    ssd1306_intf.send( 0x00 | 0x20 | 0x10 | 0x02 | mode /* 8-bit rgb color mode */ );
     ssd1306_intf.stop();
-    if (vertical)
+    if (mode)
     {
         ssd1306_lcd.set_block = ssd1331_setBlock;
     }
@@ -145,6 +145,7 @@ void    ssd1331_96x64_init()
     ssd1306_lcd.send_pixels1  = ssd1331_sendPixels;
     ssd1306_lcd.send_pixels_buffer1 = ssd1331_sendPixelsBuffer;
     ssd1306_lcd.send_pixels8 = ssd1306_intf.send;
+    ssd1306_lcd.set_mode = ssd1331_setMode;
     for( uint8_t i=0; i<sizeof(s_oled96x64_initData); i++)
     {
         ssd1306_sendCommand(pgm_read_byte(&s_oled96x64_initData[i]));

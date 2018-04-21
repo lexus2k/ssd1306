@@ -57,6 +57,22 @@ typedef enum
     LCD_TYPE_CUSTOM,
 } lcd_type_t;
 
+typedef enum
+{
+    /**
+     * Normal mode RGB displays. All ssd1306 monochrome direct draw
+     * functions do not work in this mode.
+     */
+    LCD_MODE_NORMAL = 0,
+
+    /**
+     * ssd1306 compatible mode. This is special mode, that allows
+     * to use ssd1306 monochrome direct draw functions, but RGB
+     * functions will not work.
+     */
+    LCD_MODE_SSD1306_COMPAT = 1,
+} lcd_mode_t;
+
 /**
  * Structure, describing display driver configuration
  */
@@ -115,6 +131,8 @@ typedef struct
      * @param data - byte, representing RGB8 pixel.
      */
     void (*send_pixels8)(uint8_t data);
+
+    void (*set_mode)(lcd_mode_t mode);
 } ssd1306_lcd_t;
 
 /**
@@ -202,6 +220,8 @@ void         ssd1306_sendData(uint8_t data) __attribute__ ((deprecated));
 void ssd1306_configureI2cDisplay(const uint8_t *config, uint8_t configSize);
 
 void ssd1306_configureSpiDisplay(const uint8_t *config, uint8_t configSize);
+
+void ssd1306_setMode(lcd_mode_t mode);
 
 /**
  * @}

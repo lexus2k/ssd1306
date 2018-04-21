@@ -71,3 +71,10 @@ void ssd1306_configureSpiDisplay(const uint8_t *config, uint8_t configSize)
     ssd1306_intf.stop();
 }
 
+void ssd1306_setMode(lcd_mode_t mode)
+{
+    if (ssd1306_lcd.set_mode)
+    {
+        ssd1306_lcd.set_mode( mode );
+    }
+}

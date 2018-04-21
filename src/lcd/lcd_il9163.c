@@ -156,15 +156,15 @@ static void il9163_nextPage(void)
     ssd1306_lcd.set_block(s_column,s_page+1,0);
 }
 
-void    il9163_setMode(uint8_t vertical)
+void    il9163_setMode(lcd_mode_t mode)
 {
     ssd1306_intf.start();
     ssd1306_spiDataMode(0);
     ssd1306_intf.send( 0x36 );
     ssd1306_spiDataMode(1);
-    ssd1306_intf.send( vertical ? 0b00101000 : 0b00001000 );
+    ssd1306_intf.send( mode ? 0b00101000 : 0b00001000 );
     ssd1306_intf.stop();
-    if (vertical)
+    if (mode)
     {
         ssd1306_lcd.set_block = il9163_setBlock;
     }
@@ -172,7 +172,7 @@ void    il9163_setMode(uint8_t vertical)
     {
         ssd1306_lcd.set_block = il9163_setBlock2;
     }
-    s_rotation = vertical ? 0x00 : 0x04;
+    s_rotation = mode ? 0x00 : 0x04;
 }
 
 static void il9163_sendPixels(uint8_t data)
@@ -220,6 +220,7 @@ void    il9163_128x128_init()
     ssd1306_lcd.send_pixels1  = il9163_sendPixels;
     ssd1306_lcd.send_pixels_buffer1 = il9163_sendPixelsBuffer;
     ssd1306_lcd.send_pixels8 = il9163_sendPixel8;
+    ssd1306_lcd.set_mode = il9163_setMode;
     ssd1306_configureSpiDisplay(s_oled128x128_initData, sizeof(s_oled128x128_initData));
 }
 
@@ -355,6 +356,7 @@ void    st7735_128x160_init()
     ssd1306_lcd.send_pixels1  = il9163_sendPixels;
     ssd1306_lcd.send_pixels_buffer1 = il9163_sendPixelsBuffer;
     ssd1306_lcd.send_pixels8 = il9163_sendPixel8;
+    ssd1306_lcd.set_mode = il9163_setMode;
     ssd1306_configureSpiDisplay(s_oled128x160_initData, sizeof(s_oled128x160_initData));
 }
 

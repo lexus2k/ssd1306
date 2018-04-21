@@ -30,6 +30,7 @@
 #define _OLED_SSD1351_H_
 
 #include "hal/io.h"
+#include "lcd/lcd_common.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -52,7 +53,7 @@ extern "C" {
  *
  * @param vertical - 0 or 1
  */
-void        ssd1351_setMode(uint8_t vertical);
+void        ssd1351_setMode(lcd_mode_t mode);
 
 /**
  * @brief Inits 128x128 RGB OLED display (based on SSD1351 controller).

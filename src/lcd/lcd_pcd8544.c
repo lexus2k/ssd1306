@@ -65,6 +65,10 @@ static void pcd8544_nextPage(void)
     }
 }
 
+static void pcd8544_setMode(lcd_mode_t mode)
+{
+}
+
 void pcd8544_84x48_init()
 {
     ssd1306_lcd.type = LCD_TYPE_PCD8544;
@@ -76,6 +80,7 @@ void pcd8544_84x48_init()
     ssd1306_lcd.next_page = pcd8544_nextPage;
     ssd1306_lcd.send_pixels1 = ssd1306_intf.send;
     ssd1306_lcd.send_pixels_buffer1 = ssd1306_intf.send_buffer;
+    ssd1306_lcd.set_mode = pcd8544_setMode;
 
     for( uint8_t i=0; i<sizeof(s_lcd84x48_initData); i++)
     {

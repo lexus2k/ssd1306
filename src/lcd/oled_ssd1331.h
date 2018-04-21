@@ -30,6 +30,7 @@
 #define _OLED_SSD1331_H_
 
 #include "hal/io.h"
+#include "lcd/lcd_common.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -47,7 +48,7 @@ extern "C" {
  *
  * @param vertical - 0 or 1
  */
-void        ssd1331_setMode(uint8_t vertical);
+void        ssd1331_setMode(lcd_mode_t mode);
 
 /**
  * @ingroup LCD_INTERFACE_API
