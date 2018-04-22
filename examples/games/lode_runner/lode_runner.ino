@@ -244,7 +244,7 @@ void setup()
 */
     ssd1331_96x64_spi_init(3, 4, 5); // 3 RST, 4 CES, 5 DS
     /* ssd1331 must be initialized in Horizontal addressing mode */
-    ssd1331_setMode(0);
+    ssd1331_setMode(LCD_MODE_NORMAL);
 
     playerBitmap = playerFlyingImage[MAN_ANIM_FLYING][playerAnimation];
 
