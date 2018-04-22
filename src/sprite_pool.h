@@ -37,6 +37,7 @@
  * updates only the areas, touched by the sprites. So, it
  * reduces number of i2c calls to SSD1306 display.
  * @warning this class is deprecated and not supported anymore.
+ * @deprecated use NanoEngine objects.
  */
 class SpritePool
 {

@@ -12,6 +12,7 @@ var searchData=
   ['send_5fpixels8',['send_pixels8',['../structssd1306__lcd__t.html#a881f5629ba5b0e9b4d89a1a176ce2668',1,'ssd1306_lcd_t']]],
   ['send_5fpixels_5fbuffer1',['send_pixels_buffer1',['../structssd1306__lcd__t.html#a7ceb1ea335b937f01a45c2e3529db48c',1,'ssd1306_lcd_t']]],
   ['set_5fblock',['set_block',['../structssd1306__lcd__t.html#a6429922cc1a9ea852a3152c1942b1d73',1,'ssd1306_lcd_t']]],
+  ['set_5fmode',['set_mode',['../structssd1306__lcd__t.html#abace095df95cc15051f0fcb6e44522c7',1,'ssd1306_lcd_t']]],
   ['sp_5ferr_5fno_5fspace',['SP_ERR_NO_SPACE',['../class_sprite_pool.html#abef7ea5b3414ec7adf053d56df13b7c4',1,'SpritePool']]],
   ['spi',['spi',['../structssd1306__interface__t.html#afd33289a509ae27cbdafd118b91ff23e',1,'ssd1306_interface_t']]],
   ['ssd1306_5fintf',['ssd1306_intf',['../group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga15909bf29819391d35ecb7f4e37fbea3',1,'ssd1306_intf():&#160;ssd1306_interface.c'],['../group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga15909bf29819391d35ecb7f4e37fbea3',1,'ssd1306_intf():&#160;ssd1306_interface.c']]],

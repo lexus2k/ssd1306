@@ -89,6 +89,7 @@ void         ssd1306_128x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
 
 /**
  * @copydoc ssd1306_128x64_i2c_init
+ * @deprecated Use ssd1306_128x64_i2c_init() instead.
  */
 void         ssd1306_init(void) __attribute__((deprecated));
 

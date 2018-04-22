@@ -51,7 +51,8 @@ extern "C" {
  * So, if you're going to use NanoCanvas8 functions, please call
  * il9163_setMode(0) prior to using pure RGB methods.
  *
- * @param mode - 0 or 1
+ * @param mode 0 or 1
+ * @deprecated Use ssd1306_setMode() instead.
  */
 void        il9163_setMode(lcd_mode_t mode);
 

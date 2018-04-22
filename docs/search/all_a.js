@@ -1,11 +1,14 @@
 var searchData=
 [
   ['lcd_5fcommon_2eh',['lcd_common.h',['../lcd__common_8h.html',1,'']]],
+  ['lcd_20direct_20draw_20functions_2c_20compatible_20with_20ssd1306_20oled_20types_2e',['LCD direct draw functions, compatible with ssd1306 oled types.',['../group___l_c_d___d_i_r_e_c_t___d_r_a_w___s_s_d1306___c_o_m_p_a_t.html',1,'']]],
   ['lcd_20display_20control_20functions',['LCD Display control functions',['../group___l_c_d___d_i_s_p_l_a_y___a_p_i.html',1,'']]],
-  ['lcd_20direct_20graphics_20functions_20for_20all_20display_20types',['LCD direct graphics functions for all display types',['../group___l_c_d___g_r_a_p_h_i_c_s___g_e_n_e_r_i_c___a_p_i.html',1,'']]],
   ['lcd_20physical_20interface_20functions',['LCD physical interface functions',['../group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html',1,'']]],
   ['lcd_5fil9163_2eh',['lcd_il9163.h',['../lcd__il9163_8h.html',1,'']]],
   ['lcd_20high_20level_20api',['LCD High level API',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html',1,'']]],
+  ['lcd_5fmode_5fnormal',['LCD_MODE_NORMAL',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ggad2c71a26fa32dfcee88db3a3058ce596afa76104458f5903f6b3083d2805d9432',1,'lcd_common.h']]],
+  ['lcd_5fmode_5fssd1306_5fcompat',['LCD_MODE_SSD1306_COMPAT',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ggad2c71a26fa32dfcee88db3a3058ce596a0abbc336593d4d93d9054fa2340c214b',1,'lcd_common.h']]],
+  ['lcd_5fmode_5ft',['lcd_mode_t',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gad2c71a26fa32dfcee88db3a3058ce596',1,'lcd_common.h']]],
   ['lcd_5fpcd8544_2eh',['lcd_pcd8544.h',['../lcd__pcd8544_8h.html',1,'']]],
   ['lcd_5ftype_5fcustom',['LCD_TYPE_CUSTOM',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ggaf4b71961185e1fa00ee5962123a349aea7f073223bcb6fab923d8da961abc1a7d',1,'lcd_common.h']]],
   ['lcd_5ftype_5fpcd8544',['LCD_TYPE_PCD8544',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ggaf4b71961185e1fa00ee5962123a349aea846490e1ce898baebea443873c666786',1,'lcd_common.h']]],
