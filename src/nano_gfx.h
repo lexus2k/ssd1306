@@ -34,6 +34,7 @@
 
 /**
  * NanoCanvas represents objects for drawing in memory buffer
+ * @deprecated Use NanoCanvas1, NanoCanvas8, NanoCanvas16 instead
  */
 class NanoCanvas
 {

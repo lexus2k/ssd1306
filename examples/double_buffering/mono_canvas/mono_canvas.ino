@@ -86,8 +86,14 @@ NanoCanvas1 canvas(canvasWidth, canvasHeight, canvasData);
 void setup()
 {
     /* Initialize and clear display */
-    /* Replace the line below with ssd1306_128x32_i2c_init() if you need to use 128x32 display */
     ssd1306_128x64_i2c_init();
+//    ssd1306_128x64_i2c_init();
+//    pcd8544_84x48_spi_init(3, 4, 5); // 3 RST, 4 CES, 5 DS
+//    ssd1331_96x64_spi_init(3, 4, 5);
+//    ssd1351_128x128_spi_init(3, 4, 5);
+//    il9163_128x128_spi_init(3, 4, 5);
+//    st7735_128x160_spi_init(3, 4, 5);
+
     ssd1306_fillScreen(0x00);
     /* Create 4 "hearts", and place them at different positions and give different movement direction */
     for(uint8_t i = 0; i < spritesCount; i++)

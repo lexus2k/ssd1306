@@ -110,6 +110,10 @@ static void ssd1351_nextPage(void)
     ssd1351_setBlock(s_column,s_page+1,0);
 }
 
+static void ssd1351_nextPage2(void)
+{
+}
+
 void    ssd1351_setMode(lcd_mode_t mode)
 {
     ssd1306_intf.start();
@@ -121,10 +125,12 @@ void    ssd1351_setMode(lcd_mode_t mode)
     if (mode)
     {
         ssd1306_lcd.set_block = ssd1351_setBlock;
+        ssd1306_lcd.next_page = ssd1351_nextPage;
     }
     else
     {
         ssd1306_lcd.set_block = ssd1351_setBlock2;
+        ssd1306_lcd.next_page = ssd1351_nextPage2;
     }
 }
 

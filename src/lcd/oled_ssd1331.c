@@ -93,6 +93,10 @@ static void ssd1331_nextPage(void)
     ssd1331_setBlock(s_column,s_page+1,0);
 }
 
+static void ssd1331_nextPage2(void)
+{
+}
+
 static void ssd1331_sendPixels(uint8_t data)
 {
     for (uint8_t i=8; i>0; i--)
@@ -128,10 +132,12 @@ void    ssd1331_setMode(lcd_mode_t mode)
     if (mode)
     {
         ssd1306_lcd.set_block = ssd1331_setBlock;
+        ssd1306_lcd.next_page = ssd1331_nextPage;
     }
     else
     {
         ssd1306_lcd.set_block = ssd1331_setBlock2;
+        ssd1306_lcd.next_page = ssd1331_nextPage2;
     }
 }
 
