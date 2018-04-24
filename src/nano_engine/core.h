@@ -202,6 +202,8 @@ public:
      */
     static void display();
 
+    static void begin();
+
     /**
      * @brief shows notification to a user for 1 seconds
      * Shows notification to a user for 1 seconds
@@ -224,6 +226,16 @@ void NanoEngine<C,W,H,B>::display()
     m_lastFrameTs = millis();
     NanoEngineTiler<C,W,H,B>::displayBuffer();
     m_cpuLoad = ((millis() - m_lastFrameTs)*100)/m_frameDurationMs;
+}
+
+template<class C, uint8_t W, uint8_t H, uint8_t B>
+void NanoEngine<C,W,H,B>::begin()
+{
+    NanoEngineCore::begin();
+    if (C::BITS_PER_PIXEL > 1)
+    {
+        ssd1306_setMode(LCD_MODE_NORMAL);
+    }
 }
 
 template<class C, uint8_t W, uint8_t H, uint8_t B>

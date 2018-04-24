@@ -30,6 +30,10 @@
 
 #include "hal/io.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @defgroup LCD_INTERFACE_API LCD High level API
  * @{
@@ -286,5 +290,9 @@ void ssd1306_setMode(lcd_mode_t mode);
 /**
  * @}
  */
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _LCD_COMMON_H_ */

@@ -34,6 +34,7 @@
 #include "ssd1306_fonts.h"
 #include "i2c/ssd1306_i2c_conf.h"
 #include "spi/ssd1306_spi_conf.h"
+#include "lcd/lcd_common.h"
 #include "lcd/oled_ssd1306.h"
 #include "lcd/oled_ssd1331.h"
 #include "lcd/oled_ssd1351.h"

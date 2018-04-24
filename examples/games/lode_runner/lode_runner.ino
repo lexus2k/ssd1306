@@ -235,16 +235,12 @@ void setup()
     /* Set font to use in the game. The font has only capital letters and digits */
     ssd1306_setFixedFont(ssd1306xled_font6x8_AB);
 
-    /* Do not init Wire library for Attiny controllers */
-//    ssd1306_128x64_i2c_init();
-
-    /* Use the commented lines below, if you want to connect Nokia 5110 LCD */
-/*
-    pcd8544_84x48_spi_init(3, 4, 5); // 3 RST, 4 CES, 5 DS
-*/
     ssd1331_96x64_spi_init(3, 4, 5); // 3 RST, 4 CES, 5 DS
-    /* ssd1331 must be initialized in Horizontal addressing mode */
-    ssd1331_setMode(LCD_MODE_NORMAL);
+
+//    ssd1306_128x64_i2c_init();
+//    pcd8544_84x48_spi_init(3, 4, 5); // 3 RST, 4 CES, 5 DS
+//    il9163_128x128_spi_init(3, 4, 5);
+//    st7735_128x160_spi_init(3, 4, 5);
 
     playerBitmap = playerFlyingImage[MAN_ANIM_FLYING][playerAnimation];
 

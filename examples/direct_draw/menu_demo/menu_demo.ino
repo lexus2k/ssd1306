@@ -57,7 +57,6 @@ SAppMenu menu;
 
 void setup()
 {
-    /* Do not init Wire library for Attiny controllers */
     ssd1306_128x64_i2c_init();
     ssd1306_fillScreen( 0x00 );
     /* Initialize main menu state */
