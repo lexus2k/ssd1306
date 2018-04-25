@@ -202,6 +202,10 @@ public:
      */
     static void display();
 
+    /**
+     * Initializes internal timestamps, engine state, and
+     * switches oled display to required mode (see ssd1306_setMode()).
+     */
     static void begin();
 
     /**
