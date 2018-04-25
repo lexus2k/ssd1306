@@ -169,9 +169,9 @@ void setup()
     /* Select the font to use with menu and all font functions */
     ssd1306_setFixedFont(ssd1306xled_font6x8);
 
-    ssd1306_128x64_i2c_init();
-//    ssd1306_128x64_spi_init(3,4,5);     // Use this line for Atmega328p (3=RST, 4=CE, 5=D/C)
-//    ssd1306_128x64_spi_init(24, 0, 23); // Use this line for Raspberry  (gpio24=RST, 0=CE, gpio23=D/C)
+    sh1106_128x64_i2c_init();
+//    sh1106_128x64_spi_init(3,4,5);     // Use this line for Atmega328p (3=RST, 4=CE, 5=D/C)
+//    sh1106_128x64_spi_init(24, 0, 23); // Use this line for Raspberry  (gpio24=RST, 0=CE, gpio23=D/C)
 
     ssd1306_fillScreen( 0x00 );
     ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
