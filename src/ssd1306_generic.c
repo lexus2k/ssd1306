@@ -566,7 +566,6 @@ void         ssd1306_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
             swap_data(x1, x2);
             swap_data(y1, y2);
         }
-        
         for(; x1<=x2; x1++)
         {
             err += dy;

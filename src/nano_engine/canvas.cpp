@@ -105,12 +105,63 @@ void NanoCanvasOps<8>::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
 }
 
 template <>
+void NanoCanvasOps<8>::drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+{
+    lcduint_t  dx = x1 > x2 ? (x1 - x2): (x2 - x1);
+    lcduint_t  dy = y1 > y2 ? (y1 - y2): (y2 - y1);
+    lcduint_t  err = 0;
+    if (dy > dx)
+    {
+        if (y1 > y2)
+        {
+            swap_data(x1, x2, lcdint_t);
+            swap_data(y1, y2, lcdint_t);
+        }
+        for(; y1<=y2; y1++)
+        {
+            err += dx;
+            if (err >= dy)
+            {
+                 err -= dy;
+                 x1 < x2 ? x1++: x1--;
+            }
+            putPixel( x1, y1 );
+        }
+    }
+    else
+    {
+        if (x1 > x2)
+        {
+            swap_data(x1, x2, lcdint_t);
+            swap_data(y1, y2, lcdint_t);
+        }
+        for(; x1<=x2; x1++)
+        {
+            err += dy;
+            if (err >= dx)
+            {
+                 err -= dx;
+                 if (y1 < y2) y1++; else y1--;
+            }
+            putPixel( x1, y1 );
+        }
+    }
+}
+
+template <>
+void NanoCanvasOps<8>::drawLine(const NanoRect &rect)
+{
+    drawLine(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
+}
+
+template <>
 void NanoCanvasOps<8>::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
 {
     drawHLine(x1,y1,x2);
     drawHLine(x1,y2,x2);
     drawVLine(x1,y1,y2);
     drawVLine(x2,y1,y2);
+
 }
 
 template <>
@@ -157,8 +208,6 @@ void NanoCanvasOps<8>::fillRect(const NanoRect &rect)
 {
     fillRect(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
 }
-
-//#include <stdio.h>
 
 template <>
 void NanoCanvasOps<8>::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
@@ -480,6 +529,56 @@ void NanoCanvasOps<1>::drawRect(const NanoRect &rect)
 }
 
 template <>
+void NanoCanvasOps<1>::drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+{
+    lcduint_t  dx = x1 > x2 ? (x1 - x2): (x2 - x1);
+    lcduint_t  dy = y1 > y2 ? (y1 - y2): (y2 - y1);
+    lcduint_t  err = 0;
+    if (dy > dx)
+    {
+        if (y1 > y2)
+        {
+            swap_data(x1, x2, lcdint_t);
+            swap_data(y1, y2, lcdint_t);
+        }
+        for(; y1<=y2; y1++)
+        {
+            err += dx;
+            if (err >= dy)
+            {
+                 err -= dy;
+                 x1 < x2 ? x1++: x1--;
+            }
+            putPixel( x1, y1 );
+        }
+    }
+    else
+    {
+        if (x1 > x2)
+        {
+            swap_data(x1, x2, lcdint_t);
+            swap_data(y1, y2, lcdint_t);
+        }
+        for(; x1<=x2; x1++)
+        {
+            err += dy;
+            if (err >= dx)
+            {
+                 err -= dx;
+                 if (y1 < y2) y1++; else y1--;
+            }
+            putPixel( x1, y1 );
+        }
+    }
+}
+
+template <>
+void NanoCanvasOps<1>::drawLine(const NanoRect &rect)
+{
+    drawLine(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
+}
+
+template <>
 void NanoCanvasOps<1>::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
 {
     if (x2 < x1) swap_data(x2, x1, lcdint_t);
@@ -771,6 +870,56 @@ void NanoCanvasOps<16>::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
         buf[1] = m_color & 0xFF;
         buf+=2;
     }
+}
+
+template <>
+void NanoCanvasOps<16>::drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+{
+    lcduint_t  dx = x1 > x2 ? (x1 - x2): (x2 - x1);
+    lcduint_t  dy = y1 > y2 ? (y1 - y2): (y2 - y1);
+    lcduint_t  err = 0;
+    if (dy > dx)
+    {
+        if (y1 > y2)
+        {
+            swap_data(x1, x2, lcdint_t);
+            swap_data(y1, y2, lcdint_t);
+        }
+        for(; y1<=y2; y1++)
+        {
+            err += dx;
+            if (err >= dy)
+            {
+                 err -= dy;
+                 x1 < x2 ? x1++: x1--;
+            }
+            putPixel( x1, y1 );
+        }
+    }
+    else
+    {
+        if (x1 > x2)
+        {
+            swap_data(x1, x2, lcdint_t);
+            swap_data(y1, y2, lcdint_t);
+        }
+        for(; x1<=x2; x1++)
+        {
+            err += dy;
+            if (err >= dx)
+            {
+                 err -= dx;
+                 if (y1 < y2) y1++; else y1--;
+            }
+            putPixel( x1, y1 );
+        }
+    }
+}
+
+template <>
+void NanoCanvasOps<16>::drawLine(const NanoRect &rect)
+{
+    drawLine(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
 }
 
 template <>

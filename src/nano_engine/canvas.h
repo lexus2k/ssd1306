@@ -350,6 +350,23 @@ public:
     void drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2);
 
     /**
+     * Draws line
+     * @param x1 - position X
+     * @param y1 - position Y
+     * @param x2 - position X
+     * @param y2 - position Y
+     * @note color can be set via setColor()
+     */
+    void drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
+
+    /**
+     * Draws line
+     * @param rect - structure, describing rectangle area
+     * @note color can be set via setColor()
+     */
+    void drawLine(const NanoRect &rect);
+
+    /**
      * Draws rectangle
      * @param x1 - position X
      * @param y1 - position Y
@@ -391,7 +408,7 @@ public:
      * @param w - width in pixels
      * @param h - height in pixels
      * @param bitmap - monochrome bitmap data, located in flash
-     * 
+     *
      * @note There are 2 modes: transparent and non-transparent mode, - and 2 colors available: black and white.
      *       In non-transparent mode, when black color is selected, the monochrome image just inverted.
      *       In transparent mode, those pixels of source monochrome image, which are black, do not overwrite pixels
