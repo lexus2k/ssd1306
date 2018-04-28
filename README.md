@@ -52,15 +52,17 @@ The default spi SCLK and MOSI pins are defined by SPI library, and DC, RST, CES 
 configurable through API.
 
 ## Supported displays:
- * i2c sh1106 128x64 oled display
- * i2c ssd1306 128x64 oled display
- * i2c ssd1306 128x32 oled display
- * spi ssd1306 128x64 oled display
- * spi ssd1331 96x64 RGB oled display
- * spi ssd1351 128x128 RGB oled display
- * spi il9163 128x128 RGB TFT display
- * spi st7735 128x160 RGB TFT display
- * spi pcd8544 84x48 nokia 5110 led display
+
+| **Display** | **I2C** | **SPI** | **Comments** |
+| :-------- |:---:|:---:|:---------|
+| sh1106 128x64 | X |   |   |
+| ssd1306 128x64 | X | X |   |
+| ssd1306 128x32 | X | X |   |
+| ssd1331 96x64 |   | X |   |
+| ssd1331 128x128 |   | X |   |
+| il9163 128x128 |   | X |   |
+| st7735 128x160 |   | X |   |
+| pcd8544 84x48 |   | X  | Nokia 5110 |
 
 ## Supported platforms
 
