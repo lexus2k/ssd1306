@@ -68,7 +68,7 @@ union
     } battleField;
 } gameState;
 
-void startBattleField(void);
+void startBattleField(bool reload);
 
 bool drawIntro(void)
 {
@@ -90,7 +90,7 @@ void introLoop(void)
         gameState.intro.pauseFrames++;
         if (gameState.intro.pauseFrames > engine.getFrameRate() * 3 )
         {
-            startBattleField();
+            startBattleField( true );
         }
     }
 }
@@ -242,7 +242,7 @@ bool checkGameAreaHit(void)
         gameState.battleField.ballSpeed.y = -gameState.battleField.ballSpeed.y;
         if (gameState.battleField.ball.y > gameArea.p2.y)
         {
-             startBattleField();
+             startBattleField( false );
         }
     }
     return hit;
@@ -289,7 +289,7 @@ void battleFieldLoop(void)
     if (gameState.battleField.blocksLeft == 0)
     {
         g_level++;
-        startBattleField();
+        startBattleField( true );
     }
 }
 
@@ -300,6 +300,7 @@ void loadLevel(void)
     {
        g_level = MAX_LEVELS;
     }
+    gameState.battleField.blocksLeft = 0;
     for (uint8_t i =0; i<BLOCKS_PER_ROW; i++)
     {
         for (uint8_t j=0; j<BLOCK_NUM_ROWS; j++)
@@ -315,7 +316,7 @@ void loadLevel(void)
     gameState.battleField.frames = 0;
 }
 
-void startBattleField(void)
+void startBattleField(bool reload)
 {
     engine.refresh();
     gameState.battleField.platform.setRect( 20, 56, 31, 58 );
@@ -325,7 +326,10 @@ void startBattleField(void)
     gameState.battleField.ballSpeed.setPoint( 3, -(1<<PIX_BITS) );
     engine.drawCallback( drawBattleField );
     engine.loopCallback( battleFieldLoop );
-    loadLevel();
+    if ( reload )
+    {
+        loadLevel();
+    }
 
     /* Show level info in popup message */
     char levelInfo[8] = "LEVEL X";
