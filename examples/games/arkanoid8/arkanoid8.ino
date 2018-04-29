@@ -34,6 +34,8 @@
 #include "arkanoid.h"
 #include "levels.h"
 
+#define PIX_BITS  2
+
 NanoEngine8 engine;
 
 static uint8_t g_level = 0;
@@ -57,8 +59,8 @@ union
     {
         NanoRect  platform;  // platform position on the screen
         NanoPoint ball;      // ball position on the screen
-        int16_t   ballX;     // ball position in *2 coordinates
-        int16_t   ballY;     // ball position in *2 coordinates
+        int16_t   ballX;     // ball position in ^PIX_BITS coordinates
+        int16_t   ballY;     // ball position in ^PIX_BITS coordinates
         NanoPoint ballSpeed; // ball speed in *2 coordinates
         uint8_t   blocks[BLOCK_NUM_ROWS][MAX_BLOCKS_PER_ROW];
         uint8_t   blocksLeft;
@@ -208,17 +210,17 @@ bool checkPlatformHit()
     {
         if (gameState.battleField.ball.x < gameState.battleField.platform.p1.x + 3)
         {
-            gameState.battleField.ballSpeed.x = -2;
+            gameState.battleField.ballSpeed.x = -3;
             gameState.battleField.ballSpeed.y = -gameState.battleField.ballSpeed.y;
         }
         else if (gameState.battleField.ball.x > gameState.battleField.platform.p2.x - 3)
         {
-            gameState.battleField.ballSpeed.x = +2;
+            gameState.battleField.ballSpeed.x = +3;
             gameState.battleField.ballSpeed.y = -gameState.battleField.ballSpeed.y;
         }
         else
         {
-            gameState.battleField.ballSpeed.x = gameState.battleField.ballSpeed.x > 0 ? 1: -1;
+            gameState.battleField.ballSpeed.x = gameState.battleField.ballSpeed.x > 0 ? 2: -2;
             gameState.battleField.ballSpeed.y = -gameState.battleField.ballSpeed.y;
         }
         return true;
@@ -255,7 +257,8 @@ void moveBall(void)
         gameState.battleField.ballX += gameState.battleField.ballSpeed.x;
         gameState.battleField.ballY += gameState.battleField.ballSpeed.y;
         moveBall = false;
-        gameState.battleField.ball.setPoint(gameState.battleField.ballX>>1, gameState.battleField.ballY>>1);
+        gameState.battleField.ball.setPoint(gameState.battleField.ballX>>PIX_BITS,
+                                            gameState.battleField.ballY>>PIX_BITS);
         if (checkGameAreaHit())
         {
             moveBall = true;
@@ -317,9 +320,9 @@ void startBattleField(void)
     engine.refresh();
     gameState.battleField.platform.setRect( 20, 56, 31, 58 );
     gameState.battleField.ball.setPoint( 25, 55);
-    gameState.battleField.ballX = gameState.battleField.ball.x << 1;
-    gameState.battleField.ballY = gameState.battleField.ball.y << 1;
-    gameState.battleField.ballSpeed.setPoint( 2, -2);
+    gameState.battleField.ballX = gameState.battleField.ball.x << PIX_BITS;
+    gameState.battleField.ballY = gameState.battleField.ball.y << PIX_BITS;
+    gameState.battleField.ballSpeed.setPoint( 3, -(1<<PIX_BITS) );
     engine.drawCallback( drawBattleField );
     engine.loopCallback( battleFieldLoop );
     loadLevel();
