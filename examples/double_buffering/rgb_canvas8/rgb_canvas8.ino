@@ -71,11 +71,10 @@ struct
 } objects[ spritesCount ];
 
 /*
- * Each pixel in SSD1306 display takes 1 bit of the memory. So, full resolution
- * of 128x64 LCD display will require 128*64/8 = 1024 bytes of SRAM for the buffer.
- * To let this example to run on Attiny devices (they have 256/512 byte SRAM), we
- * will use small canvas buffer: 32x32 (requires 128 bytes of SRAM), so the example
- * would run even on Attiny45.
+ * Each pixel in rgb8 mode needs 8 bit of the memory. So, full resolution
+ * of 128x128 LCD display will require 128*128 = 16384 bytes of SRAM for the buffer.
+ * To let this example to run on Atmega328p devices (they have 2048 byte SRAM), we
+ * will use small canvas buffer: 32x32 (requires 1024 bytes of SRAM).
  */
 const int canvasWidth = 32; // Width
 const int canvasHeight = 32; // Height
@@ -132,6 +131,9 @@ void loop()
 
     /* Clear canvas surface */
     canvas.clear();
+    /* Draw line */
+    canvas.setColor( RGB_COLOR8(128,128,128) );
+    canvas.drawLine( 0, 0, canvasWidth*2 - 1, canvasHeight-1);
     /* Draw rectangle around our canvas. It will show the range of the canvas on the display */
     canvas.setColor( RGB_COLOR8(0,255,255) );
     canvas.drawRect(0, 0, canvasWidth-1, canvasHeight-1);

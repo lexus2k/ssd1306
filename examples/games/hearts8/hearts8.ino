@@ -35,7 +35,7 @@
 #include "ssd1306.h"
 #include "nano_engine.h"
 
-/* 
+/*
  * Heart image below is defined directly in flash memory.
  * This reduces SRAM consumption.
  * The image is define from bottom to top (bits), from left to
@@ -60,6 +60,9 @@ const PROGMEM uint8_t heartImage[8] =
  */
 const int spriteWidth = sizeof(heartImage);
 
+/* We use 8-pixels height sprites */
+const int spriteHeight = 8;
+
 /* Lets show 4 hearts on the display */
 const int spritesCount = 4;
 
@@ -70,17 +73,44 @@ struct
     NanoPoint speed;
 } objects[ spritesCount ];
 
+/* Create engine object */
+NanoEngine8 engine;
+
+/* Array of colors, used for the heart sprites */
+static uint8_t s_colors[spritesCount] =
+{
+     RGB_COLOR8(255,0,0),
+     RGB_COLOR8(0,255,0),
+     RGB_COLOR8(0,0,255),
+     RGB_COLOR8(255,255,0),
+};
+
 /*
- * Each pixel in rgb16 mode needs 16 bit of the memory. So, full resolution
- * of 128x128 LCD display will require 128*128*2 = 32768 bytes of SRAM for the buffer.
- * To let this example to run on Atmega328p devices (they have 2048 byte SRAM), we
- * will use small canvas buffer: 32x16 (requires 1024 bytes of SRAM).
+ * This function is called by the engine every time, it needs to refresh
+ * some part of the display. Just draw the content as usual. NanoCanvas
+ * will do correct clipping for you.
  */
-const int canvasWidth = 32; // Width
-const int canvasHeight = 16; // Height
-uint8_t canvasData[canvasWidth*canvasHeight*2];
-/* Create canvas object */
-NanoCanvas16 canvas(canvasWidth, canvasHeight, canvasData);
+bool drawHearts()
+{
+    /* Clear canvas surface */
+    engine.canvas.clear();
+    engine.canvas.setMode( CANVAS_MODE_TRANSPARENT );
+    /* Draw line */
+    engine.canvas.setColor( RGB_COLOR8(128,128,128) );
+    engine.canvas.drawLine( 0, 0, ssd1306_displayWidth()*2 - 1, ssd1306_displayHeight()-1);
+    /* Draw rectangle around our canvas. It will show the range of the canvas on the display */
+    engine.canvas.setColor( RGB_COLOR8(0,255,255) );
+    engine.canvas.drawRect(0, 0, ssd1306_displayWidth() - 1, ssd1306_displayHeight() - 1);
+    /* Draw all 4 sprites on the canvas */
+    for (uint8_t i = 0; i < spritesCount; i++)
+    {
+        engine.canvas.setColor( s_colors[i] );
+        engine.canvas.drawBitmap1( objects[i].pos.x, objects[i].pos.y, 8, 8, heartImage );
+    }
+    /* Now, return true to draw canvas on the display. *
+     * If you return false, the part of display will not be refreshed */
+    return true;
+}
 
 void setup()
 {
@@ -90,59 +120,55 @@ void setup()
 //    ssd1351_128x128_spi_init(3, 4, 5);
 //    st7735_128x160_spi_init(3, 4, 5);
 //    -- ssd1306_128x64_i2c_init();  // RGB canvas does not support monochrome displays
-//    -- pcd8544_84x48_spi_init(3, 4, 5);
+//    -- pcd8544_84x48_spi_init(3, 4, 5); 
 
-    /* The library should be switched to normal mode for RGB displays */
-    ssd1306_setMode(LCD_MODE_NORMAL);
+    /* Start the engine. It will switch display to required mode */
+    engine.begin();
 
-    ssd1306_fillScreen(0x00);
+    /* Set frame refresh rate: 45 is ok for the eye */
+    engine.setFrameRate(45);
+
+    /* Make the engine to redraw whole display content when the board is powered on. *
+     * refresh() function do not change display content, but says notifies engine that *
+     * it needs to refresh() whole screen on next frame. */
+    engine.refresh();
+
     /* Create 4 "hearts", and place them at different positions and give different movement direction */
     for(uint8_t i = 0; i < spritesCount; i++)
     {
         objects[i].speed = { .x = (i & 2) ? -1:  1, .y = (i & 1) ? -1:  1 };
-        objects[i].pos = { .x = i*4, .y = i*2 + 2 };
+        objects[i].pos = { .x = i*16, .y = i*8 + 2 };
     }
-    canvas.setMode( CANVAS_MODE_TRANSPARENT );
-}
 
-static uint16_t s_colors[spritesCount] =
-{
-     RGB_COLOR16(255,0,0),
-     RGB_COLOR16(0,255,0),
-     RGB_COLOR16(0,0,255),
-     RGB_COLOR16(255,255,0),
-};
+    /* Here we set draw callback, so the engine will call it every time it needs *
+     * physically update display content */
+    engine.drawCallback( drawHearts );
+}
 
 void loop()
 {
-    delay(40);
+    /* If it is not time to draw next frame just exit and do nothing */
+    if (!engine.nextFrame()) return;
 
     /* Recalculate position and movement direction of all 4 "hearts" */
     for (uint8_t i = 0; i < spritesCount; i++)
     {
+        /* We need to point the old position of the heart sprite */
+        engine.refresh( objects[i].pos.x, objects[i].pos.y,
+                        objects[i].pos.x + spriteWidth - 1,
+                        objects[i].pos.y + spriteHeight - 1 );
         objects[i].pos += objects[i].speed;
         /* If left or right boundary is reached, reverse X direction */
-        if ((objects[i].pos.x == (canvasWidth - 8)) || (objects[i].pos.x == 0))
+        if ((objects[i].pos.x == (ssd1306_displayWidth() - 8)) || (objects[i].pos.x == 0))
             objects[i].speed.x = -objects[i].speed.x;
         /* Sprite height is always 8 pixels. Reverse Y direction if bottom or top boundary is reached. */
-        if ((objects[i].pos.y == (canvasHeight - 8)) || (objects[i].pos.y == 0))
+        if ((objects[i].pos.y == (ssd1306_displayHeight() - 8)) || (objects[i].pos.y == 0))
             objects[i].speed.y = -objects[i].speed.y;
+        /* Now provide the new position of the heart sprite to engine */
+        engine.refresh( objects[i].pos.x, objects[i].pos.y,
+                        objects[i].pos.x + spriteWidth - 1,
+                        objects[i].pos.y + spriteHeight - 1 );
     }
-
-    /* Clear canvas surface */
-    canvas.clear();
-    /* Draw line */
-    canvas.setColor( RGB_COLOR16(128,128,128) );
-    canvas.drawLine( 0, 0, canvasWidth*2 - 1, canvasHeight-1);
-    /* Draw rectangle around our canvas. It will show the range of the canvas on the display */
-    canvas.setColor( RGB_COLOR16(0,255,255) );
-    canvas.drawRect(0, 0, canvasWidth-1, canvasHeight-1);
-    /* Draw all 4 sprites on the canvas */
-    for (uint8_t i = 0; i < spritesCount; i++)
-    {
-        canvas.setColor( s_colors[i] );
-        canvas.drawBitmap1( objects[i].pos.x, objects[i].pos.y, 8, 8, heartImage );
-    }
-    /* Now, draw canvas on the display */
-    canvas.blt(48, 0);
+    /* Now do updates on the display */
+    engine.display();
 }

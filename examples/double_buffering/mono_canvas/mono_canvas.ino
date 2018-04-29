@@ -123,6 +123,8 @@ void loop()
 
     /* Clear canvas surface */
     canvas.clear();
+    /* Draw line */
+    canvas.drawLine( 0, 0, canvasWidth*2 - 1, canvasHeight-1);
     /* Draw rectangle around our canvas. It will show the range of the canvas on the display */
     canvas.drawRect(0, 0, canvasWidth-1, canvasHeight-1);
     /* Draw all 4 sprites on the canvas */
