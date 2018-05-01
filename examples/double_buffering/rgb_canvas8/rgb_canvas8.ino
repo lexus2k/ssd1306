@@ -90,7 +90,7 @@ void setup()
 //    ssd1351_128x128_spi_init(3, 4, 5);
 //    st7735_128x160_spi_init(3, 4, 5);
 //    -- ssd1306_128x64_i2c_init();  // RGB canvas does not support monochrome displays
-//    -- pcd8544_84x48_spi_init(3, 4, 5); 
+//    -- pcd8544_84x48_spi_init(3, 4, 5);
 
     /* The library should be switched to normal mode for RGB displays */
     ssd1306_setMode(LCD_MODE_NORMAL);

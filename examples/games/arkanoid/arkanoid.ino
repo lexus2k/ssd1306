@@ -75,7 +75,6 @@
 #include "sprites.h"
 #include "arkanoid.h"
 #include "buttons.h"
-#include "font6x8.h"
 
 typedef struct
 {

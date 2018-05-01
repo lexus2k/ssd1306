@@ -44,7 +44,7 @@
     #include <SPI.h>
 #endif
 
-/* 
+/*
  * Heart image below is defined directly in flash memory.
  * This reduces SRAM consumption.
  * The image is defined from bottom to top (bits), from left to
