@@ -39,6 +39,7 @@
 NanoEngine8 engine;
 
 static uint8_t g_level = 0;
+static uint8_t g_score = 0;
 static const NanoRect gameArea = { {16, 0}, {79, 63} };
 static const NanoRect blockArea = { {gameArea.p1.x, 8},
                                     {gameArea.p1.x + BLOCKS_PER_ROW*8 - 1, 8 + BLOCK_NUM_ROWS*4 - 1} };
@@ -99,6 +100,7 @@ void startIntro(void)
 {
     engine.refresh();
     g_level = 0;
+    g_score = 0;
     gameState.intro.intro_y = -24;
     gameState.intro.pauseFrames = 0;
     engine.drawCallback( drawIntro );
@@ -146,12 +148,12 @@ bool drawBattleField(void)
     }
     else
     {
-        char str[4] = {0};
+        char str[8] = {0};
         engine.canvas.clear();
         engine.canvas.setColor(RGB_COLOR8(255,255,255));
         engine.canvas.drawVLine(gameArea.p1.x-1,0,64);
         engine.canvas.drawVLine(gameArea.p2.x+1,0,64);
-        utoa(engine.getCpuLoad( ), str, 10);
+        utoa(g_score, str, 10);
         engine.canvas.setColor(RGB_COLOR8(192,192,192));
         engine.canvas.printFixed(gameArea.p2.x+3, 16, str );
     }
@@ -190,6 +192,8 @@ bool checkBlockHit(void)
     }
     gameState.battleField.blocks[row][column] = 0;
     gameState.battleField.blocksLeft--;
+    g_score++;
+    engine.refresh( gameArea.p2.x + 1, 0, 95, 63 );
     if (((p.y & 3) == 2) || (p.y & 3) == 1)
     {
         gameState.battleField.ballSpeed.x = -gameState.battleField.ballSpeed.x;
@@ -282,10 +286,6 @@ void battleFieldLoop(void)
     moveBall();
     /* Refresh debug information if we need it */
     gameState.battleField.frames++;
-    if ( (gameState.battleField.frames & 0x3F) == 0 )
-    {
-        engine.refresh( gameArea.p2.x + 1, 0, 95, 63 );
-    }
     if (gameState.battleField.blocksLeft == 0)
     {
         g_level++;
