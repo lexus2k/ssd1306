@@ -50,6 +50,7 @@ SRCS_CPP = \
 	nano_engine/core.cpp \
 	nano_gfx.cpp \
 	sprite_pool.cpp \
+	ssd1306_console.cpp \
 	i2c/ssd1306_i2c_wire.cpp \
 	spi/ssd1306_spi_hw.cpp
 

@@ -21,37 +21,62 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
+/**
+ * @file ssd1306_console.h This is for console
+ */
 
-#include "tiny_ssd1306.h"
+#ifndef _SSD1306_CONSOLE_H_
+#define _SSD1306_CONSOLE_H_
 
-/* Font width in pixels */
-static const uint8_t FIXED_FONT_WIDTH = 6;
-/* Font height in blocks */
-static const uint8_t FIXED_FONT_HEIGHT = 1;
+#include "ssd1306.h"
+#include "hal/io.h"
+#include <stdint.h>
+#ifdef ARDUINO
+#include "Print.h"
+#endif
 
-size_t TinySSD1306::write(uint8_t ch)
+/**
+ * Ssd1306Console represents object to work with LCD display.
+ * Easy to use:
+ * ~~~~~~~~~~~~~~~{.cpp}
+ * Ssd1306Console  console;
+ * void setup()
+ * {
+ *      ssd1306_128x64_spi_init(3, 4, 5);
+ *      ssd1306_clearScreen();
+ *      console.print( "Hello" );
+ * }
+ * ~~~~~~~~~~~~~~~
+ */
+class Ssd1306Console: public Print
 {
-    const char str[2] = { static_cast<char>(ch), '\0' };
-    if (ch == '\r')
-    {
-        m_xpos = 0;
-    }
-    if ( (m_xpos > width() - FIXED_FONT_WIDTH) || (ch == '\n') )
-    {
-        m_xpos = 0;
-        m_ypos += FIXED_FONT_HEIGHT;
-    }
-    if ( m_ypos > (height() >> 3) - FIXED_FONT_HEIGHT )
-    {
-        m_ypos = 0;
-    }
-    ssd1306_printFixed( m_xpos, m_ypos, str, STYLE_NORMAL );
-    m_xpos += FIXED_FONT_WIDTH;
-}
+public:
+    /**
+     * Creates console object to print text information on LCD display.
+     */
+    explicit Ssd1306Console( ) { };
 
-void TinySSD1306::clear()
-{
-    m_xpos = 0;
-    m_ypos = 0;
-    ssd1306_clearScreen();
+    /**
+     * Initializes console.
+     */
+    void begin()
+    {
+    };
+
+    /**
+     * Fills screen with zero-byte
+     */
+    void         clear();
+
+    /**
+     * Writes single character to the display
+     * @param ch - character to write
+     */
+    size_t write(uint8_t ch) override;
+
+private:
+
 };
+
+#endif
+
