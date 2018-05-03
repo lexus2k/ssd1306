@@ -31,10 +31,8 @@ var searchData=
   ['ne_5ftile_5fheight',['NE_TILE_HEIGHT',['../class_nano_engine_tiler.html#a58f5418b62c0454149eda06ffdeff4e4',1,'NanoEngineTiler']]],
   ['ne_5ftile_5fsize_5fbits',['NE_TILE_SIZE_BITS',['../class_nano_engine_tiler.html#aff885e01ce1a84146fbaa1ea38e47b37',1,'NanoEngineTiler']]],
   ['ne_5ftile_5fwidth',['NE_TILE_WIDTH',['../class_nano_engine_tiler.html#a5d605bf1ae960b5b25ece6ad9abc8974',1,'NanoEngineTiler']]],
-  ['negativemode',['negativeMode',['../class_tiny_s_s_d1306.html#ac4cc0291791131f43719e8a51c1fb165',1,'TinySSD1306']]],
   ['next_5fpage',['next_page',['../structssd1306__lcd__t.html#ae7513c1cb9a358f0d333b5ca73c3b7a7',1,'ssd1306_lcd_t']]],
   ['nextframe',['nextFrame',['../class_nano_engine_core.html#ae5143d19cd03914f667f625735c63ec0',1,'NanoEngineCore']]],
-  ['normalmode',['normalMode',['../class_tiny_s_s_d1306.html#afdcf2fc9e0bb8d06bf16ae61290087a0',1,'TinySSD1306']]],
   ['notify',['notify',['../class_nano_engine.html#acda55904927fb0159c44313a643cfd15',1,'NanoEngine']]],
   ['notpressed',['notPressed',['../class_nano_engine_inputs.html#aeaf2995c49b0256b18412ef38dd0891e',1,'NanoEngineInputs']]]
 ];

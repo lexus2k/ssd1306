@@ -38,13 +38,25 @@
 
 #include "ssd1306_hal/io.h"
 
-/* Implement own Print class for plain AVR and Linux environment */
+/** Implements own Print class for plain AVR and Linux environment */
 class Print
 {
 public:
+    /** Constructor to create Print class object */
     Print() {}
-    virtual size_t write(uint8_t) = 0;
 
+    /**
+     * abstract function to be defined in inherited classes
+     * @param ch char to print
+     * @return returns number of printed symbols
+     */
+    virtual size_t write(uint8_t ch) = 0;
+
+    /**
+     * Prints string via write()
+     * @param str string to print
+     * @return returns number of printed symbols
+     */
     size_t print(const char* str)
     {
         size_t n = 0;
@@ -56,6 +68,11 @@ public:
         return n;
     }
 
+    /**
+     * Prints string via write() and goes to next line.
+     * @param str string to print
+     * @return returns number of printed symbols
+     */
     size_t println(const char* str)
     {
         size_t n = print(str);
