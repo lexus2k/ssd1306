@@ -30,7 +30,7 @@
 #include "ssd1306_spi_linux.h"
 #include "intf/ssd1306_interface.h"
 #include "lcd/lcd_common.h"
-#include "hal/io.h"
+#include "ssd1306_hal/io.h"
 
 int8_t s_ssd1306_cs = 4;
 int8_t s_ssd1306_dc = 5;

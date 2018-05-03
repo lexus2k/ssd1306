@@ -27,8 +27,7 @@
 
 size_t Ssd1306Console::write(uint8_t ch)
 {
-// TODO: To be updated soon
-    return 0;
+    return ssd1306_write(ch);
 }
 
 void Ssd1306Console::clear()

@@ -29,7 +29,7 @@
 #ifndef _OLED_SSD1306_H_
 #define _OLED_SSD1306_H_
 
-#include "hal/io.h"
+#include "ssd1306_hal/io.h"
 
 #ifdef __cplusplus
 extern "C" {

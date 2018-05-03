@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2018, Alexey Dynda
+    Copyright (c) 2016-2018, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -21,43 +21,37 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-
 /**
- * @file ssd1306_i2c_embedded.h embedded SSD1306 i2c communication functions
+ *   Attiny85 PINS
+ *             ____
+ *   RESET   -|_|  |- 3V
+ *   SCL (3) -|    |- (2)
+ *   SDA (4) -|    |- (1)
+ *   GND     -|____|- (0)
+ *
+ *   Atmega328 PINS: connect LCD to A4/A5
  */
 
-#ifndef _SSD1306_I2C_EMBEDDED_H_
-#define _SSD1306_I2C_EMBEDDED_H_
+#include "ssd1306.h"
+#include "ssd1306_console.h"
 
-#include "ssd1306_hal/io.h"
-#include "ssd1306_i2c_conf.h"
-
-#ifdef SSD1306_I2C_SW_SUPPORTED
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/**
- * @ingroup LCD_HW_INTERFACE_API
- *
- * Initializes software implementation of i2c.
- * If you do not know i2c parameters, try ssd1306_i2cInit_Embedded(0,0,0).
- * @warning the function disables interrupts.
- * @param scl - i2c clock pin. Use -1 if you don't need to change default pin number
- * @param sda - i2c data pin. Use -1 if you don't need to change default pin number
- * @param sa  - i2c address of lcd display. Use 0 to leave default
- *
- * @note: after call to this function you need to initialize lcd display.
- */
-void ssd1306_i2cInit_Embedded(int8_t scl, int8_t sda, uint8_t sa);
-
-#ifdef __cplusplus
+void setup()
+{
+    /* Replace the line below with the display initialization function, you want to use */
+    ssd1306_128x64_i2c_init();
+    ssd1306_clearScreen();
+    /* Set font to use with console */
+    ssd1306_setFixedFont(ssd1306xled_font6x8);
 }
-#endif
 
-#endif
 
-#endif /* _SSD1306_I2C_EMBEDDED_H_ */
+void loop()
+{
+    ssd1306_print( "This is console output: " );
+    ssd1306_print( "go to the next line\n" );
+    delay(500);
+}
+
+
 
 

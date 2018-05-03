@@ -29,11 +29,8 @@
 #define _SSD1306_CONSOLE_H_
 
 #include "ssd1306.h"
-#include "hal/io.h"
-#include <stdint.h>
-#ifdef ARDUINO
-#include "Print.h"
-#endif
+#include "ssd1306_hal/io.h"
+#include "ssd1306_hal/Print_internal.h"
 
 /**
  * Ssd1306Console represents object to work with LCD display.
@@ -59,14 +56,14 @@ public:
     /**
      * Initializes console.
      */
-    void begin()
+    void   begin()
     {
     };
 
     /**
      * Fills screen with zero-byte
      */
-    void         clear();
+    void   clear();
 
     /**
      * Writes single character to the display

@@ -28,7 +28,7 @@
 #ifndef _NANO_GFX_TYPES_H_
 #define _NANO_GFX_TYPES_H_
 
-#include "hal/io.h"
+#include "ssd1306_hal/io.h"
 
 #ifndef min
 /** Macros returning minimum of 2 numbers */

@@ -96,13 +96,6 @@ void pinMode(int pin, int mode);
 #ifdef __cplusplus
 static inline int random(int max) { return 0; };
 static inline int random(int min, int max) { return 0; };
-
-class Print
-{
-public:
-    Print() {}
-    virtual size_t write(uint8_t) = 0;
-};
 #endif
 
 #endif

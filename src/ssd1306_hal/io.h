@@ -23,7 +23,7 @@
 */
 
 /**
- * @file hal/io.h SSD1306 HAL IO communication functions
+ * @file ssd1306_hal/io.h SSD1306 HAL IO communication functions
  */
 
 #ifndef _SSD1306_HAL_IO_H_

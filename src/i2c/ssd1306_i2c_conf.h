@@ -29,7 +29,7 @@
 #ifndef _SSD1306_I2C_CONF_H_
 #define _SSD1306_I2C_CONF_H_
 
-#include "hal/io.h"
+#include "ssd1306_hal/io.h"
 
 #ifdef __cplusplus
 extern "C" {

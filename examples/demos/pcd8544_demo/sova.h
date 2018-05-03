@@ -26,7 +26,7 @@
 #define _SOVA_H_
 
 // ----------------------------------------------------------------------------
-#include "hal/io.h"
+#include "ssd1306_hal/io.h"
 #include <stdint.h>
 
 extern const uint8_t Sova [] PROGMEM;

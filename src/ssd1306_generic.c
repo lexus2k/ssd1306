@@ -32,7 +32,7 @@
 #include "i2c/ssd1306_i2c.h"
 #include "spi/ssd1306_spi.h"
 #include "intf/ssd1306_interface.h"
-#include "hal/io.h"
+#include "ssd1306_hal/io.h"
 
 // TODO: remove
 #include "lcd/ssd1306_commands.h"
@@ -350,6 +350,49 @@ uint8_t ssd1306_printFixedN(uint8_t xpos, uint8_t y, const char ch[], EFontStyle
     return j;
 }
 
+size_t ssd1306_write(uint8_t ch)
+{
+    static lcduint_t xpos = 0;
+    static lcduint_t ypos = 0;
+    if (ch == '\r')
+    {
+        xpos = 0;
+        return 0;
+    }
+    else if ( (xpos > ssd1306_lcd.width - s_fixedFont.width) || (ch == '\n') )
+    {
+        xpos = 0;
+        ypos += s_fixedFont.height;
+        if ( ypos > ssd1306_lcd.height - s_fixedFont.height )
+        {
+            ypos = 0;
+        }
+        ssd1306_clearBlock(0, ypos>>3, ssd1306_lcd.width, s_fixedFont.height);
+        if (ch == '\n')
+        {
+            return 0;
+        }
+    }
+    ch -= s_fixedFont.ascii_offset;
+    ssd1306_drawBitmap( xpos,
+                        ypos>>3,
+                        s_fixedFont.width,
+                        s_fixedFont.height,
+                       &s_fixedFont.data[ ch * s_fixedFont.pages * s_fixedFont.width ] );
+    xpos += s_fixedFont.width;
+    return 1;
+}
+
+size_t ssd1306_print(const char ch[])
+{
+    size_t n = 0;
+    while (*ch)
+    {
+        n += ssd1306_write(*ch);
+        ch++;
+    }
+    return n;
+}
 
 uint8_t ssd1306_charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style)
 {

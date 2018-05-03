@@ -27,7 +27,7 @@
 
 #include "intf/ssd1306_interface.h"
 #include "lcd/lcd_common.h"
-#include "hal/io.h"
+#include "ssd1306_hal/io.h"
 
 #ifdef SSD1306_USI_SPI_SUPPORTED
 

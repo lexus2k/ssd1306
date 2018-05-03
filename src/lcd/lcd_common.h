@@ -28,7 +28,7 @@
 #ifndef _LCD_COMMON_H_
 #define _LCD_COMMON_H_
 
-#include "hal/io.h"
+#include "ssd1306_hal/io.h"
 
 #ifdef __cplusplus
 extern "C" {

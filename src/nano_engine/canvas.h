@@ -29,13 +29,15 @@
 #ifndef _NANO_CANVAS_H_
 #define _NANO_CANVAS_H_
 
-#include "hal/io.h"
+#include "ssd1306_hal/io.h"
+#include "ssd1306_hal/Print_internal.h"
 #include "nano_gfx_types.h"
 
 enum
 {
-    CANVAS_TEXT_WRAP = 1,
-    CANVAS_MODE_TRANSPARENT = 2,
+    CANVAS_TEXT_WRAP            = 0x01,
+    CANVAS_MODE_TRANSPARENT     = 0x02,
+    CANVAS_TEXT_WRAP_LOCAL      = 0x04,
 };
 
 
@@ -264,7 +266,7 @@ typedef struct _NanoRect
  * Depending on BPP argument, this class can work with 1,8,16-bit canvas areas.
  */
 template <uint8_t BPP>
-class NanoCanvasOps
+class NanoCanvasOps: public Print
 {
 public:
     /** number of bits per single pixel in buffer */
@@ -436,7 +438,7 @@ public:
      * Writes single character to canvas
      * @param c - character code to print
      */
-    void write(uint8_t c);
+    size_t write(uint8_t c) override;
 
     /**
      * Draws single character to canvas

@@ -29,7 +29,7 @@
 #ifndef _OLED_SSD1351_H_
 #define _OLED_SSD1351_H_
 
-#include "hal/io.h"
+#include "ssd1306_hal/io.h"
 #include "lcd/lcd_common.h"
 
 #ifdef __cplusplus

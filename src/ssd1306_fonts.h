@@ -28,7 +28,7 @@
 #ifndef SSD1306_FONTS_H
 #define SSD1306_FONTS_H
 
-#include "hal/io.h"
+#include "ssd1306_hal/io.h"
 
 /**
  * @defgroup LCD_FONTS Supported LCD fonts

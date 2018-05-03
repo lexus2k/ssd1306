@@ -29,7 +29,7 @@
 #ifndef _TFT_IL9163_H_
 #define _TFT_IL9163_H_
 
-#include "hal/io.h"
+#include "ssd1306_hal/io.h"
 #include "lcd/lcd_common.h"
 
 #ifdef __cplusplus

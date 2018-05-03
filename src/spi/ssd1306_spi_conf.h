@@ -29,6 +29,6 @@
 #ifndef _SSD1306_SPI_CONF_H_
 #define _SSD1306_SPI_CONF_H_
 
-#include "hal/io.h"
+#include "ssd1306_hal/io.h"
 
 #endif

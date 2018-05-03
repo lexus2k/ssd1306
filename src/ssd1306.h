@@ -232,6 +232,10 @@ uint8_t     ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFont
  */
 uint8_t     ssd1306_printFixedN(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style, uint8_t factor);
 
+size_t      ssd1306_write(uint8_t ch);
+
+size_t      ssd1306_print(const char ch[]);
+
 /**
  * Prints text to screen using font 6x8.
  * @param x - horizontal position in pixels

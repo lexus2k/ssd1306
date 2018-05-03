@@ -29,7 +29,7 @@
 #ifndef _SSD1306_SPI_LINUX_H_
 #define _SSD1306_SPI_LINUX_H_
 
-#include "hal/io.h"
+#include "ssd1306_hal/io.h"
 #include "ssd1306_spi_conf.h"
 
 #ifdef SSD1306_LINUX_SUPPORTED

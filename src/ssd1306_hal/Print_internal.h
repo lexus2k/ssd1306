@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2018, Alexey Dynda
+    Copyright (c) 2018, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -23,41 +23,47 @@
 */
 
 /**
- * @file ssd1306_i2c_embedded.h embedded SSD1306 i2c communication functions
+ * @file ssd1306_hal/Print_internal.h SSD1306 Print class implementation
  */
 
-#ifndef _SSD1306_I2C_EMBEDDED_H_
-#define _SSD1306_I2C_EMBEDDED_H_
+#ifndef _SSD1306_HAL_PRINT_INTERNAL_H_
+#define _SSD1306_HAL_PRINT_INTERNAL_H_
+
+#ifdef ARDUINO
+
+/* Include standard print class for Arduino environment */
+#include "Print.h"
+
+#else
 
 #include "ssd1306_hal/io.h"
-#include "ssd1306_i2c_conf.h"
 
-#ifdef SSD1306_I2C_SW_SUPPORTED
+/* Implement own Print class for plain AVR and Linux environment */
+class Print
+{
+public:
+    Print() {}
+    virtual size_t write(uint8_t) = 0;
 
-#ifdef __cplusplus
-extern "C" {
+    size_t print(const char* str)
+    {
+        size_t n = 0;
+        while (*str)
+        {
+            n += write(*str);
+            str++;
+        }
+        return n;
+    }
+
+    size_t println(const char* str)
+    {
+        size_t n = print(str);
+        n += write('\n');
+        return n;
+    };
+};
+
 #endif
 
-/**
- * @ingroup LCD_HW_INTERFACE_API
- *
- * Initializes software implementation of i2c.
- * If you do not know i2c parameters, try ssd1306_i2cInit_Embedded(0,0,0).
- * @warning the function disables interrupts.
- * @param scl - i2c clock pin. Use -1 if you don't need to change default pin number
- * @param sda - i2c data pin. Use -1 if you don't need to change default pin number
- * @param sa  - i2c address of lcd display. Use 0 to leave default
- *
- * @note: after call to this function you need to initialize lcd display.
- */
-void ssd1306_i2cInit_Embedded(int8_t scl, int8_t sda, uint8_t sa);
-
-#ifdef __cplusplus
-}
 #endif
-
-#endif
-
-#endif /* _SSD1306_I2C_EMBEDDED_H_ */
-
-

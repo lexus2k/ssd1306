@@ -327,7 +327,7 @@ void NanoCanvasOps<8>::printChar(uint8_t c)
 }
 
 template <>
-void NanoCanvasOps<8>::write(uint8_t c)
+size_t NanoCanvasOps<8>::write(uint8_t c)
 {
     if (c == '\n')
     {
@@ -342,12 +342,18 @@ void NanoCanvasOps<8>::write(uint8_t c)
     {
         printChar( c );
         m_cursorX += (lcdint_t)s_fixedFont.width;
-        if ((m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)ssd1306_lcd.width - (lcdint_t)s_fixedFont.width)))
+        if ( ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorX > ((lcdint_t)m_w - (lcdint_t)s_fixedFont.width) ) )
+           || ( (m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)ssd1306_lcd.width - (lcdint_t)s_fixedFont.width)) ) )
         {
             m_cursorY += (lcdint_t)s_fixedFont.height;
             m_cursorX = 0;
+            if ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorY > ((lcdint_t)m_h - (lcdint_t)s_fixedFont.height)) )
+            {
+                m_cursorY = 0;
+            }
         }
     }
+    return 1;
 }
 
 template <>
@@ -719,7 +725,7 @@ void NanoCanvasOps<1>::printChar(uint8_t c)
 }
 
 template <>
-void NanoCanvasOps<1>::write(uint8_t c)
+size_t NanoCanvasOps<1>::write(uint8_t c)
 {
     if (c == '\n')
     {
@@ -734,12 +740,18 @@ void NanoCanvasOps<1>::write(uint8_t c)
     {
         printChar( c );
         m_cursorX += (lcdint_t)s_fixedFont.width;
-        if ((m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)ssd1306_lcd.width - (lcdint_t)s_fixedFont.width)))
+        if ( ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorX > ((lcdint_t)m_w - (lcdint_t)s_fixedFont.width) ) )
+           || ( (m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)ssd1306_lcd.width - (lcdint_t)s_fixedFont.width)) ) )
         {
             m_cursorY += (lcdint_t)s_fixedFont.height;
             m_cursorX = 0;
+            if ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorY > ((lcdint_t)m_h - (lcdint_t)s_fixedFont.height)) )
+            {
+                m_cursorY = 0;
+            }
         }
     }
+    return 1;
 }
 
 template <>
@@ -977,8 +989,6 @@ void NanoCanvasOps<16>::fillRect(const NanoRect &rect)
     fillRect(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
 }
 
-//#include <stdio.h>
-
 template <>
 void NanoCanvasOps<16>::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
@@ -1013,8 +1023,6 @@ void NanoCanvasOps<16>::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, l
     }
     uint8_t offs2 = 8 - offs;
     lcdint_t y = y1;
-//    printf("[%d;%d] + [%d;%d], P1[%d;%d], P2[%d;%d]\n", xpos, ypos, offset.x, offset.y, x1,y1,x2,y2);
-//    printf("offset: 1=%d, 2=%d\n", offs, offs2);
     while ( y <= y2)
     {
         for ( lcdint_t x = x1; x <= x2; x++ )
@@ -1106,7 +1114,7 @@ void NanoCanvasOps<16>::printChar(uint8_t c)
 }
 
 template <>
-void NanoCanvasOps<16>::write(uint8_t c)
+size_t NanoCanvasOps<16>::write(uint8_t c)
 {
     if (c == '\n')
     {
@@ -1121,12 +1129,18 @@ void NanoCanvasOps<16>::write(uint8_t c)
     {
         printChar( c );
         m_cursorX += (lcdint_t)s_fixedFont.width;
-        if ((m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)ssd1306_lcd.width - (lcdint_t)s_fixedFont.width)))
+        if ( ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorX > ((lcdint_t)m_w - (lcdint_t)s_fixedFont.width) ) )
+           || ( (m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)ssd1306_lcd.width - (lcdint_t)s_fixedFont.width)) ) )
         {
             m_cursorY += (lcdint_t)s_fixedFont.height;
             m_cursorX = 0;
+            if ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorY > ((lcdint_t)m_h - (lcdint_t)s_fixedFont.height)) )
+            {
+                m_cursorY = 0;
+            }
         }
     }
+    return 1;
 }
 
 template <>

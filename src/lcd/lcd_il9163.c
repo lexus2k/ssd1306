@@ -26,7 +26,7 @@
 #include "lcd_common.h"
 #include "intf/ssd1306_interface.h"
 #include "spi/ssd1306_spi.h"
-#include "hal/io.h"
+#include "ssd1306_hal/io.h"
 #include "nano_gfx_types.h"
 
 #define CMD_ARG     0xFF

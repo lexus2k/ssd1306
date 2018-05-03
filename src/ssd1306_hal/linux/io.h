@@ -180,14 +180,6 @@ static inline long random(long min, long max)
 {
     return rand() % (max - min + 1) + min;
 }
-
-class Print
-{
-public:
-    Print() {}
-    virtual size_t write(uint8_t) = 0;
-};
-
 #endif
 
 #endif

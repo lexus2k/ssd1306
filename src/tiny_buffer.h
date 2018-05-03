@@ -42,7 +42,7 @@
  *      lcd.clear();
  *      lcd.charF6x8(0,0,"Hello");
  * }
- *
+ * @deprecated Do not use this class
  */
 class TinyBuffer: public NanoCanvas
 {
