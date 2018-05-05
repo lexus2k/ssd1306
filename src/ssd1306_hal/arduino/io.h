@@ -85,6 +85,8 @@
     #define LCDINT_TYPES_DEFINED
     typedef int8_t lcdint_t;
     typedef uint8_t lcduint_t;
+    /** The macro is defined when micro controller doesn't support multiplication operation */
+    #define SSD1306_MULTIPLICATION_NOT_SUPPORTED
 
 #elif defined(ESP8266) || defined(ESP32) || defined(ESP31B) || defined(ARDUINO_ARCH_SAMD)
     /* SW implementation of i2c isn't supported on ESP platforms */

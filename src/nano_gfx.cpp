@@ -28,8 +28,13 @@
 extern const uint8_t *s_font6x8;
 extern SFixedFontInfo s_fixedFont;
 
+#ifdef SSD1306_MULTIPLICATION_NOT_SUPPORTED
 #define YADDR(y) (static_cast<uint16_t>((y) >> 3) << m_p)
 #define BADDR(b) ((b) << m_p)
+#else
+#define YADDR(y) (static_cast<uint16_t>((y) >> 3) * m_w)
+#define BADDR(b) ((b) * m_w)
+#endif
 
 void NanoCanvas::putPixel(uint8_t x, uint8_t y)
 {

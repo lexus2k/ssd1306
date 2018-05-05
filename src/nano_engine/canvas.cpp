@@ -424,8 +424,13 @@ void NanoCanvas8::blt()
 //
 /////////////////////////////////////////////////////////////////////////////////
 
+#ifdef SSD1306_MULTIPLICATION_NOT_SUPPORTED
 #define YADDR1(y) (static_cast<uint16_t>((y) >> 3) << m_p)
 #define BANK_ADDR1(b) ((b) << m_p)
+#else
+#define YADDR1(y) (static_cast<uint16_t>((y) >> 3) * m_w)
+#define BANK_ADDR1(b) ((b) * m_w)
+#endif
 
 template <>
 void NanoCanvasOps<1>::putPixel(lcdint_t x, lcdint_t y)
