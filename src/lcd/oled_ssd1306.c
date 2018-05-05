@@ -47,7 +47,7 @@ static const uint8_t PROGMEM s_oled128x64_initData[] =
     SSD1306_SETVCOMDETECT, 0x20,    // vcom deselect to 0x20 // 0x40
     SSD1306_CHARGEPUMP, 0x14,       // Enable charge pump
     SSD1306_DISPLAYALLON_RESUME,
-    SSD1306_DISPLAYON 
+    SSD1306_DISPLAYON,
 };
 
 static const uint8_t PROGMEM s_oled128x32_initData[] =
@@ -67,7 +67,7 @@ static const uint8_t PROGMEM s_oled128x32_initData[] =
     SSD1306_MEMORYMODE, HORIZONTAL_ADDRESSING_MODE,
     SSD1306_DISPLAYALLON_RESUME,
     SSD1306_NORMALDISPLAY,
-    SSD1306_DISPLAYON
+    SSD1306_DISPLAYON,
 };
 
 static void ssd1306_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
