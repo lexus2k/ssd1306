@@ -50,7 +50,7 @@ typedef struct
     bool    falling;
 } SnowFlake;
 
-/* 
+/*
  * Define snowflake images directly in flash memory.
  * This reduces SRAM consumption.
  * The image is defined from bottom to top (bits), from left to right (bytes).
