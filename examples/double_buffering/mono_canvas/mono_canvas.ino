@@ -35,7 +35,7 @@
 #include "ssd1306.h"
 #include "nano_engine.h"
 
-/* 
+/*
  * Heart image below is defined directly in flash memory.
  * This reduces SRAM consumption.
  * The image is define from bottom to top (bits), from left to
@@ -87,7 +87,7 @@ void setup()
 {
     /* Initialize and clear display */
     ssd1306_128x64_i2c_init();
-//    ssd1306_128x64_i2c_init();
+//    ssd1306_128x64_spi_init(3, 4, 5);
 //    pcd8544_84x48_spi_init(3, 4, 5); // 3 RST, 4 CES, 5 DS
 //    ssd1331_96x64_spi_init(3, 4, 5);
 //    ssd1351_128x128_spi_init(3, 4, 5);
