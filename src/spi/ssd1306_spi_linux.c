@@ -169,6 +169,14 @@ static void sdl_send_bytes(const uint8_t *buffer, uint16_t size)
 void ssd1306_spiInit_Linux(int8_t busId, int8_t ces, int8_t dcPin)
 {
     sdl_core_init();
+    if (ces >= 0)
+    {
+        s_ssd1306_cs = ces;
+    }
+    if (dcPin >= 0)
+    {
+        s_ssd1306_dc = dcPin;
+    }
     sdl_set_dc_pin(dcPin);
     ssd1306_intf.spi = 1;
     ssd1306_intf.start = sdl_send_init;
