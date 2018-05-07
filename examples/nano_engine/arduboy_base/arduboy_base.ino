@@ -31,8 +31,15 @@
 
 NanoEngine1 engine;
 
-NanoRect rect = { {15,12}, {60,35} }; // Lets make rect smaller than in previous example
+/* Define rect to move on the display */
+NanoRect rect = { {15,12}, {60,35} }; 
 
+/*
+ * This function is called every time engine needs to refresh display content.
+ * Just draw here all you need as usual.
+ * If the function returns false, then block, pointed by engine.canvas.offset will
+ * not be refreshed
+ */
 bool drawAll()
 {
     engine.canvas.clear();
@@ -45,9 +52,9 @@ void setup()
 {
     /* Init Mono OLED 128x64 for Arduboy. 6 - RESET, 12 - CS, 4 - D/C */
     ssd1306_128x64_spi_init(6, 12, 4);
-
+    /* initialize engine */
     engine.begin();
-    engine.setFrameRate(45);
+    engine.setFrameRate(45);          // Set frame rate
     engine.drawCallback( drawAll );  // Set callback to draw content
     engine.connectArduboyKeys();     // Connect Arduboy keypad
     engine.refresh();                // Makes engine to refresh whole display content at start-up
@@ -55,8 +62,8 @@ void setup()
 
 void loop()
 {
-    if (!engine.nextFrame()) return;
-    NanoPoint point = {0,0};
+    if (!engine.nextFrame()) return; // exit if we're still waiting for next frame
+    NanoPoint point = {0,0};  // calculate vector to move rect
     if (engine.pressed( BUTTON_RIGHT )) point.x = +1;
     if (engine.pressed( BUTTON_LEFT ))  point.x = -1;
     if (engine.pressed( BUTTON_UP ))    point.y = -1;
