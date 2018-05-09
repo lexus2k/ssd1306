@@ -237,15 +237,15 @@ volatile static uint8_t uart_buf[UART_BUFFER_RX];
 
 ISR(USART_RX_vect, ISR_BLOCK)
 {
-//    if (bit_is_clear(UCSR0A, FE0)) // Do not perform error checks for now
-//    {
+    if (bit_is_clear(UCSR0A, FE0)) // Do not perform error checks for now
+    {
         uart_buf[uart_put_ptr] = UDR0;
         uart_put_ptr = (uart_put_ptr+1) & (UART_BUFFER_RX - 1);
-//    }
-//    else
-//    {
-//        volatile unsigned char data __attribute__((unused)) = UDR0;
-//    }
+    }
+    else
+    {
+        volatile unsigned char data __attribute__((unused)) = UDR0;
+    }
 }
 
 void uart_init()
