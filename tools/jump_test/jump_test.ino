@@ -50,5 +50,4 @@ void loop() {
     : "r30", "r31", "r16", "r17", "r20");
     Serial.println((uint8_t)result, HEX);
     Serial.println();
-   
 }
