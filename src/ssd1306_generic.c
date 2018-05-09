@@ -43,6 +43,8 @@ uint16_t ssd1306_color = 0xFFFF;
 static uint8_t s_invertByte = 0x00000000;
 const uint8_t *s_font6x8 = &ssd1306xled_font6x8[4];
 SFixedFontInfo s_fixedFont = { 0 };
+static lcduint_t s_cursor_x = 0;
+static lcduint_t s_cursor_y = 0;
 
 uint8_t      ssd1306_displayHeight()
 {
@@ -350,36 +352,40 @@ uint8_t ssd1306_printFixedN(uint8_t xpos, uint8_t y, const char ch[], EFontStyle
     return j;
 }
 
+void       ssd1306_setCursor(lcdint_t x, lcdint_t y)
+{
+    s_cursor_x = x;
+    s_cursor_y = y;
+}
+
 size_t ssd1306_write(uint8_t ch)
 {
-    static lcduint_t xpos = 0;
-    static lcduint_t ypos = 0;
     if (ch == '\r')
     {
-        xpos = 0;
+        s_cursor_x = 0;
         return 0;
     }
-    else if ( (xpos > ssd1306_lcd.width - s_fixedFont.width) || (ch == '\n') )
+    else if ( (s_cursor_x > ssd1306_lcd.width - s_fixedFont.width) || (ch == '\n') )
     {
-        xpos = 0;
-        ypos += s_fixedFont.height;
-        if ( ypos > ssd1306_lcd.height - s_fixedFont.height )
+        s_cursor_x = 0;
+        s_cursor_y += s_fixedFont.height;
+        if ( s_cursor_y > ssd1306_lcd.height - s_fixedFont.height )
         {
-            ypos = 0;
+            s_cursor_y = 0;
         }
-        ssd1306_clearBlock(0, ypos>>3, ssd1306_lcd.width, s_fixedFont.height);
+        ssd1306_clearBlock(0, s_cursor_y>>3, ssd1306_lcd.width, s_fixedFont.height);
         if (ch == '\n')
         {
             return 0;
         }
     }
     ch -= s_fixedFont.ascii_offset;
-    ssd1306_drawBitmap( xpos,
-                        ypos>>3,
+    ssd1306_drawBitmap( s_cursor_x,
+                        s_cursor_y>>3,
                         s_fixedFont.width,
                         s_fixedFont.height,
                        &s_fixedFont.data[ ch * s_fixedFont.pages * s_fixedFont.width ] );
-    xpos += s_fixedFont.width;
+    s_cursor_x += s_fixedFont.width;
     return 1;
 }
 
@@ -893,7 +899,7 @@ void         ssd1306_replaceSprite(SPRITE *sprite, const uint8_t *data)
 void         ssd1306_invertMode()
 {
     if (ssd1306_lcd.type != LCD_TYPE_SSD1331)
-    { 
+    {
         ssd1306_sendCommand(SSD1306_INVERTDISPLAY);
     }
 }
@@ -901,7 +907,7 @@ void         ssd1306_invertMode()
 void         ssd1306_normalMode()
 {
     if (ssd1306_lcd.type != LCD_TYPE_SSD1331)
-    { 
+    {
         ssd1306_sendCommand(SSD1306_NORMALDISPLAY);
     }
 }
@@ -909,7 +915,7 @@ void         ssd1306_normalMode()
 void         ssd1306_flipHorizontal(uint8_t mode)
 {
     if (ssd1306_lcd.type != LCD_TYPE_SSD1331)
-    { 
+    {
          ssd1306_sendCommand( SSD1306_SEGREMAP | (mode ? 0x00: 0x01 ) );
     }
 }
@@ -917,11 +923,11 @@ void         ssd1306_flipHorizontal(uint8_t mode)
 void         ssd1306_flipVertical(uint8_t mode)
 {
     if (ssd1306_lcd.type != LCD_TYPE_SSD1331)
-    { 
+    {
          ssd1306_sendCommand( mode ? SSD1306_COMSCANINC : SSD1306_COMSCANDEC );
     }
 }
- 
+
 void         ssd1306_negativeMode()
 {
     s_invertByte = 0xFF;

@@ -233,6 +233,15 @@ uint8_t     ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFont
 uint8_t     ssd1306_printFixedN(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style, uint8_t factor);
 
 /**
+ * @brief Sets cursor position for text mode print functions.
+ *
+ * Sets cursor position for text mode print functions.
+ * @param x xpos in pixels
+ * @param y ypos in pixels
+ */
+void       ssd1306_setCursor(lcdint_t x, lcdint_t y);
+
+/**
  * @brief Prints single character to display at current cursor position
  *
  * Prints single character to display at current cursor position
