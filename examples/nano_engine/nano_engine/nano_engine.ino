@@ -83,9 +83,6 @@ void setup()
     ssd1306_setFixedFont(ssd1306xled_font6x8);
     ssd1331_96x64_spi_init(3, 4, 5);
 
-    /* 8-bit engine works only in Horizontal addressing mode */
-    ssd1331_setMode(LCD_MODE_NORMAL);
-
     /* Set draw callback, it will be called by engine every time, *
      * when it needs to refresh some area on the lcd display.     */
     engine.drawCallback( drawAll );
