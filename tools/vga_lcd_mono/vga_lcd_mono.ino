@@ -33,59 +33,14 @@ void vga_interface_close()
 {
 }
 
-void vga_put_pixel4(uint8_t x, uint8_t y, uint8_t color)
+void vga_put_pixel1(uint8_t x, uint8_t y, uint8_t color)
 {
-    uint8_t mask;
-    if ((x&1))
-    {
-        mask = 0x0F;
-        color <<= 4;
-    }
+    uint8_t mask = 1 << (x & 0x7);
+    uint16_t addr = (x + y*ssd1306_lcd.width)/8;
+    if (color)
+        s_vga_buffer[addr] |= mask;
     else
-    {
-        mask = 0xF0;
-    }
-    uint16_t addr = (x + y*ssd1306_lcd.width)/2;
-    s_vga_buffer[addr] &= mask;
-    s_vga_buffer[addr] |= color;
-}
-
-void vga_interface_send_byte4(uint8_t data)
-{
-    if (s_vga_command == 0xFF)
-    {
-        s_vga_command = data;
-        return;
-    }
-    if (s_vga_command == 0x40)
-    {
-        uint8_t color = ((data & 0x80) >> 5) | ((data & 0x10) >> 3) | ((data & 0x02)>>1);
-        vga_put_pixel4(s_cursor_x, s_cursor_y, color);
-        if (s_page == 0xFF)
-        {
-            s_cursor_x++;
-            if (s_cursor_x > s_column_end)
-            {
-                s_cursor_x = s_column;
-                s_cursor_y++;
-            }
-        }
-        else
-        {
-            s_cursor_y++;
-            if ((s_cursor_y & 0x07) == 0)
-            {
-                s_cursor_y = s_page * 8;
-                s_cursor_x++;
-            }
-        }
-        return;
-    }
-    if (!s_vga_command)
-    {
-        s_vga_command = data;
-    }
-    // command mode
+        s_vga_buffer[addr] &= ~mask;
 }
 
 void vga_interface_send_byte1(uint8_t data)
@@ -97,23 +52,20 @@ void vga_interface_send_byte1(uint8_t data)
     }
     if (s_vga_command == 0x40)
     {
-        uint8_t mask = (0x1 << (s_cursor_x & 0x7));
-        uint16_t addr = (s_cursor_x + s_cursor_y*ssd1306_lcd.width)/8;
-        for(uint8_t i=8; i>0; i++)
-        {
-            if (data & 0x01)
-            {
-                s_vga_buffer[addr] |= mask;
-            }
-            else
-            {
-                s_vga_buffer[addr] &= ~mask;
-            }
-            data>>=1;
-            addr+=ssd1306_lcd.width/8;
-        }
+        vga_put_pixel1(s_cursor_x, s_cursor_y+0, data & 0x1);
+        vga_put_pixel1(s_cursor_x, s_cursor_y+1, data & 0x2);
+        vga_put_pixel1(s_cursor_x, s_cursor_y+2, data & 0x4);
+        vga_put_pixel1(s_cursor_x, s_cursor_y+3, data & 0x8);
+        vga_put_pixel1(s_cursor_x, s_cursor_y+4, data & 0x10);
+        vga_put_pixel1(s_cursor_x, s_cursor_y+5, data & 0x20);
+        vga_put_pixel1(s_cursor_x, s_cursor_y+6, data & 0x40);
+        vga_put_pixel1(s_cursor_x, s_cursor_y+7, data & 0x80);
         s_cursor_x++;
         return;
+    }
+    if (!s_vga_command)
+    {
+        s_vga_command = data;
     }
     // command mode
 }
@@ -132,7 +84,7 @@ void init_vga_interface()
     ssd1306_intf.spi = 0;
     ssd1306_intf.start = vga_interface_init;
     ssd1306_intf.stop = vga_interface_stop;
-    ssd1306_intf.send = vga_interface_send_byte4;
+    ssd1306_intf.send = vga_interface_send_byte1;
     ssd1306_intf.send_buffer = vga_interface_send_bytes;
     ssd1306_intf.close = vga_interface_close;
 }
@@ -157,55 +109,18 @@ void vga_next_page1(void)
     vga_set_block1(s_column,s_page+1,0);
 }
 
-void vga_set_block2(lcduint_t x, lcduint_t y, lcduint_t w)
-{
-    uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
-    s_column = x;
-    s_column_end = rx;
-    s_page = 0xFF; // disable ssd1306 mode
-    s_cursor_x = s_column;
-    s_cursor_y = y;
-    ssd1306_intf.start();
-    ssd1306_intf.send(0x40);
-}
-
-void vga_next_page2(void)
-{
-}
-
-void vga_send_pixels(uint8_t data)
-{
-    for (uint8_t i=8; i>0; i--)
-    {
-        if ( data & 0x01 )
-        {
-            ssd1306_intf.send( (uint8_t)ssd1306_color );
-        }
-        else
-        {
-            ssd1306_intf.send( 0B00000000 );
-        }
-        data >>= 1;
-    }
-}
-
 void vga_send_pixels_buffer(const uint8_t *buffer, uint16_t len)
 {
     while(len--)
     {
-        vga_send_pixels(*buffer);
+        ssd1306_intf.send(*buffer);
         buffer++;
     }
 }
 
 void vga_set_mode(lcd_mode_t mode)
 {
-    if (mode == LCD_MODE_NORMAL)
-    {
-        ssd1306_lcd.set_block = vga_set_block2;
-        ssd1306_lcd.next_page = vga_next_page2;
-    }
-    else if (mode == LCD_MODE_SSD1306_COMPAT)
+    if (mode == LCD_MODE_SSD1306_COMPAT)
     {
         ssd1306_lcd.set_block = vga_set_block1;
         ssd1306_lcd.next_page = vga_next_page1;
@@ -216,11 +131,11 @@ void vga_set_mode(lcd_mode_t mode)
 void init_vga_lcd()
 {
     ssd1306_lcd.type = LCD_TYPE_SSD1331;
-    ssd1306_lcd.width = 64;
-    ssd1306_lcd.height = 40;
+    ssd1306_lcd.width = 96;
+    ssd1306_lcd.height = 64;
     ssd1306_lcd.set_block = vga_set_block1;
     ssd1306_lcd.next_page = vga_next_page1;
-    ssd1306_lcd.send_pixels1  = vga_send_pixels;
+    ssd1306_lcd.send_pixels1  = ssd1306_intf.send;
     ssd1306_lcd.send_pixels_buffer1 = vga_send_pixels_buffer;
     ssd1306_lcd.send_pixels8 = ssd1306_intf.send;
     ssd1306_lcd.set_mode = vga_set_mode;
@@ -409,7 +324,7 @@ void vga_uart_on_receive(uint8_t data)
 static const uint8_t H_SYNC_PIN = 3;
 static const uint8_t V_SYNC_PIN = 10;
 // Total number of lines used in specific scan mode
-static uint16_t s_total_mode_lines = 40*8;
+static uint16_t s_total_mode_lines = 64*4;
 
 // Lines to skip before starting to draw first line of the screen content
 // This includes V-sync signal + front porch
@@ -446,7 +361,7 @@ ISR(TIMER2_COMPB_vect) // for end of h-sync pulse
     // This is dejitter code, it purpose to start pixels output at the same offset after h-sync
     asm volatile(
       "     lds r16, %[timer0]    \n\t" //
-      "     subi r16, -3           \n\t" // some offset, calculated experimentally
+      "     subi r16, -2           \n\t" // some offset, calculated experimentally
       "     andi r16, 7           \n\t" // use module 8 value from Timer 0 counter
       "     ldi r31, pm_hi8(LW)   \n\t" // load label address
       "     ldi r30, pm_lo8(LW)   \n\t" //
@@ -466,19 +381,25 @@ ISR(TIMER2_COMPB_vect) // for end of h-sync pulse
     : "r30", "r31", "r16", "r17");
     // output all pixels
     asm volatile(
-         "ldi r20, 16\n\t"
-         ".rept 32\n\t"
+         "ldi r20, 128\n\t"
+         ".rept 12\n\t"
          "ld r16, Z+\n\t"
-         "nop\n\t"               // to make pixel wider in 64x40 mode
-         "nop\n\t"               // to make pixel wider in 64x40 mode
          "out %[port], r16\n\t"
          "mul r16, r20\n\t"
-         "nop\n\t"               // to make pixel wider in 64x40 mode
-         "nop\n\t"               // to make pixel wider in 64x40 mode
+         "out %[port], r1\n\t"
+         "mul r1, r20\n\t"
+         "out %[port], r1\n\t"
+         "mul r1, r20\n\t"
+         "out %[port], r1\n\t"
+         "mul r1, r20\n\t"
+         "out %[port], r1\n\t"
+         "mul r1, r20\n\t"
+         "out %[port], r1\n\t"
+         "mul r1, r20\n\t"
+         "out %[port], r1\n\t"
+         "mul r1, r20\n\t"
          "out %[port], r1\n\t"
          ".endr\n\t"
-         "nop\n\t"               // to make pixel wider in 64x40 mode
-         "nop\n\t"               // to make pixel wider in 64x40 mode
          "nop\n\t"
          "ldi r16,0\n\t"
          "out %[port], r16 \n\t"
@@ -490,9 +411,9 @@ ISR(TIMER2_COMPB_vect) // for end of h-sync pulse
     );
 
     s_current_scan_line++;
-    if ((s_current_scan_line & 0x7) == 0)
+    if ((s_current_scan_line & 0x3) == 0)
     {
-        s_current_scan_line_data+=32;
+        s_current_scan_line_data+=96/8;
     }
 }
 
@@ -531,8 +452,8 @@ void init_vga_crt_driver(void)
   // Set up USART in SPI mode (MSPIM)
 
   pinMode(14, OUTPUT);
-  pinMode(15, OUTPUT);
-  pinMode(16, OUTPUT);
+//  pinMode(15, OUTPUT);
+//  pinMode(16, OUTPUT);
   PORTC = 0;
 
   // prepare to sleep between horizontal sync pulses
@@ -570,7 +491,7 @@ void setup()
     ssd1306_printFixed(24,16,"by",STYLE_BOLD);
     ssd1306_printFixed(4,24,"Alexey D.",STYLE_BOLD);
     ssd1331_setColor(RGB_COLOR8(255,0,0));
-    ssd1306_drawRect(0,0,63,39);
+    ssd1306_drawRect(0,0,95,63);
 
 /*    engine.begin();
     engine.drawCallback( drawAll );
