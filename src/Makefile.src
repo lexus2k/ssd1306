@@ -44,6 +44,8 @@ SRCS_C = \
 	lcd/oled_ssd1306.c \
 	lcd/oled_ssd1331.c \
 	lcd/oled_ssd1351.c \
+	lcd/vga_monitor.c \
+	lcd/vga/vga_controller.c \
 
 SRCS_CPP = \
 	nano_engine/canvas.cpp \

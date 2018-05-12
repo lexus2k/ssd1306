@@ -64,6 +64,11 @@
     #define SSD1306_TWI_SUPPORTED
     /** The macro is defined when SPI module is available */
     #define SSD1306_AVR_SPI_SUPPORTED
+    /** The macro is defined when UART module is available */
+    #define SSD1306_UART_SUPPORTED
+    /** The macro is defined when VGA monitor control is available directly from controller */
+    #define SSD1306_BUILTIN_VGA_SUPPORT
+
 #else
     /** The macro is defined when software i2c implementation is available */
     #define SSD1306_I2C_SW_SUPPORTED

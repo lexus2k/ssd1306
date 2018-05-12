@@ -97,6 +97,24 @@
     /** The macro is defined when SPI library is available */
     #define SSD1306_SPI_SUPPORTED
 
+#elif defined(__AVR_ATmega328P__)
+    /** The macro is defined when i2c Wire library is available */
+    #define SSD1306_I2C_SW_SUPPORTED
+    /** The macro is defined when i2c Wire library is available */
+    #define SSD1306_WIRE_SUPPORTED
+    /** The macro is defined when Wire library speed can be configured */
+    #define SSD1306_WIRE_CLOCK_CONFIGURABLE
+    /** The macro is defined when TWI module is available (ATTINY) */
+    #define SSD1306_TWI_SUPPORTED
+    /** The macro is defined when SPI library is available */
+    #define SSD1306_SPI_SUPPORTED
+    /** The macro is defined when SPI module is available (ATMEGA) */
+    #define SSD1306_AVR_SPI_SUPPORTED
+    /** The macro is defined when UART module is available */
+    #define SSD1306_UART_SUPPORTED
+    /** The macro is defined when VGA monitor control is available directly from controller */
+    #define SSD1306_BUILTIN_VGA_SUPPORT
+
 #else
     /** The macro is defined when i2c Wire library is available */
     #define SSD1306_I2C_SW_SUPPORTED
