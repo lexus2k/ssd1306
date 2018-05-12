@@ -34,16 +34,43 @@ volatile uint8_t g_uart_buf[UART_BUFFER_RX];
 static uint8_t s_uart_get_ptr = 0;
 static uint8_t s_uart_interrupt = 0;
 
+#define BAUD 115200
+#include <util/setbaud.h>
+static const uint8_t ubrr0h_115200 = UBRRH_VALUE;
+static const uint8_t ubrr0l_115200 = UBRRL_VALUE;
+#ifdef USE_2X
+static const uint8_t u2x0_115200 = 1;
+#else
+static const uint8_t u2x0_115200 = 0;
+#endif
+
+#define BAUD 57600
+#include <util/setbaud.h>
+static const uint8_t ubrr0h_57600 = UBRRH_VALUE;
+static const uint8_t ubrr0l_57600 = UBRRL_VALUE;
+#ifdef USE_2X
+static const uint8_t u2x0_57600 = 1;
+#else
+static const uint8_t u2x0_57600 = 0;
+#endif
+
 void uart_init_internal(uint32_t baud, uint8_t interrupt)
 {
-    uint16_t ubrr0 = (((F_CPU) + 8UL * (baud)) / (16UL * (baud)) -1UL);
     s_uart_interrupt = interrupt;
-
-    UBRR0H = ubrr0 >> 8;
-    UBRR0L = ubrr0 & 0xFF;
-    // no double speed
-    UCSR0A &= ~(_BV(U2X0));
-
+    switch (baud)
+    {
+        case 57600:
+            UBRR0H = ubrr0h_57600;
+            UBRR0L = ubrr0l_57600;
+            if (u2x0_57600) UCSR0A |= _BV(U2X0); else UCSR0A &= ~(_BV(U2X0));
+            break;
+        case 115200:
+        default:
+            UBRR0H = ubrr0h_115200;
+            UBRR0L = ubrr0l_115200;
+            if (u2x0_115200) UCSR0A |= _BV(U2X0); else UCSR0A &= ~(_BV(U2X0));
+            break;
+    }
     UCSR0C = _BV(UCSZ01) | _BV(UCSZ00); /* 8-bit data */
     UCSR0B = _BV(RXEN0) | _BV(TXEN0) | (s_uart_interrupt ? _BV(RXCIE0) : 0);
 }
@@ -61,24 +88,18 @@ static inline uint8_t uart_byte_available_direct(void)
 
 uint8_t uart_byte_available(void)
 {
-    if (s_uart_interrupt) return g_uart_put_ptr != s_uart_get_ptr;
-    return uart_byte_available_direct();
-}
-
-static inline uint8_t uart_read_byte_direct(void)
-{
-    return UDR0;
+    if (!s_uart_interrupt)
+    {
+        while (uart_byte_available_direct()) __uart_read_byte();
+    }
+    return g_uart_put_ptr != s_uart_get_ptr;
 }
 
 uint8_t uart_read_byte(void)
 {
-    if (s_uart_interrupt)
-    {
-        uint8_t data = g_uart_buf[s_uart_get_ptr];
-        s_uart_get_ptr = (s_uart_get_ptr + 1) & (UART_BUFFER_RX - 1);
-        return data;
-    }
-    return uart_read_byte_direct();
+    uint8_t data = g_uart_buf[s_uart_get_ptr];
+    s_uart_get_ptr = (s_uart_get_ptr + 1) & (UART_BUFFER_RX - 1);
+    return data;
 }
 
 #endif

@@ -1,7 +1,7 @@
 #include "ssd1306.h"
-#include "lcd/vga/vga_controller_base.h"
-//#define VGA_CONTROLLER_DEBUG
+#define VGA_CONTROLLER_DEBUG
 //#define SSD1306_VGA_SLEEP_MODE
+#include "lcd/vga/vga_controller_base.h"
 #include "lcd/vga/vga_controller.h"
 #include "lcd/vga_monitor.h"
 #include "nano_engine.h"
@@ -96,7 +96,8 @@ void vga_uart_on_receive(uint8_t data)
 
 void setup()
 {
-    uart_init(115200);
+    uart_init(57600);
+//    uart_init(115200);
     ssd1306_vgaController_init();
     vga_64x40_init();
 
@@ -107,7 +108,6 @@ void setup()
     ssd1306_printFixed(4,24,"Alexey D.",STYLE_BOLD);
     ssd1331_setColor(RGB_COLOR8(255,0,0));
     ssd1306_drawRect(0,0,63,39);
-
     #ifdef VGA_CONTROLLER_DEBUG
         ssd1306_debug_print_vga_buffer(uart_send_byte);
     #endif

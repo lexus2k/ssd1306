@@ -23,6 +23,7 @@
 */
 
 #include "vga_monitor.h"
+#include "vga_commands.h"
 #include "lcd_common.h"
 #include "intf/ssd1306_interface.h"
 #include "ssd1306_hal/io.h"
@@ -32,8 +33,6 @@ static uint8_t s_page = 0;
 
 extern uint16_t ssd1306_color;
 
-/////////////////////////////// VGA LCD //////////////////////////////////
-
 static void vga_set_block1(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
@@ -41,7 +40,7 @@ static void vga_set_block1(lcduint_t x, lcduint_t y, lcduint_t w)
     s_page = y;
     ssd1306_intf.start();
     ssd1306_intf.send(0x00);
-    ssd1306_intf.send(0x01); // set block
+    ssd1306_intf.send(VGA_SET_BLOCK);
     ssd1306_intf.send(s_column);
     ssd1306_intf.send(rx);
     ssd1306_intf.send(s_page * 8);

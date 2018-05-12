@@ -45,6 +45,12 @@ extern "C" {
 
 #include <stdint.h>
 
+#define UART_BUFFER_RX  32  // :( Still need large buffer to process USART RX bytes
+
+extern volatile uint8_t g_uart_put_ptr;
+
+extern volatile uint8_t g_uart_buf[];
+
 void uart_init_internal(uint32_t baud, uint8_t interrupt);
 
 /**
@@ -53,6 +59,7 @@ void uart_init_internal(uint32_t baud, uint8_t interrupt);
  * Initializes uart module. Depending on UART_INTERRUPT_ENABLE define,
  * module will be initialized in interrupt mode or synchronouse mode.
  * @param baud baud rate for the uart module
+ * @note only 115200 and 57600 are supported.
  */
 static inline void uart_init(uint32_t baud)
 {
@@ -72,19 +79,20 @@ uint8_t uart_byte_available(void);
 
 uint8_t uart_read_byte(void);
 
-#define UART_BUFFER_RX  32  // :( Still need large buffer to process USART RX bytes
+static inline void __uart_read_byte(void)
+{
+    g_uart_buf[g_uart_put_ptr] = UDR0;
+    g_uart_put_ptr = (g_uart_put_ptr+1) & (UART_BUFFER_RX - 1);
+}
+
 
 #ifdef UART_INTERRUPT_ENABLE
-
-extern volatile uint8_t g_uart_put_ptr;
-extern volatile uint8_t g_uart_buf[];
 
 ISR(USART_RX_vect, ISR_BLOCK)
 {
     if (bit_is_clear(UCSR0A, FE0)) // Do not perform error checks for now
     {
-        g_uart_buf[g_uart_put_ptr] = UDR0;
-        g_uart_put_ptr = (g_uart_put_ptr+1) & (UART_BUFFER_RX - 1);
+        __uart_read_byte();
     }
     else
     {

@@ -26,11 +26,14 @@
 // Never include vga_controller.h here!!!
 #include "intf/ssd1306_interface.h"
 #include "lcd/lcd_common.h"
+#include "lcd/vga_commands.h"
 
 extern uint16_t ssd1306_color;
 
 uint8_t s_vga_buffer[64*40/2] = {0};
 
+// Set to ssd1306 compatible mode by default
+static uint8_t s_mode = 0x01;
 static uint8_t s_vga_command = 0xFF;
 static uint8_t s_vga_arg = 0;
 static uint8_t s_column = 0;
@@ -80,7 +83,7 @@ static void vga_controller_send_byte4(uint8_t data)
     {
         uint8_t color = ((data & 0x80) >> 5) | ((data & 0x10) >> 3) | ((data & 0x02)>>1);
         vga_controller_put_pixel4(s_cursor_x, s_cursor_y, color);
-/*        if (s_page == 0xFF)
+        if (s_mode == 0x00)
         {
             s_cursor_x++;
             if (s_cursor_x > s_column_end)
@@ -89,7 +92,7 @@ static void vga_controller_send_byte4(uint8_t data)
                 s_cursor_y++;
             }
         }
-        else*/
+        else
         {
             s_cursor_y++;
             if ((s_cursor_y & 0x07) == 0)
@@ -100,20 +103,25 @@ static void vga_controller_send_byte4(uint8_t data)
         }
         return;
     }
+    // command mode
     if (!s_vga_command)
     {
         s_vga_command = data;
         s_vga_arg = 0;
     }
-    if (s_vga_command == 0x01)
+    if (s_vga_command == VGA_SET_BLOCK)
     {
         // set block
         if (s_vga_arg == 1) { s_column = data; s_cursor_x = data; }
         if (s_vga_arg == 2) { s_column_end = data; }
         if (s_vga_arg == 3) { s_cursor_y = data; }
+        if (s_vga_arg == 4) { s_vga_command = 0; }
+    }
+    if (s_vga_command == VGA_SET_MODE)
+    {
+        if (s_vga_arg == 1) { s_mode = data; s_vga_command = 0; }
     }
     s_vga_arg++;
-    // command mode
 }
 
 static void vga_controller_send_bytes(const uint8_t *buffer, uint16_t len)
@@ -167,7 +175,7 @@ static inline void init_vga_crt_driver(uint8_t enable_jitter_fix)
     pinMode(16, OUTPUT);
     PORTC = 0;
 
-   sei();
+    sei();
 }
 
 void ssd1306_vgaController_init_enable_output(void)

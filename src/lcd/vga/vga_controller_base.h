@@ -46,7 +46,6 @@ void ssd1306_vgaController_init_no_output(void);
 #if defined(SSD1306_BUILTIN_VGA_SUPPORT)
 void ssd1306_vgaController_init_enable_output(void);
 void ssd1306_vgaController_init_enable_output_no_jitter_fix(void);
-
 #endif
 
 static inline void ssd1306_vgaController_init(void)
