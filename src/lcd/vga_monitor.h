@@ -34,7 +34,7 @@
 extern "C" {
 #endif
 
-void vga_64x40_init(void);
+void vga_64x40_8colors_init(void);
 
 #ifdef __cplusplus
 }

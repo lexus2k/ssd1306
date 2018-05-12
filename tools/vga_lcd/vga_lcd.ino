@@ -99,7 +99,7 @@ void setup()
     uart_init(57600);
 //    uart_init(115200);
     ssd1306_vgaController_init();
-    vga_64x40_init();
+    vga_64x40_8colors_init();
 
     ssd1306_setFixedFont(ssd1306xled_font6x8);
     ssd1306_clearScreen();
