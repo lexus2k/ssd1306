@@ -63,6 +63,7 @@ configurable through API.
 | il9163 128x128 |   | X |   |
 | st7735 128x160 |   | X |   |
 | pcd8544 84x48 |   | X  | Nokia 5110 |
+| vga 64x40 |   |   | direct D-sub output, atmega328p only |
 
 ## Supported platforms
 
