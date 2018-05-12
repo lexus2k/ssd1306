@@ -126,17 +126,19 @@ static void vga_controller_send_bytes(const uint8_t *buffer, uint16_t len)
 }
 
 #if defined(SSD1306_BUILTIN_VGA_SUPPORT)
-static inline void init_vga_crt_driver(void)
+static inline void init_vga_crt_driver(uint8_t enable_jitter_fix)
 {
     cli();
-
-    // Configure Timer 0 to calculate jitter fix
-    TIMSK0=0;
-    TCCR0A=0;
-    TCCR0B=1;
-    OCR0A=0;
-    OCR0B=0;
-    TCNT0=0;
+    if (enable_jitter_fix)
+    {
+        // Configure Timer 0 to calculate jitter fix
+        TIMSK0=0;
+        TCCR0A=0;
+        TCCR0B=1;
+        OCR0A=0;
+        OCR0B=0;
+        TCNT0=0;
+    }
 
     // Timer 1 - vertical sync pulses
     pinMode (V_SYNC_PIN, OUTPUT);
@@ -165,15 +167,20 @@ static inline void init_vga_crt_driver(void)
     pinMode(16, OUTPUT);
     PORTC = 0;
 
-// prepare to sleep between horizontal sync pulses
-//  set_sleep_mode (SLEEP_MODE_IDLE);
    sei();
 }
 
 void ssd1306_vgaController_init_enable_output(void)
 {
     ssd1306_vgaController_init_no_output();
-    init_vga_crt_driver();
+    init_vga_crt_driver(1);
+}
+
+void ssd1306_vgaController_init_enable_output_no_jitter_fix(void)
+{
+    ssd1306_vgaController_init_no_output();
+    init_vga_crt_driver(0);
+//    set_sleep_mode (SLEEP_MODE_IDLE);
 }
 #endif
 

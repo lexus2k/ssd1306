@@ -1,6 +1,7 @@
 #include "ssd1306.h"
 #include "lcd/vga/vga_controller_base.h"
-#define VGA_CONTROLLER_DEBUG
+//#define VGA_CONTROLLER_DEBUG
+//#define SSD1306_VGA_SLEEP_MODE
 #include "lcd/vga/vga_controller.h"
 #include "lcd/vga_monitor.h"
 #include "nano_engine.h"

@@ -23,7 +23,14 @@
 */
 /**
  * @file vga_controller.h VGA interface to communicate with VGA-monitor from the sketch directly
- * @details Please, include this file only once in your sketch
+ *
+ * @details Please, include this file only once in your sketch, if you want to control
+ * vga monitor directly from your sketch
+ * This header supports different modes: VGA_CONTROLLER_DEBUG, SSD1306_VGA_SLEEP_MODE.
+ * If you want to use vga_controller module in debug mode without producing VGA output,
+ * define VGA_CONTROLLER_DEBUG before including this header. If you want to use library with
+ * AVR sleep mode, then jitter fix is not required, you will able to use TIMER0, so define
+ * SSD1306_VGA_SLEEP_MODE before including this header.
  */
 
 #ifndef _SSD1306_VGA_CONTROLLER_H_
@@ -74,6 +81,7 @@ static inline void do_scan_line()
     {
         return;
     }
+    #ifndef SSD1306_VGA_SLEEP_MODE
     // This is dejitter code, it purpose to start pixels output at the same offset after h-sync
     asm volatile(
       "     lds r16, %[timer0]    \n\t" //
@@ -95,6 +103,7 @@ static inline void do_scan_line()
     :
     : [timer0] "i" (&TCNT0)
     : "r30", "r31", "r16", "r17");
+    #endif
     // output all pixels
     asm volatile(
          "ldi r20, 16\n\t"
