@@ -30,7 +30,7 @@
 
 extern uint16_t ssd1306_color;
 
-uint8_t s_vga_buffer[64*40/2] = {0};
+uint8_t s_vga_buffer[80*40/2] = {0};
 
 // Set to ssd1306 compatible mode by default
 static uint8_t s_mode = 0x01;

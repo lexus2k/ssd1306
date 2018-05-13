@@ -33,6 +33,9 @@
 #include "nano_engine/tiler.h"
 #include "nano_engine/core.h"
 
+// DO NOT DECLARE NanoEngine8, NanoEngine16, NanoEngine1 as class NAME: public NanoEngine<T>
+// This causes flash and RAM memory consumption in compiled ELF
+
 /**
  * NanoEngine8 is simple graphics engine, that implements double buffering work
  * for the systems with very low resources. That is, memory buffer for SSD1331 oled
@@ -47,14 +50,7 @@
  * In your application you can choose, if you want to refresh whole screen (refresh()), or you
  * need to refresh only part of oled display.
  */
-class NanoEngine8: public NanoEngine<TILE_8x8_RGB8>
-{
-public:
-    /**
-     * Creates new Graphics Engine object.
-     */
-    NanoEngine8(): NanoEngine() {};
-};
+#define NanoEngine8   NanoEngine<TILE_8x8_RGB8>
 
 /**
  * NanoEngine1 is simple graphics engine, that implements double buffering work
@@ -70,14 +66,7 @@ public:
  * In your application you can choose, if you want to refresh whole screen (refresh()), or you
  * need to refresh only part of oled display.
  */
-class NanoEngine1: public NanoEngine<TILE_8x8_MONO>
-{
-public:
-    /**
-     * Creates new Graphics Engine object.
-     */
-    NanoEngine1(): NanoEngine() {};
-};
+#define NanoEngine1   NanoEngine<TILE_8x8_MONO>
 
 /**
  * NanoEngine16 is simple graphics engine, that implements double buffering work
@@ -94,15 +83,7 @@ public:
  * In your application you can choose, if you want to refresh whole screen (refresh()), or you
  * need to refresh only part of oled display.
  */
-class NanoEngine16: public NanoEngine<TILE_8x8_RGB16>
-{
-public:
-    /**
-     * Creates new Graphics Engine object.
-     */
-    NanoEngine16(): NanoEngine() {};
-};
-
+#define NanoEngine16  NanoEngine<TILE_8x8_RGB16>
 
 #endif
 

@@ -1,10 +1,9 @@
 #include "ssd1306.h"
 #define VGA_CONTROLLER_DEBUG
 //#define SSD1306_VGA_SLEEP_MODE
-#include "lcd/vga/vga_controller_base.h"
-#include "lcd/vga/vga_controller.h"
+#include "intf/vga/vga_controller_base.h"
+#include "intf/vga/vga_controller.h"
 #include "lcd/vga_monitor.h"
-#include "nano_engine.h"
 #include "intf/ssd1306_interface.h"
 
 // There are some issues if UART interrupt enabled with VGA output
@@ -99,7 +98,7 @@ void setup()
     uart_init(57600);
 //    uart_init(115200);
     ssd1306_vgaController_init();
-    vga_64x40_8colors_init();
+    vga_80x40_8colors_init();
 
     ssd1306_setFixedFont(ssd1306xled_font6x8);
     ssd1306_clearScreen();
@@ -107,7 +106,7 @@ void setup()
     ssd1306_printFixed(24,16,"by",STYLE_BOLD);
     ssd1306_printFixed(4,24,"Alexey D.",STYLE_BOLD);
     ssd1331_setColor(RGB_COLOR8(255,0,0));
-    ssd1306_drawRect(0,0,63,39);
+    ssd1306_drawRect(0,0,79,39);
     #ifdef VGA_CONTROLLER_DEBUG
         ssd1306_debug_print_vga_buffer(uart_send_byte);
     #endif

@@ -21,24 +21,11 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-/**
- * @file vga_monitor.h Interface to vga_monitor
- */
 
-#ifndef _SSD1306_VGA_MONITOR_H_
-#define _SSD1306_VGA_MONITOR_H_
+#ifndef _USER_SETTINGS_H_
+#define _USER_SETTINGS_H_
 
-#include "ssd1306_hal/io.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void vga_80x40_8colors_init(void);
-
-#ifdef __cplusplus
-}
-#endif
+// Uncomment if you don't need Wire support, and want to reduce memory consumption
+//#define SSD1306_DISABLE_WIRE_SUPPORT
 
 #endif
-

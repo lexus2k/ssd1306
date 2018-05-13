@@ -106,19 +106,16 @@ static inline void do_scan_line()
     #endif
     // output all pixels
     asm volatile(
-         "ldi r20, 16\n\t"
+         "ldi r20, 40\n\t"
          ".rept 32\n\t"
          "ld r16, Z+\n\t"
-         "nop\n\t"               // to make pixel wider in 64x40 mode
-         "nop\n\t"               // to make pixel wider in 64x40 mode
+         "nop\n\t"               // to make pixel wider in 80x40 mode
          "out %[port], r16\n\t"
          "mul r16, r20\n\t"
-         "nop\n\t"               // to make pixel wider in 64x40 mode
-         "nop\n\t"               // to make pixel wider in 64x40 mode
+         "nop\n\t"               // to make pixel wider in 80x40 mode
          "out %[port], r1\n\t"
          ".endr\n\t"
-         "nop\n\t"               // to make pixel wider in 64x40 mode
-         "nop\n\t"               // to make pixel wider in 64x40 mode
+         "nop\n\t"               // to make pixel wider in 80x40 mode
          "nop\n\t"
          "ldi r16,0\n\t"
          "out %[port], r16 \n\t"
@@ -132,7 +129,7 @@ static inline void do_scan_line()
     s_current_scan_line++;
     if ((s_current_scan_line & 0x7) == 0)
     {
-        s_current_scan_line_data+=32;
+        s_current_scan_line_data += 40;
     }
 }
 

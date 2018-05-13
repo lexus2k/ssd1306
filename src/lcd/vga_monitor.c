@@ -115,10 +115,10 @@ static void vga_set_mode(lcd_mode_t mode)
     // empty for a while
 }
 
-void vga_64x40_8colors_init(void)
+void vga_80x40_8colors_init(void)
 {
     ssd1306_lcd.type = LCD_TYPE_SSD1331;
-    ssd1306_lcd.width = 64;
+    ssd1306_lcd.width = 80;
     ssd1306_lcd.height = 40;
     ssd1306_lcd.set_block = vga_set_block1;
     ssd1306_lcd.next_page = vga_next_page1;
