@@ -47,6 +47,8 @@ extern "C" {
 // If you want to use your ISR's, please include "vga_controller_base.h"
 #if defined(SSD1306_BUILTIN_VGA_SUPPORT) && !defined(VGA_CONTROLLER_DEBUG)
 
+extern uint8_t s_vga_buffer[];
+
 // Total number of lines used in specific scan mode
 static uint16_t s_total_mode_lines = 40*8;
 
@@ -59,6 +61,7 @@ static const uint8_t V_BACKPORCH_LINES = 40;
 volatile int s_current_scan_line;
 volatile uint8_t s_lines_to_skip;
 volatile uint8_t *s_current_scan_line_data = &s_vga_buffer[0];
+extern volatile uint8_t s_vga_frames;
 
 // ISR: Vsync pulse
 ISR(TIMER1_OVF_vect)
@@ -66,21 +69,11 @@ ISR(TIMER1_OVF_vect)
     s_current_scan_line = 0;
     s_current_scan_line_data = &s_vga_buffer[0];
     s_lines_to_skip = V_BACKPORCH_LINES;
+    s_vga_frames++;
 } // end of TIMER1_OVF_vect
 
-static inline void do_scan_line()
+void __attribute__ ((noinline)) do_scan_line()
 {
-    // Implement all code directly in ISR: No any calls to subroutines!!!!
-    // ISR should work as fast as possible
-    if (s_lines_to_skip)
-    {
-        s_lines_to_skip--;
-        return;
-    }
-    else if (s_current_scan_line >= s_total_mode_lines)
-    {
-        return;
-    }
     #ifndef SSD1306_VGA_SLEEP_MODE
     // This is dejitter code, it purpose to start pixels output at the same offset after h-sync
     asm volatile(
@@ -106,8 +99,8 @@ static inline void do_scan_line()
     #endif
     // output all pixels
     asm volatile(
-         "ldi r20, 40\n\t"
-         ".rept 32\n\t"
+         "ldi r20, 16\n\t"
+         ".rept 40\n\t"
          "ld r16, Z+\n\t"
          "nop\n\t"               // to make pixel wider in 80x40 mode
          "out %[port], r16\n\t"
@@ -133,9 +126,22 @@ static inline void do_scan_line()
     }
 }
 
-ISR(TIMER2_COMPB_vect) // for end of h-sync pulse
+//#ifdef SSD1306_VGA_SLEEP_MODE
 //ISR(TIMER2_OVF_vect) // for start of h-sync pulse
+//#else
+ISR(TIMER2_COMPB_vect) // for end of h-sync pulse
+//#endif
 {
+    // ISR should work as fast as possible
+    if (s_lines_to_skip)
+    {
+        s_lines_to_skip--;
+        return;
+    }
+    else if (s_current_scan_line >= s_total_mode_lines)
+    {
+        return;
+    }
     do_scan_line();
 }
 

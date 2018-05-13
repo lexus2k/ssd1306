@@ -1,5 +1,5 @@
 #include "ssd1306.h"
-#define VGA_CONTROLLER_DEBUG
+//#define VGA_CONTROLLER_DEBUG
 //#define SSD1306_VGA_SLEEP_MODE
 #include "intf/vga/vga_controller_base.h"
 #include "intf/vga/vga_controller.h"
@@ -114,7 +114,10 @@ void setup()
 
 void loop()
 {
-    while (uart_byte_available())
+    #ifdef SSD1306_VGA_SLEEP_MODE
+    sleep_mode();
+    #endif
+    if (uart_byte_available())
     {
         uint8_t data = uart_read_byte();
         vga_uart_on_receive(data);

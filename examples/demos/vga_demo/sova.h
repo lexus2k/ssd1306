@@ -21,48 +21,13 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-/**
- * @file vga_controller_base.h VGA basic data. Do not include this header in your project
- */
 
-#ifndef _SSD1306_VGA_CONTROLLER_BASE_H_
-#define _SSD1306_VGA_CONTROLLER_BASE_H_
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#ifndef _SOVA_H_
+#define _SOVA_H_
 
 #include "ssd1306_hal/io.h"
+#include <stdint.h>
 
-static const uint8_t H_SYNC_PIN = 3;
-static const uint8_t V_SYNC_PIN = 10;
-
-void ssd1306_vga_delay(uint32_t ms);
-
-void ssd1306_debug_print_vga_buffer(void (*func)(uint8_t));
-
-void ssd1306_vgaController_init_no_output(void);
-
-#if defined(SSD1306_BUILTIN_VGA_SUPPORT)
-void ssd1306_vgaController_init_enable_output(void);
-void ssd1306_vgaController_init_enable_output_no_jitter_fix(void);
-#endif
-
-static inline void ssd1306_vgaController_init(void)
-{
-    // if there is no builtin support then only debug mode is available
-#if defined(VGA_CONTROLLER_DEBUG) || !defined(SSD1306_BUILTIN_VGA_SUPPORT)
-    ssd1306_vgaController_init_no_output();
-#elif defined(SSD1306_VGA_SLEEP_MODE)
-    ssd1306_vgaController_init_enable_output_no_jitter_fix();
-#else
-    ssd1306_vgaController_init_enable_output();
-#endif
-}
-
-#ifdef __cplusplus
-}
-#endif
+extern const uint8_t Sova [] PROGMEM;
 
 #endif
-

@@ -54,11 +54,41 @@ static const uint8_t u2x0_57600 = 1;
 static const uint8_t u2x0_57600 = 0;
 #endif
 
+#define BAUD 38400
+#include <util/setbaud.h>
+static const uint8_t ubrr0h_38400 = UBRRH_VALUE;
+static const uint8_t ubrr0l_38400 = UBRRL_VALUE;
+#ifdef USE_2X
+static const uint8_t u2x0_38400 = 1;
+#else
+static const uint8_t u2x0_38400 = 0;
+#endif
+
+#define BAUD 19200
+#include <util/setbaud.h>
+static const uint8_t ubrr0h_19200 = UBRRH_VALUE;
+static const uint8_t ubrr0l_19200 = UBRRL_VALUE;
+#ifdef USE_2X
+static const uint8_t u2x0_19200 = 1;
+#else
+static const uint8_t u2x0_19200 = 0;
+#endif
+
 void uart_init_internal(uint32_t baud, uint8_t interrupt)
 {
     s_uart_interrupt = interrupt;
     switch (baud)
     {
+        case 19200:
+            UBRR0H = ubrr0h_19200;
+            UBRR0L = ubrr0l_19200;
+            if (u2x0_19200) UCSR0A |= _BV(U2X0); else UCSR0A &= ~(_BV(U2X0));
+            break;
+        case 38400:
+            UBRR0H = ubrr0h_38400;
+            UBRR0L = ubrr0l_38400;
+            if (u2x0_38400) UCSR0A |= _BV(U2X0); else UCSR0A &= ~(_BV(U2X0));
+            break;
         case 57600:
             UBRR0H = ubrr0h_57600;
             UBRR0L = ubrr0l_57600;

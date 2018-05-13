@@ -40,6 +40,7 @@ static uint8_t s_column = 0;
 static uint8_t s_column_end = 0;
 static uint8_t s_cursor_x = 0;
 static uint8_t s_cursor_y = 0;
+volatile uint8_t s_vga_frames;
 
 static void vga_controller_init(void)
 {
@@ -68,8 +69,11 @@ static void vga_controller_put_pixel4(uint8_t x, uint8_t y, uint8_t color)
         mask = 0xF0;
     }
     uint16_t addr = (x + y*ssd1306_lcd.width)/2;
-    s_vga_buffer[addr] &= mask;
-    s_vga_buffer[addr] |= color;
+    if (addr < sizeof s_vga_buffer)
+    {
+        s_vga_buffer[addr] &= mask;
+        s_vga_buffer[addr] |= color;
+    }
 }
 
 static void vga_controller_send_byte4(uint8_t data)
@@ -147,6 +151,11 @@ static inline void init_vga_crt_driver(uint8_t enable_jitter_fix)
         OCR0B=0;
         TCNT0=0;
     }
+    else
+    {
+        // Sorry, we still need to disable timer0 interrupts to avoid wake up in sleep mode
+        TIMSK0 &= ~(1<<TOIE0);
+    }
 
     // Timer 1 - vertical sync pulses
     pinMode (V_SYNC_PIN, OUTPUT);
@@ -163,12 +172,18 @@ static inline void init_vga_crt_driver(uint8_t enable_jitter_fix)
     TCCR2B=(1<<WGM22) | (1<<CS21); //8 prescaler
     OCR2A = 63;   // 32 / 0.5 us = 64 (less one)
     OCR2B = 7;    // 4 / 0.5 us = 8 (less one)
-//    TIFR2 = (1<<TOV2);    // int on start of h-sync pulse
-//    TIMSK2 = (1<<TOIE2);  // int on start of h-sync pulse
-    TIFR2 = (1<<OCF2B);   // on end of h-sync pulse
-    TIMSK2 = (1<<OCIE2B); // on end of h-sync pulse
+//    if (enable_jitter_fix)
+    {
+        TIFR2 = (1<<OCF2B);   // on end of h-sync pulse
+        TIMSK2 = (1<<OCIE2B); // on end of h-sync pulse
+    }
+//    else
+//    {
+//        TIFR2 = (1<<TOV2);    // int on start of h-sync pulse
+//        TIMSK2 = (1<<TOIE2);  // int on start of h-sync pulse
+//    }
 
-  // Set up USART in SPI mode (MSPIM)
+    // Set up USART in SPI mode (MSPIM)
 
     pinMode(14, OUTPUT);
     pinMode(15, OUTPUT);
@@ -225,3 +240,13 @@ void ssd1306_debug_print_vga_buffer(void (*func)(uint8_t))
     func('\n');
 }
 
+void ssd1306_vga_delay(uint32_t ms)
+{
+    uint8_t vga_frames;
+    while (ms >= 16)
+    {
+         vga_frames = s_vga_frames;
+         while (vga_frames == s_vga_frames);
+         ms-=16;
+    }
+}

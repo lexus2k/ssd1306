@@ -59,7 +59,7 @@ void uart_init_internal(uint32_t baud, uint8_t interrupt);
  * Initializes uart module. Depending on UART_INTERRUPT_ENABLE define,
  * module will be initialized in interrupt mode or synchronouse mode.
  * @param baud baud rate for the uart module
- * @note only 115200 and 57600 are supported.
+ * @note only 115200, 57600, 38400 and 19200 are supported.
  */
 static inline void uart_init(uint32_t baud)
 {
