@@ -22,7 +22,7 @@
     SOFTWARE.
 */
 /**
- *   Nano/Atmega328 PINS: 
+ *   Nano/Atmega328 PINS:
  *     A0 - blue channel of D-Sub connector
  *     A1 - green channel of D-Sub connector
  *     A2 - red channel of D-Sub connector
@@ -31,7 +31,7 @@
  *
  *   Sketch allows to use all other PINs except A3-A6 pins.
  *   delay, millis functions do not work. Use ssd1306_vga_delay() instead.
- *   
+ *
  *   Controlling VGA requires local frame buffer to be located in RAM. Enabling VGA needs 1600 bytes (almost all Atmega328p RAM).
  *   So, be careful with application stack.
  */
@@ -39,11 +39,11 @@
 #include "ssd1331_api.h"
 #include "nano_gfx.h"
 #include "sova.h"
-#include "intf/vga/vga_controller.h"
+#include "intf/vga_controller/atmega328p/vga96x40_isr.h"
 #include "lcd/vga_monitor.h"
 #include "intf/ssd1306_interface.h"
 
-/* 
+/*
  * Heart image below is defined directly in flash memory.
  * This reduces SRAM consumption.
  * The image is defined from bottom to top (bits), from left to

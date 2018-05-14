@@ -36,7 +36,7 @@
 #ifndef _SSD1306_VGA_CONTROLLER_H_
 #define _SSD1306_VGA_CONTROLLER_H_
 
-#include "vga_controller_base.h"
+#include "vga96x40.h"
 #include "ssd1306_hal/io.h"
 
 #ifdef __cplusplus

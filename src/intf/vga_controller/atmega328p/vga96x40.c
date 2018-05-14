@@ -22,8 +22,8 @@
     SOFTWARE.
 */
 
-#include "vga_controller_base.h"
-// Never include vga_controller.h here!!!
+#include "vga96x40.h"
+// Never include vga96x40_isr.h here!!!
 #include "intf/ssd1306_interface.h"
 #include "lcd/lcd_common.h"
 #include "lcd/vga_commands.h"

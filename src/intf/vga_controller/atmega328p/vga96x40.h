@@ -22,11 +22,11 @@
     SOFTWARE.
 */
 /**
- * @file vga_controller_base.h VGA basic data. Do not include this header in your project
+ * @file vga96x40.h VGA basic data. Do not include this header in your project
  */
 
-#ifndef _SSD1306_VGA_CONTROLLER_BASE_H_
-#define _SSD1306_VGA_CONTROLLER_BASE_H_
+#ifndef _SSD1306_VGA_CONTROLLER_96X40_H_
+#define _SSD1306_VGA_CONTROLLER_96X40_H_
 
 #ifdef __cplusplus
 extern "C" {

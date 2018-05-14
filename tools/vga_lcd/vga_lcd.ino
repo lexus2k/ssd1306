@@ -1,8 +1,8 @@
 #include "ssd1306.h"
 //#define VGA_CONTROLLER_DEBUG
 //#define SSD1306_VGA_SLEEP_MODE
-#include "intf/vga/vga_controller_base.h"
-#include "intf/vga/vga_controller.h"
+#include "intf/vga_controller/atmega328p/vga96x40.h"
+#include "intf/vga_controller/atmega328p/vga96x40_isr.h"
 #include "lcd/vga_monitor.h"
 #include "intf/ssd1306_interface.h"
 

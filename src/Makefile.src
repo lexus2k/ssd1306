@@ -45,7 +45,7 @@ SRCS_C = \
 	lcd/oled_ssd1331.c \
 	lcd/oled_ssd1351.c \
 	lcd/vga_monitor.c \
-	intf/vga/vga_controller.c \
+	intf/vga_controller/atmega328p/vga96x40.c \
 	ssd1306_uart.c \
 
 SRCS_CPP = \
