@@ -72,17 +72,17 @@ ISR(TIMER1_OVF_vect)
     s_vga_frames++;
 } // end of TIMER1_OVF_vect
 
-void __attribute__ ((noinline)) do_scan_line()
+static inline void /*__attribute__ ((noinline))*/ do_scan_line()
 {
     #ifndef SSD1306_VGA_SLEEP_MODE
     // This is dejitter code, it purpose to start pixels output at the same offset after h-sync
     asm volatile(
-      "     lds r16, %[timer0]    \n\t" //
-      "     subi r16, -3           \n\t" // some offset, calculated experimentally
-      "     andi r16, 7           \n\t" // use module 8 value from Timer 0 counter
+      "     lds r24, %[timer0]    \n\t" //
+      "     subi r24, -4           \n\t" // some offset, calculated experimentally
+      "     andi r24, 7           \n\t" // use module 8 value from Timer 0 counter
       "     ldi r31, pm_hi8(LW)   \n\t" // load label address
       "     ldi r30, pm_lo8(LW)   \n\t" //
-      "     add r30, r16          \n\t" // no need to multiply by 2 since AVR addresses are half-values
+      "     add r30, r24          \n\t" // no need to multiply by 2 since AVR addresses are half-values
       "     adc r31, __zero_reg__ \n\t" //
       "     ijmp                  \n\t" //
       "LW:                        \n\t" //
@@ -95,34 +95,66 @@ void __attribute__ ((noinline)) do_scan_line()
       "     nop                   \n\t" //
     :
     : [timer0] "i" (&TCNT0)
-    : "r30", "r31", "r16", "r17");
+    : "r30", "r31", "r24", "r25");
     #endif
     // output all pixels
+
     asm volatile(
-         "ldi r20, 16\n\t"
-         ".rept 40\n\t"
-         "ld r16, Z+\n\t"
-         "nop\n\t"               // to make pixel wider in 80x40 mode
-         "out %[port], r16\n\t"
-         "mul r16, r20\n\t"
-         "nop\n\t"               // to make pixel wider in 80x40 mode
-         "out %[port], r1\n\t"
-         ".endr\n\t"
-         "nop\n\t"               // to make pixel wider in 80x40 mode
+         ".rept 12\n\t"
+
+         "ld r24, Z+\n\t"        // r24 = 82227111
+//         "nop\n\t"               // to make pixel wider in 96x40 mode
+         "out %[port], r24\n\t"  // 111
+
+         "ld r25, Z+\n\t"        // r25 = 84447333
+         "swap r24\n\t"          // r24 = 71118222
+         "out %[port], r24\n\t"  // 222
+
+         "andi r24, 0x88\n\t"    // r24 = 70008000
+         "ld r20, Z+\n\t"        // r20 = 86667555
+         "out %[port], r25\n\t"  // 333
+
+         "swap r25\n\t"          // r25 = 73338444
+         "lsr r24\n\t"           // r24 = 00080007
+         "lsr r24\n\t"           // r24 = 00800070
+         "out %[port], r25\n\t"  // 444
+
+         "andi r25, 0x88\n\t"    // r25 = 70008000
+         "lsr r24\n\t"           // r24 = 08000700
+         "lsr r25\n\t"           // r25 = 00080007
+         "out %[port], r20\n\t"  // 555
+
+         "swap r20\n\t"          // r20 = 75558666
+         "lsr r25\n\t"           // r25 = 00800070
+         "or r24, r25\n\t"       // r24 = 08800770
+         "out %[port], r20\n\t"  // 666
+
+         "andi r20, 0x88\n\t"    // r20 = 70008000
+         "lsr r20\n\t"           // r20 = 00080007 b
+         "or r24, r20\n\t"       // r24 = 08880777 rgb
+         "out %[port], r24\n\t"  // 777
+
+         "swap r24\n\t"          // r24 = 07770888
+//         "nop\n\t"               // to make pixel wider in 96x40 mode
          "nop\n\t"
-         "ldi r16,0\n\t"
-         "out %[port], r16 \n\t"
+         "out %[port], r24\n\t"  // 888
+
+         ".endr\n\t"
+//         "nop\n\t"               // to make pixel wider in 96x40 mode
+         "nop\n\t"
+         "ldi r24,0\n\t"
+         "out %[port], r24 \n\t"
          "nop\n\t"
     :
     : [port] "I" (_SFR_IO_ADDR(PORTC)),
        "z" "I" ((uint8_t *)s_current_scan_line_data )
-    : "r16", "r17", "r20", "r21", "memory"
+    : "r24", "r25", "r20", "memory"
     );
 
     s_current_scan_line++;
     if ((s_current_scan_line & 0x7) == 0)
     {
-        s_current_scan_line_data += 40;
+        s_current_scan_line_data += 36;
     }
 }
 

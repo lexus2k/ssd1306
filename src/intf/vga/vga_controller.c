@@ -30,7 +30,17 @@
 
 extern uint16_t ssd1306_color;
 
-uint8_t s_vga_buffer[80*40/2] = {0};
+/* This buffer fits 96x40 pixels
+   Each 8 pixels are packed to 3 bytes:
+
+   BYTE1: B7 R2 G2 B2 B8 R1 G1 B1
+   BYTE2: G7 R4 G4 B4 G8 R3 G3 B3
+   BYTE3: R7 R6 G6 B6 R8 R5 G5 B5
+
+   Yeah, a little bit complicated, but this allows to quickly unpack structure
+*/
+
+uint8_t s_vga_buffer[36*40] = {0};
 
 // Set to ssd1306 compatible mode by default
 static uint8_t s_mode = 0x01;
@@ -56,23 +66,53 @@ static void vga_controller_close(void)
 {
 }
 
-static void vga_controller_put_pixel4(uint8_t x, uint8_t y, uint8_t color)
+/* This buffer fits 96x40 pixels
+   Each 8 pixels are packed to 3 bytes:
+
+   BYTE1: B7 R2 G2 B2 B8 R1 G1 B1
+   BYTE2: G7 R4 G4 B4 G8 R3 G3 B3
+   BYTE3: R7 R6 G6 B6 R8 R5 G5 B5
+
+   Yeah, a little bit complicated, but this allows to quickly unpack structure
+*/
+static void vga_controller_put_pixel3(uint8_t x, uint8_t y, uint8_t color)
 {
-    uint8_t mask;
-    if ((x&1))
+    uint16_t addr = (x >> 3)*3   + (uint16_t)y*36;
+    uint8_t offset = x & 0x07;
+    if (addr >= sizeof s_vga_buffer)
     {
-        mask = 0x0F;
-        color <<= 4;
+        return;
     }
-    else
+    if (offset < 6)
     {
-        mask = 0xF0;
+        if (x&1)
+        {
+            s_vga_buffer[addr + (offset>>1)] &= 0x8F;
+            s_vga_buffer[addr + (offset>>1)] |= (color<<4);
+        }
+        else
+        {
+            s_vga_buffer[addr + (offset>>1)] &= 0xF8;
+            s_vga_buffer[addr + (offset>>1)] |= color;
+        }
     }
-    uint16_t addr = (x + y*ssd1306_lcd.width)/2;
-    if (addr < sizeof s_vga_buffer)
+    else if (offset == 6)
     {
-        s_vga_buffer[addr] &= mask;
-        s_vga_buffer[addr] |= color;
+        s_vga_buffer[addr+0] &= 0x7F;
+        s_vga_buffer[addr+0] |= ((color & 0x01) << 7);
+        s_vga_buffer[addr+1] &= 0x7F;
+        s_vga_buffer[addr+1] |= ((color & 0x02) << 6);
+        s_vga_buffer[addr+2] &= 0x7F;
+        s_vga_buffer[addr+2] |= ((color & 0x04) << 5);
+    }
+    else // if (offset == 7)
+    {
+        s_vga_buffer[addr+0] &= 0xF7;
+        s_vga_buffer[addr+0] |= ((color & 0x01) << 3);
+        s_vga_buffer[addr+1] &= 0xF7;
+        s_vga_buffer[addr+1] |= ((color & 0x02) << 2);
+        s_vga_buffer[addr+2] &= 0xF7;
+        s_vga_buffer[addr+2] |= ((color & 0x04) << 1);
     }
 }
 
@@ -86,7 +126,7 @@ static void vga_controller_send_byte4(uint8_t data)
     if (s_vga_command == 0x40)
     {
         uint8_t color = ((data & 0x80) >> 5) | ((data & 0x10) >> 3) | ((data & 0x02)>>1);
-        vga_controller_put_pixel4(s_cursor_x, s_cursor_y, color);
+        vga_controller_put_pixel3(s_cursor_x, s_cursor_y, color);
         if (s_mode == 0x00)
         {
             s_cursor_x++;

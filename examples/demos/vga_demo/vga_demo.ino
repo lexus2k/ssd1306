@@ -171,7 +171,7 @@ void setup()
 {
     ssd1306_setFixedFont(ssd1306xled_font6x8);
     ssd1306_vgaController_init();
-    vga_80x40_8colors_init();
+    vga_96x40_8colors_init();
     ssd1306_vga_delay(3000); // wait until VGA monitor starts
 
     ssd1306_fillScreen( 0x00 );

@@ -98,7 +98,7 @@ void setup()
     uart_init(57600);
 //    uart_init(115200);
     ssd1306_vgaController_init();
-    vga_80x40_8colors_init();
+    vga_96x40_8colors_init();
 
     ssd1306_setFixedFont(ssd1306xled_font6x8);
     ssd1306_clearScreen();
@@ -106,7 +106,7 @@ void setup()
     ssd1306_printFixed(24,16,"by",STYLE_BOLD);
     ssd1306_printFixed(4,24,"Alexey D.",STYLE_BOLD);
     ssd1331_setColor(RGB_COLOR8(255,0,0));
-    ssd1306_drawRect(0,0,79,39);
+    ssd1306_drawRect(0,0,95,39);
     #ifdef VGA_CONTROLLER_DEBUG
         ssd1306_debug_print_vga_buffer(uart_send_byte);
     #endif
