@@ -114,6 +114,8 @@
     #define SSD1306_UART_SUPPORTED
     /** The macro is defined when VGA monitor control is available directly from controller */
     #define SSD1306_BUILTIN_VGA_SUPPORT
+    /** The macro is defined when builtin UART implementation is supported */
+    #define SSD1306_UART_BUILTIN_SUPPORTED
 
 #else
     /** The macro is defined when i2c Wire library is available */
