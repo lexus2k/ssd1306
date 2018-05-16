@@ -26,8 +26,8 @@
 #include "lcd_common.h"
 #include "ssd1306_commands.h"
 #include "intf/ssd1306_interface.h"
-#include "i2c/ssd1306_i2c.h"
-#include "spi/ssd1306_spi.h"
+#include "intf/i2c/ssd1306_i2c.h"
+#include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
 
 
@@ -47,7 +47,7 @@ static const uint8_t PROGMEM s_oled128x64_initData[] =
     SSD1306_SETVCOMDETECT, 0x20,    // vcom deselect to 0x20 // 0x40
     SSD1306_CHARGEPUMP, 0x14,       // Enable charge pump
     SSD1306_DISPLAYALLON_RESUME,
-    SSD1306_DISPLAYON 
+    SSD1306_DISPLAYON
 };
 
 static uint8_t s_column;
@@ -68,7 +68,7 @@ static void sh1106_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
     if (ssd1306_intf.spi)
     {
         ssd1306_spiDataMode(1);
-    }    
+    }
     else
     {
         ssd1306_intf.stop();

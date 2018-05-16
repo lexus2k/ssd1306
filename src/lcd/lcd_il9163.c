@@ -25,7 +25,7 @@
 #include "lcd_il9163.h"
 #include "lcd_common.h"
 #include "intf/ssd1306_interface.h"
-#include "spi/ssd1306_spi.h"
+#include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
 #include "nano_gfx_types.h"
 

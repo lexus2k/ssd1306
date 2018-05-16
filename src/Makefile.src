@@ -28,14 +28,14 @@ SRCS_C = \
 	ssd1306_menu.c \
 	ssd1306_hal/avr/gpio.c \
 	ssd1306_hal/linux/gpio.c \
-	i2c/ssd1306_i2c_common.c \
-	i2c/ssd1306_i2c_embedded.c \
-	i2c/ssd1306_i2c_twi.c \
-	i2c/ssd1306_i2c_linux.c \
-	spi/ssd1306_spi.c \
-	spi/ssd1306_spi_avr.c \
-	spi/ssd1306_spi_usi.c \
-	spi/ssd1306_spi_linux.c \
+	intf/i2c/ssd1306_i2c_common.c \
+	intf/i2c/ssd1306_i2c_embedded.c \
+	intf/i2c/ssd1306_i2c_twi.c \
+	intf/i2c/ssd1306_i2c_linux.c \
+	intf/spi/ssd1306_spi.c \
+	intf/spi/ssd1306_spi_avr.c \
+	intf/spi/ssd1306_spi_usi.c \
+	intf/spi/ssd1306_spi_linux.c \
 	intf/ssd1306_interface.c \
 	lcd/lcd_common.c \
 	lcd/lcd_pcd8544.c \
@@ -51,8 +51,8 @@ SRCS_CPP = \
 	nano_gfx.cpp \
 	sprite_pool.cpp \
 	ssd1306_console.cpp \
-	i2c/ssd1306_i2c_wire.cpp \
-	spi/ssd1306_spi_hw.cpp
+	intf/i2c/ssd1306_i2c_wire.cpp \
+	intf/spi/ssd1306_spi_hw.cpp
 
 SRCS = $(SRCS_C) $(SRCS_CPP)
 

@@ -26,8 +26,8 @@
 #include "lcd_common.h"
 #include "ssd1306_commands.h"
 #include "intf/ssd1306_interface.h"
-#include "i2c/ssd1306_i2c.h"
-#include "spi/ssd1306_spi.h"
+#include "intf/i2c/ssd1306_i2c.h"
+#include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
 
 static const uint8_t PROGMEM s_oled128x64_initData[] =

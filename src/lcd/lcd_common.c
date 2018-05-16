@@ -24,7 +24,7 @@
 
 #include "lcd/lcd_common.h"
 #include "intf/ssd1306_interface.h"
-#include "spi/ssd1306_spi.h"
+#include "intf/spi/ssd1306_spi.h"
 #include <stddef.h>
 
 #define CMD_ARG 0xFF
