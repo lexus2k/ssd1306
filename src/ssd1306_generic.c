@@ -29,8 +29,8 @@
 #include "font6x8.h"
 #include "ssd1306.h"
 #include "lcd/lcd_common.h"
-#include "i2c/ssd1306_i2c.h"
-#include "spi/ssd1306_spi.h"
+#include "intf/i2c/ssd1306_i2c.h"
+#include "intf/spi/ssd1306_spi.h"
 #include "intf/ssd1306_interface.h"
 #include "ssd1306_hal/io.h"
 

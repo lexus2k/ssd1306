@@ -26,7 +26,7 @@
 #include "lcd_common.h"
 #include "pcd8544_commands.h"
 #include "intf/ssd1306_interface.h"
-#include "spi/ssd1306_spi.h"
+#include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
 
 static const uint8_t PROGMEM s_lcd84x48_initData[] =

@@ -26,7 +26,7 @@
 #include "lcd_common.h"
 #include "ssd1331_commands.h"
 #include "intf/ssd1306_interface.h"
-#include "spi/ssd1306_spi.h"
+#include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
 
 extern uint16_t ssd1306_color;
