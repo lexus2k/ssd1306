@@ -34,7 +34,12 @@ volatile uint8_t g_uart_buf[UART_BUFFER_RX];
 static uint8_t s_uart_get_ptr = 0;
 static uint8_t s_uart_interrupt = 0;
 
+#undef BAUD
 #define BAUD 115200
+// We need to define BAUD_TOL too high, because otherwise,
+// the compiler will give a warning "Baud rate achieved is higher than allowed"
+// I would recommend not to use 115200 on atmega328p
+#define BAUD_TOL 4
 #include <util/setbaud.h>
 static const uint8_t ubrr0h_115200 = UBRRH_VALUE;
 static const uint8_t ubrr0l_115200 = UBRRL_VALUE;
@@ -44,6 +49,7 @@ static const uint8_t u2x0_115200 = 1;
 static const uint8_t u2x0_115200 = 0;
 #endif
 
+#undef BAUD
 #define BAUD 57600
 #include <util/setbaud.h>
 static const uint8_t ubrr0h_57600 = UBRRH_VALUE;
@@ -54,6 +60,7 @@ static const uint8_t u2x0_57600 = 1;
 static const uint8_t u2x0_57600 = 0;
 #endif
 
+#undef BAUD
 #define BAUD 38400
 #include <util/setbaud.h>
 static const uint8_t ubrr0h_38400 = UBRRH_VALUE;
@@ -64,6 +71,7 @@ static const uint8_t u2x0_38400 = 1;
 static const uint8_t u2x0_38400 = 0;
 #endif
 
+#undef BAUD
 #define BAUD 19200
 #include <util/setbaud.h>
 static const uint8_t ubrr0h_19200 = UBRRH_VALUE;
@@ -95,10 +103,11 @@ void uart_init_internal(uint32_t baud, uint8_t interrupt)
             if (u2x0_57600) UCSR0A |= _BV(U2X0); else UCSR0A &= ~(_BV(U2X0));
             break;
         case 115200:
-        default:
             UBRR0H = ubrr0h_115200;
             UBRR0L = ubrr0l_115200;
             if (u2x0_115200) UCSR0A |= _BV(U2X0); else UCSR0A &= ~(_BV(U2X0));
+            break;
+        default:
             break;
     }
     UCSR0C = _BV(UCSZ01) | _BV(UCSZ00); /* 8-bit data */
