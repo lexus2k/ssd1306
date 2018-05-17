@@ -47,6 +47,10 @@ extern "C" {
 // If you want to use your ISR's, please include "vga_controller_base.h"
 #if defined(SSD1306_BUILTIN_VGA_SUPPORT) && !defined(VGA_CONTROLLER_DEBUG)
 
+#ifndef DEJITTER_OFFSET
+#define DEJITTER_OFFSET -4
+#endif
+
 extern uint8_t s_vga_buffer[];
 
 // Total number of lines used in specific scan mode
@@ -62,7 +66,7 @@ volatile int s_current_scan_line;
 volatile uint8_t s_lines_to_skip;
 volatile uint8_t *s_current_scan_line_data = &s_vga_buffer[0];
 extern volatile uint8_t s_vga_frames;
-
+extern unsigned long timer0_millis;
 // ISR: Vsync pulse
 ISR(TIMER1_OVF_vect)
 {
@@ -70,6 +74,7 @@ ISR(TIMER1_OVF_vect)
     s_current_scan_line_data = &s_vga_buffer[0];
     s_lines_to_skip = V_BACKPORCH_LINES;
     s_vga_frames++;
+    timer0_millis += 16;
 } // end of TIMER1_OVF_vect
 
 static inline void /*__attribute__ ((noinline))*/ do_scan_line()
@@ -78,7 +83,7 @@ static inline void /*__attribute__ ((noinline))*/ do_scan_line()
     // This is dejitter code, it purpose to start pixels output at the same offset after h-sync
     asm volatile(
       "     lds r24, %[timer0]    \n\t" //
-      "     subi r24, -4           \n\t" // some offset, calculated experimentally
+      "     subi r24, %[toffset]  \n\t" // some offset, calculated experimentally
       "     andi r24, 7           \n\t" // use module 8 value from Timer 0 counter
       "     ldi r31, pm_hi8(LW)   \n\t" // load label address
       "     ldi r30, pm_lo8(LW)   \n\t" //
@@ -94,7 +99,8 @@ static inline void /*__attribute__ ((noinline))*/ do_scan_line()
       "     nop                   \n\t" //
       "     nop                   \n\t" //
     :
-    : [timer0] "i" (&TCNT0)
+    : [timer0] "i" (&TCNT0),
+      [toffset] "i" ((uint8_t)DEJITTER_OFFSET)
     : "r30", "r31", "r24", "r25");
     #endif
     // output all pixels

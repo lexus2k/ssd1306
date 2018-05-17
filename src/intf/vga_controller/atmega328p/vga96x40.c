@@ -75,7 +75,7 @@ static void vga_controller_close(void)
 
    Yeah, a little bit complicated, but this allows to quickly unpack structure
 */
-static void vga_controller_put_pixel3(uint8_t x, uint8_t y, uint8_t color)
+static inline void vga_controller_put_pixel3(uint8_t x, uint8_t y, uint8_t color)
 {
     uint16_t addr = (x >> 3)*3   + (uint16_t)y*36;
     uint8_t offset = x & 0x07;

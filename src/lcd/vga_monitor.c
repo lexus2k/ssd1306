@@ -112,6 +112,11 @@ static void vga_set_mode(lcd_mode_t mode)
         ssd1306_lcd.set_block = vga_set_block1;
         ssd1306_lcd.next_page = vga_next_page1;
     }
+    ssd1306_intf.start();
+    ssd1306_intf.send( 0x00 );
+    ssd1306_intf.send( VGA_SET_MODE );
+    ssd1306_intf.send( (uint8_t)mode );
+    ssd1306_intf.stop();
     // empty for a while
 }
 
