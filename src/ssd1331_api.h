@@ -35,26 +35,19 @@ extern "C" {
 #endif
 
 ///////////////////////////////////////////////////////////////////////
-//                 DISPLAY CONTROL FUNCTIONS
-///////////////////////////////////////////////////////////////////////
-
-/**
- * @defgroup LCD_DISPLAY_API LCD Display control functions
- * @{
- */
-
-
-/**
- * @}
- */
-
-///////////////////////////////////////////////////////////////////////
 //                 DIRECT GRAPH FUNCTIONS
 ///////////////////////////////////////////////////////////////////////
 
 /**
- * @defgroup LCD_SSD1331_API SSD1331 only API functions
+ * @defgroup LCD_SSD1331_API 8-bit and 16-bit API functions only for color displays
  * @{
+ *
+ * @brief LCD direct draw functions only for color display.
+ *
+ * @details LCD direct draw functions are applicable for color display types. These functions will NOT work
+ *        in ssd1306 compatible mode. Use ssd1306_setMode() function to change display mode to NORMAL.
+ *        You can combine combine NanoEngine capabilities with these functions.
+ *        Direct draw functions draw directly in GDRAM and do not use any double-buffering.
  */
 
 /**
@@ -70,7 +63,9 @@ void        ssd1331_setColor(uint16_t color);
  * @brief Sets default color.
  *
  * Sets default color for monochrome operations.
- * For now only 8-bit RGB mode of SSD1331 display is supported
+ * For now this function supports only 8-bit RGB mode.
+ * To work with RGB colors in 16-bit mode, please refer to ssd1331_setColor() function
+ * and RGB_COLOR16 macros.
  * @param r - red in 0-255 range.
  * @param g - green in 0-255 range.
  * @param b - blue in 0-255 range.
@@ -112,6 +107,106 @@ void         ssd1331_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduin
  * @param data - pointer to data, located in SRAM.
  */
 void         ssd1331_drawBufferFast16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data);
+
+/**
+ * Puts single color point directly in OLED display GDRAM.
+ *
+ * @param x - horizontal position in pixels
+ * @param y - vertical position in pixels
+ *
+ * @note set color with ssd1331_setColor() function.
+ */
+void ssd1331_putPixel8(lcdint_t x, lcdint_t y);
+
+/**
+ * Draw vertical line directly in OLED display GDRAM.
+ *
+ * @param x1 - horizontal position in pixels
+ * @param y1 - top vertical position in pixels
+ * @param y2 - bottom vertical position in pixels
+ *
+ * @note set color with ssd1331_setColor() function.
+ */
+void ssd1331_drawVLine8(lcdint_t x1, lcdint_t y1, lcdint_t y2);
+
+/**
+ * Draw horizontal line directly in OLED display GDRAM.
+ *
+ * @param x1 - left position in pixels
+ * @param y1 - vertical vertical position in pixels
+ * @param x2 - right position in pixels
+ *
+ * @note set color with ssd1331_setColor() function.
+ */
+void ssd1331_drawHLine8(lcdint_t x1, lcdint_t y1, lcdint_t x2);
+
+/**
+ * Draw line directly in OLED display GDRAM.
+ * This is software implementation. Some OLED controllers have hardware implementation.
+ * Refer to datasheet.
+ *
+ * @param x1 - start horizontal position in pixels
+ * @param y1 - start vertical position in pixels
+ * @param x2 - end horizontal position in pixels
+ * @param y2 - end vertical position in pixels
+ *
+ * @note set color with ssd1331_setColor() function.
+ */
+void ssd1331_drawLine8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
+
+/**
+ * Draw rectangle directly in OLED display GDRAM.
+ * This is software implementation. Some OLED controllers have hardware implementation.
+ * Refer to datasheet.
+ *
+ * @param x1 - start horizontal position in pixels
+ * @param y1 - start vertical position in pixels
+ * @param x2 - end horizontal position in pixels
+ * @param y2 - end vertical position in pixels
+ *
+ * @note set color with ssd1331_setColor() function.
+ */
+void ssd1331_drawRect8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
+
+/**
+ * Fill rectangle directly in OLED display GDRAM.
+ * This is software implementation. Some OLED controllers have hardware implementation.
+ * Refer to datasheet.
+ *
+ * @param x1 - start horizontal position in pixels
+ * @param y1 - start vertical position in pixels
+ * @param x2 - end horizontal position in pixels
+ * @param y2 - end vertical position in pixels
+ *
+ * @note set color with ssd1331_setColor() function.
+ */
+void ssd1331_fillRect8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
+
+/**
+ * Draw monochrome bitmap, located in Flash, directly to OLED display GDRAM.
+ * The bitmap should be in ssd1306 format (each byte represents 8 vertical pixels)
+ *
+ * @param xpos start horizontal position in pixels
+ * @param ypos start vertical position in pixels
+ * @param w bitmap width in pixels
+ * @param h bitmap height in pixels
+ * @param bimtap pointer to Flash data, containing monochrome bitmap.
+ *
+ * @note set color with ssd1331_setColor() function.
+ */
+void ssd1331_drawMonoBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
+
+/**
+ * Draw 8-bit color bitmap, located in Flash, directly to OLED display GDRAM.
+ * Each pixel of the bitmap is expected in 3-3-2 format.
+ *
+ * @param xpos start horizontal position in pixels
+ * @param ypos start vertical position in pixels
+ * @param w bitmap width in pixels
+ * @param h bitmap height in pixels
+ * @param bimtap pointer to Flash data, containing 8-bit color bitmap.
+ */
+void ssd1331_drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
 
 /**
  * @}
