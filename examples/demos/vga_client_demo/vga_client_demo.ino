@@ -22,12 +22,13 @@
     SOFTWARE.
 */
 /**
- *   Nano/Atmega328 PINS:
- *     RX -
- *     TX -
+ * !!! IMPORTANT !!! For demonstration this sketch requires additional Arduino Nano or      !!!
+ * !!! any other EVK, based on Atmega328p ! Additional EVK should run vga_server_demo code. !!!
  *
- *   Sketch allows to use all other PINs. This sketch requires another Arduino Nano, flashed with
- *   vga_controller sketch.
+ * This sketch needs only TX pin of UART module.
+ *   Nano/Atmega328 PINS:
+ *     TX - connect TX pin to RX pin of Additional vga controller board.
+ *
  */
 #include "ssd1306.h"
 #include "ssd1331_api.h"

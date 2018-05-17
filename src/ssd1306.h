@@ -32,8 +32,6 @@
 #include "ssd1331_api.h"
 #include "nano_gfx_types.h"
 #include "ssd1306_fonts.h"
-#include "intf/i2c/ssd1306_i2c_conf.h"
-#include "intf/spi/ssd1306_spi_conf.h"
 #include "lcd/lcd_common.h"
 #include "lcd/oled_ssd1306.h"
 #include "lcd/oled_ssd1331.h"

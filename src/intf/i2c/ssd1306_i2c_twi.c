@@ -24,7 +24,6 @@
 
 #include "ssd1306_i2c_twi.h"
 #include "intf/ssd1306_interface.h"
-#include "ssd1306_i2c_conf.h"
 #include "ssd1306_i2c.h"
 
 #ifdef SSD1306_TWI_SUPPORTED

@@ -30,6 +30,10 @@
 #define _SSD1306_I2C_H_
 
 #include "ssd1306_i2c_conf.h"
+#include "ssd1306_i2c_wire.h"
+#include "ssd1306_i2c_embedded.h"
+#include "ssd1306_i2c_twi.h"
+#include "ssd1306_i2c_linux.h"
 
 #ifdef __cplusplus
 extern "C" {
