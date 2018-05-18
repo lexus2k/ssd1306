@@ -34,6 +34,9 @@
 #define swap_data(a, b ,type)  { type t = a; a = b; b = t; }
 
 extern uint16_t ssd1306_color;
+extern lcduint_t ssd1306_cursorX;
+extern lcduint_t ssd1306_cursorY;
+extern SFixedFontInfo s_fixedFont;
 
 void    ssd1331_setColor(uint16_t color)
 {
@@ -223,3 +226,73 @@ void ssd1331_drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h,
     }
     ssd1306_intf.stop();
 }
+
+void ssd1331_clearBlock8(uint8_t x, uint8_t y, uint8_t w, uint8_t h)
+{
+    ssd1306_lcd.set_block(x, y, w);
+    uint16_t count = w * h;
+    while (count--)
+    {
+        ssd1306_intf.send( ssd1306_color );
+    }
+    ssd1306_intf.stop();
+}
+
+void ssd1331_setCursor8(lcduint_t x, lcduint_t y)
+{
+    ssd1306_cursorX = x;
+    ssd1306_cursorY = y;
+}
+
+void ssd1331_printChar8(uint8_t c)
+{
+    c -= s_fixedFont.ascii_offset;
+    ssd1331_drawMonoBitmap8(ssd1306_cursorX,
+                ssd1306_cursorY,
+                s_fixedFont.width,
+                s_fixedFont.height,
+                &s_fixedFont.data[ c * s_fixedFont.pages * s_fixedFont.width ] );
+}
+
+size_t ssd1331_write8(uint8_t ch)
+{
+    if (ch == '\r')
+    {
+        ssd1306_cursorX = 0;
+        return 0;
+    }
+    else if ( (ssd1306_cursorX > ssd1306_lcd.width - s_fixedFont.width) || (ch == '\n') )
+    {
+        ssd1306_cursorX = 0;
+        ssd1306_cursorY += s_fixedFont.height;
+        if ( ssd1306_cursorY > ssd1306_lcd.height - s_fixedFont.height )
+        {
+            ssd1306_cursorY = 0;
+        }
+        ssd1331_clearBlock8(0, ssd1306_cursorY, ssd1306_lcd.width, s_fixedFont.height);
+        if (ch == '\n')
+        {
+            return 0;
+        }
+    }
+    ch -= s_fixedFont.ascii_offset;
+    ssd1331_drawMonoBitmap8( ssd1306_cursorX,
+                             ssd1306_cursorY,
+                             s_fixedFont.width,
+                             s_fixedFont.height,
+                            &s_fixedFont.data[ ch * s_fixedFont.pages * s_fixedFont.width ] );
+    ssd1306_cursorX += s_fixedFont.width;
+    return 1;
+}
+
+size_t ssd1331_print8(const char ch[])
+{
+    size_t n = 0;
+    while (*ch)
+    {
+        n += ssd1331_write8(*ch);
+        ch++;
+    }
+    return n;
+}
+

@@ -209,6 +209,56 @@ void ssd1331_drawMonoBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
 void ssd1331_drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
 
 /**
+ * Clears block, filling it with black pixels, directly in OLED display GDRAM.
+ *
+ * @param x start horizontal position in pixels
+ * @param y start vertical position in pixels
+ * @param w block width in pixels
+ * @param h block height in pixels
+ */
+void ssd1331_clearBlock8(uint8_t x, uint8_t y, uint8_t w, uint8_t h);
+
+/**
+ * Set cursor position for text functions
+ *
+ * @param x horizontal position in pixels.
+ * @param y vertical position in pixels.
+ */
+void ssd1331_setCursor8(lcduint_t x, lcduint_t y);
+
+/**
+ * Draws single character to canvas. Cursor position is defined
+ * by ssd1331_setCursor8(). Do not changes cursor position
+ *
+ * @param c - character code to print
+ *
+ * @note set color with ssd1331_setColor() function.
+ */
+void ssd1331_printChar8(uint8_t c);
+
+/**
+ * @brief Prints single character to display at current cursor position
+ *
+ * Prints single character to display at current cursor position.
+ * Cursor position can be set by ssd1331_setCursor8().
+ *
+ * @param ch - character to print to the display. 'LF' and 'CR' are skipped
+ * @return returns number of printed characters.
+ */
+size_t ssd1331_write8(uint8_t ch);
+
+/**
+ * @brief Prints null-terminated string to display at current cursor position
+ *
+ * Prints null-terminated string to display at current cursor position
+ * Cursor position can be set by ssd1331_setCursor8().
+ *
+ * @param ch - string to print to the display. 'LF' and 'CR' are skipped
+ * @return returns number of printed characters.
+ */
+size_t ssd1331_print8(const char ch[]);
+
+/**
  * @}
  */
 
