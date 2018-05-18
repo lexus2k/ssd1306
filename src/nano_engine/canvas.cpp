@@ -243,8 +243,6 @@ void NanoCanvasOps<8>::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lc
     }
     uint8_t offs2 = 8 - offs;
     lcdint_t y = y1;
-//    printf("[%d;%d] + [%d;%d], P1[%d;%d], P2[%d;%d]\n", xpos, ypos, offset.x, offset.y, x1,y1,x2,y2);
-//    printf("offset: 1=%d, 2=%d\n", offs, offs2);
     while ( y <= y2)
     {
         for ( lcdint_t x = x1; x <= x2; x++ )

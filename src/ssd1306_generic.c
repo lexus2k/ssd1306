@@ -41,10 +41,11 @@
 
 uint16_t ssd1306_color = 0xFFFF;
 static uint8_t s_invertByte = 0x00000000;
+lcduint_t ssd1306_cursorX = 0;
+lcduint_t ssd1306_cursorY = 0;
+
 const uint8_t *s_font6x8 = &ssd1306xled_font6x8[4];
 SFixedFontInfo s_fixedFont = { 0 };
-static lcduint_t s_cursor_x = 0;
-static lcduint_t s_cursor_y = 0;
 
 uint8_t      ssd1306_displayHeight()
 {
@@ -354,38 +355,38 @@ uint8_t ssd1306_printFixedN(uint8_t xpos, uint8_t y, const char ch[], EFontStyle
 
 void       ssd1306_setCursor(lcdint_t x, lcdint_t y)
 {
-    s_cursor_x = x;
-    s_cursor_y = y;
+    ssd1306_cursorX = x;
+    ssd1306_cursorY = y;
 }
 
 size_t ssd1306_write(uint8_t ch)
 {
     if (ch == '\r')
     {
-        s_cursor_x = 0;
+        ssd1306_cursorX = 0;
         return 0;
     }
-    else if ( (s_cursor_x > ssd1306_lcd.width - s_fixedFont.width) || (ch == '\n') )
+    else if ( (ssd1306_cursorX > ssd1306_lcd.width - s_fixedFont.width) || (ch == '\n') )
     {
-        s_cursor_x = 0;
-        s_cursor_y += s_fixedFont.height;
-        if ( s_cursor_y > ssd1306_lcd.height - s_fixedFont.height )
+        ssd1306_cursorX = 0;
+        ssd1306_cursorY += s_fixedFont.height;
+        if ( ssd1306_cursorY > ssd1306_lcd.height - s_fixedFont.height )
         {
-            s_cursor_y = 0;
+            ssd1306_cursorY = 0;
         }
-        ssd1306_clearBlock(0, s_cursor_y>>3, ssd1306_lcd.width, s_fixedFont.height);
+        ssd1306_clearBlock(0, ssd1306_cursorY >> 3, ssd1306_lcd.width, s_fixedFont.height);
         if (ch == '\n')
         {
             return 0;
         }
     }
     ch -= s_fixedFont.ascii_offset;
-    ssd1306_drawBitmap( s_cursor_x,
-                        s_cursor_y>>3,
+    ssd1306_drawBitmap( ssd1306_cursorX,
+                        ssd1306_cursorY >> 3,
                         s_fixedFont.width,
                         s_fixedFont.height,
                        &s_fixedFont.data[ ch * s_fixedFont.pages * s_fixedFont.width ] );
-    s_cursor_x += s_fixedFont.width;
+    ssd1306_cursorX += s_fixedFont.width;
     return 1;
 }
 
