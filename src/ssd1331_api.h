@@ -214,7 +214,7 @@ void ssd1331_fillRect8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
  * @param ypos start vertical position in pixels
  * @param w bitmap width in pixels
  * @param h bitmap height in pixels
- * @param bimtap pointer to Flash data, containing monochrome bitmap.
+ * @param bitmap pointer to Flash data, containing monochrome bitmap.
  *
  * @note set color with ssd1331_setColor() function.
  */
@@ -228,7 +228,7 @@ void ssd1331_drawMonoBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
  * @param ypos start vertical position in pixels
  * @param w bitmap width in pixels
  * @param h bitmap height in pixels
- * @param bimtap pointer to Flash data, containing 8-bit color bitmap.
+ * @param bitmap pointer to Flash data, containing 8-bit color bitmap.
  */
 void ssd1331_drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
 
