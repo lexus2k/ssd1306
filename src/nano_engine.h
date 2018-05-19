@@ -69,6 +69,8 @@ public:
  *    [0,1] [1,1] [2,1], [3,1] <br>
  * In your application you can choose, if you want to refresh whole screen (refresh()), or you
  * need to refresh only part of oled display.
+ *
+ * @warning Works only in SSD1306 compatible mode
  */
 class NanoEngine1: public NanoEngine<TILE_8x8_MONO>
 {
@@ -77,6 +79,31 @@ public:
      * Creates new Graphics Engine object.
      */
     NanoEngine1(): NanoEngine() {};
+};
+
+/**
+ * NanoEngine1 is simple graphics engine, that implements double buffering work
+ * for the systems with very low resources. That is, memory buffer for SSD1306 oled
+ * display needs at least 128x64/8 bytes (1024 bytes), and this is inacceptable for
+ * microcontrollers like attiny85 (it has only 512B of RAM). So, to workaround
+ * issue with low resources, NanoEngine1 uses small tile buffer (NE_TILE_SIZE x NE_TILE_SIZE)
+ * and updates only part of oled screen at once. It makes system slow, but it is
+ * possible to run NanoEngine1 on simple controllers.
+ * If tile size is 32x32, then 128x64 oled display is devided into 8 tiles: <br>
+ *    [0,0] [1,0] [2,0], [3,0] <br>
+ *    [0,1] [1,1] [2,1], [3,1] <br>
+ * In your application you can choose, if you want to refresh whole screen (refresh()), or you
+ * need to refresh only part of oled display.
+ *
+ * @warning Works only in RGB 8-bit color mode
+ */
+class NanoEngine1_8: public NanoEngine<TILE_8x8_MONO_8>
+{
+public:
+    /**
+     * Creates new Graphics Engine object.
+     */
+    NanoEngine1_8(): NanoEngine() {};
 };
 
 /**
