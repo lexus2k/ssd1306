@@ -185,9 +185,8 @@ static void drawLinesDemo()
 void setup()
 {
     ssd1306_setFixedFont(ssd1306xled_font6x8);
-    ssd1351_128x128_spi_init(3, 4, 5);
-//    ssd1351_128x128_spi_init(24, 0, 23); // Use this line for Raspberry  (gpio24=RST, 0=CE, gpio23=D/C)
-//    ssd1351_128x128_spi_init(3, -1, 4);  // Use this line for ATTINY
+    st7735_128x160_spi_init(3, 4, 5);
+//    st7735_128x160_spi_init(3, -1, 4); // Use this line for ATTINY
 
     // RGB functions do not work in default SSD1306 compatible mode
     ssd1306_setMode( LCD_MODE_NORMAL );
@@ -195,6 +194,8 @@ void setup()
     ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
     ssd1331_showMenu8( &menu );
 }
+
+uint8_t rotation = 0;
 
 void loop()
 {
@@ -223,6 +224,10 @@ void loop()
 
         default:
             break;
+    }
+    if ((menu.count - 1) == ssd1306_menuSelection(&menu))
+    {
+         st7735_setRotation((++rotation) & 0x03);
     }
     ssd1331_fillScreen8( 0x00 );
     ssd1331_setColor(RGB_COLOR16(255,255,255));

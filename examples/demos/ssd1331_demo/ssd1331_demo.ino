@@ -77,7 +77,7 @@ const char *menuItems[] =
     "draw bitmap",
     "sprites",
     "fonts",
-    "canvas gfx",
+    "nano canvas",
     "draw lines",
 };
 
