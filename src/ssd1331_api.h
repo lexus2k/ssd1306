@@ -85,6 +85,18 @@ void        ssd1331_setRgbColor(uint8_t r, uint8_t g, uint8_t b);
 void         ssd1331_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint16_t color);
 
 /**
+ * Draws 1-bit bitmap, located in SRAM, on the display
+ * Each bit represents separate pixel: refer to ssd1306 datasheet for more information.
+ *
+ * @param xpos horizontal position in pixels
+ * @param ypos vertical position in pixels
+ * @param w width of bitmap in pixels
+ * @param h height of bitmap in pixels
+ * @param bitmap pointer to data, located in SRAM.
+ */
+void ssd1331_drawMonoBuffer8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
+
+/**
  * Draws 8-bit bitmap, located in SRAM, on the display
  * Each byte represents separate pixel: refer to RGB_COLOR8 to understand RGB scheme, being used.
  *
@@ -107,6 +119,18 @@ void         ssd1331_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduin
  * @param data - pointer to data, located in SRAM.
  */
 void         ssd1331_drawBufferFast16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data);
+
+/**
+ * Fills screen with pattern byte
+ *
+ * @param fill_Data pattern color to fill screen with
+ */
+void ssd1331_fillScreen8(uint8_t fill_Data);
+
+/**
+ * Fills screen with zero-byte
+ */
+void ssd1331_clearScreen8();
 
 /**
  * Puts single color point directly in OLED display GDRAM.
@@ -257,6 +281,19 @@ size_t ssd1331_write8(uint8_t ch);
  * @return returns number of printed characters.
  */
 size_t ssd1331_print8(const char ch[]);
+
+/**
+ * Prints text to screen using fixed font.
+ * @param x horizontal position in pixels
+ * @param y vertical position in pixels
+ * @param ch NULL-terminated string to print
+ * @param style font style (EFontStyle), normal by default (not implemented).
+ * @returns number of chars in string
+ *
+ * @see ssd1306_setFixedFont
+ * @note set color with ssd1331_setColor() function.
+ */
+uint8_t ssd1331_printFixed8(lcdint_t x, lcdint_t y, const char *ch, EFontStyle style);
 
 /**
  * @}

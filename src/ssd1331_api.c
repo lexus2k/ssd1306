@@ -34,6 +34,7 @@
 #define swap_data(a, b ,type)  { type t = a; a = b; b = t; }
 
 extern uint16_t ssd1306_color;
+extern uint8_t s_ssd1306_invertByte;
 extern lcduint_t ssd1306_cursorX;
 extern lcduint_t ssd1306_cursorY;
 extern SFixedFontInfo s_fixedFont;
@@ -63,6 +64,37 @@ void         ssd1331_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, ui
     ssd1306_intf.stop();
 }
 
+void ssd1331_drawMonoBuffer8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+{
+    uint8_t bit = 1;
+    uint8_t blackColor = s_ssd1306_invertByte ? ssd1306_color : 0x00;
+    uint8_t color = s_ssd1306_invertByte ? 0x00 : ssd1306_color;
+    ssd1306_lcd.set_block(xpos, ypos, w);
+    while (h--)
+    {
+        uint8_t wx = w;
+        while (wx--)
+        {
+            uint8_t data = *bitmap;
+            if ( data & bit )
+                ssd1306_lcd.send_pixels8( color );
+            else
+                ssd1306_lcd.send_pixels8( blackColor );
+            bitmap++;
+        }
+        bit <<= 1;
+        if (bit == 0)
+        {
+            bit = 1;
+        }
+        else
+        {
+            bitmap -= w;
+        }
+    }
+    ssd1306_intf.stop();
+}
+
 void         ssd1331_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data)
 {
     uint16_t count = w * h;
@@ -87,10 +119,26 @@ void         ssd1331_drawBufferFast16(lcdint_t x, lcdint_t y, lcduint_t w, lcdui
     ssd1306_intf.stop();
 }
 
+void ssd1331_fillScreen8(uint8_t fill_Data)
+{
+    ssd1306_lcd.set_block(0, 0, 0);
+    uint16_t count = ssd1306_lcd.width * ssd1306_lcd.height;
+    while (count--)
+    {
+        ssd1306_lcd.send_pixels8( fill_Data );
+    }
+    ssd1306_intf.stop();
+}
+
+void ssd1331_clearScreen8()
+{
+    ssd1331_fillScreen8( 0x00 );
+}
+
 void ssd1331_putPixel8(lcdint_t x, lcdint_t y)
 {
     ssd1306_lcd.set_block(x, y, 0);
-    ssd1306_intf.send( ssd1306_color );
+    ssd1306_lcd.send_pixels8( ssd1306_color );
     ssd1306_intf.stop();
 }
 
@@ -99,7 +147,7 @@ void ssd1331_drawVLine8(lcdint_t x1, lcdint_t y1, lcdint_t y2)
     ssd1306_lcd.set_block(x1, y1, 1);
     while (y1<=y2)
     {
-        ssd1306_intf.send( ssd1306_color );
+        ssd1306_lcd.send_pixels8( ssd1306_color );
         y1++;
     }
     ssd1306_intf.stop();
@@ -110,7 +158,7 @@ void ssd1331_drawHLine8(lcdint_t x1, lcdint_t y1, lcdint_t x2)
     ssd1306_lcd.set_block(x1, y1, 0);
     while (x1 < x2)
     {
-        ssd1306_intf.send( ssd1306_color );
+        ssd1306_lcd.send_pixels8( ssd1306_color );
         x1++;
     }
     ssd1306_intf.stop();
@@ -181,7 +229,7 @@ void ssd1331_fillRect8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
     uint16_t count = (x2 - x1 + 1) * (y2 - y1 + 1);
     while (count--)
     {
-        ssd1306_intf.send( ssd1306_color );
+        ssd1306_lcd.send_pixels8( ssd1306_color );
     }
     ssd1306_intf.stop();
 }
@@ -189,6 +237,8 @@ void ssd1331_fillRect8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
 void ssd1331_drawMonoBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
     uint8_t bit = 1;
+    uint8_t blackColor = s_ssd1306_invertByte ? ssd1306_color : 0x00;
+    uint8_t color = s_ssd1306_invertByte ? 0x00 : ssd1306_color;
     ssd1306_lcd.set_block(xpos, ypos, w);
     while (h--)
     {
@@ -197,9 +247,9 @@ void ssd1331_drawMonoBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
         {
             uint8_t data = pgm_read_byte( bitmap );
             if ( data & bit )
-                ssd1306_intf.send( ssd1306_color );
+                ssd1306_lcd.send_pixels8( color );
             else
-                ssd1306_intf.send( 0x00 );
+                ssd1306_lcd.send_pixels8( blackColor );
             bitmap++;
         }
         bit <<= 1;
@@ -221,7 +271,7 @@ void ssd1331_drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h,
     uint16_t count = (w) * (h);
     while (count--)
     {
-        ssd1306_intf.send( pgm_read_byte( bitmap ) );
+        ssd1306_lcd.send_pixels8( pgm_read_byte( bitmap ) );
         bitmap++;
     }
     ssd1306_intf.stop();
@@ -233,7 +283,7 @@ void ssd1331_clearBlock8(uint8_t x, uint8_t y, uint8_t w, uint8_t h)
     uint16_t count = w * h;
     while (count--)
     {
-        ssd1306_intf.send( ssd1306_color );
+        ssd1306_lcd.send_pixels8( 0x00 );
     }
     ssd1306_intf.stop();
 }
@@ -295,4 +345,12 @@ size_t ssd1331_print8(const char ch[])
     }
     return n;
 }
+
+uint8_t ssd1331_printFixed8(lcdint_t x, lcdint_t y, const char *ch, EFontStyle style)
+{
+    ssd1306_cursorX = x;
+    ssd1306_cursorY = y;
+    return ssd1331_print8(ch);
+}
+
 

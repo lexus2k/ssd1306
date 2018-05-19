@@ -27,6 +27,8 @@
  *   ESP8266: connect LCD to D1(D/C), D2(CS), RX(RES), D7(DIN), D5(CLK)
  */
 
+/* !!! THIS DEMO RUNS in SSD1306 COMPATIBLE MODE */
+
 #include "ssd1306.h"
 #include "ssd1331_api.h"
 #include "nano_gfx.h"
@@ -161,8 +163,8 @@ static void drawLinesDemo()
 void setup()
 {
     ssd1306_setFixedFont(ssd1306xled_font6x8);
-    st7735_128x160_spi_init(3, 4, 5);
-//    st7735_128x160_spi_init(3, -1, 4); // Use this line for ATTINY
+    il9163_128x128_spi_init(3, 4, 5);
+//    il9163_128x128_spi_init(3, -1, 4); // Use this line for ATTINY
 
     ssd1306_fillScreen( 0x00 );
     ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
@@ -201,7 +203,7 @@ void loop()
     }
     if ((menu.count - 1) == ssd1306_menuSelection(&menu))
     {
-         st7735_setRotation((++rotation) & 0x03);
+         il9163_setRotation((++rotation) & 0x03);
     }
     ssd1306_fillScreen( 0x00 );
     ssd1331_setColor(RGB_COLOR16(255,255,255));

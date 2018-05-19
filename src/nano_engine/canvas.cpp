@@ -812,6 +812,18 @@ void NanoCanvas1::blt()
     ssd1306_drawBufferFast(offset.x, offset.y, m_w, m_h, m_buf);
 }
 
+//                 NANO CANVAS 1_8
+
+void NanoCanvas1_8::blt(lcdint_t x, lcdint_t y)
+{
+    ssd1331_drawMonoBuffer8(x, y, m_w, m_h, m_buf);
+}
+
+void NanoCanvas1_8::blt()
+{
+    ssd1331_drawMonoBuffer8(offset.x, offset.y, m_w, m_h, m_buf);
+}
+
 /////////////////////////////////////////////////////////////////////////////////
 //
 //                             16-BIT GRAPHICS

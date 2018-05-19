@@ -40,7 +40,7 @@
 #define swap_data(a, b)  { uint8_t t = a; a = b; b = t; }
 
 uint16_t ssd1306_color = 0xFFFF;
-static uint8_t s_invertByte = 0x00000000;
+uint8_t s_ssd1306_invertByte = 0x00000000;
 lcduint_t ssd1306_cursorX = 0;
 lcduint_t ssd1306_cursorY = 0;
 
@@ -59,7 +59,7 @@ uint8_t      ssd1306_displayWidth()
 
 void ssd1306_fillScreen(uint8_t fill_Data)
 {
-    fill_Data ^= s_invertByte;
+    fill_Data ^= s_ssd1306_invertByte;
     ssd1306_lcd.set_block(0, 0, 0);
     for(uint8_t m=(ssd1306_lcd.height >> 3); m>0; m--)
     {
@@ -79,7 +79,7 @@ void ssd1306_clearScreen()
     {
         for(uint8_t n=ssd1306_lcd.width; n>0; n--)
         {
-            ssd1306_lcd.send_pixels1( s_invertByte );
+            ssd1306_lcd.send_pixels1( s_ssd1306_invertByte );
         }
         ssd1306_lcd.next_page();
     }
@@ -170,7 +170,7 @@ uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle s
                 data = (temp & 0xF0) | ldata;
                 ldata = (temp & 0x0F);
             }
-            ssd1306_lcd.send_pixels1(data^s_invertByte);
+            ssd1306_lcd.send_pixels1(data^s_ssd1306_invertByte);
             offset++;
         }
         x += s_fixedFont.width;
@@ -249,8 +249,8 @@ uint8_t ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontStyl
                    ((data & 0x02) ? 0x0C: 0x00) |
                    ((data & 0x04) ? 0x30: 0x00) |
                    ((data & 0x08) ? 0xC0: 0x00);
-            ssd1306_lcd.send_pixels1(data^s_invertByte);
-            ssd1306_lcd.send_pixels1(data^s_invertByte);
+            ssd1306_lcd.send_pixels1(data^s_ssd1306_invertByte);
+            ssd1306_lcd.send_pixels1(data^s_ssd1306_invertByte);
             offset++;
         }
         x += (s_fixedFont.width << 1);
@@ -342,7 +342,7 @@ uint8_t ssd1306_printFixedN(uint8_t xpos, uint8_t y, const char ch[], EFontStyle
             }
             for (uint8_t z=(1<<factor); z>0; z--)
             {
-                ssd1306_lcd.send_pixels1(data^s_invertByte);
+                ssd1306_lcd.send_pixels1(data^s_ssd1306_invertByte);
             }
             offset++;
         }
@@ -432,7 +432,7 @@ uint8_t ssd1306_charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style
                 data = (temp & 0xF0) | ldata;
                 ldata = (temp & 0x0F);
             }
-            ssd1306_lcd.send_pixels1(data^s_invertByte);
+            ssd1306_lcd.send_pixels1(data^s_ssd1306_invertByte);
         }
         x += 6;
         j++;
@@ -506,8 +506,8 @@ uint8_t ssd1306_charF12x16(uint8_t xpos, uint8_t y, const char ch[], EFontStyle 
                    ((data & 0x02) ? 0x0C: 0x00) |
                    ((data & 0x04) ? 0x30: 0x00) |
                    ((data & 0x08) ? 0xC0: 0x00);
-            ssd1306_lcd.send_pixels1(data^s_invertByte);
-            ssd1306_lcd.send_pixels1(data^s_invertByte);
+            ssd1306_lcd.send_pixels1(data^s_ssd1306_invertByte);
+            ssd1306_lcd.send_pixels1(data^s_ssd1306_invertByte);
         }
         x += 12;
         j++;
@@ -548,14 +548,14 @@ void         ssd1306_setFont6x8(const uint8_t * progmemFont)
 void         ssd1306_putPixel(uint8_t x, uint8_t y)
 {
     ssd1306_lcd.set_block(x, y >> 3, 1);
-    ssd1306_lcd.send_pixels1((1 << (y & 0x07))^s_invertByte);
+    ssd1306_lcd.send_pixels1((1 << (y & 0x07))^s_ssd1306_invertByte);
     ssd1306_intf.stop();
 }
 
 void         ssd1306_putPixels(uint8_t x, uint8_t y, uint8_t pixels)
 {
     ssd1306_lcd.set_block(x, y >> 3, 1);
-    ssd1306_lcd.send_pixels1(pixels^s_invertByte);
+    ssd1306_lcd.send_pixels1(pixels^s_ssd1306_invertByte);
     ssd1306_intf.stop();
 }
 
@@ -628,7 +628,7 @@ void         ssd1306_drawHLine(uint8_t x1, uint8_t y1, uint8_t x2)
     ssd1306_lcd.set_block(x1, y1 >> 3, x2 - x1 + 1);
     for (uint8_t x = x1; x <= x2; x++)
     {
-        ssd1306_lcd.send_pixels1((1 << (y1 & 0x07))^s_invertByte);
+        ssd1306_lcd.send_pixels1((1 << (y1 & 0x07))^s_ssd1306_invertByte);
     }
     ssd1306_intf.stop();
 }
@@ -642,18 +642,18 @@ void         ssd1306_drawVLine(uint8_t x1, uint8_t y1, uint8_t y2)
     ssd1306_lcd.set_block(x1, topPage, 1);
     if (topPage == bottomPage)
     {
-        ssd1306_lcd.send_pixels1( ((0xFF >> (0x07 - height)) << (y1 & 0x07))^s_invertByte );
+        ssd1306_lcd.send_pixels1( ((0xFF >> (0x07 - height)) << (y1 & 0x07))^s_ssd1306_invertByte );
         ssd1306_intf.stop();
         return;
     }
-    ssd1306_lcd.send_pixels1( (0xFF << (y1 & 0x07))^s_invertByte );
+    ssd1306_lcd.send_pixels1( (0xFF << (y1 & 0x07))^s_ssd1306_invertByte );
     for ( y = (topPage + 1); y <= (bottomPage - 1); y++)
     {
         ssd1306_lcd.next_page();
-        ssd1306_lcd.send_pixels1( 0xFF^s_invertByte );
+        ssd1306_lcd.send_pixels1( 0xFF^s_ssd1306_invertByte );
     }
     ssd1306_lcd.next_page();
-    ssd1306_lcd.send_pixels1( (0xFF >> (0x07 - (y2 & 0x07)))^s_invertByte );
+    ssd1306_lcd.send_pixels1( (0xFF >> (0x07 - (y2 & 0x07)))^s_ssd1306_invertByte );
     ssd1306_intf.stop();
 }
 
@@ -686,7 +686,7 @@ void ssd1306_drawBuffer(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_
     {
         for(i=w;i>0;i--)
         {
-            ssd1306_lcd.send_pixels1(s_invertByte^*buf++);
+            ssd1306_lcd.send_pixels1(s_ssd1306_invertByte^*buf++);
         }
         ssd1306_lcd.next_page();
     }
@@ -703,7 +703,7 @@ void ssd1306_drawBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_
     {
         for(i=w;i>0;i--)
         {
-            ssd1306_lcd.send_pixels1(s_invertByte^pgm_read_byte(buf++));
+            ssd1306_lcd.send_pixels1(s_ssd1306_invertByte^pgm_read_byte(buf++));
         }
         buf += remainder;
         ssd1306_lcd.next_page();
@@ -758,7 +758,7 @@ void gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const 
             if ( mainFlag )    data |= (pgm_read_byte(buf) << offset);
             if ( complexFlag ) data |= (pgm_read_byte(buf - origin_width) >> (8 - offset));
             buf++;
-            ssd1306_lcd.send_pixels1(s_invertByte^data);
+            ssd1306_lcd.send_pixels1(s_ssd1306_invertByte^data);
         }
         buf += origin_width - w;
         complexFlag = offset;
@@ -776,7 +776,7 @@ void ssd1306_clearBlock(uint8_t x, uint8_t y, uint8_t w, uint8_t h)
     {
         for(i=w;i>0;i--)
         {
-            ssd1306_lcd.send_pixels1(s_invertByte);
+            ssd1306_lcd.send_pixels1(s_ssd1306_invertByte);
         }
         ssd1306_lcd.next_page();
     }
@@ -790,7 +790,7 @@ void ssd1306_drawSpriteEx(uint8_t x, uint8_t y, uint8_t w, const uint8_t *sprite
    ssd1306_lcd.set_block(x,y,w);
    for(i=0;i<w;i++)
    {
-       ssd1306_lcd.send_pixels1(s_invertByte^pgm_read_byte(&sprite[i]));
+       ssd1306_lcd.send_pixels1(s_ssd1306_invertByte^pgm_read_byte(&sprite[i]));
    }
    ssd1306_intf.stop();
 }
@@ -804,7 +804,7 @@ void ssd1306_drawSprite(SPRITE *sprite)
         ssd1306_lcd.set_block(sprite->x, sprite->y >> 3, sprite->w);
         for (uint8_t i=0; i < sprite->w; i++)
         {
-            ssd1306_lcd.send_pixels1( s_invertByte^(pgm_read_byte( &sprite->data[i] ) << offsety) );
+            ssd1306_lcd.send_pixels1( s_ssd1306_invertByte^(pgm_read_byte( &sprite->data[i] ) << offsety) );
         }
         ssd1306_intf.stop();
     }
@@ -813,7 +813,7 @@ void ssd1306_drawSprite(SPRITE *sprite)
         ssd1306_lcd.set_block(sprite->x, (sprite->y >> 3) + 1, sprite->w);
         for (uint8_t i=0; i < sprite->w; i++)
         {
-            ssd1306_lcd.send_pixels1( s_invertByte^(pgm_read_byte( &sprite->data[i] ) >> (8 - offsety)) );
+            ssd1306_lcd.send_pixels1( s_ssd1306_invertByte^(pgm_read_byte( &sprite->data[i] ) >> (8 - offsety)) );
         }
         ssd1306_intf.stop();
     }
@@ -829,7 +829,7 @@ void ssd1306_eraseSprite(SPRITE *sprite)
     ssd1306_lcd.set_block(sprite->x, posy, sprite->w);
     for (uint8_t i=sprite->w; i > 0; i--)
     {
-       ssd1306_lcd.send_pixels1( s_invertByte );
+       ssd1306_lcd.send_pixels1( s_ssd1306_invertByte );
     }
     ssd1306_intf.stop();
     if (offsety)
@@ -837,7 +837,7 @@ void ssd1306_eraseSprite(SPRITE *sprite)
         ssd1306_lcd.set_block(sprite->x, posy + 1, sprite->w);
         for (uint8_t i=sprite->w; i > 0; i--)
         {
-           ssd1306_lcd.send_pixels1( s_invertByte );
+           ssd1306_lcd.send_pixels1( s_ssd1306_invertByte );
         }
     }
     ssd1306_intf.stop();
@@ -857,7 +857,7 @@ void ssd1306_eraseTrace(SPRITE *sprite)
         ssd1306_lcd.set_block(sprite->lx, y, sprite->w);
         for(uint8_t x = sprite->w; x > 0; x--)
         {
-            ssd1306_lcd.send_pixels1( s_invertByte );
+            ssd1306_lcd.send_pixels1( s_ssd1306_invertByte );
         }
         ssd1306_intf.stop();
     }
@@ -874,7 +874,7 @@ void ssd1306_eraseTrace(SPRITE *sprite)
             ssd1306_lcd.set_block(x1, y, x2 - x1 + 1 );
             for(uint8_t x = x2 - x1 + 1; x > 0; x--)
             {
-                ssd1306_lcd.send_pixels1( s_invertByte );
+                ssd1306_lcd.send_pixels1( s_ssd1306_invertByte );
             }
             ssd1306_intf.stop();
         }
@@ -925,10 +925,10 @@ void         ssd1306_flipVertical(uint8_t mode)
 
 void         ssd1306_negativeMode()
 {
-    s_invertByte = 0xFF;
+    s_ssd1306_invertByte = 0xFF;
 }
 
 void         ssd1306_positiveMode()
 {
-    s_invertByte = 0x00;
+    s_ssd1306_invertByte = 0x00;
 }

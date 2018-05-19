@@ -24,6 +24,7 @@
 
 #include "font6x8.h"
 #include "ssd1306.h"
+#include "ssd1331_api.h"
 
 #ifndef min
 #define min(x,y) ((x)<(y)?(x):(y))
@@ -74,6 +75,20 @@ static void drawMenuItem(SAppMenu *menu, uint8_t index)
     ssd1306_positiveMode();
 }
 
+static void drawMenuItem8(SAppMenu *menu, uint8_t index)
+{
+    if (index == menu->selection)
+    {
+        ssd1306_negativeMode();
+    }
+    else
+    {
+        ssd1306_positiveMode();
+    }
+    ssd1331_printFixed8(8, (index - menu->scrollPosition + 1)*8, menu->items[index], STYLE_NORMAL );
+    ssd1306_positiveMode();
+}
+
 void ssd1306_showMenu(SAppMenu *menu)
 {
     ssd1306_drawRect(4, 4, ssd1306_displayWidth() - 5, ssd1306_displayHeight() - 5);
@@ -81,6 +96,17 @@ void ssd1306_showMenu(SAppMenu *menu)
     for (uint8_t i = menu->scrollPosition; i < min(menu->count, menu->scrollPosition + getMaxScreenItems()); i++)
     {
         drawMenuItem(menu, i);
+    }
+    menu->oldSelection = menu->selection;
+}
+
+void ssd1331_showMenu8(SAppMenu *menu)
+{
+    ssd1331_drawRect8(4, 4, ssd1306_displayWidth() - 5, ssd1306_displayHeight() - 5);
+    menu->scrollPosition = calculateScrollPosition( menu, menu->selection );
+    for (uint8_t i = menu->scrollPosition; i < min(menu->count, menu->scrollPosition + getMaxScreenItems()); i++)
+    {
+        drawMenuItem8(menu, i);
     }
     menu->oldSelection = menu->selection;
 }
@@ -99,6 +125,25 @@ void ssd1306_updateMenu(SAppMenu *menu)
         {
             drawMenuItem(menu, menu->oldSelection);
             drawMenuItem(menu, menu->selection);
+            menu->oldSelection = menu->selection;
+        }
+    }
+}
+
+void ssd1331_updateMenu8(SAppMenu *menu)
+{
+    if (menu->selection != menu->oldSelection)
+    {
+        uint8_t scrollPosition = calculateScrollPosition( menu, menu->selection );
+        if ( scrollPosition != menu->scrollPosition )
+        {
+            ssd1331_clearScreen8();
+            ssd1331_showMenu8(menu);
+        }
+        else
+        {
+            drawMenuItem8(menu, menu->oldSelection);
+            drawMenuItem8(menu, menu->selection);
             menu->oldSelection = menu->selection;
         }
     }
