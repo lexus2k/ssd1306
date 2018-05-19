@@ -1,18 +1,18 @@
 var searchData=
 [
-  ['p1',['p1',['../struct___nano_rect.html#af3f18de2667af3087f7145c5a193f63b',1,'_NanoRect']]],
-  ['p2',['p2',['../struct___nano_rect.html#a4d038b4eccb575c9128b38338ad74213',1,'_NanoRect']]],
-  ['pages',['pages',['../struct_s_fixed_font_info.html#ae1f28bffdc33257500d04b8999edb9b2',1,'SFixedFontInfo']]],
-  ['pcd8544_5f84x48_5finit',['pcd8544_84x48_init',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga82a5ff26eaac6065f9fdf8e182e0c1a0',1,'pcd8544_84x48_init():&#160;lcd_pcd8544.c'],['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga82a5ff26eaac6065f9fdf8e182e0c1a0',1,'pcd8544_84x48_init(void):&#160;lcd_pcd8544.c']]],
-  ['pcd8544_5f84x48_5fspi_5finit',['pcd8544_84x48_spi_init',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga6e5fe50f6c6bae1adb75b0008880035d',1,'lcd_pcd8544.c']]],
-  ['pcd8544_5fcommands_2eh',['pcd8544_commands.h',['../pcd8544__commands_8h.html',1,'']]],
-  ['pressed',['pressed',['../class_nano_engine_inputs.html#aaf992076a4c0e1a5aa95a9e129e8ad25',1,'NanoEngineInputs']]],
-  ['print',['Print',['../class_print.html',1,'Print'],['../class_print.html#a2131ef6aa11c8551831201ba64cf5f06',1,'Print::print(const char *str)'],['../class_print.html#a1b9fe938883bb7b4bce8fba012dab112',1,'Print::Print()']]],
-  ['print_5finternal_2eh',['Print_internal.h',['../_print__internal_8h.html',1,'']]],
-  ['printchar',['printChar',['../class_nano_canvas_ops.html#af621b5840962eea7fa043879c29c01d7',1,'NanoCanvasOps']]],
-  ['printfixed',['printFixed',['../class_nano_canvas_ops.html#ad71a16bf993276496a1bc599a6164596',1,'NanoCanvasOps::printFixed()'],['../class_nano_canvas.html#a6f89c3edb9833b7d79f7d1f771b44254',1,'NanoCanvas::printFixed()']]],
-  ['printfixed2x',['printFixed2x',['../class_nano_canvas.html#a6dcb23724a60a84baaa06c189903edef',1,'NanoCanvas']]],
-  ['printfixedpgm',['printFixedPgm',['../class_nano_canvas_ops.html#a0665fe7b180b4247ef94c3464fb2b88e',1,'NanoCanvasOps']]],
-  ['println',['println',['../class_print.html#a4ce298d7653c5279c7d501222cc8a0a2',1,'Print']]],
-  ['putpixel',['putPixel',['../class_nano_canvas_ops.html#a3f89aff0fb6346cf67799d8695e2f535',1,'NanoCanvasOps::putPixel(lcdint_t x, lcdint_t y)'],['../class_nano_canvas_ops.html#a83157f7cd82e008a5355644dc8deb4ae',1,'NanoCanvasOps::putPixel(const NanoPoint &amp;p)'],['../class_nano_canvas.html#a54a4d7fccec6cd25aa2651301e787241',1,'NanoCanvas::putPixel()']]]
+  ['only_20ssd1306_20display_20driver_20control_20functions',['only ssd1306 display driver control functions',['../group___l_c_d___s_s_d1306___a_p_i.html',1,'']]],
+  ['offset',['offset',['../class_nano_canvas_ops.html#a0ff1def9b165746092c0c21adf420612',1,'NanoCanvasOps']]],
+  ['oldselection',['oldSelection',['../struct_s_app_menu.html#ad79da4d78c16e3fbbd2e380dc5763275',1,'SAppMenu']]],
+  ['oled_5fsh1106_2eh',['oled_sh1106.h',['../oled__sh1106_8h.html',1,'']]],
+  ['oled_5fssd1306_2eh',['oled_ssd1306.h',['../oled__ssd1306_8h.html',1,'']]],
+  ['oled_5fssd1331_2eh',['oled_ssd1331.h',['../oled__ssd1331_8h.html',1,'']]],
+  ['oled_5fssd1351_2eh',['oled_ssd1351.h',['../oled__ssd1351_8h.html',1,'']]],
+  ['operator_2b',['operator+',['../struct___nano_point.html#ae43e5976ea297fa19e2c6802979dd907',1,'_NanoPoint::operator+()'],['../struct___nano_rect.html#a5b1bc5b55fca40919a5da5dc3e93fe7f',1,'_NanoRect::operator+()']]],
+  ['operator_2b_3d',['operator+=',['../struct___nano_point.html#a49f5c70f11141579ebcfaee7fb83a7a4',1,'_NanoPoint::operator+=()'],['../struct___nano_rect.html#a504c0982e9e76c09c03b632ff5d9da21',1,'_NanoRect::operator+=()']]],
+  ['operator_2d',['operator-',['../struct___nano_point.html#a2e032b491bbeaa37bc3a58a19cb8e818',1,'_NanoPoint::operator-()'],['../struct___nano_rect.html#a283c63d0a75d36aa776228470859ae56',1,'_NanoRect::operator-()']]],
+  ['operator_2d_3d',['operator-=',['../struct___nano_point.html#a45975195d121d79477d8f81fa0f1c5bb',1,'_NanoPoint']]],
+  ['operator_3c_3c',['operator&lt;&lt;',['../struct___nano_point.html#ab6584512207b4769cd117462ede8ce1f',1,'_NanoPoint']]],
+  ['operator_3c_3c_3d',['operator&lt;&lt;=',['../struct___nano_point.html#aade271ab08c395102371413a84bc929b',1,'_NanoPoint']]],
+  ['operator_3e_3e',['operator&gt;&gt;',['../struct___nano_point.html#aa57a00e98460efa2e6428399004f7690',1,'_NanoPoint']]],
+  ['operator_3e_3e_3d',['operator&gt;&gt;=',['../struct___nano_point.html#a67231d2647bf16f59f4d848467e789ab',1,'_NanoPoint']]]
 ];

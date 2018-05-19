@@ -39,7 +39,7 @@
     #include <SPI.h>
 #endif
 
-/* 
+/*
  * Heart image below is defined directly in flash memory.
  * This reduces SRAM consumption.
  * The image is defined from bottom to top (bits), from left to
@@ -78,7 +78,7 @@ const char *menuItems[] =
 static void bitmapDemo()
 {
     ssd1331_setColor(RGB_COLOR8(64,64,255));
-    ssd1306_drawBitmap(0, 0, 128, 64, Sova);
+    ssd1306_drawBitmap(0, 0, 96, 64, Sova);
     delay(3000);
 }
 

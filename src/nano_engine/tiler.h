@@ -43,7 +43,8 @@ extern "C" SFixedFontInfo s_fixedFont;
 #define BUFFER_128x64_MONO    NanoCanvas1,  128,    64,     7    ///< Full-screen 1-bit tile for SSD1306
 #define TILE_8x8_RGB16        NanoCanvas16, 8,      8,      3    ///< Standard 16-bit RGB tile 8x8
 #define TILE_8x8_RGB8         NanoCanvas8,  8,      8,      3    ///< Standard 8-bit RGB tile 8x8
-#define TILE_8x8_MONO         NanoCanvas1,  8,      8,      3    ///< Standard 1-bit tile 8x8
+#define TILE_8x8_MONO         NanoCanvas1,  8,      8,      3    ///< Standard 1-bit tile 8x8 for monochrome mode
+#define TILE_8x8_MONO_8       NanoCanvas1_8,8,      8,      3    ///< Standard 1-bit tile 8x8 for RGB mode
 
 /** Type of user-specified draw callback */
 typedef bool (*TNanoEngineOnDraw)(void);

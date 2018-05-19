@@ -34,11 +34,6 @@
 #include "nano_engine.h"
 #include "sova.h"
 
-/* Do not include SPI.h for Attiny controllers */
-#ifdef SSD1306_SPI_SUPPORTED
-    #include <SPI.h>
-#endif
-
 /*
  * Heart image below is defined directly in flash memory.
  * This reduces SRAM consumption.
@@ -69,13 +64,6 @@ const PROGMEM uint8_t heartImage8[ 8 * 8 ] =
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-/*
- * Define sprite width. The width can be of any size.
- * But sprite height is always assumed to be 8 pixels
- * (number of bits in single byte).
- */
-const int spriteWidth = sizeof(heartImage);
-
 SAppMenu menu;
 
 const char *menuItems[] =
@@ -83,7 +71,7 @@ const char *menuItems[] =
     "draw bitmap",
     "sprites",
     "fonts",
-    "canvas gfx",
+    "nano canvas",
     "draw lines",
 };
 
@@ -97,14 +85,49 @@ static void bitmapDemo()
     delay(3000);
 }
 
-// Sprites are not implemented for color modes
+/* Sprites are not implemented for color modes.
+ * But there is NanoEngine support
+ * To make example clear, we use lambda as function pointer. Since lambda can be
+ * passed to function only if it doesn't capture, all variables should be global.
+ * Refer to C++ documentation.
+ */
+NanoPoint sprite;
+NanoEngine8 engine;
 static void spriteDemo()
 {
-    ssd1306_setFixedFont(ssd1306xled_font6x8);
-    ssd1331_clearScreen8();
-    ssd1331_setColor(RGB_COLOR8(255,255,0));
-    ssd1331_printFixed8(0,  8, "Sprites not implemented", STYLE_NORMAL);
-    delay(3000);
+    // We not need to clear screen, engine will do it for us
+    engine.begin();
+    // Force engine to refresh the screen
+    engine.refresh();
+    // Set function to draw our sprite
+    engine.drawCallback( []()->bool {
+        engine.canvas.clear();
+        engine.canvas.setColor( RGB_COLOR8(255, 32, 32) );
+        engine.canvas.drawBitmap1( sprite.x, sprite.y, 8, 8, heartImage );
+        return true;
+    } );
+    sprite.x = 0;
+    sprite.y = 0;
+    for (int i=0; i<250; i++)
+    {
+        delay(15);
+        // Tell the engine to refresh screen at old sprite position
+        engine.refresh( sprite.x, sprite.y, sprite.x + 8 - 1, sprite.y + 8 - 1 );
+        sprite.x++;
+        if (sprite.x >= ssd1306_displayWidth())
+        {
+            sprite.x = 0;
+        }
+        sprite.y++;
+        if (sprite.y >= ssd1306_displayHeight())
+        {
+            sprite.y = 0;
+        }
+        // Tell the engine to refresh screen at new sprite position
+        engine.refresh( sprite.x, sprite.y, sprite.x + 8 - 1, sprite.y + 8 - 1 );
+        // Do refresh required parts of screen
+        engine.display();
+    }
 }
 
 static void textDemo()
