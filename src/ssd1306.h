@@ -568,8 +568,20 @@ void ssd1306_createMenu(SAppMenu *menu, const char **items, uint8_t count);
  * the function provides scrolling.
  *
  * @param menu - Pointer to SAppMenu structure
+ *
+ * @warning works only in SSD1306 compatible mode.
  */
 void ssd1306_showMenu(SAppMenu *menu);
+
+/**
+ * Shows menu items on the display. If menu items cannot fit the display,
+ * the function provides scrolling.
+ *
+ * @param menu - Pointer to SAppMenu structure
+ *
+ * @warning works only in 8-bit RGB normal mode.
+ */
+void ssd1331_showMenu8(SAppMenu *menu);
 
 /**
  * Updates menu items on the display. That is if selection is changed,
@@ -580,10 +592,22 @@ void ssd1306_showMenu(SAppMenu *menu);
 void ssd1306_updateMenu(SAppMenu *menu);
 
 /**
+ * Updates menu items on the display. That is if selection is changed,
+ * the function will update only those areas, affected by the change.
+ *
+ * @param menu - Pointer to SAppMenu structure
+ *
+ * @warning works only in SSD1306 compatible mode.
+ */
+void ssd1331_updateMenu8(SAppMenu *menu);
+
+/**
  * Returns currently selected menu item.
  * First item has zero-index.
  *
  * @param menu - Pointer to SAppMenu structure
+ *
+ * @warning works only in 8-bit RGB normal mode.
  */
 uint8_t ssd1306_menuSelection(SAppMenu *menu);
 

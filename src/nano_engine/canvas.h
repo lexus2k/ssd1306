@@ -578,6 +578,29 @@ public:
     void blt() override;
 };
 
+/**
+ * NanoCanvas1_8 represents objects for drawing in memory buffer
+ * NanoCanvas1_8 represents each pixel as single bit: 0/1
+ * Unlike NanoCanvas1, it works with RBG color displays in normal mode.
+ */
+class NanoCanvas1_8: public NanoCanvasBase<1>
+{
+public:
+    using NanoCanvasBase::NanoCanvasBase;
+
+    /**
+     * Draws canvas on the LCD display
+     * @param x - horizontal position in pixels
+     * @param y - vertical position in pixels
+     */
+    void blt(lcdint_t x, lcdint_t y) override;
+
+    /**
+     * Draws canvas on the LCD display using offset values.
+     */
+    void blt() override;
+};
+
 /////////////////////////////////////////////////////////////////////////////////
 //
 //                             16-BIT GRAPHICS

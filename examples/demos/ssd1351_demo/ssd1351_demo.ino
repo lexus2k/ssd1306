@@ -27,9 +27,11 @@
  *   ESP8266: connect LCD to D1(D/C), D2(CS), RX(RES), D7(DIN), D5(CLK)
  */
 
+/* !!! THIS DEMO RUNS in FULL COLOR MODE */
+
 #include "ssd1306.h"
 #include "ssd1331_api.h"
-#include "nano_gfx.h"
+#include "nano_engine.h"
 #include "sova.h"
 
 /* Do not include SPI.h for Attiny controllers */
@@ -37,7 +39,7 @@
     #include <SPI.h>
 #endif
 
-/* 
+/*
  * Heart image below is defined directly in flash memory.
  * This reduces SRAM consumption.
  * The image is defined from bottom to top (bits), from left to
@@ -53,6 +55,18 @@ const PROGMEM uint8_t heartImage[8] =
     0B00111101,
     0B00011001,
     0B00001110
+};
+
+const PROGMEM uint8_t heartImage8[ 8 * 8 ] =
+{
+    0x00, 0xE0, 0xE0, 0x00, 0x00, 0xE5, 0xE5, 0x00,
+    0xE0, 0xC0, 0xE0, 0xE0, 0xE0, 0xEC, 0xEC, 0xE5,
+    0xC0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE5, 0xEC, 0xE5,
+    0x80, 0xC0, 0xE0, 0xE0, 0xE0, 0xE0, 0xE5, 0xE0,
+    0x00, 0x80, 0xC0, 0xE0, 0xE0, 0xE0, 0xE0, 0x00,
+    0x00, 0x00, 0x80, 0xE0, 0xE0, 0xE0, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x80, 0xE0, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
 /*
@@ -75,52 +89,37 @@ const char *menuItems[] =
 
 static void bitmapDemo()
 {
-    ssd1331_setColor(RGB_COLOR16(64,64,255));
-    ssd1306_drawBitmap(0, 0, 128, 64, Sova);
+    ssd1331_setColor(RGB_COLOR8(64,64,255));
+    ssd1331_drawMonoBitmap8(0, 0, 128, 64, Sova);
+    ssd1331_drawBitmap8(0, 0, 8, 8, heartImage8);
+    ssd1331_setColor(RGB_COLOR8(255,64,64));
+    ssd1331_drawMonoBitmap8(0, 16, 8, 8, heartImage);
     delay(3000);
 }
 
+// Sprites are not implemented for color modes
 static void spriteDemo()
 {
-    ssd1331_setColor(RGB_COLOR16(255,32,32));
-    ssd1306_clearScreen();
-    /* Declare variable that represents our sprite */
-    SPRITE sprite;
-    /* Create sprite at 0,0 position. The function initializes sprite structure. */
-    sprite = ssd1306_createSprite( 0, 0, spriteWidth, heartImage );
-    for (int i=0; i<250; i++)
-    {
-        delay(15);
-        sprite.x++;
-        if (sprite.x >= ssd1306_displayWidth())
-        {
-            sprite.x = 0;
-        }
-        sprite.y++;
-        if (sprite.y >= ssd1306_displayHeight())
-        {
-            sprite.y = 0;
-        }
-        /* Erase sprite on old place. The library knows old position of the sprite. */
-        sprite.eraseTrace();
-        /* Draw sprite on new place */
-        sprite.draw();
-    }
+    ssd1306_setFixedFont(ssd1306xled_font6x8);
+    ssd1331_clearScreen8();
+    ssd1331_setColor(RGB_COLOR8(255,255,0));
+    ssd1331_printFixed8(0,  8, "Sprites not implemented", STYLE_NORMAL);
+    delay(3000);
 }
 
 static void textDemo()
 {
     ssd1306_setFixedFont(ssd1306xled_font6x8);
-    ssd1306_clearScreen();
-    ssd1331_setColor(RGB_COLOR16(255,255,0));
-    ssd1306_printFixed(0,  8, "Normal text", STYLE_NORMAL);
-    ssd1331_setColor(RGB_COLOR16(0,255,0));
-    ssd1306_printFixed(0, 16, "Bold text", STYLE_BOLD);
-    ssd1331_setColor(RGB_COLOR16(0,255,255));
-    ssd1306_printFixed(0, 24, "Italic text", STYLE_ITALIC);
+    ssd1331_clearScreen8();
+    ssd1331_setColor(RGB_COLOR8(255,255,0));
+    ssd1331_printFixed8(0,  8, "Normal text", STYLE_NORMAL);
+    ssd1331_setColor(RGB_COLOR8(0,255,0));
+    ssd1331_printFixed8(0, 16, "bold text?", STYLE_BOLD);
+    ssd1331_setColor(RGB_COLOR8(0,255,255));
+    ssd1331_printFixed8(0, 24, "Italic text?", STYLE_ITALIC);
     ssd1306_negativeMode();
-    ssd1331_setColor(RGB_COLOR16(255,255,255));
-    ssd1306_printFixed(0, 32, "Inverted bold", STYLE_BOLD);
+    ssd1331_setColor(RGB_COLOR8(255,255,255));
+    ssd1331_printFixed8(0, 32, "Inverted bold?", STYLE_BOLD);
     ssd1306_positiveMode();
     delay(3000);
 }
@@ -128,15 +127,15 @@ static void textDemo()
 static void canvasDemo()
 {
     uint8_t buffer[64*16/8];
-    NanoCanvas canvas(64,16, buffer);
-    ssd1331_setColor(RGB_COLOR16(0,255,0));
+    NanoCanvas1_8 canvas(64,16, buffer);
+    ssd1331_setColor(RGB_COLOR8(0,255,0));
     ssd1306_setFixedFont(ssd1306xled_font6x8);
-    ssd1306_clearScreen();
+    ssd1331_clearScreen8();
     canvas.clear();
-    canvas.fillRect(10, 3, 80, 5, 0xFF);
+    canvas.fillRect(10, 3, 80, 5);
     canvas.blt((ssd1306_displayWidth()-64)/2, 1);
     delay(500);
-    canvas.fillRect(50, 1, 60, 15, 0xFF);
+    canvas.fillRect(50, 1, 60, 15);
     canvas.blt((ssd1306_displayWidth()-64)/2, 1);
     delay(1500);
     canvas.printFixed(20, 1, " DEMO " );
@@ -146,14 +145,16 @@ static void canvasDemo()
 
 static void drawLinesDemo()
 {
-    ssd1306_clearScreen();
+    ssd1331_clearScreen8();
+    ssd1331_setColor(RGB_COLOR8(255,0,0));
     for (uint8_t y = 0; y < ssd1306_displayHeight(); y += 8)
     {
-        ssd1306_drawLine(0,0, ssd1306_displayWidth() -1, y);
+        ssd1331_drawLine8(0,0, ssd1306_displayWidth() -1, y);
     }
+    ssd1331_setColor(RGB_COLOR8(0,255,0));
     for (uint8_t x = ssd1306_displayWidth() - 1; x > 7; x -= 8)
     {
-        ssd1306_drawLine(0,0, x, ssd1306_displayHeight() - 1);
+        ssd1331_drawLine8(0,0, x, ssd1306_displayHeight() - 1);
     }
     delay(3000);
 }
@@ -165,9 +166,11 @@ void setup()
 //    ssd1351_128x128_spi_init(24, 0, 23); // Use this line for Raspberry  (gpio24=RST, 0=CE, gpio23=D/C)
 //    ssd1351_128x128_spi_init(3, -1, 4);  // Use this line for ATTINY
 
-    ssd1306_fillScreen( 0x00 );
+    // RGB functions do not work in default SSD1306 compatible mode
+    ssd1306_setMode( LCD_MODE_NORMAL );
+    ssd1331_fillScreen8( 0x00 );
     ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
-    ssd1306_showMenu( &menu );
+    ssd1331_showMenu8( &menu );
 }
 
 void loop()
@@ -198,10 +201,10 @@ void loop()
         default:
             break;
     }
-    ssd1306_fillScreen( 0x00 );
+    ssd1331_fillScreen8( 0x00 );
     ssd1331_setColor(RGB_COLOR16(255,255,255));
-    ssd1306_showMenu(&menu);
+    ssd1331_showMenu8(&menu);
     delay(500);
     ssd1306_menuDown(&menu);
-    ssd1306_updateMenu(&menu);
+    ssd1331_updateMenu8(&menu);
 }
