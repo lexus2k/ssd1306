@@ -34,11 +34,6 @@
 #include "nano_engine.h"
 #include "sova.h"
 
-/* Do not include SPI.h for Attiny controllers */
-#ifdef SSD1306_SPI_SUPPORTED
-    #include <SPI.h>
-#endif
-
 /*
  * Heart image below is defined directly in flash memory.
  * This reduces SRAM consumption.
@@ -68,13 +63,6 @@ const PROGMEM uint8_t heartImage8[ 8 * 8 ] =
     0x00, 0x00, 0x00, 0x80, 0xE0, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
-
-/*
- * Define sprite width. The width can be of any size.
- * But sprite height is always assumed to be 8 pixels
- * (number of bits in single byte).
- */
-const int spriteWidth = sizeof(heartImage);
 
 SAppMenu menu;
 
