@@ -27,16 +27,18 @@
 
 void ssd1306_i2cInitEx(int8_t scl, int8_t sda, int8_t sa)
 {
-#if defined(SSD1306_WIRE_SUPPORTED)
+#if defined(SSD1306_WIRE_SUPPORTED) && defined(CONFIG_ARDUINO_WIRE_LIBRARY_ENABLE)
     ssd1306_i2cConfigure_Wire(scl, sda);
     ssd1306_i2cInit_Wire(sa);
-#elif defined(SSD1306_TWI_SUPPORTED)
+#elif defined(SSD1306_TWI_SUPPORTED) && defined(CONFIG_TWI_I2C_ENABLE)
     ssd1306_i2cConfigure_Twi(0);
     ssd1306_i2cInit_Twi(sa);
-#elif defined(SSD1306_I2C_SW_SUPPORTED)
+#elif defined(SSD1306_I2C_SW_SUPPORTED) && defined(CONFIG_SOFTWARE_I2C_ENABLE)
     ssd1306_i2cInit_Embedded(scl, sda, sa);
 #elif defined(SSD1306_LINUX_SUPPORTED) && !defined(__KERNEL__)
     ssd1306_i2cInit_Linux(scl, sa);
+#else
+    #warning "ssd1306 library: no i2c support for the target platform"
 #endif
 }
 

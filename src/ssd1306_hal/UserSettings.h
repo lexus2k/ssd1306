@@ -21,11 +21,53 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
+/**
+ * @file UserSettings.h SSD1306 modules configuration.
+ */
 
 #ifndef _USER_SETTINGS_H_
 #define _USER_SETTINGS_H_
 
-// Uncomment if you don't need Wire support, and want to reduce memory consumption
-//#define SSD1306_DISABLE_WIRE_SUPPORT
+/**
+ * @defgroup SSD1306_LIBRARY_CONFIG User ssd1306 library modules configuration
+ * @{
+ *
+ * @brief Group of settings allowing to disable/enable library modules
+ *
+ * @details Arduino IDE (at least as for 1.8.2) has a lack library configuration functionality.
+ *          Some Arduino standard libraries are built the way, if you include them to the project,
+ *          but do not use any functions from the, they still eat RAM and Flash on you EVK board.
+ *          To avoid this, you need competely avoid including of such libraries. SSD1306 library
+ *          has a wide interfaces support for different platforms, and even if you don't use
+ *          SSD1306 communication via Arduino Wire/Spi/HardwareSerial libraries, those ones do
+ *          bad things with your sketch size.
+ *          To avoid this you can manually disable SSD1306 modules, you don't need in UserSettings.h
+ *          header file, and gain another 100-200 bytes of RAM and 300-500 bytes of Flash.
+ */
+
+/* Comment out options below if you don't need support in the library,  *
+ * and want to reduce memory consumption.                               */
+
+/** The macro is defined when i2c software support is enabled */
+#define CONFIG_SOFTWARE_I2C_ENABLE
+
+/** The macro is defined when i2c Wire library is available */
+#define CONFIG_ARDUINO_WIRE_LIBRARY_ENABLE
+
+/** The macro is defined when TWI module is available (ATTINY) */
+#define CONFIG_TWI_I2C_ENABLE
+
+/** The macro is defined when SPI library is available */
+#define CONFIG_ARUDINO_SPI_LIBRARY_ENABLE
+
+/** The macro is defined when SPI module is available (ATMEGA) */
+#define CONFIG_AVR_SPI_ENABLE
+
+/** The macro is defined when USI module is available for use */
+#define CONFIG_USI_SPI_ENABLE
+
+/**
+ * @}
+ */
 
 #endif

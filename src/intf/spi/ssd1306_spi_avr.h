@@ -36,7 +36,7 @@
 extern "C" {
 #endif
 
-#ifdef SSD1306_AVR_SPI_SUPPORTED
+#if defined(SSD1306_AVR_SPI_SUPPORTED) && defined(CONFIG_AVR_SPI_ENABLE)
 
 /**
  * @ingroup LCD_HW_INTERFACE_API

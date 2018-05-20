@@ -31,7 +31,7 @@
 
 #include <stdlib.h>
 
-#ifdef SSD1306_SPI_SUPPORTED
+#if defined(SSD1306_SPI_SUPPORTED) && defined(CONFIG_ARDUINO_SPI_LIBRARY_ENABLE)
 
 extern uint32_t s_ssd1306_spi_clock;
 
