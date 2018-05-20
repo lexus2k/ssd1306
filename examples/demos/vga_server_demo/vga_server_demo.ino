@@ -33,7 +33,6 @@
 #include "ssd1306.h"
 //#define VGA_CONTROLLER_DEBUG
 //#define SSD1306_VGA_SLEEP_MODE
-#include "intf/vga_controller/atmega328p/vga96x40.h"
 #include "intf/vga_controller/atmega328p/vga96x40_isr.h"
 #include "lcd/vga_monitor.h"
 #include "intf/ssd1306_interface.h"
@@ -134,7 +133,7 @@ void setup()
 {
     uart_init(57600);
 //    uart_init(115200);
-    ssd1306_vgaController_init();
+    ssd1306_vga_controller_init();
     vga_96x40_8colors_init();
 
     ssd1306_setFixedFont(ssd1306xled_font6x8);

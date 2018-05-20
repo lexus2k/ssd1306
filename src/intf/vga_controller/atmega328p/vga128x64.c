@@ -23,7 +23,7 @@
 */
 
 #include "vga.h"
-// Never include vga96x40_isr.h here!!!
+// Never include vga128x64_isr.h here!!!
 #include "intf/ssd1306_interface.h"
 #include "lcd/lcd_common.h"
 #include "lcd/vga_commands.h"
@@ -32,7 +32,7 @@
 
 extern uint16_t ssd1306_color;
 
-/* This buffer fits 96x40 pixels
+/* This buffer fits 128x64 pixels
    Each 8 pixels are packed to 3 bytes:
 
    BYTE1: B7 R2 G2 B2 B8 R1 G1 B1
@@ -42,7 +42,7 @@ extern uint16_t ssd1306_color;
    Yeah, a little bit complicated, but this allows to quickly unpack structure
 */
 
-uint8_t s_vga_buffer_96x40_8color[36*40] = {0};
+uint8_t s_vga_buffer_128x64_mono[16*64] = {0};
 
 // Set to ssd1306 compatible mode by default
 static uint8_t s_mode = 0x01;
@@ -68,53 +68,24 @@ static void vga_controller_close(void)
 {
 }
 
-/* This buffer fits 96x40 pixels
-   Each 8 pixels are packed to 3 bytes:
-
-   BYTE1: B7 R2 G2 B2 B8 R1 G1 B1
-   BYTE2: G7 R4 G4 B4 G8 R3 G3 B3
-   BYTE3: R7 R6 G6 B6 R8 R5 G5 B5
-
-   Yeah, a little bit complicated, but this allows to quickly unpack structure
-*/
-static inline void vga_controller_put_pixel3(uint8_t x, uint8_t y, uint8_t color)
+/*
+ * Function sends 8 vertical pixels to buffer
+ */
+static inline void vga_controller_put_pixels(uint8_t x, uint8_t y, uint8_t pixels)
 {
-    uint16_t addr = (x >> 3)*3   + (uint16_t)y*36;
+    uint16_t addr = (x >> 3)   + (uint16_t)(y * 16);
     uint8_t offset = x & 0x07;
-    if (addr >= sizeof s_vga_buffer_96x40_8color)
+    uint8_t mask = 1 << offset;
+    if (addr >= sizeof s_vga_buffer_128x64_mono)
     {
         return;
     }
-    if (offset < 6)
+    for (uint8_t i=8; i>0; i--)
     {
-        if (x&1)
-        {
-            s_vga_buffer_96x40_8color[addr + (offset>>1)] &= 0x8F;
-            s_vga_buffer_96x40_8color[addr + (offset>>1)] |= (color<<4);
-        }
-        else
-        {
-            s_vga_buffer_96x40_8color[addr + (offset>>1)] &= 0xF8;
-            s_vga_buffer_96x40_8color[addr + (offset>>1)] |= color;
-        }
-    }
-    else if (offset == 6)
-    {
-        s_vga_buffer_96x40_8color[addr+0] &= 0x7F;
-        s_vga_buffer_96x40_8color[addr+0] |= ((color & 0x01) << 7);
-        s_vga_buffer_96x40_8color[addr+1] &= 0x7F;
-        s_vga_buffer_96x40_8color[addr+1] |= ((color & 0x02) << 6);
-        s_vga_buffer_96x40_8color[addr+2] &= 0x7F;
-        s_vga_buffer_96x40_8color[addr+2] |= ((color & 0x04) << 5);
-    }
-    else // if (offset == 7)
-    {
-        s_vga_buffer_96x40_8color[addr+0] &= 0xF7;
-        s_vga_buffer_96x40_8color[addr+0] |= ((color & 0x01) << 3);
-        s_vga_buffer_96x40_8color[addr+1] &= 0xF7;
-        s_vga_buffer_96x40_8color[addr+1] |= ((color & 0x02) << 2);
-        s_vga_buffer_96x40_8color[addr+2] &= 0xF7;
-        s_vga_buffer_96x40_8color[addr+2] |= ((color & 0x04) << 1);
+        if (pixels & 0x01) s_vga_buffer_128x64_mono[addr] |= mask;
+                      else s_vga_buffer_128x64_mono[addr] &= ~mask;
+        addr += 16;
+        pixels >>= 1;
     }
 }
 
@@ -127,25 +98,12 @@ static void vga_controller_send_byte4(uint8_t data)
     }
     if (s_vga_command == 0x40)
     {
-        uint8_t color = ((data & 0x80) >> 5) | ((data & 0x10) >> 3) | ((data & 0x02)>>1);
-        vga_controller_put_pixel3(s_cursor_x, s_cursor_y, color);
-        if (s_mode == 0x00)
+        vga_controller_put_pixels(s_cursor_x, s_cursor_y, data);
+        s_cursor_x++;
+        if (s_cursor_x > s_column_end)
         {
-            s_cursor_x++;
-            if (s_cursor_x > s_column_end)
-            {
-                s_cursor_x = s_column;
-                s_cursor_y++;
-            }
-        }
-        else
-        {
-            s_cursor_y++;
-            if ((s_cursor_y & 0x07) == 0)
-            {
-                s_cursor_y -= 8;
-                s_cursor_x++;
-            }
+            s_cursor_x = s_column;
+            s_cursor_y += 8;
         }
         return;
     }
@@ -160,7 +118,7 @@ static void vga_controller_send_byte4(uint8_t data)
         // set block
         if (s_vga_arg == 1) { s_column = data; s_cursor_x = data; }
         if (s_vga_arg == 2) { s_column_end = data; }
-        if (s_vga_arg == 3) { s_cursor_y = data; }
+        if (s_vga_arg == 3) { s_cursor_y = data << 3; }
         if (s_vga_arg == 4) { s_vga_command = 0; }
     }
     if (s_vga_command == VGA_SET_MODE)
@@ -234,20 +192,20 @@ static inline void init_vga_crt_driver(uint8_t enable_jitter_fix)
     sei();
 }
 
-void ssd1306_vga_controller_96x40_init_enable_output(void)
+void ssd1306_vga_controller_128x64_init_enable_output(void)
 {
-    ssd1306_vga_controller_96x40_init_no_output();
+    ssd1306_vga_controller_128x64_init_no_output();
     init_vga_crt_driver(1);
 }
 
-void ssd1306_vga_controller_96x40_init_enable_output_no_jitter_fix(void)
+void ssd1306_vga_controller_128x64_init_enable_output_no_jitter_fix(void)
 {
     ssd1306_vgaController_init_no_output();
     init_vga_crt_driver(0);
 //    set_sleep_mode (SLEEP_MODE_IDLE);
 }
 
-void ssd1306_vga_controller_96x40_init_no_output(void)
+void ssd1306_vga_controller_128x64_init_no_output(void)
 {
     ssd1306_intf.spi = 0;
     ssd1306_intf.start = vga_controller_init;
@@ -257,13 +215,13 @@ void ssd1306_vga_controller_96x40_init_no_output(void)
     ssd1306_intf.close = vga_controller_close;
 }
 
-void ssd1306_debug_print_vga_buffer_96x40(void (*func)(uint8_t))
+void ssd1306_debug_print_vga_buffer_128x64(void (*func)(uint8_t))
 {
     for(int y = 0; y < ssd1306_lcd.height; y++)
     {
         for(int x = 0; x < ssd1306_lcd.width; x++)
         {
-            uint8_t color = (s_vga_buffer_96x40_8color[(y*ssd1306_lcd.width + x)/2] >> ((x&1)<<2)) & 0x0F;
+            uint8_t color = (s_vga_buffer_128x64_mono[(y*ssd1306_lcd.width + x)/2] >> ((x&1)<<2)) & 0x0F;
             if (color)
             {
                 func('#');
@@ -278,17 +236,6 @@ void ssd1306_debug_print_vga_buffer_96x40(void (*func)(uint8_t))
         func('\n');
     }
     func('\n');
-}
-
-void ssd1306_vga_delay(uint32_t ms)
-{
-    uint8_t vga_frames;
-    while (ms >= 16)
-    {
-         vga_frames = s_vga_frames;
-         while (vga_frames == s_vga_frames);
-         ms-=16;
-    }
 }
 
 #endif

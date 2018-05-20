@@ -170,7 +170,7 @@ static void drawLinesDemo()
 void setup()
 {
     ssd1306_setFixedFont(ssd1306xled_font6x8);
-    ssd1306_vgaController_init();
+    ssd1306_vga_controller_init();
     vga_96x40_8colors_init();
     ssd1306_vga_delay(3000); // wait until VGA monitor starts
 

@@ -52,7 +52,7 @@ extern "C" {
 #define DEJITTER_OFFSET -4
 #endif
 
-extern uint8_t s_vga_buffer_96x40_8color[];
+extern uint8_t s_vga_buffer_128x64_mono[];
 
 // Total number of lines used in specific scan mode
 static uint16_t s_total_mode_lines = 40*8;
@@ -65,14 +65,14 @@ static const uint8_t V_BACKPORCH_LINES = 40;
 // This includes V-sync signal + front porch
 volatile int s_current_scan_line;
 volatile uint8_t s_lines_to_skip;
-volatile uint8_t *s_current_scan_line_data = &s_vga_buffer_96x40_8color[0];
+volatile uint8_t *s_current_scan_line_data = &s_vga_buffer_128x64_mono[0];
 extern volatile uint8_t s_vga_frames;
 extern unsigned long timer0_millis;
 // ISR: Vsync pulse
 ISR(TIMER1_OVF_vect)
 {
     s_current_scan_line = 0;
-    s_current_scan_line_data = &s_vga_buffer_96x40_8color[0];
+    s_current_scan_line_data = &s_vga_buffer_128x64_mono[0];
     s_lines_to_skip = V_BACKPORCH_LINES;
     s_vga_frames++;
     timer0_millis += 16;
@@ -110,7 +110,7 @@ static inline void /*__attribute__ ((noinline))*/ do_scan_line()
          ".rept 12\n\t"
 
          "ld r24, Z+\n\t"        // r24 = 82227111
-//         "nop\n\t"               // to make pixel wider in 96x40 mode
+//         "nop\n\t"               // to make pixel wider in 128x64 mode
          "out %[port], r24\n\t"  // 111
 
          "ld r25, Z+\n\t"        // r25 = 84447333
@@ -142,12 +142,12 @@ static inline void /*__attribute__ ((noinline))*/ do_scan_line()
          "out %[port], r24\n\t"  // 777
 
          "swap r24\n\t"          // r24 = 07770888
-//         "nop\n\t"               // to make pixel wider in 96x40 mode
+//         "nop\n\t"               // to make pixel wider in 128x64 mode
          "nop\n\t"
          "out %[port], r24\n\t"  // 888
 
          ".endr\n\t"
-//         "nop\n\t"               // to make pixel wider in 96x40 mode
+//         "nop\n\t"               // to make pixel wider in 128x64 mode
          "nop\n\t"
          "ldi r24,0\n\t"
          "out %[port], r24 \n\t"
@@ -186,25 +186,25 @@ ISR(TIMER2_COMPB_vect) // for end of h-sync pulse
 
 #endif  // VGA_CONTROLLER_DEBUG
 
-void ssd1306_vga_controller_96x40_init_no_output(void);
-void ssd1306_vga_controller_96x40_init_enable_output(void);
-void ssd1306_vga_controller_96x40_init_enable_output_no_jitter_fix(void);
+void ssd1306_vga_controller_128x64_init_no_output(void);
+void ssd1306_vga_controller_128x64_init_enable_output(void);
+void ssd1306_vga_controller_128x64_init_enable_output_no_jitter_fix(void);
 
-static inline void ssd1306_vga_controller_96x40_init(void)
+static inline void ssd1306_vga_controller_128x64_init(void)
 {
     // if there is no builtin support then only debug mode is available
 #if defined(VGA_CONTROLLER_DEBUG)
-    ssd1306_vga_controller_96x40_init_no_output();
+    ssd1306_vga_controller_128x64_init_no_output();
 #elif defined(SSD1306_VGA_SLEEP_MODE)
-    ssd1306_vga_controller_96x40_init_enable_output_no_jitter_fix();
+    ssd1306_vga_controller_128x64_init_enable_output_no_jitter_fix();
 #else
-    ssd1306_vga_controller_96x40_init_enable_output();
+    ssd1306_vga_controller_128x64_init_enable_output();
 #endif
 }
 
 void ssd1306_vga_controller_init(void)
 {
-    ssd1306_vga_controller_96x40_init();
+    ssd1306_vga_controller_128x64_init();
 }
 
 void ssd1306_debug_print_vga_buffer(void (*func)(uint8_t))
@@ -213,7 +213,7 @@ void ssd1306_debug_print_vga_buffer(void (*func)(uint8_t))
     {
         for(int x = 0; x < ssd1306_lcd.width; x++)
         {
-            uint8_t color = (s_vga_buffer_96x40_8color[(y*ssd1306_lcd.width + x)/2] >> ((x&1)<<2)) & 0x0F;
+            uint8_t color = (s_vga_buffer_128x64_mono[(y*ssd1306_lcd.width + x)/2] >> ((x&1)<<2)) & 0x0F;
             if (color)
             {
                 func('#');
