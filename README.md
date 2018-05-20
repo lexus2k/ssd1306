@@ -70,6 +70,7 @@ configurable through API.
 | :-------- |:---:|:---:|:---------|
 | **Arduino** |     |     |          |
 | Attiny85, Attiny45  |  X  |  X  | Refer to [Damellis attiny package](https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json) |
+| Attiny84, Attiny44  |  X  |  X  | (Draft) Refer to [Damellis attiny package](https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json) |
 | Atmega328p, Atmega168  |  X  |  X  |    |
 | Atmega32u4  |  X  |  X  |    |
 | Atmega2560  |  X  |  X  |    |

@@ -75,7 +75,9 @@
         typedef uint8_t lcduint_t;
     #endif
 
-#elif defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
+#elif defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__) || \
+      defined(__AVR_ATtiny24__) || defined(__AVR_ATtiny44__) || defined(__AVR_ATtiny84__)
+
     /** The macro is defined when software i2c implementation is available */
     #define SSD1306_I2C_SW_SUPPORTED
     /** The macro is defined when USI module is available for use */

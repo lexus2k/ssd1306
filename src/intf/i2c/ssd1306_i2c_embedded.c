@@ -46,6 +46,11 @@ static uint8_t s_sa  = SSD1306_SA;
     // at 8Mhz each command takes ~ 0.125us
     #define DDR_REG      DDRB
     #define PORT_REG     PORTB
+#elif defined(__AVR_ATtiny24__) || defined(__AVR_ATtiny44__) || defined(__AVR_ATtiny84__)
+    // For AttinyX4 controllers
+    // at 8Mhz each command takes ~ 0.125us
+    #define DDR_REG      DDRA
+    #define PORT_REG     PORTA
 #else // For Atmega
     // at 16Mhz each command takes ~ 0.0625us
     #define DDR_REG      DDRC
