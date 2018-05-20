@@ -43,7 +43,7 @@ extern "C" {
  *
  * @details This group of API functions serves to prepare the library to work via specific hardware
  *          interface. There are a bunch of functions for different platforms. In general display
- *          initialization goes in two steps: hardware interface initialization, and then display 
+ *          initialization goes in two steps: hardware interface initialization, and then display
  *          driver initialization. But there are functions, which combine 2 steps in single call:
  *          ssd1306_128x64_i2c_initEx(), ssd1351_128x128_spi_init(), etc.
  */

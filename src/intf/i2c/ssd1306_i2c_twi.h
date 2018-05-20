@@ -32,7 +32,7 @@
 #include "ssd1306_hal/io.h"
 #include "ssd1306_i2c_conf.h"
 
-#ifdef SSD1306_TWI_SUPPORTED
+#if defined(SSD1306_TWI_SUPPORTED) && defined(CONFIG_TWI_I2C_ENABLE)
 
 #ifdef __cplusplus
 extern "C" {

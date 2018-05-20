@@ -29,6 +29,7 @@
 #ifndef _SSD1306_HAL_IO_H_
 #define _SSD1306_HAL_IO_H_
 
+#include "UserSettings.h"
 #include "arduino/io.h"
 #include "avr/io.h"
 #include "esp/io.h"

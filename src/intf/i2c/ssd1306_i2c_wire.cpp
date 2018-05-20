@@ -27,7 +27,7 @@
 #include "ssd1306_i2c_conf.h"
 #include "ssd1306_i2c.h"
 
-#ifdef SSD1306_WIRE_SUPPORTED
+#if defined(SSD1306_WIRE_SUPPORTED) && defined(CONFIG_ARDUINO_WIRE_LIBRARY_ENABLE)
 
 #include <Wire.h>
 
