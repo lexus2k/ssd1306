@@ -23,14 +23,15 @@
 */
 
 #include "ssd1306_console.h"
-
-
-size_t Ssd1306Console::write(uint8_t ch)
-{
-    return ssd1306_write(ch);
-}
+#include "ssd1331_api.h"
 
 void Ssd1306Console::clear()
 {
     ssd1306_clearScreen();
-};
+}
+
+void Ssd1306Console::setCursor(lcduint_t x, lcduint_t y)
+{
+    ssd1331_setCursor8(x,y);
+}
+

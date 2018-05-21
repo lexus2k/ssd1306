@@ -47,12 +47,19 @@ extern "C" {
     #define SSD1306_SA    0x3C  // Slave address
 #endif
 
-#if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)
+#if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
     #ifndef SSD1306_SCL
         #define SSD1306_SCL   3 ///< SCL, Pin 3 on SSD1306 Board
     #endif
     #ifndef SSD1306_SDA
         #define SSD1306_SDA   4 ///< SDA, Pin 4 on SSD1306 Board
+    #endif
+#elif defined(__AVR_ATtiny24__) || defined(__AVR_ATtiny44__) || defined(__AVR_ATtiny84__)
+    #ifndef SSD1306_SCL
+        #define SSD1306_SCL   4 ///< SCL, Pin 4 - physical pin 9 of Attiny84
+    #endif
+    #ifndef SSD1306_SDA
+        #define SSD1306_SDA   6 ///< SDA, Pin 6 - physical pin 7 of Attiny84
     #endif
 #else
     #ifndef SSD1306_SCL

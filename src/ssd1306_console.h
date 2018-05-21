@@ -33,6 +33,43 @@
 #include "ssd1306_hal/Print_internal.h"
 
 /**
+ * Callback function to print text to the LCD display
+ */
+typedef size_t (*LcdWriter)(uint8_t ch);
+
+/**
+ * Base template class for specific LCD console implementation
+ */
+template <LcdWriter W>
+class LcdConsole: public Print
+{
+public:
+    /**
+     * Creates console object to print text information on LCD display.
+     */
+    explicit LcdConsole( ) { };
+
+    /**
+     * Initializes console.
+     */
+    void   begin()
+    {
+    }
+
+    /**
+     * Writes single character to the display
+     * @param ch - character to write
+     */
+    size_t write(uint8_t ch) override
+    {
+        return W(ch);
+    }
+
+private:
+
+};
+
+/**
  * Ssd1306Console represents object to work with LCD display.
  * Easy to use:
  * ~~~~~~~~~~~~~~~{.cpp}
@@ -45,20 +82,10 @@
  * }
  * ~~~~~~~~~~~~~~~
  */
-class Ssd1306Console: public Print
+class Ssd1306Console: public LcdConsole<ssd1306_write>
 {
 public:
-    /**
-     * Creates console object to print text information on LCD display.
-     */
-    explicit Ssd1306Console( ) { };
-
-    /**
-     * Initializes console.
-     */
-    void   begin()
-    {
-    };
+    using LcdConsole::LcdConsole;
 
     /**
      * Fills screen with zero-byte
@@ -66,10 +93,12 @@ public:
     void   clear();
 
     /**
-     * Writes single character to the display
-     * @param ch - character to write
+     * Set cursor position for text functions
+     *
+     * @param x horizontal position in pixels.
+     * @param y vertical position in pixels.
      */
-    size_t write(uint8_t ch) override;
+    void   setCursor(lcduint_t x, lcduint_t y);
 
 private:
 
