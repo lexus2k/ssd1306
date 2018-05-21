@@ -35,6 +35,8 @@ extern "C" {
 #include "ssd1306_hal/io.h"
 
 #if defined(SSD1306_BUILTIN_VGA_SUPPORT)
+extern volatile uint8_t __vga_buffer[];
+
 static const uint8_t H_SYNC_PIN = 3;
 static const uint8_t V_SYNC_PIN = 10;
 void ssd1306_vga_delay(uint32_t ms);

@@ -40,8 +40,8 @@
 #include "nano_gfx.h"
 #include "sova.h"
 #define DEJITTER_OFFSET -3
-#define CONFIG_VGA_ENABLE
-#include "intf/vga_controller/atmega328p/vga128x64_isr.h"
+#define CONFIG_VGA_128X64_ENABLE
+#include "intf/vga_controller/atmega328p/vga_isr.h"
 #include "lcd/vga_monitor.h"
 #include "intf/ssd1306_interface.h"
 

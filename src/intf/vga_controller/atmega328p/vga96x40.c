@@ -42,8 +42,6 @@ extern uint16_t ssd1306_color;
    Yeah, a little bit complicated, but this allows to quickly unpack structure
 */
 
-uint8_t s_vga_buffer_96x40_8color[36*40] = {0};
-
 // Set to ssd1306 compatible mode by default
 static uint8_t s_mode = 0x01;
 static uint8_t s_vga_command = 0xFF;
@@ -81,7 +79,7 @@ static inline void vga_controller_put_pixel3(uint8_t x, uint8_t y, uint8_t color
 {
     uint16_t addr = (x >> 3)*3   + (uint16_t)y*36;
     uint8_t offset = x & 0x07;
-    if (addr >= sizeof s_vga_buffer_96x40_8color)
+    if (addr >= 36*40)
     {
         return;
     }
@@ -89,32 +87,32 @@ static inline void vga_controller_put_pixel3(uint8_t x, uint8_t y, uint8_t color
     {
         if (x&1)
         {
-            s_vga_buffer_96x40_8color[addr + (offset>>1)] &= 0x8F;
-            s_vga_buffer_96x40_8color[addr + (offset>>1)] |= (color<<4);
+            __vga_buffer[addr + (offset>>1)] &= 0x8F;
+            __vga_buffer[addr + (offset>>1)] |= (color<<4);
         }
         else
         {
-            s_vga_buffer_96x40_8color[addr + (offset>>1)] &= 0xF8;
-            s_vga_buffer_96x40_8color[addr + (offset>>1)] |= color;
+            __vga_buffer[addr + (offset>>1)] &= 0xF8;
+            __vga_buffer[addr + (offset>>1)] |= color;
         }
     }
     else if (offset == 6)
     {
-        s_vga_buffer_96x40_8color[addr+0] &= 0x7F;
-        s_vga_buffer_96x40_8color[addr+0] |= ((color & 0x01) << 7);
-        s_vga_buffer_96x40_8color[addr+1] &= 0x7F;
-        s_vga_buffer_96x40_8color[addr+1] |= ((color & 0x02) << 6);
-        s_vga_buffer_96x40_8color[addr+2] &= 0x7F;
-        s_vga_buffer_96x40_8color[addr+2] |= ((color & 0x04) << 5);
+        __vga_buffer[addr+0] &= 0x7F;
+        __vga_buffer[addr+0] |= ((color & 0x01) << 7);
+        __vga_buffer[addr+1] &= 0x7F;
+        __vga_buffer[addr+1] |= ((color & 0x02) << 6);
+        __vga_buffer[addr+2] &= 0x7F;
+        __vga_buffer[addr+2] |= ((color & 0x04) << 5);
     }
     else // if (offset == 7)
     {
-        s_vga_buffer_96x40_8color[addr+0] &= 0xF7;
-        s_vga_buffer_96x40_8color[addr+0] |= ((color & 0x01) << 3);
-        s_vga_buffer_96x40_8color[addr+1] &= 0xF7;
-        s_vga_buffer_96x40_8color[addr+1] |= ((color & 0x02) << 2);
-        s_vga_buffer_96x40_8color[addr+2] &= 0xF7;
-        s_vga_buffer_96x40_8color[addr+2] |= ((color & 0x04) << 1);
+        __vga_buffer[addr+0] &= 0xF7;
+        __vga_buffer[addr+0] |= ((color & 0x01) << 3);
+        __vga_buffer[addr+1] &= 0xF7;
+        __vga_buffer[addr+1] |= ((color & 0x02) << 2);
+        __vga_buffer[addr+2] &= 0xF7;
+        __vga_buffer[addr+2] |= ((color & 0x04) << 1);
     }
 }
 
@@ -263,7 +261,7 @@ void ssd1306_debug_print_vga_buffer_96x40(void (*func)(uint8_t))
     {
         for(int x = 0; x < ssd1306_lcd.width; x++)
         {
-            uint8_t color = (s_vga_buffer_96x40_8color[(y*ssd1306_lcd.width + x)/2] >> ((x&1)<<2)) & 0x0F;
+            uint8_t color = (__vga_buffer[(y*ssd1306_lcd.width + x)/2] >> ((x&1)<<2)) & 0x0F;
             if (color)
             {
                 func('#');

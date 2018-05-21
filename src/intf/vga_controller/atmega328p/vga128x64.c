@@ -42,8 +42,6 @@ extern uint16_t ssd1306_color;
    Yeah, a little bit complicated, but this allows to quickly unpack structure
 */
 
-volatile uint8_t s_vga_buffer_128x64_mono[16*64] = {0};
-
 // Set to ssd1306 compatible mode by default
 static uint8_t s_mode = 0x01;
 static uint8_t s_vga_command = 0xFF;
@@ -76,14 +74,14 @@ static inline void vga_controller_put_pixels(uint8_t x, uint8_t y, uint8_t pixel
     uint16_t addr = (x >> 3)   + (uint16_t)(y * 16);
     uint8_t offset = x & 0x07;
     uint8_t mask = 1 << offset;
-    if (addr >= sizeof s_vga_buffer_128x64_mono)
+    if (addr >= 32*40)
     {
         return;
     }
     for (uint8_t i=8; i>0; i--)
     {
-        if (pixels & 0x01) s_vga_buffer_128x64_mono[addr] |= mask;
-                      else s_vga_buffer_128x64_mono[addr] &= ~mask;
+        if (pixels & 0x01) __vga_buffer[addr] |= mask;
+                      else __vga_buffer[addr] &= ~mask;
         addr += 16;
         pixels >>= 1;
     }
@@ -221,7 +219,7 @@ void ssd1306_debug_print_vga_buffer_128x64(void (*func)(uint8_t))
     {
         for(int x = 0; x < ssd1306_lcd.width; x++)
         {
-            uint8_t color = s_vga_buffer_128x64_mono[(x >> 3) + y * 16] & (1<< (x&0x07));
+            uint8_t color = __vga_buffer[(x >> 3) + y * 16] & (1<< (x&0x07));
             if (color)
             {
                 func('#');

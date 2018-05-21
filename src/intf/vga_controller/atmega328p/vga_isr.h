@@ -44,18 +44,46 @@ extern "C" {
 #endif
 
 // Including this header defines ISR handlers in your application automatically
-#if defined(SSD1306_BUILTIN_VGA_SUPPORT) && defined(CONFIG_VGA_ENABLE)
-
-#if !defined(VGA_CONTROLLER_DEBUG)
+#if defined(SSD1306_BUILTIN_VGA_SUPPORT)
 
 #ifndef DEJITTER_OFFSET
 #define DEJITTER_OFFSET -4
 #endif
 
-extern uint8_t s_vga_buffer_96x40_8color[];
+#if defined(CONFIG_VGA_128X64_ENABLE)
+
+static const uint16_t __VGA_VERTICAL_PIXELS = 64;
+static const uint16_t __VGA_LINE_BYTES = 16;
+static const uint16_t __VGA_PIXEL_HEIGHT = 7;
+volatile uint8_t      __vga_buffer[16*64] = {0};
+static const uint8_t *__VGA_BUFFER_PTR = &__vga_buffer[0];
+
+void ssd1306_vga_controller_128x64_init_no_output(void);
+void ssd1306_vga_controller_128x64_init_enable_output(void);
+void ssd1306_vga_controller_128x64_init_enable_output_no_jitter_fix(void);
+void ssd1306_debug_print_vga_buffer_128x64(void (*func)(uint8_t));
+
+#elif defined(CONFIG_VGA_96X40_ENABLE)
+
+static const uint16_t __VGA_VERTICAL_PIXELS = 40;
+static const uint16_t __VGA_LINE_BYTES = 36;
+static const uint16_t __VGA_PIXEL_HEIGHT = 8;
+volatile uint8_t      __vga_buffer[36*40] = {0};
+static const uint8_t *__VGA_BUFFER_PTR = &__vga_buffer[0];
+
+void ssd1306_vga_controller_96x40_init_no_output(void);
+void ssd1306_vga_controller_96x40_init_enable_output(void);
+void ssd1306_vga_controller_96x40_init_enable_output_no_jitter_fix(void);
+void ssd1306_debug_print_vga_buffer_96x40(void (*func)(uint8_t));
+
+#else
+    #error "Please, define one of VGA options"
+#endif
+
+#if !defined(VGA_CONTROLLER_DEBUG)
 
 // Total number of lines used in specific scan mode
-static uint16_t s_total_mode_lines = 40*8;
+static const uint16_t VGA_TOTAL_MODE_LINES = __VGA_VERTICAL_PIXELS*__VGA_PIXEL_HEIGHT;
 
 // Lines to skip before starting to draw first line of the screen content
 // This includes V-sync signal + front porch
@@ -64,46 +92,68 @@ static const uint8_t V_BACKPORCH_LINES = 40;
 // Lines to skip before starting to draw first line of the screen content
 // This includes V-sync signal + front porch
 volatile int s_current_scan_line;
+
 volatile uint8_t s_lines_to_skip;
-volatile uint8_t *s_current_scan_line_data = &s_vga_buffer_96x40_8color[0];
+volatile uint8_t s_scan_line_index;
+volatile uint8_t *s_current_scan_line_data = __VGA_BUFFER_PTR;
 extern volatile uint8_t s_vga_frames;
 extern unsigned long timer0_millis;
 // ISR: Vsync pulse
 ISR(TIMER1_OVF_vect)
 {
     s_current_scan_line = 0;
-    s_current_scan_line_data = &s_vga_buffer_96x40_8color[0];
+    s_scan_line_index = 0;
+    s_current_scan_line_data = __VGA_BUFFER_PTR;
     s_lines_to_skip = V_BACKPORCH_LINES;
     s_vga_frames++;
     timer0_millis += 16;
 } // end of TIMER1_OVF_vect
 
+#if defined(CONFIG_VGA_128X64_ENABLE)
 static inline void /*__attribute__ ((noinline))*/ do_scan_line()
 {
-    #ifndef SSD1306_VGA_SLEEP_MODE
-    // This is dejitter code, it purpose to start pixels output at the same offset after h-sync
+    // output all pixels
+
     asm volatile(
-      "     lds r24, %[timer0]    \n\t" //
-      "     subi r24, %[toffset]  \n\t" // some offset, calculated experimentally
-      "     andi r24, 7           \n\t" // use module 8 value from Timer 0 counter
-      "     ldi r31, pm_hi8(LW)   \n\t" // load label address
-      "     ldi r30, pm_lo8(LW)   \n\t" //
-      "     add r30, r24          \n\t" // no need to multiply by 2 since AVR addresses are half-values
-      "     adc r31, __zero_reg__ \n\t" //
-      "     ijmp                  \n\t" //
-      "LW:                        \n\t" //
-      "     nop                   \n\t" //
-      "     nop                   \n\t" //
-      "     nop                   \n\t" //
-      "     nop                   \n\t" //
-      "     nop                   \n\t" //
-      "     nop                   \n\t" //
-      "     nop                   \n\t" //
+         ".rept 16\n\t"
+
+         "ld r24, Z+\n\t"      
+         "out %[port], r24\n\t"
+         "lsr r24\n\t"
+         "nop\n\t"
+         "out %[port], r24\n\t"
+         "lsr r24\n\t"
+         "out %[port], r24\n\t"
+         "lsr r24\n\t"
+         "nop\n\t"
+         "out %[port], r24\n\t"
+         "lsr r24\n\t"
+         "nop\n\t"
+         "out %[port], r24\n\t"
+         "lsr r24\n\t"
+         "nop\n\t"
+         "out %[port], r24\n\t"
+         "lsr r24\n\t"
+         "nop\n\t"
+         "out %[port], r24\n\t"
+         "lsr r24\n\t"
+         "nop\n\t"
+         "out %[port], r24\n\t"
+
+         ".endr\n\t"
+         "nop\n\t"
+         "ldi r24,0\n\t"
+         "out %[port], r24 \n\t"
+         "nop\n\t"
     :
-    : [timer0] "i" (&TCNT0),
-      [toffset] "i" ((uint8_t)DEJITTER_OFFSET)
-    : "r30", "r31", "r24", "r25");
-    #endif
+    : [port] "I" (_SFR_IO_ADDR(PORTC)),
+       "z" "I" ((uint8_t *)s_current_scan_line_data )
+    : "r24", "memory"
+    );
+}
+#elif defined(CONFIG_VGA_96X40_ENABLE)
+static inline void /*__attribute__ ((noinline))*/ do_scan_line()
+{
     // output all pixels
 
     asm volatile(
@@ -157,13 +207,8 @@ static inline void /*__attribute__ ((noinline))*/ do_scan_line()
        "z" "I" ((uint8_t *)s_current_scan_line_data )
     : "r24", "r25", "r20", "memory"
     );
-
-    s_current_scan_line++;
-    if ((s_current_scan_line & 0x7) == 0)
-    {
-        s_current_scan_line_data += 36;
-    }
 }
+#endif
 
 //#ifdef SSD1306_VGA_SLEEP_MODE
 //ISR(TIMER2_OVF_vect) // for start of h-sync pulse
@@ -177,20 +222,68 @@ ISR(TIMER2_COMPB_vect) // for end of h-sync pulse
         s_lines_to_skip--;
         return;
     }
-    else if (s_current_scan_line >= s_total_mode_lines)
+    else if (s_current_scan_line >= VGA_TOTAL_MODE_LINES)
     {
         return;
     }
+    #ifndef SSD1306_VGA_SLEEP_MODE
+    // This is dejitter code, it purpose to start pixels output at the same offset after h-sync
+    asm volatile(
+      "     lds r24, %[timer0]    \n\t" //
+      "     subi r24, %[toffset]  \n\t" // some offset, calculated experimentally
+      "     andi r24, 7           \n\t" // use module 8 value from Timer 0 counter
+      "     ldi r31, pm_hi8(LW)   \n\t" // load label address
+      "     ldi r30, pm_lo8(LW)   \n\t" //
+      "     add r30, r24          \n\t" // no need to multiply by 2 since AVR addresses are half-values
+      "     adc r31, __zero_reg__ \n\t" //
+      "     ijmp                  \n\t" //
+      "LW:                        \n\t" //
+      "     nop                   \n\t" //
+      "     nop                   \n\t" //
+      "     nop                   \n\t" //
+      "     nop                   \n\t" //
+      "     nop                   \n\t" //
+      "     nop                   \n\t" //
+      "     nop                   \n\t" //
+    :
+    : [timer0] "i" (&TCNT0),
+      [toffset] "i" ((uint8_t)DEJITTER_OFFSET)
+    : "r30", "r31", "r24", "r25");
+    #endif
     do_scan_line();
+    s_current_scan_line++;
+    s_scan_line_index++;
+    if ( s_scan_line_index >= __VGA_PIXEL_HEIGHT )
+    {
+        s_scan_line_index=0;
+        s_current_scan_line_data += __VGA_LINE_BYTES;
+    }
 }
 
 #endif  // VGA_CONTROLLER_DEBUG
 
-void ssd1306_vga_controller_96x40_init_no_output(void);
-void ssd1306_vga_controller_96x40_init_enable_output(void);
-void ssd1306_vga_controller_96x40_init_enable_output_no_jitter_fix(void);
+#if defined(CONFIG_VGA_128X64_ENABLE)
 
-static inline void ssd1306_vga_controller_96x40_init(void)
+static inline void ssd1306_vga_controller_init(void)
+{
+    // if there is no builtin support then only debug mode is available
+#if defined(VGA_CONTROLLER_DEBUG)
+    ssd1306_vga_controller_128x64_init_no_output();
+#elif defined(SSD1306_VGA_SLEEP_MODE)
+    ssd1306_vga_controller_128x64_init_enable_output_no_jitter_fix();
+#else
+    ssd1306_vga_controller_128x64_init_enable_output();
+#endif
+}
+
+void ssd1306_debug_print_vga_buffer(void (*func)(uint8_t))
+{
+    ssd1306_debug_print_vga_buffer_128x64(func);
+}
+
+#elif defined(CONFIG_VGA_96X40_ENABLE)
+
+static inline void ssd1306_vga_controller_init(void)
 {
     // if there is no builtin support then only debug mode is available
 #if defined(VGA_CONTROLLER_DEBUG)
@@ -202,17 +295,12 @@ static inline void ssd1306_vga_controller_96x40_init(void)
 #endif
 }
 
-void ssd1306_vga_controller_init(void)
-{
-    ssd1306_vga_controller_96x40_init();
-}
-
-void ssd1306_debug_print_vga_buffer_96x40(void (*func)(uint8_t));
-
 void ssd1306_debug_print_vga_buffer(void (*func)(uint8_t))
 {
     ssd1306_debug_print_vga_buffer_96x40(func);
 }
+
+#endif // CONFIG_VGA_XXX_ENABLE
 
 #endif  // SSD1306_BUILTIN_VGA_SUPPORT
 
