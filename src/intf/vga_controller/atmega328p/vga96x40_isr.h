@@ -44,7 +44,7 @@ extern "C" {
 #endif
 
 // Including this header defines ISR handlers in your application automatically
-#if defined(SSD1306_BUILTIN_VGA_SUPPORT)
+#if defined(SSD1306_BUILTIN_VGA_SUPPORT) && defined(CONFIG_VGA_ENABLE)
 
 #if !defined(VGA_CONTROLLER_DEBUG)
 
@@ -207,27 +207,11 @@ void ssd1306_vga_controller_init(void)
     ssd1306_vga_controller_96x40_init();
 }
 
+void ssd1306_debug_print_vga_buffer_96x40(void (*func)(uint8_t));
+
 void ssd1306_debug_print_vga_buffer(void (*func)(uint8_t))
 {
-    for(int y = 0; y < ssd1306_lcd.height; y++)
-    {
-        for(int x = 0; x < ssd1306_lcd.width; x++)
-        {
-            uint8_t color = (s_vga_buffer_96x40_8color[(y*ssd1306_lcd.width + x)/2] >> ((x&1)<<2)) & 0x0F;
-            if (color)
-            {
-                func('#');
-                func('#');
-            }
-            else
-            {
-                func(' ');
-                func(' ');
-            }
-        }
-        func('\n');
-    }
-    func('\n');
+    ssd1306_debug_print_vga_buffer_96x40(func);
 }
 
 #endif  // SSD1306_BUILTIN_VGA_SUPPORT

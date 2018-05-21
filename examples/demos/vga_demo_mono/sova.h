@@ -21,26 +21,13 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-/**
- * @file vga_monitor.h Interface to vga_monitor
- */
 
-#ifndef _SSD1306_VGA_MONITOR_H_
-#define _SSD1306_VGA_MONITOR_H_
+#ifndef _SOVA_H_
+#define _SOVA_H_
 
 #include "ssd1306_hal/io.h"
+#include <stdint.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void vga_96x40_8colors_init(void);
-
-void vga_128x64_mono_init(void);
-
-#ifdef __cplusplus
-}
-#endif
+extern const uint8_t Sova [] PROGMEM;
 
 #endif
-

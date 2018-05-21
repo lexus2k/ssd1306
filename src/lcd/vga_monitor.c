@@ -59,10 +59,8 @@ static void vga_set_block2(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
     ssd1306_intf.start();
-    ssd1306_intf.send(0x40);
-    ssd1306_intf.start();
     ssd1306_intf.send(0x00);
-    ssd1306_intf.send(0x01); // set block
+    ssd1306_intf.send(VGA_SET_BLOCK); // set block
     ssd1306_intf.send(x);
     ssd1306_intf.send(rx);
     ssd1306_intf.send(y);
@@ -133,4 +131,15 @@ void vga_96x40_8colors_init(void)
     ssd1306_lcd.set_mode = vga_set_mode;
 }
 
-void vga_128x80_mono_init(void);
+void vga_128x64_mono_init(void)
+{
+    ssd1306_lcd.type = LCD_TYPE_SSD1306;
+    ssd1306_lcd.width = 128;
+    ssd1306_lcd.height = 64;
+    ssd1306_lcd.set_block = vga_set_block2;
+    ssd1306_lcd.next_page = vga_next_page2;
+    ssd1306_lcd.send_pixels1  = ssd1306_intf.send;
+    ssd1306_lcd.send_pixels_buffer1 = ssd1306_intf.send_buffer;
+    ssd1306_lcd.set_mode = vga_set_mode;
+}
+

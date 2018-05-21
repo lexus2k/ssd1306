@@ -42,7 +42,7 @@ extern uint16_t ssd1306_color;
    Yeah, a little bit complicated, but this allows to quickly unpack structure
 */
 
-uint8_t s_vga_buffer_128x64_mono[16*64] = {0};
+volatile uint8_t s_vga_buffer_128x64_mono[16*64] = {0};
 
 // Set to ssd1306 compatible mode by default
 static uint8_t s_mode = 0x01;
@@ -89,7 +89,7 @@ static inline void vga_controller_put_pixels(uint8_t x, uint8_t y, uint8_t pixel
     }
 }
 
-static void vga_controller_send_byte4(uint8_t data)
+static void vga_controller_send_byte(uint8_t data)
 {
     if (s_vga_command == 0xFF)
     {
@@ -118,7 +118,7 @@ static void vga_controller_send_byte4(uint8_t data)
         // set block
         if (s_vga_arg == 1) { s_column = data; s_cursor_x = data; }
         if (s_vga_arg == 2) { s_column_end = data; }
-        if (s_vga_arg == 3) { s_cursor_y = data << 3; }
+        if (s_vga_arg == 3) { s_cursor_y = (data << 3); }
         if (s_vga_arg == 4) { s_vga_command = 0; }
     }
     if (s_vga_command == VGA_SET_MODE)
@@ -210,7 +210,7 @@ void ssd1306_vga_controller_128x64_init_no_output(void)
     ssd1306_intf.spi = 0;
     ssd1306_intf.start = vga_controller_init;
     ssd1306_intf.stop = vga_controller_stop;
-    ssd1306_intf.send = vga_controller_send_byte4;
+    ssd1306_intf.send = vga_controller_send_byte;
     ssd1306_intf.send_buffer = vga_controller_send_bytes;
     ssd1306_intf.close = vga_controller_close;
 }
@@ -221,7 +221,7 @@ void ssd1306_debug_print_vga_buffer_128x64(void (*func)(uint8_t))
     {
         for(int x = 0; x < ssd1306_lcd.width; x++)
         {
-            uint8_t color = (s_vga_buffer_128x64_mono[(y*ssd1306_lcd.width + x)/2] >> ((x&1)<<2)) & 0x0F;
+            uint8_t color = s_vga_buffer_128x64_mono[(x >> 3) + y * 16] & (1<< (x&0x07));
             if (color)
             {
                 func('#');

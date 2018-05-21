@@ -44,7 +44,7 @@ extern "C" {
 #endif
 
 // Including this header defines ISR handlers in your application automatically
-#if defined(SSD1306_BUILTIN_VGA_SUPPORT)
+#if defined(SSD1306_BUILTIN_VGA_SUPPORT) && defined(CONFIG_VGA_ENABLE)
 
 #if !defined(VGA_CONTROLLER_DEBUG)
 
@@ -52,10 +52,10 @@ extern "C" {
 #define DEJITTER_OFFSET -4
 #endif
 
-extern uint8_t s_vga_buffer_128x64_mono[];
+extern volatile uint8_t s_vga_buffer_128x64_mono[];
 
 // Total number of lines used in specific scan mode
-static uint16_t s_total_mode_lines = 40*8;
+static uint16_t s_total_mode_lines = 64*7;
 
 // Lines to skip before starting to draw first line of the screen content
 // This includes V-sync signal + front porch
@@ -65,6 +65,7 @@ static const uint8_t V_BACKPORCH_LINES = 40;
 // This includes V-sync signal + front porch
 volatile int s_current_scan_line;
 volatile uint8_t s_lines_to_skip;
+volatile uint8_t s_scan_line_index;
 volatile uint8_t *s_current_scan_line_data = &s_vga_buffer_128x64_mono[0];
 extern volatile uint8_t s_vga_frames;
 extern unsigned long timer0_millis;
@@ -72,6 +73,7 @@ extern unsigned long timer0_millis;
 ISR(TIMER1_OVF_vect)
 {
     s_current_scan_line = 0;
+    s_scan_line_index = 0;
     s_current_scan_line_data = &s_vga_buffer_128x64_mono[0];
     s_lines_to_skip = V_BACKPORCH_LINES;
     s_vga_frames++;
@@ -107,47 +109,32 @@ static inline void /*__attribute__ ((noinline))*/ do_scan_line()
     // output all pixels
 
     asm volatile(
-         ".rept 12\n\t"
+         ".rept 16\n\t"
 
-         "ld r24, Z+\n\t"        // r24 = 82227111
-//         "nop\n\t"               // to make pixel wider in 128x64 mode
-         "out %[port], r24\n\t"  // 111
-
-         "ld r25, Z+\n\t"        // r25 = 84447333
-         "swap r24\n\t"          // r24 = 71118222
-         "out %[port], r24\n\t"  // 222
-
-         "andi r24, 0x88\n\t"    // r24 = 70008000
-         "ld r20, Z+\n\t"        // r20 = 86667555
-         "out %[port], r25\n\t"  // 333
-
-         "swap r25\n\t"          // r25 = 73338444
-         "lsr r24\n\t"           // r24 = 00080007
-         "lsr r24\n\t"           // r24 = 00800070
-         "out %[port], r25\n\t"  // 444
-
-         "andi r25, 0x88\n\t"    // r25 = 70008000
-         "lsr r24\n\t"           // r24 = 08000700
-         "lsr r25\n\t"           // r25 = 00080007
-         "out %[port], r20\n\t"  // 555
-
-         "swap r20\n\t"          // r20 = 75558666
-         "lsr r25\n\t"           // r25 = 00800070
-         "or r24, r25\n\t"       // r24 = 08800770
-         "out %[port], r20\n\t"  // 666
-
-         "andi r20, 0x88\n\t"    // r20 = 70008000
-         "lsr r20\n\t"           // r20 = 00080007 b
-         "or r24, r20\n\t"       // r24 = 08880777 rgb
-         "out %[port], r24\n\t"  // 777
-
-         "swap r24\n\t"          // r24 = 07770888
-//         "nop\n\t"               // to make pixel wider in 128x64 mode
+         "ld r24, Z+\n\t"      
+         "out %[port], r24\n\t"
+         "lsr r24\n\t"
          "nop\n\t"
-         "out %[port], r24\n\t"  // 888
+         "out %[port], r24\n\t"
+         "lsr r24\n\t"
+         "out %[port], r24\n\t"
+         "lsr r24\n\t"
+         "nop\n\t"
+         "out %[port], r24\n\t"
+         "lsr r24\n\t"
+         "nop\n\t"
+         "out %[port], r24\n\t"
+         "lsr r24\n\t"
+         "nop\n\t"
+         "out %[port], r24\n\t"
+         "lsr r24\n\t"
+         "nop\n\t"
+         "out %[port], r24\n\t"
+         "lsr r24\n\t"
+         "nop\n\t"
+         "out %[port], r24\n\t"
 
          ".endr\n\t"
-//         "nop\n\t"               // to make pixel wider in 128x64 mode
          "nop\n\t"
          "ldi r24,0\n\t"
          "out %[port], r24 \n\t"
@@ -155,13 +142,15 @@ static inline void /*__attribute__ ((noinline))*/ do_scan_line()
     :
     : [port] "I" (_SFR_IO_ADDR(PORTC)),
        "z" "I" ((uint8_t *)s_current_scan_line_data )
-    : "r24", "r25", "r20", "memory"
+    : "r24", "memory"
     );
 
     s_current_scan_line++;
-    if ((s_current_scan_line & 0x7) == 0)
+    s_scan_line_index++;
+    if ( s_scan_line_index > 6 )
     {
-        s_current_scan_line_data += 36;
+        s_scan_line_index=0;
+        s_current_scan_line_data += 16;
     }
 }
 
@@ -207,27 +196,11 @@ void ssd1306_vga_controller_init(void)
     ssd1306_vga_controller_128x64_init();
 }
 
+void ssd1306_debug_print_vga_buffer_128x64(void (*func)(uint8_t));
+
 void ssd1306_debug_print_vga_buffer(void (*func)(uint8_t))
 {
-    for(int y = 0; y < ssd1306_lcd.height; y++)
-    {
-        for(int x = 0; x < ssd1306_lcd.width; x++)
-        {
-            uint8_t color = (s_vga_buffer_128x64_mono[(y*ssd1306_lcd.width + x)/2] >> ((x&1)<<2)) & 0x0F;
-            if (color)
-            {
-                func('#');
-                func('#');
-            }
-            else
-            {
-                func(' ');
-                func(' ');
-            }
-        }
-        func('\n');
-    }
-    func('\n');
+    ssd1306_debug_print_vga_buffer_128x64(func);
 }
 
 #endif  // SSD1306_BUILTIN_VGA_SUPPORT
