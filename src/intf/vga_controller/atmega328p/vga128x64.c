@@ -74,7 +74,7 @@ static inline void vga_controller_put_pixels(uint8_t x, uint8_t y, uint8_t pixel
     uint16_t addr = (x >> 3)   + (uint16_t)(y * 16);
     uint8_t offset = x & 0x07;
     uint8_t mask = 1 << offset;
-    if (addr >= 32*40)
+    if (addr >= 16*64)
     {
         return;
     }
@@ -114,8 +114,12 @@ static void vga_controller_send_byte(uint8_t data)
     if (s_vga_command == VGA_SET_BLOCK)
     {
         // set block
-        if (s_vga_arg == 1) { s_column = data; s_cursor_x = data; }
-        if (s_vga_arg == 2) { s_column_end = data; }
+        if (s_vga_arg == 1)
+        {
+            s_column = data >= ssd1306_lcd.width ? ssd1306_lcd.width - 1 : data ;
+            s_cursor_x = s_column;
+        }
+        if (s_vga_arg == 2) { s_column_end = data >= ssd1306_lcd.width ? ssd1306_lcd.width - 1 : data; }
         if (s_vga_arg == 3) { s_cursor_y = (data << 3); }
         if (s_vga_arg == 4) { s_vga_command = 0; }
     }
