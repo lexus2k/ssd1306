@@ -162,5 +162,3 @@ static inline long random(long min, long max)
 
 #endif
 
-#endif
-
