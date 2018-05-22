@@ -33,7 +33,7 @@ extern "C" {
 #endif
 
 
-/** SSD1351 LCD driver commands */
+/** VGA driver commands */
 enum EVgaCommands
 {
     /**

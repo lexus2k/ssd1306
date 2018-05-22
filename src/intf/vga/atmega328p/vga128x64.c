@@ -22,13 +22,13 @@
     SOFTWARE.
 */
 
-#include "vga.h"
+#include "intf/vga/vga.h"
 // Never include vga128x64_isr.h here!!!
 #include "intf/ssd1306_interface.h"
 #include "lcd/lcd_common.h"
 #include "lcd/vga_commands.h"
 
-#if defined(SSD1306_BUILTIN_VGA_SUPPORT)
+#if defined(SSD1306_VGA_AVAILABLE)
 
 extern uint16_t ssd1306_color;
 

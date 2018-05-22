@@ -34,7 +34,7 @@
 //#define VGA_CONTROLLER_DEBUG
 //#define SSD1306_VGA_SLEEP_MODE
 #define CONFIG_VGA_96X40_ENABLE
-#include "intf/vga_controller/atmega328p/vga_isr.h"
+#include "intf/vga/atmega328p/vga_isr.h"
 #include "lcd/vga_monitor.h"
 #include "intf/ssd1306_interface.h"
 

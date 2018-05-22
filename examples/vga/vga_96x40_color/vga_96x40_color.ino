@@ -39,9 +39,8 @@
 #include "ssd1331_api.h"
 #include "nano_gfx.h"
 #include "sova.h"
-#define DEJITTER_OFFSET -3
-#define CONFIG_VGA_128X64_ENABLE
-#include "intf/vga_controller/atmega328p/vga_isr.h"
+#define CONFIG_VGA_96X40_ENABLE
+#include "intf/vga/atmega328p/vga_isr.h"
 #include "lcd/vga_monitor.h"
 #include "intf/ssd1306_interface.h"
 
@@ -133,6 +132,7 @@ static void textDemo()
     ssd1306_vga_delay(3000);
 }
 
+// cannot use canvas due to RAM
 static void canvasDemo()
 {
     uint8_t buffer[64*16/8];
@@ -172,7 +172,7 @@ void setup()
 {
     ssd1306_setFixedFont(ssd1306xled_font6x8);
     ssd1306_vga_controller_init();
-    vga_128x64_mono_init();
+    vga_96x40_8colors_init();
     ssd1306_vga_delay(3000); // wait until VGA monitor starts
 
     ssd1306_fillScreen( 0x00 );
@@ -198,7 +198,7 @@ void loop()
             break;
 
         case 3:
-            canvasDemo();
+//            canvasDemo();
             break;
 
         case 4:

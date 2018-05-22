@@ -22,10 +22,10 @@
     SOFTWARE.
 */
 /**
- * @file vga_controller.h VGA interface to communicate with VGA-monitor from the sketch directly
+ * @file vga_isr.h VGA ISR code to communicate with VGA-monitor from the sketch directly
  *
  * @details Please, include this file only once in your sketch, if you want to control
- * vga monitor directly from your sketch
+ * vga monitor directly from your sketch.
  * This header supports different modes: VGA_CONTROLLER_DEBUG, SSD1306_VGA_SLEEP_MODE.
  * If you want to use vga_controller module in debug mode without producing VGA output,
  * define VGA_CONTROLLER_DEBUG before including this header. If you want to use library with
@@ -33,10 +33,10 @@
  * SSD1306_VGA_SLEEP_MODE before including this header.
  */
 
-#ifndef _SSD1306_VGA_CONTROLLER_H_
-#define _SSD1306_VGA_CONTROLLER_H_
+#ifndef _SSD1306_VGA_ATMEGA328P_ISR_H_
+#define _SSD1306_VGA_ATMEGA328P_ISR_H_
 
-#include "vga.h"
+#include "intf/vga/vga.h"
 #include "ssd1306_hal/io.h"
 
 #ifdef __cplusplus
@@ -44,7 +44,7 @@ extern "C" {
 #endif
 
 // Including this header defines ISR handlers in your application automatically
-#if defined(SSD1306_BUILTIN_VGA_SUPPORT)
+#if defined(SSD1306_VGA_AVAILABLE)
 
 #ifndef DEJITTER_OFFSET
 #define DEJITTER_OFFSET -4

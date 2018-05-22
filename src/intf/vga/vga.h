@@ -22,11 +22,11 @@
     SOFTWARE.
 */
 /**
- * @file vga96x40.h VGA basic data. Do not include this header in your project!!!
+ * @file vga.h VGA basic data. Do not include this header in your project!!!
  */
 
-#ifndef _SSD1306_VGA_CONTROLLER_96X40_H_
-#define _SSD1306_VGA_CONTROLLER_96X40_H_
+#ifndef _SSD1306_VGA_CONTROLLER_H_
+#define _SSD1306_VGA_CONTROLLER_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -34,11 +34,12 @@ extern "C" {
 
 #include "ssd1306_hal/io.h"
 
-#if defined(SSD1306_BUILTIN_VGA_SUPPORT)
-extern volatile uint8_t __vga_buffer[];
-
+#if defined(SSD1306_VGA_AVAILABLE)
+/* TODO: Move defines out of this file */
 static const uint8_t H_SYNC_PIN = 3;
 static const uint8_t V_SYNC_PIN = 10;
+
+extern volatile uint8_t __vga_buffer[];
 void ssd1306_vga_delay(uint32_t ms);
 void ssd1306_debug_print_vga_buffer(void (*func)(uint8_t));
 void ssd1306_vga_controller_init(void);
