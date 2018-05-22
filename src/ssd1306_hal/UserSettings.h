@@ -48,23 +48,26 @@
 /* Comment out options below if you don't need support in the library,  *
  * and want to reduce memory consumption.                               */
 
-/** The macro is defined when i2c software support is enabled */
+/** The macro is defined when i2c software module is enabled for compilation */
 #define CONFIG_SOFTWARE_I2C_ENABLE
 
-/** The macro is defined when i2c Wire library is available */
+/** The macro is defined when i2c Wire library is enabled for compilation */
 #define CONFIG_ARDUINO_WIRE_LIBRARY_ENABLE
 
-/** The macro is defined when TWI module is available (ATTINY) */
+/** The macro is defined when TWI module is enabled for compilation */
 #define CONFIG_TWI_I2C_ENABLE
 
-/** The macro is defined when SPI library is available */
+/** The macro is defined when SPI library is enabled for compilation */
 #define CONFIG_ARUDINO_SPI_LIBRARY_ENABLE
 
-/** The macro is defined when SPI module is available (ATMEGA) */
+/** The macro is defined when SPI module is enabled for compilation */
 #define CONFIG_AVR_SPI_ENABLE
 
-/** The macro is defined when USI module is available for use */
+/** The macro is defined when USI module is enabled for compilation */
 #define CONFIG_USI_SPI_ENABLE
+
+/** The macro is defined when internal AVR USART implementation is enabled */
+#define CONFIG_AVR_UART_ENABLE
 
 /** The macro is defined when VGA module is enabled for compilation */
 #define CONFIG_VGA_ENABLE

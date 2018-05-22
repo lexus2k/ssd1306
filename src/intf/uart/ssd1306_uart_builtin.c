@@ -28,7 +28,7 @@
 
 #include "ssd1306_hal/io.h"
 
-#ifdef SSD1306_UART_BUILTIN_SUPPORTED
+#if defined(SSD1306_UART_BUILTIN_SUPPORTED) && defined(CONFIG_AVR_UART_ENABLE)
 
 #include "ssd1306_uart.h"
 

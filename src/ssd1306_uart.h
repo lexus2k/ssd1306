@@ -37,7 +37,7 @@
 #include "ssd1306_hal/io.h"
 #endif
 
-#ifdef SSD1306_UART_SUPPORTED
+#if defined(SSD1306_UART_SUPPORTED) && defined(CONFIG_AVR_UART_ENABLE)
 
 #ifdef __cplusplus
 extern "C" {
