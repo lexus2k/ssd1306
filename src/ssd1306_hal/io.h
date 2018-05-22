@@ -30,10 +30,20 @@
 #define _SSD1306_HAL_IO_H_
 
 #include "UserSettings.h"
+#if defined(ARDUINO)
 #include "arduino/io.h"
+#elif defined(__AVR__) && !defined(ARDUINO)
 #include "avr/io.h"
+#elif defined(__XTENSA__) && !defined(ARDUINO)
 #include "esp/io.h"
+#elif defined(__linux__)
 #include "linux/io.h"
+#elif defined(__MINGW32__)
+#include "mingw/io.h"
+#else
+#warning "Platform is not supported. Use template to add support"
+#include "template/io.h"
+#endif
 
 #ifndef LCDINT_TYPES_DEFINED
 #define LCDINT_TYPES_DEFINED

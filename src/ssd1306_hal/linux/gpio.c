@@ -22,9 +22,9 @@
     SOFTWARE.
 */
 
-#if (defined(__linux__) && !defined(__MINGW32__)) && !defined(ARDUINO)
+#if defined(__linux__) && !defined(ARDUINO)
 
-#include "io.h"
+#include "ssd1306_hal/io.h"
 
 #ifndef __KERNEL__
 
@@ -221,8 +221,8 @@ void digitalWrite(int pin, int level)
     gpio_write( pin, level );
 }
 
-#endif
+#endif // SDL_EMULATION
 
-#endif
+#endif // !KERNEL
 
-#endif
+#endif // __linux__

@@ -29,7 +29,6 @@
 #ifndef _SSD1306_AVR_IO_H_
 #define _SSD1306_AVR_IO_H_
 
-#if defined(__AVR__) && !defined(ARDUINO)
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
@@ -106,8 +105,6 @@ void pinMode(int pin, int mode);
 #ifdef __cplusplus
 static inline int random(int max) { return 0; };
 static inline int random(int min, int max) { return 0; };
-#endif
-
 #endif
 
 #endif

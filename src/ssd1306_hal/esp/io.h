@@ -29,11 +29,7 @@
 #ifndef _SSD1306_ESP_IO_H_
 #define _SSD1306_ESP_IO_H_
 
-#if defined(__XTENSA__) && !defined(ARDUINO)
-
 // TODO: To add support. Any help is welcome
-
-#endif
 
 #endif
 

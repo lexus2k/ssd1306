@@ -23,28 +23,25 @@
 */
 
 /**
- * @file ssd1306_hal/linux/io.h SSD1306 LINUX IO communication functions
+ * @file ssd1306_hal/mingw/io.h SSD1306 MINGW IO communication functions
  */
 
-#ifndef _SSD1306_LINUX_IO_H_
-#define _SSD1306_LINUX_IO_H_
+#ifndef _SSD1306_MINGW_IO_H_
+#define _SSD1306_MINGW_IO_H_
 
+// Use the same library interface as for Linux
 #define SSD1306_LINUX_SUPPORTED
 
 #if defined(SDL_EMULATION)  // SDL Emulation mode includes
 #include "sdl_core.h"
 #endif
 
-#if defined(__KERNEL__)     // KERNEL includes
-#include <linux/types.h>
-
-#else                       // LINUX includes
-
+#include <windows.h>
 #include <stdint.h>
 #include <unistd.h>
+#include "sdl_core.h"
 #include <time.h>
 #include <string.h>
-#endif
 
 /** Standard defines */
 #define LOW  0
@@ -59,51 +56,22 @@ extern "C" {
 #endif
 
 static inline int  digitalRead(int pin) { return LOW; };
-#if defined(__KERNEL__)      // ============== KERNEL
-static inline void delay(unsigned long ms) {  };
-static inline void delayMicroseconds(unsigned long us) {  };
-static inline int  analogRead(int pin) { return 0; };
-static inline void digitalWrite(int pin, int level) { };
-static inline uint32_t millis(void) { return 0; };
-static inline uint32_t micros(void) { return 0; };
-static inline void pinMode(int pin, int mode) {};
-
-#else                         // ============== LINUX
-static inline void delay(unsigned long ms) { usleep(ms*1000);  };
-static inline void delayMicroseconds(unsigned long us) { usleep(us); };
+static inline void delay(unsigned long ms) { Sleep(ms);  };
+static inline void delayMicroseconds(unsigned long us) { Sleep((us+500)/1000); };
 static inline uint32_t millis(void)
 {
-   struct timespec ts;
-   clock_gettime(CLOCK_MONOTONIC, &ts);
-   return ts.tv_sec * 1000 + ts.tv_nsec / 1000000;
+    return GetTickCount();
 };
 
 static inline uint32_t micros(void)
 {
-   struct timespec ts;
-   clock_gettime(CLOCK_MONOTONIC, &ts);
-   return ts.tv_sec * 1000000 + ts.tv_nsec / 1000;
+    return GetTickCount()*1000;
 };
-
-/* For some reason defines do not work accross the libraries *
- * Didn't yet figure out, what is the reason fo this issue */
-//define min(a,b) (((a)<(b))?(a):(b))
-//define max(a,b) (((a)>(b))?(a):(b))
-static inline int min(int a, int b) { return a<b?a:b; };
-static inline int max(int a, int b) { return a>b?a:b; };
-#if !defined(SDL_EMULATION)
-void pinMode(int pin, int mode);
-#endif
-
-#endif
 
 #if defined(SDL_EMULATION)
 static inline int  analogRead(int pin) { return sdl_read_analog(pin); };
 static inline void digitalWrite(int pin, int level) {  sdl_write_digital(pin, level); };
 static inline void pinMode(int pin, int mode) { };
-#elif !defined(__KERNEL__)
-static inline int  analogRead(int pin) { return 0; };
-void digitalWrite(int pin, int level);
 #endif
 
 static inline void randomSeed(int seed) { };
@@ -158,8 +126,6 @@ static inline long random(long min, long max)
 {
     return rand() % (max - min + 1) + min;
 }
-#endif
-
 #endif
 
 #endif

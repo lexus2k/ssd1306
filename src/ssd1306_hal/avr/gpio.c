@@ -22,7 +22,7 @@
     SOFTWARE.
 */
 
-#include "io.h"
+#include "ssd1306_hal/io.h"
 
 #if defined(__AVR__) && !defined(ARDUINO)
 

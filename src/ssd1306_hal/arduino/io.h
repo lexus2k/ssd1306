@@ -29,8 +29,6 @@
 #ifndef _SSD1306_ARDUINO_IO_H_
 #define _SSD1306_ARDUINO_IO_H_
 
-#ifdef ARDUINO
-
 #if defined(ARDUINO_ARCH_STM32)   // stm32duino support
     #include <Arduino.h>
     #include <avr/pgmspace.h>
@@ -148,8 +146,6 @@
 #include <Wire.h>
 #endif
 #endif
-
-#endif /* ARDUINO */
 
 #endif
 
