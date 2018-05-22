@@ -44,7 +44,7 @@ extern "C" {
 #endif
 
 // Including this header defines ISR handlers in your application automatically
-#if defined(SSD1306_VGA_AVAILABLE)
+#if defined(SSD1306_VGA_AVAILABLE) && defined(CONFIG_VGA_ENABLE) && defined(__AVR_ATmega328P__)
 
 #ifndef DEJITTER_OFFSET
 #define DEJITTER_OFFSET -4
@@ -67,7 +67,7 @@ void ssd1306_debug_print_vga_buffer_128x64(void (*func)(uint8_t));
 
 static const uint16_t __VGA_VERTICAL_PIXELS = 40;
 static const uint16_t __VGA_LINE_BYTES = 36;
-static const uint16_t __VGA_PIXEL_HEIGHT = 8;
+static const uint16_t __VGA_PIXEL_HEIGHT = 10;
 volatile uint8_t      __vga_buffer[36*40] = {0};
 static const uint8_t *__VGA_BUFFER_PTR = &__vga_buffer[0];
 

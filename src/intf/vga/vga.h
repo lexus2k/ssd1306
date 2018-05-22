@@ -34,10 +34,13 @@ extern "C" {
 
 #include "ssd1306_hal/io.h"
 
-#if defined(SSD1306_VGA_AVAILABLE)
+#if defined(SSD1306_VGA_AVAILABLE) && defined(CONFIG_VGA_ENABLE)
+
+#if defined(__AVR_ATmega328P__)
 /* TODO: Move defines out of this file */
 static const uint8_t H_SYNC_PIN = 3;
 static const uint8_t V_SYNC_PIN = 10;
+#endif
 
 extern volatile uint8_t __vga_buffer[];
 void ssd1306_vga_delay(uint32_t ms);

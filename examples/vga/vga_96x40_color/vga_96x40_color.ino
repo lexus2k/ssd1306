@@ -22,6 +22,7 @@
     SOFTWARE.
 */
 /**
+ *   !!!!!!!!!!!!!!!!!!         RUNS ON ATMEGA328P ONLY   !!!!!!!!!!!!!!!!!!!!
  *   Nano/Atmega328 PINS:
  *     A0 - blue channel of D-Sub connector
  *     A1 - green channel of D-Sub connector
@@ -32,12 +33,12 @@
  *   Sketch allows to use all other PINs except A3-A6 pins.
  *   delay, millis functions do not work. Use ssd1306_vga_delay() instead.
  *
- *   Controlling VGA requires local frame buffer to be located in RAM. Enabling VGA needs 1600 bytes (almost all Atmega328p RAM).
+ *   Controlling VGA requires local frame buffer to be located in RAM. Enabling VGA needs 1450 bytes (almost all Atmega328p RAM).
  *   So, be careful with application stack.
  */
 #include "ssd1306.h"
 #include "ssd1331_api.h"
-#include "nano_gfx.h"
+#include "nano_engine.h"
 #include "sova.h"
 #define CONFIG_VGA_96X40_ENABLE
 #include "intf/vga/atmega328p/vga_isr.h"
@@ -83,21 +84,37 @@ const char *menuItems[] =
 static void bitmapDemo()
 {
     ssd1331_setColor(RGB_COLOR8(64,64,255));
-    gfx_drawMonoBitmap(0, 0, 128, 64, Sova);
+    ssd1331_drawMonoBitmap8(0, 0, 96, 64, Sova);
     ssd1306_vga_delay(3000);
 }
 
+/* Sprites are not implemented for color modes.
+ * But there is NanoEngine support
+ * To make example clear, we use lambda as function pointer. Since lambda can be
+ * passed to function only if it doesn't capture, all variables should be global.
+ * Refer to C++ documentation.
+ */
+NanoPoint sprite;
+NanoEngine1_8 engine;
 static void spriteDemo()
 {
-    ssd1331_setColor(RGB_COLOR8(255,32,32));
-    ssd1306_clearScreen();
-    /* Declare variable that represents our sprite */
-    SPRITE sprite;
-    /* Create sprite at 0,0 position. The function initializes sprite structure. */
-    sprite = ssd1306_createSprite( 0, 0, spriteWidth, heartImage );
+    // We not need to clear screen, engine will do it for us
+    engine.begin();
+    // Force engine to refresh the screen
+    engine.refresh();
+    // Set function to draw our sprite
+    engine.drawCallback( []()->bool {
+        engine.canvas.clear();
+        engine.canvas.drawBitmap1( sprite.x, sprite.y, 8, 8, heartImage );
+        return true;
+    } );
+    sprite.x = 0;
+    sprite.y = 0;
     for (int i=0; i<250; i++)
     {
-        ssd1306_vga_delay(20);
+        ssd1306_vga_delay(16);
+        // Tell the engine to refresh screen at old sprite position
+        engine.refresh( sprite.x, sprite.y, sprite.x + 8 - 1, sprite.y + 8 - 1 );
         sprite.x++;
         if (sprite.x >= ssd1306_displayWidth())
         {
@@ -108,32 +125,33 @@ static void spriteDemo()
         {
             sprite.y = 0;
         }
-        /* Erase sprite on old place. The library knows old position of the sprite. */
-        sprite.eraseTrace();
-        /* Draw sprite on new place */
-        sprite.draw();
+        // Tell the engine to refresh screen at new sprite position
+        engine.refresh( sprite.x, sprite.y, sprite.x + 8 - 1, sprite.y + 8 - 1 );
+        // Do refresh required parts of screen
+        ssd1331_setColor(RGB_COLOR8(255,32,32));
+        engine.display();
     }
 }
 
 static void textDemo()
 {
     ssd1306_setFixedFont(ssd1306xled_font6x8);
-    ssd1306_clearScreen();
+    ssd1331_clearScreen8();
     ssd1331_setColor(RGB_COLOR8(255,255,0));
-    ssd1306_printFixed(0,  8, "Normal text", STYLE_NORMAL);
+    ssd1331_printFixed8(0,  8, "Normal text", STYLE_NORMAL);
     ssd1331_setColor(RGB_COLOR8(0,255,0));
-    ssd1306_printFixed(0, 16, "Bold text", STYLE_BOLD);
+    ssd1331_printFixed8(0, 16, "Bold text?", STYLE_BOLD);
     ssd1331_setColor(RGB_COLOR8(0,255,255));
-    ssd1306_printFixed(0, 24, "Italic text", STYLE_ITALIC);
+    ssd1331_printFixed8(0, 24, "Italic text?", STYLE_ITALIC);
     ssd1306_negativeMode();
     ssd1331_setColor(RGB_COLOR8(255,255,255));
-    ssd1306_printFixed(0, 32, "Inverted bold", STYLE_BOLD);
+    ssd1331_printFixed8(0, 32, "Inverted bold?", STYLE_BOLD);
     ssd1306_positiveMode();
     ssd1306_vga_delay(3000);
 }
 
 // cannot use canvas due to RAM
-static void canvasDemo()
+/*static void canvasDemo()
 {
     uint8_t buffer[64*16/8];
     NanoCanvas canvas(64,16, buffer);
@@ -150,20 +168,20 @@ static void canvasDemo()
     canvas.printFixed(20, 1, " DEMO " );
     canvas.blt((ssd1306_displayWidth()-64)/2, 1);
     ssd1306_vga_delay(3000);
-}
+}*/
 
 static void drawLinesDemo()
 {
-    ssd1331_setColor(RGB_COLOR8(0, 255, 0));
-    ssd1306_clearScreen();
+    ssd1331_clearScreen8();
+    ssd1331_setColor(RGB_COLOR8(255,0,0));
     for (uint8_t y = 0; y < ssd1306_displayHeight(); y += 8)
     {
-        ssd1306_drawLine(0,0, ssd1306_displayWidth() -1, y);
+        ssd1331_drawLine8(0,0, ssd1306_displayWidth() -1, y);
     }
-    ssd1331_setColor(RGB_COLOR8(0, 0, 255));
+    ssd1331_setColor(RGB_COLOR8(0,255,0));
     for (uint8_t x = ssd1306_displayWidth() - 1; x > 7; x -= 8)
     {
-        ssd1306_drawLine(0,0, x, ssd1306_displayHeight() - 1);
+        ssd1331_drawLine8(0,0, x, ssd1306_displayHeight() - 1);
     }
     ssd1306_vga_delay(3000);
 }
@@ -173,11 +191,14 @@ void setup()
     ssd1306_setFixedFont(ssd1306xled_font6x8);
     ssd1306_vga_controller_init();
     vga_96x40_8colors_init();
+    // RGB functions do not work in default SSD1306 compatible mode
+    ssd1306_setMode( LCD_MODE_NORMAL );
+
     ssd1306_vga_delay(3000); // wait until VGA monitor starts
 
-    ssd1306_fillScreen( 0x00 );
+    ssd1331_fillScreen8( 0x00 );
     ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
-    ssd1306_showMenu( &menu );
+    ssd1331_showMenu8( &menu );
 }
 
 void loop()
@@ -208,10 +229,10 @@ void loop()
         default:
             break;
     }
-    ssd1306_fillScreen( 0x00 );
+    ssd1331_fillScreen8( 0x00 );
     ssd1331_setColor(RGB_COLOR8(255,255,255));
-    ssd1306_showMenu(&menu);
+    ssd1331_showMenu8(&menu);
     ssd1306_vga_delay(500);
     ssd1306_menuDown(&menu);
-    ssd1306_updateMenu(&menu);
+    ssd1331_updateMenu8(&menu);
 }

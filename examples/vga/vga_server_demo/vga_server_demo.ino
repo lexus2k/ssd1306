@@ -22,8 +22,17 @@
     SOFTWARE.
 */
 /**
- * This sketch can be run only on Atmgea328p based boards.
- * It waits for commands over UART RX line.
+ *   !!!!!!!!!!!!!!!!!!         RUNS ON ATMEGA328P ONLY   !!!!!!!!!!!!!!!!!!!!
+ *   Nano/Atmega328 PINS:
+ *     A0 - blue channel of D-Sub connector
+ *     A1 - green channel of D-Sub connector
+ *     A2 - red channel of D-Sub connector
+ *     D9 - H-Sync of D-Sub connector
+ *     D3 - V-Sync of D-Sub connector
+ *
+ *   Sketch allows to use all other PINs except A3-A6 pins.
+ *
+ *   CONTROLLER will wait for commands over UART RX line.
  *
  *   Nano/Atmega328 PINS:
  *     RX - connect RX pin to TX pin of other board and run vga_client_demo on it.

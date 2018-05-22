@@ -66,6 +66,9 @@
 /** The macro is defined when USI module is available for use */
 #define CONFIG_USI_SPI_ENABLE
 
+/** The macro is defined when VGA module is enabled for compilation */
+#define CONFIG_VGA_ENABLE
+
 /**
  * @}
  */
