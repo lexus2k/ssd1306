@@ -63,7 +63,8 @@ configurable through API.
 | il9163 128x128 |   | X |   |
 | st7735 128x160 |   | X |   |
 | pcd8544 84x48 |   | X  | Nokia 5110 |
-| vga 64x40 |   |   | direct D-sub output, atmega328p only |
+| vga 96x40 color |   |   | direct D-sub output, atmega328p only |
+| vga 128x64 bw |   |   | direct D-sub output, atmega328p only |
 
 ## Supported platforms
 
@@ -71,7 +72,7 @@ configurable through API.
 | :-------- |:---:|:---:|:---------|
 | **Arduino** |     |     |          |
 | Attiny85, Attiny45  |  X  |  X  | Refer to [Damellis attiny package](https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json) |
-| Attiny84, Attiny44  |  X  |  X  | (Draft) Refer to [Damellis attiny package](https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json) |
+| Attiny84, Attiny44  |  X  |  X  | Refer to [Damellis attiny package](https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json) |
 | Atmega328p, Atmega168  |  X  |  X  |    |
 | Atmega32u4  |  X  |  X  |    |
 | Atmega2560  |  X  |  X  |    |
