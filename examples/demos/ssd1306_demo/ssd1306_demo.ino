@@ -33,6 +33,7 @@
  *
  *   Nano/Atmega328 PINS: connect LCD to A4/A5 (i2c)
  *   ESP8266: GPIO4(SDA) / GPIO5( SCL )
+ *   STM32: B7(SDA), B6(SCL)
  */
 
 #include "ssd1306.h"

@@ -45,16 +45,18 @@ configurable through API.
 
 ## Supported displays:
 
-| **Display** | **I2C** | **SPI** | **Comments** |
-| :-------- |:---:|:---:|:---------|
-| sh1106 128x64 | X |   |   |
-| ssd1306 128x64 | X | X |   |
-| ssd1306 128x32 | X | X |   |
-| ssd1331 96x64 |   | X |   |
-| ssd1331 128x128 |   | X |   |
-| il9163 128x128 |   | X |   |
-| st7735 128x160 |   | X |   |
-| pcd8544 84x48 |   | X  | Nokia 5110 |
+| **Display** | **I2C** | **SPI** | **Orientation** | **Comments** |
+| :-------- |:---:|:---:|:---:|:---------|
+| sh1106 128x64 | X |   |   |   |
+| ssd1306 128x64 | X | X |   |   |
+| ssd1306 128x32 | X | X |   |   |
+| ssd1331 96x64 |   | X |   |   |
+| ssd1331 128x128 |   | X |   |   |
+| il9163 128x128 |   | X | X |   |
+| st7735 128x160 |   | X | X |   |
+| pcd8544 84x48 |   | X  |   | Nokia 5110 |
+| vga 96x40 color |   |   |   | direct D-sub output, atmega328p only |
+| vga 128x64 bw |   |   |   | direct D-sub output, atmega328p only |
 
 ## Supported platforms
 
