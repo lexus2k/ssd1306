@@ -22,7 +22,7 @@
     SOFTWARE.
 */
 
-/**
+/*
  * @file hal/esp/io.h SSD1306 ESP IO communication functions
  */
 

@@ -158,13 +158,13 @@ void drawIntro()
     ssd1331_96x64_spi_init(3,4,5);
 #elif defined(__AVR_ATtiny85__)
     ssd1306_i2cInit_Embedded(-1,-1,0);
-#elif defined(SSD1306_WIRE_SUPPORTED)
+#elif defined(CONFIG_ARDUINO_WIRE_LIBRARY_AVAILABLE)
     ssd1306_i2cInit_Wire(0);
-#elif defined(SSD1306_I2C_SW_SUPPORTED)
+#elif defined(CONFIG_SOFTWARE_I2C_AVAILABLE)
     ssd1306_i2cInit_Embedded(-1,-1,0);
 #elif defined(SSD1306_LINUX_SUPPORTED)
     ssd1306_i2cInit_Linux(-1,-1);
-#elif defined(SSD1306_TWI_SUPPORTED)
+#elif defined(CONFIG_TWI_I2C_AVAILABLE)
     ssd1306_i2cInit_Twi(0);
 #else
     #error "Not supported microcontroller or board"
@@ -355,7 +355,7 @@ void setup()
 #elif defined(__AVR_ATtiny85__)
     DDRB |= 0b00011010;         // set PB1 as output (for the speaker), PB0 and PB2 as input
     sei();                      // enable all interrupts
-#elif defined(SSD1306_WIRE_SUPPORTED)
+#elif defined(CONFIG_ARDUINO_WIRE_LIBRARY_AVAILABLE)
     Wire.begin();
     #ifdef SSD1306_WIRE_CLOCK_CONFIGURABLE
         Wire.setClock( 400000 );
@@ -366,7 +366,7 @@ void setup()
     #endif
     pinMode(BUZZER, OUTPUT);
     sei();                      // enable all interrupts
-#elif defined(SSD1306_I2C_SW_SUPPORTED)
+#elif defined(CONFIG_SOFTWARE_I2C_AVAILABLE)
     #ifndef USE_Z_KEYPAD
         pinMode(LEFT_BTN, INPUT);
         pinMode(RIGHT_BTN, INPUT);

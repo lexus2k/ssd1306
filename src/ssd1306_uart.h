@@ -23,21 +23,21 @@
 */
 /**
  * @file ssd1306_uart.h Uart implementation for SSD1306 library
- * @detail Define UART_INTERRUPT_ENABLE before including this header, if you
- *         want interrupt-based UART support.
- *         Define SSD1306_UART_SUPPORTED before including this header, if you
- *         want to use uart module outside ssd1306 library.
+ * @details Define UART_INTERRUPT_ENABLE before including this header, if you
+ *          want interrupt-based UART support.
+ *          Define CONFIG_AVR_UART_AVAILABLE and CONFIG_AVR_UART_ENABLE before
+ *          including this header, if you want to use uart module outside ssd1306 library.
  */
 
 #ifndef _SSD1306_UART_H_
 #define _SSD1306_UART_H_
 
 // This check is required if you want to use ssd1306_uart module outside ssd1306_library
-#ifndef SSD1306_UART_SUPPORTED
+#ifndef CONFIG_AVR_UART_AVAILABLE
 #include "ssd1306_hal/io.h"
 #endif
 
-#if defined(SSD1306_UART_SUPPORTED) && defined(CONFIG_AVR_UART_ENABLE)
+#if defined(CONFIG_AVR_UART_AVAILABLE) && defined(CONFIG_AVR_UART_ENABLE)
 
 #ifdef __cplusplus
 extern "C" {
@@ -45,19 +45,23 @@ extern "C" {
 
 #include <stdint.h>
 
+/** Rx buffer size, used by AVR USART implementation */
 #define UART_BUFFER_RX  32  // :( Still need large buffer to process USART RX bytes
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 extern volatile uint8_t g_uart_put_ptr;
 
 extern volatile uint8_t g_uart_buf[];
 
 void uart_init_internal(uint32_t baud, uint8_t interrupt);
+#endif
 
 /**
  * @brief Initializes uart module
  *
  * Initializes uart module. Depending on UART_INTERRUPT_ENABLE define,
  * module will be initialized in interrupt mode or synchronouse mode.
+ *
  * @param baud baud rate for the uart module
  * @note only 115200, 57600, 38400 and 19200 are supported.
  */
@@ -71,14 +75,31 @@ static inline void uart_init(uint32_t baud)
 }
 
 /**
+ * @brief Sends single byte over UART
  *
+ * Sends single byte over UART. The function doesn't use any
+ * internal buffers, so it returns control once byte is sent.
+ *
+ * @param c byte to send.
  */
 void uart_send_byte(uint8_t c);
 
+/**
+ * @brief Returns non-zero code if there are bytes in RX buffer
+ *
+ * Returns non-zero code if there are bytes in RX buffer
+ */
 uint8_t uart_byte_available(void);
 
+/**
+ * @brief Reads byte from UART RX buffer.
+ *
+ * Reads byte from UART RX buffer. Please, check bytes availability
+ * via uart_byte_available() before calling this function.
+ */
 uint8_t uart_read_byte(void);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 static inline void __uart_read_byte(void)
 {
     g_uart_buf[g_uart_put_ptr] = UDR0;
@@ -100,6 +121,8 @@ ISR(USART_RX_vect, ISR_BLOCK)
     }
 }
 #endif
+
+#endif // DOXYGEN_SHOULD_SKIP_THIS
 
 #ifdef __cplusplus
 }

@@ -22,7 +22,7 @@
     SOFTWARE.
 */
 
-/**
+/*
  * @file ssd1306_hal/mingw/io.h SSD1306 MINGW IO communication functions
  */
 

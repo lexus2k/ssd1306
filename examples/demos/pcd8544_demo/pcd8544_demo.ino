@@ -30,7 +30,7 @@
  *   GND     -|____|- (0)
  *
  *   Attiny SPI PINS:     connect LCD to D4 (D/C), GND (CS), D3 (RES), D1(DIN), D2(CLK)
- *   
+ *
  *   Nano/Atmega328 PINS: connect LCD to A4/A5 (i2c)
  *   ESP8266: GPIO4(SDA) / GPIO5( SCL )
  */
@@ -38,11 +38,6 @@
 #include "ssd1306.h"
 #include "nano_gfx.h"
 #include "sova.h"
-
-/* Do not include SPI.h for Attiny controllers */
-#ifdef SSD1306_SPI_SUPPORTED
-    #include <SPI.h>
-#endif
 
 /*
  * Heart image below is defined directly in flash memory.

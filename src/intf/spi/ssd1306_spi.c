@@ -38,12 +38,12 @@ uint32_t s_ssd1306_spi_clock = 8000000;
 
 void ssd1306_spiInit(int8_t cesPin, int8_t dcPin)
 {
-#if defined(SSD1306_AVR_SPI_SUPPORTED) && defined(CONFIG_AVR_SPI_ENABLE)
+#if defined(CONFIG_AVR_SPI_AVAILABLE) && defined(CONFIG_AVR_SPI_ENABLE)
     ssd1306_spiInit_avr(cesPin, dcPin);
-#elif defined(SSD1306_SPI_SUPPORTED) && defined(CONFIG_ARDUINO_SPI_LIBRARY_ENABLE)
+#elif defined(CONFIG_ARDUINO_SPI_LIBRARY_AVAILABLE) && defined(CONFIG_ARDUINO_SPI_LIBRARY_ENABLE)
     ssd1306_spiConfigure_hw();
     ssd1306_spiInit_hw(cesPin, dcPin);
-#elif defined(SSD1306_USI_SPI_SUPPORTED) && defined(CONFIG_USI_SPI_ENABLE)
+#elif defined(CONFIG_USI_SPI_AVAILABLE) && defined(CONFIG_USI_SPI_ENABLE)
     ssd1306_spiInit_Usi(cesPin, dcPin);
 #elif defined(SSD1306_LINUX_SUPPORTED)
     /* -1 means SPI bus is selected by default */

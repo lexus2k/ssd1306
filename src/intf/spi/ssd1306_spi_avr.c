@@ -29,7 +29,7 @@
 #include "lcd/lcd_common.h"
 #include "ssd1306_hal/io.h"
 
-#if defined(SSD1306_AVR_SPI_SUPPORTED) && defined(CONFIG_AVR_SPI_ENABLE)
+#if defined(CONFIG_AVR_SPI_AVAILABLE) && defined(CONFIG_AVR_SPI_ENABLE)
 
 #include <stdlib.h>
 

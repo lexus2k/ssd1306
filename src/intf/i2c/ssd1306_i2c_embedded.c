@@ -28,7 +28,7 @@
 
 #include "ssd1306_hal/io.h"
 
-#if defined(SSD1306_I2C_SW_SUPPORTED) && defined(CONFIG_SOFTWARE_I2C_ENABLE)
+#if defined(CONFIG_SOFTWARE_I2C_AVAILABLE) && defined(CONFIG_SOFTWARE_I2C_ENABLE)
 
 /**
  * Port registers, containing pins, which SSD1306 display is connected to.

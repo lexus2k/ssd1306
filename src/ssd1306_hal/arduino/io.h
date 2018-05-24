@@ -22,7 +22,7 @@
     SOFTWARE.
 */
 
-/**
+/*
  * @file hal/arduino/io.h SSD1306 ARDUINO IO communication functions
  */
 
@@ -44,28 +44,23 @@
     #endif
 #endif
 
-/**
- * @defgroup LCD_INTERFACE_API LCD communication interface functions
- * @{
- */
-
 #if defined(ARDUINO_ARCH_STM32)
     /** The macro is defined when i2c Wire library is available */
-    #define SSD1306_WIRE_SUPPORTED
+    #define CONFIG_ARDUINO_WIRE_LIBRARY_AVAILABLE
     /** The macro is defined when Wire library speed can be configured */
     #define SSD1306_WIRE_CLOCK_CONFIGURABLE
     /** The macro is defined when SPI library is available */
-    #define SSD1306_SPI_SUPPORTED
+    #define CONFIG_ARDUINO_SPI_LIBRARY_AVAILABLE
 
 #elif defined(ARDUINO_AVR_DIGISPARK) || defined(ARDUINO_AVR_DIGISPARKPRO)
     /** The macro is defined when i2c Wire library is available */
-    #define SSD1306_WIRE_SUPPORTED
+    #define CONFIG_ARDUINO_WIRE_LIBRARY_AVAILABLE
     #if defined(ARDUINO_AVR_DIGISPARKPRO)
         /** The macro is defined when SPI library is available */
-        #define SSD1306_SPI_SUPPORTED
+        #define CONFIG_ARDUINO_SPI_LIBRARY_AVAILABLE
     #else
         /** The macro is defined when software i2c implementation is available */
-        #define SSD1306_I2C_SW_SUPPORTED
+        #define CONFIG_SOFTWARE_I2C_AVAILABLE
         /* Define lcdint as smallest types to reduce memo usage on tiny controllers. *
          * Remember, that this can cause issues with large lcd displays, i.e. 320x240*/
         #define LCDINT_TYPES_DEFINED
@@ -77,13 +72,15 @@
       defined(__AVR_ATtiny24__) || defined(__AVR_ATtiny44__) || defined(__AVR_ATtiny84__)
 
     /** The macro is defined when software i2c implementation is available */
-    #define SSD1306_I2C_SW_SUPPORTED
+    #define CONFIG_SOFTWARE_I2C_AVAILABLE
     /** The macro is defined when USI module is available for use */
-    #define SSD1306_USI_SPI_SUPPORTED
-    /* Define lcdint as smallest types to reduce memo usage on tiny controllers. *
+    #define CONFIG_USI_SPI_AVAILABLE
+    /** Define lcdint as smallest types to reduce memo usage on tiny controllers. *
      * Remember, that this can cause issues with large lcd displays, i.e. 320x240*/
     #define LCDINT_TYPES_DEFINED
+    /** This is for Attiny controllers */
     typedef int8_t lcdint_t;
+    /** This is for Attiny controllers */
     typedef uint8_t lcduint_t;
     /** The macro is defined when micro controller doesn't support multiplication operation */
     #define SSD1306_MULTIPLICATION_NOT_SUPPORTED
@@ -91,27 +88,27 @@
 #elif defined(ESP8266) || defined(ESP32) || defined(ESP31B) || defined(ARDUINO_ARCH_SAMD)
     /* SW implementation of i2c isn't supported on ESP platforms */
     /** The macro is defined when i2c Wire library is available */
-    #define SSD1306_WIRE_SUPPORTED
+    #define CONFIG_ARDUINO_WIRE_LIBRARY_AVAILABLE
     /** The macro is defined when Wire library speed can be configured */
     #define SSD1306_WIRE_CLOCK_CONFIGURABLE
     /** The macro is defined when SPI library is available */
-    #define SSD1306_SPI_SUPPORTED
+    #define CONFIG_ARDUINO_SPI_LIBRARY_AVAILABLE
 
 #elif defined(__AVR_ATmega328P__)
     /** The macro is defined when i2c Wire library is available */
-    #define SSD1306_I2C_SW_SUPPORTED
+    #define CONFIG_SOFTWARE_I2C_AVAILABLE
     /** The macro is defined when i2c Wire library is available */
-    #define SSD1306_WIRE_SUPPORTED
+    #define CONFIG_ARDUINO_WIRE_LIBRARY_AVAILABLE
     /** The macro is defined when Wire library speed can be configured */
     #define SSD1306_WIRE_CLOCK_CONFIGURABLE
     /** The macro is defined when TWI module is available (ATTINY) */
-    #define SSD1306_TWI_SUPPORTED
+    #define CONFIG_TWI_I2C_AVAILABLE
     /** The macro is defined when SPI library is available */
-    #define SSD1306_SPI_SUPPORTED
+    #define CONFIG_ARDUINO_SPI_LIBRARY_AVAILABLE
     /** The macro is defined when SPI module is available (ATMEGA) */
-    #define SSD1306_AVR_SPI_SUPPORTED
+    #define CONFIG_AVR_SPI_AVAILABLE
     /** The macro is defined when UART module is available */
-    #define SSD1306_UART_SUPPORTED
+    #define CONFIG_AVR_UART_AVAILABLE
     /** The macro is defined when VGA monitor control is available directly from controller */
     #define SSD1306_VGA_AVAILABLE
     /** The macro is defined when builtin UART implementation is supported */
@@ -119,29 +116,20 @@
 
 #else
     /** The macro is defined when i2c Wire library is available */
-    #define SSD1306_I2C_SW_SUPPORTED
+    #define CONFIG_SOFTWARE_I2C_AVAILABLE
     /** The macro is defined when i2c Wire library is available */
-    #define SSD1306_WIRE_SUPPORTED
+    #define CONFIG_ARDUINO_WIRE_LIBRARY_AVAILABLE
     /** The macro is defined when Wire library speed can be configured */
     #define SSD1306_WIRE_CLOCK_CONFIGURABLE
     /** The macro is defined when TWI module is available (ATTINY) */
-    #define SSD1306_TWI_SUPPORTED
+    #define CONFIG_TWI_I2C_AVAILABLE
     /** The macro is defined when SPI library is available */
-    #define SSD1306_SPI_SUPPORTED
+    #define CONFIG_ARDUINO_SPI_LIBRARY_AVAILABLE
     /** The macro is defined when SPI module is available (ATMEGA) */
-    #define SSD1306_AVR_SPI_SUPPORTED
+    #define CONFIG_AVR_SPI_AVAILABLE
 #endif
 
-#ifdef SSD1306_DISABLE_WIRE_SUPPORT
-#undef SSD1306_WIRE_SUPPORTED
-#undef SSD1306_WIRE_CLOCK_CONFIGURABLE
-#endif
-
-/**
- * @}
- */
-
-#ifdef SSD1306_WIRE_SUPPORTED
+#ifdef CONFIG_ARDUINO_WIRE_LIBRARY_AVAILABLE
 #ifdef __cplusplus
 #include <Wire.h>
 #endif

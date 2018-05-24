@@ -32,7 +32,7 @@
 #include "ssd1306_hal/io.h"
 #include "ssd1306_i2c_conf.h"
 
-#if defined(SSD1306_WIRE_SUPPORTED) && defined(CONFIG_ARDUINO_WIRE_LIBRARY_ENABLE)
+#if defined(CONFIG_ARDUINO_WIRE_LIBRARY_AVAILABLE) && defined(CONFIG_ARDUINO_WIRE_LIBRARY_ENABLE)
 
 #ifdef __cplusplus
 extern "C" {

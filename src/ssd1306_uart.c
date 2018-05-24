@@ -27,7 +27,7 @@
 
 #include "ssd1306_uart.h"
 
-#if defined(SSD1306_UART_SUPPORTED) && defined(CONFIG_AVR_UART_ENABLE)
+#if defined(CONFIG_AVR_UART_AVAILABLE) && defined(CONFIG_AVR_UART_ENABLE)
 
 volatile uint8_t g_uart_put_ptr = 0;
 volatile uint8_t g_uart_buf[UART_BUFFER_RX];

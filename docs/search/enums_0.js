@@ -7,5 +7,6 @@ var searchData=
   ['essd1306commands',['ESsd1306Commands',['../pcd8544__commands_8h.html#a17072415863307f9ad2ccfc1970dcde9',1,'ESsd1306Commands():&#160;pcd8544_commands.h'],['../ssd1306__commands_8h.html#a17072415863307f9ad2ccfc1970dcde9',1,'ESsd1306Commands():&#160;ssd1306_commands.h']]],
   ['essd1306memorymode',['ESsd1306MemoryMode',['../ssd1306__commands_8h.html#a337d19ca9c99ea935db8c7b6117b7b38',1,'ssd1306_commands.h']]],
   ['essd1331commands',['ESsd1331Commands',['../ssd1331__commands_8h.html#a8370f4d426c46475fa72d703e1920853',1,'ssd1331_commands.h']]],
-  ['essd1351commands',['ESsd1351Commands',['../ssd1351__commands_8h.html#ab85f57d1e36f8ed6a1c0fe53d0ec4232',1,'ssd1351_commands.h']]]
+  ['essd1351commands',['ESsd1351Commands',['../ssd1351__commands_8h.html#ab85f57d1e36f8ed6a1c0fe53d0ec4232',1,'ssd1351_commands.h']]],
+  ['evgacommands',['EVgaCommands',['../vga__commands_8h.html#a6a3ce562f42b87c3763dd0cdd3f1dee2',1,'vga_commands.h']]]
 ];

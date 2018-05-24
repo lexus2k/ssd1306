@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.6.3</span>
+   &#160;<span id="projectnumber">1.6.99</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -78,8 +78,6 @@ $(function() {
 <div class="textblock"><code>#include &quot;<a class="el" href="ssd1331__api_8h_source.html">ssd1331_api.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="ssd1306__fonts_8h_source.html">ssd1306_fonts.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="ssd1306__i2c__conf_8h_source.html">intf/i2c/ssd1306_i2c_conf.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="ssd1306__spi__conf_8h_source.html">intf/spi/ssd1306_spi_conf.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="lcd__common_8h_source.html">lcd/lcd_common.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="oled__ssd1306_8h_source.html">lcd/oled_ssd1306.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="oled__ssd1331_8h_source.html">lcd/oled_ssd1331.h</a>&quot;</code><br />
@@ -142,6 +140,9 @@ Functions</h2></td></tr>
 <tr class="separator:gaf8feb46eefebc30d9a3e4e94a92eec75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga30a785aa6d528a3fddbe2de853211fb9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___d_i_r_e_c_t___d_r_a_w___s_s_d1306___c_o_m_p_a_t.html#ga30a785aa6d528a3fddbe2de853211fb9">ssd1306_printFixedN</a> (uint8_t xpos, uint8_t y, const char ch[], <a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style, uint8_t factor)</td></tr>
 <tr class="separator:ga30a785aa6d528a3fddbe2de853211fb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5e1a5970d84bed47e0e7d8db33a51b09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___d_i_r_e_c_t___d_r_a_w___s_s_d1306___c_o_m_p_a_t.html#ga5e1a5970d84bed47e0e7d8db33a51b09">ssd1306_setCursor</a> (<a class="el" href="io_8h.html#a609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> x, <a class="el" href="io_8h.html#a609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> y)</td></tr>
+<tr class="memdesc:ga5e1a5970d84bed47e0e7d8db33a51b09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets cursor position for text mode print functions.  <a href="group___l_c_d___d_i_r_e_c_t___d_r_a_w___s_s_d1306___c_o_m_p_a_t.html#ga5e1a5970d84bed47e0e7d8db33a51b09">More...</a><br /></td></tr>
+<tr class="separator:ga5e1a5970d84bed47e0e7d8db33a51b09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7932beed124b237611ae85478c9453b7"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___d_i_r_e_c_t___d_r_a_w___s_s_d1306___c_o_m_p_a_t.html#ga7932beed124b237611ae85478c9453b7">ssd1306_write</a> (uint8_t ch)</td></tr>
 <tr class="memdesc:ga7932beed124b237611ae85478c9453b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints single character to display at current cursor position.  <a href="group___l_c_d___d_i_r_e_c_t___d_r_a_w___s_s_d1306___c_o_m_p_a_t.html#ga7932beed124b237611ae85478c9453b7">More...</a><br /></td></tr>
 <tr class="separator:ga7932beed124b237611ae85478c9453b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -247,7 +248,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p class="">Macro to generate 16-bit color for SSD1351 OLED display </p>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306_8h_source.html#l00053">53</a> of file <a class="el" href="ssd1306_8h_source.html">ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306_8h_source.html#l00051">51</a> of file <a class="el" href="ssd1306_8h_source.html">ssd1306.h</a>.</p>
 
 </div>
 </div>
@@ -284,7 +285,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p class="">Macro to generate 8-bit color for SSD1331 OLED display </p>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306_8h_source.html#l00050">50</a> of file <a class="el" href="ssd1306_8h_source.html">ssd1306.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306_8h_source.html#l00048">48</a> of file <a class="el" href="ssd1306_8h_source.html">ssd1306.h</a>.</p>
 
 </div>
 </div>

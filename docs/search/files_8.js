@@ -18,6 +18,8 @@ var searchData=
   ['ssd1306_5fspi_5fhw_2eh',['ssd1306_spi_hw.h',['../ssd1306__spi__hw_8h.html',1,'']]],
   ['ssd1306_5fspi_5flinux_2eh',['ssd1306_spi_linux.h',['../ssd1306__spi__linux_8h.html',1,'']]],
   ['ssd1306_5fspi_5fusi_2eh',['ssd1306_spi_usi.h',['../ssd1306__spi__usi_8h.html',1,'']]],
+  ['ssd1306_5fuart_2eh',['ssd1306_uart.h',['../ssd1306__uart_8h.html',1,'']]],
+  ['ssd1306_5fuart_5fbuiltin_2eh',['ssd1306_uart_builtin.h',['../ssd1306__uart__builtin_8h.html',1,'']]],
   ['ssd1331_5fapi_2eh',['ssd1331_api.h',['../ssd1331__api_8h.html',1,'']]],
   ['ssd1331_5fcommands_2eh',['ssd1331_commands.h',['../ssd1331__commands_8h.html',1,'']]],
   ['ssd1351_5fcommands_2eh',['ssd1351_commands.h',['../ssd1351__commands_8h.html',1,'']]]

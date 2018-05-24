@@ -22,7 +22,7 @@
     SOFTWARE.
 */
 
-/**
+/*
  * @file ssd1306_hal/template/io.h This is template file for new platform with detailed instructions
  */
 
@@ -47,12 +47,12 @@
  *    Remember that you will need to implement low level intf/i2c or *
  *    intf/spi layers for your platform                              */
 
-//#define SSD1306_I2C_SW_SUPPORTED
-//#define SSD1306_TWI_SUPPORTED
-//#define SSD1306_WIRE_SUPPORTED
-//#define SSD1306_AVR_SPI_SUPPORTED
-//#define SSD1306_SPI_SUPPORTED
-//#define SSD1306_UART_SUPPORTED
+//#define CONFIG_SOFTWARE_I2C_AVAILABLE
+//#define CONFIG_TWI_I2C_AVAILABLE
+//#define CONFIG_ARDUINO_WIRE_LIBRARY_AVAILABLE
+//#define CONFIG_AVR_SPI_AVAILABLE
+//#define CONFIG_ARDUINO_SPI_LIBRARY_AVAILABLE
+//#define CONFIG_AVR_UART_AVAILABLE
 //#define SSD1306_VGA_AVAILABLE
 //#define SSD1306_UART_BUILTIN_SUPPORTED
 

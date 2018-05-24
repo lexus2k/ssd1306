@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.6.3</span>
+   &#160;<span id="projectnumber">1.6.99</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -213,8 +213,23 @@ $(function() {
 <li>ssd1306_flipVertical()
 : <a class="el" href="group___l_c_d___s_s_d1306___a_p_i.html#ga238cd7dab0ae562b70e1a19ad3032caa">ssd1306.h</a>
 </li>
+<li>ssd1306_i2cConfigure_Twi()
+: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa741bfcb2dac09d4d0e7d2a0ed14372c">ssd1306_i2c_twi.h</a>
+</li>
+<li>ssd1306_i2cConfigure_Wire()
+: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga93cba4fd5da49fa7eb1451294cba9b66">ssd1306_i2c_wire.h</a>
+</li>
 <li>ssd1306_i2cInit()
 : <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa13b9975cc9b1d9a802db4edf22baa7b">ssd1306_i2c.h</a>
+</li>
+<li>ssd1306_i2cInit_Embedded()
+: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa20f0b4b8d87d4663fae2246b47ec699">ssd1306_i2c_embedded.h</a>
+</li>
+<li>ssd1306_i2cInit_Twi()
+: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga14a55fcba9938619dae1628494ac4497">ssd1306_i2c_twi.h</a>
+</li>
+<li>ssd1306_i2cInit_Wire()
+: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga5bdb592a9f02287a8743b922d51e957b">ssd1306_i2c_wire.h</a>
 </li>
 <li>ssd1306_i2cInitEx()
 : <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gadad8452b053aef2c84c6a14c7f4f247d">ssd1306_i2c.h</a>
@@ -273,6 +288,9 @@ $(function() {
 <li>ssd1306_setContrast()
 : <a class="el" href="group___l_c_d___s_s_d1306___a_p_i.html#ga27852f112ebe53726badd8f4998fceab">ssd1306.h</a>
 </li>
+<li>ssd1306_setCursor()
+: <a class="el" href="group___l_c_d___d_i_r_e_c_t___d_r_a_w___s_s_d1306___c_o_m_p_a_t.html#ga5e1a5970d84bed47e0e7d8db33a51b09">ssd1306.h</a>
+</li>
 <li>ssd1306_setFixedFont()
 : <a class="el" href="group___l_c_d___d_i_r_e_c_t___d_r_a_w___s_s_d1306___c_o_m_p_a_t.html#gac38e07839ff23bd17a6f0c79f5f92d2d">ssd1306.h</a>
 </li>
@@ -293,6 +311,12 @@ $(function() {
 </li>
 <li>ssd1306_spiInit()
 : <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga0e21371367897c0f86480cfccc100b5c">ssd1306_spi.h</a>
+</li>
+<li>ssd1306_spiInit_avr()
+: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gacddab5cfa0ccfd82ac37bb897a26953d">ssd1306_spi_avr.h</a>
+</li>
+<li>ssd1306_spiInit_Usi()
+: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gafca371e5a797bd7a1639ed0b06846a8d">ssd1306_spi_usi.h</a>
 </li>
 <li>ssd1306_updateMenu()
 : <a class="el" href="group___l_c_d___d_i_r_e_c_t___d_r_a_w___s_s_d1306___c_o_m_p_a_t.html#ga26b4b11e4bc8b566855b2dbb3979210a">ssd1306.h</a>
@@ -395,6 +419,32 @@ $(function() {
 </li>
 <li>st7735_128x160_spi_init()
 : <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga31c3f5b0024bd41ead0c4f318b474c05">lcd_il9163.h</a>
+</li>
+</ul>
+
+
+<h3><a id="index_u"></a>- u -</h3><ul>
+<li>uart_byte_available()
+: <a class="el" href="ssd1306__uart_8h.html#a9303a912df9a76702c17750f3f0a5bf0">ssd1306_uart.h</a>
+</li>
+<li>uart_init()
+: <a class="el" href="ssd1306__uart_8h.html#aea3c2acc281315ff5dc9f400845bf406">ssd1306_uart.h</a>
+</li>
+<li>uart_read_byte()
+: <a class="el" href="ssd1306__uart_8h.html#a8cd92b6cf3b75bf832242080a7dbe6c2">ssd1306_uart.h</a>
+</li>
+<li>uart_send_byte()
+: <a class="el" href="ssd1306__uart_8h.html#a0a6add2293e47c6adb4070dcafb77991">ssd1306_uart.h</a>
+</li>
+</ul>
+
+
+<h3><a id="index_v"></a>- v -</h3><ul>
+<li>vga_128x64_mono_init()
+: <a class="el" href="vga__monitor_8h.html#a0c5a94022f25032231a7ba4abb7e20a4">vga_monitor.h</a>
+</li>
+<li>vga_96x40_8colors_init()
+: <a class="el" href="vga__monitor_8h.html#a67d1256f7c32955b61b10c9413675612">vga_monitor.h</a>
 </li>
 </ul>
 </div><!-- contents -->

@@ -22,7 +22,7 @@
     SOFTWARE.
 */
 
-/**
+/*
  * @file ssd1306_hal/linux/io.h SSD1306 LINUX IO communication functions
  */
 

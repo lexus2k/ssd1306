@@ -26,7 +26,7 @@
 #include "intf/ssd1306_interface.h"
 #include "ssd1306_i2c.h"
 
-#if defined(SSD1306_TWI_SUPPORTED) && defined(CONFIG_TWI_I2C_ENABLE)
+#if defined(CONFIG_TWI_I2C_AVAILABLE) && defined(CONFIG_TWI_I2C_ENABLE)
 
 #include <avr/io.h>
 #include <util/twi.h>

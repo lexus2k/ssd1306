@@ -34,8 +34,28 @@
 extern "C" {
 #endif
 
+/**
+ * @brief Inits 96x40 color VGA display.
+ *
+ * Inits 96x40 color VGA display. This mode supports 8 colors: 3 bits per pixel.
+ * User must init communication interface (uart) for vga client mode or init vga
+ * interface for host mode prior to calling this function.
+ *
+ * @see ssd1306_uartInit_Builtin()
+ * @see ssd1306_vga_controller_init()
+ */
 void vga_96x40_8colors_init(void);
 
+/**
+ * @brief Inits 128x64 monochrome VGA display.
+ *
+ * Inits 128x64 monochrome VGA display. This mode supports 2 colors: black and white.
+ * User must init communication interface (uart) for vga client mode or init vga
+ * interface for host mode prior to calling this function.
+ *
+ * @see ssd1306_uartInit_Builtin()
+ * @see ssd1306_vga_controller_init()
+ */
 void vga_128x64_mono_init(void);
 
 #ifdef __cplusplus
