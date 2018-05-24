@@ -128,6 +128,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga6496dfa0de1c422f00889c1341c522a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3df07368356ac5f5af1acc77055a4aa2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga3df07368356ac5f5af1acc77055a4aa2">ssd1306_dataStart</a> (void)</td></tr>
 <tr class="separator:ga3df07368356ac5f5af1acc77055a4aa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab8f6528f3aa977d02549bfd7c4009282"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gab8f6528f3aa977d02549bfd7c4009282">ssd1306_uartInit_Builtin</a> (uint32_t baud)</td></tr>
+<tr class="separator:gab8f6528f3aa977d02549bfd7c4009282"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -711,6 +713,33 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
 <dl class="section note"><dt>Note</dt><dd>: after call to this function you need to initialize lcd display. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="ssd1306__spi__usi_8c_source.html#l00111">111</a> of file <a class="el" href="ssd1306__spi__usi_8c_source.html">ssd1306_spi_usi.c</a>.</p>
+
+</div>
+</div>
+<a id="gab8f6528f3aa977d02549bfd7c4009282"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab8f6528f3aa977d02549bfd7c4009282">&#9670;&nbsp;</a></span>ssd1306_uartInit_Builtin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1306_uartInit_Builtin </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>baud</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Initializes built-in implementation of uart functions, based on USART hw module. If you do not know uart parameters, try ssd1306_uartInit_Builtin(0). </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">baud</td><td>uart baud rate</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>: after call to this function you need to initialize lcd display. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="ssd1306__uart__builtin_8c_source.html#l00063">63</a> of file <a class="el" href="ssd1306__uart__builtin_8c_source.html">ssd1306_uart_builtin.c</a>.</p>
 
 </div>
 </div>

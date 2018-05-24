@@ -34,7 +34,9 @@ extern "C" {
 
 #include "ssd1306_hal/io.h"
 
-#if defined(SSD1306_VGA_AVAILABLE) && defined(CONFIG_VGA_ENABLE)
+#if defined(CONFIG_VGA_AVAILABLE) && defined(CONFIG_VGA_ENABLE)
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 #if defined(__AVR_ATmega328P__)
 /* TODO: Move defines out of this file */
@@ -43,9 +45,29 @@ static const uint8_t V_SYNC_PIN = 10;
 #endif
 
 extern volatile uint8_t __vga_buffer[];
+#endif // DOXYGEN_SHOULD_SKIP_THIS
+
+/**
+ * Make ms milliseconds delay. This function has very low precision: 16ms.
+ *
+ * @param ms time in milliseconds
+ */
 void ssd1306_vga_delay(uint32_t ms);
+
+/**
+ * Prints vga buffer in text form using passed callback
+ *
+ * @param func callback to use for printing single character
+ */
 void ssd1306_debug_print_vga_buffer(void (*func)(uint8_t));
+
+/**
+ * Initializes hardware VGA controller
+ * Be careful, this function reinitialized Atmega328p timers.
+ * delay() function will not work after call.
+ */
 void ssd1306_vga_controller_init(void);
+
 #endif
 
 #ifdef __cplusplus

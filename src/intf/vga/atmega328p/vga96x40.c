@@ -28,7 +28,7 @@
 #include "lcd/lcd_common.h"
 #include "lcd/vga_commands.h"
 
-#if defined(SSD1306_VGA_AVAILABLE) && defined(CONFIG_VGA_ENABLE) && defined(__AVR_ATmega328P__)
+#if defined(CONFIG_VGA_AVAILABLE) && defined(CONFIG_VGA_ENABLE) && defined(__AVR_ATmega328P__)
 
 extern uint16_t ssd1306_color;
 

@@ -83,7 +83,7 @@
     /** This is for Attiny controllers */
     typedef uint8_t lcduint_t;
     /** The macro is defined when micro controller doesn't support multiplication operation */
-    #define SSD1306_MULTIPLICATION_NOT_SUPPORTED
+    #define CONFIG_MULTIPLICATION_NOT_SUPPORTED
 
 #elif defined(ESP8266) || defined(ESP32) || defined(ESP31B) || defined(ARDUINO_ARCH_SAMD)
     /* SW implementation of i2c isn't supported on ESP platforms */
@@ -110,9 +110,7 @@
     /** The macro is defined when UART module is available */
     #define CONFIG_AVR_UART_AVAILABLE
     /** The macro is defined when VGA monitor control is available directly from controller */
-    #define SSD1306_VGA_AVAILABLE
-    /** The macro is defined when builtin UART implementation is supported */
-    #define SSD1306_UART_BUILTIN_SUPPORTED
+    #define CONFIG_VGA_AVAILABLE
 
 #else
     /** The macro is defined when i2c Wire library is available */

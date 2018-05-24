@@ -56,7 +56,7 @@
     typedef int8_t lcdint_t;
     typedef uint8_t lcduint_t;
     /** The macro is defined when micro controller doesn't support multiplication operation */
-    #define SSD1306_MULTIPLICATION_NOT_SUPPORTED
+    #define CONFIG_MULTIPLICATION_NOT_SUPPORTED
 #elif defined(__AVR_ATmega328P__)
     /** The macro is defined when software i2c implementation is available */
     #define CONFIG_SOFTWARE_I2C_AVAILABLE
@@ -67,9 +67,7 @@
     /** The macro is defined when UART module is available */
     #define CONFIG_AVR_UART_AVAILABLE
     /** The macro is defined when VGA monitor control is available directly from controller */
-    #define SSD1306_VGA_AVAILABLE
-    /** The macro is defined when builtin UART implementation is supported */
-    #define SSD1306_UART_BUILTIN_SUPPORTED
+    #define CONFIG_VGA_AVAILABLE
 
 #else
     /** The macro is defined when software i2c implementation is available */
