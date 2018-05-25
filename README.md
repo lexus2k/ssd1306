@@ -23,14 +23,14 @@ few resources as possible, but still has powerful capabilities (NanoEngine), all
 
 ## Key Features
 
- * Supports color and monochrome OLED displays
- * The library uses as little Flash memory as possible
+ * Supports color, monochrome OLED displays, and VGA monitor
+ * The library has modular structure, and some modules can be excluded from compilation at all to reduce flash usage.
  * Needs very little RAM (Attiny85 with Damellis package needs minimum 25 bytes of RAM to communicate with OLED)
  * Fast implementation to provide reasonable speed on slow microcontrollers
  * Supports i2c and spi interfaces:
    * i2c (software implementation, Wire library, AVR Twi, Linux i2c-dev)
    * spi (4-wire spi via Arduino SPI library, AVR Spi, AVR USI module)
- * Primitive graphics functions (line,rectangle,pixels, bitmaps)
+ * Primitive graphics functions (lines, rectangles, pixels, bitmaps)
  * Printing text to display (using fonts of different size, you can use GLCD Font Creator to create new fonts)
  * Includes [graphics engine](https://github.com/lexus2k/ssd1306/wiki/Using-NanoEngine-for-systems-with-low-resources) to support
    double buffering on tiny microcontrollers.
@@ -39,11 +39,11 @@ few resources as possible, but still has powerful capabilities (NanoEngine), all
    * Simple [Lode runner](examples/lode_runner) game in old style API, [Lode runner8](examples/lode_runner8) in new style API
    * [Snowflakes](examples/snowflakes)
 
-![Image of arkanoid intro](examples/games/arkanoid/screenshots/introscreen.png)
-![Image of lode runner](examples/games/lode_runner/screenshots/main_screen.png)
+![Image of arkanoid intro](imgs/arkanoid.png)
+![Image of lode runner](imgs/lode_runner.png)
 
-![Image of menu example](examples/demos/ssd1306_demo/screenshots/mainmenu_top.png)
-![Image of color oled](examples/demos/ssd1331_demo_compat/screenshots/fonts.png)
+![Image of menu example](imgs/mainmenu_top.png)
+![Image of color oled](imgs/fonts.png)
 
 The default i2c pins for embedded implementation can be modified in ssd1306_i2c_conf.h file.
 For other controllers pins are defined by standard Wire library.
