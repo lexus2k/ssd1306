@@ -48,28 +48,28 @@
 /* Comment out options below if you don't need support in the library,  *
  * and want to reduce memory consumption.                               */
 
-/** The macro is defined when i2c software module is enabled for compilation */
+/** Define this macro if you need to enable software I2C module for compilation */
 #define CONFIG_SOFTWARE_I2C_ENABLE
 
-/** The macro is defined when i2c Wire library is enabled for compilation */
+/** Define this macro if you need to enable Arduino Wire library module for compilation */
 #define CONFIG_ARDUINO_WIRE_LIBRARY_ENABLE
 
-/** The macro is defined when TWI module is enabled for compilation */
+/** Define this macro if you need to enable TWI I2C module for compilation */
 #define CONFIG_TWI_I2C_ENABLE
 
-/** The macro is defined when SPI library is enabled for compilation */
+/** Define this macro if you need to enable Arduino SPI library module for compilation */
 #define CONFIG_ARUDINO_SPI_LIBRARY_ENABLE
 
-/** The macro is defined when SPI module is enabled for compilation */
+/** Define this macro if you need to enable AVR SPI module for compilation */
 #define CONFIG_AVR_SPI_ENABLE
 
-/** The macro is defined when USI module is enabled for compilation */
+/** Define this macro if you need to enable USI SPI module for compilation */
 #define CONFIG_USI_SPI_ENABLE
 
-/** The macro is defined when internal AVR USART implementation is enabled */
+/** Define this macro if you need to enable AVR UART module for compilation */
 #define CONFIG_AVR_UART_ENABLE
 
-/** The macro is defined when VGA module is enabled for compilation */
+/** Define this macro if you need to enable VGA module for compilation */
 #define CONFIG_VGA_ENABLE
 
 /**
