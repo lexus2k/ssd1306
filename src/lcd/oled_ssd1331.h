@@ -52,6 +52,15 @@ extern "C" {
 void        ssd1331_setMode(lcd_mode_t mode);
 
 /**
+ * @brief Sets screen orientation (rotation)
+ *
+ * Sets screen orientation (rotation): 0 - normal, 1 - 90 CW, 2 - 180 CW, 3 - 270 CW
+ * @param rotation - screen rotation 0 - normal, 1 - 90 CW, 2 - 180 CW, 3 - 270 CW
+ * @note works only with ssd1331 display
+ */
+void ssd1331_setRotation(uint8_t rotation);
+
+/**
  * @ingroup LCD_INTERFACE_API
  * @{
  */

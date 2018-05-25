@@ -57,8 +57,8 @@ configurable through API.
 | sh1106 128x64 | X |   |   |   |
 | ssd1306 128x64 | X | X |   |   |
 | ssd1306 128x32 | X | X |   |   |
-| ssd1331 96x64 |   | X |   |   |
-| ssd1331 128x128 |   | X |   |   |
+| ssd1331 96x64 |   | X | X |   |
+| ssd1351 128x128 |   | X |   |   |
 | il9163 128x128 |   | X | X |   |
 | st7735 128x160 |   | X | X |   |
 | pcd8544 84x48 |   | X  |   | Nokia 5110 |

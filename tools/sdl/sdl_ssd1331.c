@@ -39,6 +39,8 @@ static int sdl_ssd1331_detect(uint8_t data)
 }
 
 static uint8_t s_verticalMode = 1;
+static uint8_t s_leftToRight = 0;
+static uint8_t s_topToBottom = 0;
 
 static void sdl_ssd1331_commands(uint8_t data)
 {
@@ -48,6 +50,8 @@ static void sdl_ssd1331_commands(uint8_t data)
             if (s_cmdArgIndex == 0)
             {
                 s_verticalMode = data & 0x01;
+                s_leftToRight = data & 0x02;
+                s_topToBottom = data & 0x10;
                 s_commandId = SSD_COMMAND_NONE;
             }
             break;
@@ -88,8 +92,8 @@ static void sdl_ssd1331_commands(uint8_t data)
 
 void sdl_ssd1331_data(uint8_t data)
 {
-    int y = s_activePage;
-    int x = s_activeColumn;
+    int y = s_topToBottom ? s_activePage : (sdl_ssd1331.height - s_activePage - 1);
+    int x = s_leftToRight ? s_activeColumn: (sdl_ssd1331.width - s_activeColumn - 1);
     sdl_put_pixel(x, y, data);
 
     if (s_verticalMode)

@@ -81,10 +81,15 @@ const char *menuItems[] =
     "draw lines",
 };
 
+uint8_t rotation = 0;
+
 static void bitmapDemo()
 {
     ssd1331_setColor(RGB_COLOR8(64,64,255));
-    ssd1331_drawMonoBitmap8(0, 0, 96, 64, Sova);
+    if ( rotation & 1 )
+        ssd1331_drawMonoBitmap8(0, 0, 64, 64, Owl_64x64);
+    else
+        ssd1331_drawMonoBitmap8(0, 0, 96, 64, Owl);
     ssd1331_drawBitmap8(0, 0, 8, 8, heartImage8);
     ssd1331_setColor(RGB_COLOR8(255,64,64));
     ssd1331_drawMonoBitmap8(0, 16, 8, 8, heartImage);
@@ -229,6 +234,10 @@ void loop()
 
         default:
             break;
+    }
+    if ((menu.count - 1) == ssd1306_menuSelection(&menu))
+    {
+         ssd1331_setRotation((++rotation) & 0x03);
     }
     ssd1331_fillScreen8( 0x00 );
     ssd1331_setColor(RGB_COLOR8(255,255,255));

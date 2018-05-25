@@ -7,6 +7,6 @@ var searchData=
   ['initfunction',['InitFunction',['../nano__gfx__types_8h.html#aeb51e8c3a40de7886cdc7d9c74175f05',1,'nano_gfx_types.h']]],
   ['invert',['invert',['../class_nano_canvas.html#ae25cac1c7da55ee6df1e75275b92e626',1,'NanoCanvas']]],
   ['io_2eh',['io.h',['../io_8h.html',1,'']]],
-  ['isnearmove',['isNearMove',['../struct_s_p_r_i_t_e.html#a20017763966ef3adcf3bb7015e39eb14',1,'SPRITE']]],
+  ['isnearmove',['isNearMove',['../struct_s_p_r_i_t_e.html#a4fb56c0ed9faa7260460c19955e4f523',1,'SPRITE']]],
   ['items',['items',['../struct_s_app_menu.html#a9112659b47fa205336626f5ee0caa870',1,'SAppMenu']]]
 ];
