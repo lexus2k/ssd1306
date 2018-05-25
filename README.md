@@ -14,13 +14,12 @@
 
 ## Introduction
 
-SSD1306 driver is Arduino style C/C++ library. it can be compiled with plain avr-gcc compiler
-without Arduino libraries and supports monochrome and RGB oleds. It is intended for use with
-very small microcontrollers (with a little of RAM). It was developed to use as
-few resources as possible. Since ATTiny controllers have no division and multiply
-operations, the library uses shift operation to speed up calculations.
-
-Do not forget pull-up resistors for i2c lines.
+SSD1306 driver is Arduino style C/C++ library. The library can be compiled for plain Linux
+(for example, raspberry spi), or you can use it with plain avr-gcc compiler without Arduino
+IDE. It supports monochrome and RGB oleds and has debug mode, allowing to execute code on PC,
+using SDL2.0.
+The library is intended for very small microcontrollers (with a little of RAM). It was developed to use as
+few resources as possible, but still has powerful capabilities (NanoEngine), allowing to develop nice animation.
 
 ## Key Features
 
