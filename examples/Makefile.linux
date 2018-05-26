@@ -37,6 +37,10 @@ platform?=linux
 
 CCFLAGS += -g -Os -w -ffreestanding
 
+ifeq ($(ADAFRUIT),y)
+INCLUDES += -I../src/ssd1306_hal/linux/arduino
+endif
+
 include Makefile.common
 
 ifeq ($(SDL_EMULATION),y)

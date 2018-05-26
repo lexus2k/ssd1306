@@ -35,4 +35,8 @@ CC=gcc
 MKDIR=mkdir
 BACKSLASH=\\
 
+ifeq ($(ADAFRUIT),y)
+INCLUDES += -I./ssd1306_hal/mingw/arduino
+endif
+
 include Makefile.common

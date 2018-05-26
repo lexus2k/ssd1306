@@ -40,4 +40,8 @@ FREQUENCY ?= 16000000
 
 CCFLAGS += -mmcu=$(MCU) -DF_CPU=$(FREQUENCY)
 
+ifeq ($(ADAFRUIT),y)
+INCLUDES += -I./ssd1306_hal/avr/arduino
+endif
+
 include Makefile.common

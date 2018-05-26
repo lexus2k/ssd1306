@@ -31,4 +31,8 @@
 # MCU
 # FREQUENCY
 
+ifeq ($(ADAFRUIT),y)
+INCLUDES += -I./ssd1306_hal/linux/arduino
+endif
+
 include Makefile.common

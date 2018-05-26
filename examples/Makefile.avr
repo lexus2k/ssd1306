@@ -43,6 +43,10 @@ platform=avr
 
 CCFLAGS += -g -Os -w -ffreestanding -mmcu=$(MCU) -DF_CPU=$(FREQUENCY)
 
+ifeq ($(ADAFRUIT),y)
+INCLUDES += -I../src/ssd1306_hal/avr/arduino
+endif
+
 include Makefile.common
 
 all: $(BLD)/$(PROJECT).bin $(BLD)/$(PROJECT).hex

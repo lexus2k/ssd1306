@@ -21,7 +21,7 @@
 #    SOFTWARE.
 #
 #################################################################
-# Makefile to build ssd1306 examples for AVR controllers
+# Makefile to build ssd1306 examples for different platforms
 #
 # Accept the following parameters:
 # CC
@@ -30,6 +30,9 @@
 # AR
 # MCU
 # FREQUENCY
+#
+# ADAFRUIT=y                                  - compile Adafruit GFX module
+# ADAFRUIT_DIR=path_to_adafruit_gfx_library
 
 default: all
 
@@ -46,7 +49,7 @@ convert=$(subst /,$(BACKSLASH),$1)
 
 $(BLD)/%.o: %.c
 	-$(MKDIR) $(call convert,$(dir $@))
-	$(CC) -std=gnu11 $(CCFLAGS) -c $< -o $@
+	$(CC) -std=gnu11 $(CCFLAGS) $(CCFLAGS-$@) $(CCFLAGS-$(basename $(notdir $@))) -c $< -o $@
 
 $(BLD)/%.o: %.ino
 	-$(MKDIR) $(call convert,$(dir $@))
@@ -54,7 +57,23 @@ $(BLD)/%.o: %.ino
 
 $(BLD)/%.o: %.cpp
 	-$(MKDIR) $(call convert,$(dir $@))
-	$(CXX) -std=c++11 $(CCFLAGS) $(CXXFLAGS) -c $< -o $@
+	$(CXX) -std=c++11 $(CCFLAGS) $(CXXFLAGS) $(CCFLAGS-$(basename $(notdir $@))) -c $< -o $@
+
+############### OPTIONS #######################
+
+ifeq ($(ADAFRUIT),y)
+ADAFRUIT_DIR ?= $(shell readlink -f ~)/Arduino/libraries/Adafruit_GFX_Library
+
+INCLUDES += -I$(ADAFRUIT_DIR)
+
+#	-I$(shell readlink -f ../src)/ssd1306_hal/linux/arduino
+
+CCFLAGS-Adafruit_GFX= -DARDUINO=100
+
+SRCS += \
+       $(ADAFRUIT_DIR)/Adafruit_GFX.cpp
+endif
+
 
 # ************* Common defines ********************
 
@@ -68,9 +87,9 @@ CCFLAGS += -MD -g -Os -w -ffreestanding $(INCLUDES) -Wall -Werror \
 	-Wl,--gc-sections -ffunction-sections -fdata-sections \
 	$(EXTRA_CCFLAGS)
 
-.PHONY: clean ssd1306 all
+.PHONY: clean ssd1306 all help
 
-SRCS = main.cpp \
+SRCS += main.cpp \
        $(wildcard $(PROJECT)/*.cpp) \
        $(wildcard $(PROJECT)/*.ino)
 
@@ -81,7 +100,8 @@ LDFLAGS += -L$(BLD) -lssd1306
 ####################### Compiling library #########################
 
 ssd1306:
-	$(MAKE) -C ../src -f Makefile.$(platform) MCU=$(MCU) SDL_EMULATION=$(SDL_EMULATION)
+	$(MAKE) -C ../src -f Makefile.$(platform) MCU=$(MCU) SDL_EMULATION=$(SDL_EMULATION) \
+	                     ADAFRUIT=$(ADAFRUIT)
 
 all: $(OUTFILE)
 
@@ -92,5 +112,13 @@ $(OUTFILE): $(OBJS) ssd1306
 clean:
 	rm -rf $(BLD)
 	rm -f *~ *.out *.bin *.hex *.srec *.s *.o *.pdf *core
+
+help:
+	@echo "Makefile accepts the following options:"
+	@echo "    ADAFRUIT=y/n       Enables compilation of Adafruit GFX library"
+	@echo "    ADAFRUIT_DIR=path  Path to Adafruit GFX library"
+	@echo "    SDL_EMULATION=y/n  Enables SDL emulator in the library"
+	@echo "    FREQUENCY=N        Frequency in Hz"
+	@echo "    MCU=mcu_code       Specifies MCU to compile for (valid for AVR)"
 
 -include $(OBJS:%.o=%.d)

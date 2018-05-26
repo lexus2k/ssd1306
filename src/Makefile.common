@@ -45,11 +45,26 @@ $(BLD)/%.o: %.c
 
 $(BLD)/%.o: %.ino
 	-$(MKDIR) $(call convert,$(dir $@))
-	$(CXX) -std=c++11 $(CCFLAGS) $(CXXFLAGS) -x c++ -c $< -o $@
+	$(CXX) -std=c++11 $(CCFLAGS) $(CXXFLAGS) $(CCFLAGS-$(basename $(notdir $@))) -x c++ -c $< -o $@
 
 $(BLD)/%.o: %.cpp
 	-$(MKDIR) $(call convert,$(dir $@))
-	$(CXX) -std=c++11 $(CCFLAGS) $(CXXFLAGS) -c $< -o $@
+	$(CXX) -std=c++11 $(CCFLAGS) $(CXXFLAGS) $(CCFLAGS-$(basename $(notdir $@))) -c $< -o $@
+
+################ OPTIONS ##########################
+
+ifeq ($(ADAFRUIT),y)
+ADAFRUIT_DIR ?= $(shell readlink -f ~)/Arduino/libraries/Adafruit_GFX_Library
+
+INCLUDES += -I$(ADAFRUIT_DIR) \
+
+#	-I$(shell readlink -f ../src)/ssd1306_hal/linux/arduino
+
+CCFLAGS-Adafruit_GFX= -DARDUINO=100
+
+SRCS += \
+	$(ADAFRUIT_DIR)/Adafruit_GFX.cpp
+endif
 
 # ************* Common defines ********************
 
@@ -65,7 +80,7 @@ ifeq ($(SDL_EMULATION),y)
     CCFLAGS += -DSDL_EMULATION -I../tools/sdl
 endif
 
-.PHONY: clean ssd1306 all
+.PHONY: clean ssd1306 all help
 
 include Makefile.src
 
@@ -80,5 +95,13 @@ all: ssd1306
 
 clean:
 	rm -rf $(BLD)
+
+help:
+	@echo "Makefile accepts the following options:"
+	@echo "    ADAFRUIT=y/n       Enables compilation of Adafruit GFX library"
+	@echo "    ADAFRUIT_DIR=path  Path to Adafruit GFX library"
+	@echo "    SDL_EMULATION=y/n  Enables SDL emulator in the library"
+	@echo "    FREQUENCY=N        Frequency in Hz"
+	@echo "    MCU=mcu_code       Specifies MCU to compile for (valid for AVR)"
 
 -include $(OBJS:%.o=%.d)
