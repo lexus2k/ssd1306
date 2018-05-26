@@ -94,7 +94,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">adafruit.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Canvas implementation, based on Adafruit GFX.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="io_8h_source.html">ssd1306_hal/io.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="ssd1306_8h_source.html">ssd1306.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="ssd1331__api_8h_source.html">ssd1331_api.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_print__internal_8h_source.html">ssd1306_hal/Print_internal.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>&quot;</code><br />
 </div>
@@ -104,11 +109,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit_canvas_ops.html">AdafruitCanvasOps&lt; BPP &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit_canvas_base.html">AdafruitCanvasBase&lt; BPP &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit_canvas1.html">AdafruitCanvas1</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit_canvas8.html">AdafruitCanvas8</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit_canvas16.html">AdafruitCanvas16</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Adafruit related canvas implementation </p>
+<div class="textblock"><p>Canvas implementation, based on Adafruit GFX. </p>
+<p>Adafruit related canvas implementation</p>
+<p>If you like canvas implementation by Adafruit, you can easily use it with ssd1306 library, including <a class="el" href="class_nano_engine.html">NanoEngine</a> support. You will be able to use all features of AdafruitGFX, and output result to any OLED display, supported by ssd1306 library. If you want to use this feature, define CONFIG_ADAFRUIT_GFX_ENABLE in the beginning of your sketch, and include "nano_engine.h" header. </p>
 
 <p>Definition in file <a class="el" href="adafruit_8h_source.html">adafruit.h</a>.</p>
 </div></div><!-- contents -->

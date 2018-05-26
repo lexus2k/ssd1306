@@ -516,35 +516,6 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////
 //
-//                             8-BIT GRAPHICS
-//
-/////////////////////////////////////////////////////////////////////////////////
-
-/**
- * NanoCanvas8 represents objects for drawing in memory buffer
- * NanoCanvas8 represents each pixel as single byte with RGB bits: RRRGGGBB
- * For details refer to SSD1331 datasheet
- */
-class NanoCanvas8: public NanoCanvasBase<8>
-{
-public:
-    using NanoCanvasBase::NanoCanvasBase;
-
-    /**
-     * Draws canvas on the LCD display
-     * @param x - horizontal position in pixels
-     * @param y - vertical position in blocks (pixels/8)
-     */
-    void blt(lcdint_t x, lcdint_t y) override;
-
-    /**
-     * Draws canvas on the LCD display using offset values.
-     */
-    void blt() override;
-};
-
-/////////////////////////////////////////////////////////////////////////////////
-//
 //                             1-BIT GRAPHICS
 //
 /////////////////////////////////////////////////////////////////////////////////
@@ -568,7 +539,7 @@ public:
     /**
      * Draws canvas on the LCD display
      * @param x - horizontal position in pixels
-     * @param y - vertical position in blocks (pixels/8)
+     * @param y - vertical position in pixels
      */
     void blt(lcdint_t x, lcdint_t y) override;
 
@@ -584,6 +555,35 @@ public:
  * Unlike NanoCanvas1, it works with RBG color displays in normal mode.
  */
 class NanoCanvas1_8: public NanoCanvasBase<1>
+{
+public:
+    using NanoCanvasBase::NanoCanvasBase;
+
+    /**
+     * Draws canvas on the LCD display
+     * @param x - horizontal position in pixels
+     * @param y - vertical position in pixels
+     */
+    void blt(lcdint_t x, lcdint_t y) override;
+
+    /**
+     * Draws canvas on the LCD display using offset values.
+     */
+    void blt() override;
+};
+
+/////////////////////////////////////////////////////////////////////////////////
+//
+//                             8-BIT GRAPHICS
+//
+/////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * NanoCanvas8 represents objects for drawing in memory buffer
+ * NanoCanvas8 represents each pixel as single byte with RGB bits: RRRGGGBB
+ * For details refer to SSD1331 datasheet
+ */
+class NanoCanvas8: public NanoCanvasBase<8>
 {
 public:
     using NanoCanvasBase::NanoCanvasBase;
@@ -620,7 +620,7 @@ public:
     /**
      * Draws canvas on the LCD display
      * @param x - horizontal position in pixels
-     * @param y - vertical position in blocks (pixels/8)
+     * @param y - vertical position in pixels
      */
     void blt(lcdint_t x, lcdint_t y) override;
 

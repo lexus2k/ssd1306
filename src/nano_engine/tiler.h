@@ -46,6 +46,10 @@ extern "C" SFixedFontInfo s_fixedFont;
 #define TILE_8x8_MONO         NanoCanvas1,  8,      8,      3    ///< Standard 1-bit tile 8x8 for monochrome mode
 #define TILE_8x8_MONO_8       NanoCanvas1_8,8,      8,      3    ///< Standard 1-bit tile 8x8 for RGB mode
 
+#define ADATILE_8x8_MONO      AdafruitCanvas1,  8,  8,      3    ///< Use Adafruit GFX implementation as NanoEngine canvas
+#define ADATILE_8x8_RGB8      AdafruitCanvas8,  8,  8,      3    ///< Use Adafruit GFX implementation as NanoEngine canvas
+#define ADATILE_8x8_RGB16     AdafruitCanvas16, 8,  8,      3    ///< Use Adafruit GFX implementation as NanoEngine canvas
+
 /** Type of user-specified draw callback */
 typedef bool (*TNanoEngineOnDraw)(void);
 

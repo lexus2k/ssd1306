@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2018, Alexey Dynda
+    Copyright (c) 2018, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +31,7 @@
  *
  *   Atmega328 PINS: connect LCD to A4/A5
  */
+
 // Define this before including library header, this will give Adafruit GFX support
 // !!! Don't forget to install AdafruitGFX library to your Arduino IDE !!!
 #define CONFIG_ADAFRUIT_GFX_ENABLE
@@ -80,38 +81,46 @@ struct
 } objects[ spritesCount ];
 
 /*
- * Each pixel in SSD1306 display takes 1 bit of the memory. So, full resolution
- * of 128x64 LCD display will require 128*64/8 = 1024 bytes of SRAM for the buffer.
- * To let this example to run on Attiny devices (they have 256/512 byte SRAM), we
- * will use small canvas buffer: 32x32 (requires 128 bytes of SRAM), so the example
- * would run even on Attiny45.
+ * Each pixel in rgb16 mode needs 16 bit of the memory. So, full resolution
+ * of 128x128 LCD display will require 128*128*2 = 32768 bytes of SRAM for the buffer.
+ * To let this example to run on Atmega328p devices (they have 2048 byte SRAM), we
+ * will use small canvas buffer: 32x16 (requires 1024 bytes of SRAM).
  */
-const int canvasWidth = 64; // Width must be power of 2, i.e. 16, 32, 64, 128...
-const int canvasHeight = 32; // Height must be divided on 8, i.e. 8, 16, 24, 32...
-uint8_t canvasData[canvasWidth*(canvasHeight/8)];
-
-AdafruitCanvas1  canvas(canvasWidth, canvasHeight, canvasData);
+const int canvasWidth = 32; // Width
+const int canvasHeight = 16; // Height
+uint8_t canvasData[canvasWidth*canvasHeight*2];
+/* Create canvas object */
+AdafruitCanvas16 canvas(canvasWidth, canvasHeight, canvasData);
 
 void setup()
 {
-    /* Initialize and clear display */
-    ssd1306_128x64_i2c_init();
-//    ssd1306_128x64_spi_init(3, 4, 5);
-//    pcd8544_84x48_spi_init(3, 4, 5); // 3 RST, 4 CES, 5 DS
+    /* Initialize and clear display: 3 RST, 4 CES, 5 DS */
+    il9163_128x128_spi_init(3, 4, 5);
 //    ssd1331_96x64_spi_init(3, 4, 5);
 //    ssd1351_128x128_spi_init(3, 4, 5);
-//    il9163_128x128_spi_init(3, 4, 5);
 //    st7735_128x160_spi_init(3, 4, 5);
+//    -- ssd1306_128x64_i2c_init();  // RGB canvas does not support monochrome displays
+//    -- pcd8544_84x48_spi_init(3, 4, 5);
+
+    /* The library should be switched to normal mode for RGB displays */
+    ssd1306_setMode(LCD_MODE_NORMAL);
 
     ssd1306_fillScreen(0x00);
     /* Create 4 "hearts", and place them at different positions and give different movement direction */
     for(uint8_t i = 0; i < spritesCount; i++)
     {
-        objects[i].speed = { .x = (i & 1) ? -1:  1, .y = (i & 2) ? -1:  1 };
-        objects[i].pos = { .x = i*4, .y = i*4 + 2 };
+        objects[i].speed = { .x = (i & 2) ? -1:  1, .y = (i & 1) ? -1:  1 };
+        objects[i].pos = { .x = i*4, .y = i*2 + 2 };
     }
 }
 
+static uint16_t s_colors[spritesCount] =
+{
+     RGB_COLOR16(255,0,0),
+     RGB_COLOR16(0,255,0),
+     RGB_COLOR16(0,0,255),
+     RGB_COLOR16(255,255,0),
+};
 
 void loop()
 {
@@ -132,15 +141,14 @@ void loop()
     /* Clear canvas surface */
     canvas.fillScreen(0);
     /* Draw line */
-    canvas.drawLine( 0, 0, canvasWidth*2 - 1, canvasHeight-1, 1);
+    canvas.drawLine( 0, 0, canvasWidth*2 - 1, canvasHeight-1, RGB_COLOR16(128,128,128));
     /* Draw rectangle around our canvas. It will show the range of the canvas on the display */
-    canvas.drawRect(0, 0, canvasWidth, canvasHeight, 1);
+    canvas.drawRect(0, 0, canvasWidth, canvasHeight, RGB_COLOR16(0,255,255));
     /* Draw all 4 sprites on the canvas */
     for (uint8_t i = 0; i < spritesCount; i++)
     {
-        canvas.drawBitmap( objects[i].pos.x, objects[i].pos.y, heartImage, 8, 8, 1 );
+        canvas.drawBitmap( objects[i].pos.x, objects[i].pos.y, heartImage, 8, 8, s_colors[i] );
     }
-    /* Now, draw canvas on the display. You will find, that  *
-     * using AdafruitCanvas1 is similar to NanoCanvas1       */
-    canvas.blt(0, 0);
+    /* Now, draw canvas on the display */
+    canvas.blt(48, 0);
 }
