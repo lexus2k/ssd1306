@@ -139,6 +139,7 @@ void loop()
     {
         canvas.drawBitmap( objects[i].pos.x, objects[i].pos.y, heartImage, 8, 8, 1 );
     }
-    /* Now, draw canvas on the display */
-    ssd1306_drawBufferFast(48, 0, canvasWidth, canvasHeight, canvasData );
+    /* Now, draw canvas on the display. You will find, that  *
+     * using AdafruitCanvas1 is similar to NanoCanvas1       */
+    canvas.blt(48, 0);
 }

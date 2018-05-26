@@ -31,6 +31,8 @@
 
 #if defined(CONFIG_ADAFRUIT_GFX_ENABLE)
 
+#include "ssd1306.h"
+#include "ssd1331_api.h"
 #include "ssd1306_hal/Print_internal.h"
 #include "nano_gfx_types.h"
 
@@ -127,16 +129,56 @@ void AdafruitCanvasOps<1>::drawPixel(int16_t x, int16_t y, uint16_t color)
         }
 }
 
+/**
+ * Base class for all AdafruitCanvas childs
+ */
+template <uint8_t BPP>
+class AdafruitCanvasBase: public AdafruitCanvasOps<BPP>
+{
+public:
+    using AdafruitCanvasOps<BPP>::AdafruitCanvasOps;
+
+    /**
+     * Draws canvas on the LCD display
+     * @param x - horizontal position in pixels
+     * @param y - vertical position in blocks (pixels/8)
+     */
+    virtual void blt(lcdint_t x, lcdint_t y) = 0;
+
+    /**
+     * Draws canvas on the LCD display using offset values.
+     */
+    virtual void blt() = 0;
+};
+
 
 /**
  * AdafruitCanvas1 represents objects for drawing in memory buffer
  * AdafruitCanvas1 represents each pixel as single bit: 0/1
  * For details refer to SSD1306 datasheet
  */
-class AdafruitCanvas1 : public AdafruitCanvasOps<1>
+class AdafruitCanvas1 : public AdafruitCanvasBase<1>
 {
 public:
-    using AdafruitCanvasOps::AdafruitCanvasOps;
+    using AdafruitCanvasBase::AdafruitCanvasBase;
+
+    /**
+     * Draws canvas on the LCD display
+     * @param x - horizontal position in pixels
+     * @param y - vertical position in blocks (pixels/8)
+     */
+    void blt(lcdint_t x, lcdint_t y) override
+    {
+        ssd1306_drawBufferFast(x, y, width(), height(), m_buffer);
+    }
+
+    /**
+     * Draws canvas on the LCD display using offset values.
+     */
+    void blt() override
+    {
+        ssd1306_drawBufferFast(offset.x, offset.y, width(), height(), m_buffer);
+    }
 };
 
 
