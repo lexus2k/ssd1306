@@ -38,8 +38,9 @@ print_help_and_exit()
     echo "        -e      start OLED emulation mode with SDL (Linux only)"
     echo "                OLED emulation allows to run simple demo without OLED hardware"
     echo "                OLED emulation mode requires installed libsdl2-dev package"
-    echo "add_build_opts:"
+    echo "add_build_opts: (additional options)"
     echo "        FREQUENCY=<num>  frequency in Hz, passed as -DF_CPU=<num> to gcc/g++"
+    echo "        ADAFRUIT=y       add Adafruit GFX support to ssd1306 library"
     echo ""
     echo "# example: run demo on linux with emulator"
     echo "    ./build_and_run.sh -p linux -e -f ssd1306_demo"
@@ -51,7 +52,7 @@ print_help_and_exit()
 }
 
 while getopts "fep:m:" opt; do
-  echo $opt, $OPTARG
+  # echo $opt, $OPTARG
   case $opt in
     p) platform=$OPTARG;;
     m) mcu=$OPTARG;;
