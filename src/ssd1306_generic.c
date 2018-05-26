@@ -37,8 +37,6 @@
 // TODO: remove
 #include "lcd/ssd1306_commands.h"
 
-#define swap_data(a, b)  { uint8_t t = a; a = b; b = t; }
-
 uint16_t ssd1306_color = 0xFFFF;
 uint8_t s_ssd1306_invertByte = 0x00000000;
 lcduint_t ssd1306_cursorX = 0;
@@ -594,8 +592,8 @@ void         ssd1306_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
     {
         if (y1 > y2)
         {
-            swap_data(x1, x2);
-            swap_data(y1, y2);
+            ssd1306_swap_data(x1, x2, uint8_t);
+            ssd1306_swap_data(y1, y2, uint8_t);
         }
         for(; y1<=y2; y1++)
         {
@@ -613,8 +611,8 @@ void         ssd1306_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
     {
         if (x1 > x2)
         {
-            swap_data(x1, x2);
-            swap_data(y1, y2);
+            ssd1306_swap_data(x1, x2, uint8_t);
+            ssd1306_swap_data(y1, y2, uint8_t);
         }
         for(; x1<=x2; x1++)
         {

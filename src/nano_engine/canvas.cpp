@@ -27,8 +27,6 @@
 #include "ssd1306.h"
 #include "ssd1331_api.h"
 
-#define swap_data(a, b ,type)  { type t = a; a = b; b = t; }
-
 extern const uint8_t *s_font6x8;
 extern SFixedFontInfo s_fixedFont;
 
@@ -67,7 +65,7 @@ void NanoCanvasOps<8>::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
     y2 -= offset.y;
     if (y1 > y2)
     {
-        swap_data(y1, y2, lcdint_t);
+        ssd1306_swap_data(y1, y2, lcdint_t);
     }
     if ((x1 < 0) || (x1 >= (lcdint_t)m_w)) return;
     if ((y2 < 0) || (y1 >= (lcdint_t)m_h)) return;
@@ -90,7 +88,7 @@ void NanoCanvasOps<8>::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
     x2 -= offset.x;
     if (x1 > x2)
     {
-        swap_data(x1, x2, lcdint_t);
+        ssd1306_swap_data(x1, x2, lcdint_t);
     }
     if ((x2 < 0) || (x1 >= (lcdint_t)m_w)) return;
     if ((y1 < 0) || (y1 >= (lcdint_t)m_h)) return;
@@ -114,8 +112,8 @@ void NanoCanvasOps<8>::drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t 
     {
         if (y1 > y2)
         {
-            swap_data(x1, x2, lcdint_t);
-            swap_data(y1, y2, lcdint_t);
+            ssd1306_swap_data(x1, x2, lcdint_t);
+            ssd1306_swap_data(y1, y2, lcdint_t);
         }
         for(; y1<=y2; y1++)
         {
@@ -132,8 +130,8 @@ void NanoCanvasOps<8>::drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t 
     {
         if (x1 > x2)
         {
-            swap_data(x1, x2, lcdint_t);
-            swap_data(y1, y2, lcdint_t);
+            ssd1306_swap_data(x1, x2, lcdint_t);
+            ssd1306_swap_data(y1, y2, lcdint_t);
         }
         for(; x1<=x2; x1++)
         {
@@ -175,11 +173,11 @@ void NanoCanvasOps<8>::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t 
 {
     if (y1 > y2)
     {
-        swap_data(y1, y2, lcdint_t);
+        ssd1306_swap_data(y1, y2, lcdint_t);
     }
     if (x1 > x2)
     {
-        swap_data(x1, x2, lcdint_t);
+        ssd1306_swap_data(x1, x2, lcdint_t);
     }
     x1 -= offset.x;
     y1 -= offset.y;
@@ -456,7 +454,7 @@ void NanoCanvasOps<1>::putPixel(const NanoPoint &p)
 template <>
 void NanoCanvasOps<1>::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
 {
-    if (x2 < x1) swap_data(x2, x1, lcdint_t);
+    if (x2 < x1) ssd1306_swap_data(x2, x1, lcdint_t);
     x1 -= offset.x;
     x2 -= offset.x;
     y1 -= offset.y;
@@ -479,7 +477,7 @@ void NanoCanvasOps<1>::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
 template <>
 void NanoCanvasOps<1>::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
 {
-    if (y2 < y1) swap_data(y2, y1, lcdint_t);
+    if (y2 < y1) ssd1306_swap_data(y2, y1, lcdint_t);
     x1 -= offset.x;
     y1 -= offset.y;
     y2 -= offset.y;
@@ -547,8 +545,8 @@ void NanoCanvasOps<1>::drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t 
     {
         if (y1 > y2)
         {
-            swap_data(x1, x2, lcdint_t);
-            swap_data(y1, y2, lcdint_t);
+            ssd1306_swap_data(x1, x2, lcdint_t);
+            ssd1306_swap_data(y1, y2, lcdint_t);
         }
         for(; y1<=y2; y1++)
         {
@@ -565,8 +563,8 @@ void NanoCanvasOps<1>::drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t 
     {
         if (x1 > x2)
         {
-            swap_data(x1, x2, lcdint_t);
-            swap_data(y1, y2, lcdint_t);
+            ssd1306_swap_data(x1, x2, lcdint_t);
+            ssd1306_swap_data(y1, y2, lcdint_t);
         }
         for(; x1<=x2; x1++)
         {
@@ -590,8 +588,8 @@ void NanoCanvasOps<1>::drawLine(const NanoRect &rect)
 template <>
 void NanoCanvasOps<1>::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
 {
-    if (x2 < x1) swap_data(x2, x1, lcdint_t);
-    if (y2 < y1) swap_data(y2, y1, lcdint_t);
+    if (x2 < x1) ssd1306_swap_data(x2, x1, lcdint_t);
+    if (y2 < y1) ssd1306_swap_data(y2, y1, lcdint_t);
     x1 -= offset.x;
     x2 -= offset.x;
     y1 -= offset.y;
@@ -860,7 +858,7 @@ void NanoCanvasOps<16>::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
     y2 -= offset.y;
     if (y1 > y2)
     {
-        swap_data(y1, y2, lcdint_t);
+        ssd1306_swap_data(y1, y2, lcdint_t);
     }
     if ((x1 < 0) || (x1 >= (lcdint_t)m_w)) return;
     if ((y2 < 0) || (y1 >= (lcdint_t)m_h)) return;
@@ -884,7 +882,7 @@ void NanoCanvasOps<16>::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
     x2 -= offset.x;
     if (x1 > x2)
     {
-        swap_data(x1, x2, lcdint_t);
+        ssd1306_swap_data(x1, x2, lcdint_t);
     }
     if ((x2 < 0) || (x1 >= (lcdint_t)m_w)) return;
     if ((y1 < 0) || (y1 >= (lcdint_t)m_h)) return;
@@ -909,8 +907,8 @@ void NanoCanvasOps<16>::drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t
     {
         if (y1 > y2)
         {
-            swap_data(x1, x2, lcdint_t);
-            swap_data(y1, y2, lcdint_t);
+            ssd1306_swap_data(x1, x2, lcdint_t);
+            ssd1306_swap_data(y1, y2, lcdint_t);
         }
         for(; y1<=y2; y1++)
         {
@@ -927,8 +925,8 @@ void NanoCanvasOps<16>::drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t
     {
         if (x1 > x2)
         {
-            swap_data(x1, x2, lcdint_t);
-            swap_data(y1, y2, lcdint_t);
+            ssd1306_swap_data(x1, x2, lcdint_t);
+            ssd1306_swap_data(y1, y2, lcdint_t);
         }
         for(; x1<=x2; x1++)
         {
@@ -969,11 +967,11 @@ void NanoCanvasOps<16>::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t
 {
     if (y1 > y2)
     {
-        swap_data(y1, y2, lcdint_t);
+        ssd1306_swap_data(y1, y2, lcdint_t);
     }
     if (x1 > x2)
     {
-        swap_data(x1, x2, lcdint_t);
+        ssd1306_swap_data(x1, x2, lcdint_t);
     }
     x1 -= offset.x;
     y1 -= offset.y;

@@ -46,12 +46,16 @@
 #endif
 
 #ifndef LCDINT_TYPES_DEFINED
+/** Macro informs if lcdint_t type is defined */
 #define LCDINT_TYPES_DEFINED
 /** internal int type, used by ssd1306 library. Important for uC with low SRAM */
 typedef int lcdint_t;
 /** internal int type, used by ssd1306 library. Important for uC with low SRAM */
 typedef unsigned int lcduint_t;
 #endif
+
+/** swaps content of a and b variables of type type */
+#define ssd1306_swap_data(a, b, type)  { type t = a; a = b; b = t; }
 
 #endif
 

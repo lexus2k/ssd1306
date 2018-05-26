@@ -63,7 +63,10 @@ class NanoEngineTiler
 {
 protected:
     /** Only child classes can initialize the engine */
-    NanoEngineTiler() { canvas.begin(NE_TILE_WIDTH, NE_TILE_HEIGHT, m_buffer); refresh(); };
+    NanoEngineTiler()
+    {
+        refresh();
+    };
 
 public:
     /** Number of bits in tile size. 5 corresponds to 1<<5 = 32 tile size */
@@ -179,7 +182,7 @@ template<class C, uint8_t W, uint8_t H, uint8_t B>
 uint8_t NanoEngineTiler<C,W,H,B>::m_buffer[W * H * C::BITS_PER_PIXEL / 8];
 
 template<class C, uint8_t W, uint8_t H, uint8_t B>
-C NanoEngineTiler<C,W,H,B>::canvas;
+C NanoEngineTiler<C,W,H,B>::canvas(W, H, m_buffer);
 
 template<class C, uint8_t W, uint8_t H, uint8_t B>
 TNanoEngineOnDraw NanoEngineTiler<C,W,H,B>::m_onDraw = nullptr;

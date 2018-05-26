@@ -1,6 +1,7 @@
 var searchData=
 [
   ['m_5fbuf',['m_buf',['../class_nano_canvas_ops.html#a652509405060c8461b311a2a93a99907',1,'NanoCanvasOps']]],
+  ['m_5fbuffer',['m_buffer',['../class_adafruit_canvas_ops.html#a0077cb63601a008150f6d4c7642ab702',1,'AdafruitCanvasOps']]],
   ['m_5fcanvas',['m_canvas',['../class_sprite_pool.html#aacf3c183566ace3d39ace8755a2a60aa',1,'SpritePool']]],
   ['m_5fcolor',['m_color',['../class_nano_canvas_ops.html#a2791c74fdd94200db0fadd7e0f42e938',1,'NanoCanvasOps']]],
   ['m_5fcpuload',['m_cpuLoad',['../class_nano_engine_core.html#a03092e366bf50606308bd065d6de9623',1,'NanoEngineCore']]],

@@ -7,7 +7,7 @@ var searchData=
   ['pcd8544_5f84x48_5fspi_5finit',['pcd8544_84x48_spi_init',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga6e5fe50f6c6bae1adb75b0008880035d',1,'lcd_pcd8544.c']]],
   ['pcd8544_5fcommands_2eh',['pcd8544_commands.h',['../pcd8544__commands_8h.html',1,'']]],
   ['pressed',['pressed',['../class_nano_engine_inputs.html#aaf992076a4c0e1a5aa95a9e129e8ad25',1,'NanoEngineInputs']]],
-  ['print',['Print',['../class_print.html',1,'Print'],['../class_print.html#a2131ef6aa11c8551831201ba64cf5f06',1,'Print::print(const char *str)'],['../class_print.html#a1b9fe938883bb7b4bce8fba012dab112',1,'Print::Print()']]],
+  ['print',['Print',['../class_print.html',1,'Print'],['../class_print.html#a1b9fe938883bb7b4bce8fba012dab112',1,'Print::Print()'],['../class_print.html#a2131ef6aa11c8551831201ba64cf5f06',1,'Print::print(const char *str)']]],
   ['print_5finternal_2eh',['Print_internal.h',['../_print__internal_8h.html',1,'']]],
   ['printchar',['printChar',['../class_nano_canvas_ops.html#af621b5840962eea7fa043879c29c01d7',1,'NanoCanvasOps']]],
   ['printfixed',['printFixed',['../class_nano_canvas_ops.html#ad71a16bf993276496a1bc599a6164596',1,'NanoCanvasOps::printFixed()'],['../class_nano_canvas.html#a6f89c3edb9833b7d79f7d1f771b44254',1,'NanoCanvas::printFixed()']]],

@@ -31,8 +31,6 @@
 #include "lcd/ssd1331_commands.h"
 #include "lcd/lcd_common.h"
 
-#define swap_data(a, b ,type)  { type t = a; a = b; b = t; }
-
 extern uint16_t ssd1306_color;
 extern uint8_t s_ssd1306_invertByte;
 extern lcduint_t ssd1306_cursorX;
@@ -173,8 +171,8 @@ void ssd1331_drawLine8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
     {
         if (y1 > y2)
         {
-            swap_data(x1, x2, lcdint_t);
-            swap_data(y1, y2, lcdint_t);
+            ssd1306_swap_data(x1, x2, lcdint_t);
+            ssd1306_swap_data(y1, y2, lcdint_t);
         }
         for(; y1<=y2; y1++)
         {
@@ -191,8 +189,8 @@ void ssd1331_drawLine8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
     {
         if (x1 > x2)
         {
-            swap_data(x1, x2, lcdint_t);
-            swap_data(y1, y2, lcdint_t);
+            ssd1306_swap_data(x1, x2, lcdint_t);
+            ssd1306_swap_data(y1, y2, lcdint_t);
         }
         for(; x1<=x2; x1++)
         {
@@ -219,11 +217,11 @@ void ssd1331_fillRect8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
 {
     if (y1 > y2)
     {
-        swap_data(y1, y2, lcdint_t);
+        ssd1306_swap_data(y1, y2, lcdint_t);
     }
     if (x1 > x2)
     {
-        swap_data(x1, x2, lcdint_t);
+        ssd1306_swap_data(x1, x2, lcdint_t);
     }
     ssd1306_lcd.set_block(x1, y1, x2 - x1 + 1);
     uint16_t count = (x2 - x1 + 1) * (y2 - y1 + 1);

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['font6x8_2eh',['font6x8.h',['../font6x8_8h.html',1,'']]]
+  ['canvas_2eh',['canvas.h',['../canvas_8h.html',1,'']]],
+  ['core_2eh',['core.h',['../core_8h.html',1,'']]]
 ];

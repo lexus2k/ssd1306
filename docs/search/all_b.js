@@ -18,6 +18,7 @@ var searchData=
   ['lcdconsole',['LcdConsole',['../class_lcd_console.html',1,'LcdConsole&lt; W &gt;'],['../class_lcd_console.html#a8d54972e9e06390b812137b54528d400',1,'LcdConsole::LcdConsole()']]],
   ['lcdconsole_3c_20ssd1306_5fwrite_20_3e',['LcdConsole&lt; ssd1306_write &gt;',['../class_lcd_console.html',1,'']]],
   ['lcdint_5ft',['lcdint_t',['../io_8h.html#a609c6ba2ba635102cd316b7b59af8351',1,'io.h']]],
+  ['lcdint_5ftypes_5fdefined',['LCDINT_TYPES_DEFINED',['../io_8h.html#a57896cfd0f578b584d58e3bef85b0e78',1,'io.h']]],
   ['lcduint_5ft',['lcduint_t',['../io_8h.html#a3de6a212815ee8499f4042db94992210',1,'io.h']]],
   ['lcdwriter',['LcdWriter',['../ssd1306__console_8h.html#af5099e06f17b3868b9b9961ab64263ef',1,'ssd1306_console.h']]],
   ['left',['left',['../struct_s_s_d1306___r_e_c_t.html#a596b6b6cce11df484877b63db7d0a5b5',1,'SSD1306_RECT']]],
