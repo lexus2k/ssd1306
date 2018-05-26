@@ -72,6 +72,11 @@
 /** Define this macro if you need to enable VGA module for compilation */
 #define CONFIG_VGA_ENABLE
 
+/** Define this macro if you need to enable Adafruit GFX canvas support for compilation */
+#ifndef CONFIG_ADAFRUIT_GFX_ENABLE
+//#define CONFIG_ADAFRUIT_GFX_ENABLE
+#endif
+
 /**
  * @}
  */

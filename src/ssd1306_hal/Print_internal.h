@@ -29,7 +29,7 @@
 #ifndef _SSD1306_HAL_PRINT_INTERNAL_H_
 #define _SSD1306_HAL_PRINT_INTERNAL_H_
 
-#ifdef ARDUINO
+#if defined(ARDUINO) && !defined(ARDUINO_FAKE)
 
 /* Include standard print class for Arduino environment */
 #include "Print.h"
