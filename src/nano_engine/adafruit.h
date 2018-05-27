@@ -98,6 +98,22 @@ public:
      */
     void drawPixel(int16_t x, int16_t y, uint16_t color) override;
 
+    /**
+     * Sets offset
+     * @param ox - X offset in pixels
+     * @param oy - Y offset in pixels
+     */
+    void setOffset(lcdint_t ox, lcdint_t oy) { offset.x = ox; offset.y = oy; };
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    // We need to override Adafruit GFX implementation of fillScreen, because
+    // NanoEngine uses offsets, when refreshing screen content.
+    void fillScreen(uint16_t color) override
+    {
+        fillRect(offset.x, offset.y, _width, _height, color);
+    }
+#endif
+
 protected:
 
     /** pixels buffer */
