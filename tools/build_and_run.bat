@@ -32,13 +32,15 @@ set project=%1
 @mkdir ..\bld\%sketch_path%
 @copy /Y sdl\SDL2.dll ..\bld\%sketch_path%\..\
 
-mingw32-make.exe -C ../examples -f Makefile.mingw32 EXTRA_CCFLAGS=%2 SDL_EMULATION=y PROJECT=%project% flash
+mingw32-make.exe -C ../examples -f Makefile.mingw32 EXTRA_CCFLAGS=%2 SDL_EMULATION=y PROJECT=%project% flash %3
 @exit /0
 
 :error
-@echo "Usage: build_and_run.bat <project_name> ["flags"]"
+@echo "Usage: build_and_run.bat <project_name> ["flags"] [option]"
 @echo "       flags:"
 @echo "           -DARKANOID_SSD1331   to run in SSD1331 RGB color mode"
 @echo "           -DSDL_NO_BORDER      to not draw border around oled display emulator"
+@echo "       option:"
+@echo "           "ADAFRUIT=y"         to enable Adafruit support"
 @echo -
 @echo "Example: build_and_run.bat "games/arkanoid" "-DARKANOID_SSD1331 -DSDL_NO_BORDER""

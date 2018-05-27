@@ -37,6 +37,11 @@ platform?=mingw32
 BACKSLASH=\\
 MKDIR=mkdir
 
+ifeq ($(ADAFRUIT),y)
+# Get path to Adafruit GFX library, and remove drive letter C:
+ADAFRUIT_DIR?=$(subst C:,,$(shell echo %UserProfile%\Documents)\Arduino\libraries\Adafruit_GFX_Library)
+endif
+
 include Makefile.linux
 
 OUTFILE:=$(BLD)/$(PROJECT).exe

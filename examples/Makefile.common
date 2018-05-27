@@ -66,8 +66,6 @@ ADAFRUIT_DIR ?= $(shell readlink -f ~)/Arduino/libraries/Adafruit_GFX_Library
 
 INCLUDES += -I$(ADAFRUIT_DIR)
 
-#	-I$(shell readlink -f ../src)/ssd1306_hal/linux/arduino
-
 CCFLAGS-Adafruit_GFX= -DARDUINO=100
 
 SRCS += \
