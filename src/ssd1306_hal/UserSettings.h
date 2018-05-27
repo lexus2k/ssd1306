@@ -77,6 +77,10 @@
 //#define CONFIG_ADAFRUIT_GFX_ENABLE
 #endif
 
+/** Define this macro if you need to enable STM32 i2c module for compilation */
+#define CONFIG_STM32_I2C_ENABLE
+
+
 /**
  * @}
  */

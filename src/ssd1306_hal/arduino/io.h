@@ -51,6 +51,8 @@
     #define SSD1306_WIRE_CLOCK_CONFIGURABLE
     /** The macro is defined when SPI library is available */
     #define CONFIG_ARDUINO_SPI_LIBRARY_AVAILABLE
+    /** The macro is defined when STM32 i2c implementation is available */
+    #define CONFIG_STM32_I2C_AVAILABLE
 
 #elif defined(ARDUINO_AVR_DIGISPARK) || defined(ARDUINO_AVR_DIGISPARKPRO)
     /** The macro is defined when i2c Wire library is available */

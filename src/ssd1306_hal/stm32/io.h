@@ -23,11 +23,13 @@
 */
 
 /*
- * @file ssd1306_hal/template/io.h This is template file for new platform with detailed instructions
+ * @file ssd1306_hal/stm32/io.h This is stm32 platform file
  */
 
-#ifndef _SSD1306_TEMPLATE_IO_H_
-#define _SSD1306_TEMPLATE_IO_H_
+#ifndef _SSD1306_STM32_IO_H_
+#define _SSD1306_STM32_IO_H_
+
+// TODO: To add support. Any help is welcome
 
 //========================== I. Include libraries =========================
 /* 1. Include all required headers, specific for your platform here */
@@ -54,7 +56,9 @@
 //#define CONFIG_ARDUINO_SPI_LIBRARY_AVAILABLE
 //#define CONFIG_AVR_UART_AVAILABLE
 //#define CONFIG_VGA_AVAILABLE
-//#define CONFIG_STM32_I2C_AVAILABLE
+
+/** The macro is defined when STM32 i2c implementation is available */
+#define CONFIG_STM32_I2C_AVAILABLE
 
 #ifdef __cplusplus
 extern "C" {

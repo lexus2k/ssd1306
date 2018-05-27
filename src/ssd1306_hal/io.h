@@ -36,6 +36,8 @@
 #include "avr/io.h"
 #elif defined(__XTENSA__) && !defined(ARDUINO)
 #include "esp/io.h"
+#elif defined(STM32F1) || defined(STM32F2)
+#include "stm32/io.h"
 #elif defined(__linux__)
 #include "linux/io.h"
 #elif defined(__MINGW32__)
