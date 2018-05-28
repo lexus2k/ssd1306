@@ -149,7 +149,7 @@ void movePlayer(uint8_t direction)
          (!isPipe(handBlock) ||
           !isPipe(feetBlock) ) )
     {
-        player.move( { player.center().x & ~0x07, player.y() + 1 } );
+        player.moveTo( { player.center().x & ~0x07, player.y() + 1 } );
         player.setBitmap( &playerFlyingImage[MAN_ANIM_FLYING][playerAnimation][0] );
         animated = true;
     }
@@ -182,7 +182,7 @@ void movePlayer(uint8_t direction)
             case BUTTON_UP:
                 if (isStair(feetBlock))
                 {
-                    player.move( { player.top().x & ~0x07, player.top().y - 1 } );
+                    player.moveTo( { player.top().x & ~0x07, player.top().y - 1 } );
                     player.setBitmap( &playerFlyingImage[MAN_ANIM_UP][playerAnimation][0] );
                     animated = true;
                 }
@@ -192,7 +192,7 @@ void movePlayer(uint8_t direction)
                    (!isSolid(bottomBlock) &&
                      isPipe(handBlock)) )
                 {
-                    player.move( { player.top().x & ~0x07, player.top().y + 1 } );
+                    player.moveTo( { player.top().x & ~0x07, player.top().y + 1 } );
                     player.setBitmap( &playerFlyingImage[MAN_ANIM_DOWN][playerAnimation][0] );
                     animated = true;
                 }
