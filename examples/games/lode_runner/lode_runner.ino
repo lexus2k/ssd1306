@@ -53,15 +53,15 @@
 #define BUTTON_PIN  0
 #endif
 
-uint8_t gameField[16*7] =
+uint8_t gameField[12*7] =
 {
-   5,0,0,0,0,3,3,0,0,0,0,0,0,0,0,5,
-   5,0,2,0,4,0,0,2,1,1,2,0,4,0,0,5,
-   5,0,2,0,1,1,0,2,0,0,1,1,1,1,0,5,
-   5,0,2,0,0,0,0,2,0,4,0,0,0,0,0,5,
-   5,1,2,1,1,1,1,1,1,1,1,1,2,1,1,5,
-   5,0,2,0,0,0,0,0,4,0,0,0,2,1,0,5,
-   1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,5
+   5,0,0,0,0,3,3,0,0,0,0,5,
+   5,0,2,0,4,0,0,2,1,1,2,5,
+   5,0,2,0,1,1,0,2,0,0,1,1,
+   5,0,2,0,0,0,0,2,0,4,0,5,
+   5,1,2,1,1,1,1,1,1,1,1,1,
+   5,0,2,0,0,0,0,0,4,0,0,5,
+   1,1,1,1,1,1,1,1,1,1,1,1,
 };
 
 uint8_t blockColors[] = 
@@ -73,7 +73,7 @@ uint8_t blockColors[] =
     RGB_COLOR8(128,128,128),
 };
 
-static inline uint8_t blockIdx(uint8_t x, uint8_t y) { return (x>>3) + (((y - 8)>>3) << 4); }
+static inline uint8_t blockIdx(uint8_t x, uint8_t y) { return (x>>3) + (((y - 8)>>3) * 12); }
 static inline bool isWalkable(uint8_t type)          { return (type == 0) || (type == 2) || (type == 3) || (type == 4); }
 static inline bool isSolid(uint8_t type)             { return (type == 1) || (type == 2) || (type == 5); }
 static inline bool isPipe(uint8_t type)              { return type == 3; }
@@ -87,9 +87,7 @@ NanoEngine8 engine;
  */
 void beep(int bCount,int bDelay);
 
-const uint8_t * playerBitmap;
-
-NanoPoint player = { 8, 8 };
+NanoSprite<NanoEngine8, engine> player( { 8, 8 }, { 8, 8 }, nullptr );
 
 /* The variable is used for player animation      *
  * The graphics defined for the hero has 2 images *
@@ -118,9 +116,9 @@ bool onDraw()
     engine.canvas.setMode(0);
     for (uint8_t row = 0; row < 7; row++)
     {
-        for (uint8_t col = 0; col < 16; col++)
+        for (uint8_t col = 0; col < 12; col++)
         {
-            uint8_t index = (row << 4) + col;
+            uint8_t index = (row * 12) + col;
             uint8_t blockType = gameField[index];
             if (blockType != 0)
             {
@@ -132,29 +130,27 @@ bool onDraw()
     showGameInfo();
     engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
     engine.canvas.setColor(RGB_COLOR8(64,255,255));
-    engine.canvas.drawBitmap1(player.x, player.y, 8, 8, playerBitmap);
+    player.draw();
     return true;
 }
 
 void movePlayer(uint8_t direction)
 {                                           
     bool animated = false;
-    engine.refresh(player.x, player.y, player.x + 7, player.y + 7);
-    uint8_t bottomBlock = gameField[blockIdx(player.x + 3,player.y + 8)];
-    uint8_t feetBlock = gameField[blockIdx(player.x + 3,player.y+7)];
-    uint8_t handBlock = gameField[blockIdx(player.x + 3,player.y)];
-    uint8_t centerBlock = gameField[blockIdx(player.x + 3,player.y + 3)];
-    uint8_t rightBlock = gameField[blockIdx(player.x + 8,player.y)];
-    uint8_t leftBlock = gameField[blockIdx(player.x - 1,player.y)];
+    uint8_t bottomBlock = gameField[blockIdx(player.bottom().x,player.bottom().y)];
+    uint8_t feetBlock = gameField[blockIdx(player.bottom().x,player.bottom().y - 1)];
+    uint8_t handBlock = gameField[blockIdx(player.top().x,player.top().y)];
+    uint8_t centerBlock = gameField[blockIdx(player.center().x,player.center().y)];
+    uint8_t rightBlock = gameField[blockIdx(player.right().x,player.right().y)];
+    uint8_t leftBlock = gameField[blockIdx(player.left().x,player.left().y)];
     /* If player doesn't stand on the ground, and doesn't hold the pipe,
      * make the player to fall down. */
     if ( !isSolid(bottomBlock) &&
          (!isPipe(handBlock) ||
           !isPipe(feetBlock) ) )
     {
-        player.x = (player.x + 3) & ~0x07;
-        player.y += 1;
-        playerBitmap = &playerFlyingImage[MAN_ANIM_FLYING][playerAnimation][0];
+        player.move( { player.center().x & ~0x07, player.y() + 1 } );
+        player.setBitmap( &playerFlyingImage[MAN_ANIM_FLYING][playerAnimation][0] );
         animated = true;
     }
     else
@@ -164,31 +160,30 @@ void movePlayer(uint8_t direction)
             case BUTTON_RIGHT:
                 if (isWalkable(rightBlock))
                 {
-                    player.x += 1;
+                    player.moveBy( { 1, 0 } );
                     if (isPipe(centerBlock))
-                        playerBitmap = &playerFlyingImage[MAN_ANIM_RIGHT_PIPE][playerAnimation][0];
+                        player.setBitmap( &playerFlyingImage[MAN_ANIM_RIGHT_PIPE][playerAnimation][0] );
                     else
-                        playerBitmap = &playerFlyingImage[MAN_ANIM_RIGHT][playerAnimation][0];
+                        player.setBitmap( &playerFlyingImage[MAN_ANIM_RIGHT][playerAnimation][0] );
                     animated = true;
                 }
                 break;
             case BUTTON_LEFT:
                 if (isWalkable(leftBlock))
                 {
-                    player.x -= 1;
+                    player.moveBy( { -1, 0 } );
                     if (isPipe(centerBlock))
-                        playerBitmap = &playerFlyingImage[MAN_ANIM_LEFT_PIPE][playerAnimation][0];
+                        player.setBitmap( &playerFlyingImage[MAN_ANIM_LEFT_PIPE][playerAnimation][0] );
                     else
-                        playerBitmap = &playerFlyingImage[MAN_ANIM_LEFT][playerAnimation][0];
+                        player.setBitmap( &playerFlyingImage[MAN_ANIM_LEFT][playerAnimation][0] );
                     animated = true;
                 }
                 break;
             case BUTTON_UP:
                 if (isStair(feetBlock))
                 {
-                    player.x = (player.x + 3) & ~0x07;
-                    player.y -= 1;
-                    playerBitmap = &playerFlyingImage[MAN_ANIM_UP][playerAnimation][0];
+                    player.move( { player.top().x & ~0x07, player.top().y - 1 } );
+                    player.setBitmap( &playerFlyingImage[MAN_ANIM_UP][playerAnimation][0] );
                     animated = true;
                 }
                 break;
@@ -197,9 +192,8 @@ void movePlayer(uint8_t direction)
                    (!isSolid(bottomBlock) &&
                      isPipe(handBlock)) )
                 {
-                    player.x = (player.x + 3) & ~0x07;
-                    player.y += 1;
-                    playerBitmap = &playerFlyingImage[MAN_ANIM_DOWN][playerAnimation][0];
+                    player.move( { player.top().x & ~0x07, player.top().y + 1 } );
+                    player.setBitmap( &playerFlyingImage[MAN_ANIM_DOWN][playerAnimation][0] );
                     animated = true;
                 }
                 break;
@@ -215,7 +209,7 @@ void movePlayer(uint8_t direction)
         if (isGold(centerBlock))
         {
             engine.notify( "GOLD COIN" );
-            gameField[blockIdx(player.x + 3,player.y + 3)] = 0;
+            gameField[blockIdx(player.center().x,player.center().y)] = 0;
             goldCollection++;
             showGameInfo();
             engine.refresh(0,0,63,7);
@@ -227,7 +221,6 @@ void movePlayer(uint8_t direction)
             beep(20,40);
         }
     }
-    engine.refresh(player.x, player.y, player.x + 7, player.y + 7);
 }
 
 void setup()
@@ -242,7 +235,7 @@ void setup()
 //    il9163_128x128_spi_init(3, 4, 5);
 //    st7735_128x160_spi_init(3, 4, 5);
 
-    playerBitmap = playerFlyingImage[MAN_ANIM_FLYING][playerAnimation];
+    player.setBitmap( playerFlyingImage[MAN_ANIM_FLYING][playerAnimation] );
 
     engine.connectZKeypad(BUTTON_PIN);
     engine.drawCallback( onDraw );
@@ -277,5 +270,4 @@ void beep(int bCount,int bDelay)
     }
     digitalWrite(BUZZER,LOW);
 }
-
 

@@ -118,6 +118,7 @@ public:
      */
     static void refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
     {
+        if (y2 < 0) return;
         if (y1 < 0) y1 = 0;
         if (x1 < 0) x1 = 0;
         y1 = y1>>B;

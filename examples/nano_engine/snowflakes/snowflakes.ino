@@ -39,17 +39,6 @@
 #include "ssd1306.h"
 #include "nano_engine.h"
 
-typedef struct
-{
-    const uint8_t * bitmap;
-    int16_t x;
-    int16_t y;
-    int8_t speedX;
-    int8_t speedY;
-    uint8_t timer;
-    bool    falling;
-} SnowFlake;
-
 /*
  * Define snowflake images directly in flash memory.
  * This reduces SRAM consumption.
@@ -139,22 +128,65 @@ const PROGMEM uint8_t snowFlakeImage[8][8] =
     },
 };
 
-
 NanoEngine1 engine;
+
+class SnowFlake: public NanoSprite<NanoEngine1, engine>
+{
+public:
+    SnowFlake(): NanoSprite<NanoEngine1, engine>({0, 0}, {8, 8}, nullptr) { }
+
+    bool isAlive() { return falling; }
+
+    void bringToLife()
+    {
+        setBitmap( &snowFlakeImage[random(8)][0] );
+        /* Set initial position in scaled coordinates */
+        scaled_position = { random(ssd1306_displayWidth() * 8), -8 * 8 };
+        /* Use some random speed */
+        speed = { random(-16, 16), random(4, 12) };
+        /* After countdown timer ticks to 0, change X direction */
+        timer = random(24, 48);
+        NanoSprite::move( scaled_position/8 );
+        falling = true;
+    }
+
+    void move()
+    {
+        scaled_position += speed;
+        timer--;
+        if (0 == timer)
+        {
+            /* Change movement direction */
+            speed.x = random(-16, 16);
+            timer = random(24, 48);
+        }
+        NanoSprite::move( scaled_position/8 );
+        if (y() >= ssd1306_displayHeight() )
+        {
+            falling = false;
+        }
+    }
+
+private:
+    NanoPoint scaled_position;
+    NanoPoint speed;
+    uint8_t timer;
+    bool falling = false;
+};
 
 static const uint8_t maxCount = 20;
 
 /* These are our snow flakes */
-SnowFlake snowFlakes[maxCount] = { {0} };
+SnowFlake snowFlakes[maxCount];
 
 bool onDraw()
 {
     engine.canvas.clear();
     for (uint8_t i=0; i<maxCount; i++)
     {
-        if (snowFlakes[i].falling)
+        if (snowFlakes[i].isAlive())
         {
-            engine.canvas.drawBitmap1(snowFlakes[i].x>>3, snowFlakes[i].y>>3, 8, 8,snowFlakes[i].bitmap);
+            snowFlakes[i].draw();
         }
     }
     return true;
@@ -179,25 +211,9 @@ void addSnowFlake()
 {
     for (uint8_t i=0; i<maxCount; i++)
     {
-        if (!snowFlakes[i].falling)
+        if (!snowFlakes[i].isAlive())
         {
-            /* We found empty slot, use it for new snowflake */
-            /* Create new sprite with new snowflake image. Just put it for now to fixed place */
-            snowFlakes[i].bitmap = &snowFlakeImage[random(8)][0];
-            /* Select horizontal position */
-            snowFlakes[i].x = random(ssd1306_displayWidth() * 8);
-            /* Select y position. We use number multiple of 8 to make snowflake movements more smooth. *
-             * Moving snowflake by 1 point actually means movement by 1/8 of pixel on the display.     */
-            snowFlakes[i].y = -8 * 8;
-            /* Use some random X speed */
-            snowFlakes[i].speedX = random(-16, 16);
-            /* Use random vertical speed */
-            snowFlakes[i].speedY = random(4, 12);
-            snowFlakes[i].falling = true;
-            /* After countdown timer ticks to 0, change X direction */
-            snowFlakes[i].timer = random(24, 48);
-            /* And register new snowflake in spritepool */
-            engine.refresh( snowFlakes[i].x/8, snowFlakes[i].y/8, (snowFlakes[i].x/8) + 7, (snowFlakes[i].y/8) + 7);
+            snowFlakes[i].bringToLife();
             break;
         }
     }
@@ -208,23 +224,9 @@ void moveSnowFlakes()
 {
     for (uint8_t i=0; i<maxCount; i++)
     {
-        if (snowFlakes[i].falling)
+        if (snowFlakes[i].isAlive())
         {
-            engine.refresh( snowFlakes[i].x/8, snowFlakes[i].y/8, (snowFlakes[i].x/8) + 7, (snowFlakes[i].y/8) + 7);
-            snowFlakes[i].x += snowFlakes[i].speedX;
-            snowFlakes[i].y += snowFlakes[i].speedY;
-            snowFlakes[i].timer--;
-            if (0 == snowFlakes[i].timer)
-            {
-                /* Change movement direction */
-                snowFlakes[i].speedX = random(-16, 16);
-                snowFlakes[i].timer = random(24, 48);
-            }
-            engine.refresh( snowFlakes[i].x/8, snowFlakes[i].y/8, (snowFlakes[i].x/8) + 7, (snowFlakes[i].y/8) + 7);
-            if (snowFlakes[i].y >= ssd1306_displayHeight() * 8)
-            {
-                snowFlakes[i].falling = false;
-            }
+            snowFlakes[i].move();
         }
     }
 }
