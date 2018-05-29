@@ -47,6 +47,8 @@
 #include "intf/ssd1306_interface.h"
 #include "intf/spi/ssd1306_spi.h"
 
+typedef NanoEngine<TILE_16x16_RGB8> GameEngine;
+
 #if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)
 #define BUZZER      1
 #define BUTTON_PIN  0
@@ -54,6 +56,8 @@
 #define BUZZER      8
 #define BUTTON_PIN  0
 #endif
+
+//#define SSD1331_ACCELERATION
 
 uint8_t gameField[24*7] =
 {
@@ -82,14 +86,14 @@ static inline bool isPipe(uint8_t type)              { return type == 3; }
 static inline bool isGold(uint8_t type)              { return type == 4; }
 static inline bool isStair(uint8_t type)             { return type == 2; }
 
-NanoEngine8 engine;
+GameEngine engine;
 
 /**
  * Just produces some sound depending on params 
  */
 void beep(int bCount,int bDelay);
 
-NanoSprite<NanoEngine8, engine> player( { 8, 8 }, { 8, 8 }, nullptr );
+NanoSprite<GameEngine, engine> player( { 8, 8 }, { 8, 8 }, nullptr );
 
 /* The variable is used for player animation      *
  * The graphics defined for the hero has 2 images *
@@ -116,9 +120,9 @@ bool onDraw()
 {
     engine.canvas.clear();
     engine.canvas.setMode(0);
-    for (uint8_t row = 0; row < 7; row++)
+    for (uint8_t row = max(0,(engine.canvas.offset.y >> 3) - 1); row <= min(6,((engine.canvas.offset.y + engine.NE_TILE_HEIGHT - 1) >> 3) - 1); row++)
     {
-        for (uint8_t col = 0; col < 24; col++)
+        for (uint8_t col = (engine.canvas.offset.x >> 3); col <= min(23, ((engine.canvas.offset.x + engine.NE_TILE_WIDTH - 1) >> 3)); col++)
         {
             uint8_t index = (row * 24) + col;
             uint8_t blockType = gameField[index];
@@ -167,9 +171,14 @@ void movePlayer(uint8_t direction)
                         int16_t newX = min(player.x() - 64, 96);
                         if (newX != engine.offset.x)
                         {
+                            #ifdef SSD1331_ACCELERATION
                             ssd1331_copyBlock((newX - engine.offset.x), 8, 95, 63, 0, 8);
                             engine.offset.x = newX;
                             engine.refresh(95-7, 8, 95, 63);
+                            #else
+                            engine.offset.x = newX;
+                            engine.refresh();
+                            #endif
                         }
                     }
                     player.moveBy( { 1, 0 } );
@@ -188,10 +197,14 @@ void movePlayer(uint8_t direction)
                         int16_t newX = max(0, player.x() - 32);
                         if (newX != engine.offset.x)
                         {
+                            #ifdef SSD1331_ACCELERATION
                             ssd1331_copyBlock(0, 8, 95 - (engine.offset.x - newX), 63, engine.offset.x - newX, 8);
                             engine.offset.x = newX;
                             engine.refresh(0, 8, 7, 63);
-//                            engine.refresh();
+                            #else
+                            engine.offset.x = newX;
+                            engine.refresh();
+                            #endif
                         }
                     }
                     player.moveBy( { -1, 0 } );
@@ -263,7 +276,7 @@ void setup()
     engine.connectZKeypad(BUTTON_PIN);
     engine.drawCallback( onDraw );
     engine.begin();
-    engine.setFrameRate(25);
+    engine.setFrameRate(45);
     engine.refresh();
     pinMode(BUZZER, OUTPUT);
 }
