@@ -32,6 +32,24 @@ static int s_columnStart = 0;
 static int s_columnEnd = 127;
 static int s_pageStart = 0;
 static int s_pageEnd = 7;
+static int s_newColumn;
+static int s_newPage;
+
+static void copyBlock()
+{
+    if ( s_newColumn < s_columnStart )
+    {
+        for( int y = s_pageStart; y <= s_pageEnd; y++)
+        for( int x = s_newColumn; x <= s_newColumn + s_columnEnd - s_columnStart; x++)
+            sdl_put_pixel(x, y, sdl_get_pixel( x + s_columnStart - s_newColumn, y ));
+    }
+    else
+    {
+        for( int y = s_pageStart; y <= s_pageEnd; y++)
+        for( int x = s_newColumn + s_columnEnd - s_columnStart; x >= s_newColumn; x--)
+            sdl_put_pixel(x, y, sdl_get_pixel( x + s_columnStart - s_newColumn, y ));
+    }
+}
 
 static int sdl_ssd1331_detect(uint8_t data)
 {
@@ -67,6 +85,23 @@ static void sdl_ssd1331_commands(uint8_t data)
                      s_commandId = SSD_COMMAND_NONE;
                      break;
                 default: break;
+            }
+            break;
+        case 0x23: // MOVE BLOCK
+            switch (s_cmdArgIndex)
+            {
+                case 0: s_columnStart = data; break;
+                case 1: s_pageStart = data; break;
+                case 2: s_columnEnd = data; break;
+                case 3: s_pageEnd = data; break;
+                case 4: s_newColumn = data; break;
+                case 5:
+                     s_newPage = data;
+                     copyBlock();
+                     s_commandId = SSD_COMMAND_NONE;
+                     break;
+                default:
+                     break;
             }
             break;
         case 0x75:

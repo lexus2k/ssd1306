@@ -37,6 +37,7 @@ extern void sdl_graphics_close(void);
 
 extern void sdl_graphics_set_oled_params(int width, int height, int bpp, uint32_t pixfmt);
 extern void sdl_put_pixel(int x, int y, uint32_t color);
+extern uint32_t sdl_get_pixel(int x, int y);
 
 #ifdef __cplusplus
 }

@@ -221,6 +221,35 @@ void sdl_put_pixel(int x, int y, uint32_t color)
     }
 }
 
+uint32_t sdl_get_pixel(int x, int y)
+{
+    uint32_t pixel = 0;
+    while (x >= s_width) x-= s_width;
+    while (y >= s_height) y-= s_height;
+    if (x<0) x = 0;
+    if (y<0) y = 0;
+    if (g_pixels)
+    {
+        int index = x + y * s_width;
+        switch (s_bpp)
+        {
+            case 8:
+                pixel = ((uint8_t *)g_pixels)[ index ];
+                break;
+            case 16:
+                pixel = ((uint16_t *)g_pixels)[ index ];
+                break;
+            case 32:
+                pixel = ((uint32_t *)g_pixels)[ index ];
+                break;
+            default:
+                break;
+        }
+    }
+    return pixel;
+}
+
+
 void sdl_graphics_close(void)
 {
     SDL_DestroyWindow(g_window);
