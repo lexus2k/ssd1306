@@ -85,6 +85,19 @@ void        ssd1331_setRgbColor(uint8_t r, uint8_t g, uint8_t b);
 void         ssd1331_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint16_t color);
 
 /**
+ * Copies block in GDRAM to new position
+ * @param left column start of block to copy
+ * @param top row start of block to copy
+ * @param right column end of block to copy
+ * @param bttom row end of block to copy
+ * @param newLeft new column start
+ * @param newTop new row start
+ *
+ * @note This API can be used only with ssd1331 RGB oled displays
+ */
+void ssd1331_copyBlock(uint8_t left, uint8_t top, uint8_t right, uint8_t bottom, uint8_t newLeft, uint8_t newTop);
+
+/**
  * Draws 1-bit bitmap, located in SRAM, on the display
  * Each bit represents separate pixel: refer to ssd1306 datasheet for more information.
  *
