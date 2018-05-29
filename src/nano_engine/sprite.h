@@ -54,7 +54,8 @@ public:
 
     void refresh()
     {
-        E.refresh( m_pos.x, m_pos.y, m_pos.x + m_size.x - 1, m_pos.y + m_size.y - 1 );
+        E.refresh( m_pos.x - E.offset.x, m_pos.y - E.offset.y,
+                   m_pos.x - E.offset.x + m_size.x - 1, m_pos.y - E.offset.y + m_size.y - 1 );
     }
 
     void moveTo(const NanoPoint &p)

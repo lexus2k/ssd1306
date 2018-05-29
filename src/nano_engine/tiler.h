@@ -85,6 +85,7 @@ public:
     /** object, representing canvas. Use it in your draw handler */
     static C canvas;
 
+    static NanoPoint offset;
     /**
      * Marks all tiles for update. Actual update will take place in display() method.
      */
@@ -190,6 +191,9 @@ template<class C, uint8_t W, uint8_t H, uint8_t B>
 C NanoEngineTiler<C,W,H,B>::canvas(W, H, m_buffer);
 
 template<class C, uint8_t W, uint8_t H, uint8_t B>
+NanoPoint NanoEngineTiler<C,W,H,B>::offset = {0, 0};
+
+template<class C, uint8_t W, uint8_t H, uint8_t B>
 TNanoEngineOnDraw NanoEngineTiler<C,W,H,B>::m_onDraw = nullptr;
 
 template<class C, uint8_t W, uint8_t H, uint8_t B>
@@ -208,8 +212,8 @@ void NanoEngineTiler<C,W,H,B>::displayBuffer()
         {
             if (flag & 0x01)
             {
-                canvas.setOffset(x, y);
-                if (m_onDraw()) canvas.blt();
+                canvas.setOffset((int16_t)x + offset.x, (int16_t)y + offset.y);
+                if (m_onDraw()) canvas.blt(x, y);
             }
             flag >>=1;
         }
@@ -231,15 +235,15 @@ void NanoEngineTiler<C,W,H,B>::displayPopup(const char *msg)
         {
             if (flag & 0x01)
             {
-                canvas.setOffset(x, y);
+                canvas.setOffset((int16_t)x + offset.x, (int16_t)y + offset.y);
                 if (m_onDraw) m_onDraw();
                 canvas.setColor(RGB_COLOR8(0,0,0));
-                canvas.fillRect(rect);
+                canvas.fillRect(rect + offset);
                 canvas.setColor(RGB_COLOR8(192,192,192));
-                canvas.drawRect(rect);
-                canvas.printFixed( textPos.x, textPos.y, msg);
+                canvas.drawRect(rect + offset);
+                canvas.printFixed( textPos.x + offset.x, textPos.y + offset.y, msg);
 
-                canvas.blt();
+                canvas.blt(x, y);
             }
             flag >>=1;
         }
