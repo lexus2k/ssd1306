@@ -35,9 +35,9 @@ few resources as possible, but still has powerful capabilities (NanoEngine), all
  * Includes [graphics engine](https://github.com/lexus2k/ssd1306/wiki/Using-NanoEngine-for-systems-with-low-resources) to support
    double buffering on tiny microcontrollers.
  * Can be used for game development (bonus examples):
-   * Arkanoid game ([arkanoid](examples/arkanoid) in old style API and [arkanoid8](examples/arkanoid8) in new style API)
-   * Simple [Lode runner](examples/lode_runner) game in old style API, [Lode runner8](examples/lode_runner8) in new style API
-   * [Snowflakes](examples/snowflakes)
+   * Arkanoid game ([arkanoid](examples/games/arkanoid) in old style API and [arkanoid8](examples/games/arkanoid8) in new style API)
+   * Simple [Lode runner](examples/games/lode_runner) game.
+   * [Snowflakes](examples/nano_engine/snowflakes)
 
 ![Image of arkanoid intro](imgs/arkanoid.png)
 ![Image of lode runner](imgs/lode_runner.png)
