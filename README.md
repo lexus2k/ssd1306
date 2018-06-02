@@ -40,7 +40,7 @@ few resources as possible, but still has powerful capabilities (NanoEngine), all
    * [Snowflakes](examples/nano_engine/snowflakes)
 
 ![Image of arkanoid intro](imgs/arkanoid.png)
-![Image of lode runner](imgs/lode_runner.png)
+![Image of lode runner](imgs/lode_runner.gif)
 
 ![Image of menu example](imgs/mainmenu_top.png)
 ![Image of color oled](imgs/fonts.png)
