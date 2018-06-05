@@ -87,7 +87,6 @@ public:
     /** object, representing canvas. Use it in your draw handler */
     static C canvas;
 
-    static NanoPoint offset;
     /**
      * Marks all tiles for update. Actual update will take place in display() method.
      */
@@ -95,6 +94,28 @@ public:
     {
         memset(m_refreshFlags,0xFF,sizeof(uint16_t) * NanoEngineTiler<C,W,H,B>::NE_MAX_TILES_NUM);
     }
+
+    static void absoluteRefresh(const NanoRect &rect)
+    {
+        absoluteRefresh(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
+    }
+
+    static void absoluteRefresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+    {
+        refresh(x1 - offset.x, y1 - offset.y, x2 - offset.x, y2 - offset.y);
+    }
+
+    static void localCoordinates()
+    {
+        canvas.offset -= offset;
+    }
+
+    static void globalCoordinates()
+    {
+        canvas.offset += offset;
+    }
+
+    static NanoPoint offset;
 
     /**
      * Mark specified area in pixels for redrawing by NanoEngine.
@@ -214,7 +235,8 @@ void NanoEngineTiler<C,W,H,B>::displayBuffer()
         {
             if (flag & 0x01)
             {
-                canvas.setOffset((int16_t)x + offset.x, (int16_t)y + offset.y);
+                canvas.setOffset(x, y);
+                globalCoordinates();
                 if (m_onDraw()) canvas.blt(x, y);
             }
             flag >>=1;
@@ -237,13 +259,15 @@ void NanoEngineTiler<C,W,H,B>::displayPopup(const char *msg)
         {
             if (flag & 0x01)
             {
-                canvas.setOffset((int16_t)x + offset.x, (int16_t)y + offset.y);
+                canvas.setOffset(x, y);
+                globalCoordinates();
                 if (m_onDraw) m_onDraw();
+                localCoordinates();
                 canvas.setColor(RGB_COLOR8(0,0,0));
-                canvas.fillRect(rect + offset);
+                canvas.fillRect(rect);
                 canvas.setColor(RGB_COLOR8(192,192,192));
-                canvas.drawRect(rect + offset);
-                canvas.printFixed( textPos.x + offset.x, textPos.y + offset.y, msg);
+                canvas.drawRect(rect);
+                canvas.printFixed( textPos.x, textPos.y, msg);
 
                 canvas.blt(x, y);
             }

@@ -112,7 +112,7 @@ void showGameInfo()
     for (uint8_t i=0; i<goldCollection; i++)
     {
         engine.canvas.setColor(RGB_COLOR8(255,255,0));
-        engine.canvas.drawBitmap1(0 + (i<<3) + engine.offset.x, 0, 8, 8, coinImage);
+        engine.canvas.drawBitmap1(0 + (i<<3), 0, 8, 8, coinImage);
     }
 }
 
@@ -133,10 +133,12 @@ bool onDraw()
             }
         }
     }
-    showGameInfo();
     engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
     engine.canvas.setColor(RGB_COLOR8(64,255,255));
     player.draw();
+    engine.localCoordinates();
+    showGameInfo();
+    engine.globalCoordinates();
     return true;
 }
 
