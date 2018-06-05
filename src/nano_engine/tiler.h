@@ -95,12 +95,12 @@ public:
         memset(m_refreshFlags,0xFF,sizeof(uint16_t) * NanoEngineTiler<C,W,H,B>::NE_MAX_TILES_NUM);
     }
 
-    static void absoluteRefresh(const NanoRect &rect)
+    static void globalRefresh(const NanoRect &rect)
     {
-        absoluteRefresh(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
+        globalRefresh(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
     }
 
-    static void absoluteRefresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+    static void globalRefresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
     {
         refresh(x1 - offset.x, y1 - offset.y, x2 - offset.x, y2 - offset.y);
     }
