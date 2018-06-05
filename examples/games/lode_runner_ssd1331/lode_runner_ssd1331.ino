@@ -70,7 +70,7 @@ uint8_t gameField[24*7] =
    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 };
 
-uint8_t blockColors[] = 
+uint8_t blockColors[] =
 {
     RGB_COLOR8(255,96,0),
     RGB_COLOR8(255,255,192),
@@ -89,7 +89,7 @@ static inline bool isStair(uint8_t type)             { return type == 2; }
 GameEngine engine;
 
 /**
- * Just produces some sound depending on params 
+ * Just produces some sound depending on params
  */
 void beep(int bCount,int bDelay);
 
@@ -120,9 +120,13 @@ bool onDraw()
 {
     engine.canvas.clear();
     engine.canvas.setMode(0);
-    for (uint8_t row = max(0,(engine.canvas.offset.y >> 3) - 1); row <= min(6,((engine.canvas.offset.y + engine.NE_TILE_HEIGHT - 1) >> 3) - 1); row++)
+    showGameInfo();
+    engine.globalCoordinates();
+    for (uint8_t row = max(0,(engine.canvas.offset.y >> 3) - 1);
+                 row <= min(6,((engine.canvas.offset.y + engine.NE_TILE_HEIGHT - 1) >> 3) - 1); row++)
     {
-        for (uint8_t col = (engine.canvas.offset.x >> 3); col <= min(23, ((engine.canvas.offset.x + engine.NE_TILE_WIDTH - 1) >> 3)); col++)
+        for (uint8_t col = (engine.canvas.offset.x >> 3);
+                     col <= min(23, ((engine.canvas.offset.x + engine.NE_TILE_WIDTH - 1) >> 3)); col++)
         {
             uint8_t index = (row * 24) + col;
             uint8_t blockType = gameField[index];
@@ -136,14 +140,11 @@ bool onDraw()
     engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
     engine.canvas.setColor(RGB_COLOR8(64,255,255));
     player.draw();
-    engine.localCoordinates();
-    showGameInfo();
-    engine.globalCoordinates();
     return true;
 }
 
 void movePlayer(uint8_t direction)
-{                                           
+{
     bool animated = false;
     uint8_t bottomBlock = gameField[blockIdx(player.bottom().x,player.bottom().y)];
     uint8_t feetBlock = gameField[blockIdx(player.bottom().x,player.bottom().y - 1)];
@@ -168,18 +169,17 @@ void movePlayer(uint8_t direction)
             case BUTTON_RIGHT:
                 if (isWalkable(rightBlock))
                 {
-                    if (player.x() - engine.offset.x >= 64)
+                    if (player.x() - engine.getPosition().x >= 64)
                     {
                         int16_t newX = min(player.x() - 64, 96);
-                        if (newX != engine.offset.x)
+                        if (newX != engine.getPosition().x)
                         {
                             #ifdef SSD1331_ACCELERATION
-                            ssd1331_copyBlock((newX - engine.offset.x), 8, 95, 63, 0, 8);
-                            engine.offset.x = newX;
+                            ssd1331_copyBlock((newX - engine.getPosition().x), 8, 95, 63, 0, 8);
+                            engine.moveTo( { newX, engine.getPosition().y } );
                             engine.refresh(95-7, 8, 95, 63);
                             #else
-                            engine.offset.x = newX;
-                            engine.refresh();
+                            engine.moveToAndRefresh( { newX, engine.getPosition().y } );
                             #endif
                         }
                     }
@@ -194,18 +194,17 @@ void movePlayer(uint8_t direction)
             case BUTTON_LEFT:
                 if (isWalkable(leftBlock))
                 {
-                    if (player.x() - engine.offset.x < 32)
+                    if (player.x() - engine.getPosition().x < 32)
                     {
                         int16_t newX = max(0, player.x() - 32);
-                        if (newX != engine.offset.x)
+                        if (newX != engine.getPosition().x)
                         {
                             #ifdef SSD1331_ACCELERATION
-                            ssd1331_copyBlock(0, 8, 95 - (engine.offset.x - newX), 63, engine.offset.x - newX, 8);
-                            engine.offset.x = newX;
+                            ssd1331_copyBlock(0, 8, 95 - (engine.getPosition().x - newX), 63, engine.getPosition().x - newX, 8);
+                            engine.moveTo( { newX, engine.getPosition().y } );
                             engine.refresh(0, 8, 7, 63);
                             #else
-                            engine.offset.x = newX;
-                            engine.refresh();
+                            engine.moveToAndRefresh( { newX, engine.getPosition().y } );
                             #endif
                         }
                     }

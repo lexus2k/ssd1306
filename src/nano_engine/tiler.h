@@ -52,7 +52,9 @@ extern "C" SFixedFontInfo s_fixedFont;
 #define ADATILE_8x8_RGB8      AdafruitCanvas8,  8,  8,      3    ///< Use Adafruit GFX implementation as NanoEngine canvas
 #define ADATILE_8x8_RGB16     AdafruitCanvas16, 8,  8,      3    ///< Use Adafruit GFX implementation as NanoEngine canvas
 
-/** Type of user-specified draw callback */
+/**
+ * Type of user-specified draw callback.
+ */
 typedef bool (*TNanoEngineOnDraw)(void);
 
 /**
@@ -95,31 +97,10 @@ public:
         memset(m_refreshFlags,0xFF,sizeof(uint16_t) * NanoEngineTiler<C,W,H,B>::NE_MAX_TILES_NUM);
     }
 
-    static void globalRefresh(const NanoRect &rect)
-    {
-        globalRefresh(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
-    }
-
-    static void globalRefresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
-    {
-        refresh(x1 - offset.x, y1 - offset.y, x2 - offset.x, y2 - offset.y);
-    }
-
-    static void localCoordinates()
-    {
-        canvas.offset -= offset;
-    }
-
-    static void globalCoordinates()
-    {
-        canvas.offset += offset;
-    }
-
-    static NanoPoint offset;
-
     /**
      * Mark specified area in pixels for redrawing by NanoEngine.
      * Actual update will take place in display() method.
+     * @note assumes that rect is in local screen coordinates
      */
     static void refresh(const NanoRect &rect)
     {
@@ -157,14 +138,63 @@ public:
     }
 
     /**
+     *
+     */
+    static void globalRefresh(const NanoRect &rect)
+    {
+        globalRefresh(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
+    }
+
+    static void globalRefresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+    {
+        refresh(x1 - offset.x, y1 - offset.y, x2 - offset.x, y2 - offset.y);
+    }
+
+    static void localCoordinates()
+    {
+        canvas.offset -= offset;
+    }
+
+    static void globalCoordinates()
+    {
+        canvas.offset += offset;
+    }
+
+    static void moveTo(const NanoPoint & position)
+    {
+        offset = position;
+    }
+
+    static void moveToAndRefresh(const NanoPoint & position)
+    {
+        moveTo(position);
+        refresh();
+    }
+
+    const NanoPoint & getPosition() const
+    {
+        return offset;
+    }
+
+    /**
      * Sets user-defined draw callback. This callback will be called everytime, engine needs
      * to update display content. If callback returns false, engine will not update those area.
      * You always have a way to find out, which area is being updated by engine via
-     * NanoEngine8::canvas::getOffset() and NE_TILE_SIZE.
+     * NanoEngine<>::canvas::getOffset() and NanoEngine<>::NE_TILE_SIZE.
+     * @important By default canvas in the engine is initialized with local screen coordinates. So
+     *            graphics object with [0,0] coordinates will be placed at topleft position on the
+     *            display. But engine supports also global coordinates, in this case actual object
+     *            position depends on current engine offset. Refer to globalCoordinates() and
+     *            localCoordinates().
      * @param callback - user-defined draw callback.
      * @note you can change draw callback anytime you need.
+     * @see globalCoordinates()
+     * @see localCoordinates()
      */
-    static void drawCallback(TNanoEngineOnDraw callback) { m_onDraw = callback; };
+    static void drawCallback(TNanoEngineOnDraw callback)
+    {
+        m_onDraw = callback;
+    }
 
     /**
      * @brief Returns true if point is inside the rectangle area.
@@ -202,6 +232,8 @@ protected:
 private:
     /** Buffer, used by NanoCanvas */
     static uint8_t    m_buffer[W * H * C::BITS_PER_PIXEL / 8];
+
+    static NanoPoint offset;
 };
 
 template<class C, uint8_t W, uint8_t H, uint8_t B>
@@ -236,8 +268,11 @@ void NanoEngineTiler<C,W,H,B>::displayBuffer()
             if (flag & 0x01)
             {
                 canvas.setOffset(x, y);
-                globalCoordinates();
-                if (m_onDraw()) canvas.blt(x, y);
+                if (m_onDraw())
+                {
+                    canvas.setOffset(x, y);
+                    canvas.blt();
+                }
             }
             flag >>=1;
         }
@@ -260,16 +295,15 @@ void NanoEngineTiler<C,W,H,B>::displayPopup(const char *msg)
             if (flag & 0x01)
             {
                 canvas.setOffset(x, y);
-                globalCoordinates();
                 if (m_onDraw) m_onDraw();
-                localCoordinates();
+                canvas.setOffset(x, y);
                 canvas.setColor(RGB_COLOR8(0,0,0));
                 canvas.fillRect(rect);
                 canvas.setColor(RGB_COLOR8(192,192,192));
                 canvas.drawRect(rect);
                 canvas.printFixed( textPos.x, textPos.y, msg);
 
-                canvas.blt(x, y);
+                canvas.blt();
             }
             flag >>=1;
         }
