@@ -130,10 +130,10 @@ const PROGMEM uint8_t snowFlakeImage[8][8] =
 
 NanoEngine1 engine;
 
-class SnowFlake: public NanoSprite<NanoEngine1, engine>
+class SnowFlake: public NanoFixedSprite<NanoEngine1, engine>
 {
 public:
-    SnowFlake(): NanoSprite<NanoEngine1, engine>({0, 0}, {8, 8}, nullptr) { }
+    SnowFlake(): NanoFixedSprite<NanoEngine1, engine>({0, 0}, {8, 8}, nullptr) { }
 
     bool isAlive() { return falling; }
 
@@ -146,7 +146,7 @@ public:
         speed = { random(-16, 16), random(4, 12) };
         /* After countdown timer ticks to 0, change X direction */
         timer = random(24, 48);
-        NanoSprite::moveTo( scaled_position/8 );
+        moveTo( scaled_position/8 );
         falling = true;
     }
 
@@ -160,7 +160,7 @@ public:
             speed.x = random(-16, 16);
             timer = random(24, 48);
         }
-        NanoSprite::moveTo( scaled_position/8 );
+        moveTo( scaled_position/8 );
         if (y() >= ssd1306_displayHeight() )
         {
             falling = false;

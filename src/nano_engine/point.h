@@ -70,7 +70,7 @@ typedef struct _NanoPoint
 
     /**
      * Adds point.
-     * @param p - point values to add to the point. 
+     * @param p - point values to add to the point.
      */
     _NanoPoint& operator+=(const _NanoPoint &p)
     {
@@ -81,7 +81,7 @@ typedef struct _NanoPoint
 
     /**
      * Subtracts point.
-     * @param p - point values to subtract from the point. 
+     * @param p - point values to subtract from the point.
      */
     _NanoPoint& operator-=(const _NanoPoint &p)
     {
@@ -92,7 +92,7 @@ typedef struct _NanoPoint
 
     /**
      * Subtracts point.
-     * @param p - point values to subtract from the point. 
+     * @param p - point values to subtract from the point.
      */
     _NanoPoint operator-(const _NanoPoint &p)
     {
@@ -102,7 +102,7 @@ typedef struct _NanoPoint
 
     /**
      * Adds point.
-     * @param p - point values to add to the point. 
+     * @param p - point values to add to the point.
      */
     _NanoPoint operator+(const _NanoPoint &p)
     {
@@ -141,6 +141,12 @@ typedef struct _NanoPoint
     };
 
 } NanoPoint;
+
+
+inline NanoPoint operator+(const NanoPoint& p1, const NanoPoint& p2)
+{
+  return { p1.x + p2.x, p1.y + p2.y };
+}
 
 #endif
 

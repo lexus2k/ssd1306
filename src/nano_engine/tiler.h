@@ -140,12 +140,12 @@ public:
     /**
      *
      */
-    static void globalRefresh(const NanoRect &rect)
+    static void refreshWorld(const NanoRect &rect)
     {
-        globalRefresh(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
+        refreshWorld(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
     }
 
-    static void globalRefresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+    static void refreshWorld(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
     {
         refresh(x1 - offset.x, y1 - offset.y, x2 - offset.x, y2 - offset.y);
     }

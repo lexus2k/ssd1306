@@ -87,7 +87,7 @@ NanoEngine8 engine;
  */
 void beep(int bCount,int bDelay);
 
-NanoSprite<NanoEngine8, engine> player( { 8, 8 }, { 8, 8 }, nullptr );
+NanoFixedSprite<NanoEngine8, engine> player( { 8, 8 }, { 8, 8 }, nullptr );
 
 /* The variable is used for player animation      *
  * The graphics defined for the hero has 2 images *

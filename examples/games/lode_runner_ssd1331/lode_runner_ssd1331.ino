@@ -93,7 +93,7 @@ GameEngine engine;
  */
 void beep(int bCount,int bDelay);
 
-NanoSprite<GameEngine, engine> player( { 8, 8 }, { 8, 8 }, nullptr );
+NanoFixedSprite<GameEngine, engine> player( { 8, 8 }, { 8, 8 }, nullptr );
 
 /* The variable is used for player animation      *
  * The graphics defined for the hero has 2 images *

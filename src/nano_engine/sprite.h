@@ -41,6 +41,82 @@ class NanoSprite
 {
 public:
     NanoSprite(const NanoPoint &pos, const NanoPoint &size, const uint8_t *bitmap)
+         : m_rect{pos, pos + size}
+         , m_bitmap( bitmap )
+    {
+    }
+
+    void draw()
+    {
+        E.canvas.drawBitmap1(m_rect.p1.x, m_rect.p1.y, m_rect.width(), m_rect.height(), m_bitmap);
+    }
+
+    void refresh()
+    {
+        E.refreshWorld( m_rect );
+    }
+
+    void moveTo(const NanoPoint &p)
+    {
+        refresh();
+        m_rect = p;
+        refresh();
+    }
+
+    void moveBy(const NanoPoint &p)
+    {
+        refresh();
+        m_rect += p;
+        refresh();
+    }
+
+    const NanoPoint bottom() const
+    {
+        return { (m_rect.p1.x + m_rect.p2.x) >> 1, m_rect.p2.y  };
+    }
+
+    const NanoPoint top() const
+    {
+        return { (m_rect.p1.x + m_rect.p2.x) >> 1, m_rect.p1.y  };
+    }
+
+    const NanoPoint left() const
+    {
+        return { m_rect.p1.x, (m_rect.p1.y + m_rect.p2.y) >> 1  };
+    }
+
+    const NanoPoint right() const
+    {
+        return { m_rect.p2.x, (m_rect.p1.y + m_rect.p2.y) >> 1  };
+    }
+
+    const NanoPoint center() const
+    {
+        return { (m_rect.p1.x + m_rect.p2.x) >> 1, (m_rect.p1.y + m_rect.p2.y) >> 1  };
+    }
+
+    void setBitmap( const uint8_t * bitmap )
+    {
+        m_bitmap = bitmap;
+    }
+
+    lcdint_t x( ) const { return m_rect.p1.x; }
+    lcdint_t y( ) const { return m_rect.p1.y; }
+
+private:
+    NanoRect       m_rect;
+    const uint8_t *m_bitmap;
+};
+
+/**
+ * This is template class for user sprites implementation.
+ * It requires NanoEngine type and NanoEngine instance as arguments.
+ */
+template<typename T, T &E>
+class NanoFixedSprite
+{
+public:
+    NanoFixedSprite(const NanoPoint &pos, const NanoPoint &size, const uint8_t *bitmap)
          : m_pos(pos)
          , m_size(size)
          , m_bitmap( bitmap )
@@ -54,7 +130,7 @@ public:
 
     void refresh()
     {
-        E.globalRefresh( m_pos.x, m_pos.y,
+        E.refreshWorld( m_pos.x, m_pos.y,
                          m_pos.x + m_size.x - 1, m_pos.y + m_size.y - 1 );
     }
 

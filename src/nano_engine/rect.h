@@ -42,6 +42,18 @@ typedef struct _NanoRect
     /** right-bottom point of the rectangle area */
     NanoPoint p2;
 
+    /** returns width of NanoRect */
+    lcdint_t width() const
+    {
+        return p2.x - p1.x + 1;
+    }
+
+    /** returns height of NanoRect */
+    lcdint_t height() const
+    {
+        return p2.y - p1.y + 1;
+    }
+
     /**
      * Shifts rectangle area by dx;dy pixels.
      * @param dx - delta on x-axis
@@ -60,7 +72,7 @@ typedef struct _NanoRect
     void addH(lcdint_t dx)
     {
         p1.x += dx; p2.x += dx;
-    };
+    }
 
     /**
      * Shifts rectangle area by dy pixels.
@@ -70,7 +82,7 @@ typedef struct _NanoRect
     {
         p1.y += dy;
         p2.y += dy;
-    };
+    }
 
     /**
      * Initializes NanoRect with specified values
@@ -83,13 +95,16 @@ typedef struct _NanoRect
     {
         p1.x = l; p1.y = t;
         p2.x = r; p2.y = b;
-    };
+    }
 
     /**
      * Returns true if specified x position is between left and right borders.
      * @param x - position to check
      */
-    bool collisionX(lcdint_t x) const { return (x >= p1.x) && (x <= p2.x); };
+    bool collisionX(lcdint_t x) const
+    {
+        return (x >= p1.x) && (x <= p2.x);
+    }
 
     /**
      * Returns true if specified y position is between left and right borders.
@@ -123,7 +138,7 @@ typedef struct _NanoRect
     {
         return { {static_cast<lcdint_t>(p1.x - p.x), static_cast<lcdint_t>(p1.y - p.y) },
                  {static_cast<lcdint_t>(p2.x - p.x), static_cast<lcdint_t>(p2.y - p.y) } };
-    };
+    }
 
     /**
      * Add point to all points of rectangle.
@@ -133,7 +148,7 @@ typedef struct _NanoRect
     {
         return { {static_cast<lcdint_t>(p1.x + p.x), static_cast<lcdint_t>(p1.y + p.y) },
                  {static_cast<lcdint_t>(p2.x + p.x), static_cast<lcdint_t>(p2.y + p.y) } };
-    };
+    }
 
     /**
      * Subtracts point to all points of rectangle.
@@ -146,7 +161,7 @@ typedef struct _NanoRect
         p2.x += p.x;
         p2.y += p.y;
         return *this;
-    };
+    }
 
 } NanoRect;
 
