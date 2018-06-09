@@ -32,7 +32,7 @@
 
 #include "ssd1306.h"
 #include "intf/ssd1306_interface.h"
-#include "i2c/ssd1306_i2c.h"
+#include "intf/i2c/ssd1306_i2c.h"
 #include "font6x8.h"
 
 #define DEVICE_CLASS_NAME "ssd1306_lcd"

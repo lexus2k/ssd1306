@@ -59,6 +59,27 @@ typedef unsigned int lcduint_t;
 /** swaps content of a and b variables of type type */
 #define ssd1306_swap_data(a, b, type)  { type t = a; a = b; b = t; }
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+// !!! PLATFORM I2C IMPLEMENTATION OPTIONAL !!!
+#if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && defined(CONFIG_PLATFORM_I2C_ENABLE)
+extern void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, int8_t arg);
+#endif
+
+
+// !!! PLATFORM SPI IMPLEMENTATION OPTIONAL !!!
+#if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)
+extern void ssd1306_platform_spiInit(int8_t busId,
+                                     int8_t cesPin,
+                                     int8_t dcPin);
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif
 
 

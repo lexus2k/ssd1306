@@ -89,7 +89,7 @@ void         ssd1331_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, ui
  * @param left column start of block to copy
  * @param top row start of block to copy
  * @param right column end of block to copy
- * @param bttom row end of block to copy
+ * @param bottom row end of block to copy
  * @param newLeft new column start
  * @param newTop new row start
  *
@@ -143,7 +143,7 @@ void ssd1331_fillScreen8(uint8_t fill_Data);
 /**
  * Fills screen with zero-byte
  */
-void ssd1331_clearScreen8();
+void ssd1331_clearScreen8(void);
 
 /**
  * Puts single color point directly in OLED display GDRAM.

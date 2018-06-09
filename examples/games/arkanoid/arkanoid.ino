@@ -59,7 +59,6 @@
 #include "i2c/ssd1306_i2c_wire.h"
 #include "i2c/ssd1306_i2c_embedded.h"
 #include "i2c/ssd1306_i2c_twi.h"
-#include "i2c/ssd1306_i2c_linux.h"
 #include "intf/ssd1306_interface.h"
 #include "lcd/lcd_common.h"
 
@@ -162,8 +161,8 @@ void drawIntro()
     ssd1306_i2cInit_Wire(0);
 #elif defined(CONFIG_SOFTWARE_I2C_AVAILABLE)
     ssd1306_i2cInit_Embedded(-1,-1,0);
-#elif defined(SSD1306_LINUX_SUPPORTED)
-    ssd1306_i2cInit_Linux(-1,-1);
+#elif defined(CONFIG_PLATFORM_I2C_AVAILABLE)
+    ssd1306_platform_i2cInit(-1,-1,-1);
 #elif defined(CONFIG_TWI_I2C_AVAILABLE)
     ssd1306_i2cInit_Twi(0);
 #else
@@ -343,7 +342,7 @@ void setup()
 {
     ssd1306_setFixedFont(ssd1306xled_font6x8_AB);
     randomSeed(analogRead(0));
-#if defined(SSD1306_LINUX_SUPPORTED)
+#if defined(CONFIG_PLATFORM_I2C_AVAILABLE)
     // no need to do anything here
 #elif defined(ARKANOID_SSD1331)
     #ifndef USE_Z_KEYPAD

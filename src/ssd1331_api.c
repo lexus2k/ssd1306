@@ -142,7 +142,7 @@ void ssd1331_fillScreen8(uint8_t fill_Data)
     ssd1306_intf.stop();
 }
 
-void ssd1331_clearScreen8()
+void ssd1331_clearScreen8(void)
 {
     ssd1331_fillScreen8( 0x00 );
 }
