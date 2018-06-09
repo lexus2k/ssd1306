@@ -27,7 +27,6 @@
 #include "ssd1306_spi_hw.h"
 #include "ssd1306_spi_avr.h"
 #include "ssd1306_spi_usi.h"
-#include "ssd1306_spi_linux.h"
 #include "intf/ssd1306_interface.h"
 #include "lcd/lcd_common.h"
 #include "ssd1306_hal/io.h"
@@ -47,9 +46,6 @@ void ssd1306_spiInit(int8_t cesPin, int8_t dcPin)
     ssd1306_spiInit_hw(cesPin, dcPin);
 #elif defined(CONFIG_USI_SPI_AVAILABLE) && defined(CONFIG_USI_SPI_ENABLE)
     ssd1306_spiInit_Usi(cesPin, dcPin);
-#elif defined(SSD1306_LINUX_SUPPORTED)
-    /* -1 means SPI bus is selected by default */
-    ssd1306_spiInit_Linux(-1, cesPin, dcPin);
 #else
     #warning "ssd1306 library: no spi support for the target platform"
 #endif

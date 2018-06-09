@@ -143,7 +143,7 @@ void ssd1331_fillScreen8(uint8_t fill_Data);
 /**
  * Fills screen with zero-byte
  */
-void ssd1331_clearScreen8();
+void ssd1331_clearScreen8(void);
 
 /**
  * Puts single color point directly in OLED display GDRAM.

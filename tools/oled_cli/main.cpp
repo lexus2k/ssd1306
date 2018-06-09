@@ -23,7 +23,6 @@
 */
 
 #include "ssd1306.h"
-#include "intf/spi/ssd1306_spi_linux.h"
 #include "intf/ssd1306_interface.h"
 #include "intf/i2c/ssd1306_i2c.h"
 
@@ -36,11 +35,12 @@ int init_interface(char *intf, char *bus, char *devId)
 {
     if (!strcmp(intf, "spi"))
     {
-        ssd1306_spiInit_Linux(bus[0] - '0', strtol(devId, NULL, 16), -1);
+        ssd1306_platform_spiInit(bus[0] - '0', strtol(devId, NULL, 16), -1);
     }
     else if (!strcmp(intf, "i2c"))
     {
-        ssd1306_i2cInitEx(bus[0] - '0', bus[0] - '0', strtol(devId, NULL, 16));
+        ssd1306_platform_i2cInit(bus[0] - '0', strtol(devId, NULL, 16), -1);
+//        ssd1306_i2cInitEx(bus[0] - '0', bus[0] - '0', strtol(devId, NULL, 16));
     }
     else
     {

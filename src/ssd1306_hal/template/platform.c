@@ -30,7 +30,7 @@
 
 #include "intf/ssd1306_interface.h"
 ////////////////////////////////////////////////////////////////////////////////////////
-// !!! PLATFORM SPI IMPLEMENTATION OPTIONAL !!!
+// !!! PLATFORM I2C IMPLEMENTATION OPTIONAL !!!
 #if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && defined(CONFIG_PLATFORM_I2C_ENABLE)
 static uint8_t s_i2c_addr = 0x3C;
 

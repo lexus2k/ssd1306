@@ -29,7 +29,9 @@
 #ifndef _SSD1306_LINUX_IO_H_
 #define _SSD1306_LINUX_IO_H_
 
-#define SSD1306_LINUX_SUPPORTED
+#define CONFIG_PLATFORM_I2C_AVAILABLE
+#define CONFIG_PLATFORM_SPI_AVAILABLE
+
 
 #if defined(SDL_EMULATION)  // SDL Emulation mode includes
 #include "sdl_core.h"

@@ -130,20 +130,6 @@ static inline char *utoa(unsigned int num, char *str, int radix)    // util utoa
     return str;
 }
 
-
-// !!! PLATFORM I2C IMPLEMENTATION OPTIONAL !!!
-#if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && defined(CONFIG_PLATFORM_I2C_ENABLE)
-void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, int8_t arg);
-#endif
-
-
-// !!! PLATFORM SPI IMPLEMENTATION OPTIONAL !!!
-#if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)
-void ssd1306_platform_spiInit(uint8_t busId,
-                              uint8_t cesPin,
-                              uint8_t dcPin);
-#endif
-
 #ifdef __cplusplus
 }
 #endif
