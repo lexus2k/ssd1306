@@ -28,6 +28,7 @@ SRCS_C = \
 	ssd1306_menu.c \
 	ssd1306_hal/avr/gpio.c \
 	ssd1306_hal/linux/gpio.c \
+	ssd1306_hal/template/platform.c \
 	intf/i2c/ssd1306_i2c_common.c \
 	intf/i2c/ssd1306_i2c_embedded.c \
 	intf/i2c/ssd1306_i2c_twi.c \
