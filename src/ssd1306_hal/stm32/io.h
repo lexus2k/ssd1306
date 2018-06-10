@@ -31,6 +31,7 @@
 
 // TODO: To add support. Any help is welcome
 
+#define SSD1306_STM32_PLATFORM
 //========================== I. Include libraries =========================
 /* 1. Include all required headers, specific for your platform here */
 #include <stdint.h>
@@ -49,16 +50,9 @@
  *    Remember that you will need to implement low level intf/i2c or *
  *    intf/spi layers for your platform                              */
 
-//#define CONFIG_SOFTWARE_I2C_AVAILABLE
-//#define CONFIG_TWI_I2C_AVAILABLE
-//#define CONFIG_AVR_SPI_AVAILABLE
-//#define CONFIG_AVR_UART_AVAILABLE
-//#define CONFIG_VGA_AVAILABLE
-//#define CONFIG_PLATFORM_I2C_AVAILABLE
-//#define CONFIG_PLATFORM_SPI_AVAILABLE
-
 /** The macro is defined when STM32 i2c implementation is available */
-#define CONFIG_STM32_I2C_AVAILABLE
+#define CONFIG_PLATFORM_I2C_AVAILABLE
+#define CONFIG_PLATFORM_SPI_AVAILABLE
 
 #ifdef __cplusplus
 extern "C" {

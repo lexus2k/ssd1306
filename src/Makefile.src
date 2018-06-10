@@ -29,6 +29,7 @@ SRCS_C = \
 	ssd1306_hal/avr/platform.c \
 	ssd1306_hal/linux/platform.c \
 	ssd1306_hal/mingw/platform.c \
+	ssd1306_hal/stm32/platform.c \
 	ssd1306_hal/template/platform.c \
 	intf/i2c/ssd1306_i2c.c \
 	intf/i2c/ssd1306_i2c_embedded.c \

@@ -26,15 +26,25 @@
  * @file ssd1306_hal/template/io.h This is template file for new platform with detailed instructions
  */
 
-#ifndef _SSD1306_TEMPLATE_IO_H_
-#define _SSD1306_TEMPLATE_IO_H_
+#ifndef _SSD1306_YOUR_PLATFORM_IO_H_
+#define _SSD1306_YOUR_PLATFORM_IO_H_
 
+//========================== I. Create directory for your platform ========
+/* 1. Copy content of this folder to src/ssd1306_hal/<your_platform>/ folder   */
+/* 2. Replace YOUR_PLATFORM in these files with the one, you would like to use */
+/* 3. Add #include "<your_platform>/io.h" to src/ssd1306_hal/io.h file         */
+/*    (remember to add required #elif defined(X) lines)                        */
+/* 4. Add platform.c file to SOURCES list in src/Makefile.src                  */
+/* 5. Implement functions below and functions in platform.c file               */
+
+#define YOUR_PLATFORM
 //========================== I. Include libraries =========================
 /* 1. Include all required headers, specific for your platform here */
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
+/* If your platform already has these definitions, comment out lines below */
 #define LOW  0
 #define HIGH 1
 #define INPUT 0
@@ -52,7 +62,6 @@
 //#define CONFIG_AVR_SPI_AVAILABLE
 //#define CONFIG_AVR_UART_AVAILABLE
 //#define CONFIG_VGA_AVAILABLE
-//#define CONFIG_STM32_I2C_AVAILABLE
 //#define CONFIG_PLATFORM_I2C_AVAILABLE
 //#define CONFIG_PLATFORM_SPI_AVAILABLE
 
@@ -61,8 +70,10 @@ extern "C" {
 #endif
 
 //========================== III. Implement functions =====================
-/* Implement functions below the way you like. You can make them non-static */
-// !!!  MANDATORY !!!
+/* Implement functions below the way you like. You can make them non-static
+ * and implement the functions in platform.c file
+ */
+// !!! MANDATORY. The library will not work without these functions !!!
 static inline int  digitalRead(int pin)   // digitalRead()
 {
     return LOW;
@@ -108,7 +119,7 @@ static inline void attachInterrupt(int pin, void (*interrupt)(), int level)  // 
 {
 }
 
-static inline uint8_t pgm_read_byte(const void *ptr)  // pgm_read_byte() - can be skipped
+static inline uint8_t pgm_read_byte(const void *ptr)  // pgm_read_byte() - can be left as is
 {
     return *((const uint8_t *)ptr);
 }
