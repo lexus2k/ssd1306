@@ -1,0 +1,62 @@
+#    MIT License
+#
+#    Copyright (c) 2018, Alexey Dynda
+#
+#    Permission is hereby granted, free of charge, to any person obtaining a copy
+#    of this software and associated documentation files (the "Software"), to deal
+#    in the Software without restriction, including without limitation the rights
+#    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#    copies of the Software, and to permit persons to whom the Software is
+#    furnished to do so, subject to the following conditions:
+#
+#    The above copyright notice and this permission notice shall be included in all
+#    copies or substantial portions of the Software.
+#
+#    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+#    SOFTWARE.
+#
+#################################################################
+# Makefile to build ssd1306 examples for AVR controllers
+#
+# Accept the following parameters:
+# CC
+# CXX
+# STRIP
+# AR
+# MCU
+# FREQUENCY
+
+default: all
+
+CC = arm-none-eabi-gcc
+CXX = arm-none-eabi-g++
+STRIP = arm-none-eabi-strip
+AR = arm-none-eabi-ar
+CORE ?= cortex-m3
+MCU ?= stm32f4x
+FREQUENCY ?= 16000000
+platform=stm32
+
+CCFLAGS += -DSTM32F4
+CCFLAGS += -mlittle-endian -mthumb -mthumb-interwork -g -Os -w -ffreestanding -mcpu=$(CORE) -DF_CPU=$(FREQUENCY)
+LDFLAGS += -specs=nosys.specs
+
+ifeq ($(ADAFRUIT),y)
+INCLUDES += -I../src/ssd1306_hal/avr/arduino
+endif
+
+include Makefile.common
+
+all: $(BLD)/$(PROJECT).bin $(BLD)/$(PROJECT).hex
+
+$(BLD)/$(PROJECT).bin: $(OUTFILE)
+	arm-none-eabi-objcopy -O binary $< $@
+
+$(BLD)/$(PROJECT).hex: $(OUTFILE)
+	arm-none-eabi-objcopy -O ihex $< $@
+

@@ -120,11 +120,12 @@ static inline void eeprom_write_word(const void *ptr, uint16_t val) // eeprom_wr
 {
 }
 
-static inline char *utoa(unsigned int num, char *str, int radix)    // util utoa() - can be skipped
-{
-    *str = '\0';
-    return str;
-}
+// utoa is already defined in stdlib c
+//static inline char *utoa(unsigned int num, char *str, int radix)    // util utoa() - can be skipped
+//{
+//    *str = '\0';
+//    return str;
+//}
 
 #ifdef __cplusplus
 }

@@ -27,6 +27,7 @@
 #if defined(SSD1306_STM32_PLATFORM)
 
 #include "intf/ssd1306_interface.h"
+#include "stm32f1xx_hal.h"
 
 // TODO: To add support. Any help is welcome
 
@@ -63,6 +64,10 @@ static void platform_i2c_send_buffer(const uint8_t *data, uint16_t len)
 void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, int8_t arg)
 {
     if (addr) s_i2c_addr = addr;
+    if (HAL_I2C_IsDeviceReady(&hi2c1, s_i2c_addr, 1, 20000) != HAL_OK)
+    {
+        return;
+    }
     ssd1306_intf.spi = 0;
     ssd1306_intf.start = &platform_i2c_start;
     ssd1306_intf.stop  = &platform_i2c_stop;
