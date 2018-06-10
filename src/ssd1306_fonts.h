@@ -31,7 +31,7 @@
 #include "ssd1306_hal/io.h"
 
 /**
- * @defgroup LCD_FONTS Supported LCD fonts
+ * @defgroup LCD_FONTS FONTS: Supported LCD fonts
  * @{
  */
 

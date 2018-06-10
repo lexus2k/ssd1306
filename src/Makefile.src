@@ -57,7 +57,6 @@ SRCS_CPP = \
 	sprite_pool.cpp \
 	ssd1306_console.cpp \
 	ssd1306_hal/arduino/platform.cpp \
-	intf/spi/ssd1306_spi_hw.cpp
 
 SRCS = $(SRCS_C) $(SRCS_CPP)
 

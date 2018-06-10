@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['lcd_20direct_20draw_20functions_2c_20compatible_20with_20ssd1306_20oled_20types_2e',['LCD direct draw functions, compatible with ssd1306 oled types.',['../group___l_c_d___d_i_r_e_c_t___d_r_a_w___s_s_d1306___c_o_m_p_a_t.html',1,'']]],
-  ['lcd_20physical_20interface_20functions',['LCD physical interface functions',['../group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html',1,'']]],
-  ['lcd_20high_20level_20api',['LCD High level API',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html',1,'']]]
+  ['direct_20draw_3a_201_2dbit_20graphic_20functions_20for_20ssd1306_20compatible_20mode_2e',['DIRECT DRAW: 1-bit graphic functions for ssd1306 compatible mode.',['../group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html',1,'']]],
+  ['direct_20draw_3a_208_2dbit_20and_2016_2dbit_20api_20functions_20only_20for_20color_20displays',['DIRECT DRAW: 8-bit and 16-bit API functions only for color displays',['../group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html',1,'']]]
 ];

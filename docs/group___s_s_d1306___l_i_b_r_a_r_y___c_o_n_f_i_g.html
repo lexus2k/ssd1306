@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>SSD1306 OLED display driver: User ssd1306 library modules configuration</title>
+<title>SSD1306 OLED display driver: CONFIG: ssd1306 library configuration</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -81,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">User ssd1306 library modules configuration</div>  </div>
+<div class="title">CONFIG: ssd1306 library configuration</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -92,12 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Macros</h2></td></tr>
 <tr class="memitem:gabf5f8ea0739c7b74ca0336bdf04b70fd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#gabf5f8ea0739c7b74ca0336bdf04b70fd">CONFIG_SOFTWARE_I2C_ENABLE</a></td></tr>
 <tr class="separator:gabf5f8ea0739c7b74ca0336bdf04b70fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8da1ccb0508306865a5e78c9f0a8ef34"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga8da1ccb0508306865a5e78c9f0a8ef34">CONFIG_ARDUINO_WIRE_LIBRARY_ENABLE</a></td></tr>
-<tr class="separator:ga8da1ccb0508306865a5e78c9f0a8ef34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaae38bc2500b53d8fb222f4071ec27a54"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#gaae38bc2500b53d8fb222f4071ec27a54">CONFIG_TWI_I2C_ENABLE</a></td></tr>
 <tr class="separator:gaae38bc2500b53d8fb222f4071ec27a54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga63bc9f631c3dcf67c09836217a4cbfb2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga63bc9f631c3dcf67c09836217a4cbfb2">CONFIG_ARUDINO_SPI_LIBRARY_ENABLE</a></td></tr>
-<tr class="separator:ga63bc9f631c3dcf67c09836217a4cbfb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac028140be3b57c38264f1a85db026c7f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#gac028140be3b57c38264f1a85db026c7f">CONFIG_AVR_SPI_ENABLE</a></td></tr>
 <tr class="separator:gac028140be3b57c38264f1a85db026c7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf1c2440ddde06b7bdd1974fbd2447941"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#gaf1c2440ddde06b7bdd1974fbd2447941">CONFIG_USI_SPI_ENABLE</a></td></tr>
@@ -115,36 +111,6 @@ Macros</h2></td></tr>
 <p>Group of settings allowing to disable/enable library modules. </p>
 <p>Arduino IDE (at least as for 1.8.2) has a lack library configuration functionality. Some Arduino standard libraries are built the way, if you include them to the project, but do not use any functions from the, they still eat RAM and Flash on you EVK board. To avoid this, you need competely avoid including of such libraries. SSD1306 library has a wide interfaces support for different platforms, and even if you don't use SSD1306 communication via Arduino Wire/Spi/HardwareSerial libraries, those ones do bad things with your sketch size. To avoid this you can manually disable SSD1306 modules, you don't need in <a class="el" href="_user_settings_8h.html">UserSettings.h</a> header file, and gain another 100-200 bytes of RAM and 300-500 bytes of Flash. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga8da1ccb0508306865a5e78c9f0a8ef34"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CONFIG_ARDUINO_WIRE_LIBRARY_ENABLE</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define this macro if you need to enable Arduino Wire library module for compilation </p>
-
-<p>Definition at line <a class="el" href="_user_settings_8h_source.html#l00055">55</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ga63bc9f631c3dcf67c09836217a4cbfb2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CONFIG_ARUDINO_SPI_LIBRARY_ENABLE</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define this macro if you need to enable Arduino SPI library module for compilation </p>
-
-<p>Definition at line <a class="el" href="_user_settings_8h_source.html#l00061">61</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="gac028140be3b57c38264f1a85db026c7f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -156,7 +122,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <p>Define this macro if you need to enable AVR SPI module for compilation </p>
 
-<p>Definition at line <a class="el" href="_user_settings_8h_source.html#l00064">64</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
+<p>Definition at line <a class="el" href="_user_settings_8h_source.html#l00058">58</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
 
 </div>
 </div>
@@ -171,7 +137,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <p>Define this macro if you need to enable AVR UART module for compilation </p>
 
-<p>Definition at line <a class="el" href="_user_settings_8h_source.html#l00070">70</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
+<p>Definition at line <a class="el" href="_user_settings_8h_source.html#l00064">64</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
 
 </div>
 </div>
@@ -184,9 +150,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Define this macro if you need to enable Adafruit GFX canvas support for compilation Define this macro if platform specific i2c interface is implemented in SSD1306 HAL. If you use Arduino platform, thie macro enables Arduino Wire library module for compilation. </p>
+<p>Define this macro if you need to enable Adafruit GFX canvas support for compilation Define this macro if platform specific i2c interface is implemented in SSD1306 HAL. If you use Arduino platform, this macro enables Arduino Wire library module for compilation. </p>
 
-<p>Definition at line <a class="el" href="_user_settings_8h_source.html#l00084">84</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
+<p>Definition at line <a class="el" href="_user_settings_8h_source.html#l00078">78</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
 
 </div>
 </div>
@@ -199,9 +165,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Define this macro if platform specific spi interface is implemented in SSD1306 HAL </p>
+<p>Define this macro if platform specific spi interface is implemented in SSD1306 HAL If you use Arduino platform, this macro enables Arduino SPI library module for compilation. </p>
 
-<p>Definition at line <a class="el" href="_user_settings_8h_source.html#l00087">87</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
+<p>Definition at line <a class="el" href="_user_settings_8h_source.html#l00084">84</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
 
 </div>
 </div>
@@ -231,7 +197,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <p>Define this macro if you need to enable TWI I2C module for compilation </p>
 
-<p>Definition at line <a class="el" href="_user_settings_8h_source.html#l00058">58</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
+<p>Definition at line <a class="el" href="_user_settings_8h_source.html#l00055">55</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
 
 </div>
 </div>
@@ -246,7 +212,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <p>Define this macro if you need to enable USI SPI module for compilation </p>
 
-<p>Definition at line <a class="el" href="_user_settings_8h_source.html#l00067">67</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
+<p>Definition at line <a class="el" href="_user_settings_8h_source.html#l00061">61</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
 
 </div>
 </div>
@@ -261,7 +227,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <p>Define this macro if you need to enable VGA module for compilation </p>
 
-<p>Definition at line <a class="el" href="_user_settings_8h_source.html#l00073">73</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
+<p>Definition at line <a class="el" href="_user_settings_8h_source.html#l00067">67</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
 
 </div>
 </div>

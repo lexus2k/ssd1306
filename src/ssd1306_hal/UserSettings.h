@@ -29,7 +29,7 @@
 #define _USER_SETTINGS_H_
 
 /**
- * @defgroup SSD1306_LIBRARY_CONFIG User ssd1306 library modules configuration
+ * @defgroup SSD1306_LIBRARY_CONFIG CONFIG: ssd1306 library configuration
  * @{
  *
  * @brief Group of settings allowing to disable/enable library modules
@@ -54,9 +54,6 @@
 /** Define this macro if you need to enable TWI I2C module for compilation */
 #define CONFIG_TWI_I2C_ENABLE
 
-/** Define this macro if you need to enable Arduino SPI library module for compilation */
-#define CONFIG_ARUDINO_SPI_LIBRARY_ENABLE
-
 /** Define this macro if you need to enable AVR SPI module for compilation */
 #define CONFIG_AVR_SPI_ENABLE
 
@@ -76,11 +73,14 @@
 
 /**
  * Define this macro if platform specific i2c interface is implemented in SSD1306 HAL.
- * If you use Arduino platform, thie macro enables Arduino Wire library module for compilation.
+ * If you use Arduino platform, this macro enables Arduino Wire library module for compilation.
  */
 #define CONFIG_PLATFORM_I2C_ENABLE
 
-/** Define this macro if platform specific spi interface is implemented in SSD1306 HAL */
+/**
+ * Define this macro if platform specific spi interface is implemented in SSD1306 HAL
+ * If you use Arduino platform, this macro enables Arduino SPI library module for compilation.
+ */
 #define CONFIG_PLATFORM_SPI_ENABLE
 
 /** Define this macro if you need to enable STM32 i2c module for compilation */

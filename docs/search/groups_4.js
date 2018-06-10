@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['user_20ssd1306_20library_20modules_20configuration',['User ssd1306 library modules configuration',['../group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html',1,'']]]
+  ['il9163_2fst7735_3a_20il9163_2fst7735_20control_20functions',['IL9163/ST7735: il9163/st7735 control functions',['../group___i_l9163___s_t7734___a_p_i.html',1,'']]],
+  ['i2c_2fspi_3a_20physical_20interface_20functions',['I2C/SPI: physical interface functions',['../group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html',1,'']]]
 ];

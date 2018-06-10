@@ -1,11 +1,7 @@
 var searchData=
 [
-  ['vga_2eh',['vga.h',['../vga_8h.html',1,'']]],
-  ['vga_5f128x64_5fmono_5finit',['vga_128x64_mono_init',['../vga__monitor_8h.html#a0c5a94022f25032231a7ba4abb7e20a4',1,'vga_monitor.c']]],
-  ['vga_5f96x40_5f8colors_5finit',['vga_96x40_8colors_init',['../vga__monitor_8h.html#a67d1256f7c32955b61b10c9413675612',1,'vga_monitor.c']]],
-  ['vga_5fcommands_2eh',['vga_commands.h',['../vga__commands_8h.html',1,'']]],
-  ['vga_5fisr_2eh',['vga_isr.h',['../vga__isr_8h.html',1,'']]],
-  ['vga_5fmonitor_2eh',['vga_monitor.h',['../vga__monitor_8h.html',1,'']]],
-  ['vga_5fset_5fblock',['VGA_SET_BLOCK',['../vga__commands_8h.html#a6a3ce562f42b87c3763dd0cdd3f1dee2a85b2ea560661c4e81b3746fa463d6d51',1,'vga_commands.h']]],
-  ['vga_5fset_5fmode',['VGA_SET_MODE',['../vga__commands_8h.html#a6a3ce562f42b87c3763dd0cdd3f1dee2a699dc4ba7ac890dffb99907e5d705d54',1,'vga_commands.h']]]
+  ['w',['w',['../struct_s_p_r_i_t_e.html#abb6cdf1e159d5d3a8655d1944d4be2de',1,'SPRITE']]],
+  ['white',['WHITE',['../canvas_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a283fc479650da98250635b9c3c0e7e50',1,'canvas.h']]],
+  ['width',['width',['../structssd1306__lcd__t.html#a0c7d9e9ee7e3d36391e55731b0ebc516',1,'ssd1306_lcd_t::width()'],['../struct_s_fixed_font_info.html#a3a19df1e396115c8e04256af069d7091',1,'SFixedFontInfo::width()'],['../class_nano_canvas.html#aabb87d82817d542dfaee61be285fe8c9',1,'NanoCanvas::width()']]],
+  ['write',['write',['../class_nano_canvas_ops.html#ad57ba5e2fd174bf8489374033d707200',1,'NanoCanvasOps::write()'],['../class_lcd_console.html#a7fc98f800165e3f25ad8fb1d11642cc0',1,'LcdConsole::write()'],['../class_print.html#a8be9c61ba33a974b43f8d49ee9cd9469',1,'Print::write()']]]
 ];

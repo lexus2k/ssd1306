@@ -35,9 +35,9 @@ extern "C" {
 #endif
 
 /**
- * @defgroup LCD_INTERFACE_API LCD High level API
+ * @defgroup LCD_INTERFACE_API OLEDs: initialization and service functions
  * @{
- * @brief LCD high level API for setup and programming GDRAM
+ * @brief LCD initialization and service functions
  *
  * @details This group contains API functions for OLED displays initialization and
  *          direct programming of GDRAM. This API can be used to create your own

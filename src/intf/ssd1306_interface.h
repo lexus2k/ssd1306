@@ -36,7 +36,7 @@ extern "C" {
 #endif
 
 /**
- * @defgroup LCD_HW_INTERFACE_API LCD physical interface functions
+ * @defgroup LCD_HW_INTERFACE_API I2C/SPI: physical interface functions
  * @{
  *
  * @brief i2c/spi initialization functions for different platforms

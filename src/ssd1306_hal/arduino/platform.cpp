@@ -22,10 +22,18 @@
     SOFTWARE.
 */
 
+#include "ssd1306_hal/io.h"
+
 #include "intf/ssd1306_interface.h"
 #include "intf/i2c/ssd1306_i2c.h"
+#include "intf/spi/ssd1306_spi.h"
+#include "lcd/lcd_common.h"
 
 #if defined(ARDUINO)
+
+//////////////////////////////////////////////////////////////////////////////////
+//                        ARDUINO I2C IMPLEMENTATION
+//////////////////////////////////////////////////////////////////////////////////
 
 #if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && \
     defined(CONFIG_PLATFORM_I2C_ENABLE)
@@ -128,5 +136,79 @@ void ssd1306_platform_i2cInit(int8_t scl, uint8_t sa, int8_t sda)
 }
 
 #endif // CONFIG_PLATFORM_I2C_AVAILABLE
+
+//////////////////////////////////////////////////////////////////////////////////
+//                        ARDUINO SPI IMPLEMENTATION
+//////////////////////////////////////////////////////////////////////////////////
+#if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)
+
+/* STANDARD branch */
+#include <SPI.h>
+
+void ssd1306_spiConfigure_hw()
+{
+    SPI.begin();
+}
+
+static void ssd1306_spiClose_hw()
+{
+}
+
+static void ssd1306_spiStart_hw()
+{
+    /* anyway, oled ssd1331 cannot work faster, clock cycle should be > 150ns: *
+     * 1s / 150ns ~ 6.7MHz                                                     */
+    SPI.beginTransaction(SPISettings(s_ssd1306_spi_clock, MSBFIRST, SPI_MODE0));
+    if (s_ssd1306_cs >= 0)
+    {
+        digitalWrite(s_ssd1306_cs,LOW);
+    }
+}
+
+static void ssd1306_spiStop_hw()
+{
+    if (s_ssd1306_cs >= 0)
+    {
+        digitalWrite(s_ssd1306_cs, HIGH);
+    }
+    if (ssd1306_lcd.type == LCD_TYPE_PCD8544)
+    {
+        digitalWrite(s_ssd1306_dc, LOW);
+        SPI.transfer( 0x00 ); // Send NOP command to allow last data byte to pass (bug in PCD8544?)
+                              // ssd1306 E3h is NOP command
+    }
+    SPI.endTransaction();
+}
+
+static void ssd1306_spiSendByte_hw(uint8_t data)
+{
+    SPI.transfer(data);
+}
+
+static void ssd1306_spiSendBytes_hw(const uint8_t *buffer, uint16_t size)
+{
+    /* Do not use SPI.transfer(buffer, size)! this method corrupts buffer content */
+    while (size--)
+    {
+        SPI.transfer(*buffer);
+        buffer++;
+    };
+}
+
+void ssd1306_platform_spiInit(int8_t busId, int8_t cesPin, int8_t dcPin)
+{
+    if (cesPin >=0) pinMode(cesPin, OUTPUT);
+    if (dcPin >= 0) pinMode(dcPin, OUTPUT);
+    if (cesPin) s_ssd1306_cs = cesPin;
+    if (dcPin) s_ssd1306_dc = dcPin;
+    ssd1306_intf.spi = 1;
+    ssd1306_intf.start = ssd1306_spiStart_hw;
+    ssd1306_intf.stop = ssd1306_spiStop_hw;
+    ssd1306_intf.send = ssd1306_spiSendByte_hw;
+    ssd1306_intf.send_buffer = ssd1306_spiSendBytes_hw;
+    ssd1306_intf.close = ssd1306_spiClose_hw;
+}
+
+#endif // CONFIG_PLATFORM_SPI_AVAILABLE
 
 #endif // ARDUINO

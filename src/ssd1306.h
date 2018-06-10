@@ -55,7 +55,7 @@ extern "C" {
 ///////////////////////////////////////////////////////////////////////
 
 /**
- * @defgroup LCD_SSD1306_API only ssd1306 display driver control functions
+ * @defgroup LCD_SSD1306_API SSD1306: ssd1306 display driver control functions
  * @{
  *
  * @brief The functions can be used only for OLEDs with ssd1306 controller
@@ -115,6 +115,10 @@ void         ssd1306_flipHorizontal(uint8_t mode);
 void         ssd1306_flipVertical(uint8_t mode);
 
 /**
+ * @}
+ */
+
+/**
  * @ingroup LCD_INTERFACE_API
  * Returns display height in pixels
  */
@@ -126,16 +130,12 @@ uint8_t      ssd1306_displayHeight(void);
  */
 uint8_t      ssd1306_displayWidth(void);
 
-/**
- * @}
- */
-
 ///////////////////////////////////////////////////////////////////////
 //                 DIRECT GRAPH FUNCTIONS
 ///////////////////////////////////////////////////////////////////////
 
 /**
- * @defgroup LCD_DIRECT_DRAW_SSD1306_COMPAT LCD direct draw functions, compatible with ssd1306 oled types.
+ * @defgroup LCD_1BIT_GRAPHICS DIRECT DRAW: 1-bit graphic functions for ssd1306 compatible mode.
  * @{
  * @brief LCD direct draw functions for all display types: color and monochrome.
  *

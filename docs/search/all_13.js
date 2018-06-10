@@ -1,10 +1,11 @@
 var searchData=
 [
-  ['user_20ssd1306_20library_20modules_20configuration',['User ssd1306 library modules configuration',['../group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html',1,'']]],
-  ['uart_5fbuffer_5frx',['UART_BUFFER_RX',['../ssd1306__uart_8h.html#adff6f1691b8119f8c50293135a28e1b3',1,'ssd1306_uart.h']]],
-  ['uart_5fbyte_5favailable',['uart_byte_available',['../ssd1306__uart_8h.html#a9303a912df9a76702c17750f3f0a5bf0',1,'ssd1306_uart.c']]],
-  ['uart_5finit',['uart_init',['../ssd1306__uart_8h.html#aea3c2acc281315ff5dc9f400845bf406',1,'ssd1306_uart.h']]],
-  ['uart_5fread_5fbyte',['uart_read_byte',['../ssd1306__uart_8h.html#a8cd92b6cf3b75bf832242080a7dbe6c2',1,'ssd1306_uart.c']]],
-  ['uart_5fsend_5fbyte',['uart_send_byte',['../ssd1306__uart_8h.html#a0a6add2293e47c6adb4070dcafb77991',1,'ssd1306_uart.c']]],
-  ['usersettings_2eh',['UserSettings.h',['../_user_settings_8h.html',1,'']]]
+  ['vga_2eh',['vga.h',['../vga_8h.html',1,'']]],
+  ['vga_5f128x64_5fmono_5finit',['vga_128x64_mono_init',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga0c5a94022f25032231a7ba4abb7e20a4',1,'vga_monitor.c']]],
+  ['vga_5f96x40_5f8colors_5finit',['vga_96x40_8colors_init',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga67d1256f7c32955b61b10c9413675612',1,'vga_96x40_8colors_init(void):&#160;vga_monitor.c'],['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga67d1256f7c32955b61b10c9413675612',1,'vga_96x40_8colors_init(void):&#160;vga_monitor.c']]],
+  ['vga_5fcommands_2eh',['vga_commands.h',['../vga__commands_8h.html',1,'']]],
+  ['vga_5fisr_2eh',['vga_isr.h',['../vga__isr_8h.html',1,'']]],
+  ['vga_5fmonitor_2eh',['vga_monitor.h',['../vga__monitor_8h.html',1,'']]],
+  ['vga_5fset_5fblock',['VGA_SET_BLOCK',['../vga__commands_8h.html#a6a3ce562f42b87c3763dd0cdd3f1dee2a85b2ea560661c4e81b3746fa463d6d51',1,'vga_commands.h']]],
+  ['vga_5fset_5fmode',['VGA_SET_MODE',['../vga__commands_8h.html#a6a3ce562f42b87c3763dd0cdd3f1dee2a699dc4ba7ac890dffb99907e5d705d54',1,'vga_commands.h']]]
 ];

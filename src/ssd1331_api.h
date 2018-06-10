@@ -39,7 +39,7 @@ extern "C" {
 ///////////////////////////////////////////////////////////////////////
 
 /**
- * @defgroup LCD_SSD1331_API 8-bit and 16-bit API functions only for color displays
+ * @defgroup LCD_8BIT_GRAPHICS DIRECT DRAW: 8-bit and 16-bit API functions only for color displays
  * @{
  *
  * @brief LCD direct draw functions only for color display.

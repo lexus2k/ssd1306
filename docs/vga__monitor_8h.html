@@ -88,8 +88,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">vga_monitor.h File Reference</div>  </div>
 </div><!--header-->
@@ -100,67 +98,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a67d1256f7c32955b61b10c9413675612"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vga__monitor_8h.html#a67d1256f7c32955b61b10c9413675612">vga_96x40_8colors_init</a> (void)</td></tr>
-<tr class="memdesc:a67d1256f7c32955b61b10c9413675612"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits 96x40 color VGA display.  <a href="#a67d1256f7c32955b61b10c9413675612">More...</a><br /></td></tr>
-<tr class="separator:a67d1256f7c32955b61b10c9413675612"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c5a94022f25032231a7ba4abb7e20a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vga__monitor_8h.html#a0c5a94022f25032231a7ba4abb7e20a4">vga_128x64_mono_init</a> (void)</td></tr>
-<tr class="memdesc:a0c5a94022f25032231a7ba4abb7e20a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits 128x64 monochrome VGA display.  <a href="#a0c5a94022f25032231a7ba4abb7e20a4">More...</a><br /></td></tr>
-<tr class="separator:a0c5a94022f25032231a7ba4abb7e20a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:ga67d1256f7c32955b61b10c9413675612"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga67d1256f7c32955b61b10c9413675612">vga_96x40_8colors_init</a> (void)</td></tr>
+<tr class="memdesc:ga67d1256f7c32955b61b10c9413675612"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits 96x40 color VGA display.  <a href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga67d1256f7c32955b61b10c9413675612">More...</a><br /></td></tr>
+<tr class="separator:ga67d1256f7c32955b61b10c9413675612"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0c5a94022f25032231a7ba4abb7e20a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga0c5a94022f25032231a7ba4abb7e20a4">vga_128x64_mono_init</a> (void)</td></tr>
+<tr class="memdesc:ga0c5a94022f25032231a7ba4abb7e20a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits 128x64 monochrome VGA display.  <a href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga0c5a94022f25032231a7ba4abb7e20a4">More...</a><br /></td></tr>
+<tr class="separator:ga0c5a94022f25032231a7ba4abb7e20a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface to vga_monitor </p>
 
 <p>Definition in file <a class="el" href="vga__monitor_8h_source.html">vga_monitor.h</a>.</p>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a0c5a94022f25032231a7ba4abb7e20a4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void vga_128x64_mono_init </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Inits 128x64 monochrome VGA display. </p>
-<p>Inits 128x64 monochrome VGA display. This mode supports 2 colors: black and white. User must init communication interface (uart) for vga client mode or init vga interface for host mode prior to calling this function.</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gab8f6528f3aa977d02549bfd7c4009282">ssd1306_uartInit_Builtin()</a> </dd>
-<dd>
-<a class="el" href="vga_8h.html#acf64e5de4b20d9ec09267c59607b36ce">ssd1306_vga_controller_init()</a> </dd></dl>
-
-<p>Definition at line <a class="el" href="vga__monitor_8c_source.html#l00134">134</a> of file <a class="el" href="vga__monitor_8c_source.html">vga_monitor.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a67d1256f7c32955b61b10c9413675612"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void vga_96x40_8colors_init </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Inits 96x40 color VGA display. </p>
-<p>Inits 96x40 color VGA display. This mode supports 8 colors: 3 bits per pixel. User must init communication interface (uart) for vga client mode or init vga interface for host mode prior to calling this function.</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gab8f6528f3aa977d02549bfd7c4009282">ssd1306_uartInit_Builtin()</a> </dd>
-<dd>
-<a class="el" href="vga_8h.html#acf64e5de4b20d9ec09267c59607b36ce">ssd1306_vga_controller_init()</a> </dd></dl>
-
-<p>Definition at line <a class="el" href="vga__monitor_8c_source.html#l00121">121</a> of file <a class="el" href="vga__monitor_8c_source.html">vga_monitor.c</a>.</p>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

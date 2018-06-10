@@ -29,6 +29,15 @@
 #ifndef _SSD1306_HAL_IO_H_
 #define _SSD1306_HAL_IO_H_
 
+/**
+ * @defgroup SSD1306_HAL_API HAL: ssd1306 library hardware abstraction layer
+ * @{
+ *
+ * @brief i2c/spi ssd1306 library hardware abstraction layer
+ *
+ * @details ssd1306 library hardware abstraction layer
+ */
+
 #include "UserSettings.h"
 #if defined(ARDUINO)
 #include "arduino/io.h"
@@ -109,6 +118,10 @@ void ssd1306_platform_spiInit(int8_t busId, int8_t cesPin, int8_t dcPin);
 #ifdef __cplusplus
 }
 #endif
+
+/**
+ * @}
+ */
 
 #endif
 
