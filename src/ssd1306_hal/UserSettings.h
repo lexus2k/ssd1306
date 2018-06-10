@@ -51,9 +51,6 @@
 /** Define this macro if you need to enable software I2C module for compilation */
 #define CONFIG_SOFTWARE_I2C_ENABLE
 
-/** Define this macro if you need to enable Arduino Wire library module for compilation */
-#define CONFIG_ARDUINO_WIRE_LIBRARY_ENABLE
-
 /** Define this macro if you need to enable TWI I2C module for compilation */
 #define CONFIG_TWI_I2C_ENABLE
 
