@@ -65,15 +65,45 @@ extern "C" {
 
 // !!! PLATFORM I2C IMPLEMENTATION OPTIONAL !!!
 #if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && defined(CONFIG_PLATFORM_I2C_ENABLE)
-extern void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, int8_t arg);
+/**
+ * @brief Initializes i2c interface for platform being used.
+ *
+ * Initializes i2c interface for platform being used. i2c implementation
+ * depends on platform.
+ *
+ * @param busId i2c bus number. Some platforms have several i2c buses. so, this
+ *        argument identifies bus to use. For AVR platforms busId is used as scl
+ *        pin number. If you want to use default i2c bus for specific platform, please
+ *        pass -1.
+ * @param addr i2c address of oled driver, connected to i2c bus. If you want to use default
+ *        i2c display address, please, pass 0.
+ * @param arg additional parameter for i2c interface. Not used on many platforms, while
+ *        for AVR it is used as sda pin number. If you want to use default pin number, please
+ *        pass -1.
+ */
+void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, int8_t arg);
 #endif
 
 
 // !!! PLATFORM SPI IMPLEMENTATION OPTIONAL !!!
 #if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)
-extern void ssd1306_platform_spiInit(int8_t busId,
-                                     int8_t cesPin,
-                                     int8_t dcPin);
+/**
+ * @brief Initializes spi interface for platform being used.
+ *
+ * Initializes spi interface for platform being used. spi implementation
+ * depends on platform.
+ *
+ * @param busId spi bus number if device has several spi buses. For most AVR platforms
+ *        busId is not used. If you want to use default spi bus for specific platform, please
+ *        pass -1.
+ * @param cesPin chip select (chip enable) pin number. If you want to use default pin,
+ *        hard coded by ssd1306 library, please, pass -1. For Linux platform cesPin means
+ *        second number in spidev device.
+ * @param dcPin data/command pin number. For most oled displays this pin number is used to
+ *        select data or command mode for the bus. If you want to use default pin number, please
+ *        pass -1.
+ */
+void ssd1306_platform_spiInit(int8_t busId, int8_t cesPin, int8_t dcPin);
 #endif
 
 #ifdef __cplusplus

@@ -22,11 +22,13 @@
     SOFTWARE.
 */
 
-#include "ssd1306_i2c_wire.h"
 #include "intf/ssd1306_interface.h"
-#include "ssd1306_i2c.h"
+#include "intf/i2c/ssd1306_i2c.h"
 
-#if defined(CONFIG_ARDUINO_WIRE_LIBRARY_AVAILABLE) && defined(CONFIG_ARDUINO_WIRE_LIBRARY_ENABLE)
+#if defined(ARDUINO)
+
+#if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && \
+    defined(CONFIG_PLATFORM_I2C_ENABLE)
 
 #include <Wire.h>
 
@@ -100,8 +102,22 @@ static void ssd1306_i2cClose_Wire()
 {
 }
 
-void ssd1306_i2cInit_Wire(uint8_t sa)
+void ssd1306_platform_i2cInit(int8_t scl, uint8_t sa, int8_t sda)
 {
+#if defined(ESP8266) || defined(ESP32) || defined(ESP31B)
+    if ((scl >= 0) && (sda >=0))
+    {
+        Wire.begin(sda, scl);
+    }
+    else
+#endif
+    {
+        Wire.begin();
+    }
+    #ifdef SSD1306_WIRE_CLOCK_CONFIGURABLE
+        Wire.setClock(400000);
+    #endif
+
     if (sa) s_sa = sa;
     ssd1306_intf.spi = 0;
     ssd1306_intf.start = ssd1306_i2cStart_Wire;
@@ -111,6 +127,6 @@ void ssd1306_i2cInit_Wire(uint8_t sa)
     ssd1306_intf.close = ssd1306_i2cClose_Wire;
 }
 
-#endif
+#endif // CONFIG_PLATFORM_I2C_AVAILABLE
 
-
+#endif // ARDUINO

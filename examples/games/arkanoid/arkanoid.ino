@@ -56,10 +56,8 @@
  */
 
 #include "ssd1306.h"
-#include "i2c/ssd1306_i2c_wire.h"
-#include "i2c/ssd1306_i2c_embedded.h"
-#include "i2c/ssd1306_i2c_twi.h"
 #include "intf/ssd1306_interface.h"
+#include "intf/i2c/ssd1306_i2c.h"
 #include "lcd/lcd_common.h"
 
 #include <stdlib.h>
@@ -156,13 +154,11 @@ void drawIntro()
 #ifdef ARKANOID_SSD1331
     ssd1331_96x64_spi_init(3,4,5);
 #elif defined(__AVR_ATtiny85__)
-    ssd1306_i2cInit_Embedded(-1,-1,0);
-#elif defined(CONFIG_ARDUINO_WIRE_LIBRARY_AVAILABLE)
-    ssd1306_i2cInit_Wire(0);
+    ssd1306_i2cInitEx(-1,-1,0);
 #elif defined(CONFIG_SOFTWARE_I2C_AVAILABLE)
     ssd1306_i2cInit_Embedded(-1,-1,0);
 #elif defined(CONFIG_PLATFORM_I2C_AVAILABLE)
-    ssd1306_platform_i2cInit(-1,-1,-1);
+    ssd1306_platform_i2cInit(-1,0,-1);
 #elif defined(CONFIG_TWI_I2C_AVAILABLE)
     ssd1306_i2cInit_Twi(0);
 #else
@@ -804,3 +800,4 @@ void system_sleep()
   ssd1306_displayOn();
 }
 #endif
+

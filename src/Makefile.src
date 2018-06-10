@@ -30,7 +30,7 @@ SRCS_C = \
 	ssd1306_hal/linux/platform.c \
 	ssd1306_hal/mingw/platform.c \
 	ssd1306_hal/template/platform.c \
-	intf/i2c/ssd1306_i2c_common.c \
+	intf/i2c/ssd1306_i2c.c \
 	intf/i2c/ssd1306_i2c_embedded.c \
 	intf/i2c/ssd1306_i2c_twi.c \
 	intf/spi/ssd1306_spi.c \
@@ -56,7 +56,7 @@ SRCS_CPP = \
 	nano_gfx.cpp \
 	sprite_pool.cpp \
 	ssd1306_console.cpp \
-	intf/i2c/ssd1306_i2c_wire.cpp \
+	ssd1306_hal/arduino/platform.cpp \
 	intf/spi/ssd1306_spi_hw.cpp
 
 SRCS = $(SRCS_C) $(SRCS_CPP)

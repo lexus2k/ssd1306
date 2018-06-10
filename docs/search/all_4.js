@@ -15,6 +15,8 @@ var searchData=
   ['config_5farudino_5fspi_5flibrary_5fenable',['CONFIG_ARUDINO_SPI_LIBRARY_ENABLE',['../group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga63bc9f631c3dcf67c09836217a4cbfb2',1,'UserSettings.h']]],
   ['config_5favr_5fspi_5fenable',['CONFIG_AVR_SPI_ENABLE',['../group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#gac028140be3b57c38264f1a85db026c7f',1,'UserSettings.h']]],
   ['config_5favr_5fuart_5fenable',['CONFIG_AVR_UART_ENABLE',['../group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga090563dd00874aa0f954021e76b3c6c6',1,'UserSettings.h']]],
+  ['config_5fplatform_5fi2c_5fenable',['CONFIG_PLATFORM_I2C_ENABLE',['../group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga879a327dedebec82e853eab3b2f86e50',1,'UserSettings.h']]],
+  ['config_5fplatform_5fspi_5fenable',['CONFIG_PLATFORM_SPI_ENABLE',['../group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga022279a3f667bcaf983e4bfb0919ac72',1,'UserSettings.h']]],
   ['config_5fsoftware_5fi2c_5fenable',['CONFIG_SOFTWARE_I2C_ENABLE',['../group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#gabf5f8ea0739c7b74ca0336bdf04b70fd',1,'UserSettings.h']]],
   ['config_5ftwi_5fi2c_5fenable',['CONFIG_TWI_I2C_ENABLE',['../group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#gaae38bc2500b53d8fb222f4071ec27a54',1,'UserSettings.h']]],
   ['config_5fusi_5fspi_5fenable',['CONFIG_USI_SPI_ENABLE',['../group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#gaf1c2440ddde06b7bdd1974fbd2447941',1,'UserSettings.h']]],

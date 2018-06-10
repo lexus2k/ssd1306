@@ -16,5 +16,6 @@ var searchData=
   ['nanoenginecore',['NanoEngineCore',['../class_nano_engine_core.html',1,'']]],
   ['nanoengineinputs',['NanoEngineInputs',['../class_nano_engine_inputs.html',1,'']]],
   ['nanoenginetiler',['NanoEngineTiler',['../class_nano_engine_tiler.html',1,'']]],
-  ['nanoenginetiler_3c_20tile_5f8x8_5fmono_5f8_2c_20w_2c_20h_2c_20b_20_3e',['NanoEngineTiler&lt; TILE_8x8_MONO_8, W, H, B &gt;',['../class_nano_engine_tiler.html',1,'']]]
+  ['nanoenginetiler_3c_20tile_5f8x8_5fmono_5f8_2c_20w_2c_20h_2c_20b_20_3e',['NanoEngineTiler&lt; TILE_8x8_MONO_8, W, H, B &gt;',['../class_nano_engine_tiler.html',1,'']]],
+  ['nanosprite',['NanoSprite',['../class_nano_sprite.html',1,'']]]
 ];

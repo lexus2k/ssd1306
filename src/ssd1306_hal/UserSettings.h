@@ -77,7 +77,10 @@
 //#define CONFIG_ADAFRUIT_GFX_ENABLE
 #endif
 
-/** Define this macro if platform specific i2c interface is implemented in SSD1306 HAL */
+/**
+ * Define this macro if platform specific i2c interface is implemented in SSD1306 HAL.
+ * If you use Arduino platform, thie macro enables Arduino Wire library module for compilation.
+ */
 #define CONFIG_PLATFORM_I2C_ENABLE
 
 /** Define this macro if platform specific spi interface is implemented in SSD1306 HAL */
@@ -85,7 +88,6 @@
 
 /** Define this macro if you need to enable STM32 i2c module for compilation */
 //#define CONFIG_STM32_I2C_ENABLE
-
 
 /**
  * @}

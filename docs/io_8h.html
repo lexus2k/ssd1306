@@ -24,7 +24,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.6.99</span>
+   &#160;<span id="projectnumber">1.7.0</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -90,7 +90,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">io.h File Reference</div>  </div>
 </div><!--header-->
@@ -113,6 +114,15 @@ Typedefs</h2></td></tr>
 <tr class="separator:a609c6ba2ba635102cd316b7b59af8351"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3de6a212815ee8499f4042db94992210"><td class="memItemLeft" align="right" valign="top">typedef unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="io_8h.html#a3de6a212815ee8499f4042db94992210">lcduint_t</a></td></tr>
 <tr class="separator:a3de6a212815ee8499f4042db94992210"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a7b16dcc41b55cd60ca4749f16934adff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="io_8h.html#a7b16dcc41b55cd60ca4749f16934adff">ssd1306_platform_i2cInit</a> (int8_t busId, uint8_t addr, int8_t arg)</td></tr>
+<tr class="memdesc:a7b16dcc41b55cd60ca4749f16934adff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes i2c interface for platform being used.  <a href="#a7b16dcc41b55cd60ca4749f16934adff">More...</a><br /></td></tr>
+<tr class="separator:a7b16dcc41b55cd60ca4749f16934adff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48b3e1e6fc7eec0e0634370746d31c22"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="io_8h.html#a48b3e1e6fc7eec0e0634370746d31c22">ssd1306_platform_spiInit</a> (int8_t busId, int8_t cesPin, int8_t dcPin)</td></tr>
+<tr class="memdesc:a48b3e1e6fc7eec0e0634370746d31c22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes spi interface for platform being used.  <a href="#a48b3e1e6fc7eec0e0634370746d31c22">More...</a><br /></td></tr>
+<tr class="separator:a48b3e1e6fc7eec0e0634370746d31c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>SSD1306 HAL IO communication functions </p>
@@ -130,7 +140,7 @@ Typedefs</h2></td></tr>
 </div><div class="memdoc">
 <p>Macro informs if lcdint_t type is defined </p>
 
-<p>Definition at line <a class="el" href="io_8h_source.html#l00050">50</a> of file <a class="el" href="io_8h_source.html">io.h</a>.</p>
+<p>Definition at line <a class="el" href="io_8h_source.html#l00052">52</a> of file <a class="el" href="io_8h_source.html">io.h</a>.</p>
 
 </div>
 </div>
@@ -165,7 +175,7 @@ Typedefs</h2></td></tr>
 </div><div class="memdoc">
 <p>swaps content of a and b variables of type type </p>
 
-<p>Definition at line <a class="el" href="io_8h_source.html#l00058">58</a> of file <a class="el" href="io_8h_source.html">io.h</a>.</p>
+<p>Definition at line <a class="el" href="io_8h_source.html#l00060">60</a> of file <a class="el" href="io_8h_source.html">io.h</a>.</p>
 
 </div>
 </div>
@@ -181,7 +191,7 @@ Typedefs</h2></td></tr>
 </div><div class="memdoc">
 <p>internal int type, used by ssd1306 library. Important for uC with low SRAM </p>
 
-<p>Definition at line <a class="el" href="io_8h_source.html#l00052">52</a> of file <a class="el" href="io_8h_source.html">io.h</a>.</p>
+<p>Definition at line <a class="el" href="io_8h_source.html#l00054">54</a> of file <a class="el" href="io_8h_source.html">io.h</a>.</p>
 
 </div>
 </div>
@@ -196,7 +206,94 @@ Typedefs</h2></td></tr>
 </div><div class="memdoc">
 <p>internal int type, used by ssd1306 library. Important for uC with low SRAM </p>
 
-<p>Definition at line <a class="el" href="io_8h_source.html#l00054">54</a> of file <a class="el" href="io_8h_source.html">io.h</a>.</p>
+<p>Definition at line <a class="el" href="io_8h_source.html#l00056">56</a> of file <a class="el" href="io_8h_source.html">io.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a7b16dcc41b55cd60ca4749f16934adff"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1306_platform_i2cInit </td>
+          <td>(</td>
+          <td class="paramtype">int8_t&#160;</td>
+          <td class="paramname"><em>busId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int8_t&#160;</td>
+          <td class="paramname"><em>arg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initializes i2c interface for platform being used. </p>
+<p>Initializes i2c interface for platform being used. i2c implementation depends on platform.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">busId</td><td>i2c bus number. Some platforms have several i2c buses. so, this argument identifies bus to use. For AVR platforms busId is used as scl pin number. If you want to use default i2c bus for specific platform, please pass -1. </td></tr>
+    <tr><td class="paramname">addr</td><td>i2c address of oled driver, connected to i2c bus. If you want to use default i2c display address, please, pass 0. </td></tr>
+    <tr><td class="paramname">arg</td><td>additional parameter for i2c interface. Not used on many platforms, while for AVR it is used as sda pin number. If you want to use default pin number, please pass -1. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a48b3e1e6fc7eec0e0634370746d31c22"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1306_platform_spiInit </td>
+          <td>(</td>
+          <td class="paramtype">int8_t&#160;</td>
+          <td class="paramname"><em>busId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int8_t&#160;</td>
+          <td class="paramname"><em>cesPin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int8_t&#160;</td>
+          <td class="paramname"><em>dcPin</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initializes spi interface for platform being used. </p>
+<p>Initializes spi interface for platform being used. spi implementation depends on platform.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">busId</td><td>spi bus number if device has several spi buses. For most AVR platforms busId is not used. If you want to use default spi bus for specific platform, please pass -1. </td></tr>
+    <tr><td class="paramname">cesPin</td><td>chip select (chip enable) pin number. If you want to use default pin, hard coded by ssd1306 library, please, pass -1. For Linux platform cesPin means second number in spidev device. </td></tr>
+    <tr><td class="paramname">dcPin</td><td>data/command pin number. For most oled displays this pin number is used to select data or command mode for the bus. If you want to use default pin number, please pass -1. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

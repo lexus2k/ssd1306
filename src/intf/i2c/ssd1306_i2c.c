@@ -29,9 +29,6 @@ void ssd1306_i2cInitEx(int8_t scl, int8_t sda, int8_t sa)
 {
 #if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && defined(CONFIG_PLATFORM_I2C_ENABLE)
     ssd1306_platform_i2cInit(scl, sa, sda);
-#elif defined(CONFIG_ARDUINO_WIRE_LIBRARY_AVAILABLE) && defined(CONFIG_ARDUINO_WIRE_LIBRARY_ENABLE)
-    ssd1306_i2cConfigure_Wire(scl, sda);
-    ssd1306_i2cInit_Wire(sa);
 #elif defined(CONFIG_TWI_I2C_AVAILABLE) && defined(CONFIG_TWI_I2C_ENABLE)
     ssd1306_i2cConfigure_Twi(0);
     ssd1306_i2cInit_Twi(sa);

@@ -46,7 +46,7 @@
 
 #if defined(ARDUINO_ARCH_STM32)
     /** The macro is defined when i2c Wire library is available */
-    #define CONFIG_ARDUINO_WIRE_LIBRARY_AVAILABLE
+    #define CONFIG_PLATFORM_I2C_AVAILABLE
     /** The macro is defined when Wire library speed can be configured */
     #define SSD1306_WIRE_CLOCK_CONFIGURABLE
     /** The macro is defined when SPI library is available */
@@ -56,7 +56,7 @@
 
 #elif defined(ARDUINO_AVR_DIGISPARK) || defined(ARDUINO_AVR_DIGISPARKPRO)
     /** The macro is defined when i2c Wire library is available */
-    #define CONFIG_ARDUINO_WIRE_LIBRARY_AVAILABLE
+    #define CONFIG_PLATFORM_I2C_AVAILABLE
     #if defined(ARDUINO_AVR_DIGISPARKPRO)
         /** The macro is defined when SPI library is available */
         #define CONFIG_ARDUINO_SPI_LIBRARY_AVAILABLE
@@ -90,7 +90,7 @@
 #elif defined(ESP8266) || defined(ESP32) || defined(ESP31B) || defined(ARDUINO_ARCH_SAMD)
     /* SW implementation of i2c isn't supported on ESP platforms */
     /** The macro is defined when i2c Wire library is available */
-    #define CONFIG_ARDUINO_WIRE_LIBRARY_AVAILABLE
+    #define CONFIG_PLATFORM_I2C_AVAILABLE
     /** The macro is defined when Wire library speed can be configured */
     #define SSD1306_WIRE_CLOCK_CONFIGURABLE
     /** The macro is defined when SPI library is available */
@@ -100,7 +100,7 @@
     /** The macro is defined when i2c Wire library is available */
     #define CONFIG_SOFTWARE_I2C_AVAILABLE
     /** The macro is defined when i2c Wire library is available */
-    #define CONFIG_ARDUINO_WIRE_LIBRARY_AVAILABLE
+    #define CONFIG_PLATFORM_I2C_AVAILABLE
     /** The macro is defined when Wire library speed can be configured */
     #define SSD1306_WIRE_CLOCK_CONFIGURABLE
     /** The macro is defined when TWI module is available (ATTINY) */
@@ -118,7 +118,7 @@
     /** The macro is defined when i2c Wire library is available */
     #define CONFIG_SOFTWARE_I2C_AVAILABLE
     /** The macro is defined when i2c Wire library is available */
-    #define CONFIG_ARDUINO_WIRE_LIBRARY_AVAILABLE
+    #define CONFIG_PLATFORM_I2C_AVAILABLE
     /** The macro is defined when Wire library speed can be configured */
     #define SSD1306_WIRE_CLOCK_CONFIGURABLE
     /** The macro is defined when TWI module is available (ATTINY) */
@@ -129,11 +129,11 @@
     #define CONFIG_AVR_SPI_AVAILABLE
 #endif
 
-#ifdef CONFIG_ARDUINO_WIRE_LIBRARY_AVAILABLE
-#ifdef __cplusplus
-#include <Wire.h>
-#endif
-#endif
+//#ifdef CONFIG_PLATFORM_I2C_AVAILABLE
+//#ifdef __cplusplus
+//#include <Wire.h>
+//#endif
+//#endif
 
-#endif
+#endif // _SSD1306_ARDUINO_IO_H_
 
