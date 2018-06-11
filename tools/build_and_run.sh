@@ -43,11 +43,13 @@ print_help_and_exit()
     echo "        ADAFRUIT=y       add Adafruit GFX support to ssd1306 library"
     echo ""
     echo "# example: run demo on linux with emulator"
-    echo "    ./build_and_run.sh -p linux -e -f ssd1306_demo"
+    echo "    ./build_and_run.sh -p linux -e -f demos/ssd1306_demo"
     echo "# example: run demo on linux with real ssd1306 oled display"
-    echo "    ./build_and_run.sh -p linux -f ssd1306_demo"
+    echo "    ./build_and_run.sh -p linux -f demos/ssd1306_demo"
     echo "# example: build demo and flash for AVR controller"
-    echo "    ./build_and_run.sh -p avr -m attiny85 -f ssd1306_demo"
+    echo "    ./build_and_run.sh -p avr -m attiny85 -f demos/ssd1306_demo"
+    echo "# example: build demo for ESP32 controller"
+    echo "    ./build_and_run.sh -p esp32 demos/ssd1306_demo"
     exit 1
 }
 
