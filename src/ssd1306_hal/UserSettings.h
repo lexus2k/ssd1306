@@ -83,9 +83,6 @@
  */
 #define CONFIG_PLATFORM_SPI_ENABLE
 
-/** Define this macro if you need to enable STM32 i2c module for compilation */
-//#define CONFIG_STM32_I2C_ENABLE
-
 /**
  * @}
  */

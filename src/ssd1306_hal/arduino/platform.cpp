@@ -145,11 +145,6 @@ void ssd1306_platform_i2cInit(int8_t scl, uint8_t sa, int8_t sda)
 /* STANDARD branch */
 #include <SPI.h>
 
-void ssd1306_spiConfigure_hw()
-{
-    SPI.begin();
-}
-
 static void ssd1306_spiClose_hw()
 {
 }
@@ -201,6 +196,7 @@ void ssd1306_platform_spiInit(int8_t busId, int8_t cesPin, int8_t dcPin)
     if (dcPin >= 0) pinMode(dcPin, OUTPUT);
     if (cesPin) s_ssd1306_cs = cesPin;
     if (dcPin) s_ssd1306_dc = dcPin;
+    SPI.begin();
     ssd1306_intf.spi = 1;
     ssd1306_intf.start = ssd1306_spiStart_hw;
     ssd1306_intf.stop = ssd1306_spiStop_hw;
