@@ -29,7 +29,7 @@
 #ifndef _SSD1306_ESP_IO_H_
 #define _SSD1306_ESP_IO_H_
 
-// TODO: To add support. Any help is welcome
+// TODO: To complete support. Any help is welcome
 
 #define SSD1306_ESP_PLATFORM
 //========================== I. Include libraries =========================
@@ -61,37 +61,25 @@ extern "C" {
 //========================== III. Implement functions =====================
 /* Implement functions below the way you like. You can make them non-static */
 // !!!  MANDATORY !!!
-static inline int  digitalRead(int pin)   // digitalRead()
-{
-    return LOW;
-}
+int  digitalRead(int pin);
 
-static inline void digitalWrite(int pin, int level)  // digitalWrite()
-{
-}
+void digitalWrite(int pin, int level);
 
-static inline void pinMode(int pin, int mode) // pinMode()
-{
-}
+void pinMode(int pin, int mode);
 
 static inline int  analogRead(int pin)    // analogRead()
 {
     return 0;
 }
 
-static inline uint32_t millis(void)       // millis()
-{
-    return 0;
-}
+uint32_t millis(void);
 
 static inline uint32_t micros(void)       // micros()
 {
     return 0;
 };
 
-static inline void delay(uint32_t ms)     // delay()
-{
-}
+static inline void delay(uint32_t ms);
 
 static inline void delayMicroseconds(uint32_t us)  // delayMicroseconds()
 {

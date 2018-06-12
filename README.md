@@ -83,6 +83,8 @@ configurable through API.
 | Attiny85, Attiny45 |  X  |  X  |         |
 | Atmega328p, Atmega168 |  X  |  X  |         |
 | Atmega32u4  |  X  |  X  |    |
+| **Plain ESP32** |   |     |          |
+| ESP32 |  X  |    |  library can be used as IDF component  |
 | **Linux**  |    |     |          |
 | Raspberry Pi |  X  |  X  | i2c-dev, spidev, sys/class/gpio  |
 | [SDL Emulation](https://github.com/lexus2k/ssd1306/wiki/How-to-run-emulator-mode) |  X  |  X  | demo code can be run without real OLED HW via SDL library |
