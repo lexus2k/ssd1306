@@ -14,7 +14,9 @@ it looses precision (it updates only each 16 milliseconds). The code needs 3 tim
 to use `delay()`, please call `ssd1306_vga_delay()` instead.
 
 In client mode, the controller executes sketch application only, so, all standard functions are available. The vga code
-runs on separate microcontroller connected with your EVK via UART line. So in client mode, the ssd1306 library part needs only UART to send commands to the second controller, which runs vga_server_demo; and you are free to use any pins you need, except UART pins.
+runs on separate microcontroller connected with your EVK via UART line. So in client mode, the ssd1306 library part needs
+only UART to send commands to the second controller, which runs vga_server_demo; and you are free to use any pins you need,
+except UART pins.
 
 ## Supported controllers
 
