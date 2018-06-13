@@ -79,7 +79,7 @@ static inline uint32_t micros(void)       // micros()
     return 0;
 };
 
-static inline void delay(uint32_t ms);
+void delay(uint32_t ms);
 
 static inline void delayMicroseconds(uint32_t us)  // delayMicroseconds()
 {

@@ -43,16 +43,16 @@ PROJECT ?= demos/ssd1306_demo
 ######### Prepare project structure for esp32 idf
 # main sources (entry point)
 $(shell mkdir -p $(BLD)/esp32/main)
-$(shell rsync -t ./esp32_main.cpp $(BLD)/esp32/main/)
+$(shell cp -a ./esp32_main.cpp $(BLD)/esp32/main/)
 $(shell echo "" > $(BLD)/esp32/main/component.mk)
 # example sketch sources
 $(shell mkdir -p $(BLD)/esp32/components/project)
-$(shell rsync -rt $(PROJECT)/* $(BLD)/esp32/components/project/)
+$(shell cp -a $(PROJECT)/* $(BLD)/esp32/components/project/)
 $(shell mv $(BLD)/esp32/components/project/$(notdir $(PROJECT)).ino $(BLD)/esp32/components/project/$(notdir $(PROJECT)).cpp)
 $(shell echo "COMPONENT_ADD_INCLUDEDIRS := ." > $(BLD)/esp32/components/project/component.mk)
 # library
 $(shell mkdir -p $(BLD)/esp32/components/ssd1306)
-$(shell rsync -rt ../src/* $(BLD)/esp32/components/ssd1306/)
+$(shell cp -a ../src/* $(BLD)/esp32/components/ssd1306/)
 $(shell echo "COMPONENT_ADD_INCLUDEDIRS := ." > $(BLD)/esp32/components/ssd1306/component.mk)
 $(shell echo "COMPONENT_SRCDIRS := . ./ssd1306_hal \
                                      ./ssd1306_hal/esp \
