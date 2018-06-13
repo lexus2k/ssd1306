@@ -146,47 +146,116 @@ void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, int8_t arg)
 #if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)
 
 #include "intf/spi/ssd1306_spi.h"
+#include "driver/spi_master.h"
+
+// Store spi handle globally for all spi callbacks
+static spi_device_handle_t s_spi;
+static int8_t s_spi_bus_id;
+// s_first_spi_session is used for delayed spi initialization.
+// Some oled displays have slow max SPI speed, so display init function can change
+// spi frequency s_ssd1306_spi_clock. Register device, only when frequency is known.
+static uint8_t s_first_spi_session = 0;
 
 static void platform_spi_start(void)
 {
     // ... Open spi channel for your device with specific s_ssd1306_cs, s_ssd1306_dc
+    if (s_first_spi_session)
+    {
+        spi_device_interface_config_t devcfg=
+        {
+            .clock_speed_hz = s_ssd1306_spi_clock,
+            .mode=0,
+            .spics_io_num=s_ssd1306_cs,
+            .queue_size=7,       // max 7 transactions at a time
+        };
+        spi_bus_add_device(s_spi_bus_id ? VSPI_HOST : HSPI_HOST, &devcfg, &s_spi);
+        s_first_spi_session = 0;
+    }
 }
 
 static void platform_spi_stop(void)
 {
     // ... Complete spi communication
+    // no complete actions required for this implementation
 }
 
 static void platform_spi_send(uint8_t data)
 {
     // ... Send byte to spi communication channel
+    // We do not care here about DC line state, because
+    // ssd1306 library already set DC pin via ssd1306_spiDataMode() before call to send().
+    spi_transaction_t t;
+    memset(&t, 0, sizeof(t));
+    t.length = 8;          // 8 bits
+    t.tx_buffer=&data;
+    spi_device_transmit(s_spi, &t);  // Transmit!
 }
 
 static void platform_spi_close(void)
 {
     // ... free all spi resources here
+    if (!s_first_spi_session)
+    {
+        spi_bus_remove_device( s_spi );
+    }
+    spi_bus_free( s_spi_bus_id ? VSPI_HOST : HSPI_HOST );
 }
 
 static void platform_spi_send_buffer(const uint8_t *data, uint16_t len)
 {
     // ... Send len bytes to spi communication channel here
+    while (len)
+    {
+        size_t sz = len > 32 ? 32: len;
+        spi_transaction_t t;
+        memset(&t, 0, sizeof(t));
+        t.length=8*sz;          // 8 bits
+        t.tx_buffer=data;
+        spi_device_transmit(s_spi, &t);
+        data+=sz;
+        len-=sz;
+    }
 }
 
 void ssd1306_platform_spiInit(int8_t busId,
                               int8_t cesPin,
                               int8_t dcPin)
 {
-    if (cesPin>=0) s_ssd1306_cs = cesPin;
+    // Use VSPI by default
+    if (busId < 0) busId = 1;
+    s_spi_bus_id = busId;
+
+    // If cesPin is not provided, select by default
+    if (cesPin < 0)
+    {
+        cesPin = s_spi_bus_id ? 5 : 15;
+    }
+    s_ssd1306_cs = cesPin;
     if (dcPin>=0) s_ssd1306_dc = dcPin;
+
+    if (cesPin >=0) pinMode(cesPin, OUTPUT);
+    if (dcPin >= 0) pinMode(dcPin, OUTPUT);
+
     ssd1306_intf.spi = 1;
     ssd1306_intf.start = &platform_spi_start;
     ssd1306_intf.stop  = &platform_spi_stop;
     ssd1306_intf.send  = &platform_spi_send;
     ssd1306_intf.close = &platform_spi_close;
     ssd1306_intf.send_buffer = &platform_spi_send_buffer;
+
     // init your interface here
-    //...
+    spi_bus_config_t buscfg=
+    {
+        .miso_io_num= s_spi_bus_id ? 19 : 12,
+        .mosi_io_num= s_spi_bus_id ? 23 : 13,
+        .sclk_io_num= s_spi_bus_id ? 18 : 14,
+        .quadwp_io_num=-1,
+        .quadhd_io_num=-1,
+        .max_transfer_sz=32
+    };
+    spi_bus_initialize(s_spi_bus_id ? VSPI_HOST : HSPI_HOST, &buscfg, 0); // 0 -no dma
+    s_first_spi_session = 1;
 }
 #endif
 
-#endif // YOUR_PLATFORM
+#endif // SSD1306_ESP_PLATFORM
