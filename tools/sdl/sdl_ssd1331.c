@@ -25,6 +25,7 @@
 #include "sdl_ssd1331.h"
 #include "sdl_oled_basic.h"
 #include "sdl_graphics.h"
+#include "sdl_core.h"
 
 static int s_activeColumn = 0;
 static int s_activePage = 0;
@@ -34,6 +35,8 @@ static int s_pageStart = 0;
 static int s_pageEnd = 7;
 static int s_newColumn;
 static int s_newPage;
+static uint8_t detected = 0;
+
 
 static void copyBlock()
 {
@@ -53,7 +56,12 @@ static void copyBlock()
 
 static int sdl_ssd1331_detect(uint8_t data)
 {
-    return (data == 0xBE);
+    if (detected)
+    {
+        return 1;
+    }
+    detected = (data == SDL_LCD_SSD1331);
+    return 0;
 }
 
 static uint8_t s_verticalMode = 1;
@@ -125,7 +133,7 @@ static void sdl_ssd1331_commands(uint8_t data)
 }
 
 
-void sdl_ssd1331_data(uint8_t data)
+static void sdl_ssd1331_data(uint8_t data)
 {
     int y = s_topToBottom ? s_activePage : (sdl_ssd1331.height - s_activePage - 1);
     int x = s_leftToRight ? s_activeColumn: (sdl_ssd1331.width - s_activeColumn - 1);

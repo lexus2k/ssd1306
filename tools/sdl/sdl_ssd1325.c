@@ -22,7 +22,7 @@
     SOFTWARE.
 */
 
-#include "sdl_ssd1351.h"
+#include "sdl_ssd1325.h"
 #include "sdl_oled_basic.h"
 #include "sdl_graphics.h"
 #include "sdl_core.h"
@@ -33,29 +33,53 @@ static int s_columnStart = 0;
 static int s_columnEnd = 127;
 static int s_pageStart = 0;
 static int s_pageEnd = 7;
+static int s_newColumn;
+static int s_newPage;
 static uint8_t detected = 0;
 
 
-static int sdl_ssd1351_detect(uint8_t data)
+static void copyBlock()
+{
+    if ( s_newColumn < s_columnStart )
+    {
+        for( int y = s_pageStart; y <= s_pageEnd; y++)
+        for( int x = s_newColumn; x <= s_newColumn + s_columnEnd - s_columnStart; x++)
+            sdl_put_pixel(x, y, sdl_get_pixel( x + s_columnStart - s_newColumn, y ));
+    }
+    else
+    {
+        for( int y = s_pageStart; y <= s_pageEnd; y++)
+        for( int x = s_newColumn + s_columnEnd - s_columnStart; x >= s_newColumn; x--)
+            sdl_put_pixel(x, y, sdl_get_pixel( x + s_columnStart - s_newColumn, y ));
+    }
+}
+
+static int sdl_ssd1325_detect(uint8_t data)
 {
     if (detected)
     {
         return 1;
     }
-    detected = (data == SDL_LCD_SSD1351);
+    detected = (data == SDL_LCD_SSD1325);
     return 0;
 }
 
 static uint8_t s_verticalMode = 1;
+static uint8_t s_nimbleMapping = 0;
+static uint8_t s_leftToRight = 0;
+static uint8_t s_topToBottom = 0;
 
-static void sdl_ssd1351_commands(uint8_t data)
+static void sdl_ssd1325_commands(uint8_t data)
 {
     switch (s_commandId)
     {
         case 0xA0:
             if (s_cmdArgIndex == 0)
             {
-                s_verticalMode = data & 0x01;
+                s_verticalMode = data & 0x04;
+                s_nimbleMapping = data & 0x02;
+                s_leftToRight = data & 0x01;
+                s_topToBottom = data & 0x10;
                 s_commandId = SSD_COMMAND_NONE;
             }
             break;
@@ -73,6 +97,23 @@ static void sdl_ssd1351_commands(uint8_t data)
                 default: break;
             }
             break;
+        case 0x23: // MOVE BLOCK
+            switch (s_cmdArgIndex)
+            {
+                case 0: s_columnStart = data; break;
+                case 1: s_pageStart = data; break;
+                case 2: s_columnEnd = data; break;
+                case 3: s_pageEnd = data; break;
+                case 4: s_newColumn = data; break;
+                case 5:
+                     s_newPage = data;
+                     copyBlock();
+                     s_commandId = SSD_COMMAND_NONE;
+                     break;
+                default:
+                     break;
+            }
+            break;
         case 0x75:
             switch (s_cmdArgIndex)
             {
@@ -87,10 +128,6 @@ static void sdl_ssd1351_commands(uint8_t data)
                 default: break;
             }
             break;
-        case 0x5C:
-            sdl_set_data_mode( SDM_WRITE_DATA );
-            s_commandId = SSD_COMMAND_NONE;
-            break;
         default:
             s_commandId = SSD_COMMAND_NONE;
             break;
@@ -98,20 +135,17 @@ static void sdl_ssd1351_commands(uint8_t data)
 }
 
 
-void sdl_ssd1351_data(uint8_t data)
+static void sdl_ssd1325_data(uint8_t data)
 {
-    int y = s_activePage;
-    int x = s_activeColumn;
-    static uint8_t firstByte = 1;  /// SSD1351
-    static uint8_t dataFirst = 0x00;  /// SSD1351
-    if (firstByte)
+    for (int i=0; i<2; i++)
     {
-        dataFirst = data;
-        firstByte = 0;
-        return;
-    }
-    firstByte = 1;
-    sdl_put_pixel(x, y, (dataFirst<<8) | data);
+    int y = s_topToBottom ? s_activePage : (sdl_ssd1325.height - s_activePage - 1);
+    int x = s_leftToRight ? s_activeColumn: (sdl_ssd1325.width - s_activeColumn - 1);
+    sdl_put_pixel(x, y, ((data & 0x0F) << 28) |
+                        ((data & 0x0F) << 20) |
+                        ((data & 0x0F) << 12) |
+                        ((data & 0x0F) << 4)
+     );
 
     if (s_verticalMode)
     {
@@ -139,16 +173,18 @@ void sdl_ssd1351_data(uint8_t data)
             }
         }
     }
+   data >>= 4;
+   }
 }
 
-sdl_oled_info sdl_ssd1351 =
+sdl_oled_info sdl_ssd1325 =
 {
     .width = 128,
-    .height = 128,
-    .bpp = 16,
-    .pixfmt = SDL_PIXELFORMAT_RGB565,
-    .dataMode = SDMS_CONTROLLER,
-    .detect = sdl_ssd1351_detect,
-    .run_cmd = sdl_ssd1351_commands,
-    .run_data = sdl_ssd1351_data,
+    .height = 64,
+    .bpp = 32,
+    .pixfmt = SDL_PIXELFORMAT_RGBX8888,
+    .dataMode = SDMS_AUTO,
+    .detect = sdl_ssd1325_detect,
+    .run_cmd = sdl_ssd1325_commands,
+    .run_data = sdl_ssd1325_data,
 };

@@ -25,6 +25,7 @@
 #include "sdl_pcd8544.h"
 #include "sdl_oled_basic.h"
 #include "sdl_graphics.h"
+#include "sdl_core.h"
 
 static int s_activeColumn = 0;
 static int s_activePage = 0;
@@ -33,10 +34,17 @@ const static int s_columnEnd = 83;
 const static int s_pageStart = 0;
 const static int s_pageEnd = 5;
 static int s_verticalMode = 0;
+static uint8_t detected = 0;
+
 
 static int sdl_pcd8544_detect(uint8_t data)
 {
-    return (data == 0x04);
+    if (detected)
+    {
+        return 1;
+    }
+    detected = (data == SDL_LCD_PCD8544);
+    return 0;
 }
 
 static void sdl_pcd8544_commands(uint8_t data)

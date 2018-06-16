@@ -29,6 +29,9 @@
 #include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
 #include "nano_gfx_types.h"
+#ifdef SDL_EMULATION
+#include "sdl_core.h"
+#endif
 
 #define CMD_ARG     0xFF
 
@@ -37,6 +40,10 @@ extern uint32_t s_ssd1306_spi_clock;
 
 static const PROGMEM uint8_t s_oled128x128_initData[] =
 {
+#ifdef SDL_EMULATION
+    SDL_LCD_SSD1351,
+    0x00,
+#endif
     SSD1351_UNLOCK, CMD_ARG, 0x12,
     SSD1351_UNLOCK, CMD_ARG, 0xB1,
     SSD1351_SLEEP_ON,

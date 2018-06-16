@@ -28,11 +28,18 @@
 #include "intf/ssd1306_interface.h"
 #include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
+#ifdef SDL_EMULATION
+#include "sdl_core.h"
+#endif
 
 extern uint16_t ssd1306_color;
 
 static const PROGMEM uint8_t s_oled96x64_initData[] =
 {
+#ifdef SDL_EMULATION
+    SDL_LCD_SSD1331,
+    0x00,
+#endif
     SSD1331_DISPLAYOFF,             // display off
     SSD1331_SEGREMAP, 0x00 | 0x20 | 0x10 | 0x02 | 0x01, /* 8-bit rgb color mode */
     SSD1331_SETSTARTLINE, 0x00,    // First line to start scanning from

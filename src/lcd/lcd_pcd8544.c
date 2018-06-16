@@ -28,9 +28,17 @@
 #include "intf/ssd1306_interface.h"
 #include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
+#ifdef SDL_EMULATION
+#include "sdl_core.h"
+#endif
+
 
 static const uint8_t PROGMEM s_lcd84x48_initData[] =
 {
+#ifdef SDL_EMULATION
+    SDL_LCD_PCD8544,
+    0x00,
+#endif
     PCD8544_FUNCTIONSET | PCD8544_EXTENDEDINSTRUCTION, // switch to extented commands
     PCD8544_SETVOP | 0x16,  // Set vop contrast
     PCD8544_SETTEMP,

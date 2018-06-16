@@ -29,10 +29,17 @@
 #include "intf/i2c/ssd1306_i2c.h"
 #include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
+#ifdef SDL_EMULATION
+#include "sdl_core.h"
+#endif
 
 
 static const uint8_t PROGMEM s_oled128x64_initData[] =
 {
+#ifdef SDL_EMULATION
+    SDL_LCD_SH1106,
+    0x00,
+#endif
     SSD1306_DISPLAYOFF, // display off
     SSD1306_COMSCANDEC,             // Scan from 127 to 0 (Reverse scan)
     SSD1306_SETSTARTLINE | 0x00,    // First line to start scanning from

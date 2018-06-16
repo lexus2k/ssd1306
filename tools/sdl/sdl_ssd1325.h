@@ -22,39 +22,17 @@
     SOFTWARE.
 */
 
-#ifndef _SDL_CORE_H_
-#define _SDL_CORE_H_
+#ifndef _SDL_SSD1325_H_
+#define _SDL_SSD1325_H_
 
 #include <stdint.h>
+#include "sdl_oled_basic.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-enum
-{
-    SDL_LCD_TEMPLATE,
-    SDL_LCD_SSD1306,
-    SDL_LCD_SH1106,
-    SDL_LCD_PCD8544,
-    SDL_LCD_SSD1325,
-    SDL_LCD_SSD1331,
-    SDL_LCD_SSD1351,
-    SDL_LCD_IL9163,
-    SDL_LCD_ST7735,
-};
-
-extern void sdl_core_init(void);
-extern void sdl_core_draw(void);
-
-extern void sdl_set_dc_pin(int pin);
-extern void sdl_send_init();
-extern void sdl_send_byte(uint8_t data);
-extern void sdl_send_stop();
-extern int  sdl_read_analog(int pin);
-extern void sdl_write_digital(int pin, int value);
-
-extern void sdl_core_close(void);
+extern sdl_oled_info sdl_ssd1325;
 
 #ifdef __cplusplus
 }
