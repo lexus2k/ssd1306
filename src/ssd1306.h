@@ -34,11 +34,14 @@
 #include "ssd1306_fonts.h"
 #include "lcd/lcd_common.h"
 #include "lcd/oled_ssd1306.h"
+#include "lcd/oled_ssd1325.h"
 #include "lcd/oled_ssd1331.h"
 #include "lcd/oled_ssd1351.h"
 #include "lcd/oled_sh1106.h"
 #include "lcd/lcd_pcd8544.h"
 #include "lcd/lcd_il9163.h"
+
+#include "lcd/oled_template.h"
 
 #ifdef __cplusplus
 extern "C" {

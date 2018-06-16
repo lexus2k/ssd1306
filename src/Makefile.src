@@ -44,8 +44,10 @@ SRCS_C = \
 	lcd/lcd_il9163.c \
 	lcd/oled_sh1106.c \
 	lcd/oled_ssd1306.c \
+	lcd/oled_ssd1325.c \
 	lcd/oled_ssd1331.c \
 	lcd/oled_ssd1351.c \
+	lcd/oled_template.c \
 	lcd/vga_monitor.c \
 	intf/vga/atmega328p/vga128x64.c \
 	intf/vga/atmega328p/vga96x40.c \
