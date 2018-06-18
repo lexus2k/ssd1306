@@ -58,31 +58,9 @@ static const PROGMEM uint8_t s_oled_128x64_initData[] =
 /////////////   ssd1325 functions below are for SPI display  ////////////
 /////////////   in ssd1306 compatible mode                   ////////////
 
-static uint8_t s_column;
-static uint8_t s_page;
+//////////////////////// SSD1306 COMPATIBLE MODE ///////////////////////////////
 
-// The function must set block to draw data
-static void ssd1325_setBlock_compat(lcduint_t x, lcduint_t y, lcduint_t w)
-{
-    uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
-    s_column = x;
-    s_page = y;
-    ssd1306_intf.start();
-    ssd1306_spiDataMode(0);
-    ssd1306_intf.send(0x15);
-    ssd1306_intf.send(x);
-    ssd1306_intf.send(rx < ssd1306_lcd.width ? rx : (ssd1306_lcd.width - 1));
-    ssd1306_intf.send(0x75);
-    ssd1306_intf.send(y<<3);
-    ssd1306_intf.send(((y<<3) + 7) < ssd1306_lcd.height ? ((y<<3) + 7) : (ssd1306_lcd.height - 1));
-    ssd1306_spiDataMode(1);
-}
-
-static void ssd1325_nextPage_compat(void)
-{
-    ssd1306_intf.stop();
-    ssd1325_setBlock_compat(s_column,s_page+1,0);
-}
+SSD1306_COMPAT_SPI_BLOCK_8BIT_CMDS( 0x15, 0x75 );
 
 static void ssd1325_sendPixels(uint8_t data)
 {
@@ -104,38 +82,24 @@ static void ssd1325_sendPixelsBuffer(const uint8_t *buffer, uint16_t len)
     }
 }
 
+//////////////////////// SSD1331 NATIVE MODE ///////////////////////////////////
+
+CONTROLLER_NATIVE_SPI_BLOCK_8BIT_CMDS( 0x15, 0x75 );
+
 /////////////   ssd1325 functions below are for SPI display  ////////////
 /////////////   in native/normal mode                        ////////////
-
-static void ssd1325_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
-{
-    uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
-    ssd1306_intf.start();
-    ssd1306_spiDataMode(0);
-    ssd1306_intf.send(0x15);
-    ssd1306_intf.send(x);
-    ssd1306_intf.send(rx < ssd1306_lcd.width ? rx : (ssd1306_lcd.width - 1));
-    ssd1306_intf.send(0x75);
-    ssd1306_intf.send(y);
-    ssd1306_intf.send(ssd1306_lcd.height - 1);
-    ssd1306_spiDataMode(1);
-}
-
-static void ssd1325_nextPage(void)
-{
-}
 
 void    ssd1325_setMode(lcd_mode_t mode)
 {
     if (mode == LCD_MODE_NORMAL)
     {
-        ssd1306_lcd.set_block = ssd1325_setBlock;
-        ssd1306_lcd.next_page = ssd1325_nextPage;
+        ssd1306_lcd.set_block = set_block_native;
+        ssd1306_lcd.next_page = next_page_native;
     }
     else
     {
-        ssd1306_lcd.set_block = ssd1325_setBlock_compat;
-        ssd1306_lcd.next_page = ssd1325_nextPage_compat;
+        ssd1306_lcd.set_block = set_block_compat;
+        ssd1306_lcd.next_page = next_page_compat;
     }
     ssd1306_intf.start();
     ssd1306_spiDataMode(0);
@@ -151,8 +115,8 @@ void    ssd1325_128x64_init()
     ssd1306_lcd.width = 128;  // specify width
     ssd1306_lcd.height = 64; // specify height
     // Set functions for compatible mode
-    ssd1306_lcd.set_block = ssd1325_setBlock_compat;
-    ssd1306_lcd.next_page = ssd1325_nextPage_compat;
+    ssd1306_lcd.set_block = set_block_compat;
+    ssd1306_lcd.next_page = next_page_compat;
     ssd1306_lcd.send_pixels1  = ssd1325_sendPixels;
     ssd1306_lcd.send_pixels_buffer1 = ssd1325_sendPixelsBuffer;
     // Set function for 8-bit mode
@@ -170,14 +134,7 @@ void   ssd1325_128x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
 {
     if (rstPin >=0)
     {
-        pinMode(rstPin, OUTPUT);
-        digitalWrite(rstPin, HIGH);
-        /* Wait at least 1ms after VCC is up for LCD */
-        delay(1);
-        /* Perform reset operation of LCD display */
-        digitalWrite(rstPin, LOW);
-        delay(10);
-        digitalWrite(rstPin, HIGH);
+        ssd1306_resetController( rstPin, 10 );
     }
     ssd1306_spiInit(cesPin, dcPin);
     ssd1325_128x64_init();

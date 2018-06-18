@@ -283,6 +283,18 @@ void ssd1306_configureSpiDisplay(const uint8_t *config, uint8_t configSize);
 void ssd1306_setMode(lcd_mode_t mode);
 
 /**
+ * @brief Does hardware reset for oled controller.
+ *
+ * Does hardware reset for oled controller. The function pulls up rstPin
+ * for 10 milliseconds, then pulls down rstPin for delayMs milliseconds
+ * and then finally pulls rstPin up.
+ *
+ * @param rstPin reset pin number
+ * @param delayMs delay in milliseconds to hold rstPin in low state
+ */
+void ssd1306_resetController(int8_t rstPin, uint8_t delayMs);
+
+/**
  * Macro SSD1306_COMPAT_SPI_BLOCK_8BIT_CMDS() generates 2 static functions,
  * applicable for many oled controllers with 8-bit commands:
  * set_block_compat(), next_page_compat(). These functions are to be used
@@ -318,6 +330,35 @@ void ssd1306_setMode(lcd_mode_t mode);
         set_block_compat(__s_column,__s_page+1,0); \
     } \
 
+/**
+ * Macro CONTROLLER_NATIVE_SPI_BLOCK_8BIT_CMDS() generates 2 static functions,
+ * applicable for many oled controllers with 8-bit commands:
+ * set_block_native(), next_page_native(). These functions are to be used
+ * when working in oled controller native mode.
+ * @param column_cmd command opcode for setting column address according to
+ *        oled controller datasheet
+ * @param row_cmd command opcode for setting row address according to
+ *        oled controller datasheet
+ * @note It is assumed that column and row commands accept 2 single byte
+ *       arguments: start and end of region
+ */
+#define CONTROLLER_NATIVE_SPI_BLOCK_8BIT_CMDS(column_cmd, row_cmd) \
+    static void set_block_native(lcduint_t x, lcduint_t y, lcduint_t w) \
+    { \
+        uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1); \
+        ssd1306_intf.start(); \
+        ssd1306_spiDataMode(0); \
+        ssd1306_intf.send(column_cmd); \
+        ssd1306_intf.send(x); \
+        ssd1306_intf.send(rx < ssd1306_lcd.width ? rx : (ssd1306_lcd.width - 1)); \
+        ssd1306_intf.send(row_cmd); \
+        ssd1306_intf.send(y); \
+        ssd1306_intf.send(ssd1306_lcd.height - 1); \
+        ssd1306_spiDataMode(1); \
+    } \
+    static void next_page_native() \
+    { \
+    } \
 
 /**
  * Macro SSD1306_COMPAT_SEND_PIXELS_RGB8_CMDS() generates 2 static functions,

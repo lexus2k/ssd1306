@@ -73,23 +73,9 @@ SSD1306_COMPAT_SEND_PIXELS_RGB8_CMDS();
 
 //////////////////////// SSD1331 NATIVE MODE ///////////////////////////////////
 
-static void ssd1331_setBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
-{
-    uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
-    ssd1306_intf.start();
-    ssd1306_spiDataMode(0);
-    ssd1306_intf.send((s_rotation & 1) ? SSD1331_ROWADDR: SSD1331_COLUMNADDR);
-    ssd1306_intf.send(x);
-    ssd1306_intf.send(rx < ssd1306_lcd.width ? rx : (ssd1306_lcd.width - 1));
-    ssd1306_intf.send((s_rotation & 1) ? SSD1331_COLUMNADDR: SSD1331_ROWADDR);
-    ssd1306_intf.send(y);
-    ssd1306_intf.send(ssd1306_lcd.height - 1);
-    ssd1306_spiDataMode(1);
-}
-
-static void ssd1331_nextPage2(void)
-{
-}
+CONTROLLER_NATIVE_SPI_BLOCK_8BIT_CMDS(
+     (s_rotation & 1) ? SSD1331_ROWADDR: SSD1331_COLUMNADDR,
+     (s_rotation & 1) ? SSD1331_COLUMNADDR: SSD1331_ROWADDR );
 
 //////////////////////////// GENERIC FUNCTIONS ////////////////////////////
 
@@ -98,8 +84,8 @@ void    ssd1331_setMode(lcd_mode_t mode)
     if (mode == LCD_MODE_NORMAL)
     {
         s_rotation &= ~0x04;
-        ssd1306_lcd.set_block = ssd1331_setBlock2;
-        ssd1306_lcd.next_page = ssd1331_nextPage2;
+        ssd1306_lcd.set_block = set_block_native;
+        ssd1306_lcd.next_page = next_page_native;
     }
     else
     {
@@ -182,14 +168,7 @@ void   ssd1331_96x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
 {
     if (rstPin >=0)
     {
-        pinMode(rstPin, OUTPUT);
-        digitalWrite(rstPin, HIGH);
-        /* Wait at least 1ms after VCC is up for LCD */
-        delay(1);
-        /* Perform reset operation of LCD display */
-        digitalWrite(rstPin, LOW);
-        delay(10);
-        digitalWrite(rstPin, HIGH);
+        ssd1306_resetController( rstPin, 10 );
     }
     ssd1306_spiInit(cesPin, dcPin);
     ssd1331_96x64_init();

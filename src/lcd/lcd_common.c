@@ -78,3 +78,16 @@ void ssd1306_setMode(lcd_mode_t mode)
         ssd1306_lcd.set_mode( mode );
     }
 }
+
+void ssd1306_resetController(int8_t rstPin, uint8_t delayMs)
+{
+    pinMode(rstPin, OUTPUT);
+    digitalWrite(rstPin, HIGH);
+    /* Wait at least 10ms after VCC is up for LCD */
+    delay(10);
+    /* Perform reset operation of LCD display */
+    digitalWrite(rstPin, LOW);
+    delay(delayMs);
+    digitalWrite(rstPin, HIGH);
+}
+

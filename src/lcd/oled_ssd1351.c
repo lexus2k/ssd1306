@@ -210,14 +210,7 @@ void   ssd1351_128x128_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
 {
     if (rstPin >=0)
     {
-        pinMode(rstPin, OUTPUT);
-        digitalWrite(rstPin, HIGH);
-        /* Wait at least 1ms after VCC is up for LCD */
-        delay(1);
-        /* Perform reset operation of LCD display */
-        digitalWrite(rstPin, LOW);
-        delay(20);
-        digitalWrite(rstPin, HIGH);
+        ssd1306_resetController( rstPin, 20 );
     }
     /* ssd1351 cannot work faster than at 4MHz per datasheet */
     s_ssd1306_spi_clock = 4000000;

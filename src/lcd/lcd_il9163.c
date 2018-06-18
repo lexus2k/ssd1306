@@ -381,14 +381,7 @@ void   st7735_128x160_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
 {
     if (rstPin >=0)
     {
-        pinMode(rstPin, OUTPUT);
-        digitalWrite(rstPin, HIGH);
-        /* Wait at least 1ms after VCC is up for LCD */
-        delay(1);
-        /* Perform reset operation of LCD display */
-        digitalWrite(rstPin, LOW);
-        delay(20);
-        digitalWrite(rstPin, HIGH);
+        ssd1306_resetController( rstPin, 20 );
         /* Give 120ms display to initialize */
         delay(120);
     }
