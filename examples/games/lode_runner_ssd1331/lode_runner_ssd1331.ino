@@ -47,6 +47,9 @@
 #include "intf/ssd1306_interface.h"
 #include "intf/spi/ssd1306_spi.h"
 
+// Uncomment if you have ssd1331 oled display
+//#define SSD1331_ACCELERATION
+
 typedef NanoEngine<TILE_16x16_RGB8> GameEngine;
 
 #if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)
@@ -56,8 +59,6 @@ typedef NanoEngine<TILE_16x16_RGB8> GameEngine;
 #define BUZZER      8
 #define BUTTON_PIN  0
 #endif
-
-//#define SSD1331_ACCELERATION
 
 uint8_t gameField[24*7] =
 {
@@ -121,7 +122,7 @@ bool onDraw()
     engine.canvas.clear();
     engine.canvas.setMode(0);
     showGameInfo();
-    engine.globalCoordinates();
+    engine.worldCoordinates();
     for (uint8_t row = max(0,(engine.canvas.offset.y >> 3) - 1);
                  row <= min(6,((engine.canvas.offset.y + engine.NE_TILE_HEIGHT - 1) >> 3) - 1); row++)
     {

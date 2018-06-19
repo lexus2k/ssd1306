@@ -48,6 +48,12 @@ typedef struct _NanoRect
         return p2.x - p1.x + 1;
     }
 
+    /** returns size of NanoRect */
+    const NanoPoint size() const
+    {
+        return {width(), height()};
+    }
+
     /** returns height of NanoRect */
     lcdint_t height() const
     {

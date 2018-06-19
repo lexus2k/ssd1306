@@ -39,22 +39,6 @@
 // This causes flash and RAM memory consumption in compiled ELF
 
 /**
- * NanoEngine8 is simple graphics engine, that implements double buffering work
- * for the systems with very low resources. That is, memory buffer for SSD1331 oled
- * display needs at least 96x64x1 bytes (6144 bytes), and this is inacceptable for
- * microcontrollers like atmega328p (it has only 2KiB of RAM). So, to workaround
- * issue with low resources, NanoEngine8 uses small tile buffer (NE_TILE_SIZE x NE_TILE_SIZE)
- * and updates only part of oled screen at once. It makes system slow, but it is
- * possible to run NanoEngine8 on simple controllers.
- * If tile size is 32x32, then 96x64 oled display is devided into 6 tiles: <br>
- *    [0,0] [1,0] [2,0] <br>
- *    [0,1] [1,1] [2,1] <br>
- * In your application you can choose, if you want to refresh whole screen (refresh()), or you
- * need to refresh only part of oled display.
- */
-#define NanoEngine8   NanoEngine<TILE_8x8_RGB8>
-
-/**
  * NanoEngine1 is simple graphics engine, that implements double buffering work
  * for the systems with very low resources. That is, memory buffer for SSD1306 oled
  * display needs at least 128x64/8 bytes (1024 bytes), and this is inacceptable for
@@ -70,7 +54,23 @@
  *
  * @warning Works only in SSD1306 compatible mode
  */
-#define NanoEngine1   NanoEngine<TILE_8x8_MONO>
+#define NanoEngine1   NanoEngine<TILE_16x16_MONO>
+
+/**
+ * NanoEngine8 is simple graphics engine, that implements double buffering work
+ * for the systems with very low resources. That is, memory buffer for SSD1331 oled
+ * display needs at least 96x64x1 bytes (6144 bytes), and this is inacceptable for
+ * microcontrollers like atmega328p (it has only 2KiB of RAM). So, to workaround
+ * issue with low resources, NanoEngine8 uses small tile buffer (NE_TILE_SIZE x NE_TILE_SIZE)
+ * and updates only part of oled screen at once. It makes system slow, but it is
+ * possible to run NanoEngine8 on simple controllers.
+ * If tile size is 32x32, then 96x64 oled display is devided into 6 tiles: <br>
+ *    [0,0] [1,0] [2,0] <br>
+ *    [0,1] [1,1] [2,1] <br>
+ * In your application you can choose, if you want to refresh whole screen (refresh()), or you
+ * need to refresh only part of oled display.
+ */
+#define NanoEngine8   NanoEngine<TILE_16x16_RGB8>
 
 /**
  * NanoEngine1 is simple graphics engine, that implements double buffering work

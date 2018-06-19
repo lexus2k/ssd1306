@@ -40,14 +40,19 @@ extern "C" SFixedFontInfo s_fixedFont;
 
 /* The table below defines arguments for NanoEngineTiler.          *
  *                            canvas        width   height  bits   */
-#define BUFFER_128x64_MONO    NanoCanvas1,  128,    64,     7    ///< Full-screen 1-bit tile for SSD1306
-#define TILE_8x8_RGB16        NanoCanvas16, 8,      8,      3    ///< Standard 16-bit RGB tile 8x8
+// Tiles for monochrome displays
+#define TILE_128x64_MONO      NanoCanvas1,  128,    64,     7    ///< Full-screen 1-bit tile for SSD1306
+#define TILE_8x8_MONO         NanoCanvas1,  8,      8,      3    ///< Standard 1-bit tile 8x8 for monochrome mode
+#define TILE_16x16_MONO       NanoCanvas1,  16,     16,     4    ///< Standard 1-bit tile 16x16 for monochrome mode
+#define TILE_32x32_MONO       NanoCanvas1,  32,     32,     4    ///< Standard 1-bit tile 32x32 for monochrome mode
+// Tiles for 8-bit displays
 #define TILE_8x8_RGB8         NanoCanvas8,  8,      8,      3    ///< Standard 8-bit RGB tile 8x8
 #define TILE_16x16_RGB8       NanoCanvas8,  16,     16,     4    ///< Standard 8-bit RGB tile 16x16
 #define TILE_32x32_RGB8       NanoCanvas8,  32,     32,     5    ///< Standard 8-bit RGB tile 32x32
-#define TILE_8x8_MONO         NanoCanvas1,  8,      8,      3    ///< Standard 1-bit tile 8x8 for monochrome mode
 #define TILE_8x8_MONO_8       NanoCanvas1_8,8,      8,      3    ///< Standard 1-bit tile 8x8 for RGB mode
-
+// Tiles for 16-bit displays
+#define TILE_8x8_RGB16        NanoCanvas16, 8,      8,      3    ///< Standard 16-bit RGB tile 8x8
+// Adafruit tiles
 #define ADATILE_8x8_MONO      AdafruitCanvas1,  8,  8,      3    ///< Use Adafruit GFX implementation as NanoEngine canvas
 #define ADATILE_8x8_RGB8      AdafruitCanvas8,  8,  8,      3    ///< Use Adafruit GFX implementation as NanoEngine canvas
 #define ADATILE_8x8_RGB16     AdafruitCanvas16, 8,  8,      3    ///< Use Adafruit GFX implementation as NanoEngine canvas
@@ -138,39 +143,66 @@ public:
     }
 
     /**
-     *
+     * Marks for refresh lcd area, which corresponds to specified rectangle in
+     * global (World) coordinates. If engine offset is (0,0), then this function
+     * refreshes the same area as refresh().
      */
     static void refreshWorld(const NanoRect &rect)
     {
         refreshWorld(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
     }
 
+    /**
+     * Marks for refresh lcd area, which corresponds to specified rectangle in
+     * global (World) coordinates. If engine offset is (0,0), then this function
+     * refreshes the same area as refresh().
+     */
     static void refreshWorld(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
     {
         refresh(x1 - offset.x, y1 - offset.y, x2 - offset.x, y2 - offset.y);
     }
 
+    /**
+     * Switches engine canvas to local coordinates system. This method can be useful
+     * to ease up drawing of some static elements on lcd display.
+     * @warning do not call twice subsequentally.
+     */
     static void localCoordinates()
     {
         canvas.offset -= offset;
     }
 
-    static void globalCoordinates()
+    /**
+     * Switches engine canvas to global (World) coordinates system. This method can be useful
+     * to create screen moving animation.
+     * @warning do not call twice subsequentally.
+     */
+    static void worldCoordinates()
     {
         canvas.offset += offset;
     }
 
+    /**
+     * Moves engine coordinate to new position (this sets World coordinates offset).
+     */
     static void moveTo(const NanoPoint & position)
     {
         offset = position;
     }
 
+    /**
+     * Moves engine coordinate to new position and mark whole display for refresh
+     * (this sets World coordinates offset).
+     */
     static void moveToAndRefresh(const NanoPoint & position)
     {
         moveTo(position);
         refresh();
     }
 
+    /**
+     * Returns current World offset
+     */
     const NanoPoint & getPosition() const
     {
         return offset;
@@ -181,14 +213,14 @@ public:
      * to update display content. If callback returns false, engine will not update those area.
      * You always have a way to find out, which area is being updated by engine via
      * NanoEngine<>::canvas::getOffset() and NanoEngine<>::NE_TILE_SIZE.
-     * @important By default canvas in the engine is initialized with local screen coordinates. So
+     * @warning   By default canvas in the engine is initialized with local screen coordinates. So
      *            graphics object with [0,0] coordinates will be placed at topleft position on the
      *            display. But engine supports also global coordinates, in this case actual object
-     *            position depends on current engine offset. Refer to globalCoordinates() and
+     *            position depends on current engine offset. Refer to worldCoordinates() and
      *            localCoordinates().
      * @param callback - user-defined draw callback.
      * @note you can change draw callback anytime you need.
-     * @see globalCoordinates()
+     * @see worldCoordinates()
      * @see localCoordinates()
      */
     static void drawCallback(TNanoEngineOnDraw callback)
