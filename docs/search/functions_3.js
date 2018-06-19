@@ -3,7 +3,7 @@ var searchData=
   ['display',['display',['../class_nano_engine.html#aa62679199db111eeaf01a4235c72ecd0',1,'NanoEngine']]],
   ['displaybuffer',['displayBuffer',['../class_nano_engine_tiler.html#a6f7ba05a46f9033d548390d5c8107110',1,'NanoEngineTiler']]],
   ['displaypopup',['displayPopup',['../class_nano_engine_tiler.html#ac9642cbeff5b4de207b379d4bbb07ba8',1,'NanoEngineTiler']]],
-  ['draw',['draw',['../struct_s_p_r_i_t_e.html#af3f35eab30dd39e4434b29923f0afab6',1,'SPRITE']]],
+  ['draw',['draw',['../class_nano_sprite.html#a3edd93768ba913a2fbd767271be3b4e6',1,'NanoSprite::draw()'],['../class_nano_fixed_sprite.html#a0b73403ca6d639c5ee61d97b9421d273',1,'NanoFixedSprite::draw()'],['../struct_s_p_r_i_t_e.html#af3f35eab30dd39e4434b29923f0afab6',1,'SPRITE::draw()']]],
   ['drawbitmap',['drawBitmap',['../class_nano_canvas.html#ad28f993fce34532404c4cdbafff5ea35',1,'NanoCanvas']]],
   ['drawbitmap1',['drawBitmap1',['../class_nano_canvas_ops.html#aa7d2cae52276202ed1e13d17b4fa8a3a',1,'NanoCanvasOps']]],
   ['drawbitmap8',['drawBitmap8',['../class_nano_canvas_ops.html#afe3dc7128ee365101384f4233cd2838c',1,'NanoCanvasOps']]],

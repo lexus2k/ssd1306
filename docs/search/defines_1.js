@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['buffer_5f128x64_5fmono',['BUFFER_128x64_MONO',['../tiler_8h.html#a37b0aad4356f722a76635e116d37125c',1,'tiler.h']]]
+  ['max',['max',['../nano__gfx__types_8h.html#affe776513b24d84b39af8ab0930fef7f',1,'nano_gfx_types.h']]],
+  ['min',['min',['../nano__gfx__types_8h.html#ac6afabdc09a49a433ee19d8a9486056d',1,'nano_gfx_types.h']]]
 ];

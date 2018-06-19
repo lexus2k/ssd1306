@@ -17,11 +17,15 @@ var searchData=
   ['m_5fp',['m_p',['../class_nano_canvas_ops.html#ad225695be47a6ad53c9d17db4184983c',1,'NanoCanvasOps']]],
   ['m_5frect',['m_rect',['../class_sprite_pool.html#a4a3cbbd6bbd5c9c74f1ed5dd8e631589',1,'SpritePool']]],
   ['m_5frefreshflags',['m_refreshFlags',['../class_nano_engine_tiler.html#aaa4fafbc1339cb6bef17d0aeabd94a44',1,'NanoEngineTiler']]],
+  ['m_5fsize',['m_size',['../class_nano_fixed_sprite.html#a6b601c5a85bf9a388c9bce4fd1c98924',1,'NanoFixedSprite']]],
   ['m_5ftextmode',['m_textMode',['../class_nano_canvas_ops.html#aa1960bb47eb7a5ee51466740c6ad7b42',1,'NanoCanvasOps']]],
   ['m_5fw',['m_w',['../class_nano_canvas_ops.html#a56d0c52199326b808ddecef112c4cb38',1,'NanoCanvasOps']]],
   ['mainpage_2edox',['mainpage.dox',['../mainpage_8dox.html',1,'']]],
   ['max',['max',['../nano__gfx__types_8h.html#affe776513b24d84b39af8ab0930fef7f',1,'nano_gfx_types.h']]],
   ['max_5fsprites',['MAX_SPRITES',['../class_sprite_pool.html#aa7522b59d079d63cfbb0612aaaee58df',1,'SpritePool']]],
   ['min',['min',['../nano__gfx__types_8h.html#ac6afabdc09a49a433ee19d8a9486056d',1,'nano_gfx_types.h']]],
-  ['move',['move',['../struct___nano_rect.html#adfed33ba72806ccae25fb0260b822a94',1,'_NanoRect']]]
+  ['move',['move',['../struct___nano_rect.html#adfed33ba72806ccae25fb0260b822a94',1,'_NanoRect']]],
+  ['moveby',['moveBy',['../class_nano_sprite.html#a5ffe9307b63f742064f67e23ee36a688',1,'NanoSprite::moveBy()'],['../class_nano_fixed_sprite.html#a11793f70c2a4baa2e663b003954b675d',1,'NanoFixedSprite::moveBy()']]],
+  ['moveto',['moveTo',['../class_nano_sprite.html#af144f32292ddb60d012e2cfed296e3d8',1,'NanoSprite::moveTo()'],['../class_nano_fixed_sprite.html#afbad5aef3c16b4aeaf6027c6d9c1c42f',1,'NanoFixedSprite::moveTo()'],['../class_nano_engine_tiler.html#a8241cced3faa62ae75e40afc88870fca',1,'NanoEngineTiler::moveTo()']]],
+  ['movetoandrefresh',['moveToAndRefresh',['../class_nano_engine_tiler.html#ab35b23771a8e9f007b9dfb7395e6ed13',1,'NanoEngineTiler']]]
 ];

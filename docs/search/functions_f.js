@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['setbitmap',['setBitmap',['../class_nano_sprite.html#acf17b80799bd2230d98255abda620263',1,'NanoSprite::setBitmap()'],['../class_nano_fixed_sprite.html#a68e16417f5ec6aff5e7c49f4efdaf581',1,'NanoFixedSprite::setBitmap()']]],
   ['setcolor',['setColor',['../class_nano_canvas_ops.html#a64f9b55e8041a118899437935f488f82',1,'NanoCanvasOps']]],
   ['setcursor',['setCursor',['../class_ssd1306_console.html#ae5725d8fcccdcf8d1496cc82a1d0fe19',1,'Ssd1306Console']]],
   ['setframerate',['setFrameRate',['../class_nano_engine_core.html#ae3bea7e85ca03cc698dff398ff853835',1,'NanoEngineCore']]],
@@ -11,6 +12,7 @@ var searchData=
   ['sh1106_5f128x64_5fi2c_5finit',['sh1106_128x64_i2c_init',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga9139ba33a533d8a0e85efddd6e22d87f',1,'oled_sh1106.c']]],
   ['sh1106_5f128x64_5finit',['sh1106_128x64_init',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga931c084327fd2ae48550599c120d72f4',1,'sh1106_128x64_init():&#160;oled_sh1106.c'],['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga931c084327fd2ae48550599c120d72f4',1,'sh1106_128x64_init(void):&#160;oled_sh1106.c']]],
   ['sh1106_5f128x64_5fspi_5finit',['sh1106_128x64_spi_init',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga595cfcfd0d9f8658d5a6f5d69df3b967',1,'oled_sh1106.c']]],
+  ['size',['size',['../struct___nano_rect.html#a688825fc3470de435d6344f96f2262a4',1,'_NanoRect']]],
   ['spritepool',['SpritePool',['../class_sprite_pool.html#ad7f28dde3e55d7e57f68507058c7cbda',1,'SpritePool']]],
   ['ssd1306_5f128x32_5fi2c_5finit',['ssd1306_128x32_i2c_init',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gac3fda4135e6f94eb79ffe7919f77de6b',1,'oled_ssd1306.c']]],
   ['ssd1306_5f128x32_5finit',['ssd1306_128x32_init',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gadbd0487bec3e3ffb688206e74a787e1d',1,'oled_ssd1306.c']]],
@@ -70,6 +72,7 @@ var searchData=
   ['ssd1306_5fputpixel',['ssd1306_putPixel',['../group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga5d98e0567eb3f541f19508ac74899962',1,'ssd1306_putPixel(uint8_t x, uint8_t y):&#160;ssd1306_generic.c'],['../group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga5d98e0567eb3f541f19508ac74899962',1,'ssd1306_putPixel(uint8_t x, uint8_t y):&#160;ssd1306_generic.c']]],
   ['ssd1306_5fputpixels',['ssd1306_putPixels',['../group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga94085f41277fb90ec4957b3e7f8cbe97',1,'ssd1306_putPixels(uint8_t x, uint8_t y, uint8_t pixels):&#160;ssd1306_generic.c'],['../group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga94085f41277fb90ec4957b3e7f8cbe97',1,'ssd1306_putPixels(uint8_t x, uint8_t y, uint8_t pixels):&#160;ssd1306_generic.c']]],
   ['ssd1306_5freplacesprite',['ssd1306_replaceSprite',['../group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga4ab1b9180be9247898ae4d2031988cd4',1,'ssd1306_replaceSprite(SPRITE *sprite, const uint8_t *data):&#160;ssd1306_generic.c'],['../group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga4ab1b9180be9247898ae4d2031988cd4',1,'ssd1306_replaceSprite(SPRITE *sprite, const uint8_t *data):&#160;ssd1306_generic.c']]],
+  ['ssd1306_5fresetcontroller',['ssd1306_resetController',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga2c9a4cae483acc0afd549c59a9946ef3',1,'ssd1306_resetController(int8_t rstPin, uint8_t delayMs):&#160;lcd_common.c'],['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga2c9a4cae483acc0afd549c59a9946ef3',1,'ssd1306_resetController(int8_t rstPin, uint8_t delayMs):&#160;lcd_common.c']]],
   ['ssd1306_5fsendcommand',['ssd1306_sendCommand',['../group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaf63dd3db50389223a46d7c4eb716ef83',1,'ssd1306_sendCommand(uint8_t command):&#160;ssd1306_interface.c'],['../group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaf63dd3db50389223a46d7c4eb716ef83',1,'ssd1306_sendCommand(uint8_t command):&#160;ssd1306_interface.c']]],
   ['ssd1306_5fsenddata',['ssd1306_sendData',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga223fdc8edd9172690f961922f46d330c',1,'ssd1306_sendData(uint8_t data):&#160;lcd_common.c'],['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga223fdc8edd9172690f961922f46d330c',1,'ssd1306_sendData(uint8_t data) __attribute__((deprecated)):&#160;lcd_common.c']]],
   ['ssd1306_5fsetcontrast',['ssd1306_setContrast',['../group___l_c_d___s_s_d1306___a_p_i.html#ga27852f112ebe53726badd8f4998fceab',1,'ssd1306_setContrast(uint8_t contrast):&#160;ssd1306_generic.c'],['../group___l_c_d___s_s_d1306___a_p_i.html#ga27852f112ebe53726badd8f4998fceab',1,'ssd1306_setContrast(uint8_t contrast):&#160;ssd1306_generic.c']]],
@@ -88,6 +91,9 @@ var searchData=
   ['ssd1306_5fvga_5fcontroller_5finit',['ssd1306_vga_controller_init',['../vga_8h.html#acf64e5de4b20d9ec09267c59607b36ce',1,'vga.h']]],
   ['ssd1306_5fvga_5fdelay',['ssd1306_vga_delay',['../vga_8h.html#a42807b68550e08a7753a63f6a4ab0caf',1,'vga.h']]],
   ['ssd1306_5fwrite',['ssd1306_write',['../group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga7932beed124b237611ae85478c9453b7',1,'ssd1306_write(uint8_t ch):&#160;ssd1306_generic.c'],['../group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga7932beed124b237611ae85478c9453b7',1,'ssd1306_write(uint8_t ch):&#160;ssd1306_generic.c']]],
+  ['ssd1325_5f128x64_5finit',['ssd1325_128x64_init',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga46db384aa804f1ba09641c485595aed2',1,'oled_ssd1325.c']]],
+  ['ssd1325_5f128x64_5fspi_5finit',['ssd1325_128x64_spi_init',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga9d09d25be2577002a164bbb8517b75e0',1,'oled_ssd1325.c']]],
+  ['ssd1325_5fsetmode',['ssd1325_setMode',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga7970481a2ed34c3730621472fab89ada',1,'ssd1325_setMode(lcd_mode_t mode):&#160;oled_ssd1325.c'],['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga7970481a2ed34c3730621472fab89ada',1,'ssd1325_setMode(lcd_mode_t mode):&#160;oled_ssd1325.c']]],
   ['ssd1331_5f96x64_5finit',['ssd1331_96x64_init',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga0cd4120ea19b526a16b33029e3f98f82',1,'oled_ssd1331.c']]],
   ['ssd1331_5f96x64_5fspi_5finit',['ssd1331_96x64_spi_init',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga838896d36d56ee1619bbc9ae5d7b88a8',1,'oled_ssd1331.c']]],
   ['ssd1331_5fclearblock8',['ssd1331_clearBlock8',['../group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#ga71095702df6018febaa0568bcfdf2f49',1,'ssd1331_clearBlock8(uint8_t x, uint8_t y, uint8_t w, uint8_t h):&#160;ssd1331_api.c'],['../group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#ga71095702df6018febaa0568bcfdf2f49',1,'ssd1331_clearBlock8(uint8_t x, uint8_t y, uint8_t w, uint8_t h):&#160;ssd1331_api.c']]],
