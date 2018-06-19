@@ -26,6 +26,7 @@
 #include "sdl_graphics.h"
 #include "sdl_oled_basic.h"
 #include "sdl_ssd1306.h"
+#include "sdl_ssd1325.h"
 #include "sdl_ssd1331.h"
 #include "sdl_ssd1351.h"
 #include "sdl_il9163.h"
@@ -60,6 +61,7 @@ static void register_oled(sdl_oled_info *oled_info)
 void sdl_core_init(void)
 {
     register_oled( &sdl_ssd1306 );
+    register_oled( &sdl_ssd1325 );
     register_oled( &sdl_ssd1331 );
     register_oled( &sdl_ssd1351 );
     register_oled( &sdl_il9163 );

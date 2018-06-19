@@ -24,7 +24,6 @@
 
 
 #include "ssd1306_spi.h"
-#include "ssd1306_spi_hw.h"
 #include "ssd1306_spi_avr.h"
 #include "ssd1306_spi_usi.h"
 #include "intf/ssd1306_interface.h"
@@ -41,9 +40,6 @@ void ssd1306_spiInit(int8_t cesPin, int8_t dcPin)
     ssd1306_platform_spiInit(-1, cesPin, dcPin);
 #elif defined(CONFIG_AVR_SPI_AVAILABLE) && defined(CONFIG_AVR_SPI_ENABLE)
     ssd1306_spiInit_avr(cesPin, dcPin);
-#elif defined(CONFIG_ARDUINO_SPI_LIBRARY_AVAILABLE) && defined(CONFIG_ARDUINO_SPI_LIBRARY_ENABLE)
-    ssd1306_spiConfigure_hw();
-    ssd1306_spiInit_hw(cesPin, dcPin);
 #elif defined(CONFIG_USI_SPI_AVAILABLE) && defined(CONFIG_USI_SPI_ENABLE)
     ssd1306_spiInit_Usi(cesPin, dcPin);
 #else
@@ -53,12 +49,8 @@ void ssd1306_spiInit(int8_t cesPin, int8_t dcPin)
 
 void ssd1306_spiDataMode(uint8_t mode)
 {
-    if (mode)
+    if (s_ssd1306_dc)
     {
-        digitalWrite(s_ssd1306_dc, HIGH);
-    }
-    else
-    {
-        digitalWrite(s_ssd1306_dc, LOW);
+        digitalWrite(s_ssd1306_dc, mode ? HIGH : LOW);
     }
 }

@@ -188,6 +188,7 @@ void setup()
     ssd1351_128x128_spi_init(3, 4, 5);
 //    ssd1351_128x128_spi_init(24, 0, 23); // Use this line for Raspberry  (gpio24=RST, 0=CE, gpio23=D/C)
 //    ssd1351_128x128_spi_init(3, -1, 4);  // Use this line for ATTINY
+//    ssd1351_128x128_spi_init(22, 5, 21); // Use this line for ESP32 (VSPI)  (gpio22=RST, gpio5=CE for VSPI, gpio21=D/C)
 
     // RGB functions do not work in default SSD1306 compatible mode
     ssd1306_setMode( LCD_MODE_NORMAL );

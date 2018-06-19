@@ -25,6 +25,7 @@
 #include "sdl_il9163.h"
 #include "sdl_oled_basic.h"
 #include "sdl_graphics.h"
+#include "sdl_core.h"
 
 static int s_activeColumn = 0;
 static int s_activePage = 0;
@@ -32,10 +33,16 @@ static int s_columnStart = 0;
 static int s_columnEnd = 127;
 static int s_pageStart = 0;
 static int s_pageEnd = 7;
+static uint8_t detected = 0;
 
 static int sdl_il9163_detect(uint8_t data)
 {
-    return (data == 0x11);
+    if (detected)
+    {
+        return 1;
+    }
+    detected = (data == SDL_LCD_IL9163) || (data == SDL_LCD_ST7735);
+    return 0;
 }
 
 static uint8_t s_verticalMode = 0;

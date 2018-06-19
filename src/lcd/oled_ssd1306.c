@@ -29,9 +29,17 @@
 #include "intf/i2c/ssd1306_i2c.h"
 #include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
+#ifdef SDL_EMULATION
+#include "sdl_core.h"
+#endif
+
 
 static const uint8_t PROGMEM s_oled128x64_initData[] =
 {
+#ifdef SDL_EMULATION
+    SDL_LCD_SSD1306,
+    0x00,
+#endif
     SSD1306_DISPLAYOFF, // display off
     SSD1306_MEMORYMODE, HORIZONTAL_ADDRESSING_MODE, // Page Addressing mode
     SSD1306_COMSCANDEC,             // Scan from 127 to 0 (Reverse scan)
@@ -52,6 +60,10 @@ static const uint8_t PROGMEM s_oled128x64_initData[] =
 
 static const uint8_t PROGMEM s_oled128x32_initData[] =
 {
+#ifdef SDL_EMULATION
+    SDL_LCD_SSD1306,
+    0x00,
+#endif
     SSD1306_DISPLAYOFF, // display off
     SSD1306_SETDISPLAYCLOCKDIV, 0x80,
     SSD1306_SETMULTIPLEX, 31,
@@ -149,14 +161,7 @@ void   ssd1306_128x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
 {
     if (rstPin >=0)
     {
-        pinMode(rstPin, OUTPUT);
-        digitalWrite(rstPin, HIGH);
-        /* Wait at least 1ms after VCC is up for LCD */
-        delay(1);
-        /* Perform reset operation of LCD display */
-        digitalWrite(rstPin, LOW);
-        delay(10);
-        digitalWrite(rstPin, HIGH);
+        ssd1306_resetController( rstPin, 10 );
     }
     ssd1306_spiInit(cesPin, dcPin);
     ssd1306_128x64_init();

@@ -31,6 +31,7 @@
 
 // TODO: To add support. Any help is welcome
 
+#define SSD1306_STM32_PLATFORM
 //========================== I. Include libraries =========================
 /* 1. Include all required headers, specific for your platform here */
 #include <stdint.h>
@@ -49,16 +50,9 @@
  *    Remember that you will need to implement low level intf/i2c or *
  *    intf/spi layers for your platform                              */
 
-//#define CONFIG_SOFTWARE_I2C_AVAILABLE
-//#define CONFIG_TWI_I2C_AVAILABLE
-//#define CONFIG_ARDUINO_WIRE_LIBRARY_AVAILABLE
-//#define CONFIG_AVR_SPI_AVAILABLE
-//#define CONFIG_ARDUINO_SPI_LIBRARY_AVAILABLE
-//#define CONFIG_AVR_UART_AVAILABLE
-//#define CONFIG_VGA_AVAILABLE
-
 /** The macro is defined when STM32 i2c implementation is available */
-#define CONFIG_STM32_I2C_AVAILABLE
+#define CONFIG_PLATFORM_I2C_AVAILABLE
+#define CONFIG_PLATFORM_SPI_AVAILABLE
 
 #ifdef __cplusplus
 extern "C" {
@@ -126,11 +120,12 @@ static inline void eeprom_write_word(const void *ptr, uint16_t val) // eeprom_wr
 {
 }
 
-static inline char *utoa(unsigned int num, char *str, int radix)    // util utoa() - can be skipped
-{
-    *str = '\0';
-    return str;
-}
+// utoa is already defined in stdlib c
+//static inline char *utoa(unsigned int num, char *str, int radix)    // util utoa() - can be skipped
+//{
+//    *str = '\0';
+//    return str;
+//}
 
 #ifdef __cplusplus
 }

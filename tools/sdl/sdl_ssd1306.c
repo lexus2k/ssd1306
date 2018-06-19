@@ -25,6 +25,7 @@
 #include "sdl_ssd1306.h"
 #include "sdl_oled_basic.h"
 #include "sdl_graphics.h"
+#include "sdl_core.h"
 
 static int s_activeColumn = 0;
 static int s_activePage = 0;
@@ -32,10 +33,17 @@ static int s_columnStart = 0;
 static int s_columnEnd = 127;
 static int s_pageStart = 0;
 static int s_pageEnd = 7;
+static uint8_t detected = 0;
+
 
 static int sdl_ssd1306_detect(uint8_t data)
 {
-    return (data == 0xC0) || (data == 0xC8) || (data == 0xD5);
+    if (detected)
+    {
+        return 1;
+    }
+    detected = (data == SDL_LCD_SSD1306) || (data == SDL_LCD_SH1106);
+    return 0;
 }
 
 static void sdl_ssd1306_commands(uint8_t data)

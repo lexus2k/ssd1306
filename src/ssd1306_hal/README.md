@@ -1,8 +1,10 @@
+# Hardware abstraction layer
+
 This directory contain platform specific implementation of hardware abstraction layer.
 
   * arduino dir: for all Arduino platforms (if you use Arduino IDE)
   * avr dir: for plain avr-gcc environment
-  * esp dir: for plain esp8266/esp32 environment (not implemented)
+  * esp dir: for plain esp8266/esp32 environment
   * linux dir: for linux platforms including raspberry pi
   * mingw dir: for running under windows
   * stm32 dir: for plain stm32 support (not implemented)

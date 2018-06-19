@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['nanoengine1',['NanoEngine1',['../nano__engine_8h.html#a851b20d4f9ae55f000ee7058d5f3412a',1,'nano_engine.h']]],
-  ['nanoengine16',['NanoEngine16',['../nano__engine_8h.html#ac8889599607ff5a2a595ccccd6deaa2f',1,'nano_engine.h']]],
-  ['nanoengine8',['NanoEngine8',['../nano__engine_8h.html#a3030b7f658c461c80e88876ed8ea0131',1,'nano_engine.h']]]
+  ['rgb8_5fto_5frgb16',['RGB8_TO_RGB16',['../nano__gfx__types_8h.html#a4ab6a81b88d852058c6522940bc236c5',1,'nano_gfx_types.h']]],
+  ['rgb_5fcolor16',['RGB_COLOR16',['../nano__gfx__types_8h.html#a5ffae889173a34bb16146d3a3b869c04',1,'RGB_COLOR16():&#160;nano_gfx_types.h'],['../ssd1306_8h.html#a5ffae889173a34bb16146d3a3b869c04',1,'RGB_COLOR16():&#160;ssd1306.h']]],
+  ['rgb_5fcolor8',['RGB_COLOR8',['../nano__gfx__types_8h.html#ade80ecbb039cb905f9e27cf08657dedc',1,'RGB_COLOR8():&#160;nano_gfx_types.h'],['../ssd1306_8h.html#ade80ecbb039cb905f9e27cf08657dedc',1,'RGB_COLOR8():&#160;ssd1306.h']]]
 ];

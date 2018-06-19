@@ -101,13 +101,18 @@ void         st7735_128x160_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
  */
 
 /**
+ * @defgroup IL9163_ST7734_API IL9163/ST7735: il9163/st7735 control functions
+ * @{
+ */
+
+/**
  * @brief Sets screen orientation (rotation)
  *
  * Sets screen orientation (rotation): 0 - normal, 1 - 90 CW, 2 - 180 CW, 3 - 270 CW
  * @param rotation - screen rotation 0 - normal, 1 - 90 CW, 2 - 180 CW, 3 - 270 CW
  * @note works only with IL9163 display
  */
-void         il9163_setRotation(uint8_t rotation);
+void il9163_setRotation(uint8_t rotation);
 
 /**
  * @brief Sets screen orientation (rotation)
@@ -117,6 +122,10 @@ void         il9163_setRotation(uint8_t rotation);
  * @note works only with ST7735 display
  */
 #define st7735_setRotation il9163_setRotation
+
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

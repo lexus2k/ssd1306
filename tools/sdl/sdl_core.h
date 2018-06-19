@@ -31,6 +31,19 @@
 extern "C" {
 #endif
 
+enum
+{
+    SDL_LCD_TEMPLATE,
+    SDL_LCD_SSD1306,
+    SDL_LCD_SH1106,
+    SDL_LCD_PCD8544,
+    SDL_LCD_SSD1325,
+    SDL_LCD_SSD1331,
+    SDL_LCD_SSD1351,
+    SDL_LCD_IL9163,
+    SDL_LCD_ST7735,
+};
+
 extern void sdl_core_init(void);
 extern void sdl_core_draw(void);
 

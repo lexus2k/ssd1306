@@ -35,6 +35,11 @@ extern "C" {
 #endif
 
 /**
+ * @ingroup LCD_INTERFACE_API
+ * @{
+ */
+
+/**
  * @brief Inits 96x40 color VGA display.
  *
  * Inits 96x40 color VGA display. This mode supports 8 colors: 3 bits per pixel.
@@ -57,6 +62,10 @@ void vga_96x40_8colors_init(void);
  * @see ssd1306_vga_controller_init()
  */
 void vga_128x64_mono_init(void);
+
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }

@@ -28,6 +28,9 @@
 #include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
 #include "nano_gfx_types.h"
+#ifdef SDL_EMULATION
+#include "sdl_core.h"
+#endif
 
 #define CMD_ARG     0xFF
 
@@ -39,6 +42,10 @@ static uint8_t s_rgb_bit  = 0b00001000;
 
 static const PROGMEM uint8_t s_oled128x128_initData[] =
 {
+#ifdef SDL_EMULATION
+    SDL_LCD_IL9163,
+    0x00,
+#endif
 //    0x01,                     // sw reset. not needed, we do hardware reset
     0x11,                       // exit sleep mode
     0x3A, CMD_ARG, 0x05,        // set 16-bit pixel format
@@ -68,6 +75,10 @@ static const PROGMEM uint8_t s_oled128x128_initData[] =
 
 static const PROGMEM uint8_t s_oled128x160_initData[] =
 {
+#ifdef SDL_EMULATION
+    SDL_LCD_ST7735,
+    0x00,
+#endif
 //    0x01,                     // sw reset. not needed, we do hardware reset
     0x11,                       // exit sleep mode
 //    0x28,                                 // display off
@@ -370,14 +381,7 @@ void   st7735_128x160_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
 {
     if (rstPin >=0)
     {
-        pinMode(rstPin, OUTPUT);
-        digitalWrite(rstPin, HIGH);
-        /* Wait at least 1ms after VCC is up for LCD */
-        delay(1);
-        /* Perform reset operation of LCD display */
-        digitalWrite(rstPin, LOW);
-        delay(20);
-        digitalWrite(rstPin, HIGH);
+        ssd1306_resetController( rstPin, 20 );
         /* Give 120ms display to initialize */
         delay(120);
     }

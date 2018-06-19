@@ -29,6 +29,9 @@
 #include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
 #include "nano_gfx_types.h"
+#ifdef SDL_EMULATION
+#include "sdl_core.h"
+#endif
 
 #define CMD_ARG     0xFF
 
@@ -37,6 +40,10 @@ extern uint32_t s_ssd1306_spi_clock;
 
 static const PROGMEM uint8_t s_oled128x128_initData[] =
 {
+#ifdef SDL_EMULATION
+    SDL_LCD_SSD1351,
+    0x00,
+#endif
     SSD1351_UNLOCK, CMD_ARG, 0x12,
     SSD1351_UNLOCK, CMD_ARG, 0xB1,
     SSD1351_SLEEP_ON,
@@ -203,14 +210,7 @@ void   ssd1351_128x128_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
 {
     if (rstPin >=0)
     {
-        pinMode(rstPin, OUTPUT);
-        digitalWrite(rstPin, HIGH);
-        /* Wait at least 1ms after VCC is up for LCD */
-        delay(1);
-        /* Perform reset operation of LCD display */
-        digitalWrite(rstPin, LOW);
-        delay(20);
-        digitalWrite(rstPin, HIGH);
+        ssd1306_resetController( rstPin, 20 );
     }
     /* ssd1351 cannot work faster than at 4MHz per datasheet */
     s_ssd1306_spi_clock = 4000000;
