@@ -1,0 +1,5 @@
+# NO MAKEFILE REQUIRED FOR ESP32 IDF platform, as Makefile.esp32 in examples
+# generates all required mk file to compile sketches and library.
+#
+# For using ssd1306 library as IDF component module, there is component.mk,
+# located in root folder of ssd1306 library

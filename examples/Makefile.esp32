@@ -40,32 +40,26 @@ endif
 BLD ?= ../bld
 PROJECT ?= demos/ssd1306_demo
 
-######### Prepare project structure for esp32 idf
-# main sources (entry point)
-$(shell mkdir -p $(BLD)/esp32/main)
-$(shell cp -a ./esp32_main.cpp $(BLD)/esp32/main/)
-$(shell echo "" > $(BLD)/esp32/main/component.mk)
-# example sketch sources
-$(shell mkdir -p $(BLD)/esp32/components/project)
-$(shell cp -a $(PROJECT)/* $(BLD)/esp32/components/project/)
-$(shell mv $(BLD)/esp32/components/project/$(notdir $(PROJECT)).ino $(BLD)/esp32/components/project/$(notdir $(PROJECT)).cpp)
-$(shell echo "COMPONENT_ADD_INCLUDEDIRS := ." > $(BLD)/esp32/components/project/component.mk)
-# library
-$(shell mkdir -p $(BLD)/esp32/components/ssd1306)
-$(shell cp -a ../src/* $(BLD)/esp32/components/ssd1306/)
-$(shell echo "COMPONENT_ADD_INCLUDEDIRS := ." > $(BLD)/esp32/components/ssd1306/component.mk)
-$(shell echo "COMPONENT_SRCDIRS := . ./ssd1306_hal \
-                                     ./ssd1306_hal/esp \
-                                     ./intf \
-                                     ./intf/i2c \
-                                     ./intf/spi \
-                                     ./lcd \
-                                     ./nano_engine" >> $(BLD)/esp32/components/ssd1306/component.mk)
-# main project Makefile
-$(shell echo "#" > $(BLD)/esp32/sdkconfig.defaults)
-$(shell echo "PROJECT_NAME:=$(notdir $(PROJECT))" > $(BLD)/esp32/Makefile)
-#$(shell echo "COMPONENTS:=main project ssd1306" >> $(BLD)/esp32/Makefile)
-$(shell echo "include \$$(IDF_PATH)/make/project.mk" >> $(BLD)/esp32/Makefile)
+prepare_esp32_library:
+	mkdir -p $(BLD)/esp32/components/ssd1306
+	cp -a ../src $(BLD)/esp32/components/ssd1306/
+	cp -a ../component.mk $(BLD)/esp32/components/ssd1306/
 
-all:
+prepare_esp32_sketch:
+	mkdir -p $(BLD)/esp32/components/sketch
+	cp -a $(PROJECT)/* $(BLD)/esp32/components/sketch/
+	mv $(BLD)/esp32/components/sketch/$(notdir $(PROJECT)).ino $(BLD)/esp32/components/sketch/$(notdir $(PROJECT)).cpp
+	echo "COMPONENT_ADD_INCLUDEDIRS := ." > $(BLD)/esp32/components/sketch/component.mk
+
+prepare_esp32_project:
+	mkdir -p $(BLD)/esp32/main
+	cp -a ./esp32_main.cpp $(BLD)/esp32/main/
+	echo "" > $(BLD)/esp32/main/component.mk
+	echo "#" > $(BLD)/esp32/sdkconfig.defaults
+	echo "PROJECT_NAME:=$(notdir $(PROJECT))" > $(BLD)/esp32/Makefile
+	# echo "COMPONENTS:=main sketch ssd1306" >> $(BLD)/esp32/Makefile
+	echo "include \$$(IDF_PATH)/make/project.mk" >> $(BLD)/esp32/Makefile
+
+
+all: prepare_esp32_project prepare_esp32_library prepare_esp32_sketch
 	$(MAKE) -C $(BLD)/esp32
