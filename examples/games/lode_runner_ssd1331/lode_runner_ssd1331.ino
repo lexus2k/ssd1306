@@ -48,7 +48,7 @@
 #include "intf/spi/ssd1306_spi.h"
 
 // Uncomment if you have ssd1331 oled display
-//#define SSD1331_ACCELERATION
+#define SSD1331_ACCELERATION
 
 typedef NanoEngine<TILE_16x16_RGB8> GameEngine;
 
@@ -60,9 +60,18 @@ typedef NanoEngine<TILE_16x16_RGB8> GameEngine;
 #define BUTTON_PIN  0
 #endif
 
-uint8_t gameField[24*7] =
+const NanoRect game_window = { {16, 8}, {95, 63} };
+
+uint8_t gameField[24*14] =
 {
    5,0,0,0,0,3,3,0,0,0,0,5,5,0,0,0,0,3,3,0,0,0,0,5,
+   5,0,2,0,4,0,0,2,1,1,2,0,0,0,0,0,4,0,0,2,1,1,2,5,
+   5,0,2,0,1,1,0,2,0,0,1,1,5,2,0,0,1,1,0,2,0,0,1,1,
+   5,0,2,0,0,0,0,2,0,4,0,0,0,2,0,0,0,0,0,2,0,4,0,5,
+   5,1,2,1,1,1,1,1,1,1,1,1,5,1,2,1,1,1,1,1,1,1,1,1,
+   5,0,2,0,0,0,0,0,4,0,0,5,5,0,2,0,0,0,0,0,4,0,0,5,
+   1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+   5,0,0,0,0,3,3,2,0,0,0,5,5,0,0,0,0,3,3,0,0,0,0,5,
    5,0,2,0,4,0,0,2,1,1,2,0,0,0,0,0,4,0,0,2,1,1,2,5,
    5,0,2,0,1,1,0,2,0,0,1,1,5,2,0,0,1,1,0,2,0,0,1,1,
    5,0,2,0,0,0,0,2,0,4,0,0,0,2,0,0,0,0,0,2,0,4,0,5,
@@ -80,12 +89,27 @@ uint8_t blockColors[] =
     RGB_COLOR8(128,128,128),
 };
 
-static inline uint8_t blockIdx(uint8_t x, uint8_t y) { return (x>>3) + (((y - 8)>>3) * 24); }
 static inline bool isWalkable(uint8_t type)          { return (type == 0) || (type == 2) || (type == 3) || (type == 4); }
 static inline bool isSolid(uint8_t type)             { return (type == 1) || (type == 2) || (type == 5); }
 static inline bool isPipe(uint8_t type)              { return type == 3; }
 static inline bool isGold(uint8_t type)              { return type == 4; }
 static inline bool isStair(uint8_t type)             { return type == 2; }
+
+static inline uint8_t block_at(const NanoPoint& p)
+{
+    uint16_t index = ((p.x - game_window.p1.x)>>3) +
+                     (((p.y - game_window.p1.y)>>3) * 24);
+    if (index >= 24*14) index = 0;
+    return gameField[index];
+}
+
+static inline void set_block_at(const NanoPoint& p, uint8_t v)
+{
+    uint16_t index = ((p.x - game_window.p1.x)>>3) +
+                     (((p.y - game_window.p1.y)>>3) * 24);
+    if (index >= 24*14) index = 0;
+    gameField[index] = v;
+}
 
 GameEngine engine;
 
@@ -94,7 +118,7 @@ GameEngine engine;
  */
 void beep(int bCount,int bDelay);
 
-NanoFixedSprite<GameEngine, engine> player( { 8, 8 }, { 8, 8 }, nullptr );
+NanoFixedSprite<GameEngine, engine> player( game_window.p1 + (NanoPoint){ 8, 8 }, { 8, 8 }, nullptr );
 
 /* The variable is used for player animation      *
  * The graphics defined for the hero has 2 images *
@@ -110,6 +134,8 @@ uint8_t  goldCollection = 0;
 
 void showGameInfo()
 {
+    engine.canvas.setColor(RGB_COLOR8(0,0,0));
+    engine.canvas.fillRect({{0,0},{95,game_window.p1.y - 1}});
     for (uint8_t i=0; i<goldCollection; i++)
     {
         engine.canvas.setColor(RGB_COLOR8(255,255,0));
@@ -117,42 +143,112 @@ void showGameInfo()
     }
 }
 
-bool onDraw()
+static bool onDraw()
 {
     engine.canvas.clear();
     engine.canvas.setMode(0);
-    showGameInfo();
-    engine.worldCoordinates();
-    for (uint8_t row = max(0,(engine.canvas.offset.y >> 3) - 1);
-                 row <= min(6,((engine.canvas.offset.y + engine.NE_TILE_HEIGHT - 1) >> 3) - 1); row++)
+    if ((engine.canvas.offset.x + engine.NE_TILE_WIDTH - 1 >= game_window.p1.x) &&
+       (engine.canvas.offset.y + engine.NE_TILE_HEIGHT - 1 >= game_window.p1.y) &&
+       (engine.canvas.offset.x <= game_window.p2.x) &&
+       (engine.canvas.offset.y <= game_window.p2.y))
     {
-        for (uint8_t col = (engine.canvas.offset.x >> 3);
-                     col <= min(23, ((engine.canvas.offset.x + engine.NE_TILE_WIDTH - 1) >> 3)); col++)
+    engine.worldCoordinates();
+    for (uint8_t row = max(0,(engine.canvas.offset.y - game_window.p1.y) >> 3);
+                 row <= min(13,((engine.canvas.offset.y - game_window.p1.y + engine.NE_TILE_HEIGHT - 1) >> 3)); row++)
+    {
+        for (uint8_t col = max(0,(engine.canvas.offset.x - game_window.p1.x)>> 3);
+                     col <= min(23, ((engine.canvas.offset.x - game_window.p1.x + engine.NE_TILE_WIDTH - 1) >> 3)); col++)
         {
-            uint8_t index = (row * 24) + col;
+            uint16_t index = (row * 24) + col;
             uint8_t blockType = gameField[index];
             if (blockType != 0)
             {
                 engine.canvas.setColor(blockColors[blockType - 1]);
-                engine.canvas.drawBitmap1((col<<3), 8 + (row<<3), 8, 8, bgSprites[blockType - 1]);
+                engine.canvas.drawBitmap1(game_window.p1.x + (col<<3), game_window.p1.y + (row<<3),
+                                          8, 8, bgSprites[blockType - 1]);
             }
         }
     }
     engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
     engine.canvas.setColor(RGB_COLOR8(64,255,255));
     player.draw();
+    engine.localCoordinates();
+    }
+    showGameInfo();
     return true;
 }
+
+static NanoPoint calc_new_screen_position()
+{
+    NanoPoint position = engine.getPosition();
+    if (player.x() - position.x >= game_window.p2.x - 24)
+    {
+        position.x = min(player.x() - (game_window.p2.x - 24), 96);
+    }
+    else if (player.x() - engine.getPosition().x < game_window.p1.x + 24)
+    {
+        position.x = max(0, player.x() - (game_window.p1.x + 24));
+    }
+    if (player.y() - engine.getPosition().y >= 40)
+    {
+        position.y = min(player.y() - 40, 64);
+    }
+    else if (player.y() - engine.getPosition().y < 24)
+    {
+        position.y = max(0, player.y() - 24);
+    }
+    return position;
+}
+
+#ifdef SSD1331_ACCELERATION
+static void moveGameScreen()
+{
+    NanoPoint position = calc_new_screen_position();
+    if (position != engine.getPosition())
+    {
+        NanoPoint delta = position - engine.getPosition();
+        NanoRect block = game_window + delta;
+        block.crop(game_window);
+        // Copy most part of OLED content via hardware accelerator
+        ssd1331_copyBlock(block.p1.x, block.p1.y, block.p2.x, block.p2.y,
+                          block.p1.x - delta.x, block.p1.y - delta.y);
+        engine.moveTo( position );
+        // Now tell the engine to redraw only new areas
+        if ( delta.x > 0)
+            engine.refresh(game_window.p2.x - delta.x, game_window.p1.y, game_window.p2.x, game_window.p2.y);
+        else if ( delta.x < 0 )
+            engine.refresh(game_window.p1.x, game_window.p1.y, game_window.p1.x - delta.x, game_window.p2.y);
+        if ( delta.y > 0)
+            engine.refresh(game_window.p1.x, game_window.p2.y - delta.y, game_window.p2.x, game_window.p2.y);
+        else if ( delta.y < 0 )
+            engine.refresh(game_window.p1.x, game_window.p1.y, game_window.p2.x, game_window.p1.y - delta.y);
+    }
+}
+
+#else // NO SSD1331 Acceleration
+
+static void moveGameScreen()
+{
+    NanoPoint position = calc_new_screen_position();
+    if (position != engine.getPosition())
+    {
+        engine.moveTo( position );
+        engine.refresh( game_window );
+    }
+}
+
+#endif
 
 void movePlayer(uint8_t direction)
 {
     bool animated = false;
-    uint8_t bottomBlock = gameField[blockIdx(player.bottom().x,player.bottom().y)];
-    uint8_t feetBlock = gameField[blockIdx(player.bottom().x,player.bottom().y - 1)];
-    uint8_t handBlock = gameField[blockIdx(player.top().x,player.top().y)];
-    uint8_t centerBlock = gameField[blockIdx(player.center().x,player.center().y)];
-    uint8_t rightBlock = gameField[blockIdx(player.right().x,player.right().y)];
-    uint8_t leftBlock = gameField[blockIdx(player.left().x,player.left().y)];
+    uint8_t bottomBlock = block_at(player.bottom());
+    uint8_t feetBlock = block_at(player.bottom() + (NanoPoint){0,1});
+    uint8_t handBlock = block_at(player.top());
+    uint8_t centerBlock = block_at(player.center());
+    uint8_t rightBlock = block_at(player.right());
+    uint8_t leftBlock = block_at(player.left());
+    moveGameScreen();
     /* If player doesn't stand on the ground, and doesn't hold the pipe,
      * make the player to fall down. */
     if ( !isSolid(bottomBlock) &&
@@ -170,20 +266,6 @@ void movePlayer(uint8_t direction)
             case BUTTON_RIGHT:
                 if (isWalkable(rightBlock))
                 {
-                    if (player.x() - engine.getPosition().x >= 64)
-                    {
-                        int16_t newX = min(player.x() - 64, 96);
-                        if (newX != engine.getPosition().x)
-                        {
-                            #ifdef SSD1331_ACCELERATION
-                            ssd1331_copyBlock((newX - engine.getPosition().x), 8, 95, 63, 0, 8);
-                            engine.moveTo( { newX, engine.getPosition().y } );
-                            engine.refresh(95-7, 8, 95, 63);
-                            #else
-                            engine.moveToAndRefresh( { newX, engine.getPosition().y } );
-                            #endif
-                        }
-                    }
                     player.moveBy( { 1, 0 } );
                     if (isPipe(centerBlock))
                         player.setBitmap( &playerFlyingImage[MAN_ANIM_RIGHT_PIPE][playerAnimation][0] );
@@ -195,20 +277,6 @@ void movePlayer(uint8_t direction)
             case BUTTON_LEFT:
                 if (isWalkable(leftBlock))
                 {
-                    if (player.x() - engine.getPosition().x < 32)
-                    {
-                        int16_t newX = max(0, player.x() - 32);
-                        if (newX != engine.getPosition().x)
-                        {
-                            #ifdef SSD1331_ACCELERATION
-                            ssd1331_copyBlock(0, 8, 95 - (engine.getPosition().x - newX), 63, engine.getPosition().x - newX, 8);
-                            engine.moveTo( { newX, engine.getPosition().y } );
-                            engine.refresh(0, 8, 7, 63);
-                            #else
-                            engine.moveToAndRefresh( { newX, engine.getPosition().y } );
-                            #endif
-                        }
-                    }
                     player.moveBy( { -1, 0 } );
                     if (isPipe(centerBlock))
                         player.setBitmap( &playerFlyingImage[MAN_ANIM_LEFT_PIPE][playerAnimation][0] );
@@ -218,7 +286,7 @@ void movePlayer(uint8_t direction)
                 }
                 break;
             case BUTTON_UP:
-                if (isStair(feetBlock))
+                if (isStair(bottomBlock) || isStair(centerBlock))
                 {
                     player.moveTo( { player.top().x & ~0x07, player.top().y - 1 } );
                     player.setBitmap( &playerFlyingImage[MAN_ANIM_UP][playerAnimation][0] );
@@ -247,7 +315,7 @@ void movePlayer(uint8_t direction)
         if (isGold(centerBlock))
         {
             engine.notify( "GOLD COIN" );
-            gameField[blockIdx(player.center().x,player.center().y)] = 0;
+            set_block_at(player.center(), 0);
             goldCollection++;
             showGameInfo();
             engine.refresh(0,0,63,7);
