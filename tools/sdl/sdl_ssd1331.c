@@ -40,17 +40,25 @@ static uint8_t detected = 0;
 
 static void copyBlock()
 {
-    if ( s_newColumn < s_columnStart )
+    int x_start = s_newColumn;
+    int x_end = s_newColumn + s_columnEnd - s_columnStart;
+    int x_dir = s_newColumn < s_columnStart ? 1 : -1;
+    int y_start = s_newPage;
+    int y_end = s_newPage + s_pageEnd - s_pageStart;
+    int y_dir = s_newPage < s_pageStart ? 1 : -1;
+
+
+    for( int y = y_dir > 0 ? y_start: y_end;
+             ((y_dir > 0) && (y <= y_end)) || ((y_dir < 0) && (y >= y_start));
+             y = y + y_dir)
     {
-        for( int y = s_pageStart; y <= s_pageEnd; y++)
-        for( int x = s_newColumn; x <= s_newColumn + s_columnEnd - s_columnStart; x++)
-            sdl_put_pixel(x, y, sdl_get_pixel( x + s_columnStart - s_newColumn, y ));
-    }
-    else
-    {
-        for( int y = s_pageStart; y <= s_pageEnd; y++)
-        for( int x = s_newColumn + s_columnEnd - s_columnStart; x >= s_newColumn; x--)
-            sdl_put_pixel(x, y, sdl_get_pixel( x + s_columnStart - s_newColumn, y ));
+        for( int x = x_dir > 0 ? x_start : x_end;
+                 ((x_dir > 0) && (x <= x_end)) || ((x_dir < 0) && (x >= x_start));
+                 x = x + x_dir)
+        {
+            sdl_put_pixel(x, y, sdl_get_pixel( x + s_columnStart - s_newColumn,
+                                               y + s_pageStart - s_newPage ));
+        }
     }
 }
 
