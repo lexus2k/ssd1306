@@ -103,6 +103,14 @@ typedef struct _NanoRect
         p2.x = r; p2.y = b;
     }
 
+    void crop(const _NanoRect& rect)
+    {
+        if (p1.x < rect.p1.x) p1.x = rect.p1.x;
+        if (p1.y < rect.p1.y) p1.y = rect.p1.y;
+        if (p2.x > rect.p2.x) p2.x = rect.p2.x;
+        if (p2.y > rect.p2.y) p2.y = rect.p2.y;
+    }
+
     /**
      * Returns true if specified x position is between left and right borders.
      * @param x - position to check
@@ -170,6 +178,14 @@ typedef struct _NanoRect
     }
 
 } NanoRect;
+
+
+inline NanoRect operator+(const NanoRect& rect, const NanoPoint& p)
+{
+    return { { rect.p1.x + p.x, rect.p1.y + p.y },
+             { rect.p2.x + p.x, rect.p2.y + p.y } };
+}
+
 
 #endif
 
