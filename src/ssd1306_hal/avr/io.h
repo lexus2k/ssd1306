@@ -90,7 +90,7 @@ static inline void randomSeed(int seed) { };
 static inline void attachInterrupt(int pin, void (*interrupt)(), int level) { };
 
 // implemented functions for plain AVR
-#define delay(ms)  _delay_ms(ms)
+void delay(unsigned long ms);
 #define delayMicroseconds(us)  _delay_us(us)
 
 void digitalWrite(int pin, int level);

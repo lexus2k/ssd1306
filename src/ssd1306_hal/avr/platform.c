@@ -24,6 +24,14 @@
 
 #include "ssd1306_hal/io.h"
 
+void delay(unsigned long ms)
+{
+    while (ms--)
+    {
+        _delay_ms(1);
+    }
+}
+
 #if defined(__AVR__) && !defined(ARDUINO)
 
 #if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
