@@ -33,6 +33,11 @@
 #include "ssd1306_hal/io.h"
 
 /**
+ * @ingroup NANO_ENGINE_API
+ * @{
+ */
+
+/**
  * This is template class for user sprites implementations.
  * NanoSprite can work only as part of NanoEngine, it requires
  * NanoEngine type and NanoEngine instance as arguments.
@@ -278,6 +283,10 @@ private:
     NanoPoint         m_pos;
     const uint8_t *m_bitmap;
 };
+
+/**
+ * @}
+ */
 
 #endif
 

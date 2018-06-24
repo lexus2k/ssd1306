@@ -58,6 +58,11 @@
 #endif // DOXYGEN_SHOULD_SKIP_THIS
 
 /**
+ * @ingroup NANO_ENGINE_API
+ * @{
+ */
+
+/**
  * This is basic template class for all canvas classes,
  * based on Adafruit_GFX. This base class provides functionality
  * compatible with native NanoCanvas implementation of ssd1306
@@ -321,6 +326,10 @@ void AdafruitCanvasOps<16>::drawPixel(int16_t x, int16_t y, uint16_t color)
     m_buffer[(x+y*WIDTH) * 2 + 1] = color >> 8;
 }
 #endif // DOXYGEN_SHOULD_SKIP_THIS
+
+/**
+ * @}
+ */
 
 #endif // CONFIG_ADAFRUIT_GFX_ENABLE
 

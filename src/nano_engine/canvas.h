@@ -35,6 +35,11 @@
 #include "ssd1306_hal/Print_internal.h"
 #include "nano_gfx_types.h"
 
+/**
+ * @ingroup NANO_ENGINE_API
+ * @{
+ */
+
 enum
 {
     CANVAS_MODE_BASIC           = 0x00,
@@ -432,6 +437,10 @@ public:
      */
     void blt() override;
 };
+
+/**
+ * @}
+ */
 
 #endif
 

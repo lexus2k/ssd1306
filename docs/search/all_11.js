@@ -15,7 +15,7 @@ var searchData=
   ['tile_5f8x8_5frgb8',['TILE_8x8_RGB8',['../tiler_8h.html#ac073fe67e8850a43c912c020374c418d',1,'tiler.h']]],
   ['tiler_2eh',['tiler.h',['../tiler_8h.html',1,'']]],
   ['tloopcallback',['TLoopCallback',['../core_8h.html#a9f670b824fb6b10883cd4283f800310f',1,'core.h']]],
-  ['tnanoenginegetbuttons',['TNanoEngineGetButtons',['../core_8h.html#aff4934f12cf7a86959c46e57aac5ae5d',1,'core.h']]],
+  ['tnanoenginegetbuttons',['TNanoEngineGetButtons',['../group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#gaff4934f12cf7a86959c46e57aac5ae5d',1,'core.h']]],
   ['tnanoengineondraw',['TNanoEngineOnDraw',['../tiler_8h.html#a5db298dc5fe7132d3190e5e423b6da6a',1,'tiler.h']]],
   ['top',['top',['../struct_s_s_d1306___r_e_c_t.html#ae4b7642bc9792a9eac02e19f62fe55eb',1,'SSD1306_RECT::top()'],['../class_nano_sprite.html#a0963e4b6983a1aa7c0afb66328f5631d',1,'NanoSprite::top()'],['../class_nano_fixed_sprite.html#a7915b453eb3561d74c6c1e8a5c158f6a',1,'NanoFixedSprite::top()']]],
   ['transparentmask',['transparentMask',['../struct_s_p_r_i_t_e.html#a179f75785cfe41d2aaba303536d09d26',1,'SPRITE']]],

@@ -31,6 +31,11 @@
 
 #include "ssd1306_hal/io.h"
 
+/**
+ * @ingroup NANO_ENGINE_API
+ * @{
+ */
+
 /** Describes point */
 typedef struct _NanoPoint
 {
@@ -164,6 +169,10 @@ inline bool operator!=(const NanoPoint& p1, const NanoPoint& p2)
     return !(p1 == p2);
 }
 #endif // DOXYGEN_SHOULD_SKIP_THIS
+
+/**
+ * @}
+ */
 
 #endif
 

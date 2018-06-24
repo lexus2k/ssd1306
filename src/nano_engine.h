@@ -39,6 +39,14 @@
 // This causes flash and RAM memory consumption in compiled ELF
 
 /**
+ * @defgroup NANO_ENGINE_API NANO_ENGINE: Nano Engine description
+ * @{
+ * @brief Nano Engine description
+ *
+ * @details This group contains API functions for developing Graphics engines.
+ */
+
+/**
  * NanoEngine1 is simple graphics engine, that implements double buffering work
  * for the systems with very low resources. That is, memory buffer for SSD1306 oled
  * display needs at least 128x64/8 bytes (1024 bytes), and this is inacceptable for
@@ -113,6 +121,10 @@ public:
  * need to refresh only part of oled display.
  */
 #define NanoEngine16  NanoEngine<TILE_8x8_RGB16>
+
+/**
+ * @}
+ */
 
 #endif
 

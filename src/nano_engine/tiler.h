@@ -33,6 +33,11 @@
 #include "lcd/lcd_common.h"
 
 /**
+ * @ingroup NANO_ENGINE_API
+ * @{
+ */
+
+/**
  * Structure, holding currently set font.
  * @warning Only for internal use.
  */
@@ -341,6 +346,10 @@ void NanoEngineTiler<C,W,H,B>::displayPopup(const char *msg)
         }
     }
 }
+
+/**
+ * @}
+ */
 
 #endif
 

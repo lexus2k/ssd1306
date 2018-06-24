@@ -32,6 +32,11 @@
 #include "ssd1306_hal/io.h"
 
 /**
+ * @ingroup NANO_ENGINE_API
+ * @{
+ */
+
+/**
  * NanoRect structure describes rectangle area.
  */
 typedef struct _NanoRect
@@ -243,6 +248,10 @@ inline NanoRect operator+(const NanoRect& rect, const NanoPoint& p)
              { rect.p2.x + p.x, rect.p2.y + p.y } };
 }
 #endif
+
+/**
+ * @}
+ */
 
 #endif
 

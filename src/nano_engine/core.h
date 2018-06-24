@@ -32,6 +32,11 @@
 #include "tiler.h"
 #include "canvas.h"
 
+/**
+ * @ingroup NANO_ENGINE_API
+ * @{
+ */
+
 /** Type of user-specified keyboard callback */
 typedef uint8_t (*TNanoEngineGetButtons)(void);
 
@@ -251,6 +256,9 @@ void NanoEngine<C,W,H,B>::notify(const char *str)
     NanoEngineTiler<C,W,H,B>::refresh();
 }
 
+/**
+ * @}
+ */
 
 #endif
 
