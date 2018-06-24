@@ -60,7 +60,7 @@ typedef NanoEngine<TILE_16x16_RGB8> GameEngine;
 #define BUTTON_PIN  0
 #endif
 
-const NanoRect game_window = { {0, 8}, {95, 63} };
+const NanoRect game_window = { {16, 8}, {95, 63} };
 
 uint8_t gameField[24*14] =
 {
@@ -95,18 +95,41 @@ static inline bool isPipe(uint8_t type)              { return type == 3; }
 static inline bool isGold(uint8_t type)              { return type == 4; }
 static inline bool isStair(uint8_t type)             { return type == 2; }
 
-static inline uint8_t block_at(const NanoPoint& p)
+static inline uint16_t block_index(const NanoPoint& block)
 {
-    uint16_t index = ((p.x - game_window.p1.x)>>3) +
-                     (((p.y - game_window.p1.y)>>3) * 24);
+    return block.x + block.y * 24;
+}
+
+static inline NanoPoint pos_to_block(const NanoPoint& pos)
+{
+    return pos >> 3;
+}
+
+static inline NanoPoint block_to_pos(const NanoPoint& block)
+{
+    return block << 3;
+}
+
+static inline NanoRect rect_to_blocks(const NanoRect& rect)
+{
+    return rect >> 3;
+}
+
+static inline uint8_t block_value(const NanoPoint& block)
+{
+    uint16_t index = block_index(block);
     if (index >= 24*14) index = 0;
     return gameField[index];
 }
 
+static inline uint8_t block_at(const NanoPoint& p)
+{
+    return block_value(pos_to_block(p));
+}
+
 static inline void set_block_at(const NanoPoint& p, uint8_t v)
 {
-    uint16_t index = ((p.x - game_window.p1.x)>>3) +
-                     (((p.y - game_window.p1.y)>>3) * 24);
+    uint16_t index = block_index(pos_to_block(p));
     if (index >= 24*14) index = 0;
     gameField[index] = v;
 }
@@ -118,7 +141,7 @@ GameEngine engine;
  */
 void beep(int bCount,int bDelay);
 
-NanoFixedSprite<GameEngine, engine> player( game_window.p1 + (NanoPoint){ 8, 8 }, { 8, 8 }, nullptr );
+NanoFixedSprite<GameEngine, engine> player( { 8, 8 }, { 8, 8 }, nullptr );
 
 /* The variable is used for player animation      *
  * The graphics defined for the hero has 2 images *
@@ -146,33 +169,31 @@ void showGameInfo()
 static bool onDraw()
 {
     engine.canvas.clear();
-    engine.canvas.setMode(0);
-    if ((engine.canvas.offset.x + engine.NE_TILE_WIDTH - 1 >= game_window.p1.x) &&
-       (engine.canvas.offset.y + engine.NE_TILE_HEIGHT - 1 >= game_window.p1.y) &&
-       (engine.canvas.offset.x <= game_window.p2.x) &&
-       (engine.canvas.offset.y <= game_window.p2.y))
+    engine.canvas.setMode(CANVAS_MODE_BASIC);
+    if (game_window.containsPartOf( engine.canvas.rect() ))
     {
-    engine.worldCoordinates();
-    for (uint8_t row = max(0,(engine.canvas.offset.y - game_window.p1.y) >> 3);
-                 row <= min(13,((engine.canvas.offset.y - game_window.p1.y + engine.NE_TILE_HEIGHT - 1) >> 3)); row++)
-    {
-        for (uint8_t col = max(0,(engine.canvas.offset.x - game_window.p1.x)>> 3);
-                     col <= min(23, ((engine.canvas.offset.x - game_window.p1.x + engine.NE_TILE_WIDTH - 1) >> 3)); col++)
+        engine.worldCoordinates();
+        NanoRect blocks = rect_to_blocks( engine.canvas.rect() );
+        for (uint8_t row = max(0,blocks.p1.y);
+                     row <= min(13,blocks.p2.y); row++)
         {
-            uint16_t index = (row * 24) + col;
-            uint8_t blockType = gameField[index];
-            if (blockType != 0)
+            for (uint8_t col = max(0,blocks.p1.x);
+                         col <= min(23,blocks.p2.x); col++)
             {
-                engine.canvas.setColor(blockColors[blockType - 1]);
-                engine.canvas.drawBitmap1(game_window.p1.x + (col<<3), game_window.p1.y + (row<<3),
+                uint8_t blockType = block_value({col,row});
+                if (blockType != 0)
+                {
+                    engine.canvas.setColor(blockColors[blockType - 1]);
+                    NanoPoint pos = block_to_pos({col,row});
+                    engine.canvas.drawBitmap1(pos.x, pos.y,
                                           8, 8, bgSprites[blockType - 1]);
+                }
             }
         }
-    }
-    engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
-    engine.canvas.setColor(RGB_COLOR8(64,255,255));
-    player.draw();
-    engine.localCoordinates();
+        engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
+        engine.canvas.setColor(RGB_COLOR8(64,255,255));
+        player.draw();
+        engine.localCoordinates();
     }
     showGameInfo();
     return true;
