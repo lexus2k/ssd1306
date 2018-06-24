@@ -135,7 +135,7 @@ bool onDraw()
 }
 
 void movePlayer(uint8_t direction)
-{                                           
+{
     bool animated = false;
     uint8_t bottomBlock = gameField[blockIdx(player.bottom().x,player.bottom().y)];
     uint8_t feetBlock = gameField[blockIdx(player.bottom().x,player.bottom().y - 1)];

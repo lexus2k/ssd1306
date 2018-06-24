@@ -60,7 +60,7 @@ typedef NanoEngine<TILE_16x16_RGB8> GameEngine;
 #define BUTTON_PIN  0
 #endif
 
-const NanoRect game_window = { {16, 8}, {95, 63} };
+const NanoRect game_window = { {0, 8}, {95, 63} };
 
 uint8_t gameField[24*14] =
 {
@@ -204,7 +204,7 @@ static NanoPoint calc_new_screen_position()
     NanoPoint position = engine.getPosition() + game_window.p1;
     if (player.x() - position.x >= game_window.width() - 24)
     {
-        position.x = min(player.x() - (game_window.width() - 24), 96);
+        position.x = min(player.x() - (game_window.width() - 24), 128);
     }
     else if (player.x() - position.x < 24)
     {
@@ -272,9 +272,8 @@ void movePlayer(uint8_t direction)
     moveGameScreen();
     /* If player doesn't stand on the ground, and doesn't hold the pipe,
      * make the player to fall down. */
-    if ( !isSolid(bottomBlock) &&
-         (!isPipe(handBlock) ||
-          !isPipe(feetBlock) ) )
+    if ( !isSolid(feetBlock) &&
+         (!isPipe(handBlock) || !isPipe(bottomBlock)) )
     {
         player.moveTo( { player.center().x & ~0x07, player.y() + 1 } );
         player.setBitmap( &playerFlyingImage[MAN_ANIM_FLYING][playerAnimation][0] );
