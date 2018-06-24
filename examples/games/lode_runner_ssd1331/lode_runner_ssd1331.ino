@@ -48,7 +48,7 @@
 #include "intf/spi/ssd1306_spi.h"
 
 // Uncomment if you have ssd1331 oled display
-#define SSD1331_ACCELERATION
+//#define SSD1331_ACCELERATION
 
 typedef NanoEngine<TILE_16x16_RGB8> GameEngine;
 
@@ -60,7 +60,7 @@ typedef NanoEngine<TILE_16x16_RGB8> GameEngine;
 #define BUTTON_PIN  0
 #endif
 
-const NanoRect game_window = { {16, 8}, {95, 63} };
+const NanoRect game_window = { {0, 8}, {95, 63} };
 
 uint8_t gameField[24*14] =
 {
@@ -180,24 +180,24 @@ static bool onDraw()
 
 static NanoPoint calc_new_screen_position()
 {
-    NanoPoint position = engine.getPosition();
-    if (player.x() - position.x >= game_window.p2.x - 24)
+    NanoPoint position = engine.getPosition() + game_window.p1;
+    if (player.x() - position.x >= game_window.width() - 24)
     {
-        position.x = min(player.x() - (game_window.p2.x - 24), 96);
+        position.x = min(player.x() - (game_window.width() - 24), 96);
     }
-    else if (player.x() - engine.getPosition().x < game_window.p1.x + 24)
+    else if (player.x() - position.x < 24)
     {
-        position.x = max(0, player.x() - (game_window.p1.x + 24));
+        position.x = max(0, player.x() - 24);
     }
-    if (player.y() - engine.getPosition().y >= 40)
+    if (player.y() - position.y >= game_window.height() - 24)
     {
-        position.y = min(player.y() - 40, 64);
+        position.y = min(player.y() - (game_window.height() - 24), 64);
     }
-    else if (player.y() - engine.getPosition().y < 24)
+    else if (player.y() - position.y < 24)
     {
         position.y = max(0, player.y() - 24);
     }
-    return position;
+    return position - game_window.p1;
 }
 
 #ifdef SSD1331_ACCELERATION
