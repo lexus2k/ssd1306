@@ -217,7 +217,7 @@ public:
      */
     const NanoPoint bottom() const
     {
-        return { m_pos.x + (m_size.x >> 1), m_pos.y + m_size.y  };
+        return { m_pos.x + (m_size.x >> 1), m_pos.y + m_size.y - 1  };
     }
 
     /**
@@ -241,7 +241,7 @@ public:
      */
     const NanoPoint right() const
     {
-        return { m_pos.x + m_size.x, m_pos.y + (m_size.y>>1)  };
+        return { m_pos.x + m_size.x - 1, m_pos.y + (m_size.y>>1)  };
     }
 
     /**
