@@ -50,7 +50,7 @@
 // Uncomment if you have ssd1331 oled display
 //#define SSD1331_ACCELERATION
 
-typedef NanoEngine<TILE_16x16_RGB8> GameEngine;
+typedef NanoEngine<TILE_16x16_RGB8> GraphicsEngine;
 
 #if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)
 #define BUZZER      1
@@ -134,14 +134,14 @@ static inline void set_block_at(const NanoPoint& p, uint8_t v)
     gameField[index] = v;
 }
 
-GameEngine engine;
+GraphicsEngine engine;
 
 /**
  * Just produces some sound depending on params
  */
 void beep(int bCount,int bDelay);
 
-NanoFixedSprite<GameEngine, engine> player( { 8, 8 }, { 8, 8 }, nullptr );
+NanoFixedSprite<GraphicsEngine, engine> player( { 8, 8 }, { 8, 8 }, nullptr );
 
 /* The variable is used for player animation      *
  * The graphics defined for the hero has 2 images *
