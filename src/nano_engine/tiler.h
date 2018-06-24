@@ -314,7 +314,7 @@ void NanoEngineTiler<C,W,H,B>::displayBuffer()
 template<class C, uint8_t W, uint8_t H, uint8_t B>
 void NanoEngineTiler<C,W,H,B>::displayPopup(const char *msg)
 {
-    NanoRect rect = { 8, (ssd1306_lcd.height>>1) - 8, ssd1306_lcd.width - 8, (ssd1306_lcd.height>>1) + 8 };
+    NanoRect rect = { {8, (ssd1306_lcd.height>>1) - 8}, {ssd1306_lcd.width - 8, (ssd1306_lcd.height>>1) + 8} };
     // TODO: It would be nice to calculate message height
     NanoPoint textPos = { (ssd1306_lcd.width - (lcdint_t)strlen(msg)*s_fixedFont.width) >> 1, (ssd1306_lcd.height>>1) - 4 };
     refresh(rect);

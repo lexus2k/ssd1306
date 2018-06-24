@@ -103,6 +103,11 @@ typedef struct _NanoRect
         p2.x = r; p2.y = b;
     }
 
+    /**
+     * Crops rectangle to fit specified area
+     *
+     * @param rect rectangle to crop to
+     */
     void crop(const _NanoRect& rect)
     {
         if (p1.x < rect.p1.x) p1.x = rect.p1.x;
@@ -130,7 +135,40 @@ typedef struct _NanoRect
      * Returns true if specified point is inside rectangle area.
      * @param p - point to check.
      */
-    bool collision(const NanoPoint &p) const { return collisionX(p.x) && collisionY(p.y); };
+    bool collision(const NanoPoint &p) const
+    {
+        return collisionX(p.x) && collisionY(p.y);
+    }
+
+    /**
+     * Returns true of point belongs to rectangle area
+     *
+     * @param p point to check for
+     */
+    bool contains(const NanoPoint &p) const
+    {
+        return collision(p);
+    }
+
+    /**
+     * Returns true if whole rectangle belongs to rectangle area
+     *
+     * @param r rectangle to check
+     */
+    bool contains(const _NanoRect &r) const
+    {
+        return contains(r.p1) && contains(r.p2);
+    }
+
+    /**
+     * Returns true if rectangle topleft or rightbottom points belong to rectangle area
+     *
+     * @param r rectangle to check
+     */
+    bool containsPartOf(const _NanoRect &r) const
+    {
+        return contains(r.p1) || contains(r.p2);
+    }
 
     /**
      * Returns true if specified point is above rectangle area.
@@ -177,15 +215,34 @@ typedef struct _NanoRect
         return *this;
     }
 
+    /**
+     * Shifts right x,y value of the point by bits value.
+     * @param bits - number of bits to shift
+     */
+    _NanoRect operator>>(const uint8_t bits) const
+    {
+        return { p1 >> bits, p2 >> bits };
+    };
+
+    /**
+     * Shifts left x,y value of the point by bits value.
+     * @param bits - number of bits to shift
+     */
+    _NanoRect operator<<(const uint8_t bits) const
+    {
+        return { p1 << bits, p2 << bits };
+    };
+
+
 } NanoRect;
 
-
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 inline NanoRect operator+(const NanoRect& rect, const NanoPoint& p)
 {
     return { { rect.p1.x + p.x, rect.p1.y + p.y },
              { rect.p2.x + p.x, rect.p2.y + p.y } };
 }
-
+#endif
 
 #endif
 

@@ -39,6 +39,12 @@ typedef struct _NanoPoint
     /** y position in pixels */
     lcdint_t y;
 
+//    _NanoPoint(lcdint_t px, lcdint_t py)
+//    {
+//        x = px;
+//        y = py;
+//    }
+
     /**
      * Initializes NanoPoint with specified values
      * @param px - x position
@@ -114,7 +120,7 @@ typedef struct _NanoPoint
      * Shifts right x,y value of the point by bits value.
      * @param bits - number of bits to shift
      */
-    _NanoPoint operator>>(const uint8_t bits)
+    _NanoPoint operator>>(const uint8_t bits) const
     {
         return { static_cast<lcdint_t>(x >> bits),
                  static_cast<lcdint_t>(y >> bits) };
@@ -124,7 +130,7 @@ typedef struct _NanoPoint
      * Shifts left x,y value of the point by bits value.
      * @param bits - number of bits to shift
      */
-    _NanoPoint operator<<(const uint8_t bits)
+    _NanoPoint operator<<(const uint8_t bits) const
     {
         return { static_cast<lcdint_t>(x << bits),
                  static_cast<lcdint_t>(y << bits) };
@@ -134,7 +140,7 @@ typedef struct _NanoPoint
      * Divides x,y value of the point by d value.
      * @param d divider
      */
-    _NanoPoint operator/(const int16_t d)
+    _NanoPoint operator/(const int16_t d) const
     {
         return { static_cast<lcdint_t>(x / d),
                  static_cast<lcdint_t>(y / d) };
