@@ -10,5 +10,8 @@ var searchData=
   ['collisiony',['collisionY',['../struct___nano_rect.html#a04efd997a8639c654dd919e8dfdc9727',1,'_NanoRect']]],
   ['connectarduboykeys',['connectArduboyKeys',['../class_nano_engine_inputs.html#a44834200b3dd49442b96ea45de2aaf56',1,'NanoEngineInputs']]],
   ['connectcustomkeys',['connectCustomKeys',['../class_nano_engine_inputs.html#a7f509d896a9b9d1c523ac87f459f5686',1,'NanoEngineInputs']]],
-  ['connectzkeypad',['connectZKeypad',['../class_nano_engine_inputs.html#a4b438315ca118e0721e3a8fb2f638e41',1,'NanoEngineInputs']]]
+  ['connectzkeypad',['connectZKeypad',['../class_nano_engine_inputs.html#a4b438315ca118e0721e3a8fb2f638e41',1,'NanoEngineInputs']]],
+  ['contains',['contains',['../struct___nano_rect.html#a69a3be037a0a9d153a1ad2cc0aaa48c6',1,'_NanoRect::contains(const NanoPoint &amp;p) const '],['../struct___nano_rect.html#a165e6c644da41b1dc01a26aa94acc203',1,'_NanoRect::contains(const _NanoRect &amp;r) const ']]],
+  ['containspartof',['containsPartOf',['../struct___nano_rect.html#a65b4fb8c04412e146aa1bc5aaa4bab30',1,'_NanoRect']]],
+  ['crop',['crop',['../struct___nano_rect.html#ad2830dc65621088cfc9656e3959ff9b0',1,'_NanoRect']]]
 ];

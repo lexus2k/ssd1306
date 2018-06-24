@@ -2,6 +2,9 @@ var searchData=
 [
   ['canvas',['canvas',['../class_nano_engine_tiler.html#a1199d9ef403213788c83abf74ded68d8',1,'NanoEngineTiler']]],
   ['canvas_2eh',['canvas.h',['../canvas_8h.html',1,'']]],
+  ['canvas_5fmode_5ftransparent',['CANVAS_MODE_TRANSPARENT',['../canvas_8h.html#a06fc87d81c62e9abb8790b6e5713c55ba98772cc8a02f04e00b7503800d2ab9ab',1,'canvas.h']]],
+  ['canvas_5ftext_5fwrap',['CANVAS_TEXT_WRAP',['../canvas_8h.html#a06fc87d81c62e9abb8790b6e5713c55ba0f8baf412154ca8af0a985f1eac3853c',1,'canvas.h']]],
+  ['canvas_5ftext_5fwrap_5flocal',['CANVAS_TEXT_WRAP_LOCAL',['../canvas_8h.html#a06fc87d81c62e9abb8790b6e5713c55ba2c6c98a4735704fd9e10e68e00a05363',1,'canvas.h']]],
   ['center',['center',['../class_nano_sprite.html#a6cedfb244591db4b63c56cf48a4446b5',1,'NanoSprite::center()'],['../class_nano_fixed_sprite.html#a0a7b3b34df1019c86dc747680be85dd5',1,'NanoFixedSprite::center()']]],
   ['char_5ff6x8',['char_f6x8',['../class_nano_canvas.html#afe659b5c2c540b8af0d8c0fd53eb7327',1,'NanoCanvas']]],
   ['charf12x16',['charF12x16',['../class_nano_canvas.html#aa1ab1e5c598b6d46f261f45396ea2743',1,'NanoCanvas']]],
@@ -23,9 +26,12 @@ var searchData=
   ['connectarduboykeys',['connectArduboyKeys',['../class_nano_engine_inputs.html#a44834200b3dd49442b96ea45de2aaf56',1,'NanoEngineInputs']]],
   ['connectcustomkeys',['connectCustomKeys',['../class_nano_engine_inputs.html#a7f509d896a9b9d1c523ac87f459f5686',1,'NanoEngineInputs']]],
   ['connectzkeypad',['connectZKeypad',['../class_nano_engine_inputs.html#a4b438315ca118e0721e3a8fb2f638e41',1,'NanoEngineInputs']]],
+  ['contains',['contains',['../struct___nano_rect.html#a69a3be037a0a9d153a1ad2cc0aaa48c6',1,'_NanoRect::contains(const NanoPoint &amp;p) const '],['../struct___nano_rect.html#a165e6c644da41b1dc01a26aa94acc203',1,'_NanoRect::contains(const _NanoRect &amp;r) const ']]],
+  ['containspartof',['containsPartOf',['../struct___nano_rect.html#a65b4fb8c04412e146aa1bc5aaa4bab30',1,'_NanoRect']]],
   ['controller_5fnative_5fspi_5fblock_5f8bit_5fcmds',['CONTROLLER_NATIVE_SPI_BLOCK_8BIT_CMDS',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga9d0d908bfa8476c33a85718bb1281f83',1,'lcd_common.h']]],
   ['core_2eh',['core.h',['../core_8h.html',1,'']]],
   ['count',['count',['../struct_s_app_menu.html#ad750fae199422bd44dc6063123631d62',1,'SAppMenu']]],
   ['courier_5fnew_5ffont11x16_5fdigits',['courier_new_font11x16_digits',['../group___l_c_d___f_o_n_t_s.html#gad0b4c4a1805d2cbc11910dbf2febb516',1,'courier_new_font11x16_digits():&#160;ssd1306_fonts.c'],['../group___l_c_d___f_o_n_t_s.html#gad0b4c4a1805d2cbc11910dbf2febb516',1,'courier_new_font11x16_digits():&#160;ssd1306_fonts.c']]],
+  ['crop',['crop',['../struct___nano_rect.html#ad2830dc65621088cfc9656e3959ff9b0',1,'_NanoRect']]],
   ['config_3a_20ssd1306_20library_20configuration',['CONFIG: ssd1306 library configuration',['../group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html',1,'']]]
 ];
