@@ -159,6 +159,11 @@ inline NanoPoint operator+(const NanoPoint& p1, const NanoPoint& p2)
     return { p1.x + p2.x, p1.y + p2.y };
 }
 
+inline NanoPoint operator-(const NanoPoint& p1, const NanoPoint& p2)
+{
+    return { p1.x - p2.x, p1.y - p2.y };
+}
+
 inline bool operator==(const NanoPoint& p1, const NanoPoint& p2)
 {
     return (p1.x == p2.x) && (p1.y == p2.y);

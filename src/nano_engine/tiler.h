@@ -168,6 +168,15 @@ public:
     }
 
     /**
+     * Marks specified pixel area for redrawing by NanoEngine.
+     * @param point point in global (World) coordinates
+     */
+    static void refreshWorld(const NanoPoint &point)
+    {
+        refresh( point - offset );
+    }
+
+    /**
      * Switches engine canvas to local coordinates system. This method can be useful
      * to ease up drawing of some static elements on lcd display.
      * @warning do not call twice subsequentally.
