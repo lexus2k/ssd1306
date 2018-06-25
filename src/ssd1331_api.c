@@ -74,6 +74,8 @@ void ssd1331_copyBlock(uint8_t left, uint8_t top, uint8_t right, uint8_t bottom,
     ssd1306_intf.send(newLeft);
     ssd1306_intf.send(newTop);
     ssd1306_intf.stop();
+    // give some time to complete operation
+    delayMicroseconds(200);
 }
 
 void ssd1331_drawMonoBuffer8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
