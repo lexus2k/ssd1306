@@ -115,9 +115,9 @@ bool drawBattleField(void)
         engine.canvas.setMode(CANVAS_MODE_BASIC);
         engine.canvas.setColor(RGB_COLOR8(0,0,64));
         NanoRect tileBlocks = engine.canvas.rect() >> 3;
-        tileBlocks.crop(gameArea);
-        for (int row = tileBlocks.p1.y; row <= tileBlocks.p2.y; row++)
-            for (int col = tileBlocks.p1.x; col <= tileBlocks.p2.x; col++)
+        tileBlocks.crop(gameArea >> 3);
+        for (uint8_t row = tileBlocks.p1.y; row <= tileBlocks.p2.y; row++)
+            for (uint8_t col = tileBlocks.p1.x; col <= tileBlocks.p2.x; col++)
                 engine.canvas.drawBitmap1(col << 3, row << 3, 8, 8, bgTile);
         engine.canvas.setColor(RGB_COLOR8(255,255,255));
         engine.canvas.drawHLine(gameArea.p1.x,gameArea.p1.y,gameArea.p2.x);
@@ -166,13 +166,13 @@ bool drawBattleField(void)
 /* Moves platform right or left according to pressed keys */
 void movePlatform(void)
 {
-    if (engine.pressed( BUTTON_LEFT ) && (gameState.battleField.platform.p1.x > gameArea.p1.x))
+    if (engine.pressed( BUTTON_LEFT ) && (gameState.battleField.platform.p1.x > 0))
     {
         engine.refreshWorld( gameState.battleField.platform );
         gameState.battleField.platform.move(-1, 0);
         engine.refreshWorld( gameState.battleField.platform );
     }
-    if (engine.pressed( BUTTON_RIGHT ) && (gameState.battleField.platform.p2.x < gameArea.p2.x))
+    if (engine.pressed( BUTTON_RIGHT ) && (gameState.battleField.platform.p2.x < gameArea.width() - 1))
     {
         engine.refreshWorld( gameState.battleField.platform );
         gameState.battleField.platform.move(+1, 0);
@@ -238,16 +238,18 @@ bool checkPlatformHit()
 bool checkGameAreaHit(void)
 {
     bool hit = false;
-    if (!gameArea.collisionX(gameState.battleField.ball.x))
+    if ((gameState.battleField.ball.x < 0) ||
+        (gameState.battleField.ball.x >= gameArea.width()))
     {
         hit = true;
         gameState.battleField.ballSpeed.x = -gameState.battleField.ballSpeed.x;
     }
-    if (!gameArea.collisionY(gameState.battleField.ball.y))
+    if ((gameState.battleField.ball.y < 0) ||
+        (gameState.battleField.ball.y >= gameArea.height()))
     {
         hit = true;
         gameState.battleField.ballSpeed.y = -gameState.battleField.ballSpeed.y;
-        if (gameState.battleField.ball.y > gameArea.p2.y)
+        if (gameState.battleField.ball.y >= gameArea.height())
         {
              startBattleField( false );
         }
@@ -262,8 +264,8 @@ void moveBall(void)
     do
     {
         gameState.battleField.ballScaled += gameState.battleField.ballSpeed;
-        moveBall = false;
         gameState.battleField.ball = gameState.battleField.ballScaled >> PIX_BITS;
+        moveBall = false;
         if (checkGameAreaHit())
         {
             moveBall = true;
