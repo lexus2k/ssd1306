@@ -314,8 +314,8 @@ void movePlayer(uint8_t direction)
                 }
                 break;
             case BUTTON_DOWN:
-                if ( isStair(bottomBlock) ||
-                   (!isSolid(bottomBlock) &&
+                if ( isStair(feetBlock) ||
+                   (!isSolid(feetBlock) &&
                      isPipe(handBlock)) )
                 {
                     player.moveTo( { player.top().x & ~0x07, player.top().y + 1 } );
