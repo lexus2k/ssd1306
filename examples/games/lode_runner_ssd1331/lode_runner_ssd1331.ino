@@ -60,7 +60,7 @@ typedef NanoEngine<TILE_16x16_RGB8> GraphicsEngine;
 #define BUTTON_PIN  0
 #endif
 
-const NanoRect game_window = { {0, 8}, {95, 63} };
+const NanoRect game_window = { {0, 0}, {95, 63} };
 
 uint8_t gameField[24*14] =
 {
@@ -157,13 +157,19 @@ uint8_t  goldCollection = 0;
 
 void showGameInfo()
 {
+    engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
     engine.canvas.setColor(RGB_COLOR8(0,0,0));
-    engine.canvas.fillRect({{0,0},{95,game_window.p1.y - 1}});
-    for (uint8_t i=0; i<goldCollection; i++)
-    {
-        engine.canvas.setColor(RGB_COLOR8(255,255,0));
-        engine.canvas.drawBitmap1(0 + (i<<3), 0, 8, 8, coinImage);
-    }
+    engine.canvas.drawBitmap1(1, 1, 8, 8, coinImage);
+    engine.canvas.setColor(RGB_COLOR8(255,255,0));
+    engine.canvas.drawBitmap1(0, 0, 8, 8, coinImage);
+
+    ssd1306_setFixedFont(digital_font5x7_AB);
+    char score[3] = {goldCollection/10 + '0', goldCollection%10 + '0', 0};
+    engine.canvas.setColor(RGB_COLOR8(0,0,0));
+    engine.canvas.printFixed(9,1,score);
+    engine.canvas.setColor(RGB_COLOR8(255,255,255));
+    engine.canvas.printFixed(8,0,score);
+    ssd1306_setFixedFont(digital_font5x7_AB);
 }
 
 static bool onDraw()
@@ -233,6 +239,8 @@ static void moveGameScreen()
         // Copy most part of OLED content via hardware accelerator
         ssd1331_copyBlock(block.p1.x, block.p1.y, block.p2.x, block.p2.y,
                           block.p1.x - delta.x, block.p1.y - delta.y);
+        // give some time oled to complete HW copy operation
+        delayMicroseconds(250);
         engine.moveTo( position );
         // Now tell the engine to redraw only new areas
         if ( delta.x > 0)
@@ -243,6 +251,8 @@ static void moveGameScreen()
             engine.refresh(game_window.p1.x, game_window.p2.y - delta.y, game_window.p2.x, game_window.p2.y);
         else if ( delta.y < 0 )
             engine.refresh(game_window.p1.x, game_window.p1.y, game_window.p2.x, game_window.p1.y - delta.y);
+        // refresh status line
+        engine.refresh(0,0,23,7);
     }
 }
 
@@ -351,9 +361,6 @@ void movePlayer(uint8_t direction)
 
 void setup()
 {
-    /* Set font to use in the game. The font has only capital letters and digits */
-    ssd1306_setFixedFont(ssd1306xled_font6x8_AB);
-
     ssd1331_96x64_spi_init(3, 4, 5); // 3 RST, 4 CES, 5 DS
 
 //    ssd1306_128x64_i2c_init();

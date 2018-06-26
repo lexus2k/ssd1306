@@ -94,10 +94,11 @@ void         ssd1331_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, ui
  * @param newTop new row start
  *
  * @note This API can be used only with ssd1331 RGB oled displays
- * @note after copy command is sent, the function waits for 200us
- *       before return. This time is required for oled display to
- *       complete copy operation and become ready to accept new
- *       commands.
+ * @note after copy command is sent, it takes some time from oled
+ *       controller to complete operation. So, it is HIGHLY recommended
+ *       to wait for reasonable time before send other graphics operations
+ *       (for example, use 250us delay). This time is required for
+ *       oled display to become ready to accept new commands.
  */
 void ssd1331_copyBlock(uint8_t left, uint8_t top, uint8_t right, uint8_t bottom, uint8_t newLeft, uint8_t newTop);
 
