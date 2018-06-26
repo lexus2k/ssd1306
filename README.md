@@ -80,6 +80,7 @@ configurable through API.
 | ESP32  |  X  |  X  | check [examples compatibility list](examples/ESP8266_compatibility.txt)   |
 | STM32  |  X  |  X  | [stm32duino](https://github.com/stm32duino/wiki/wiki)  |
 | Arduino Zero | X  | X  |    |
+| Nordic nRF5 (nRF51, nRF52) | X | X | nRF users, enable c++11 in platform.txt `-std=gnu++11`   |
 | **Plain AVR** |   |     |          |
 | Attiny85, Attiny45 |  X  |  X  |         |
 | Atmega328p, Atmega168 |  X  |  X  |         |

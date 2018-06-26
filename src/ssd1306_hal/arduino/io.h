@@ -39,7 +39,7 @@
     #include <Arduino.h>
     #include <avr/pgmspace.h>
     #include <avr/interrupt.h>
-    #if !defined(ARDUINO_ARCH_SAMD)
+    #if !defined(ARDUINO_ARCH_SAMD) && defined(__AVR__)
     #include <avr/sleep.h>
     #endif
 #endif
@@ -113,6 +113,14 @@
     #define CONFIG_AVR_UART_AVAILABLE
     /** The macro is defined when VGA monitor control is available directly from controller */
     #define CONFIG_VGA_AVAILABLE
+
+#elif defined(NRF52) || defined(NRF5)
+    /** The macro is defined when i2c Wire library is available */
+    #define CONFIG_PLATFORM_I2C_AVAILABLE
+    /** The macro is defined when Wire library speed can be configured */
+    #define SSD1306_WIRE_CLOCK_CONFIGURABLE
+    /** The macro is defined when SPI library is available */
+    #define CONFIG_PLATFORM_SPI_AVAILABLE
 
 #else
     /** The macro is defined when i2c Wire library is available */
