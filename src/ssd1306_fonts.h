@@ -47,6 +47,15 @@ extern const PROGMEM uint8_t ssd1306xled_font5x7 [];
 /** Standard ASCII 5x7 font with only capital letters */
 extern const PROGMEM uint8_t ssd1306xled_font5x7_AB [];
 
+/** Digital ASCII 5x7 font with only digits and operation signs */
+extern const PROGMEM uint8_t digital_font5x7_123[];
+
+/** Digital ASCII 5x7 font with only capital letters */
+extern const PROGMEM uint8_t digital_font5x7_AB[];
+
+/** Digital ASCII 5x7 font */
+extern const PROGMEM uint8_t digital_font5x7[];
+
 /**
  * Standard ASCII font 11x16 with digits only (Ascii codes 32 - 64).
  * @warning can be used only with ssd1306_printFixed() and ssd1306_setFixedFont() functions.
