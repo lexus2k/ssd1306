@@ -44,6 +44,13 @@
 #include "ssd1306.h"
 #include "nano_engine.h"
 #include "sprites.h"
+#include "intf/ssd1306_interface.h"
+#include "intf/spi/ssd1306_spi.h"
+
+// Uncomment if you have ssd1331 oled display
+//#define SSD1331_ACCELERATION
+
+typedef NanoEngine<TILE_16x16_RGB8> GraphicsEngine;
 
 #if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)
 #define BUZZER      1
@@ -53,18 +60,27 @@
 #define BUTTON_PIN  0
 #endif
 
-uint8_t gameField[12*7] =
+const NanoRect game_window = { {0, 0}, {95, 63} };
+
+uint8_t gameField[24*14] =
 {
-   5,0,0,0,0,3,3,0,0,0,0,5,
-   5,0,2,0,4,0,0,2,1,1,2,5,
-   5,0,2,0,1,1,0,2,0,0,1,1,
-   5,0,2,0,0,0,0,2,0,4,0,5,
-   5,1,2,1,1,1,1,1,1,1,1,1,
-   5,0,2,0,0,0,0,0,4,0,0,5,
-   1,1,1,1,1,1,1,1,1,1,1,1,
+   5,0,0,0,0,3,3,0,0,0,0,5,5,0,0,0,0,3,3,0,0,0,0,5,
+   5,0,2,0,4,0,0,2,1,1,2,0,0,0,0,0,4,0,0,2,1,1,2,5,
+   5,0,2,0,1,1,0,2,0,0,1,1,5,2,0,0,1,1,0,2,0,0,1,1,
+   5,0,2,0,0,0,0,2,0,4,0,0,0,2,0,0,0,0,0,2,0,4,0,5,
+   5,1,2,1,1,1,1,1,1,1,1,1,5,1,2,1,1,1,1,1,1,1,1,1,
+   5,0,2,0,0,0,0,0,4,0,0,5,5,0,2,0,0,0,0,0,4,0,0,5,
+   1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+   5,0,0,0,0,3,3,2,0,0,0,5,5,0,0,0,0,3,3,0,0,0,0,5,
+   5,0,2,0,4,0,0,2,1,1,2,0,0,0,0,0,4,0,0,2,1,1,2,5,
+   5,0,2,0,1,1,0,2,0,0,1,1,5,2,0,0,1,1,0,2,0,0,1,1,
+   5,0,2,0,0,0,0,2,0,4,0,0,0,2,0,0,0,0,0,2,0,4,0,5,
+   5,1,2,1,1,1,1,1,1,1,1,1,5,1,2,1,1,1,1,1,1,1,1,1,
+   5,0,2,0,0,0,0,0,4,0,0,5,5,0,2,0,0,0,0,0,4,0,0,5,
+   1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 };
 
-uint8_t blockColors[] = 
+uint8_t blockColors[] =
 {
     RGB_COLOR8(255,96,0),
     RGB_COLOR8(255,255,192),
@@ -73,21 +89,59 @@ uint8_t blockColors[] =
     RGB_COLOR8(128,128,128),
 };
 
-static inline uint8_t blockIdx(uint8_t x, uint8_t y) { return (x>>3) + (((y - 8)>>3) * 12); }
 static inline bool isWalkable(uint8_t type)          { return (type == 0) || (type == 2) || (type == 3) || (type == 4); }
 static inline bool isSolid(uint8_t type)             { return (type == 1) || (type == 2) || (type == 5); }
 static inline bool isPipe(uint8_t type)              { return type == 3; }
 static inline bool isGold(uint8_t type)              { return type == 4; }
 static inline bool isStair(uint8_t type)             { return type == 2; }
 
-NanoEngine8 engine;
+static inline uint16_t block_index(const NanoPoint& block)
+{
+    return block.x + block.y * 24;
+}
+
+static inline NanoPoint pos_to_block(const NanoPoint& pos)
+{
+    return pos >> 3;
+}
+
+static inline NanoPoint block_to_pos(const NanoPoint& block)
+{
+    return block << 3;
+}
+
+static inline NanoRect rect_to_blocks(const NanoRect& rect)
+{
+    return rect >> 3;
+}
+
+static inline uint8_t block_value(const NanoPoint& block)
+{
+    uint16_t index = block_index(block);
+    if (index >= 24*14) index = 0;
+    return gameField[index];
+}
+
+static inline uint8_t block_at(const NanoPoint& p)
+{
+    return block_value(pos_to_block(p));
+}
+
+static inline void set_block_at(const NanoPoint& p, uint8_t v)
+{
+    uint16_t index = block_index(pos_to_block(p));
+    if (index >= 24*14) index = 0;
+    gameField[index] = v;
+}
+
+GraphicsEngine engine;
 
 /**
- * Just produces some sound depending on params 
+ * Just produces some sound depending on params
  */
 void beep(int bCount,int bDelay);
 
-NanoFixedSprite<NanoEngine8, engine> player( { 8, 8 }, { 8, 8 }, nullptr );
+NanoFixedSprite<GraphicsEngine, engine> player( { 8, 8 }, { 8, 8 }, nullptr );
 
 /* The variable is used for player animation      *
  * The graphics defined for the hero has 2 images *
@@ -103,51 +157,133 @@ uint8_t  goldCollection = 0;
 
 void showGameInfo()
 {
-    for (uint8_t i=0; i<goldCollection; i++)
+    engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
+    engine.canvas.setColor(RGB_COLOR8(0,0,0));
+    engine.canvas.drawBitmap1(1, 1, 8, 8, coinImage);
+    engine.canvas.setColor(RGB_COLOR8(255,255,0));
+    engine.canvas.drawBitmap1(0, 0, 8, 8, coinImage);
+
+    ssd1306_setFixedFont(digital_font5x7_AB);
+    char score[3] = {goldCollection/10 + '0', goldCollection%10 + '0', 0};
+    engine.canvas.setColor(RGB_COLOR8(0,0,0));
+    engine.canvas.printFixed(9,1,score);
+    engine.canvas.setColor(RGB_COLOR8(255,255,255));
+    engine.canvas.printFixed(8,0,score);
+    ssd1306_setFixedFont(digital_font5x7_AB);
+}
+
+static bool onDraw()
+{
+    engine.canvas.clear();
+    engine.canvas.setMode(CANVAS_MODE_BASIC);
+    if (game_window.containsPartOf( engine.canvas.rect() ))
     {
-        engine.canvas.setColor(RGB_COLOR8(255,255,0));
-        engine.canvas.drawBitmap1(0 + (i<<3), 0, 8, 8, coinImage);
+        engine.worldCoordinates();
+        NanoRect blocks = rect_to_blocks( engine.canvas.rect() );
+        for (uint8_t row = max(0,blocks.p1.y);
+                     row <= min(13,blocks.p2.y); row++)
+        {
+            for (uint8_t col = max(0,blocks.p1.x);
+                         col <= min(23,blocks.p2.x); col++)
+            {
+                uint8_t blockType = block_value({col,row});
+                if (blockType != 0)
+                {
+                    engine.canvas.setColor(blockColors[blockType - 1]);
+                    NanoPoint pos = block_to_pos({col,row});
+                    engine.canvas.drawBitmap1(pos.x, pos.y,
+                                          8, 8, bgSprites[blockType - 1]);
+                }
+            }
+        }
+        engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
+        engine.canvas.setColor(RGB_COLOR8(64,255,255));
+        player.draw();
+        engine.localCoordinates();
+    }
+    showGameInfo();
+    return true;
+}
+
+static NanoPoint calc_new_screen_position()
+{
+    NanoPoint position = engine.getPosition() + game_window.p1;
+    if (player.x() - position.x >= game_window.width() - 24)
+    {
+        position.x = min(player.x() - (game_window.width() - 24), 128);
+    }
+    else if (player.x() - position.x < 24)
+    {
+        position.x = max(0, player.x() - 24);
+    }
+    if (player.y() - position.y >= game_window.height() - 24)
+    {
+        position.y = min(player.y() - (game_window.height() - 24), 64);
+    }
+    else if (player.y() - position.y < 24)
+    {
+        position.y = max(0, player.y() - 24);
+    }
+    return position - game_window.p1;
+}
+
+#ifdef SSD1331_ACCELERATION
+static void moveGameScreen()
+{
+    NanoPoint position = calc_new_screen_position();
+    if (position != engine.getPosition())
+    {
+        NanoPoint delta = position - engine.getPosition();
+        NanoRect block = game_window + delta;
+        block.crop(game_window);
+        // Copy most part of OLED content via hardware accelerator
+        ssd1331_copyBlock(block.p1.x, block.p1.y, block.p2.x, block.p2.y,
+                          block.p1.x - delta.x, block.p1.y - delta.y);
+        // give some time oled to complete HW copy operation
+        delayMicroseconds(250);
+        engine.moveTo( position );
+        // Now tell the engine to redraw only new areas
+        if ( delta.x > 0)
+            engine.refresh(game_window.p2.x - delta.x, game_window.p1.y, game_window.p2.x, game_window.p2.y);
+        else if ( delta.x < 0 )
+            engine.refresh(game_window.p1.x, game_window.p1.y, game_window.p1.x - delta.x, game_window.p2.y);
+        if ( delta.y > 0)
+            engine.refresh(game_window.p1.x, game_window.p2.y - delta.y, game_window.p2.x, game_window.p2.y);
+        else if ( delta.y < 0 )
+            engine.refresh(game_window.p1.x, game_window.p1.y, game_window.p2.x, game_window.p1.y - delta.y);
+        // refresh status line
+        engine.refresh(0,0,23,7);
     }
 }
 
-bool onDraw()
+#else // NO SSD1331 Acceleration
+
+static void moveGameScreen()
 {
-    engine.canvas.clear();
-    engine.canvas.setMode(0);
-    for (uint8_t row = 0; row < 7; row++)
+    NanoPoint position = calc_new_screen_position();
+    if (position != engine.getPosition())
     {
-        for (uint8_t col = 0; col < 12; col++)
-        {
-            uint8_t index = (row * 12) + col;
-            uint8_t blockType = gameField[index];
-            if (blockType != 0)
-            {
-                engine.canvas.setColor(blockColors[blockType - 1]);
-                engine.canvas.drawBitmap1((col<<3), 8 + (row<<3), 8, 8, bgSprites[blockType - 1]);
-            }
-        }
+        engine.moveTo( position );
+        engine.refresh( game_window );
     }
-    showGameInfo();
-    engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
-    engine.canvas.setColor(RGB_COLOR8(64,255,255));
-    player.draw();
-    return true;
 }
+
+#endif
 
 void movePlayer(uint8_t direction)
 {
     bool animated = false;
-    uint8_t bottomBlock = gameField[blockIdx(player.bottom().x,player.bottom().y)];
-    uint8_t feetBlock = gameField[blockIdx(player.bottom().x,player.bottom().y - 1)];
-    uint8_t handBlock = gameField[blockIdx(player.top().x,player.top().y)];
-    uint8_t centerBlock = gameField[blockIdx(player.center().x,player.center().y)];
-    uint8_t rightBlock = gameField[blockIdx(player.right().x,player.right().y)];
-    uint8_t leftBlock = gameField[blockIdx(player.left().x,player.left().y)];
+    uint8_t bottomBlock = block_at(player.bottom());
+    uint8_t feetBlock = block_at(player.bottom() + (NanoPoint){0,1});
+    uint8_t handBlock = block_at(player.top());
+    uint8_t centerBlock = block_at(player.center());
+    uint8_t rightBlock = block_at(player.right());
+    uint8_t leftBlock = block_at(player.left());
+    moveGameScreen();
     /* If player doesn't stand on the ground, and doesn't hold the pipe,
      * make the player to fall down. */
-    if ( !isSolid(bottomBlock) &&
-         (!isPipe(handBlock) ||
-          !isPipe(feetBlock) ) )
+    if ( !isSolid(feetBlock) &&
+         (!isPipe(handBlock) || !isPipe(bottomBlock)) )
     {
         player.moveTo( { player.center().x & ~0x07, player.y() + 1 } );
         player.setBitmap( &playerFlyingImage[MAN_ANIM_FLYING][playerAnimation][0] );
@@ -180,7 +316,7 @@ void movePlayer(uint8_t direction)
                 }
                 break;
             case BUTTON_UP:
-                if (isStair(feetBlock))
+                if (isStair(bottomBlock) || isStair(centerBlock))
                 {
                     player.moveTo( { player.top().x & ~0x07, player.top().y - 1 } );
                     player.setBitmap( &playerFlyingImage[MAN_ANIM_UP][playerAnimation][0] );
@@ -188,8 +324,8 @@ void movePlayer(uint8_t direction)
                 }
                 break;
             case BUTTON_DOWN:
-                if ( isStair(bottomBlock) ||
-                   (!isSolid(bottomBlock) &&
+                if ( isStair(feetBlock) ||
+                   (!isSolid(feetBlock) &&
                      isPipe(handBlock)) )
                 {
                     player.moveTo( { player.top().x & ~0x07, player.top().y + 1 } );
@@ -209,7 +345,7 @@ void movePlayer(uint8_t direction)
         if (isGold(centerBlock))
         {
             engine.notify( "GOLD COIN" );
-            gameField[blockIdx(player.center().x,player.center().y)] = 0;
+            set_block_at(player.center(), 0);
             goldCollection++;
             showGameInfo();
             engine.refresh(0,0,63,7);
@@ -225,9 +361,6 @@ void movePlayer(uint8_t direction)
 
 void setup()
 {
-    /* Set font to use in the game. The font has only capital letters and digits */
-    ssd1306_setFixedFont(ssd1306xled_font6x8_AB);
-
     ssd1331_96x64_spi_init(3, 4, 5); // 3 RST, 4 CES, 5 DS
 
 //    ssd1306_128x64_i2c_init();
@@ -240,7 +373,7 @@ void setup()
     engine.connectZKeypad(BUTTON_PIN);
     engine.drawCallback( onDraw );
     engine.begin();
-    engine.setFrameRate(25);
+    engine.setFrameRate(45);
     engine.refresh();
     pinMode(BUZZER, OUTPUT);
 }
@@ -270,4 +403,3 @@ void beep(int bCount,int bDelay)
     }
     digitalWrite(BUZZER,LOW);
 }
-
