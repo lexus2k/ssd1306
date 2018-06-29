@@ -81,6 +81,14 @@ typedef struct
     const uint8_t *data; ///< font chars bits
 } SFixedFontInfo;
 
+/** Structure describes single char information */
+typedef struct
+{
+    uint8_t width;      ///< char width in pixels
+    uint8_t height;     ///< char height in pixels
+    const uint8_t *data; ///< char data, located in progmem.
+} SCharInfo;
+
 /**
  * Rectangle region. not used now
  */
@@ -99,6 +107,7 @@ typedef struct
 
 /**
  * SPRITE structure represents logical graphics object
+ * @deprecated Use NanoSprite or NanoFixedSprite instead.
  */
 typedef struct SPRITE
 {
@@ -151,7 +160,7 @@ typedef struct SPRITE
         return (((uint8_t)(x-lx)<w) || ((uint8_t)(lx-x)<w)) &&
                (((uint8_t)(y-ly)<8) || ((uint8_t)(ly-y)<8));
     };
-                                                       
+
     /**
      * Returns area in 8-pixel blocks, which is used by the sprite.
      *

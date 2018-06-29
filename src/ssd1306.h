@@ -234,15 +234,6 @@ uint8_t     ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFont
 uint8_t     ssd1306_printFixedN(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style, uint8_t factor);
 
 /**
- * @brief Sets cursor position for text mode print functions.
- *
- * Sets cursor position for text mode print functions.
- * @param x xpos in pixels
- * @param y ypos in pixels
- */
-void       ssd1306_setCursor(lcdint_t x, lcdint_t y);
-
-/**
  * @brief Prints single character to display at current cursor position
  *
  * Prints single character to display at current cursor position
@@ -312,39 +303,6 @@ uint8_t      ssd1306_charF6x8_eol(uint8_t left,
                                   uint8_t right) __attribute__ ((deprecated));
 
 /**
- * Function allows to set another fixed font for the library.
- * By default, the font supports only first 128 - 32 ascii chars.
- * First 32 chars of ascii table are non-printable, and removed
- * from the font table to reduce flash memory consumption.
- * Default font doesn't support russian characters. Using
- * this function you can implement your own fonts.
- * First font char must be started with \<space\> image.
- * Font data should be in the following format:
- * | 0x00 | 0xWW | 0xHH | 0xAA | FONT DATA |,
- * where 0xWW - width in pixels, 0xHH - height in pixels, 0xAA - ascii offset (0x20).<br>
- * For fixed font 6x8 each char is presented by 6 bytes:<br>
- * COL0, COL1, COL2, COL3, COL4, COL5.<br>
- * For fixed font 4x16 each char is presented by 4x16/8 = 8 bytes:<br>
- * ROW0: COL0, COL1, COL2, COL3,<br>
- * ROW1: COL0, COL1, COL2, COL3<br>
- * @param progmemFont - font to setup located in Flash area
- */
-void         ssd1306_setFixedFont(const uint8_t * progmemFont);
-
-/**
- * Function allows to set another font for the library.
- * By default, the font supports only first 128 - 32 ascii chars.
- * First 32 chars of ascii table are non-printable, and removed
- * from the font table to reduce flash memory consumption.
- * Default font doesn't support russian characters. Using
- * this function you can implement your own fonts.
- * First font char must be started with \<space\> image.
- * @param progmemFont - font to setup located in Flash area
- * @deprecated Use ssd1306_setFixedFont() instead.
- */
-void         ssd1306_setFont6x8(const uint8_t * progmemFont) __attribute__ ((deprecated));
-
-/**
  * Put single pixel on the LCD.
  *
  * @warning Please, take into account that there is no way
@@ -362,7 +320,7 @@ void         ssd1306_putPixel(uint8_t x, uint8_t y);
  * Puts eight vertical pixels on the LCD at once.
  *
  * ~~~~~~~~~~~~~~~{.c}
- * // Draw 8 vertical pixels, starting at [10,16] position 
+ * // Draw 8 vertical pixels, starting at [10,16] position
  * ssd1306_putPixels(10,2,0xFF);
  * // Draw 4 vertical pixels, starting at [32,28] position
  * ssd1306_putPixels(32,3,0x0F);
@@ -415,7 +373,7 @@ void         ssd1306_drawVLine(uint8_t x1, uint8_t y1, uint8_t y2);
 
 /**
  * Draws bitmap, located in SRAM, on the display
- * Each byte represents 8 vertical pixels. 
+ * Each byte represents 8 vertical pixels.
  *
  * ~~~~~~~~~~~~~~~{.c}
  * // Draw small rectangle 3x8 at position 10,8
@@ -433,7 +391,7 @@ void         ssd1306_drawBuffer(uint8_t x, uint8_t y, uint8_t w, uint8_t h, cons
 
 /**
  * Draws bitmap, located in SRAM, on the display
- * Each byte represents 8 vertical pixels. 
+ * Each byte represents 8 vertical pixels.
  *
  * ~~~~~~~~~~~~~~~{.c}
  * // Draw small rectangle 3x8 at position 10,8

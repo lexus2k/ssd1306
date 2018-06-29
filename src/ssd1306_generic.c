@@ -535,7 +535,7 @@ uint8_t      ssd1306_charF6x8_eol(uint8_t left,
     return len;
 }
 
-void         ssd1306_setFixedFont(const uint8_t * progmemFont)
+void ssd1306_setFixedFont(const uint8_t * progmemFont)
 {
     s_fixedFont.width  = pgm_read_byte(&progmemFont[1]);
     s_fixedFont.height = pgm_read_byte(&progmemFont[2]);
@@ -544,7 +544,17 @@ void         ssd1306_setFixedFont(const uint8_t * progmemFont)
     s_fixedFont.data = progmemFont + 4;
 }
 
-void         ssd1306_setFont6x8(const uint8_t * progmemFont)
+void ssd1306_getCharBitmap(char ch, SCharInfo *info)
+{
+    if (info)
+    {
+        info->width = s_fixedFont.width;
+        info->height = s_fixedFont.height;
+        info->data = &s_fixedFont.data[ ch * s_fixedFont.pages * s_fixedFont.width ];
+    }
+}
+
+void ssd1306_setFont6x8(const uint8_t * progmemFont)
 {
     s_font6x8 = progmemFont + 4;
 }
