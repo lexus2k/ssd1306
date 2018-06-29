@@ -143,8 +143,11 @@ static void spriteDemo()
 
 static void textDemo()
 {
-    ssd1306_setFixedFont(ssd1306xled_font6x8);
     ssd1331_clearScreen8();
+    ssd1306_setFixedFont(digital_font5x7);
+    ssd1331_setColor(RGB_COLOR8(0,64,255));
+    ssd1331_printFixed8(0,  0, "0123456789", STYLE_NORMAL);
+    ssd1306_setFixedFont(ssd1306xled_font6x8);
     ssd1331_setColor(RGB_COLOR8(255,255,0));
     ssd1331_printFixed8(0,  8, "Normal text", STYLE_NORMAL);
     ssd1331_setColor(RGB_COLOR8(0,255,0));
