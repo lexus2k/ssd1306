@@ -314,12 +314,18 @@ void NanoCanvasOps<8>::drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lc
 template <>
 void NanoCanvasOps<8>::printChar(uint8_t c)
 {
+    uint8_t mode = m_textMode;
     c -= s_fixedFont.ascii_offset;
-    drawBitmap1(m_cursorX,
-                m_cursorY,
-                s_fixedFont.width,
-                s_fixedFont.height,
-                &s_fixedFont.data[ c * s_fixedFont.pages * s_fixedFont.width ] );
+    for (uint8_t i = 0; i<(m_fontStyle == STYLE_BOLD ? 2: 1); i++)
+    {
+        drawBitmap1(m_cursorX + i,
+                    m_cursorY,
+                    s_fixedFont.width,
+                    s_fixedFont.height,
+                    &s_fixedFont.data[ c * s_fixedFont.pages * s_fixedFont.width ] );
+        m_textMode |= CANVAS_MODE_TRANSPARENT;
+    }
+    m_textMode = mode;
 }
 
 template <>
@@ -353,11 +359,13 @@ size_t NanoCanvasOps<8>::write(uint8_t c)
 }
 
 template <>
-void NanoCanvasOps<8>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch)
+void NanoCanvasOps<8>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style)
 {
+    m_fontStyle = style;
     m_cursorX = xpos;
     m_cursorY = y;
-    while (*ch)
+    const char *p = ch;
+    while (*p)
     {
         write(*ch);
         ch++;
@@ -365,8 +373,9 @@ void NanoCanvasOps<8>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch)
 }
 
 template <>
-void NanoCanvasOps<8>::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch)
+void NanoCanvasOps<8>::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style)
 {
+    m_fontStyle = style;
     m_cursorX = xpos;
     m_cursorY = y;
     for (;;)
@@ -716,13 +725,18 @@ void NanoCanvasOps<1>::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_
 template <>
 void NanoCanvasOps<1>::printChar(uint8_t c)
 {
+    uint8_t mode = m_textMode;
     c -= s_fixedFont.ascii_offset;
-    drawBitmap1(m_cursorX,
-                m_cursorY,
-                s_fixedFont.width,
-                s_fixedFont.height,
-                &s_fixedFont.data[ c * s_fixedFont.pages * s_fixedFont.width ] );
-    /* calculate char rectangle */
+    for (uint8_t i = 0; i<(m_fontStyle == STYLE_BOLD ? 2: 1); i++)
+    {
+        drawBitmap1(m_cursorX + i,
+                    m_cursorY,
+                    s_fixedFont.width,
+                    s_fixedFont.height,
+                    &s_fixedFont.data[ c * s_fixedFont.pages * s_fixedFont.width ] );
+        m_textMode |= CANVAS_MODE_TRANSPARENT;
+    }
+    m_textMode = mode;
 }
 
 template <>
@@ -756,8 +770,9 @@ size_t NanoCanvasOps<1>::write(uint8_t c)
 }
 
 template <>
-void NanoCanvasOps<1>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch)
+void NanoCanvasOps<1>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style)
 {
+    m_fontStyle = style;
     m_cursorX = xpos;
     m_cursorY = y;
     while (*ch)
@@ -768,8 +783,9 @@ void NanoCanvasOps<1>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch)
 }
 
 template <>
-void NanoCanvasOps<1>::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch)
+void NanoCanvasOps<1>::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style)
 {
+    m_fontStyle = style;
     m_cursorX = xpos;
     m_cursorY = y;
     for (;;)
@@ -1118,12 +1134,18 @@ void NanoCanvasOps<16>::drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, l
 template <>
 void NanoCanvasOps<16>::printChar(uint8_t c)
 {
+    uint8_t mode = m_textMode;
     c -= s_fixedFont.ascii_offset;
-    drawBitmap1(m_cursorX,
-                m_cursorY,
-                s_fixedFont.width,
-                s_fixedFont.height,
-                &s_fixedFont.data[ c * s_fixedFont.pages * s_fixedFont.width ] );
+    for (uint8_t i = 0; i<(m_fontStyle == STYLE_BOLD ? 2: 1); i++)
+    {
+        drawBitmap1(m_cursorX + i,
+                    m_cursorY,
+                    s_fixedFont.width,
+                    s_fixedFont.height,
+                    &s_fixedFont.data[ c * s_fixedFont.pages * s_fixedFont.width ] );
+        m_textMode |= CANVAS_MODE_TRANSPARENT;
+    }
+    m_textMode = mode;
 }
 
 template <>
@@ -1157,8 +1179,9 @@ size_t NanoCanvasOps<16>::write(uint8_t c)
 }
 
 template <>
-void NanoCanvasOps<16>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch)
+void NanoCanvasOps<16>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style)
 {
+    m_fontStyle = style;
     m_cursorX = xpos;
     m_cursorY = y;
     while (*ch)
@@ -1169,8 +1192,9 @@ void NanoCanvasOps<16>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch)
 }
 
 template <>
-void NanoCanvasOps<16>::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch)
+void NanoCanvasOps<16>::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style)
 {
+    m_fontStyle = style;
     m_cursorX = xpos;
     m_cursorY = y;
     for (;;)

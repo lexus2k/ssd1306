@@ -175,7 +175,7 @@ static void canvasDemo()
     canvas.fillRect(50, 1, 60, 15);
     canvas.blt((ssd1306_displayWidth()-64)/2, 1);
     delay(1500);
-    canvas.printFixed(20, 1, " DEMO " );
+    canvas.printFixed(20, 1, " DEMO ", STYLE_BOLD );
     canvas.blt((ssd1306_displayWidth()-64)/2, 1);
     delay(3000);
 }

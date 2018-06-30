@@ -256,25 +256,27 @@ public:
 
     /**
      * Print text at specified position to canvas
-     * @param xpos - position in pixels
-     * @param y    - position in pixels
-     * @param ch - pointer to NULL-terminated string.
      *
-     * @note No font style support anymore, sorry for that. Font styles
-     *       increase code size.
+     * @param xpos  position in pixels
+     * @param y     position in pixels
+     * @param ch    pointer to NULL-terminated string.
+     * @param style specific font style to use
+     *
+     * @note Supports only STYLE_NORMAL and STYLE_BOLD
      */
-    void printFixed(lcdint_t xpos, lcdint_t y, const char *ch);
+    void printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style = STYLE_NORMAL);
 
     /**
      * Print text at specified position to canvas
-     * @param xpos - position in pixels
-     * @param y    - position in pixels
-     * @param ch - pointer to NULL-terminated string, located in flash
      *
-     * @note No font style support anymore, sorry for that. Font styles
-     *       increase code size.
+     * @param xpos  position in pixels
+     * @param y     position in pixels
+     * @param ch    pointer to NULL-terminated string, located in flash
+     * @param style specific font style to use
+     *
+     * @note Supports only STYLE_NORMAL and STYLE_BOLD
      */
-    void printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch);
+    void printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style = STYLE_NORMAL);
 
     /**
      * @brief Sets canvas drawing mode
@@ -296,6 +298,7 @@ protected:
     lcdint_t  m_cursorX;  ///< current X cursor position for text output
     lcdint_t  m_cursorY;  ///< current Y cursor position for text output
     uint8_t   m_textMode; ///< Flags for current NanoCanvas mode
+    EFontStyle   m_fontStyle; ///< currently active font style
     uint8_t * m_buf;      ///< Canvas data
     uint16_t  m_color;    ///< current color for monochrome operations
 };
