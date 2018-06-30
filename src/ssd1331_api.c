@@ -107,7 +107,7 @@ void ssd1331_drawMonoBuffer8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
     ssd1306_intf.stop();
 }
 
-void         ssd1331_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data)
+void ssd1331_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data)
 {
     uint16_t count = w * h;
     ssd1306_lcd.set_block(x, y, w);
@@ -255,7 +255,7 @@ void ssd1331_drawMonoBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
     while (h--)
     {
         uint8_t wx = w;
-        while (wx--)
+        while ( wx-- )
         {
             uint8_t data = pgm_read_byte( bitmap );
             if ( data & bit )
@@ -265,7 +265,7 @@ void ssd1331_drawMonoBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
             bitmap++;
         }
         bit <<= 1;
-        if (bit == 0)
+        if ( bit == 0 )
         {
             bit = 1;
         }
