@@ -102,7 +102,7 @@ Ssd1306 library requires at least c++11 and c99 (by default Digispark package mi
  * To use as few RAM as possible
  * To use as few Flash as possible
  * To be as fast as possible
- * To fit [Arkanoid game example](examples/arkanoid) to Attiny85 microcontroller
+ * To fit [Arkanoid game example](examples/games/arkanoid) to Attiny85 microcontroller
 
 ## Setting up
 
