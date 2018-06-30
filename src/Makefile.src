@@ -24,7 +24,7 @@
 SRCS_C = \
 	ssd1306_fonts.c \
 	ssd1306_generic.c \
-	ssd1331_api.c \
+	ssd1306_8bit.c \
 	ssd1306_menu.c \
 	ssd1306_hal/avr/platform.c \
 	ssd1306_hal/linux/platform.c \
