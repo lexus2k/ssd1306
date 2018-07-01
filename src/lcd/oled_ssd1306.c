@@ -115,6 +115,57 @@ static void ssd1306_setMode_int(lcd_mode_t mode)
 {
 }
 
+void ssd1306_displayOff()
+{
+    ssd1306_sendCommand(SSD1306_DISPLAYOFF);
+}
+
+
+void ssd1306_displayOn()
+{
+    ssd1306_sendCommand(SSD1306_DISPLAYON);
+}
+
+void ssd1306_setContrast(uint8_t contrast)
+{
+    ssd1306_commandStart();
+    ssd1306_intf.send(SSD1306_SETCONTRAST);
+    ssd1306_intf.send(contrast);
+    ssd1306_intf.stop();
+}
+
+void ssd1306_invertMode()
+{
+    if (ssd1306_lcd.type != LCD_TYPE_SSD1331)
+    {
+        ssd1306_sendCommand(SSD1306_INVERTDISPLAY);
+    }
+}
+
+void ssd1306_normalMode()
+{
+    if (ssd1306_lcd.type != LCD_TYPE_SSD1331)
+    {
+        ssd1306_sendCommand(SSD1306_NORMALDISPLAY);
+    }
+}
+
+void ssd1306_flipHorizontal(uint8_t mode)
+{
+    if (ssd1306_lcd.type != LCD_TYPE_SSD1331)
+    {
+         ssd1306_sendCommand( SSD1306_SEGREMAP | (mode ? 0x00: 0x01 ) );
+    }
+}
+
+void ssd1306_flipVertical(uint8_t mode)
+{
+    if (ssd1306_lcd.type != LCD_TYPE_SSD1331)
+    {
+         ssd1306_sendCommand( mode ? SSD1306_COMSCANINC : SSD1306_COMSCANDEC );
+    }
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 //  I2C SSD1306 128x64
 ///////////////////////////////////////////////////////////////////////////////

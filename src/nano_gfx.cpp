@@ -26,7 +26,7 @@
 #include "ssd1306.h"
 
 extern const uint8_t *s_font6x8;
-extern SFixedFontInfo s_fixedFont;
+extern "C" SFixedFontInfo s_fixedFont;
 
 #ifdef CONFIG_MULTIPLICATION_NOT_SUPPORTED
 #define YADDR(y) (static_cast<uint16_t>((y) >> 3) << m_p)

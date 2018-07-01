@@ -113,7 +113,56 @@ void         ssd1306_128x32_i2c_init(void);
  */
 void         ssd1306_128x32_init(void);
 
+/**
+ * Turns off display
+ */
+void         ssd1306_displayOff(void);
 
+/**
+ * Turns on display
+ */
+void         ssd1306_displayOn(void);
+
+/**
+ * Set display contrast, ie light intensity
+ * @param contrast - contrast value to see, refer to ssd1306 datasheet
+ */
+void         ssd1306_setContrast(uint8_t contrast);
+
+/**
+ * Switches display to inverse mode.
+ * LCD will display 0-pixels as white, and 1-pixels as black.
+ * @note Not supported for SSD1331
+ */
+void         ssd1306_invertMode(void);
+
+/**
+ * Switches display to normal mode.
+ * @note Not supported for SSD1331
+ */
+void         ssd1306_normalMode(void);
+
+/**
+ * @brief performs horizontal flip
+ *
+ * Performs horizontal flip. If you need to turn display by 180 degree,
+ * please use both ssd1306_flipHorizontal() and ssd1306_flipVertical().
+ *
+ * @param mode - 0 to disable horizontal flip
+ *               1 to enable horizontal flip
+ */
+void         ssd1306_flipHorizontal(uint8_t mode);
+
+/**
+ * @brief performs vertical flip
+ *
+ * Performs vertical flip. If you need to turn display by 180 degree,
+ * please use both ssd1306_flipHorizontal() and ssd1306_flipVertical().
+ *
+ * @param mode - 0 to disable vertical flip
+ *               1 to enable vertical flip
+ */
+void         ssd1306_flipVertical(uint8_t mode);
 
 /**
  * @}

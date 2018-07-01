@@ -28,7 +28,7 @@
 #include "ssd1331_api.h"
 
 extern const uint8_t *s_font6x8;
-extern SFixedFontInfo s_fixedFont;
+extern "C" SFixedFontInfo s_fixedFont;
 
 /////////////////////////////////////////////////////////////////////////////////
 //
@@ -779,8 +779,7 @@ void NanoCanvasOps<8>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFo
     m_fontStyle = style;
     m_cursorX = xpos;
     m_cursorY = y;
-    const char *p = ch;
-    while (*p)
+    while (*ch)
     {
         write(*ch);
         ch++;
