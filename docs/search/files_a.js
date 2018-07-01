@@ -3,6 +3,8 @@ var searchData=
   ['sprite_2eh',['sprite.h',['../sprite_8h.html',1,'']]],
   ['sprite_5fpool_2eh',['sprite_pool.h',['../sprite__pool_8h.html',1,'']]],
   ['ssd1306_2eh',['ssd1306.h',['../ssd1306_8h.html',1,'']]],
+  ['ssd1306_5f1bit_2eh',['ssd1306_1bit.h',['../ssd1306__1bit_8h.html',1,'']]],
+  ['ssd1306_5f8bit_2eh',['ssd1306_8bit.h',['../ssd1306__8bit_8h.html',1,'']]],
   ['ssd1306_5fcommands_2eh',['ssd1306_commands.h',['../ssd1306__commands_8h.html',1,'']]],
   ['ssd1306_5fconsole_2eh',['ssd1306_console.h',['../ssd1306__console_8h.html',1,'']]],
   ['ssd1306_5ffonts_2eh',['ssd1306_fonts.h',['../ssd1306__fonts_8h.html',1,'']]],
@@ -17,7 +19,6 @@ var searchData=
   ['ssd1306_5fspi_5fusi_2eh',['ssd1306_spi_usi.h',['../ssd1306__spi__usi_8h.html',1,'']]],
   ['ssd1306_5fuart_2eh',['ssd1306_uart.h',['../ssd1306__uart_8h.html',1,'']]],
   ['ssd1306_5fuart_5fbuiltin_2eh',['ssd1306_uart_builtin.h',['../ssd1306__uart__builtin_8h.html',1,'']]],
-  ['ssd1331_5fapi_2eh',['ssd1331_api.h',['../ssd1331__api_8h.html',1,'']]],
   ['ssd1331_5fcommands_2eh',['ssd1331_commands.h',['../ssd1331__commands_8h.html',1,'']]],
   ['ssd1351_5fcommands_2eh',['ssd1351_commands.h',['../ssd1351__commands_8h.html',1,'']]]
 ];

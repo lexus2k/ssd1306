@@ -7,6 +7,7 @@ var searchData=
   ['m_5fcpuload',['m_cpuLoad',['../class_nano_engine_core.html#a03092e366bf50606308bd065d6de9623',1,'NanoEngineCore']]],
   ['m_5fcursorx',['m_cursorX',['../class_nano_canvas_ops.html#aca15784dd70d1b3dbe5ec3f85757aab2',1,'NanoCanvasOps']]],
   ['m_5fcursory',['m_cursorY',['../class_nano_canvas_ops.html#aacc78fabf65b53efb5463ad0ff7d6398',1,'NanoCanvasOps']]],
+  ['m_5ffontstyle',['m_fontStyle',['../class_nano_canvas_ops.html#ae7b89d5a253d5b7699cd214f799146cc',1,'NanoCanvasOps']]],
   ['m_5ffps',['m_fps',['../class_nano_engine_core.html#a451151896bbd7e586e5f5970487bccb8',1,'NanoEngineCore']]],
   ['m_5fframedurationms',['m_frameDurationMs',['../class_nano_engine_core.html#a22077f2a0f1ea7c897dbec7e1878d3a8',1,'NanoEngineCore']]],
   ['m_5fh',['m_h',['../class_nano_canvas_ops.html#a1fcf1a393470cb8b0110eadf0beae905',1,'NanoCanvasOps']]],

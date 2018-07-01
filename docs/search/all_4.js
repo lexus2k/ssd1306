@@ -1,7 +1,10 @@
 var searchData=
 [
-  ['data',['data',['../struct_s_fixed_font_info.html#a0f7b369b22f547c125f83c708d8a6c39',1,'SFixedFontInfo::data()'],['../struct_s_p_r_i_t_e.html#ac56b0c16d0bcd810ae1289350df821c3',1,'SPRITE::data()']]],
+  ['data',['data',['../struct_s_fixed_font_info.html#a0f7b369b22f547c125f83c708d8a6c39',1,'SFixedFontInfo::data()'],['../struct_s_char_info.html#a5014add4b407a70d69d0bcb4ad47f5c0',1,'SCharInfo::data()'],['../struct_s_p_r_i_t_e.html#ac56b0c16d0bcd810ae1289350df821c3',1,'SPRITE::data()']]],
   ['deprecated_20list',['Deprecated List',['../deprecated.html',1,'']]],
+  ['digital_5ffont5x7',['digital_font5x7',['../group___l_c_d___f_o_n_t_s.html#ga919823288e1446e97594e9168783ad71',1,'ssd1306_fonts.c']]],
+  ['digital_5ffont5x7_5f123',['digital_font5x7_123',['../group___l_c_d___f_o_n_t_s.html#ga1c5aca50d1a7e7f35fff0c87500a34c9',1,'ssd1306_fonts.h']]],
+  ['digital_5ffont5x7_5fab',['digital_font5x7_AB',['../group___l_c_d___f_o_n_t_s.html#gae777458a27c60f82c00fc8f45c6281a8',1,'ssd1306_fonts.c']]],
   ['display',['display',['../class_nano_engine.html#aa62679199db111eeaf01a4235c72ecd0',1,'NanoEngine']]],
   ['displaybuffer',['displayBuffer',['../class_nano_engine_tiler.html#a6f7ba05a46f9033d548390d5c8107110',1,'NanoEngineTiler']]],
   ['displaypopup',['displayPopup',['../class_nano_engine_tiler.html#ac9642cbeff5b4de207b379d4bbb07ba8',1,'NanoEngineTiler']]],
@@ -20,5 +23,5 @@ var searchData=
   ['drawsprites',['drawSprites',['../class_sprite_pool.html#af3736a90cef87f0a61b260e6b196d289',1,'SpritePool']]],
   ['drawvline',['drawVLine',['../class_nano_canvas_ops.html#a58b32d28a2693b98dbbd47c5d21b1c16',1,'NanoCanvasOps::drawVLine()'],['../class_nano_canvas.html#a18f6ca61bb4830ef65a2c0aa67bcedcc',1,'NanoCanvas::drawVLine()']]],
   ['direct_20draw_3a_201_2dbit_20graphic_20functions_20for_20ssd1306_20compatible_20mode_2e',['DIRECT DRAW: 1-bit graphic functions for ssd1306 compatible mode.',['../group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html',1,'']]],
-  ['direct_20draw_3a_208_2dbit_20and_2016_2dbit_20api_20functions_20only_20for_20color_20displays',['DIRECT DRAW: 8-bit and 16-bit API functions only for color displays',['../group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html',1,'']]]
+  ['direct_20draw_3a_208_2dbit_20api_20functions_20only_20for_20color_20displays',['DIRECT DRAW: 8-bit API functions only for color displays',['../group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html',1,'']]]
 ];
