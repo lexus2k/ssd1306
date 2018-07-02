@@ -24,6 +24,9 @@
 
 #include "core.h"
 
+#ifdef SDL_EMULATION
+#include "sdl_core.h"
+#endif
 ///////////////////////////////////////////////////////////////////////////////
 ////// NANO ENGINE INPUTS CLASS ///////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -85,6 +88,29 @@ uint8_t NanoEngineInputs::arduboyButtons()
     #else
     buttons = 0;
     #endif
+    return buttons;
+}
+
+const uint8_t * NanoEngineInputs::s_gpioKeypadPins;
+
+void NanoEngineInputs::connectGpioKeypad(const uint8_t * gpioKeys)
+{
+    NanoEngineInputs::s_gpioKeypadPins = gpioKeys;
+#ifdef SDL_EMULATION
+    sdl_set_gpio_keys(gpioKeys);
+#endif
+    m_onButtons = gpioButtons;
+}
+
+uint8_t NanoEngineInputs::gpioButtons()
+{
+    uint8_t buttons = BUTTON_NONE;
+    if ((s_gpioKeypadPins[0]) && (digitalRead(s_gpioKeypadPins[0]) == HIGH)) buttons |= BUTTON_DOWN;
+    if ((s_gpioKeypadPins[1]) && (digitalRead(s_gpioKeypadPins[1]) == HIGH)) buttons |= BUTTON_LEFT;
+    if ((s_gpioKeypadPins[2]) && (digitalRead(s_gpioKeypadPins[2]) == HIGH)) buttons |= BUTTON_RIGHT;
+    if ((s_gpioKeypadPins[3]) && (digitalRead(s_gpioKeypadPins[3]) == HIGH)) buttons |= BUTTON_UP;
+    if ((s_gpioKeypadPins[4]) && (digitalRead(s_gpioKeypadPins[4]) == HIGH)) buttons |= BUTTON_A;
+    if ((s_gpioKeypadPins[5]) && (digitalRead(s_gpioKeypadPins[5]) == HIGH)) buttons |= BUTTON_B;
     return buttons;
 }
 

@@ -56,7 +56,7 @@
 extern "C" {
 #endif
 
-static inline int  digitalRead(int pin) { return LOW; };
+static inline int  digitalRead(int pin) { return sdl_read_digital(pin); };
 static inline void delay(unsigned long ms) { Sleep(ms);  };
 static inline void delayMicroseconds(unsigned long us) { Sleep((us+500)/1000); };
 static inline uint32_t millis(void)

@@ -60,8 +60,8 @@
 extern "C" {
 #endif
 
-static inline int  digitalRead(int pin) { return LOW; };
 #if defined(__KERNEL__)      // ============== KERNEL
+static inline int  digitalRead(int pin) { return LOW; };
 static inline void delay(unsigned long ms) {  };
 static inline void delayMicroseconds(unsigned long us) {  };
 static inline int  analogRead(int pin) { return 0; };
@@ -95,11 +95,13 @@ static inline int min(int a, int b) { return a<b?a:b; };
 static inline int max(int a, int b) { return a>b?a:b; };
 #if !defined(SDL_EMULATION)
 void pinMode(int pin, int mode);
+static inline int  digitalRead(int pin) { return LOW; };
 #endif
 
 #endif
 
 #if defined(SDL_EMULATION)
+static inline int  digitalRead(int pin) { return sdl_read_digital(pin); };
 static inline int  analogRead(int pin) { return sdl_read_analog(pin); };
 static inline void digitalWrite(int pin, int level) {  sdl_write_digital(pin, level); };
 static inline void pinMode(int pin, int mode) { };

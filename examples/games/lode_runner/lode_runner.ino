@@ -31,6 +31,7 @@
  *
  *   Atmega328 PINS with i2c SSD1306 to A4/A5, BUZZER on D8,
  *   Z-keypad ADC module on A0 pin.
+ *   If you want to use GPIO keys, uncomment USE_GPIO_BUTTONS below
  *
  *   Atmega328 PINS with spi Nokia 5110 LCD:
  *   LCD RST to D3
@@ -50,6 +51,9 @@
 // Uncomment if you have ssd1331 oled display
 //#define SSD1331_ACCELERATION
 
+// Uncomment if you want to use gpio buttons
+//#define USE_GPIO_BUTTONS
+
 typedef NanoEngine<TILE_16x16_RGB8> GraphicsEngine;
 
 #if defined(__AVR_ATtiny25__) | defined(__AVR_ATtiny45__) | defined(__AVR_ATtiny85__)
@@ -58,6 +62,10 @@ typedef NanoEngine<TILE_16x16_RGB8> GraphicsEngine;
 #else // For Arduino Nano/Atmega328 we use different pins
 #define BUZZER      8
 #define BUTTON_PIN  0
+#ifdef USE_GPIO_BUTTONS
+static const uint8_t g_buttonsPins[6] = { 2, 6, 7, 8, 9, 12 };
+#endif
+
 #endif
 
 const NanoRect game_window = { {0, 0}, {95, 63} };
@@ -370,7 +378,11 @@ void setup()
 
     player.setBitmap( playerFlyingImage[MAN_ANIM_FLYING][playerAnimation] );
 
+#ifdef USE_GPIO_BUTTONS
+    engine.connectGpioKeypad(g_buttonsPins);
+#else
     engine.connectZKeypad(BUTTON_PIN);
+#endif
     engine.drawCallback( onDraw );
     engine.begin();
     engine.setFrameRate(45);

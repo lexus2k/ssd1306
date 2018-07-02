@@ -87,7 +87,11 @@ public:
 
     /**
      * @brief Returns bits of all pressed buttons
-     * Returns bits of all pressed buttons
+     *
+     * Returns bits of all pressed buttons. For example, to check if Down button is pressed
+     * you need to write `if (result & BUTTON_DOWN) {}`. Available constants are:
+     * BUTTON_DOWN, BUTTON_LEFT, BUTTON_RIGHT, BUTTON_UP, BUTTON_A, BUTTON_B.
+     *
      */
     static uint8_t buttonsState()
     {
@@ -113,14 +117,31 @@ public:
      */
     static void connectArduboyKeys();
 
+    /**
+     * @brief Enables engine to use GPIO keys
+     *
+     * Enables engine  to use gpio-keys. You need to pass globally defined array,
+     * containing GPIO pin numbers for the 6 buttons in the following order:
+     * Down, Left, Right, Up, A, B. If you don't want to use some specific button,
+     * then just set not used button to 0.
+     * Once you call this function, you can read buttons state via buttonsState().
+     *
+     * @param gpioKeys pointer to 6-button pins array.
+     *
+     * @see buttonsState()
+     */
+    static void connectGpioKeypad(const uint8_t *gpioKeys);
+
 protected:
     /** Callback to call if buttons state needs to be updated */
     static TNanoEngineGetButtons m_onButtons;
 
 private:
     static uint8_t s_zkeypadPin;
+    static const uint8_t * s_gpioKeypadPins;
     static uint8_t zkeypadButtons();
     static uint8_t arduboyButtons();
+    static uint8_t gpioButtons();
 };
 
 

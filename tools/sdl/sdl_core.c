@@ -35,6 +35,7 @@
 #include <SDL2/SDL.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #define CANVAS_REFRESH_RATE  60
 
@@ -47,6 +48,7 @@ enum
 static int s_analogInput[128];
 static int s_digitalPins[128];
 static int s_dcPin = -1;
+static uint8_t s_gpioKeys[6] = {0};
 
 static sdl_oled_info *p_oled_db[128] = { NULL };
 static sdl_oled_info *p_active_driver = NULL;
@@ -78,18 +80,22 @@ static void sdl_poll_event(void)
         switch (event.type)
         {
             case SDL_KEYDOWN:
-                if (event.key.keysym.scancode == SDL_SCANCODE_DOWN)  s_analogInput[0] = 300;
-                if (event.key.keysym.scancode == SDL_SCANCODE_UP)    s_analogInput[0] = 150;
-                if (event.key.keysym.scancode == SDL_SCANCODE_LEFT)  s_analogInput[0] = 500;
-                if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) s_analogInput[0] = 50;
-                if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) s_analogInput[0] = 700;
+                if (event.key.keysym.scancode == SDL_SCANCODE_DOWN)  { s_analogInput[0] = 300; s_digitalPins[s_gpioKeys[0]] = 1; }
+                if (event.key.keysym.scancode == SDL_SCANCODE_UP)    { s_analogInput[0] = 150; s_digitalPins[s_gpioKeys[3]] = 1; }
+                if (event.key.keysym.scancode == SDL_SCANCODE_LEFT)  { s_analogInput[0] = 500; s_digitalPins[s_gpioKeys[1]] = 1; }
+                if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) { s_analogInput[0] = 50;  s_digitalPins[s_gpioKeys[2]] = 1; }
+                if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) { s_analogInput[0] = 700; s_digitalPins[s_gpioKeys[4]] = 1; }
+                if (event.key.keysym.scancode == SDL_SCANCODE_Z) { s_analogInput[0] = 700; s_digitalPins[s_gpioKeys[4]] = 1; }
+                if (event.key.keysym.scancode == SDL_SCANCODE_X) { s_digitalPins[s_gpioKeys[5]] = 1; }
                 break;
             case SDL_KEYUP:
-                if ((event.key.keysym.scancode == SDL_SCANCODE_DOWN)  ||
-                    (event.key.keysym.scancode == SDL_SCANCODE_UP) ||
-                    (event.key.keysym.scancode == SDL_SCANCODE_LEFT) ||
-                    (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) ||
-                    (event.key.keysym.scancode == SDL_SCANCODE_SPACE)) s_analogInput[0] = 1023;
+                if (event.key.keysym.scancode == SDL_SCANCODE_DOWN)  { s_analogInput[0] = 1023; s_digitalPins[s_gpioKeys[0]] = 0; }
+                if (event.key.keysym.scancode == SDL_SCANCODE_UP)    { s_analogInput[0] = 1023; s_digitalPins[s_gpioKeys[3]] = 0; }
+                if (event.key.keysym.scancode == SDL_SCANCODE_LEFT)  { s_analogInput[0] = 1023; s_digitalPins[s_gpioKeys[1]] = 0; }
+                if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) { s_analogInput[0] = 1023;  s_digitalPins[s_gpioKeys[2]] = 0; }
+                if (event.key.keysym.scancode == SDL_SCANCODE_SPACE) { s_analogInput[0] = 1023; s_digitalPins[s_gpioKeys[4]] = 0; }
+                if (event.key.keysym.scancode == SDL_SCANCODE_Z) { s_analogInput[0] = 1023; s_digitalPins[s_gpioKeys[4]] = 0; }
+                if (event.key.keysym.scancode == SDL_SCANCODE_X) { s_digitalPins[s_gpioKeys[5]] = 0; }
                 break;
             default:
                 break;
@@ -102,6 +108,11 @@ void sdl_set_dc_pin(int pin)
     s_dcPin = pin;
 }
 
+void sdl_set_gpio_keys(const uint8_t * pins)
+{
+    memcpy(s_gpioKeys, pins, sizeof(s_gpioKeys));
+}
+
 int sdl_read_analog(int pin)
 {
     sdl_poll_event();
@@ -111,6 +122,11 @@ int sdl_read_analog(int pin)
 void sdl_write_digital(int pin, int value)
 {
     s_digitalPins[pin] = value;
+}
+
+int sdl_read_digital(int pin)
+{
+    return s_digitalPins[pin];
 }
 
 void sdl_core_close(void)

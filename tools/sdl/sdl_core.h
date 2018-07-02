@@ -48,11 +48,14 @@ extern void sdl_core_init(void);
 extern void sdl_core_draw(void);
 
 extern void sdl_set_dc_pin(int pin);
+// Accepts pointer to six-elements array
+extern void sdl_set_gpio_keys(const uint8_t * pins);
 extern void sdl_send_init();
 extern void sdl_send_byte(uint8_t data);
 extern void sdl_send_stop();
 extern int  sdl_read_analog(int pin);
 extern void sdl_write_digital(int pin, int value);
+extern int sdl_read_digital(int pin);
 
 extern void sdl_core_close(void);
 
