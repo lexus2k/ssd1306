@@ -26,6 +26,7 @@ SRCS_C = \
 	ssd1306_generic.c \
 	ssd1306_1bit.c \
 	ssd1306_8bit.c \
+	ssd1306_16bit.c \
 	ssd1306_menu.c \
 	ssd1306_hal/avr/platform.c \
 	ssd1306_hal/linux/platform.c \

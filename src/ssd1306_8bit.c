@@ -22,8 +22,7 @@
     SOFTWARE.
 */
 
-#include "ssd1306.h"
-#include "ssd1331_api.h"
+#include "ssd1306_8bit.h"
 #include "intf/ssd1306_interface.h"
 #include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
