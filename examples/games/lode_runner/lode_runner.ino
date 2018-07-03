@@ -73,13 +73,13 @@ const NanoRect game_window = { {0, 0}, {95, 63} };
 uint8_t gameField[24*14] =
 {
    5,0,0,0,0,3,3,0,0,0,0,5,5,0,0,0,0,3,3,0,0,0,0,5,
-   5,0,2,0,4,0,0,2,1,1,2,0,0,0,0,0,4,0,0,2,1,1,2,5,
-   5,0,2,0,1,1,0,2,0,0,1,1,5,2,0,0,1,1,0,2,0,0,1,1,
-   5,0,2,0,0,0,0,2,0,4,0,0,0,2,0,0,0,0,0,2,0,4,0,5,
-   5,1,2,1,1,1,1,1,1,1,1,1,5,1,2,1,1,1,1,1,1,1,1,1,
-   5,0,2,0,0,0,0,0,4,0,0,5,5,0,2,0,0,0,0,0,4,0,0,5,
-   1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-   5,0,0,0,0,3,3,2,0,0,0,5,5,0,0,0,0,3,3,0,0,0,0,5,
+   5,0,2,0,0,4,0,2,1,1,2,0,0,0,0,0,4,0,0,2,1,1,2,5,
+   5,0,2,0,0,1,0,2,0,0,1,1,5,2,0,0,1,1,0,2,0,0,1,1,
+   5,0,2,1,0,0,0,2,0,4,0,0,0,2,0,0,0,0,0,2,0,4,0,5,
+   5,1,2,1,1,1,1,1,1,1,1,1,5,1,5,2,1,1,1,1,1,1,1,1,
+   5,0,2,0,0,0,0,0,4,0,0,0,0,0,5,2,0,0,0,0,4,0,0,5,
+   1,1,1,1,1,1,1,2,1,1,1,1,1,2,0,2,1,1,1,1,1,1,1,1,
+   5,0,0,0,0,3,3,2,0,0,0,5,5,1,1,1,0,3,3,0,0,0,0,5,
    5,0,2,0,4,0,0,2,1,1,2,0,0,0,0,0,4,0,0,2,1,1,2,5,
    5,0,2,0,1,1,0,2,0,0,1,1,5,2,0,0,1,1,0,2,0,0,1,1,
    5,0,2,0,0,0,0,2,0,4,0,0,0,2,0,0,0,0,0,2,0,4,0,5,
@@ -149,7 +149,8 @@ GraphicsEngine engine;
  */
 void beep(int bCount,int bDelay);
 
-NanoFixedSprite<GraphicsEngine, engine> player( { 8, 8 }, { 8, 8 }, nullptr );
+NanoFixedSprite<GraphicsEngine, engine> player( { 8, 8 }, { 8, 8 }, playerFlyingImage[0][0] );
+NanoFixedSprite<GraphicsEngine, engine> ninja( { 72, 8 }, { 8, 8 }, playerFlyingImage[0][0] );
 
 /* The variable is used for player animation      *
  * The graphics defined for the hero has 2 images *
@@ -207,6 +208,8 @@ static bool onDraw()
         engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
         engine.canvas.setColor(RGB_COLOR8(64,255,255));
         player.draw();
+        engine.canvas.setColor(RGB_COLOR8(64,64,255));
+        ninja.draw();
         engine.localCoordinates();
     }
     showGameInfo();
@@ -367,6 +370,133 @@ void movePlayer(uint8_t direction)
     }
 }
 
+void moveNinja()
+{
+    static uint16_t ninjaAnimationTs = 0;
+    static uint8_t  ninjaAnimation = 0;
+    bool animated = false;
+    uint8_t direction = BUTTON_NONE;
+    uint8_t bottomBlock = block_at(ninja.bottom());
+    uint8_t feetBlock = block_at(ninja.bottom() + (NanoPoint){0,1});
+    uint8_t handBlock = block_at(ninja.top());
+    uint8_t centerBlock = block_at(ninja.center());
+    uint8_t rightBlock = block_at(ninja.right());
+    uint8_t leftBlock = block_at(ninja.left());
+    if ( !isSolid(feetBlock) &&
+         (!isPipe(handBlock) || !isPipe(bottomBlock)) )
+    {
+        ninja.moveTo( { ninja.center().x & ~0x07, ninja.y() + 1 } );
+        ninja.setBitmap( &playerFlyingImage[MAN_ANIM_FLYING][ninjaAnimation][0] );
+        animated = true;
+    }
+    else
+    {
+        if (player.y() < ninja.y() - 1)
+        {
+            bool right = true;
+            bool left = true;
+            // search for stairs
+            for (int8_t i=0; i < 80; i=i+8)
+            {
+                if (right)
+                {
+                    uint8_t block = block_at(ninja.center() + (NanoPoint){i,0});
+                    if (!isWalkable(block)) { right = false; }
+                    if (isStair(block)) { direction = BUTTON_RIGHT; break; }
+                }
+                if (left)
+                {
+                    uint8_t block = block_at(ninja.center() - (NanoPoint){i,0});
+                    if (!isWalkable(block)) { left = false; }
+                    if (isStair(block)) { direction = BUTTON_LEFT; break; }
+                }
+            }
+            if (isStair(centerBlock) || isStair(bottomBlock)) direction = BUTTON_UP;
+        }
+        else if (player.y() > ninja.y() + 1)
+        {
+            if (isPipe(handBlock))
+            {
+                direction = BUTTON_DOWN;
+            }
+            else
+            {
+                bool right = true;
+                bool left = true;
+                // search for stairs
+                for (int8_t i=0; i < 80; i=i+8)
+                {
+                    if (right)
+                    {
+                        uint8_t block = block_at(ninja.center() + (NanoPoint){i,0});
+                        if (!isWalkable(block)) right = false;
+                        else
+                        {
+                            block = block_at(ninja.bottom() + (NanoPoint){i,1});
+                            if (isWalkable(block)) { direction = BUTTON_RIGHT; break; }
+                        }
+                    }
+                    if (left)
+                    {
+                        uint8_t block = block_at(ninja.center() - (NanoPoint){i,0});
+                        if (!isWalkable(block)) left = false;
+                        else
+                        {
+                            block = block_at(ninja.bottom() + (NanoPoint){-i,1});
+                            if (isWalkable(block)) { direction = BUTTON_LEFT; break; }
+                        }
+                    }
+                }
+                if (isWalkable(feetBlock)) direction = BUTTON_DOWN;
+            }
+        }
+        else if (player.x() > ninja.x())
+        {
+            if (isWalkable(rightBlock)) direction = BUTTON_RIGHT;
+        }
+        else if (player.x() < ninja.x())
+        {
+            if (isWalkable(leftBlock)) direction = BUTTON_LEFT;
+        }
+        switch (direction)
+        {
+            case BUTTON_RIGHT:
+                ninja.moveBy( { 1, 0 } );
+                if (isPipe(centerBlock))
+                    ninja.setBitmap( &playerFlyingImage[MAN_ANIM_RIGHT_PIPE][ninjaAnimation][0] );
+                else
+                    ninja.setBitmap( &playerFlyingImage[MAN_ANIM_RIGHT][ninjaAnimation][0] );
+                animated = true;
+                break;
+            case BUTTON_LEFT:
+                ninja.moveBy( { -1, 0 } );
+                if (isPipe(centerBlock))
+                    ninja.setBitmap( &playerFlyingImage[MAN_ANIM_LEFT_PIPE][ninjaAnimation][0] );
+                else
+                    ninja.setBitmap( &playerFlyingImage[MAN_ANIM_LEFT][ninjaAnimation][0] );
+                animated = true;
+                break;
+            case BUTTON_UP:
+                ninja.moveTo( { ninja.top().x & ~0x07, ninja.top().y - 1 } );
+                ninja.setBitmap( &playerFlyingImage[MAN_ANIM_UP][ninjaAnimation][0] );
+                animated = true;
+                break;
+            case BUTTON_DOWN:
+                ninja.moveTo( { ninja.top().x & ~0x07, ninja.top().y + 1 } );
+                ninja.setBitmap( &playerFlyingImage[MAN_ANIM_DOWN][ninjaAnimation][0] );
+                animated = true;
+                break;
+            default:
+                break;
+        }
+    }
+    if (animated && ((uint16_t)(millis() - ninjaAnimationTs) > 150))
+    {
+        ninjaAnimationTs = millis();
+        ninjaAnimation = ninjaAnimation ? 0 : 1;
+    }
+}
+
 void setup()
 {
     ssd1331_96x64_spi_init(3, 4, 5); // 3 RST, 4 CES, 5 DS
@@ -394,6 +524,7 @@ void loop()
 {
     if (!engine.nextFrame()) return;
     movePlayer(engine.buttonsState());
+    moveNinja();
     engine.display();
 }
 
