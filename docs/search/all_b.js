@@ -16,6 +16,7 @@ var searchData=
   ['m_5fonbuttons',['m_onButtons',['../class_nano_engine_inputs.html#a8c619be0d57a15ed98680ba1fb5e58a6',1,'NanoEngineInputs']]],
   ['m_5fondraw',['m_onDraw',['../class_nano_engine_tiler.html#a184dd26abea919c6a7d84d2d20b53a75',1,'NanoEngineTiler']]],
   ['m_5fp',['m_p',['../class_nano_canvas_ops.html#ad225695be47a6ad53c9d17db4184983c',1,'NanoCanvasOps']]],
+  ['m_5fpos',['m_pos',['../class_nano_fixed_sprite.html#a7f0281198da917037e1ed71bdf8f86e1',1,'NanoFixedSprite']]],
   ['m_5frect',['m_rect',['../class_sprite_pool.html#a4a3cbbd6bbd5c9c74f1ed5dd8e631589',1,'SpritePool']]],
   ['m_5frefreshflags',['m_refreshFlags',['../class_nano_engine_tiler.html#aaa4fafbc1339cb6bef17d0aeabd94a44',1,'NanoEngineTiler']]],
   ['m_5fsize',['m_size',['../class_nano_fixed_sprite.html#a6b601c5a85bf9a388c9bce4fd1c98924',1,'NanoFixedSprite']]],

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['y',['y',['../class_nano_sprite.html#ab0e7c284c197a3cd2df4e3f623eca522',1,'NanoSprite::y()'],['../class_nano_fixed_sprite.html#a321f1afb9a052eb774231d86c3f1cc6d',1,'NanoFixedSprite::y()']]]
+  ['y',['y',['../class_nano_sprite.html#a26447909c8d140e4745205de9ef040c0',1,'NanoSprite::y()'],['../class_nano_fixed_sprite.html#aa5b745d1d556b612bdd00f9bf606c224',1,'NanoFixedSprite::y()']]]
 ];

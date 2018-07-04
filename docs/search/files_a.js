@@ -3,6 +3,7 @@ var searchData=
   ['sprite_2eh',['sprite.h',['../sprite_8h.html',1,'']]],
   ['sprite_5fpool_2eh',['sprite_pool.h',['../sprite__pool_8h.html',1,'']]],
   ['ssd1306_2eh',['ssd1306.h',['../ssd1306_8h.html',1,'']]],
+  ['ssd1306_5f16bit_2eh',['ssd1306_16bit.h',['../ssd1306__16bit_8h.html',1,'']]],
   ['ssd1306_5f1bit_2eh',['ssd1306_1bit.h',['../ssd1306__1bit_8h.html',1,'']]],
   ['ssd1306_5f8bit_2eh',['ssd1306_8bit.h',['../ssd1306__8bit_8h.html',1,'']]],
   ['ssd1306_5fcommands_2eh',['ssd1306_commands.h',['../ssd1306__commands_8h.html',1,'']]],
