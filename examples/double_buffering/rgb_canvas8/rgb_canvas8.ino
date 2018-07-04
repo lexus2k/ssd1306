@@ -35,7 +35,7 @@
 #include "ssd1306.h"
 #include "nano_engine.h"
 
-/* 
+/*
  * Heart image below is defined directly in flash memory.
  * This reduces SRAM consumption.
  * The image is define from bottom to top (bits), from left to

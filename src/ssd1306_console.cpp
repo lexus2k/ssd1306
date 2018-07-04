@@ -23,7 +23,6 @@
 */
 
 #include "ssd1306_console.h"
-#include "ssd1331_api.h"
 
 void Ssd1306Console::clear()
 {

@@ -24,7 +24,6 @@
 
 #include "font6x8.h"
 #include "ssd1306.h"
-#include "ssd1331_api.h"
 
 #ifndef min
 #define min(x,y) ((x)<(y)?(x):(y))

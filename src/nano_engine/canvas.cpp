@@ -25,7 +25,6 @@
 #include "canvas.h"
 #include "lcd/lcd_common.h"
 #include "ssd1306.h"
-#include "ssd1331_api.h"
 
 extern const uint8_t *s_font6x8;
 extern "C" SFixedFontInfo s_fixedFont;

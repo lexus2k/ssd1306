@@ -30,7 +30,6 @@
 /* !!! THIS DEMO RUNS in FULL COLOR MODE */
 
 #include "ssd1306.h"
-#include "ssd1331_api.h"
 #include "nano_engine.h"
 #include "sova.h"
 

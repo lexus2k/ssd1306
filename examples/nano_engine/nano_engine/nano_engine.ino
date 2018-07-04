@@ -31,7 +31,6 @@
  */
 
 #include "ssd1306.h"
-#include "ssd1331_api.h"
 #include "nano_engine.h"
 #include "nano_bitmaps.h"
 

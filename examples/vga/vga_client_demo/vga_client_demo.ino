@@ -31,7 +31,6 @@
  *
  */
 #include "ssd1306.h"
-#include "ssd1331_api.h"
 #include "nano_gfx.h"
 #include "sova.h"
 #include "intf/uart/ssd1306_uart_builtin.h"

@@ -35,7 +35,6 @@
  *   So, be careful with application stack.
  */
 #include "ssd1306.h"
-#include "ssd1331_api.h"
 #include "nano_gfx.h"
 #include "sova.h"
 #define DEJITTER_OFFSET -3

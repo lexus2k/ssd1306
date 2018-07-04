@@ -37,7 +37,6 @@
  *   So, be careful with application stack.
  */
 #include "ssd1306.h"
-#include "ssd1331_api.h"
 #include "nano_engine.h"
 #include "sova.h"
 #define CONFIG_VGA_96X40_ENABLE
