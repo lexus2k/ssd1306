@@ -265,6 +265,8 @@ public:
         m_bitmap = bitmap;
     }
 
+    NanoPoint getPosition() const { return m_pos; }
+
     /**
      * Returns sprite x position
      */
@@ -278,9 +280,9 @@ public:
 protected:
     /** fixed size of sprite */
     const NanoPoint   m_size;
+    NanoPoint         m_pos;
 
 private:
-    NanoPoint         m_pos;
     const uint8_t *m_bitmap;
 };
 
