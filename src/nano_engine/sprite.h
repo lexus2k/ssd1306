@@ -265,7 +265,10 @@ public:
         m_bitmap = bitmap;
     }
 
-    NanoPoint getPosition() const { return m_pos; }
+    /**
+     * Returns current sprite position (top-left corner)
+     */
+    const NanoPoint & getPosition() const { return m_pos; }
 
     /**
      * Returns sprite x position
@@ -280,6 +283,7 @@ public:
 protected:
     /** fixed size of sprite */
     const NanoPoint   m_size;
+    /** Sprite position in global (world) coordinates */
     NanoPoint         m_pos;
 
 private:
