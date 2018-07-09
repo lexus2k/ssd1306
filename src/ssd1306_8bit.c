@@ -118,18 +118,6 @@ void ssd1331_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, c
     ssd1306_intf.stop();
 }
 
-void         ssd1331_drawBufferFast16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data)
-{
-    uint16_t count = (w * h) << 1;
-    ssd1306_lcd.set_block(x, y, w);
-    while (count--)
-    {
-        ssd1306_intf.send( *data );
-        data++;
-    }
-    ssd1306_intf.stop();
-}
-
 void ssd1331_fillScreen8(uint8_t fill_Data)
 {
     ssd1306_lcd.set_block(0, 0, 0);
