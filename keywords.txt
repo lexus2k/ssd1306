@@ -6,13 +6,13 @@
 # Datatypes (KEYWORD1)
 #######################################
 
-Object1		KEYWORD1
+Object1	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 
-begin		KEYWORD2
+begin	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
