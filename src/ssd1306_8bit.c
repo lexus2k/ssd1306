@@ -46,35 +46,6 @@ void    ssd1331_setRgbColor(uint8_t r, uint8_t g, uint8_t b)
     ssd1306_color = RGB_COLOR8(r,g,b);
 }
 
-void         ssd1331_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint16_t color)
-{
-    ssd1306_intf.start();
-    ssd1306_spiDataMode(0);
-    ssd1306_intf.send(SSD1331_DRAWLINE);
-    ssd1306_intf.send(x1);
-    ssd1306_intf.send(y1);
-    ssd1306_intf.send(x2);
-    ssd1306_intf.send(y2);
-    ssd1306_intf.send( (color & 0x03) << 4 );
-    ssd1306_intf.send( (color & 0x1C) << 2 );
-    ssd1306_intf.send( (color & 0xE0) >> 2 );
-    ssd1306_intf.stop();
-}
-
-void ssd1331_copyBlock(uint8_t left, uint8_t top, uint8_t right, uint8_t bottom, uint8_t newLeft, uint8_t newTop)
-{
-    ssd1306_intf.start();
-    ssd1306_spiDataMode(0);
-    ssd1306_intf.send(0x23);
-    ssd1306_intf.send(left);
-    ssd1306_intf.send(top);
-    ssd1306_intf.send(right);
-    ssd1306_intf.send(bottom);
-    ssd1306_intf.send(newLeft);
-    ssd1306_intf.send(newTop);
-    ssd1306_intf.stop();
-}
-
 void ssd1331_drawMonoBuffer8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
     uint8_t bit = 1;

@@ -39,3 +39,5 @@ void ssd1331_drawBufferFast16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, 
     ssd1306_intf.stop();
 }
 
+// IMPORTANT: 16-BIT OLED DISPLAYS USE 8-BIT DIRECT DRAW FUNCTIONS
+//            REFER TO ssd1306_8bit.c

@@ -36,6 +36,7 @@ static int s_pageEnd = 7;
 static int s_newColumn;
 static int s_newPage;
 static uint8_t detected = 0;
+static uint32_t s_color = 0;
 
 
 static void copyBlock()
@@ -58,6 +59,30 @@ static void copyBlock()
         {
             sdl_put_pixel(x, y, sdl_get_pixel( x + s_columnStart - s_newColumn,
                                                y + s_pageStart - s_newPage ));
+        }
+    }
+}
+
+static void drawLine()
+{
+    if ( abs(s_columnStart - s_columnEnd) > abs(s_pageStart - s_pageEnd) )
+    {
+        int x = s_columnStart;
+        while (x != s_columnEnd)
+        {
+            int y = s_pageStart + (s_pageEnd - s_pageStart)*(x - s_columnStart)/(s_columnEnd - s_columnStart);
+            sdl_put_pixel(x, y, s_color);
+            x += (s_columnEnd > s_columnStart ? 1: -1);
+        }
+    }
+    else
+    {
+        int y = s_pageStart;
+        while (y != s_pageEnd)
+        {
+            int x = s_columnStart + (s_columnEnd - s_columnStart)*(y - s_pageStart)/(s_pageEnd - s_pageStart);
+            sdl_put_pixel(x, y, s_color);
+            y += (s_pageEnd > s_pageStart ? 1: -1);
         }
     }
 }
@@ -101,6 +126,23 @@ static void sdl_ssd1331_commands(uint8_t data)
                      s_commandId = SSD_COMMAND_NONE;
                      break;
                 default: break;
+            }
+            break;
+        case 0x21: // DRAW LINE
+            switch (s_cmdArgIndex)
+            {
+                case 0: s_columnStart = data; s_color = 0; break;
+                case 1: s_pageStart = data; break;
+                case 2: s_columnEnd = data; break;
+                case 3: s_pageEnd = data; break;
+                case 4: s_color |= ((data & 0x30) >> 4); break;
+                case 5: s_color |= ((data & 0x30) >> 1); break;
+                case 6: s_color |= ((data & 0x38) << 2);
+                     drawLine();
+                     s_commandId = SSD_COMMAND_NONE;
+                     break;
+                default:
+                     break;
             }
             break;
         case 0x23: // MOVE BLOCK

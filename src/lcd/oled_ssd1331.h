@@ -95,6 +95,36 @@ void         ssd1331_96x64_init(void);
 void         ssd1331_96x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin);
 
 /**
+ * Draws line
+ * @param x1 - x position in pixels of start point
+ * @param y1 - y position in pixels of start point
+ * @param x2 - x position in pixels of end point
+ * @param y2 - y position in pixels of end point
+ * @param color - color of the line, refer to RGB_COLOR8 macros
+ *
+ * @note This API can be used only with ssd1331 RGB oled displays
+ */
+void         ssd1331_drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint16_t color);
+
+/**
+ * Copies block in GDRAM to new position
+ * @param left column start of block to copy
+ * @param top row start of block to copy
+ * @param right column end of block to copy
+ * @param bottom row end of block to copy
+ * @param newLeft new column start
+ * @param newTop new row start
+ *
+ * @note This API can be used only with ssd1331 RGB oled displays
+ * @note after copy command is sent, it takes some time from oled
+ *       controller to complete operation. So, it is HIGHLY recommended
+ *       to wait for reasonable time before send other graphics operations
+ *       (for example, use 250us delay). This time is required for
+ *       oled display to become ready to accept new commands.
+ */
+void ssd1331_copyBlock(uint8_t left, uint8_t top, uint8_t right, uint8_t bottom, uint8_t newLeft, uint8_t newTop);
+
+/**
  * @}
  */
 
