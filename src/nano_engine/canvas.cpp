@@ -28,6 +28,9 @@
 
 extern const uint8_t *s_font6x8;
 extern "C" SFixedFontInfo s_fixedFont;
+#ifdef CONFIG_SSD1306_UNICODE_ENABLE
+extern "C" uint8_t g_ssd1306_unicode;
+#endif
 
 /////////////////////////////////////////////////////////////////////////////////
 //
@@ -329,20 +332,33 @@ void NanoCanvasOps<1>::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_
 }
 
 template <>
-void NanoCanvasOps<1>::printChar(uint8_t c)
+uint8_t NanoCanvasOps<1>::printChar(uint8_t c)
 {
+    const uint8_t *glyph_ptr;
+#ifdef CONFIG_SSD1306_UNICODE_ENABLE
+    if (g_ssd1306_unicode)
+    {
+        uint16_t unicode = get_unicode16_from_utf8(c);
+        if (unicode == 0xffff) return 0;
+        glyph_ptr = ssd1306_getU16CharGlyph( unicode );
+    }
+    else
+#endif
+    {
+        glyph_ptr = ssd1306_getCharGlyph( c );
+    }
     uint8_t mode = m_textMode;
-    c -= s_fixedFont.ascii_offset;
     for (uint8_t i = 0; i<(m_fontStyle == STYLE_BOLD ? 2: 1); i++)
     {
         drawBitmap1(m_cursorX + i,
                     m_cursorY,
-                    s_fixedFont.width,
-                    s_fixedFont.height,
-                    &s_fixedFont.data[ c * s_fixedFont.pages * s_fixedFont.width ] );
+                    s_fixedFont.h.width,
+                    s_fixedFont.h.height,
+                    glyph_ptr );
         m_textMode |= CANVAS_MODE_TRANSPARENT;
     }
     m_textMode = mode;
+    return 1;
 }
 
 template <>
@@ -350,7 +366,7 @@ size_t NanoCanvasOps<1>::write(uint8_t c)
 {
     if (c == '\n')
     {
-        m_cursorY += (lcdint_t)s_fixedFont.height;
+        m_cursorY += (lcdint_t)s_fixedFont.h.height;
         m_cursorX = 0;
     }
     else if (c == '\r')
@@ -359,14 +375,14 @@ size_t NanoCanvasOps<1>::write(uint8_t c)
     }
     else
     {
-        printChar( c );
-        m_cursorX += (lcdint_t)s_fixedFont.width;
-        if ( ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorX > ((lcdint_t)m_w - (lcdint_t)s_fixedFont.width) ) )
-           || ( (m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)ssd1306_lcd.width - (lcdint_t)s_fixedFont.width)) ) )
+        if (!printChar( c )) return 0;
+        m_cursorX += (lcdint_t)s_fixedFont.h.width;
+        if ( ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorX > ((lcdint_t)m_w - (lcdint_t)s_fixedFont.h.width) ) )
+           || ( (m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)ssd1306_lcd.width - (lcdint_t)s_fixedFont.h.width)) ) )
         {
-            m_cursorY += (lcdint_t)s_fixedFont.height;
+            m_cursorY += (lcdint_t)s_fixedFont.h.height;
             m_cursorX = 0;
-            if ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorY > ((lcdint_t)m_h - (lcdint_t)s_fixedFont.height)) )
+            if ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorY > ((lcdint_t)m_h - (lcdint_t)s_fixedFont.h.height)) )
             {
                 m_cursorY = 0;
             }
@@ -726,20 +742,33 @@ void NanoCanvasOps<8>::drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lc
 }
 
 template <>
-void NanoCanvasOps<8>::printChar(uint8_t c)
+uint8_t NanoCanvasOps<8>::printChar(uint8_t c)
 {
+    const uint8_t *glyph_ptr;
+#ifdef CONFIG_SSD1306_UNICODE_ENABLE
+    if (g_ssd1306_unicode)
+    {
+        uint16_t unicode = get_unicode16_from_utf8(c);
+        if (unicode == 0xffff) return 0;
+        glyph_ptr = ssd1306_getU16CharGlyph( unicode );
+    }
+    else
+#endif
+    {
+        glyph_ptr = ssd1306_getCharGlyph( c );
+    }
     uint8_t mode = m_textMode;
-    c -= s_fixedFont.ascii_offset;
     for (uint8_t i = 0; i<(m_fontStyle == STYLE_BOLD ? 2: 1); i++)
     {
         drawBitmap1(m_cursorX + i,
                     m_cursorY,
-                    s_fixedFont.width,
-                    s_fixedFont.height,
-                    &s_fixedFont.data[ c * s_fixedFont.pages * s_fixedFont.width ] );
+                    s_fixedFont.h.width,
+                    s_fixedFont.h.height,
+                    glyph_ptr );
         m_textMode |= CANVAS_MODE_TRANSPARENT;
     }
     m_textMode = mode;
+    return 1;
 }
 
 template <>
@@ -747,7 +776,7 @@ size_t NanoCanvasOps<8>::write(uint8_t c)
 {
     if (c == '\n')
     {
-        m_cursorY += (lcdint_t)s_fixedFont.height;
+        m_cursorY += (lcdint_t)s_fixedFont.h.height;
         m_cursorX = 0;
     }
     else if (c == '\r')
@@ -756,14 +785,14 @@ size_t NanoCanvasOps<8>::write(uint8_t c)
     }
     else
     {
-        printChar( c );
-        m_cursorX += (lcdint_t)s_fixedFont.width;
-        if ( ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorX > ((lcdint_t)m_w - (lcdint_t)s_fixedFont.width) ) )
-           || ( (m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)ssd1306_lcd.width - (lcdint_t)s_fixedFont.width)) ) )
+        if (!printChar( c )) return 0;
+        m_cursorX += (lcdint_t)s_fixedFont.h.width;
+        if ( ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorX > ((lcdint_t)m_w - (lcdint_t)s_fixedFont.h.width) ) )
+           || ( (m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)ssd1306_lcd.width - (lcdint_t)s_fixedFont.h.width)) ) )
         {
-            m_cursorY += (lcdint_t)s_fixedFont.height;
+            m_cursorY += (lcdint_t)s_fixedFont.h.height;
             m_cursorX = 0;
-            if ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorY > ((lcdint_t)m_h - (lcdint_t)s_fixedFont.height)) )
+            if ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorY > ((lcdint_t)m_h - (lcdint_t)s_fixedFont.h.height)) )
             {
                 m_cursorY = 0;
             }
@@ -1130,20 +1159,33 @@ void NanoCanvasOps<16>::drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, l
 }
 
 template <>
-void NanoCanvasOps<16>::printChar(uint8_t c)
+uint8_t NanoCanvasOps<16>::printChar(uint8_t c)
 {
+    const uint8_t *glyph_ptr;
+#ifdef CONFIG_SSD1306_UNICODE_ENABLE
+    if (g_ssd1306_unicode)
+    {
+        uint16_t unicode = get_unicode16_from_utf8(c);
+        if (unicode == 0xffff) return 0;
+        glyph_ptr = ssd1306_getU16CharGlyph( unicode );
+    }
+    else
+#endif
+    {
+        glyph_ptr = ssd1306_getCharGlyph( c );
+    }
     uint8_t mode = m_textMode;
-    c -= s_fixedFont.ascii_offset;
     for (uint8_t i = 0; i<(m_fontStyle == STYLE_BOLD ? 2: 1); i++)
     {
         drawBitmap1(m_cursorX + i,
                     m_cursorY,
-                    s_fixedFont.width,
-                    s_fixedFont.height,
-                    &s_fixedFont.data[ c * s_fixedFont.pages * s_fixedFont.width ] );
+                    s_fixedFont.h.width,
+                    s_fixedFont.h.height,
+                    glyph_ptr );
         m_textMode |= CANVAS_MODE_TRANSPARENT;
     }
     m_textMode = mode;
+    return 1;
 }
 
 template <>
@@ -1151,7 +1193,7 @@ size_t NanoCanvasOps<16>::write(uint8_t c)
 {
     if (c == '\n')
     {
-        m_cursorY += (lcdint_t)s_fixedFont.height;
+        m_cursorY += (lcdint_t)s_fixedFont.h.height;
         m_cursorX = 0;
     }
     else if (c == '\r')
@@ -1160,14 +1202,14 @@ size_t NanoCanvasOps<16>::write(uint8_t c)
     }
     else
     {
-        printChar( c );
-        m_cursorX += (lcdint_t)s_fixedFont.width;
-        if ( ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorX > ((lcdint_t)m_w - (lcdint_t)s_fixedFont.width) ) )
-           || ( (m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)ssd1306_lcd.width - (lcdint_t)s_fixedFont.width)) ) )
+        if (!printChar( c )) return 0;
+        m_cursorX += (lcdint_t)s_fixedFont.h.width;
+        if ( ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorX > ((lcdint_t)m_w - (lcdint_t)s_fixedFont.h.width) ) )
+           || ( (m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)ssd1306_lcd.width - (lcdint_t)s_fixedFont.h.width)) ) )
         {
-            m_cursorY += (lcdint_t)s_fixedFont.height;
+            m_cursorY += (lcdint_t)s_fixedFont.h.height;
             m_cursorX = 0;
-            if ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorY > ((lcdint_t)m_h - (lcdint_t)s_fixedFont.height)) )
+            if ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorY > ((lcdint_t)m_h - (lcdint_t)s_fixedFont.h.height)) )
             {
                 m_cursorY = 0;
             }

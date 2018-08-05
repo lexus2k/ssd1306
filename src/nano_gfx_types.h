@@ -71,13 +71,31 @@ typedef enum
     FONT_SIZE_8X     = 3,
 } EFontSize;
 
+#pragma pack(push, 1)
+/** Structure describes font format in memory */
+typedef struct
+{
+    uint8_t type;         ///< font type: 0 - Fixed Font
+    uint8_t width;        ///< width in pixels
+    uint8_t height;       ///< height in pixels
+    uint8_t ascii_offset; ///< ascii offset
+} SFontHeaderRecord;
+
+/** Structure describes unicode block in font data */
+typedef struct
+{
+    uint16_t start_code;  ///< unicode start code
+    uint16_t count;       ///< unicode end code
+    uint32_t size;        ///< size of block (optional, not used)
+} SUnicodeBlockRecord;
+
+#pragma pack(pop)
+
 /** Structure is used for internal font presentation */
 typedef struct
 {
-    uint8_t width; ///< width in pixels
-    uint8_t height; ///< height in pixels
+    SFontHeaderRecord h;
     uint8_t pages; ///< height in pages (each page height is 8-pixels)
-    uint8_t ascii_offset; ///< ascii offset
     const uint8_t *data; ///< font chars bits
 } SFixedFontInfo;
 

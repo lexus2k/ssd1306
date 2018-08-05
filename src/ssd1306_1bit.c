@@ -42,6 +42,9 @@ const uint8_t *s_font6x8 = &ssd1306xled_font6x8[4];
 extern lcduint_t ssd1306_cursorX;
 extern lcduint_t ssd1306_cursorY;
 extern SFixedFontInfo s_fixedFont;
+#ifdef CONFIG_SSD1306_UNICODE_ENABLE
+extern uint8_t g_ssd1306_unicode;
+#endif
 
 void ssd1306_fillScreen(uint8_t fill_Data)
 {
@@ -82,10 +85,8 @@ uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle s
     ssd1306_lcd.set_block(xpos, y, ssd1306_lcd.width - xpos);
     for(;;)
     {
-        uint8_t c;
         uint8_t ldata;
-        uint16_t offset;
-        if( (x > ssd1306_lcd.width - s_fixedFont.width) || (ch[j] == '\0') )
+        if( (x > ssd1306_lcd.width - s_fixedFont.h.width) || (ch[j] == '\0') )
         {
             x = xpos;
             y++;
@@ -110,37 +111,49 @@ uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle s
             ssd1306_intf.stop();
             ssd1306_lcd.set_block(xpos, y, ssd1306_lcd.width - xpos);
         }
-        c = ch[j];
-        if ( c >= s_fixedFont.ascii_offset )
+        const uint8_t * glyph_ptr;
+#ifdef CONFIG_SSD1306_UNICODE_ENABLE
+        if (g_ssd1306_unicode)
         {
-            c -= s_fixedFont.ascii_offset;
+            uint16_t unicode;
+            do
+            {
+                unicode = get_unicode16_from_utf8(ch[j]);
+                j++;
+            } while ( unicode == 0xffff );
+            glyph_ptr = ssd1306_getU16CharGlyph( unicode );
+        }
+        else
+#endif
+        {
+            glyph_ptr = ssd1306_getCharGlyph( ch[j] );
+            j++;
         }
         ldata = 0;
-        offset = (c * s_fixedFont.pages + page_offset) * s_fixedFont.width;
-        for( i=s_fixedFont.width; i>0; i--)
+        glyph_ptr += page_offset * s_fixedFont.h.width;
+        for( i=s_fixedFont.h.width; i>0; i--)
         {
             uint8_t data;
             if ( style == STYLE_NORMAL )
             {
-                data = pgm_read_byte(&s_fixedFont.data[offset]);
+                data = pgm_read_byte(glyph_ptr);
             }
             else if ( style == STYLE_BOLD )
             {
-                uint8_t temp = pgm_read_byte(&s_fixedFont.data[offset]);
+                uint8_t temp = pgm_read_byte(glyph_ptr);
                 data = temp | ldata;
                 ldata = temp;
             }
             else
             {
-                uint8_t temp = pgm_read_byte(&s_fixedFont.data[offset + 1]);
+                uint8_t temp = pgm_read_byte(glyph_ptr + 1);
                 data = (temp & 0xF0) | ldata;
                 ldata = (temp & 0x0F);
             }
             ssd1306_lcd.send_pixels1(data^s_ssd1306_invertByte);
-            offset++;
+            glyph_ptr++;
         }
-        x += s_fixedFont.width;
-        j++;
+        x += s_fixedFont.h.width;
     }
     ssd1306_intf.stop();
     return j;
@@ -159,7 +172,7 @@ uint8_t ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontStyl
         uint8_t c;
         uint8_t ldata;
         uint16_t offset;
-        if( (x > ssd1306_lcd.width - (s_fixedFont.width << 1)) || (ch[j] == '\0') )
+        if( (x > ssd1306_lcd.width - (s_fixedFont.h.width << 1)) || (ch[j] == '\0') )
         {
             x = xpos;
             y++;
@@ -185,13 +198,13 @@ uint8_t ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontStyl
             ssd1306_lcd.set_block(xpos, y, ssd1306_lcd.width - xpos);
         }
         c = ch[j];
-        if ( c >= s_fixedFont.ascii_offset )
+        if ( c >= s_fixedFont.h.ascii_offset )
         {
-            c -= s_fixedFont.ascii_offset;
+            c -= s_fixedFont.h.ascii_offset;
         }
         ldata = 0;
-        offset = (c * s_fixedFont.pages + (page_offset >> 1)) * s_fixedFont.width;
-        for( i=s_fixedFont.width; i>0; i--)
+        offset = (c * s_fixedFont.pages + (page_offset >> 1)) * s_fixedFont.h.width;
+        for( i=s_fixedFont.h.width; i>0; i--)
         {
             uint8_t data;
             if ( style == STYLE_NORMAL )
@@ -219,7 +232,7 @@ uint8_t ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontStyl
             ssd1306_lcd.send_pixels1(data^s_ssd1306_invertByte);
             offset++;
         }
-        x += (s_fixedFont.width << 1);
+        x += (s_fixedFont.h.width << 1);
         j++;
     }
     ssd1306_intf.stop();
@@ -237,10 +250,8 @@ uint8_t ssd1306_printFixedN(uint8_t xpos, uint8_t y, const char ch[], EFontStyle
     ssd1306_lcd.set_block(xpos, y, ssd1306_lcd.width - xpos);
     for(;;)
     {
-        uint8_t c;
         uint8_t ldata;
-        uint16_t offset;
-        if( (x > ssd1306_lcd.width - (s_fixedFont.width << factor)) || (ch[j] == '\0') )
+        if( (x > ssd1306_lcd.width - (s_fixedFont.h.width << factor)) || (ch[j] == '\0') )
         {
             x = xpos;
             y++;
@@ -265,29 +276,42 @@ uint8_t ssd1306_printFixedN(uint8_t xpos, uint8_t y, const char ch[], EFontStyle
             ssd1306_intf.stop();
             ssd1306_lcd.set_block(xpos, y, ssd1306_lcd.width - xpos);
         }
-        c = ch[j];
-        if ( c >= s_fixedFont.ascii_offset )
+        const uint8_t *glyph_ptr;
+#ifdef CONFIG_SSD1306_UNICODE_ENABLE
+        if (g_ssd1306_unicode)
         {
-            c -= s_fixedFont.ascii_offset;
+            uint16_t unicode;
+            do
+            {
+                unicode = get_unicode16_from_utf8(ch[j]);
+                j++;
+            } while ( unicode == 0xffff );
+            glyph_ptr = ssd1306_getU16CharGlyph( unicode );
+        }
+        else
+#endif
+        {
+            glyph_ptr = ssd1306_getCharGlyph( ch[j] );
+            j++;
         }
         ldata = 0;
-        offset = (c * s_fixedFont.pages + (page_offset >> factor)) * s_fixedFont.width;
-        for( i=s_fixedFont.width; i>0; i--)
+        glyph_ptr += (page_offset >> factor) * s_fixedFont.h.width;
+        for( i=s_fixedFont.h.width; i>0; i--)
         {
             uint8_t data;
             if ( style == STYLE_NORMAL )
             {
-                data = pgm_read_byte(&s_fixedFont.data[offset]);
+                data = pgm_read_byte(glyph_ptr);
             }
             else if ( style == STYLE_BOLD )
             {
-                uint8_t temp = pgm_read_byte(&s_fixedFont.data[offset]);
+                uint8_t temp = pgm_read_byte(glyph_ptr);
                 data = temp | ldata;
                 ldata = temp;
             }
             else
             {
-                uint8_t temp = pgm_read_byte(&s_fixedFont.data[offset + 1]);
+                uint8_t temp = pgm_read_byte(glyph_ptr+1);
                 data = (temp & 0xF0) | ldata;
                 ldata = (temp & 0x0F);
             }
@@ -310,10 +334,9 @@ uint8_t ssd1306_printFixedN(uint8_t xpos, uint8_t y, const char ch[], EFontStyle
             {
                 ssd1306_lcd.send_pixels1(data^s_ssd1306_invertByte);
             }
-            offset++;
+            glyph_ptr++;
         }
-        x += (s_fixedFont.width << factor);
-        j++;
+        x += (s_fixedFont.h.width << factor);
     }
     ssd1306_intf.stop();
     return j;
@@ -326,27 +349,39 @@ size_t ssd1306_write(uint8_t ch)
         ssd1306_cursorX = 0;
         return 0;
     }
-    else if ( (ssd1306_cursorX > ssd1306_lcd.width - s_fixedFont.width) || (ch == '\n') )
+    else if ( (ssd1306_cursorX > ssd1306_lcd.width - s_fixedFont.h.width) || (ch == '\n') )
     {
         ssd1306_cursorX = 0;
-        ssd1306_cursorY += s_fixedFont.height;
-        if ( ssd1306_cursorY > ssd1306_lcd.height - s_fixedFont.height )
+        ssd1306_cursorY += s_fixedFont.h.height;
+        if ( ssd1306_cursorY > ssd1306_lcd.height - s_fixedFont.h.height )
         {
             ssd1306_cursorY = 0;
         }
-        ssd1306_clearBlock(0, ssd1306_cursorY >> 3, ssd1306_lcd.width, s_fixedFont.height);
+        ssd1306_clearBlock(0, ssd1306_cursorY >> 3, ssd1306_lcd.width, s_fixedFont.h.height);
         if (ch == '\n')
         {
             return 0;
         }
     }
-    ch -= s_fixedFont.ascii_offset;
+    const uint8_t *glyph_ptr;
+#ifdef CONFIG_SSD1306_UNICODE_ENABLE
+    if (g_ssd1306_unicode)
+    {
+        uint16_t unicode = get_unicode16_from_utf8(ch);
+        if (unicode == 0xffff) return 0;
+        glyph_ptr = ssd1306_getU16CharGlyph( unicode );
+    }
+    else
+#endif
+    {
+        glyph_ptr = ssd1306_getCharGlyph( ch );
+    }
     ssd1306_drawBitmap( ssd1306_cursorX,
                         ssd1306_cursorY >> 3,
-                        s_fixedFont.width,
-                        s_fixedFont.height,
-                       &s_fixedFont.data[ ch * s_fixedFont.pages * s_fixedFont.width ] );
-    ssd1306_cursorX += s_fixedFont.width;
+                        s_fixedFont.h.width,
+                        s_fixedFont.h.height,
+                        glyph_ptr );
+    ssd1306_cursorX += s_fixedFont.h.width;
     return 1;
 }
 

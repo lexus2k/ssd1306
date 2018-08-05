@@ -130,6 +130,16 @@ void ssd1306_setFont6x8(const uint8_t * progmemFont) __attribute__ ((deprecated)
  */
 void ssd1306_getCharBitmap(char ch, SCharInfo *info);
 
+const uint8_t *ssd1306_getCharGlyph(char ch);
+
+const uint8_t *ssd1306_getU16CharGlyph(uint16_t unicode);
+
+/**
+ * Returns 16-bit unicode char, encoded in utf8
+ *         0xffff if more characters is expected
+ */
+uint16_t get_unicode16_from_utf8(uint8_t ch);
+
 /**
  * @}
  */

@@ -251,8 +251,9 @@ public:
     /**
      * Draws single character to canvas
      * @param c - character code to print
+     * @returns 0 if char is not printed
      */
-    void printChar(uint8_t c);
+    uint8_t printChar(uint8_t c);
 
     /**
      * Print text at specified position to canvas

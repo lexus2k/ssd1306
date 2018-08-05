@@ -27,11 +27,17 @@
 import os
 import sys
 import re
+import codecs
 
 if len(sys.argv) < 2:
-    print "Usage: glcd2ssd1306.py inputFile > outputFile"
+    print "Usage: glcd2ssd1306.py inputFile [options] > outputFile"
+    print "Options:"
+    print "    utf8      read source file as utf8-encoded"
+    print "              utf8 option enforces script to generate unicode block for the font"
+    print "              unicode block is part of ssd1306 font"
     print "Examples:"
     print "      glcd2ssd1306.py glcdfont.c > ssd1306font.c"
+    print "      glcd2ssd1306.py glcdfont.c utf8 > ssd1306font.c"
     exit(1)
 
 class GLCDFont:
@@ -42,9 +48,13 @@ class GLCDFont:
     chars = []
     charMap = {}
 
-    def __init__(self, filename):
-        with open(filename) as f:
-            content = f.readlines()
+    def __init__(self, filename, enc = None):
+        if enc is None:
+            with open(filename) as f:
+                content = f.readlines()
+        else:
+            with codecs.open(filename,'r',encoding=enc) as f:
+                content = f.readlines()
 
         for line in content:
             bytes_str = line.split(', ')
@@ -100,13 +110,28 @@ class GLCDFont:
     def rows(self):
         return (self.height + 7) / 8
 
-font = GLCDFont(sys.argv[1])
+enc = None
+if len(sys.argv) > 2:
+    enc = sys.argv[2]
+font = GLCDFont(sys.argv[1], enc)
 # print font.printChar( "B" )
 # print font.charMap["B"]['source_str']
 
-print "const uint8_t %s[] PROGMEM =" % (font.name)
-print "{"
-print "    0x%02X, 0x%02X, 0x%02X, 0x%02X," % (0, font.width, font.height, font.first_char)
+if enc is None:
+    print "const uint8_t %s[] PROGMEM =" % (font.name)
+    print "{"
+
+print "#ifdef CONFIG_SSD1306_UNICODE_ENABLE"
+if enc is None:
+    print "    0x%02X, 0x%02X, 0x%02X, 0x%02X," % (1, font.width, font.height, font.first_char)
+print "    0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x00, 0x00, 0x00, 0x00, // unicode record" % \
+       (font.first_char & 0xFF, (font.first_char >> 8) & 0xFF, \
+        len(font.chars) & 0xFF, (len(font.chars) >> 8) & 0xFF)
+if enc is None:
+    print "#else"
+    print "    0x%02X, 0x%02X, 0x%02X, 0x%02X," % (0, font.width, font.height, font.first_char)
+    print "#endif"
+char_code = font.first_char
 for char in font.chars:
     print "   ",
     for row in range(font.rows()):
@@ -118,5 +143,11 @@ for char in font.chars:
                     break
                 data |= (font.charBitmap(char)[y][x] << i)
             print "0x%02X," % data,
-    print "// char '%s' (0x%02X/%d)" % (char, ord(char[0]), ord(char[0]))
-print "};"
+    print "// char '%s' (0x%04X/%d)" % (unichr(char_code), char_code, char_code)
+    char_code = char_code + 1
+if enc is None:
+    print "#ifdef CONFIG_SSD1306_UNICODE_ENABLE"
+print "    0x00, 0x00, 0x00, 0x00, // end of unicode tables"
+print "#endif"
+if enc is None:
+    print "};"

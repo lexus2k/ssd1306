@@ -256,7 +256,7 @@ void NanoCanvas::printFixed(uint8_t xpos, uint8_t y, const char ch[], EFontStyle
     bottomMask = (0xFF << (y & 0x7));
     for(;;)
     {
-        if( ( x > m_w - s_fixedFont.width ) || ( ch[j] == '\0' ) )
+        if( ( x > m_w - s_fixedFont.h.width ) || ( ch[j] == '\0' ) )
         {
             x = xpos;
             y += 8;
@@ -285,8 +285,8 @@ void NanoCanvas::printFixed(uint8_t xpos, uint8_t y, const char ch[], EFontStyle
             c = 0;
         }
         uint8_t ldata = 0;
-        uint16_t offset = (c * s_fixedFont.pages + page_offset) * s_fixedFont.width;
-        for( i=0; i<s_fixedFont.width; i++)
+        uint16_t offset = (c * s_fixedFont.pages + page_offset) * s_fixedFont.h.width;
+        for( i=0; i<s_fixedFont.h.width; i++)
         {
             uint8_t data;
             if ( style == STYLE_NORMAL )
@@ -333,7 +333,7 @@ void NanoCanvas::printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontSty
     bottomMask = (0xFF << (y & 0x7));
     for(;;)
     {
-        if( ( x > m_w - (s_fixedFont.width<<1) ) || ( ch[j] == '\0' ) )
+        if( ( x > m_w - (s_fixedFont.h.width<<1) ) || ( ch[j] == '\0' ) )
         {
             x = xpos;
             y += 8;
@@ -362,8 +362,8 @@ void NanoCanvas::printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontSty
             c = 0;
         }
         uint8_t ldata = 0;
-        uint16_t offset = (c * s_fixedFont.pages + (page_offset >> 1)) * s_fixedFont.width;
-        for( i=0; i<s_fixedFont.width; i++)
+        uint16_t offset = (c * s_fixedFont.pages + (page_offset >> 1)) * s_fixedFont.h.width;
+        for( i=0; i<s_fixedFont.h.width; i++)
         {
             uint8_t data;
             if ( style == STYLE_NORMAL )

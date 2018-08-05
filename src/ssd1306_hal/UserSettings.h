@@ -84,6 +84,12 @@
 #define CONFIG_PLATFORM_SPI_ENABLE
 
 /**
+ * Defines, whenever ssd1306 library supports unicode.
+ * Support of unicode increases RAM and Flasg memory consumption
+ */
+#define CONFIG_SSD1306_UNICODE_ENABLE
+
+/**
  * @}
  */
 

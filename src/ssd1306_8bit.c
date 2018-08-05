@@ -23,6 +23,7 @@
 */
 
 #include "ssd1306_8bit.h"
+#include "ssd1306_fonts.h"
 #include "intf/ssd1306_interface.h"
 #include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
@@ -35,6 +36,9 @@ extern uint8_t s_ssd1306_invertByte;
 extern lcduint_t ssd1306_cursorX;
 extern lcduint_t ssd1306_cursorY;
 extern SFixedFontInfo s_fixedFont;
+#ifdef CONFIG_SSD1306_UNICODE_ENABLE
+extern uint8_t g_ssd1306_unicode;
+#endif
 
 void    ssd1331_setColor(uint16_t color)
 {
@@ -266,12 +270,24 @@ void ssd1331_setCursor8(lcduint_t x, lcduint_t y)
 
 void ssd1331_printChar8(uint8_t c)
 {
-    c -= s_fixedFont.ascii_offset;
+    const uint8_t *glyph_ptr;
+#ifdef CONFIG_SSD1306_UNICODE_ENABLE
+    if (g_ssd1306_unicode)
+    {
+        uint16_t unicode = get_unicode16_from_utf8(c);
+        if (unicode == 0xffff) return;
+        glyph_ptr = ssd1306_getU16CharGlyph( unicode );
+    }
+    else
+#endif
+    {
+        glyph_ptr = ssd1306_getCharGlyph( c );
+    }
     ssd1331_drawMonoBitmap8(ssd1306_cursorX,
                 ssd1306_cursorY,
-                s_fixedFont.width,
-                s_fixedFont.height,
-                &s_fixedFont.data[ c * s_fixedFont.pages * s_fixedFont.width ] );
+                s_fixedFont.h.width,
+                s_fixedFont.h.height,
+                glyph_ptr );
 }
 
 size_t ssd1331_write8(uint8_t ch)
@@ -281,27 +297,39 @@ size_t ssd1331_write8(uint8_t ch)
         ssd1306_cursorX = 0;
         return 0;
     }
-    else if ( (ssd1306_cursorX > ssd1306_lcd.width - s_fixedFont.width) || (ch == '\n') )
+    else if ( (ssd1306_cursorX > ssd1306_lcd.width - s_fixedFont.h.width) || (ch == '\n') )
     {
         ssd1306_cursorX = 0;
-        ssd1306_cursorY += s_fixedFont.height;
-        if ( ssd1306_cursorY > ssd1306_lcd.height - s_fixedFont.height )
+        ssd1306_cursorY += s_fixedFont.h.height;
+        if ( ssd1306_cursorY > ssd1306_lcd.height - s_fixedFont.h.height )
         {
             ssd1306_cursorY = 0;
         }
-        ssd1331_clearBlock8(0, ssd1306_cursorY, ssd1306_lcd.width, s_fixedFont.height);
+        ssd1331_clearBlock8(0, ssd1306_cursorY, ssd1306_lcd.width, s_fixedFont.h.height);
         if (ch == '\n')
         {
             return 0;
         }
     }
-    ch -= s_fixedFont.ascii_offset;
+    const uint8_t *glyph_ptr;
+#ifdef CONFIG_SSD1306_UNICODE_ENABLE
+    if (g_ssd1306_unicode)
+    {
+        uint16_t unicode = get_unicode16_from_utf8(ch);
+        if (unicode == 0xffff) return 0;
+        glyph_ptr = ssd1306_getU16CharGlyph( unicode );
+    }
+    else
+#endif
+    {
+        glyph_ptr = ssd1306_getCharGlyph( ch );
+    }
     ssd1331_drawMonoBitmap8( ssd1306_cursorX,
                              ssd1306_cursorY,
-                             s_fixedFont.width,
-                             s_fixedFont.height,
-                            &s_fixedFont.data[ ch * s_fixedFont.pages * s_fixedFont.width ] );
-    ssd1306_cursorX += s_fixedFont.width;
+                             s_fixedFont.h.width,
+                             s_fixedFont.h.height,
+                             glyph_ptr);
+    ssd1306_cursorX += s_fixedFont.h.width;
     return 1;
 }
 
