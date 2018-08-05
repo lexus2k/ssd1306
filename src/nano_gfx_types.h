@@ -94,7 +94,7 @@ typedef struct
 /** Structure is used for internal font presentation */
 typedef struct
 {
-    SFontHeaderRecord h;
+    SFontHeaderRecord h; ///< record, containing information on font
     uint8_t pages; ///< height in pages (each page height is 8-pixels)
     const uint8_t *data; ///< font chars bits
 } SFixedFontInfo;

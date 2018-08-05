@@ -130,15 +130,33 @@ void ssd1306_setFont6x8(const uint8_t * progmemFont) __attribute__ ((deprecated)
  */
 void ssd1306_getCharBitmap(char ch, SCharInfo *info);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 const uint8_t *ssd1306_getCharGlyph(char ch);
 
 const uint8_t *ssd1306_getU16CharGlyph(uint16_t unicode);
+#endif
 
+/**
+ * Enables utf8 support for all text-functions.
+ * @note Unicode-16 only supported in text decoding functions.
+ */
+void ssd1306_enableUtf8Mode();
+
+/**
+ * Enables ascii mode for all text-functions. No any decoding will be performed
+ */
+void ssd1306_enableAsciiMode();
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 /**
  * Returns 16-bit unicode char, encoded in utf8
  *         0xffff if more characters is expected
+ * @param ch character byte to decode
+ * @return 16-bit unicode char, encoded in utf8
+ *         0xffff if more characters is expected
  */
 uint16_t get_unicode16_from_utf8(uint8_t ch);
+#endif
 
 /**
  * @}

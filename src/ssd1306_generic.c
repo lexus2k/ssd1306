@@ -155,3 +155,16 @@ uint16_t get_unicode16_from_utf8(uint8_t ch)
     return code;
 }
 
+void ssd1306_enableUtf8Mode()
+{
+#ifdef CONFIG_SSD1306_UNICODE_ENABLE
+    g_ssd1306_unicode = 1;
+#endif
+}
+
+void ssd1306_enableAsciiMode()
+{
+#ifdef CONFIG_SSD1306_UNICODE_ENABLE
+    g_ssd1306_unicode = 0;
+#endif
+}
