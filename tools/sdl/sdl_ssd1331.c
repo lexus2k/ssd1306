@@ -27,6 +27,8 @@
 #include "sdl_graphics.h"
 #include "sdl_core.h"
 
+#include <stdlib.h>
+
 static int s_activeColumn = 0;
 static int s_activePage = 0;
 static int s_columnStart = 0;
