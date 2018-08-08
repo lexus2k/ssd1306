@@ -85,8 +85,7 @@ typedef struct
 typedef struct
 {
     uint16_t start_code;  ///< unicode start code
-    uint16_t count;       ///< unicode end code
-    uint32_t size;        ///< size of block (optional, not used)
+    uint8_t count;        ///< count of unicode chars in block
 } SUnicodeBlockRecord;
 
 #pragma pack(pop)
@@ -96,6 +95,7 @@ typedef struct
 {
     SFontHeaderRecord h; ///< record, containing information on font
     uint8_t pages; ///< height in pages (each page height is 8-pixels)
+    uint8_t glyph_size;  ///< glyph size in bytes
     const uint8_t *data; ///< font chars bits
 } SFixedFontInfo;
 
