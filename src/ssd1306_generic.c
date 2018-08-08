@@ -34,15 +34,13 @@
 #include "intf/ssd1306_interface.h"
 #include "ssd1306_hal/io.h"
 
-// TODO: remove
-#include "lcd/ssd1306_commands.h"
-
 uint16_t ssd1306_color = 0xFFFF;
 lcduint_t ssd1306_cursorX = 0;
 lcduint_t ssd1306_cursorY = 0;
 SFixedFontInfo s_fixedFont = { 0 };
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
 uint8_t g_ssd1306_unicode = 1;
+static const uint8_t * s_unicode_table = NULL;
 #endif
 
 uint8_t      ssd1306_displayHeight()
@@ -69,10 +67,14 @@ void ssd1306_setFixedFont(const uint8_t * progmemFont)
     s_fixedFont.h.ascii_offset = pgm_read_byte(&progmemFont[3]);
     s_fixedFont.pages = (s_fixedFont.h.height + 7) >> 3;
     s_fixedFont.data = progmemFont + sizeof(SFontHeaderRecord);
+#ifdef CONFIG_SSD1306_UNICODE_ENABLE
+    s_unicode_table = NULL;
     if (s_fixedFont.h.type == 0x01)
     {
-        s_fixedFont.data += sizeof(SUnicodeBlockRecord);
+        s_unicode_table = s_fixedFont.data;
+        s_fixedFont.data = NULL;
     }
+#endif
 }
 
 void ssd1306_getCharBitmap(char ch, SCharInfo *info)
@@ -109,32 +111,41 @@ static void ssd1306_read_unicode_record(SUnicodeBlockRecord *r, const uint8_t *p
 
 const uint8_t *ssd1306_getU16CharGlyph(uint16_t unicode)
 {
-    const uint8_t *data = s_fixedFont.data;
     SUnicodeBlockRecord r;
-    if (s_fixedFont.h.type == 0x00)
+    if ((unicode < 128) && (s_fixedFont.data))
     {
-        r.start_code = s_fixedFont.h.ascii_offset;
-        r.count = 128 - s_fixedFont.h.ascii_offset;
-        r.size = s_fixedFont.pages * s_fixedFont.h.width * r.count;
+        return ssd1306_getCharGlyph(unicode);
     }
-    else
+#ifdef CONFIG_SSD1306_UNICODE_ENABLE
+    const uint8_t *data = s_unicode_table;
+    if (!data)
     {
-        ssd1306_read_unicode_record(&r, data - sizeof(SFontHeaderRecord));
+        return s_fixedFont.data;
     }
     // looking for required unicode table
-    while ( ( unicode < r.start_code) || ( unicode >= (r.start_code + r.count) ) )
+    while (1)
     {
-        if (r.count == 0) break;
-        data += r.size;
         ssd1306_read_unicode_record( &r, data );
+        if (r.count == 0)
+        {
+            break;
+        }
         data += sizeof(SUnicodeBlockRecord);
+        if ( ( unicode >= r.start_code) && ( unicode < (r.start_code + r.count) ) )
+        {
+            break;
+        }
+        data += r.size;
     }
     if (r.count == 0)
     {
         // Sorry, no glyph found for the specified character
-        return s_fixedFont.data;
+        return s_unicode_table + sizeof(SUnicodeBlockRecord);
     }
     return &data[ (unicode - r.start_code) * s_fixedFont.pages * s_fixedFont.h.width ];
+#else
+    return ssd1306_getCharGlyph(unicode);
+#endif
 }
 
 uint16_t get_unicode16_from_utf8(uint8_t ch)
