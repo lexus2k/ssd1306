@@ -40,7 +40,6 @@ lcduint_t ssd1306_cursorY = 0;
 SFixedFontInfo s_fixedFont = { 0 };
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
 uint8_t g_ssd1306_unicode = 1;
-static const uint8_t * s_unicode_table = NULL;
 #endif
 
 uint8_t      ssd1306_displayHeight()
@@ -67,15 +66,20 @@ void ssd1306_setFixedFont(const uint8_t * progmemFont)
     s_fixedFont.h.ascii_offset = pgm_read_byte(&progmemFont[3]);
     s_fixedFont.pages = (s_fixedFont.h.height + 7) >> 3;
     s_fixedFont.glyph_size = s_fixedFont.pages * s_fixedFont.h.width;
-    s_fixedFont.data = progmemFont + sizeof(SFontHeaderRecord);
+    s_fixedFont.basic_table = progmemFont + sizeof(SFontHeaderRecord);
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
-    s_unicode_table = NULL;
+    s_fixedFont.unicode_table = NULL;
     if (s_fixedFont.h.type == 0x01)
     {
-        s_unicode_table = s_fixedFont.data;
-        s_fixedFont.data = NULL;
+        s_fixedFont.unicode_table = s_fixedFont.basic_table;
+        s_fixedFont.basic_table = NULL;
     }
 #endif
+}
+
+void ssd1306_setUnicodeTable(const uint8_t * progmemUnicode)
+{
+    s_fixedFont.unicode_table = progmemUnicode + sizeof(SFontHeaderRecord);
 }
 
 void ssd1306_getCharBitmap(char ch, SCharInfo *info)
@@ -90,8 +94,8 @@ void ssd1306_getCharBitmap(char ch, SCharInfo *info)
 
 const uint8_t *ssd1306_getCharGlyph(char ch)
 {
-     return &s_fixedFont.data[ (ch - s_fixedFont.h.ascii_offset) *
-                                s_fixedFont.glyph_size ];
+     return &s_fixedFont.basic_table[ (ch - s_fixedFont.h.ascii_offset) *
+                                      s_fixedFont.glyph_size ];
 }
 
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
@@ -106,12 +110,12 @@ const uint8_t *ssd1306_getU16CharGlyph(uint16_t unicode)
 {
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
     SUnicodeBlockRecord r;
-    if ((unicode >= 128) || (!s_fixedFont.data))
+    if ((unicode >= 128) || (!s_fixedFont.basic_table))
     {
-        const uint8_t *data = s_unicode_table;
+        const uint8_t *data = s_fixedFont.unicode_table;
         if (!data)
         {
-            return s_fixedFont.data;
+            return s_fixedFont.basic_table;
         }
         // looking for required unicode table
         while (1)
@@ -131,7 +135,7 @@ const uint8_t *ssd1306_getU16CharGlyph(uint16_t unicode)
         if (r.count == 0)
         {
             // Sorry, no glyph found for the specified character
-            return s_unicode_table + sizeof(SUnicodeBlockRecord);
+            return s_fixedFont.unicode_table + sizeof(SUnicodeBlockRecord);
         }
         return &data[ (unicode - r.start_code) * s_fixedFont.glyph_size ];
     }

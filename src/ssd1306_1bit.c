@@ -209,17 +209,17 @@ uint8_t ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontStyl
             uint8_t data;
             if ( style == STYLE_NORMAL )
             {
-                data = pgm_read_byte(&s_fixedFont.data[offset]);
+                data = pgm_read_byte(&s_fixedFont.basic_table[offset]);
             }
             else if ( style == STYLE_BOLD )
             {
-                uint8_t temp = pgm_read_byte(&s_fixedFont.data[offset]);
+                uint8_t temp = pgm_read_byte(&s_fixedFont.basic_table[offset]);
                 data = temp | ldata;
                 ldata = temp;
             }
             else
             {
-                uint8_t temp = pgm_read_byte(&s_fixedFont.data[offset + 1]);
+                uint8_t temp = pgm_read_byte(&s_fixedFont.basic_table[offset + 1]);
                 data = (temp & 0xF0) | ldata;
                 ldata = (temp & 0x0F);
             }

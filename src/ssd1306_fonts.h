@@ -103,6 +103,11 @@ void       ssd1306_setCursor(lcdint_t x, lcdint_t y);
 void ssd1306_setFixedFont(const uint8_t * progmemFont);
 
 /**
+ *
+ */
+void ssd1306_setUnicodeTable(const uint8_t * progmemUnicode);
+
+/**
  * Function allows to set another font for the library.
  * By default, the font supports only first 128 - 32 ascii chars.
  * First 32 chars of ascii table are non-printable, and removed
@@ -130,12 +135,6 @@ void ssd1306_setFont6x8(const uint8_t * progmemFont) __attribute__ ((deprecated)
  */
 void ssd1306_getCharBitmap(char ch, SCharInfo *info);
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-const uint8_t *ssd1306_getCharGlyph(char ch);
-
-const uint8_t *ssd1306_getU16CharGlyph(uint16_t unicode);
-#endif
-
 /**
  * Enables utf8 support for all text-functions.
  * @note Unicode-16 only supported in text decoding functions.
@@ -148,6 +147,10 @@ void ssd1306_enableUtf8Mode();
 void ssd1306_enableAsciiMode();
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
+const uint8_t *ssd1306_getCharGlyph(char ch);
+
+const uint8_t *ssd1306_getU16CharGlyph(uint16_t unicode);
+
 /**
  * Returns 16-bit unicode char, encoded in utf8
  *         0xffff if more characters is expected

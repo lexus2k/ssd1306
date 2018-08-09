@@ -124,9 +124,9 @@ if enc is None:
 print "#ifdef CONFIG_SSD1306_UNICODE_ENABLE"
 if enc is None:
     print "    0x%02X, 0x%02X, 0x%02X, 0x%02X," % (1, font.width, font.height, font.first_char)
-print "    0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x00, 0x00, 0x00, 0x00, // unicode record" % \
+print "    0x%02X, 0x%02X, 0x%02X, // unicode record" % \
        (font.first_char & 0xFF, (font.first_char >> 8) & 0xFF, \
-        len(font.chars) & 0xFF, (len(font.chars) >> 8) & 0xFF)
+        len(font.chars) & 0xFF)
 if enc is None:
     print "#else"
     print "    0x%02X, 0x%02X, 0x%02X, 0x%02X," % (0, font.width, font.height, font.first_char)
