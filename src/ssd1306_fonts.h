@@ -43,6 +43,10 @@ extern "C" {
 /** Standard ASCII 6x8 font */
 extern const PROGMEM uint8_t ssd1306xled_font6x8 [];
 
+#ifdef CONFIG_SSD1306_UNICODE_ENABLE
+extern const PROGMEM uint8_t ssd1306xled_font6x8_German [];
+#endif
+
 /** Standard ASCII 6x8 AB font with only capital letters */
 extern const PROGMEM uint8_t ssd1306xled_font6x8_AB [];
 

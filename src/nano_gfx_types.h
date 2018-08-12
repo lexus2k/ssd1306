@@ -96,9 +96,9 @@ typedef struct
     SFontHeaderRecord h; ///< record, containing information on font
     uint8_t pages; ///< height in pages (each page height is 8-pixels)
     uint8_t glyph_size;  ///< glyph size in bytes
-    const uint8_t *basic_table; ///< font chars bits
+    const uint8_t *primary_table; ///< font chars bits
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
-    const uint8_t *unicode_table; ///< font chars bits
+    const uint8_t *secondary_table; ///< font chars bits
 #endif
 } SFixedFontInfo;
 

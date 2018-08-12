@@ -291,18 +291,18 @@ void NanoCanvas::printFixed(uint8_t xpos, uint8_t y, const char ch[], EFontStyle
             uint8_t data;
             if ( style == STYLE_NORMAL )
             {
-                data = pgm_read_byte(&s_fixedFont.basic_table[offset]);
+                data = pgm_read_byte(&s_fixedFont.primary_table[offset]);
             }
             else if ( style == STYLE_BOLD )
             {
-                data = pgm_read_byte(&s_fixedFont.basic_table[offset]);
+                data = pgm_read_byte(&s_fixedFont.primary_table[offset]);
                 uint8_t temp = data | ldata;
                 ldata = data;
                 data = temp;
             }
             else
             {
-                data = pgm_read_byte(&s_fixedFont.basic_table[offset + 1]);
+                data = pgm_read_byte(&s_fixedFont.primary_table[offset + 1]);
                 uint8_t temp = (data & 0xF0) | ldata;
                 ldata = (data & 0x0F);
                 data = temp;
@@ -368,18 +368,18 @@ void NanoCanvas::printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontSty
             uint8_t data;
             if ( style == STYLE_NORMAL )
             {
-                data = pgm_read_byte(&s_fixedFont.basic_table[offset]);
+                data = pgm_read_byte(&s_fixedFont.primary_table[offset]);
             }
             else if ( style == STYLE_BOLD )
             {
-                data = pgm_read_byte(&s_fixedFont.basic_table[offset]);
+                data = pgm_read_byte(&s_fixedFont.primary_table[offset]);
                 uint8_t temp = data | ldata;
                 ldata = data;
                 data = temp;
             }
             else
             {
-                data = pgm_read_byte(&s_fixedFont.basic_table[offset + 1]);
+                data = pgm_read_byte(&s_fixedFont.primary_table[offset + 1]);
                 uint8_t temp = (data & 0xF0) | ldata;
                 ldata = (data & 0x0F);
                 data = temp;
