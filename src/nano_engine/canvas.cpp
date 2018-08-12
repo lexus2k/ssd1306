@@ -338,8 +338,8 @@ uint8_t NanoCanvasOps<1>::printChar(uint8_t c)
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
     if (g_ssd1306_unicode)
     {
-        uint16_t unicode = get_unicode16_from_utf8(c);
-        if (unicode == 0xffff) return 0;
+        uint16_t unicode = ssd1306_unicode16FromUtf8(c);
+        if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
         glyph_ptr = ssd1306_getU16CharGlyph( unicode );
     }
     else
@@ -748,8 +748,8 @@ uint8_t NanoCanvasOps<8>::printChar(uint8_t c)
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
     if (g_ssd1306_unicode)
     {
-        uint16_t unicode = get_unicode16_from_utf8(c);
-        if (unicode == 0xffff) return 0;
+        uint16_t unicode = ssd1306_unicode16FromUtf8(c);
+        if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
         glyph_ptr = ssd1306_getU16CharGlyph( unicode );
     }
     else
@@ -1165,8 +1165,8 @@ uint8_t NanoCanvasOps<16>::printChar(uint8_t c)
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
     if (g_ssd1306_unicode)
     {
-        uint16_t unicode = get_unicode16_from_utf8(c);
-        if (unicode == 0xffff) return 0;
+        uint16_t unicode = ssd1306_unicode16FromUtf8(c);
+        if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
         glyph_ptr = ssd1306_getU16CharGlyph( unicode );
     }
     else

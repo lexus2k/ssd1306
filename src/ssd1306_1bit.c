@@ -118,9 +118,9 @@ uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle s
             uint16_t unicode;
             do
             {
-                unicode = get_unicode16_from_utf8(ch[j]);
+                unicode = ssd1306_unicode16FromUtf8(ch[j]);
                 j++;
-            } while ( unicode == 0xffff );
+            } while ( unicode == SSD1306_MORE_CHARS_REQUIRED );
             glyph_ptr = ssd1306_getU16CharGlyph( unicode );
         }
         else
@@ -283,9 +283,9 @@ uint8_t ssd1306_printFixedN(uint8_t xpos, uint8_t y, const char ch[], EFontStyle
             uint16_t unicode;
             do
             {
-                unicode = get_unicode16_from_utf8(ch[j]);
+                unicode = ssd1306_unicode16FromUtf8(ch[j]);
                 j++;
-            } while ( unicode == 0xffff );
+            } while ( unicode == SSD1306_MORE_CHARS_REQUIRED );
             glyph_ptr = ssd1306_getU16CharGlyph( unicode );
         }
         else
@@ -367,8 +367,8 @@ size_t ssd1306_write(uint8_t ch)
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
     if (g_ssd1306_unicode)
     {
-        uint16_t unicode = get_unicode16_from_utf8(ch);
-        if (unicode == 0xffff) return 0;
+        uint16_t unicode = ssd1306_unicode16FromUtf8(ch);
+        if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
         glyph_ptr = ssd1306_getU16CharGlyph( unicode );
     }
     else

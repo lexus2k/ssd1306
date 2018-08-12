@@ -40,12 +40,13 @@ extern "C" {
  * @{
  */
 
+#define SSD1306_MORE_CHARS_REQUIRED  0xffff
+
 /** Standard ASCII 6x8 font */
 extern const PROGMEM uint8_t ssd1306xled_font6x8 [];
 
-#ifdef CONFIG_SSD1306_UNICODE_ENABLE
+/** German chars for standard ASCII 6x8 font */
 extern const PROGMEM uint8_t ssd1306xled_font6x8_German [];
-#endif
 
 /** Standard ASCII 6x8 AB font with only capital letters */
 extern const PROGMEM uint8_t ssd1306xled_font6x8_AB [];
@@ -107,9 +108,13 @@ void       ssd1306_setCursor(lcdint_t x, lcdint_t y);
 void ssd1306_setFixedFont(const uint8_t * progmemFont);
 
 /**
- *
+ * Function allows sets secondary font for specific language.
+ * Use it if you want to use additional font to combine capabilities of
+ * ascii fonts and language specific font.
+ * @param progmemUnicode font containing unicode table (refer to
+ *        ssd1306xled_font6x8_German as example).
  */
-void ssd1306_setUnicodeTable(const uint8_t * progmemUnicode);
+void ssd1306_setSecondaryFont(const uint8_t * progmemUnicode);
 
 /**
  * Function allows to set another font for the library.
@@ -157,12 +162,12 @@ const uint8_t *ssd1306_getU16CharGlyph(uint16_t unicode);
 
 /**
  * Returns 16-bit unicode char, encoded in utf8
- *         0xffff if more characters is expected
+ *         SSD1306_MORE_CHARS_REQUIRED if more characters is expected
  * @param ch character byte to decode
  * @return 16-bit unicode char, encoded in utf8
- *         0xffff if more characters is expected
+ *         SSD1306_MORE_CHARS_REQUIRED if more characters is expected
  */
-uint16_t get_unicode16_from_utf8(uint8_t ch);
+uint16_t ssd1306_unicode16FromUtf8(uint8_t ch);
 #endif
 
 /**

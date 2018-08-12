@@ -72,7 +72,7 @@ void ssd1306_setFixedFont(const uint8_t * progmemFont)
 #endif
 }
 
-void ssd1306_setUnicodeTable(const uint8_t * progmemUnicode)
+void ssd1306_setSecondaryFont(const uint8_t * progmemUnicode)
 {
     s_fixedFont.secondary_table = progmemUnicode;
     if (s_fixedFont.secondary_table != NULL)
@@ -95,11 +95,11 @@ const uint8_t *ssd1306_getCharGlyph(char ch)
 {
      return &s_fixedFont.primary_table[ (ch - s_fixedFont.h.ascii_offset) *
                                         s_fixedFont.glyph_size +
-                                        s_fixedFont.h.type == 0x01 ? sizeof(SUnicodeBlockRecord) : 0 ];
+                                        (s_fixedFont.h.type == 0x01 ? sizeof(SUnicodeBlockRecord) : 0) ];
 }
 
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
-static void ssd1306_read_unicode_record(SUnicodeBlockRecord *r, const uint8_t *p)
+static void ssd1306_readUnicodeRecord(SUnicodeBlockRecord *r, const uint8_t *p)
 {
     r->start_code = pgm_read_byte(&p[0]) | (pgm_read_byte(&p[1]) << 8);
     r->count = pgm_read_byte(&p[2]) | (pgm_read_byte(&p[3]) << 8);
@@ -113,7 +113,7 @@ static const uint8_t *ssd1306_searchCharGlyph(const uint8_t * unicode_table, uin
     // looking for required unicode table
     while (1)
     {
-        ssd1306_read_unicode_record( &r, data );
+        ssd1306_readUnicodeRecord( &r, data );
         if (r.count == 0)
         {
             break;
@@ -159,7 +159,7 @@ const uint8_t *ssd1306_getU16CharGlyph(uint16_t unicode)
 #endif
 }
 
-uint16_t get_unicode16_from_utf8(uint8_t ch)
+uint16_t ssd1306_unicode16FromUtf8(uint8_t ch)
 {
     static uint16_t unicode = 0;
     ch &= 0x000000FF;
@@ -168,7 +168,7 @@ uint16_t get_unicode16_from_utf8(uint8_t ch)
         if ( ch >= 0xc0 )
         {
             unicode = ch;
-            return 0xffff;
+            return SSD1306_MORE_CHARS_REQUIRED;
         }
         return ch;
     }

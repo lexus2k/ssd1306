@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2016-2018, Alexey Dynda
+    Copyright (c) 2018, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -40,10 +40,8 @@ void setup()
     ssd1306_128x64_i2c_init();
     ssd1306_fillScreen(0x00);
     ssd1306_setFixedFont(ssd1306xled_font6x8);
-    ssd1306_printFixed (0,  8, "Line 1. Normal text", STYLE_NORMAL);
-    ssd1306_printFixed (0, 16, "Line 2. Bold text", STYLE_BOLD);
-    ssd1306_printFixed (0, 24, "Line 3. Italic text", STYLE_ITALIC);
-    ssd1306_printFixedN (0, 32, "Line 4. Double size", STYLE_BOLD, FONT_SIZE_2X);
+    ssd1306_setSecondaryFont(ssd1306xled_font6x8_German);
+    ssd1306_printFixed (0,  8, u8"Line 1.äöü", STYLE_NORMAL);
 }
 
 
