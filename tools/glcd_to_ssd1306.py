@@ -117,20 +117,16 @@ font = GLCDFont(sys.argv[1], enc)
 # print font.printChar( "B" )
 # print font.charMap["B"]['source_str']
 
-if enc is None:
-    print "const uint8_t %s[] PROGMEM =" % (font.name)
-    print "{"
-
+print "const uint8_t %s[] PROGMEM =" % (font.name)
+print "{"
 print "#ifdef CONFIG_SSD1306_UNICODE_ENABLE"
-if enc is None:
-    print "    0x%02X, 0x%02X, 0x%02X, 0x%02X," % (1, font.width, font.height, font.first_char)
+print "    0x%02X, 0x%02X, 0x%02X, 0x%02X," % (1, font.width, font.height, font.first_char)
 print "    0x%02X, 0x%02X, 0x%02X, // unicode record" % \
        (font.first_char & 0xFF, (font.first_char >> 8) & 0xFF, \
         len(font.chars) & 0xFF)
-if enc is None:
-    print "#else"
-    print "    0x%02X, 0x%02X, 0x%02X, 0x%02X," % (0, font.width, font.height, font.first_char)
-    print "#endif"
+print "#else"
+print "    0x%02X, 0x%02X, 0x%02X, 0x%02X," % (0, font.width, font.height, font.first_char)
+print "#endif"
 char_code = font.first_char
 for char in font.chars:
     print "   ",
@@ -145,9 +141,7 @@ for char in font.chars:
             print "0x%02X," % data,
     print "// char '%s' (0x%04X/%d)" % (unichr(char_code), char_code, char_code)
     char_code = char_code + 1
-if enc is None:
-    print "#ifdef CONFIG_SSD1306_UNICODE_ENABLE"
-print "    0x00, 0x00, 0x00, 0x00, // end of unicode tables"
+print "#ifdef CONFIG_SSD1306_UNICODE_ENABLE"
+print "    0x00, 0x00, 0x00, // end of unicode tables"
 print "#endif"
-if enc is None:
-    print "};"
+print "};"
