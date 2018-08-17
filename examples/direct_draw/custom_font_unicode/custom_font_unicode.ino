@@ -40,7 +40,7 @@
 
 const uint8_t g_customUnicodeFont_6x8[] PROGMEM =
 {
-    0x00,  // 0x00 means fixed font type - the only supported by the library
+    0x01,  // 0x01 means fixed font type with unicode support
     0x06,  // 0x05 = 6 - font width in pixels
     0x08,  // 0x08 = 8 - font height in pixels
     0x00,  // This byte has no meaning for unicode fonts
