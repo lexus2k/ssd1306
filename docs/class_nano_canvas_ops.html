@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.2</span>
+   &#160;<span id="projectnumber">1.7.5</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -137,8 +137,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ab5c228332af7aeebecbd953422d6b148"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad57ba5e2fd174bf8489374033d707200"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas_ops.html#ad57ba5e2fd174bf8489374033d707200">write</a> (uint8_t c) override</td></tr>
 <tr class="separator:ad57ba5e2fd174bf8489374033d707200"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af621b5840962eea7fa043879c29c01d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas_ops.html#af621b5840962eea7fa043879c29c01d7">printChar</a> (uint8_t c)</td></tr>
-<tr class="separator:af621b5840962eea7fa043879c29c01d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4031b35e730a08985d766d32f7c164fc"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas_ops.html#a4031b35e730a08985d766d32f7c164fc">printChar</a> (uint8_t c)</td></tr>
+<tr class="separator:a4031b35e730a08985d766d32f7c164fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1174380635ea8d9de6b363e6384f7628"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas_ops.html#a1174380635ea8d9de6b363e6384f7628">printFixed</a> (<a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> xpos, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> y, const char *ch, <a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style=STYLE_NORMAL)</td></tr>
 <tr class="separator:a1174380635ea8d9de6b363e6384f7628"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb1263d29d204157c1e87aa5172880b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_canvas_ops.html#adb1263d29d204157c1e87aa5172880b3">printFixedPgm</a> (<a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> xpos, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> y, const char *ch, <a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style=STYLE_NORMAL)</td></tr>
@@ -842,8 +842,8 @@ template&lt;uint8_t BPP&gt; </div>
 
 </div>
 </div>
-<a id="af621b5840962eea7fa043879c29c01d7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af621b5840962eea7fa043879c29c01d7">&#9670;&nbsp;</a></span>printChar()</h2>
+<a id="a4031b35e730a08985d766d32f7c164fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4031b35e730a08985d766d32f7c164fc">&#9670;&nbsp;</a></span>printChar()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -851,7 +851,7 @@ template&lt;uint8_t BPP&gt; </div>
 template&lt;uint8_t BPP&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="class_nano_canvas_ops.html">NanoCanvasOps</a>&lt; BPP &gt;::printChar </td>
+          <td class="memname">uint8_t <a class="el" href="class_nano_canvas_ops.html">NanoCanvasOps</a>&lt; BPP &gt;::printChar </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>c</em></td><td>)</td>
@@ -865,6 +865,7 @@ template&lt;uint8_t BPP&gt; </div>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if char is not printed </dd></dl>
 
 </div>
 </div>
@@ -1101,7 +1102,7 @@ template&lt;uint8_t BPP&gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="canvas_8h_source.html#l00292">292</a> of file <a class="el" href="canvas_8h_source.html">canvas.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="canvas_8h_source.html#l00293">293</a> of file <a class="el" href="canvas_8h_source.html">canvas.h</a>.</p>
 
 </div>
 </div>
@@ -1139,7 +1140,7 @@ template&lt;uint8_t BPP&gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="canvas_8h_source.html#l00286">286</a> of file <a class="el" href="canvas_8h_source.html">canvas.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="canvas_8h_source.html#l00287">287</a> of file <a class="el" href="canvas_8h_source.html">canvas.h</a>.</p>
 
 </div>
 </div>

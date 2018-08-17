@@ -20,6 +20,7 @@ var searchData=
   ['config_5fplatform_5fi2c_5fenable',['CONFIG_PLATFORM_I2C_ENABLE',['../group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga879a327dedebec82e853eab3b2f86e50',1,'UserSettings.h']]],
   ['config_5fplatform_5fspi_5fenable',['CONFIG_PLATFORM_SPI_ENABLE',['../group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga022279a3f667bcaf983e4bfb0919ac72',1,'UserSettings.h']]],
   ['config_5fsoftware_5fi2c_5fenable',['CONFIG_SOFTWARE_I2C_ENABLE',['../group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#gabf5f8ea0739c7b74ca0336bdf04b70fd',1,'UserSettings.h']]],
+  ['config_5fssd1306_5funicode_5fenable',['CONFIG_SSD1306_UNICODE_ENABLE',['../group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#gacdc84c96cc576f7839a93c71b8e74ef7',1,'UserSettings.h']]],
   ['config_5ftwi_5fi2c_5fenable',['CONFIG_TWI_I2C_ENABLE',['../group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#gaae38bc2500b53d8fb222f4071ec27a54',1,'UserSettings.h']]],
   ['config_5fusi_5fspi_5fenable',['CONFIG_USI_SPI_ENABLE',['../group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#gaf1c2440ddde06b7bdd1974fbd2447941',1,'UserSettings.h']]],
   ['config_5fvga_5fenable',['CONFIG_VGA_ENABLE',['../group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#gaffdb461184617cc2353606cd64c748ad',1,'UserSettings.h']]],
@@ -31,7 +32,7 @@ var searchData=
   ['containspartof',['containsPartOf',['../struct___nano_rect.html#a1c6eafcf4abb5770114119ff25dfb8ba',1,'_NanoRect']]],
   ['controller_5fnative_5fspi_5fblock_5f8bit_5fcmds',['CONTROLLER_NATIVE_SPI_BLOCK_8BIT_CMDS',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga9d0d908bfa8476c33a85718bb1281f83',1,'lcd_common.h']]],
   ['core_2eh',['core.h',['../core_8h.html',1,'']]],
-  ['count',['count',['../struct_s_app_menu.html#ad750fae199422bd44dc6063123631d62',1,'SAppMenu']]],
+  ['count',['count',['../struct_s_unicode_block_record.html#a4e9a958ed2e5507c22490818dd2a304d',1,'SUnicodeBlockRecord::count()'],['../struct_s_app_menu.html#ad750fae199422bd44dc6063123631d62',1,'SAppMenu::count()']]],
   ['courier_5fnew_5ffont11x16_5fdigits',['courier_new_font11x16_digits',['../group___l_c_d___f_o_n_t_s.html#gad0b4c4a1805d2cbc11910dbf2febb516',1,'courier_new_font11x16_digits():&#160;ssd1306_fonts.c'],['../group___l_c_d___f_o_n_t_s.html#gad0b4c4a1805d2cbc11910dbf2febb516',1,'courier_new_font11x16_digits():&#160;ssd1306_fonts.c']]],
   ['crop',['crop',['../struct___nano_rect.html#ad2830dc65621088cfc9656e3959ff9b0',1,'_NanoRect']]],
   ['config_3a_20ssd1306_20library_20configuration',['CONFIG: ssd1306 library configuration',['../group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html',1,'']]]

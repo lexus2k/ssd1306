@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.2</span>
+   &#160;<span id="projectnumber">1.7.5</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -204,6 +204,12 @@ $(function() {
 <li>ssd1306_drawVLine()
 : <a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga8d600483f434f6b117893d4b3c0dc36c">ssd1306_1bit.h</a>
 </li>
+<li>ssd1306_enableAsciiMode()
+: <a class="el" href="group___l_c_d___f_o_n_t_s.html#ga7ac0d7091e5e877119c3eee7ae6bcf9e">ssd1306_fonts.h</a>
+</li>
+<li>ssd1306_enableUtf8Mode()
+: <a class="el" href="group___l_c_d___f_o_n_t_s.html#ga0677fe5920f7a6f67590fed2a53dfac7">ssd1306_fonts.h</a>
+</li>
 <li>ssd1306_endTransmission
 : <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga450686fc271e943d9e22b1cfcd06e978">ssd1306_interface.h</a>
 </li>
@@ -260,6 +266,9 @@ $(function() {
 </li>
 <li>ssd1306_menuUp()
 : <a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga5d1ea78a9e0ac5d92bc1efd9c6a14f44">ssd1306_1bit.h</a>
+</li>
+<li>SSD1306_MORE_CHARS_REQUIRED
+: <a class="el" href="group___l_c_d___f_o_n_t_s.html#gabed91b24933cbc8ba18dab9cd9f92e08">ssd1306_fonts.h</a>
 </li>
 <li>ssd1306_negativeMode()
 : <a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga48dbae0a3d28d8708f9a5f552afdd8c0">ssd1306_1bit.h</a>
@@ -354,6 +363,9 @@ $(function() {
 <li>ssd1306_setRamBlock
 : <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga13280d5cffa007c2a3ee87adbe823e41">lcd_common.h</a>
 </li>
+<li>ssd1306_setSecondaryFont()
+: <a class="el" href="group___l_c_d___f_o_n_t_s.html#ga4ed82d5a009a2553cf8525e8ba94df1a">ssd1306_fonts.h</a>
+</li>
 <li>ssd1306_showMenu()
 : <a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga4353274677f513ae61778927f110d507">ssd1306_1bit.h</a>
 </li>
@@ -402,6 +414,9 @@ $(function() {
 <li>ssd1306xled_font6x8_AB
 : <a class="el" href="group___l_c_d___f_o_n_t_s.html#ga0c86fca06d7d0ff2594ed5dbd8c3e0a6">ssd1306_fonts.h</a>
 </li>
+<li>ssd1306xled_font6x8_German
+: <a class="el" href="group___l_c_d___f_o_n_t_s.html#ga7528788d43102c14800322a186f382a5">ssd1306_fonts.h</a>
+</li>
 <li>ssd1325_128x64_init()
 : <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga46db384aa804f1ba09641c485595aed2">oled_ssd1325.h</a>
 </li>
@@ -424,7 +439,7 @@ $(function() {
 : <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#ga397a5623a0332d005ff60c62a716c42a">ssd1306_8bit.h</a>
 </li>
 <li>ssd1331_copyBlock()
-: <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#ga521e5d88879aa31c3b062ea820665818">ssd1306_8bit.h</a>
+: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga521e5d88879aa31c3b062ea820665818">oled_ssd1331.h</a>
 </li>
 <li>ssd1331_drawBitmap8()
 : <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#ga9a7ccb6566643330a320bcdc12015e00">ssd1306_8bit.h</a>
@@ -440,7 +455,7 @@ $(function() {
 : <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gabbd71ea3e4f7b32a470b348eefa3b5f8">ssd1306_8bit.h</a>
 </li>
 <li>ssd1331_drawLine()
-: <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gafa4c239fd99c5541b06d46ac9ed88b6d">ssd1306_8bit.h</a>
+: <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gafa4c239fd99c5541b06d46ac9ed88b6d">oled_ssd1331.h</a>
 </li>
 <li>ssd1331_drawLine8()
 : <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gad7d1c6e3751f3c33e36cf246f1d14ab2">ssd1306_8bit.h</a>

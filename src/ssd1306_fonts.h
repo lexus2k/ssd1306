@@ -40,6 +40,7 @@ extern "C" {
  * @{
  */
 
+/** Flag means that more chars are required to decode utf-8 */
 #define SSD1306_MORE_CHARS_REQUIRED  0xffff
 
 /** Standard ASCII 6x8 font */

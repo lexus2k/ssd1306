@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.2</span>
+   &#160;<span id="projectnumber">1.7.5</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -64,6 +64,7 @@ $(function() {
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
@@ -71,6 +72,11 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gabed91b24933cbc8ba18dab9cd9f92e08"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___f_o_n_t_s.html#gabed91b24933cbc8ba18dab9cd9f92e08">SSD1306_MORE_CHARS_REQUIRED</a>&#160;&#160;&#160;0xffff</td></tr>
+<tr class="separator:gabed91b24933cbc8ba18dab9cd9f92e08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga5e1a5970d84bed47e0e7d8db33a51b09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___f_o_n_t_s.html#ga5e1a5970d84bed47e0e7d8db33a51b09">ssd1306_setCursor</a> (<a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> x, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> y)</td></tr>
@@ -78,16 +84,24 @@ Functions</h2></td></tr>
 <tr class="separator:ga5e1a5970d84bed47e0e7d8db33a51b09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac38e07839ff23bd17a6f0c79f5f92d2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___f_o_n_t_s.html#gac38e07839ff23bd17a6f0c79f5f92d2d">ssd1306_setFixedFont</a> (const uint8_t *progmemFont)</td></tr>
 <tr class="separator:gac38e07839ff23bd17a6f0c79f5f92d2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4ed82d5a009a2553cf8525e8ba94df1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___f_o_n_t_s.html#ga4ed82d5a009a2553cf8525e8ba94df1a">ssd1306_setSecondaryFont</a> (const uint8_t *progmemUnicode)</td></tr>
+<tr class="separator:ga4ed82d5a009a2553cf8525e8ba94df1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga99b9113b49f46e88d6a202be946044af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___f_o_n_t_s.html#ga99b9113b49f46e88d6a202be946044af">ssd1306_setFont6x8</a> (const uint8_t *progmemFont) __attribute__((deprecated))</td></tr>
 <tr class="separator:ga99b9113b49f46e88d6a202be946044af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab55c83d76cc62547534070a75c1f9f14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___f_o_n_t_s.html#gab55c83d76cc62547534070a75c1f9f14">ssd1306_getCharBitmap</a> (char ch, <a class="el" href="struct_s_char_info.html">SCharInfo</a> *info)</td></tr>
 <tr class="memdesc:gab55c83d76cc62547534070a75c1f9f14"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns char data for currently set (active) font.  <a href="#gab55c83d76cc62547534070a75c1f9f14">More...</a><br /></td></tr>
 <tr class="separator:gab55c83d76cc62547534070a75c1f9f14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0677fe5920f7a6f67590fed2a53dfac7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___f_o_n_t_s.html#ga0677fe5920f7a6f67590fed2a53dfac7">ssd1306_enableUtf8Mode</a> ()</td></tr>
+<tr class="separator:ga0677fe5920f7a6f67590fed2a53dfac7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7ac0d7091e5e877119c3eee7ae6bcf9e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___f_o_n_t_s.html#ga7ac0d7091e5e877119c3eee7ae6bcf9e">ssd1306_enableAsciiMode</a> ()</td></tr>
+<tr class="separator:ga7ac0d7091e5e877119c3eee7ae6bcf9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:ga6a43520fb56952580c1b1119286c8c47"><td class="memItemLeft" align="right" valign="top">const PROGMEM uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___f_o_n_t_s.html#ga6a43520fb56952580c1b1119286c8c47">ssd1306xled_font6x8</a> []</td></tr>
 <tr class="separator:ga6a43520fb56952580c1b1119286c8c47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7528788d43102c14800322a186f382a5"><td class="memItemLeft" align="right" valign="top">const PROGMEM uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___f_o_n_t_s.html#ga7528788d43102c14800322a186f382a5">ssd1306xled_font6x8_German</a> []</td></tr>
+<tr class="separator:ga7528788d43102c14800322a186f382a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0c86fca06d7d0ff2594ed5dbd8c3e0a6"><td class="memItemLeft" align="right" valign="top">const PROGMEM uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___f_o_n_t_s.html#ga0c86fca06d7d0ff2594ed5dbd8c3e0a6">ssd1306xled_font6x8_AB</a> []</td></tr>
 <tr class="separator:ga0c86fca06d7d0ff2594ed5dbd8c3e0a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7f8ff37e85ff2ea4e4dfe68a555028ad"><td class="memItemLeft" align="right" valign="top">const PROGMEM uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___f_o_n_t_s.html#ga7f8ff37e85ff2ea4e4dfe68a555028ad">ssd1306xled_font5x7</a> []</td></tr>
@@ -106,7 +120,65 @@ Variables</h2></td></tr>
 <tr class="separator:gac2a45a7b4fb328332ca86f7937ea761c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="gabed91b24933cbc8ba18dab9cd9f92e08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabed91b24933cbc8ba18dab9cd9f92e08">&#9670;&nbsp;</a></span>SSD1306_MORE_CHARS_REQUIRED</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SSD1306_MORE_CHARS_REQUIRED&#160;&#160;&#160;0xffff</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Flag means that more chars are required to decode utf-8 </p>
+
+<p class="definition">Definition at line <a class="el" href="ssd1306__fonts_8h_source.html#l00044">44</a> of file <a class="el" href="ssd1306__fonts_8h_source.html">ssd1306_fonts.h</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ga7ac0d7091e5e877119c3eee7ae6bcf9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7ac0d7091e5e877119c3eee7ae6bcf9e">&#9670;&nbsp;</a></span>ssd1306_enableAsciiMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1306_enableAsciiMode </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Enables ascii mode for all text-functions. No any decoding will be performed </p>
+
+<p class="definition">Definition at line <a class="el" href="ssd1306__generic_8c_source.html#l00187">187</a> of file <a class="el" href="ssd1306__generic_8c_source.html">ssd1306_generic.c</a>.</p>
+
+</div>
+</div>
+<a id="ga0677fe5920f7a6f67590fed2a53dfac7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0677fe5920f7a6f67590fed2a53dfac7">&#9670;&nbsp;</a></span>ssd1306_enableUtf8Mode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1306_enableUtf8Mode </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Enables utf8 support for all text-functions. </p><dl class="section note"><dt>Note</dt><dd>Unicode-16 only supported in text decoding functions. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="ssd1306__generic_8c_source.html#l00180">180</a> of file <a class="el" href="ssd1306__generic_8c_source.html">ssd1306_generic.c</a>.</p>
+
+</div>
+</div>
 <a id="gab55c83d76cc62547534070a75c1f9f14"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gab55c83d76cc62547534070a75c1f9f14">&#9670;&nbsp;</a></span>ssd1306_getCharBitmap()</h2>
 
@@ -144,7 +216,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___f_o_n_t_s.html#gac38e07839ff23bd17a6f0c79f5f92d2d">ssd1306_setFixedFont</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__generic_8c_source.html#l00070">70</a> of file <a class="el" href="ssd1306__generic_8c_source.html">ssd1306_generic.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__generic_8c_source.html#l00084">84</a> of file <a class="el" href="ssd1306__generic_8c_source.html">ssd1306_generic.c</a>.</p>
 
 </div>
 </div>
@@ -242,7 +314,33 @@ Variables</h2></td></tr>
 </dl>
 <dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000026">Deprecated:</a></b></dt><dd>Use <a class="el" href="group___l_c_d___f_o_n_t_s.html#gac38e07839ff23bd17a6f0c79f5f92d2d">ssd1306_setFixedFont()</a> instead. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00856">856</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00891">891</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+
+</div>
+</div>
+<a id="ga4ed82d5a009a2553cf8525e8ba94df1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4ed82d5a009a2553cf8525e8ba94df1a">&#9670;&nbsp;</a></span>ssd1306_setSecondaryFont()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1306_setSecondaryFont </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>progmemUnicode</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Function allows sets secondary font for specific language. Use it if you want to use additional font to combine capabilities of ascii fonts and language specific font. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">progmemUnicode</td><td>font containing unicode table (refer to ssd1306xled_font6x8_German as example). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="ssd1306__generic_8c_source.html#l00075">75</a> of file <a class="el" href="ssd1306__generic_8c_source.html">ssd1306_generic.c</a>.</p>
 
 </div>
 </div>
@@ -260,7 +358,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p class="">Comic Sans ASCII font 24x32 with digits only (Ascii codes 32 - 64). </p><dl class="section warning"><dt>Warning</dt><dd>can be used only with <a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga8000e9cfe2aa02fc552ea80cb23d49fa">ssd1306_printFixed()</a> and <a class="el" href="group___l_c_d___f_o_n_t_s.html#gac38e07839ff23bd17a6f0c79f5f92d2d">ssd1306_setFixedFont()</a> functions. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__fonts_8c_source.html#l00615">615</a> of file <a class="el" href="ssd1306__fonts_8c_source.html">ssd1306_fonts.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__fonts_8c_source.html#l00634">634</a> of file <a class="el" href="ssd1306__fonts_8c_source.html">ssd1306_fonts.c</a>.</p>
 
 </div>
 </div>
@@ -277,7 +375,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p class="">Standard ASCII font 11x16 with digits only (Ascii codes 32 - 64). </p><dl class="section warning"><dt>Warning</dt><dd>can be used only with <a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga8000e9cfe2aa02fc552ea80cb23d49fa">ssd1306_printFixed()</a> and <a class="el" href="group___l_c_d___f_o_n_t_s.html#gac38e07839ff23bd17a6f0c79f5f92d2d">ssd1306_setFixedFont()</a> functions. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__fonts_8c_source.html#l00576">576</a> of file <a class="el" href="ssd1306__fonts_8c_source.html">ssd1306_fonts.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__fonts_8c_source.html#l00595">595</a> of file <a class="el" href="ssd1306__fonts_8c_source.html">ssd1306_fonts.c</a>.</p>
 
 </div>
 </div>
@@ -294,7 +392,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p class="">Digital ASCII 5x7 font </p>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__fonts_8c_source.html#l00230">230</a> of file <a class="el" href="ssd1306__fonts_8c_source.html">ssd1306_fonts.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__fonts_8c_source.html#l00249">249</a> of file <a class="el" href="ssd1306__fonts_8c_source.html">ssd1306_fonts.c</a>.</p>
 
 </div>
 </div>
@@ -326,7 +424,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p class="">Digital ASCII 5x7 font with only capital letters </p>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__fonts_8c_source.html#l00331">331</a> of file <a class="el" href="ssd1306__fonts_8c_source.html">ssd1306_fonts.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__fonts_8c_source.html#l00350">350</a> of file <a class="el" href="ssd1306__fonts_8c_source.html">ssd1306_fonts.c</a>.</p>
 
 </div>
 </div>
@@ -343,7 +441,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p class="">Standard ASCII 5x7 font </p>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__fonts_8c_source.html#l00401">401</a> of file <a class="el" href="ssd1306__fonts_8c_source.html">ssd1306_fonts.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__fonts_8c_source.html#l00420">420</a> of file <a class="el" href="ssd1306__fonts_8c_source.html">ssd1306_fonts.c</a>.</p>
 
 </div>
 </div>
@@ -360,7 +458,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p class="">Standard ASCII 5x7 font with only capital letters </p>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__fonts_8c_source.html#l00503">503</a> of file <a class="el" href="ssd1306__fonts_8c_source.html">ssd1306_fonts.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__fonts_8c_source.html#l00522">522</a> of file <a class="el" href="ssd1306__fonts_8c_source.html">ssd1306_fonts.c</a>.</p>
 
 </div>
 </div>
@@ -393,6 +491,23 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p class="">Standard ASCII 6x8 AB font with only capital letters </p>
+
+<p class="definition">Definition at line <a class="el" href="ssd1306__fonts_8c_source.html#l00163">163</a> of file <a class="el" href="ssd1306__fonts_8c_source.html">ssd1306_fonts.c</a>.</p>
+
+</div>
+</div>
+<a id="ga7528788d43102c14800322a186f382a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7528788d43102c14800322a186f382a5">&#9670;&nbsp;</a></span>ssd1306xled_font6x8_German</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const PROGMEM uint8_t ssd1306xled_font6x8_German[]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">German chars for standard ASCII 6x8 font </p>
 
 <p class="definition">Definition at line <a class="el" href="ssd1306__fonts_8c_source.html#l00144">144</a> of file <a class="el" href="ssd1306__fonts_8c_source.html">ssd1306_fonts.c</a>.</p>
 

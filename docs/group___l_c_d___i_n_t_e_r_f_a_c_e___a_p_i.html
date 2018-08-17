@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.2</span>
+   &#160;<span id="projectnumber">1.7.5</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -235,6 +235,10 @@ Variables</h2></td></tr>
 <tr class="memitem:ga838896d36d56ee1619bbc9ae5d7b88a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga838896d36d56ee1619bbc9ae5d7b88a8">ssd1331_96x64_spi_init</a> (int8_t rstPin, int8_t cesPin, int8_t dcPin)</td></tr>
 <tr class="memdesc:ga838896d36d56ee1619bbc9ae5d7b88a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits 96x64 RGB OLED display over spi (based on SSD1331 controller).  <a href="#ga838896d36d56ee1619bbc9ae5d7b88a8">More...</a><br /></td></tr>
 <tr class="separator:ga838896d36d56ee1619bbc9ae5d7b88a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa4c239fd99c5541b06d46ac9ed88b6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gafa4c239fd99c5541b06d46ac9ed88b6d">ssd1331_drawLine</a> (uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint16_t color)</td></tr>
+<tr class="separator:gafa4c239fd99c5541b06d46ac9ed88b6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga521e5d88879aa31c3b062ea820665818"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga521e5d88879aa31c3b062ea820665818">ssd1331_copyBlock</a> (uint8_t left, uint8_t top, uint8_t right, uint8_t bottom, uint8_t newLeft, uint8_t newTop)</td></tr>
+<tr class="separator:ga521e5d88879aa31c3b062ea820665818"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad784e60b2fe8b8f92a6f8b0cf5187bcf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gad784e60b2fe8b8f92a6f8b0cf5187bcf">ssd1351_setMode</a> (<a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gad2c71a26fa32dfcee88db3a3058ce596">lcd_mode_t</a> mode)</td></tr>
 <tr class="memdesc:gad784e60b2fe8b8f92a6f8b0cf5187bcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets GDRAM autoincrement mode.  <a href="#gad784e60b2fe8b8f92a6f8b0cf5187bcf">More...</a><br /></td></tr>
 <tr class="separator:gad784e60b2fe8b8f92a6f8b0cf5187bcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1626,6 +1630,133 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="oled__ssd1331_8c_source.html#l00167">167</a> of file <a class="el" href="oled__ssd1331_8c_source.html">oled_ssd1331.c</a>.</p>
+
+</div>
+</div>
+<a id="ga521e5d88879aa31c3b062ea820665818"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga521e5d88879aa31c3b062ea820665818">&#9670;&nbsp;</a></span>ssd1331_copyBlock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1331_copyBlock </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>left</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>top</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>right</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>bottom</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>newLeft</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>newTop</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Copies block in GDRAM to new position </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">left</td><td>column start of block to copy </td></tr>
+    <tr><td class="paramname">top</td><td>row start of block to copy </td></tr>
+    <tr><td class="paramname">right</td><td>column end of block to copy </td></tr>
+    <tr><td class="paramname">bottom</td><td>row end of block to copy </td></tr>
+    <tr><td class="paramname">newLeft</td><td>new column start </td></tr>
+    <tr><td class="paramname">newTop</td><td>new row start</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This API can be used only with ssd1331 RGB oled displays </dd>
+<dd>
+after copy command is sent, it takes some time from oled controller to complete operation. So, it is HIGHLY recommended to wait for reasonable time before send other graphics operations (for example, use 250us delay). This time is required for oled display to become ready to accept new commands. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="oled__ssd1331_8c_source.html#l00192">192</a> of file <a class="el" href="oled__ssd1331_8c_source.html">oled_ssd1331.c</a>.</p>
+
+</div>
+</div>
+<a id="gafa4c239fd99c5541b06d46ac9ed88b6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafa4c239fd99c5541b06d46ac9ed88b6d">&#9670;&nbsp;</a></span>ssd1331_drawLine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1331_drawLine </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>color</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Draws line </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x1</td><td>- x position in pixels of start point </td></tr>
+    <tr><td class="paramname">y1</td><td>- y position in pixels of start point </td></tr>
+    <tr><td class="paramname">x2</td><td>- x position in pixels of end point </td></tr>
+    <tr><td class="paramname">y2</td><td>- y position in pixels of end point </td></tr>
+    <tr><td class="paramname">color</td><td>- color of the line, refer to RGB_COLOR8 macros</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This API can be used only with ssd1331 RGB oled displays </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="oled__ssd1331_8c_source.html#l00177">177</a> of file <a class="el" href="oled__ssd1331_8c_source.html">oled_ssd1331.c</a>.</p>
 
 </div>
 </div>

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.2</span>
+   &#160;<span id="projectnumber">1.7.5</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -67,7 +67,7 @@ $(function() {
 
 <h3><a id="index_a"></a>- a -</h3><ul>
 <li>ascii_offset
-: <a class="el" href="struct_s_fixed_font_info.html#ab1ce9f48a6468de8d4677a32be0d516d">SFixedFontInfo</a>
+: <a class="el" href="struct_s_font_header_record.html#a2b7b768b98e4da20a932b32d7980dde1">SFontHeaderRecord</a>
 </li>
 </ul>
 
@@ -92,6 +92,7 @@ $(function() {
 </li>
 <li>count
 : <a class="el" href="struct_s_app_menu.html#ad750fae199422bd44dc6063123631d62">SAppMenu</a>
+, <a class="el" href="struct_s_unicode_block_record.html#a4e9a958ed2e5507c22490818dd2a304d">SUnicodeBlockRecord</a>
 </li>
 </ul>
 
@@ -99,16 +100,25 @@ $(function() {
 <h3><a id="index_d"></a>- d -</h3><ul>
 <li>data
 : <a class="el" href="struct_s_char_info.html#a5014add4b407a70d69d0bcb4ad47f5c0">SCharInfo</a>
-, <a class="el" href="struct_s_fixed_font_info.html#a0f7b369b22f547c125f83c708d8a6c39">SFixedFontInfo</a>
 , <a class="el" href="struct_s_p_r_i_t_e.html#ac56b0c16d0bcd810ae1289350df821c3">SPRITE</a>
 </li>
 </ul>
 
 
+<h3><a id="index_g"></a>- g -</h3><ul>
+<li>glyph_size
+: <a class="el" href="struct_s_fixed_font_info.html#a16b1ae2c599c2e8c1634a372f4c550b8">SFixedFontInfo</a>
+</li>
+</ul>
+
+
 <h3><a id="index_h"></a>- h -</h3><ul>
+<li>h
+: <a class="el" href="struct_s_fixed_font_info.html#a5116a6259c857fffdbbfc0867ced31b9">SFixedFontInfo</a>
+</li>
 <li>height
 : <a class="el" href="struct_s_char_info.html#a8bd0a76b2bebe145437473ab3c1b8a2b">SCharInfo</a>
-, <a class="el" href="struct_s_fixed_font_info.html#a496d496ec76e9aecc7ee507ed9d1d0a4">SFixedFontInfo</a>
+, <a class="el" href="struct_s_font_header_record.html#ad650740842794fe175eb1dccfa3cedea">SFontHeaderRecord</a>
 , <a class="el" href="structssd1306__lcd__t.html#af576fdaf144fefdb8e278ca3cb90f49e">ssd1306_lcd_t</a>
 </li>
 </ul>
@@ -247,6 +257,9 @@ $(function() {
 <li>pages
 : <a class="el" href="struct_s_fixed_font_info.html#ae1f28bffdc33257500d04b8999edb9b2">SFixedFontInfo</a>
 </li>
+<li>primary_table
+: <a class="el" href="struct_s_fixed_font_info.html#a8b47480d4d3e59a40411045a1c82730c">SFixedFontInfo</a>
+</li>
 </ul>
 
 
@@ -260,6 +273,9 @@ $(function() {
 <h3><a id="index_s"></a>- s -</h3><ul>
 <li>scrollPosition
 : <a class="el" href="struct_s_app_menu.html#a561ec2f54b8defb69d0d6ace7c5702b9">SAppMenu</a>
+</li>
+<li>secondary_table
+: <a class="el" href="struct_s_fixed_font_info.html#a73c75a104b00970b7fef5c7fe66b5ff6">SFixedFontInfo</a>
 </li>
 <li>selection
 : <a class="el" href="struct_s_app_menu.html#abbe11210d697c17d62e0232d6451d06b">SAppMenu</a>
@@ -294,6 +310,9 @@ $(function() {
 <li>start
 : <a class="el" href="structssd1306__interface__t.html#a347dbbf8fdb470d133901c8fbd8c5186">ssd1306_interface_t</a>
 </li>
+<li>start_code
+: <a class="el" href="struct_s_unicode_block_record.html#af269a22380bdb209d119e78fd94793b3">SUnicodeBlockRecord</a>
+</li>
 <li>stop
 : <a class="el" href="structssd1306__interface__t.html#a1cccdffea7b707f9db54e93375d12a22">ssd1306_interface_t</a>
 </li>
@@ -308,7 +327,8 @@ $(function() {
 : <a class="el" href="struct_s_p_r_i_t_e.html#a179f75785cfe41d2aaba303536d09d26">SPRITE</a>
 </li>
 <li>type
-: <a class="el" href="structssd1306__lcd__t.html#aabe73540a354c4f959e4fe862167b482">ssd1306_lcd_t</a>
+: <a class="el" href="struct_s_font_header_record.html#a0ea841c88936f4f4d49f6d0c4b71ce8e">SFontHeaderRecord</a>
+, <a class="el" href="structssd1306__lcd__t.html#aabe73540a354c4f959e4fe862167b482">ssd1306_lcd_t</a>
 </li>
 </ul>
 
@@ -319,7 +339,7 @@ $(function() {
 </li>
 <li>width
 : <a class="el" href="struct_s_char_info.html#a5473977c8856f8b33d5dd5383d88ad89">SCharInfo</a>
-, <a class="el" href="struct_s_fixed_font_info.html#a3a19df1e396115c8e04256af069d7091">SFixedFontInfo</a>
+, <a class="el" href="struct_s_font_header_record.html#a0ddb0bb869318675504c842516810c2d">SFontHeaderRecord</a>
 , <a class="el" href="structssd1306__lcd__t.html#a0c7d9e9ee7e3d36391e55731b0ebc516">ssd1306_lcd_t</a>
 </li>
 </ul>

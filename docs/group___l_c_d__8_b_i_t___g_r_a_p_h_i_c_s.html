@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.2</span>
+   &#160;<span id="projectnumber">1.7.5</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -81,10 +81,6 @@ Functions</h2></td></tr>
 <tr class="memitem:gacff343d6288cebda87d589f47fd6f5e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gacff343d6288cebda87d589f47fd6f5e3">ssd1331_setRgbColor</a> (uint8_t r, uint8_t g, uint8_t b)</td></tr>
 <tr class="memdesc:gacff343d6288cebda87d589f47fd6f5e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets default color.  <a href="#gacff343d6288cebda87d589f47fd6f5e3">More...</a><br /></td></tr>
 <tr class="separator:gacff343d6288cebda87d589f47fd6f5e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafa4c239fd99c5541b06d46ac9ed88b6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gafa4c239fd99c5541b06d46ac9ed88b6d">ssd1331_drawLine</a> (uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint16_t color)</td></tr>
-<tr class="separator:gafa4c239fd99c5541b06d46ac9ed88b6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga521e5d88879aa31c3b062ea820665818"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#ga521e5d88879aa31c3b062ea820665818">ssd1331_copyBlock</a> (uint8_t left, uint8_t top, uint8_t right, uint8_t bottom, uint8_t newLeft, uint8_t newTop)</td></tr>
-<tr class="separator:ga521e5d88879aa31c3b062ea820665818"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga14bc05c63fa2b0a38b6a2546a149741d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#ga14bc05c63fa2b0a38b6a2546a149741d">ssd1331_drawMonoBuffer8</a> (<a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> xpos, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> ypos, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> w, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> h, const uint8_t *bitmap)</td></tr>
 <tr class="separator:ga14bc05c63fa2b0a38b6a2546a149741d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac7f5c79106c1aa7caddd8f9f5170152b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gac7f5c79106c1aa7caddd8f9f5170152b">ssd1331_drawBufferFast8</a> (<a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> x, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> y, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> w, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> h, const uint8_t *data)</td></tr>
@@ -178,7 +174,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00291">291</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00254">254</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
 
 </div>
 </div>
@@ -199,75 +195,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p class="">Fills screen with zero-byte </p>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00144">144</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
-
-</div>
-</div>
-<a id="ga521e5d88879aa31c3b062ea820665818"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga521e5d88879aa31c3b062ea820665818">&#9670;&nbsp;</a></span>ssd1331_copyBlock()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1331_copyBlock </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>left</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>top</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>right</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>bottom</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>newLeft</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>newTop</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p class="">Copies block in GDRAM to new position </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">left</td><td>column start of block to copy </td></tr>
-    <tr><td class="paramname">top</td><td>row start of block to copy </td></tr>
-    <tr><td class="paramname">right</td><td>column end of block to copy </td></tr>
-    <tr><td class="paramname">bottom</td><td>row end of block to copy </td></tr>
-    <tr><td class="paramname">newLeft</td><td>new column start </td></tr>
-    <tr><td class="paramname">newTop</td><td>new row start</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>This API can be used only with ssd1331 RGB oled displays </dd>
-<dd>
-after copy command is sent, it takes some time from oled controller to complete operation. So, it is HIGHLY recommended to wait for reasonable time before send other graphics operations (for example, use 250us delay). This time is required for oled display to become ready to accept new commands. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00064">64</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00107">107</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
 
 </div>
 </div>
@@ -326,7 +254,7 @@ after copy command is sent, it takes some time from oled controller to complete 
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00279">279</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00242">242</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
 
 </div>
 </div>
@@ -444,7 +372,7 @@ after copy command is sent, it takes some time from oled controller to complete 
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00109">109</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00084">84</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
 
 </div>
 </div>
@@ -490,66 +418,7 @@ after copy command is sent, it takes some time from oled controller to complete 
 </dl>
 <dl class="section note"><dt>Note</dt><dd>set color with <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gabf877db26754e2b5b6d0707aa206cc08" title="Sets default color, generated by RGB_COLOR8 or RGB_COLOR16 macros. ">ssd1331_setColor()</a> function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00167">167</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
-
-</div>
-</div>
-<a id="gafa4c239fd99c5541b06d46ac9ed88b6d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gafa4c239fd99c5541b06d46ac9ed88b6d">&#9670;&nbsp;</a></span>ssd1331_drawLine()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1331_drawLine </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>x1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>y1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>x2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>y2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>color</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p class="">Draws line </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x1</td><td>- x position in pixels of start point </td></tr>
-    <tr><td class="paramname">y1</td><td>- y position in pixels of start point </td></tr>
-    <tr><td class="paramname">x2</td><td>- x position in pixels of end point </td></tr>
-    <tr><td class="paramname">y2</td><td>- y position in pixels of end point </td></tr>
-    <tr><td class="paramname">color</td><td>- color of the line, refer to RGB_COLOR8 macros</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>This API can be used only with ssd1331 RGB oled displays </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00049">49</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00130">130</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
 
 </div>
 </div>
@@ -602,7 +471,7 @@ after copy command is sent, it takes some time from oled controller to complete 
 </dl>
 <dl class="section note"><dt>Note</dt><dd>set color with <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gabf877db26754e2b5b6d0707aa206cc08" title="Sets default color, generated by RGB_COLOR8 or RGB_COLOR16 macros. ">ssd1331_setColor()</a> function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00178">178</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00141">141</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
 
 </div>
 </div>
@@ -662,7 +531,7 @@ after copy command is sent, it takes some time from oled controller to complete 
 </dl>
 <dl class="section note"><dt>Note</dt><dd>set color with <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gabf877db26754e2b5b6d0707aa206cc08" title="Sets default color, generated by RGB_COLOR8 or RGB_COLOR16 macros. ">ssd1331_setColor()</a> function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00248">248</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00211">211</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
 
 </div>
 </div>
@@ -721,7 +590,7 @@ after copy command is sent, it takes some time from oled controller to complete 
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00078">78</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00053">53</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
 
 </div>
 </div>
@@ -774,7 +643,7 @@ after copy command is sent, it takes some time from oled controller to complete 
 </dl>
 <dl class="section note"><dt>Note</dt><dd>set color with <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gabf877db26754e2b5b6d0707aa206cc08" title="Sets default color, generated by RGB_COLOR8 or RGB_COLOR16 macros. ">ssd1331_setColor()</a> function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00221">221</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00184">184</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
 
 </div>
 </div>
@@ -820,7 +689,7 @@ after copy command is sent, it takes some time from oled controller to complete 
 </dl>
 <dl class="section note"><dt>Note</dt><dd>set color with <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gabf877db26754e2b5b6d0707aa206cc08" title="Sets default color, generated by RGB_COLOR8 or RGB_COLOR16 macros. ">ssd1331_setColor()</a> function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00156">156</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00119">119</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
 
 </div>
 </div>
@@ -873,7 +742,7 @@ after copy command is sent, it takes some time from oled controller to complete 
 </dl>
 <dl class="section note"><dt>Note</dt><dd>set color with <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gabf877db26754e2b5b6d0707aa206cc08" title="Sets default color, generated by RGB_COLOR8 or RGB_COLOR16 macros. ">ssd1331_setColor()</a> function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00229">229</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00192">192</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
 
 </div>
 </div>
@@ -900,7 +769,7 @@ after copy command is sent, it takes some time from oled controller to complete 
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00133">133</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00096">96</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
 
 </div>
 </div>
@@ -930,7 +799,7 @@ after copy command is sent, it takes some time from oled controller to complete 
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>returns number of printed characters. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00349">349</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00336">336</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
 
 </div>
 </div>
@@ -958,7 +827,7 @@ after copy command is sent, it takes some time from oled controller to complete 
 </dl>
 <dl class="section note"><dt>Note</dt><dd>set color with <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gabf877db26754e2b5b6d0707aa206cc08" title="Sets default color, generated by RGB_COLOR8 or RGB_COLOR16 macros. ">ssd1331_setColor()</a> function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00308">308</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00271">271</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
 
 </div>
 </div>
@@ -1012,7 +881,7 @@ after copy command is sent, it takes some time from oled controller to complete 
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___f_o_n_t_s.html#gac38e07839ff23bd17a6f0c79f5f92d2d">ssd1306_setFixedFont</a> </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>set color with <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gabf877db26754e2b5b6d0707aa206cc08" title="Sets default color, generated by RGB_COLOR8 or RGB_COLOR16 macros. ">ssd1331_setColor()</a> function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00360">360</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00347">347</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
 
 </div>
 </div>
@@ -1051,7 +920,7 @@ after copy command is sent, it takes some time from oled controller to complete 
 </dl>
 <dl class="section note"><dt>Note</dt><dd>set color with <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gabf877db26754e2b5b6d0707aa206cc08" title="Sets default color, generated by RGB_COLOR8 or RGB_COLOR16 macros. ">ssd1331_setColor()</a> function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00149">149</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00112">112</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
 
 </div>
 </div>
@@ -1080,7 +949,7 @@ after copy command is sent, it takes some time from oled controller to complete 
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00039">39</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00043">43</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
 
 </div>
 </div>
@@ -1118,7 +987,7 @@ after copy command is sent, it takes some time from oled controller to complete 
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00302">302</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00265">265</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
 
 </div>
 </div>
@@ -1164,7 +1033,7 @@ after copy command is sent, it takes some time from oled controller to complete 
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00044">44</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00048">48</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
 
 </div>
 </div>
@@ -1194,7 +1063,7 @@ after copy command is sent, it takes some time from oled controller to complete 
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>returns number of printed characters. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00318">318</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00293">293</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
 
 </div>
 </div>
