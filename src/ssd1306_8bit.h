@@ -57,7 +57,7 @@ extern "C" {
  *
  * @param color - new  color to use for monochrome-specific operations on color display.
  */
-void        ssd1331_setColor(uint16_t color);
+void ssd1331_setColor(uint16_t color);
 
 /**
  * @brief Sets default color.
@@ -70,7 +70,7 @@ void        ssd1331_setColor(uint16_t color);
  * @param g - green in 0-255 range.
  * @param b - blue in 0-255 range.
  */
-void        ssd1331_setRgbColor(uint8_t r, uint8_t g, uint8_t b);
+void ssd1331_setRgbColor(uint8_t r, uint8_t g, uint8_t b);
 
 /**
  * Draws 1-bit bitmap, located in SRAM, on the display
@@ -94,7 +94,7 @@ void ssd1331_drawMonoBuffer8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
  * @param h - height of bitmap in pixels
  * @param data - pointer to data, located in SRAM.
  */
-void         ssd1331_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data);
+void ssd1331_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data);
 
 /**
  * Draws 16-bit bitmap, located in SRAM, on the display
@@ -106,7 +106,7 @@ void         ssd1331_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduin
  * @param h - height of bitmap in pixels
  * @param data - pointer to data, located in SRAM.
  */
-void         ssd1331_drawBufferFast16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data);
+void ssd1331_drawBufferFast16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data);
 
 /**
  * Fills screen with pattern byte
