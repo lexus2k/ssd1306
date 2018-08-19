@@ -23,14 +23,13 @@
 */
 
 #include "buttons.h"
-
-#include "Arduino.h"
+#include "ssd1306.h"
 
 uint8_t getPressedButton(uint8_t analogPin)
 {
   int buttonValue = analogRead(analogPin);
   if (buttonValue < 100) {
-    return BUTTON_RIGHT;  
+    return BUTTON_RIGHT;
   }
   else if (buttonValue < 200) {
     return BUTTON_UP;

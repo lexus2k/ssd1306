@@ -36,6 +36,9 @@
 #include "ssd1306.h"
 #include "buttons.h"
 
+#ifndef A0
+#define A0  0
+#endif
 #define BUTTON_PIN     A0
 
 /* Define menu items of the menu box */
@@ -53,22 +56,31 @@ const char *menuItems[] =
 
 /* This variable will hold menu state, processed by SSD1306 API functions */
 SAppMenu menu;
+static uint8_t button;
 
 
 void setup()
 {
     ssd1306_128x64_i2c_init();
+    ssd1306_setFixedFont(ssd1306xled_font6x8);
     ssd1306_fillScreen( 0x00 );
     /* Initialize main menu state */
     ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
     /* show menu on the display */
     ssd1306_showMenu( &menu );
+    button = getPressedButton(BUTTON_PIN);
 }
 
 
 void loop()
 {
-    switch (getPressedButton(BUTTON_PIN))
+    uint8_t newButton = getPressedButton(BUTTON_PIN);
+    if (newButton == button)
+    {
+        return;
+    }
+    button = newButton;
+    switch (button)
     {
         case BUTTON_UP:
             /* move menu cursor up and refresh menu on the display */
