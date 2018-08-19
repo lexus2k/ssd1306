@@ -81,7 +81,10 @@ class NanoEngineTiler
 {
 protected:
     /** Only child classes can initialize the engine */
-    NanoEngineTiler()
+    NanoEngineTiler():
+        m_onDraw(nullptr),
+        canvas(W, H, m_buffer),
+        offset{0, 0}
     {
         refresh();
     };
@@ -97,12 +100,12 @@ public:
     static const uint8_t NE_MAX_TILES_NUM = 16 >> (B - 3);
 
     /** object, representing canvas. Use it in your draw handler */
-    static C canvas;
+    C canvas;
 
     /**
      * Marks all tiles for update. Actual update will take place in display() method.
      */
-    static void refresh()
+    void refresh()
     {
         memset(m_refreshFlags,0xFF,sizeof(uint16_t) * NanoEngineTiler<C,W,H,B>::NE_MAX_TILES_NUM);
     }
@@ -112,7 +115,7 @@ public:
      * Actual update will take place in display() method.
      * @note assumes that rect is in local screen coordinates
      */
-    static void refresh(const NanoRect &rect)
+    void refresh(const NanoRect &rect)
     {
         refresh(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
     }
@@ -121,7 +124,7 @@ public:
      * Mark specified area in pixels for redrawing by NanoEngine.
      * Actual update will take place in display() method.
      */
-    static void refresh(const NanoPoint &point)
+    void refresh(const NanoPoint &point)
     {
         if ((point.y<0) || ((point.y>>B)>=NE_MAX_TILES_NUM)) return;
         m_refreshFlags[(point.y>>B)] |= (1<<(point.x>>B));
@@ -131,7 +134,7 @@ public:
      * Mark specified area in pixels for redrawing by NanoEngine.
      * Actual update will take place in display() method.
      */
-    static void refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+    void refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
     {
         if (y2 < 0) return;
         if (y1 < 0) y1 = 0;
@@ -152,7 +155,7 @@ public:
      * global (World) coordinates. If engine offset is (0,0), then this function
      * refreshes the same area as refresh().
      */
-    static void refreshWorld(const NanoRect &rect)
+    void refreshWorld(const NanoRect &rect)
     {
         refreshWorld(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
     }
@@ -162,7 +165,7 @@ public:
      * global (World) coordinates. If engine offset is (0,0), then this function
      * refreshes the same area as refresh().
      */
-    static void refreshWorld(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+    void refreshWorld(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
     {
         refresh(x1 - offset.x, y1 - offset.y, x2 - offset.x, y2 - offset.y);
     }
@@ -171,7 +174,7 @@ public:
      * Marks specified pixel area for redrawing by NanoEngine.
      * @param point point in global (World) coordinates
      */
-    static void refreshWorld(const NanoPoint &point)
+    void refreshWorld(const NanoPoint &point)
     {
         refresh( point - offset );
     }
@@ -181,7 +184,7 @@ public:
      * to ease up drawing of some static elements on lcd display.
      * @warning do not call twice subsequentally.
      */
-    static void localCoordinates()
+    void localCoordinates()
     {
         canvas.offset -= offset;
     }
@@ -191,7 +194,7 @@ public:
      * to create screen moving animation.
      * @warning do not call twice subsequentally.
      */
-    static void worldCoordinates()
+    void worldCoordinates()
     {
         canvas.offset += offset;
     }
@@ -199,7 +202,7 @@ public:
     /**
      * Moves engine coordinate to new position (this sets World coordinates offset).
      */
-    static void moveTo(const NanoPoint & position)
+    void moveTo(const NanoPoint & position)
     {
         offset = position;
     }
@@ -208,7 +211,7 @@ public:
      * Moves engine coordinate to new position and mark whole display for refresh
      * (this sets World coordinates offset).
      */
-    static void moveToAndRefresh(const NanoPoint & position)
+    void moveToAndRefresh(const NanoPoint & position)
     {
         moveTo(position);
         refresh();
@@ -237,7 +240,7 @@ public:
      * @see worldCoordinates()
      * @see localCoordinates()
      */
-    static void drawCallback(TNanoEngineOnDraw callback)
+    void drawCallback(TNanoEngineOnDraw callback)
     {
         m_onDraw = callback;
     }
@@ -249,17 +252,17 @@ public:
      * @param rect - rectangle, describing the region to check with the point
      * @returns true if point is inside the rectangle area.
      */
-    static bool collision(NanoPoint &p, NanoRect &rect) { return rect.collision( p ); }
+    bool collision(NanoPoint &p, NanoRect &rect) { return rect.collision( p ); }
 
 protected:
     /**
      * Contains information on tiles to be updated.
      * Elements of array are rows and bits are columns.
      */
-    static uint16_t   m_refreshFlags[NE_MAX_TILES_NUM];
+    uint16_t   m_refreshFlags[NE_MAX_TILES_NUM];
 
     /** Callback to call if specific tile needs to be updated */
-    static TNanoEngineOnDraw m_onDraw;
+    TNanoEngineOnDraw m_onDraw;
 
     /**
      * @brief refreshes content on oled display.
@@ -267,35 +270,20 @@ protected:
      * Engine will update only those areas, which are marked by refresh()
      * methods.
      */
-    static void displayBuffer();
+    void displayBuffer();
 
     /**
      * @brief prints popup message over display content
      * prints popup message over display content
      * @param msg - message to display
      */
-    static void displayPopup(const char *msg);
+    void displayPopup(const char *msg);
 private:
     /** Buffer, used by NanoCanvas */
-    static uint8_t    m_buffer[W * H * C::BITS_PER_PIXEL / 8];
+    uint8_t    m_buffer[W * H * C::BITS_PER_PIXEL / 8];
 
-    static NanoPoint offset;
+    NanoPoint offset;
 };
-
-template<class C, uint8_t W, uint8_t H, uint8_t B>
-uint16_t NanoEngineTiler<C,W,H,B>::m_refreshFlags[NE_MAX_TILES_NUM];
-
-template<class C, uint8_t W, uint8_t H, uint8_t B>
-uint8_t NanoEngineTiler<C,W,H,B>::m_buffer[W * H * C::BITS_PER_PIXEL / 8];
-
-template<class C, uint8_t W, uint8_t H, uint8_t B>
-C NanoEngineTiler<C,W,H,B>::canvas(W, H, m_buffer);
-
-template<class C, uint8_t W, uint8_t H, uint8_t B>
-NanoPoint NanoEngineTiler<C,W,H,B>::offset = {0, 0};
-
-template<class C, uint8_t W, uint8_t H, uint8_t B>
-TNanoEngineOnDraw NanoEngineTiler<C,W,H,B>::m_onDraw = nullptr;
 
 template<class C, uint8_t W, uint8_t H, uint8_t B>
 void NanoEngineTiler<C,W,H,B>::displayBuffer()

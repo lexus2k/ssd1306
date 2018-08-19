@@ -226,20 +226,20 @@ public:
      * Engine will update only those areas, which are marked by refresh()
      * methods.
      */
-    static void display();
+    void display();
 
     /**
      * Initializes internal timestamps, engine state, and
      * switches oled display to required mode (see ssd1306_setMode()).
      */
-    static void begin();
+    void begin();
 
     /**
      * @brief shows notification to a user for 1 seconds
      * Shows notification to a user for 1 seconds
      * @param str - pointer to null-terminated string to show
      */
-    static void notify(const char *str);
+    void notify(const char *str);
 
 protected:
 };
