@@ -56,7 +56,7 @@ static const uint16_t __VGA_VERTICAL_PIXELS = 64;
 static const uint16_t __VGA_LINE_BYTES = 16;
 static const uint16_t __VGA_PIXEL_HEIGHT = 7;
 volatile uint8_t      __vga_buffer[16*64] = {0};
-static const uint8_t *__VGA_BUFFER_PTR = &__vga_buffer[0];
+static const volatile uint8_t *__VGA_BUFFER_PTR = &__vga_buffer[0];
 
 void ssd1306_vga_controller_128x64_init_no_output(void);
 void ssd1306_vga_controller_128x64_init_enable_output(void);
@@ -69,7 +69,7 @@ static const uint16_t __VGA_VERTICAL_PIXELS = 40;
 static const uint16_t __VGA_LINE_BYTES = 36;
 static const uint16_t __VGA_PIXEL_HEIGHT = 10;
 volatile uint8_t      __vga_buffer[36*40] = {0};
-static const uint8_t *__VGA_BUFFER_PTR = &__vga_buffer[0];
+static const volatile uint8_t * __VGA_BUFFER_PTR = &__vga_buffer[0];
 
 void ssd1306_vga_controller_96x40_init_no_output(void);
 void ssd1306_vga_controller_96x40_init_enable_output(void);
@@ -95,7 +95,7 @@ volatile int s_current_scan_line;
 
 volatile uint8_t s_lines_to_skip;
 volatile uint8_t s_scan_line_index;
-volatile uint8_t *s_current_scan_line_data = __VGA_BUFFER_PTR;
+volatile const uint8_t * volatile s_current_scan_line_data = __VGA_BUFFER_PTR;
 extern volatile uint8_t s_vga_frames;
 extern unsigned long timer0_millis;
 // ISR: Vsync pulse

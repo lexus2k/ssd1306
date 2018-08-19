@@ -66,7 +66,7 @@ void ssd1306_debug_print_vga_buffer(void (*func)(uint8_t));
  * Be careful, this function reinitialized Atmega328p timers.
  * delay() function will not work after call.
  */
-void ssd1306_vga_controller_init(void);
+//void ssd1306_vga_controller_init(void);
 
 #endif
 
