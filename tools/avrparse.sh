@@ -31,3 +31,4 @@ fi
 avr-nm --size-sort -C -r $1 >elfdump.txt
 avr-objdump -C -d $1 >elfdisasm.txt
 avr-size -C $1 > elfsize.txt
+cat elfsize.txt
