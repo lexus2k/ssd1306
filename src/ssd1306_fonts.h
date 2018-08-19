@@ -86,7 +86,7 @@ extern const PROGMEM uint8_t comic_sans_font24x32_123 [];
  * @param x xpos in pixels
  * @param y ypos in pixels
  */
-void       ssd1306_setCursor(lcdint_t x, lcdint_t y);
+void ssd1306_setCursor(lcdint_t x, lcdint_t y);
 
 /**
  * Function allows to set another fixed font for the library.
@@ -135,7 +135,7 @@ void ssd1306_setFont6x8(const uint8_t * progmemFont) __attribute__ ((deprecated)
  *
  * Function returns char data for currently set font: pointer to progmem
  * data for specified char, and width, height of the char. You can use these
- * data to draw char manually using ssd1306_drawBitmap(), ssd1331_drawMonoBitmap8()
+ * data to draw char manually using ssd1306_drawBitmap(), ssd1306_drawMonoBitmap8()
  * or NanoCanvasOps::drawBitmap1().
  *
  * @param ch char to read from set font

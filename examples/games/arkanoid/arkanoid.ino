@@ -168,13 +168,13 @@ void drawIntro()
     ssd1306_128x64_init();
 #endif
     ssd1306_clearScreen( );
-    ssd1331_setColor(RGB_COLOR8(255,0,0));
+    ssd1306_setColor(RGB_COLOR8(255,0,0));
     for (int8_t y=-24; y<16; y++)
     {
         gfx_drawMonoBitmap(16 - OUTPUT_OFFSET, y, 96, 24, arkanoid_2);
         delay(20);
     }
-    ssd1331_setColor(RGB_COLOR8(255,255,0));
+    ssd1306_setColor(RGB_COLOR8(255,255,0));
     ssd1306_printFixed(40 - OUTPUT_OFFSET, 40, "BREAKOUT", STYLE_NORMAL);
     beep(200,600);
     beep(300,200);
@@ -183,17 +183,17 @@ void drawIntro()
 
 void drawStatusPanel()
 {
-    ssd1331_setColor(RGB_COLOR8(255,0,0));
+    ssd1306_setColor(RGB_COLOR8(255,0,0));
     for(uint8_t i=0; i<min(hearts,3); i++)
     {
         SPRITE heart = ssd1306_createSprite( RIGHT_EDGE + 4, 16 + (i<<3), 8, heartSprite );
         heart.draw();
     }
-    ssd1331_setColor(RGB_COLOR8(255,255,0));
+    ssd1306_setColor(RGB_COLOR8(255,255,0));
     arkanoidUtoa(score);
     tempStr[2] = '\0';
     ssd1306_printFixed(RIGHT_EDGE + 1, 8, tempStr, STYLE_NORMAL);
-    ssd1331_setColor(RGB_COLOR8(0,255,255));
+    ssd1306_setColor(RGB_COLOR8(0,255,255));
     SPRITE power = ssd1306_createSprite( RIGHT_EDGE + 4, 40, 8, powerSprite );
     if (platformPower)
         power.draw();
@@ -205,7 +205,7 @@ void drawStatusPanel()
 void drawPlatform()
 {
     uint8_t pos = (platformPos < PLATFORM_SPEED) ? 0: (platformPos - PLATFORM_SPEED);
-    ssd1331_setColor(RGB_COLOR8(255,255,0));
+    ssd1306_setColor(RGB_COLOR8(255,255,0));
     ssd1306_lcd.set_block( pos + LEFT_EDGE + 1, PLATFORM_ROW, platformWidth + PLATFORM_SPEED * 2 );
     while (pos < platformPos)
     {
@@ -235,7 +235,7 @@ void drawPlatform()
 void drawFieldEdges()
 {
     uint8_t i=8;
-    ssd1331_setColor(RGB_COLOR8(255,0,0));
+    ssd1306_setColor(RGB_COLOR8(255,0,0));
     while (i)
     {
         i--;
@@ -253,10 +253,10 @@ void drawBlock(uint8_t x, uint8_t y)
     uint8_t block = gameField[y][x];
     switch(block)
     {
-        case 1: ssd1331_setColor(RGB_COLOR8(64,64,255)); break;
-        case 2: ssd1331_setColor(RGB_COLOR8(64,255,255)); break;
-        case 3: ssd1331_setColor(RGB_COLOR8(64,255,64)); break;
-        default: ssd1331_setColor(RGB_COLOR8(64,64,255)); break;
+        case 1: ssd1306_setColor(RGB_COLOR8(64,64,255)); break;
+        case 2: ssd1306_setColor(RGB_COLOR8(64,255,255)); break;
+        case 3: ssd1306_setColor(RGB_COLOR8(64,255,64)); break;
+        default: ssd1306_setColor(RGB_COLOR8(64,64,255)); break;
     }
     ssd1306_drawSpriteEx(LEFT_EDGE + 1 + (x << 4), y, 16, &blockImages[block][0]);
 }
@@ -303,7 +303,7 @@ void drawStartScreen()
 
 void startLevel()
 {
-    ssd1331_setColor(RGB_COLOR8(255,128,0));
+    ssd1306_setColor(RGB_COLOR8(255,128,0));
     arkanoidUtoa(level);
     ssd1306_clearScreen();
     ssd1306_printFixed(40 - OUTPUT_OFFSET, 24, "LEVEL ", STYLE_BOLD);
@@ -408,7 +408,7 @@ void drawBall(uint8_t lastx, uint8_t lasty)
     uint8_t newy = bally >> SPEED_SHIFT;
     uint8_t temp;
     temp = 0B00000001 << (newy & 0x07);
-    ssd1331_setColor(RGB_COLOR8(255,255,255));
+    ssd1306_setColor(RGB_COLOR8(255,255,255));
     ssd1306_lcd.set_block(LEFT_EDGE + 1 + newx, newy >> 3, 1);
     ssd1306_lcd.send_pixels1( temp );
     ssd1306_intf.stop();
@@ -423,7 +423,7 @@ void drawBall(uint8_t lastx, uint8_t lasty)
 
 void drawObjects()
 {
-    ssd1331_setColor(RGB_COLOR8(255,0,192));
+    ssd1306_setColor(RGB_COLOR8(255,0,192));
     for(uint8_t i=0; i<MAX_GAME_OBJECTS; i++)
     {
        if (objects[i].type == 0)
@@ -622,7 +622,7 @@ void movePlatform()
 
 void gameOver()
 {
-    ssd1331_setColor(RGB_COLOR8(255,255,255));
+    ssd1306_setColor(RGB_COLOR8(255,255,255));
 #if defined(ESP32) || defined(ESP8266)
     uint16_t topScore = score;
 #else

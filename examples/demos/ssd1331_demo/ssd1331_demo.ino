@@ -84,14 +84,14 @@ uint8_t rotation = 0;
 
 static void bitmapDemo()
 {
-    ssd1331_setColor(RGB_COLOR8(64,64,255));
+    ssd1306_setColor(RGB_COLOR8(64,64,255));
     if ( rotation & 1 )
-        ssd1331_drawMonoBitmap8(0, 0, 64, 64, Owl_64x64);
+        ssd1306_drawMonoBitmap8(0, 0, 64, 64, Owl_64x64);
     else
-        ssd1331_drawMonoBitmap8(0, 0, 96, 64, Owl);
-    ssd1331_drawBitmap8(0, 0, 8, 8, heartImage8);
-    ssd1331_setColor(RGB_COLOR8(255,64,64));
-    ssd1331_drawMonoBitmap8(0, 16, 8, 8, heartImage);
+        ssd1306_drawMonoBitmap8(0, 0, 96, 64, Owl);
+    ssd1306_drawBitmap8(0, 0, 8, 8, heartImage8);
+    ssd1306_setColor(RGB_COLOR8(255,64,64));
+    ssd1306_drawMonoBitmap8(0, 16, 8, 8, heartImage);
     delay(3000);
 }
 
@@ -142,20 +142,20 @@ static void spriteDemo()
 
 static void textDemo()
 {
-    ssd1331_clearScreen8();
+    ssd1306_clearScreen8();
     ssd1306_setFixedFont(digital_font5x7);
-    ssd1331_setColor(RGB_COLOR8(0,64,255));
-    ssd1331_printFixed8(0,  0, "0123456789", STYLE_NORMAL);
+    ssd1306_setColor(RGB_COLOR8(0,64,255));
+    ssd1306_printFixed8(0,  0, "0123456789", STYLE_NORMAL);
     ssd1306_setFixedFont(ssd1306xled_font6x8);
-    ssd1331_setColor(RGB_COLOR8(255,255,0));
-    ssd1331_printFixed8(0,  8, "Normal text", STYLE_NORMAL);
-    ssd1331_setColor(RGB_COLOR8(0,255,0));
-    ssd1331_printFixed8(0, 16, "Bold text?", STYLE_BOLD);
-    ssd1331_setColor(RGB_COLOR8(0,255,255));
-    ssd1331_printFixed8(0, 24, "Italic text?", STYLE_ITALIC);
+    ssd1306_setColor(RGB_COLOR8(255,255,0));
+    ssd1306_printFixed8(0,  8, "Normal text", STYLE_NORMAL);
+    ssd1306_setColor(RGB_COLOR8(0,255,0));
+    ssd1306_printFixed8(0, 16, "Bold text?", STYLE_BOLD);
+    ssd1306_setColor(RGB_COLOR8(0,255,255));
+    ssd1306_printFixed8(0, 24, "Italic text?", STYLE_ITALIC);
     ssd1306_negativeMode();
-    ssd1331_setColor(RGB_COLOR8(255,255,255));
-    ssd1331_printFixed8(0, 32, "Inverted bold?", STYLE_BOLD);
+    ssd1306_setColor(RGB_COLOR8(255,255,255));
+    ssd1306_printFixed8(0, 32, "Inverted bold?", STYLE_BOLD);
     ssd1306_positiveMode();
     delay(3000);
 }
@@ -164,9 +164,9 @@ static void canvasDemo()
 {
     uint8_t buffer[64*16/8];
     NanoCanvas1_8 canvas(64,16, buffer);
-    ssd1331_setColor(RGB_COLOR8(0,255,0));
+    ssd1306_setColor(RGB_COLOR8(0,255,0));
     ssd1306_setFixedFont(ssd1306xled_font6x8);
-    ssd1331_clearScreen8();
+    ssd1306_clearScreen8();
     canvas.clear();
     canvas.fillRect(10, 3, 80, 5);
     canvas.blt((ssd1306_displayWidth()-64)/2, 1);
@@ -205,9 +205,9 @@ void setup()
 
     // RGB functions do not work in default SSD1306 compatible mode
     ssd1306_setMode( LCD_MODE_NORMAL );
-    ssd1331_fillScreen8( 0x00 );
+    ssd1306_fillScreen8( 0x00 );
     ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
-    ssd1331_showMenu8( &menu );
+    ssd1306_showMenu8( &menu );
 }
 
 void loop()
@@ -242,10 +242,10 @@ void loop()
     {
          ssd1331_setRotation((++rotation) & 0x03);
     }
-    ssd1331_fillScreen8( 0x00 );
-    ssd1331_setColor(RGB_COLOR8(255,255,255));
-    ssd1331_showMenu8(&menu);
+    ssd1306_fillScreen8( 0x00 );
+    ssd1306_setColor(RGB_COLOR8(255,255,255));
+    ssd1306_showMenu8(&menu);
     delay(500);
     ssd1306_menuDown(&menu);
-    ssd1331_updateMenu8(&menu);
+    ssd1306_updateMenu8(&menu);
 }

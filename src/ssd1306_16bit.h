@@ -60,7 +60,14 @@ extern "C" {
  * @param h - height of bitmap in pixels
  * @param data - pointer to data, located in SRAM.
  */
-void         ssd1331_drawBufferFast16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data);
+void ssd1306_drawBufferFast16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data);
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+static inline void ssd1331_drawBufferFast16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data)
+{
+    ssd1306_drawBufferFast16(x, y, w, h, data);
+}
+#endif
 
 /**
  * @}

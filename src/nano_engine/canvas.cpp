@@ -452,12 +452,12 @@ void NanoCanvas1::blt()
 
 void NanoCanvas1_8::blt(lcdint_t x, lcdint_t y)
 {
-    ssd1331_drawMonoBuffer8(x, y, m_w, m_h, m_buf);
+    ssd1306_drawMonoBuffer8(x, y, m_w, m_h, m_buf);
 }
 
 void NanoCanvas1_8::blt()
 {
-    ssd1331_drawMonoBuffer8(offset.x, offset.y, m_w, m_h, m_buf);
+    ssd1306_drawMonoBuffer8(offset.x, offset.y, m_w, m_h, m_buf);
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -857,12 +857,12 @@ void NanoCanvasOps<8>::begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
 
 void NanoCanvas8::blt(lcdint_t x, lcdint_t y)
 {
-    ssd1331_drawBufferFast8(x, y, m_w, m_h, m_buf);
+    ssd1306_drawBufferFast8(x, y, m_w, m_h, m_buf);
 }
 
 void NanoCanvas8::blt()
 {
-    ssd1331_drawBufferFast8(offset.x, offset.y, m_w, m_h, m_buf);
+    ssd1306_drawBufferFast8(offset.x, offset.y, m_w, m_h, m_buf);
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -1274,11 +1274,11 @@ void NanoCanvasOps<16>::begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
 
 void NanoCanvas16::blt(lcdint_t x, lcdint_t y)
 {
-    ssd1331_drawBufferFast16(x, y, m_w, m_h, m_buf);
+    ssd1306_drawBufferFast16(x, y, m_w, m_h, m_buf);
 }
 
 void NanoCanvas16::blt()
 {
-    ssd1331_drawBufferFast16(offset.x, offset.y, m_w, m_h, m_buf);
+    ssd1306_drawBufferFast16(offset.x, offset.y, m_w, m_h, m_buf);
 }
 

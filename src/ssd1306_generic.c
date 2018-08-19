@@ -33,11 +33,12 @@
 #include "intf/spi/ssd1306_spi.h"
 #include "intf/ssd1306_interface.h"
 #include "ssd1306_hal/io.h"
+#include "nano_gfx_types.h"
 
 uint16_t ssd1306_color = 0xFFFF;
 lcduint_t ssd1306_cursorX = 0;
 lcduint_t ssd1306_cursorY = 0;
-SFixedFontInfo s_fixedFont = { 0 };
+SFixedFontInfo s_fixedFont = { {0} };
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
 uint8_t g_ssd1306_unicode = 1;
 #endif

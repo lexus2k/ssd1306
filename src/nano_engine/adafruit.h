@@ -245,7 +245,7 @@ public:
      */
     void blt(lcdint_t x, lcdint_t y) override
     {
-        ssd1331_drawBufferFast8(x, y, WIDTH, HEIGHT, m_buffer);
+        ssd1306_drawBufferFast8(x, y, WIDTH, HEIGHT, m_buffer);
     }
 
     /**
@@ -253,7 +253,7 @@ public:
      */
     void blt() override
     {
-        ssd1331_drawBufferFast8(offset.x, offset.y, WIDTH, HEIGHT, m_buffer);
+        ssd1306_drawBufferFast8(offset.x, offset.y, WIDTH, HEIGHT, m_buffer);
     }
 };
 
@@ -297,7 +297,7 @@ public:
      */
     void blt(lcdint_t x, lcdint_t y) override
     {
-        ssd1331_drawBufferFast16(x, y, WIDTH, HEIGHT, m_buffer);
+        ssd1306_drawBufferFast16(x, y, WIDTH, HEIGHT, m_buffer);
     }
 
     /**
@@ -305,7 +305,7 @@ public:
      */
     void blt() override
     {
-        ssd1331_drawBufferFast16(offset.x, offset.y, WIDTH, HEIGHT, m_buffer);
+        ssd1306_drawBufferFast16(offset.x, offset.y, WIDTH, HEIGHT, m_buffer);
     }
 };
 

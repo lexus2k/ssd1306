@@ -84,7 +84,7 @@ static void drawMenuItem8(SAppMenu *menu, uint8_t index)
     {
         ssd1306_positiveMode();
     }
-    ssd1331_printFixed8(8, (index - menu->scrollPosition + 1)*8, menu->items[index], STYLE_NORMAL );
+    ssd1306_printFixed8(8, (index - menu->scrollPosition + 1)*8, menu->items[index], STYLE_NORMAL );
     ssd1306_positiveMode();
 }
 
@@ -99,9 +99,9 @@ void ssd1306_showMenu(SAppMenu *menu)
     menu->oldSelection = menu->selection;
 }
 
-void ssd1331_showMenu8(SAppMenu *menu)
+void ssd1306_showMenu8(SAppMenu *menu)
 {
-    ssd1331_drawRect8(4, 4, ssd1306_displayWidth() - 5, ssd1306_displayHeight() - 5);
+    ssd1306_drawRect8(4, 4, ssd1306_displayWidth() - 5, ssd1306_displayHeight() - 5);
     menu->scrollPosition = calculateScrollPosition( menu, menu->selection );
     for (uint8_t i = menu->scrollPosition; i < min(menu->count, menu->scrollPosition + getMaxScreenItems()); i++)
     {
@@ -129,15 +129,15 @@ void ssd1306_updateMenu(SAppMenu *menu)
     }
 }
 
-void ssd1331_updateMenu8(SAppMenu *menu)
+void ssd1306_updateMenu8(SAppMenu *menu)
 {
     if (menu->selection != menu->oldSelection)
     {
         uint8_t scrollPosition = calculateScrollPosition( menu, menu->selection );
         if ( scrollPosition != menu->scrollPosition )
         {
-            ssd1331_clearScreen8();
-            ssd1331_showMenu8(menu);
+            ssd1306_clearScreen8();
+            ssd1306_showMenu8(menu);
         }
         else
         {

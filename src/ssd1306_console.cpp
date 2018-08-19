@@ -31,6 +31,6 @@ void Ssd1306Console::clear()
 
 void Ssd1306Console::setCursor(lcduint_t x, lcduint_t y)
 {
-    ssd1331_setCursor8(x,y);
+    ssd1306_setCursor8(x,y);
 }
 

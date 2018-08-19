@@ -444,7 +444,14 @@ void ssd1306_showMenu(SAppMenu *menu);
  *
  * @warning works only in 8-bit RGB normal mode.
  */
-void ssd1331_showMenu8(SAppMenu *menu);
+void ssd1306_showMenu8(SAppMenu *menu);
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+static inline void ssd1331_showMenu8(SAppMenu *menu)
+{
+    ssd1306_showMenu8(menu);
+}
+#endif
 
 /**
  * Updates menu items on the display. That is if selection is changed,
@@ -462,7 +469,14 @@ void ssd1306_updateMenu(SAppMenu *menu);
  *
  * @warning works only in SSD1306 compatible mode.
  */
-void ssd1331_updateMenu8(SAppMenu *menu);
+void ssd1306_updateMenu8(SAppMenu *menu);
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+static inline void ssd1331_updateMenu8(SAppMenu *menu)
+{
+    ssd1306_updateMenu8(menu);
+}
+#endif
 
 /**
  * Returns currently selected menu item.

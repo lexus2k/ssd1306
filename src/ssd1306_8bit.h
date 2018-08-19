@@ -57,20 +57,20 @@ extern "C" {
  *
  * @param color - new  color to use for monochrome-specific operations on color display.
  */
-void ssd1331_setColor(uint16_t color);
+void ssd1306_setColor(uint16_t color);
 
 /**
  * @brief Sets default color.
  *
  * Sets default color for monochrome operations.
  * For now this function supports only 8-bit RGB mode.
- * To work with RGB colors in 16-bit mode, please refer to ssd1331_setColor() function
+ * To work with RGB colors in 16-bit mode, please refer to ssd1306_setColor() function
  * and RGB_COLOR16 macros.
  * @param r - red in 0-255 range.
  * @param g - green in 0-255 range.
  * @param b - blue in 0-255 range.
  */
-void ssd1331_setRgbColor(uint8_t r, uint8_t g, uint8_t b);
+void ssd1306_setRgbColor(uint8_t r, uint8_t g, uint8_t b);
 
 /**
  * Draws 1-bit bitmap, located in SRAM, on the display
@@ -82,7 +82,7 @@ void ssd1331_setRgbColor(uint8_t r, uint8_t g, uint8_t b);
  * @param h height of bitmap in pixels
  * @param bitmap pointer to data, located in SRAM.
  */
-void ssd1331_drawMonoBuffer8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
+void ssd1306_drawMonoBuffer8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
 
 /**
  * Draws 8-bit bitmap, located in SRAM, on the display
@@ -94,31 +94,19 @@ void ssd1331_drawMonoBuffer8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
  * @param h - height of bitmap in pixels
  * @param data - pointer to data, located in SRAM.
  */
-void ssd1331_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data);
-
-/**
- * Draws 16-bit bitmap, located in SRAM, on the display
- * Each byte represents separate pixel: refer to RGB_COLOR16 to understand RGB scheme, being used.
- *
- * @param x - horizontal position in pixels
- * @param y - vertical position in pixels
- * @param w - width of bitmap in pixels
- * @param h - height of bitmap in pixels
- * @param data - pointer to data, located in SRAM.
- */
-void ssd1331_drawBufferFast16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data);
+void ssd1306_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data);
 
 /**
  * Fills screen with pattern byte
  *
  * @param fill_Data pattern color to fill screen with
  */
-void ssd1331_fillScreen8(uint8_t fill_Data);
+void ssd1306_fillScreen8(uint8_t fill_Data);
 
 /**
  * Fills screen with zero-byte
  */
-void ssd1331_clearScreen8(void);
+void ssd1306_clearScreen8(void);
 
 /**
  * Puts single color point directly in OLED display GDRAM.
@@ -126,9 +114,9 @@ void ssd1331_clearScreen8(void);
  * @param x - horizontal position in pixels
  * @param y - vertical position in pixels
  *
- * @note set color with ssd1331_setColor() function.
+ * @note set color with ssd1306_setColor() function.
  */
-void ssd1331_putPixel8(lcdint_t x, lcdint_t y);
+void ssd1306_putPixel8(lcdint_t x, lcdint_t y);
 
 /**
  * Draw vertical line directly in OLED display GDRAM.
@@ -137,9 +125,9 @@ void ssd1331_putPixel8(lcdint_t x, lcdint_t y);
  * @param y1 - top vertical position in pixels
  * @param y2 - bottom vertical position in pixels
  *
- * @note set color with ssd1331_setColor() function.
+ * @note set color with ssd1306_setColor() function.
  */
-void ssd1331_drawVLine8(lcdint_t x1, lcdint_t y1, lcdint_t y2);
+void ssd1306_drawVLine8(lcdint_t x1, lcdint_t y1, lcdint_t y2);
 
 /**
  * Draw horizontal line directly in OLED display GDRAM.
@@ -148,9 +136,9 @@ void ssd1331_drawVLine8(lcdint_t x1, lcdint_t y1, lcdint_t y2);
  * @param y1 - vertical vertical position in pixels
  * @param x2 - right position in pixels
  *
- * @note set color with ssd1331_setColor() function.
+ * @note set color with ssd1306_setColor() function.
  */
-void ssd1331_drawHLine8(lcdint_t x1, lcdint_t y1, lcdint_t x2);
+void ssd1306_drawHLine8(lcdint_t x1, lcdint_t y1, lcdint_t x2);
 
 /**
  * Draw line directly in OLED display GDRAM.
@@ -162,9 +150,9 @@ void ssd1331_drawHLine8(lcdint_t x1, lcdint_t y1, lcdint_t x2);
  * @param x2 - end horizontal position in pixels
  * @param y2 - end vertical position in pixels
  *
- * @note set color with ssd1331_setColor() function.
+ * @note set color with ssd1306_setColor() function.
  */
-void ssd1331_drawLine8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
+void ssd1306_drawLine8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
 
 /**
  * Draw rectangle directly in OLED display GDRAM.
@@ -176,9 +164,9 @@ void ssd1331_drawLine8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
  * @param x2 - end horizontal position in pixels
  * @param y2 - end vertical position in pixels
  *
- * @note set color with ssd1331_setColor() function.
+ * @note set color with ssd1306_setColor() function.
  */
-void ssd1331_drawRect8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
+void ssd1306_drawRect8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
 
 /**
  * Fill rectangle directly in OLED display GDRAM.
@@ -190,9 +178,9 @@ void ssd1331_drawRect8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
  * @param x2 - end horizontal position in pixels
  * @param y2 - end vertical position in pixels
  *
- * @note set color with ssd1331_setColor() function.
+ * @note set color with ssd1306_setColor() function.
  */
-void ssd1331_fillRect8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
+void ssd1306_fillRect8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
 
 /**
  * Draw monochrome bitmap, located in Flash, directly to OLED display GDRAM.
@@ -204,9 +192,9 @@ void ssd1331_fillRect8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
  * @param h bitmap height in pixels
  * @param bitmap pointer to Flash data, containing monochrome bitmap.
  *
- * @note set color with ssd1331_setColor() function.
+ * @note set color with ssd1306_setColor() function.
  */
-void ssd1331_drawMonoBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
+void ssd1306_drawMonoBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
 
 /**
  * Draw 8-bit color bitmap, located in Flash, directly to OLED display GDRAM.
@@ -218,7 +206,7 @@ void ssd1331_drawMonoBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
  * @param h bitmap height in pixels
  * @param bitmap pointer to Flash data, containing 8-bit color bitmap.
  */
-void ssd1331_drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
+void ssd1306_drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
 
 /**
  * Clears block, filling it with black pixels, directly in OLED display GDRAM.
@@ -228,7 +216,7 @@ void ssd1331_drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h,
  * @param w block width in pixels
  * @param h block height in pixels
  */
-void ssd1331_clearBlock8(uint8_t x, uint8_t y, uint8_t w, uint8_t h);
+void ssd1306_clearBlock8(uint8_t x, uint8_t y, uint8_t w, uint8_t h);
 
 /**
  * Set cursor position for text functions
@@ -236,39 +224,39 @@ void ssd1331_clearBlock8(uint8_t x, uint8_t y, uint8_t w, uint8_t h);
  * @param x horizontal position in pixels.
  * @param y vertical position in pixels.
  */
-void ssd1331_setCursor8(lcduint_t x, lcduint_t y);
+void ssd1306_setCursor8(lcduint_t x, lcduint_t y);
 
 /**
  * Draws single character to canvas. Cursor position is defined
- * by ssd1331_setCursor8(). Do not changes cursor position
+ * by ssd1306_setCursor8(). Do not changes cursor position
  *
  * @param c - character code to print
  *
- * @note set color with ssd1331_setColor() function.
+ * @note set color with ssd1306_setColor() function.
  */
-void ssd1331_printChar8(uint8_t c);
+void ssd1306_printChar8(uint8_t c);
 
 /**
  * @brief Prints single character to display at current cursor position
  *
  * Prints single character to display at current cursor position.
- * Cursor position can be set by ssd1331_setCursor8().
+ * Cursor position can be set by ssd1306_setCursor8().
  *
  * @param ch - character to print to the display. 'LF' and 'CR' are skipped
  * @return returns number of printed characters.
  */
-size_t ssd1331_write8(uint8_t ch);
+size_t ssd1306_write8(uint8_t ch);
 
 /**
  * @brief Prints null-terminated string to display at current cursor position
  *
  * Prints null-terminated string to display at current cursor position
- * Cursor position can be set by ssd1331_setCursor8().
+ * Cursor position can be set by ssd1306_setCursor8().
  *
  * @param ch - string to print to the display. 'LF' and 'CR' are skipped
  * @return returns number of printed characters.
  */
-size_t ssd1331_print8(const char ch[]);
+size_t ssd1306_print8(const char ch[]);
 
 /**
  * Prints text to screen using fixed font.
@@ -279,9 +267,117 @@ size_t ssd1331_print8(const char ch[]);
  * @returns number of chars in string
  *
  * @see ssd1306_setFixedFont
- * @note set color with ssd1331_setColor() function.
+ * @note set color with ssd1306_setColor() function.
  */
-uint8_t ssd1331_printFixed8(lcdint_t x, lcdint_t y, const char *ch, EFontStyle style);
+uint8_t ssd1306_printFixed8(lcdint_t x, lcdint_t y, const char *ch, EFontStyle style);
+
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
+/////////////////////////////////////////////////////////////////////////////////
+// FUNCTIONS BELOW ARE ONLY FOR COMPATIBILITY WITH PREVIOUSE VERSIONS OF LIBRARY
+
+static inline void ssd1331_setColor(uint16_t color)
+{
+    ssd1306_setColor(color);
+}
+
+static inline void ssd1331_setRgbColor(uint8_t r, uint8_t g, uint8_t b)
+{
+    ssd1306_setRgbColor(r, g, b);
+}
+
+static inline void ssd1331_drawMonoBuffer8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+{
+    ssd1306_drawMonoBuffer8(xpos, ypos, w, h, bitmap);
+}
+
+static inline void ssd1331_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data)
+{
+    ssd1306_drawBufferFast8(x, y, w, h, data);
+}
+
+static inline void ssd1331_fillScreen8(uint8_t fill_Data)
+{
+    ssd1306_fillScreen8(fill_Data);
+}
+
+static inline void ssd1331_clearScreen8(void)
+{
+    ssd1306_clearScreen8();
+}
+
+static inline void ssd1331_putPixel8(lcdint_t x, lcdint_t y)
+{
+    ssd1306_putPixel8(x, y);
+}
+
+static inline void ssd1331_drawVLine8(lcdint_t x1, lcdint_t y1, lcdint_t y2)
+{
+    ssd1306_drawVLine8(x1, y1, y2);
+}
+
+static inline void ssd1331_drawHLine8(lcdint_t x1, lcdint_t y1, lcdint_t x2)
+{
+    ssd1306_drawHLine8(x1, y1, x2);
+}
+
+static inline void ssd1331_drawLine8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+{
+    ssd1306_drawLine8(x1, y1, x2, y2);
+}
+
+static inline void ssd1331_drawRect8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+{
+    ssd1306_drawRect8(x1, y1, x2, y2);
+}
+
+static inline void ssd1331_fillRect8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+{
+    ssd1306_fillRect8(x1, y1, x2, y2);
+}
+
+static inline void ssd1331_drawMonoBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+{
+    ssd1306_drawMonoBitmap8(xpos, ypos, w, h, bitmap);
+}
+
+static inline void ssd1331_drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+{
+    ssd1306_drawBitmap8(xpos, ypos, w, h, bitmap);
+}
+
+static inline void ssd1331_clearBlock8(uint8_t x, uint8_t y, uint8_t w, uint8_t h)
+{
+    ssd1306_clearBlock8(x, y, w, h);
+}
+
+static inline void ssd1331_setCursor8(lcduint_t x, lcduint_t y)
+{
+    ssd1306_setCursor8(x, y);
+}
+
+static inline void ssd1331_printChar8(uint8_t c)
+{
+    ssd1306_printChar8(c);
+}
+
+static inline size_t ssd1331_write8(uint8_t ch)
+{
+    return ssd1306_write8(ch);
+}
+
+static inline size_t ssd1331_print8(const char ch[])
+{
+    return ssd1306_print8(ch);
+}
+
+static inline uint8_t ssd1331_printFixed8(lcdint_t x, lcdint_t y, const char *ch, EFontStyle style)
+{
+    return ssd1306_printFixed8(x, y, ch, style);
+}
+
+#endif
 
 /**
  * @}
