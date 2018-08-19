@@ -130,7 +130,7 @@ void vga_uart_on_receive(uint8_t data)
         if (s_uart_arg)
         {
             if (data >= '0') data -= '0';
-            ssd1306_setMode(data);
+            ssd1306_setMode(static_cast<lcd_mode_t>(data));
             s_uart_command = UART_CMD_LISTEN;
         }
     }
@@ -151,7 +151,7 @@ void setup()
     ssd1306_printFixed(10,8,"SSD1306",STYLE_BOLD);
     ssd1306_printFixed(24,16,"by",STYLE_BOLD);
     ssd1306_printFixed(4,24,"Alexey D.",STYLE_BOLD);
-    ssd1331_setColor(RGB_COLOR8(255,0,0));
+    ssd1306_setColor(RGB_COLOR8(255,0,0));
     ssd1306_drawRect(0,0,95,39);
     #ifdef VGA_CONTROLLER_DEBUG
         ssd1306_debug_print_vga_buffer(uart_send_byte);

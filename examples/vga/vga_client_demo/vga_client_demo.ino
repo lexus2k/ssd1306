@@ -75,14 +75,14 @@ const char *menuItems[] =
 
 static void bitmapDemo()
 {
-    ssd1331_setColor(RGB_COLOR8(64,64,255));
+    ssd1306_setColor(RGB_COLOR8(64,64,255));
     gfx_drawMonoBitmap(0, 0, 128, 64, Sova);
     delay(3000);
 }
 
 static void spriteDemo()
 {
-    ssd1331_setColor(RGB_COLOR8(255,32,32));
+    ssd1306_setColor(RGB_COLOR8(255,32,32));
     ssd1306_clearScreen();
     /* Declare variable that represents our sprite */
     SPRITE sprite;
@@ -112,14 +112,14 @@ static void textDemo()
 {
     ssd1306_setFixedFont(ssd1306xled_font6x8);
     ssd1306_clearScreen();
-    ssd1331_setColor(RGB_COLOR8(255,255,0));
+    ssd1306_setColor(RGB_COLOR8(255,255,0));
     ssd1306_printFixed(0,  8, "Normal text", STYLE_NORMAL);
-    ssd1331_setColor(RGB_COLOR8(0,255,0));
+    ssd1306_setColor(RGB_COLOR8(0,255,0));
     ssd1306_printFixed(0, 16, "Bold text", STYLE_BOLD);
-    ssd1331_setColor(RGB_COLOR8(0,255,255));
+    ssd1306_setColor(RGB_COLOR8(0,255,255));
     ssd1306_printFixed(0, 24, "Italic text", STYLE_ITALIC);
     ssd1306_negativeMode();
-    ssd1331_setColor(RGB_COLOR8(255,255,255));
+    ssd1306_setColor(RGB_COLOR8(255,255,255));
     ssd1306_printFixed(0, 32, "Inverted bold", STYLE_BOLD);
     ssd1306_positiveMode();
     delay(3000);
@@ -129,7 +129,7 @@ static void canvasDemo()
 {
     uint8_t buffer[64*16/8];
     NanoCanvas canvas(64,16, buffer);
-    ssd1331_setColor(RGB_COLOR8(0,255,0));
+    ssd1306_setColor(RGB_COLOR8(0,255,0));
     ssd1306_setFixedFont(ssd1306xled_font6x8);
     ssd1306_clearScreen();
     canvas.clear();
@@ -146,13 +146,13 @@ static void canvasDemo()
 
 static void drawLinesDemo()
 {
-    ssd1331_setColor(RGB_COLOR8(0, 255, 0));
+    ssd1306_setColor(RGB_COLOR8(0, 255, 0));
     ssd1306_clearScreen();
     for (uint8_t y = 0; y < ssd1306_displayHeight(); y += 8)
     {
         ssd1306_drawLine(0,0, ssd1306_displayWidth() -1, y);
     }
-    ssd1331_setColor(RGB_COLOR8(0, 0, 255));
+    ssd1306_setColor(RGB_COLOR8(0, 0, 255));
     for (uint8_t x = ssd1306_displayWidth() - 1; x > 7; x -= 8)
     {
         ssd1306_drawLine(0,0, x, ssd1306_displayHeight() - 1);
@@ -201,7 +201,7 @@ void loop()
             break;
     }
     ssd1306_fillScreen( 0x00 );
-    ssd1331_setColor(RGB_COLOR8(255,255,255));
+    ssd1306_setColor(RGB_COLOR8(255,255,255));
     ssd1306_showMenu(&menu);
     delay(500);
     ssd1306_menuDown(&menu);

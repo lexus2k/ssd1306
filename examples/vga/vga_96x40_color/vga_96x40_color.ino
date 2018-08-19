@@ -82,8 +82,8 @@ const char *menuItems[] =
 
 static void bitmapDemo()
 {
-    ssd1331_setColor(RGB_COLOR8(64,64,255));
-    ssd1331_drawMonoBitmap8(0, 0, 96, 64, Sova);
+    ssd1306_setColor(RGB_COLOR8(64,64,255));
+    ssd1306_drawMonoBitmap8(0, 0, 96, 64, Sova);
     ssd1306_vga_delay(3000);
 }
 
@@ -127,7 +127,7 @@ static void spriteDemo()
         // Tell the engine to refresh screen at new sprite position
         engine.refresh( sprite.x, sprite.y, sprite.x + 8 - 1, sprite.y + 8 - 1 );
         // Do refresh required parts of screen
-        ssd1331_setColor(RGB_COLOR8(255,32,32));
+        ssd1306_setColor(RGB_COLOR8(255,32,32));
         engine.display();
     }
 }
@@ -135,16 +135,16 @@ static void spriteDemo()
 static void textDemo()
 {
     ssd1306_setFixedFont(ssd1306xled_font6x8);
-    ssd1331_clearScreen8();
-    ssd1331_setColor(RGB_COLOR8(255,255,0));
-    ssd1331_printFixed8(0,  8, "Normal text", STYLE_NORMAL);
-    ssd1331_setColor(RGB_COLOR8(0,255,0));
-    ssd1331_printFixed8(0, 16, "Bold text?", STYLE_BOLD);
-    ssd1331_setColor(RGB_COLOR8(0,255,255));
-    ssd1331_printFixed8(0, 24, "Italic text?", STYLE_ITALIC);
+    ssd1306_clearScreen8();
+    ssd1306_setColor(RGB_COLOR8(255,255,0));
+    ssd1306_printFixed8(0,  8, "Normal text", STYLE_NORMAL);
+    ssd1306_setColor(RGB_COLOR8(0,255,0));
+    ssd1306_printFixed8(0, 16, "Bold text?", STYLE_BOLD);
+    ssd1306_setColor(RGB_COLOR8(0,255,255));
+    ssd1306_printFixed8(0, 24, "Italic text?", STYLE_ITALIC);
     ssd1306_negativeMode();
-    ssd1331_setColor(RGB_COLOR8(255,255,255));
-    ssd1331_printFixed8(0, 32, "Inverted bold?", STYLE_BOLD);
+    ssd1306_setColor(RGB_COLOR8(255,255,255));
+    ssd1306_printFixed8(0, 32, "Inverted bold?", STYLE_BOLD);
     ssd1306_positiveMode();
     ssd1306_vga_delay(3000);
 }
@@ -154,7 +154,7 @@ static void textDemo()
 {
     uint8_t buffer[64*16/8];
     NanoCanvas canvas(64,16, buffer);
-    ssd1331_setColor(RGB_COLOR8(0,255,0));
+    ssd1306_setColor(RGB_COLOR8(0,255,0));
     ssd1306_setFixedFont(ssd1306xled_font6x8);
     ssd1306_clearScreen();
     canvas.clear();
@@ -171,16 +171,16 @@ static void textDemo()
 
 static void drawLinesDemo()
 {
-    ssd1331_clearScreen8();
-    ssd1331_setColor(RGB_COLOR8(255,0,0));
+    ssd1306_clearScreen8();
+    ssd1306_setColor(RGB_COLOR8(255,0,0));
     for (uint8_t y = 0; y < ssd1306_displayHeight(); y += 8)
     {
-        ssd1331_drawLine8(0,0, ssd1306_displayWidth() -1, y);
+        ssd1306_drawLine8(0,0, ssd1306_displayWidth() -1, y);
     }
-    ssd1331_setColor(RGB_COLOR8(0,255,0));
+    ssd1306_setColor(RGB_COLOR8(0,255,0));
     for (uint8_t x = ssd1306_displayWidth() - 1; x > 7; x -= 8)
     {
-        ssd1331_drawLine8(0,0, x, ssd1306_displayHeight() - 1);
+        ssd1306_drawLine8(0,0, x, ssd1306_displayHeight() - 1);
     }
     ssd1306_vga_delay(3000);
 }
@@ -195,9 +195,9 @@ void setup()
 
     ssd1306_vga_delay(3000); // wait until VGA monitor starts
 
-    ssd1331_fillScreen8( 0x00 );
+    ssd1306_fillScreen8( 0x00 );
     ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
-    ssd1331_showMenu8( &menu );
+    ssd1306_showMenu8( &menu );
 }
 
 void loop()
@@ -228,10 +228,10 @@ void loop()
         default:
             break;
     }
-    ssd1331_fillScreen8( 0x00 );
-    ssd1331_setColor(RGB_COLOR8(255,255,255));
-    ssd1331_showMenu8(&menu);
+    ssd1306_fillScreen8( 0x00 );
+    ssd1306_setColor(RGB_COLOR8(255,255,255));
+    ssd1306_showMenu8(&menu);
     ssd1306_vga_delay(500);
     ssd1306_menuDown(&menu);
-    ssd1331_updateMenu8(&menu);
+    ssd1306_updateMenu8(&menu);
 }
