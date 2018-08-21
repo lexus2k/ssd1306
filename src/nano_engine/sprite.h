@@ -280,6 +280,8 @@ public:
      */
     lcdint_t y( ) const { return m_pos.y; }
 
+    const NanoPoint & pos() const { return m_pos; }
+
 protected:
     /** fixed size of sprite */
     const NanoPoint   m_size;
