@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 #    MIT License
 #
 #    Copyright (c) 2018, Alexey Dynda
@@ -44,10 +45,11 @@ fname = sys.argv[1]
 
 face = freetype.Face(fname)
 face.set_char_size( width=0, height=(fsize << 6), hres=96, vres=96 )
-face.load_char('S', freetype.FT_LOAD_MONOCHROME | freetype.FT_LOAD_RENDER )
+face.load_char(u'A', freetype.FT_LOAD_MONOCHROME | freetype.FT_LOAD_RENDER )
 bitmap = face.glyph.bitmap
 
 print bitmap.width, "x", bitmap.rows
+print face.glyph.bitmap_left, ",", face.glyph.bitmap_top
 
 for y in range(bitmap.rows):
    s=""
