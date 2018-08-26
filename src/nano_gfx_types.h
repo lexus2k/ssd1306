@@ -107,7 +107,7 @@ typedef struct
 {
     uint8_t width;      ///< char width in pixels
     uint8_t height;     ///< char height in pixels
-    const uint8_t *data; ///< char data, located in progmem.
+    const uint8_t *glyph; ///< char data, located in progmem.
 } SCharInfo;
 
 /**

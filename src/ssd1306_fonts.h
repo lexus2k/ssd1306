@@ -143,7 +143,7 @@ void ssd1306_setFont6x8(const uint8_t * progmemFont) __attribute__ ((deprecated)
  *
  * @see ssd1306_setFixedFont
  */
-void ssd1306_getCharBitmap(char ch, SCharInfo *info);
+void ssd1306_getCharBitmap(uint16_t ch, SCharInfo *info);
 
 /**
  * Enables utf8 support for all text-functions.

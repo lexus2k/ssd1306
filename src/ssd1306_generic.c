@@ -82,13 +82,24 @@ void ssd1306_setSecondaryFont(const uint8_t * progmemUnicode)
     }
 }
 
-void ssd1306_getCharBitmap(char ch, SCharInfo *info)
+void ssd1306_getCharBitmap(uint16_t unicode, SCharInfo *info)
 {
     if (info)
     {
-        info->width = s_fixedFont.h.width;
-        info->height = s_fixedFont.h.height;
-        info->data = ssd1306_getCharGlyph( ch );
+#ifdef CONFIG_SSD1306_UNICODE_ENABLE
+        if (g_ssd1306_unicode)
+        {
+            info->width = s_fixedFont.h.width;
+            info->height = s_fixedFont.h.height;
+            info->glyph = ssd1306_getU16CharGlyph( unicode );
+        }
+        else
+#endif
+        {
+            info->width = s_fixedFont.h.width;
+            info->height = s_fixedFont.h.height;
+            info->glyph = ssd1306_getCharGlyph( unicode );
+        }
     }
 }
 

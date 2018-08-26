@@ -86,7 +86,7 @@ uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle s
     for(;;)
     {
         uint8_t ldata;
-        if( (x > ssd1306_lcd.width - s_fixedFont.h.width) || (ch[j] == '\0') )
+        if ((x > ssd1306_lcd.width - s_fixedFont.h.width) || (ch[j] == '\0'))
         {
             x = xpos;
             y++;
@@ -131,7 +131,7 @@ uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle s
         }
         ldata = 0;
         glyph_ptr += page_offset * s_fixedFont.h.width;
-        for( i=s_fixedFont.h.width; i>0; i--)
+        for( i = s_fixedFont.h.width; i>0; i--)
         {
             uint8_t data;
             if ( style == STYLE_NORMAL )

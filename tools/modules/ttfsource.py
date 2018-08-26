@@ -29,16 +29,7 @@
 # Get fonts
 # wget https://ftp.gnu.org/gnu/freefont/freefont-ttf-20120503.zip
 
-import sys
 import freetype
-
-if len(sys.argv) < 2:
-    print "Usage: ttf_fonts.py ttfFile [size] > outputFile"
-    print "Examples:"
-    print "      ttf_fonts.py FreeSans 16 > ssd1306font.c"
-    print "Font name must not include .ttf extenstion. Tool will add it"
-    exit(1)
-
 
 class FontSource:
     width = 0
@@ -94,9 +85,9 @@ class FontSource:
         data = self.__find_char_data(ch)
         if data is None:
             return
-        print ch
-        print data
-        print data['source_data']
+        # print ch
+        # print data
+        # print data['source_data']
         for row in data['bitmap']:
             print "".join('-' if x == 0 else '@' for x in row)
 
@@ -105,9 +96,15 @@ class FontSource:
             row = ""
             for ch in s:
                data = self.__find_char_data(ch)
-               row += "".join('-' if x == 0 else '@' for x in data['bitmap'][y])
+               if data is None:
+                   continue
+               index = y - self.baseline + data['top']
+               if index < 0 or index >= data['height']:
+                   row += "".join(['-'] * (data['width'] + 1))
+                   continue
+               row += "".join('-' if x == 0 else '@' for x in data['bitmap'][index])
                row += "-"
-            print row
+            print "//", row
 
     def charBitmap(self, ch):
         data = self.__find_char_data(ch)
@@ -144,7 +141,7 @@ class FontSource:
         self.width = right - left
         self.height = bottom - top
         self.baseline = -top
-        self.baseline_h = 0
+        self.baseline_h = -left
 
     # Function expands character bitmap vertically to match the tallest char
     def __expand_char_v(self, data):
@@ -174,6 +171,23 @@ class FontSource:
         data['left'] = self.baseline_h
         data['width'] = self.width
 
+    # Function deflates character bitmap horizontally by left pixels
+    # from left side and right pixels from right side
+    def __deflate_char_h(self, data, left=0, right=0):
+        for d in data['bitmap']:
+            d = d[left:len(d)-right]
+        data['width'] -= (left + right)
+        data['left'] -= left
+        if data['left'] < 0:
+            data['left'] = 0
+
+    def __deflate_char_v(self, data, top=0, bottom=0):
+        data['bitmap'] = data['bitmap'][top:len(data['bitmap'])-bottom]
+        data['height'] -= (top + bottom)
+        data['top'] -= top
+        if data['top'] < 0:
+            data['top'] = 0
+
     # Function expands all chars vertically to match the tallest char
     def expand_chars_v(self):
         for g in self.__groups:
@@ -191,61 +205,25 @@ class FontSource:
         self.expand_chars_v()
         self.expand_chars_h()
 
+    def deflate_chars(self, left=0, top=0, right=0, bottom=0):
+        # Calculate maximum parts according to requested change
+        left_part = self.baseline_h - left
+        right_part = self.width - self.baseline_h - right
+        top_part = self.baseline - top
+        bottom_part = self.height - self.baseline - bottom
+        for g in self.__groups:
+            for c in g:
+                # Deflate char only if it is out of font size
+                left_p = max([c['left'] - left_part, 0])
+                right_p = max([c['width'] - c['left'] - right_part, 0])
+                self.__deflate_char_h( c, left_p, right_p )
+                top_p = max([c['top'] - top_part, 0])
+                bottom_p = max([c['height'] - c['top'] - bottom_part, 0])
+                self.__deflate_char_v( c, top_p, bottom_p )
+        self.__commit_updates()
 
-class FontGenerator:
-    source = None
+    # Deflate chars from bottom side to specified height
+    def deflate_chars_bottom(self, height):
+        bottom = self.height - height
+        self.deflate_chars(bottom = bottom)
 
-    def __init__(self, source):
-        self.source = source
-
-    def generate_fixed_old(self):
-        self.source.expand_chars()
-        print "const uint8_t %s[] PROGMEM =" % (self.source.name)
-        print "{"
-        print "#ifdef CONFIG_SSD1306_UNICODE_ENABLE"
-        print "//  type|width|height|first char"
-        print "    0x%02X, 0x%02X, 0x%02X, 0x%02X," % (1, self.source.width, self.source.height, self.source.first_char)
-        print "//  unicode(2B)|count"
-        print "    0x%02X, 0x%02X, 0x%02X, // unicode record" % \
-             (self.source.first_char & 0xFF, (self.source.first_char >> 8) & 0xFF, \
-              len(self.source.chars) & 0xFF)
-        print "#else"
-        print "//  type|width|height|first char"
-        print "    0x%02X, 0x%02X, 0x%02X, 0x%02X," % (0, self.source.width, self.source.height, self.source.first_char)
-        print "#endif"
-        char_code = self.source.first_char
-        for char in self.source.chars:
-            print "   ",
-            for row in range(self.source.rows()):
-                for x in range(self.source.width):
-                    data = 0
-                    for i in range(8):
-                        y = row * 8 + i
-                        if y >= self.source.height:
-                            break
-                        data |= (self.source.charBitmap(char)[y][x] << i)
-                    print "0x%02X," % data,
-            print "// char '%s' (0x%04X/%d)" % (char, char_code, char_code)
-            char_code = char_code + 1
-        print "#ifdef CONFIG_SSD1306_UNICODE_ENABLE"
-        print "    0x00, 0x00, 0x00, // end of unicode tables"
-        print "#endif"
-        print "};"
-
-fsize = 8
-if len(sys.argv) > 2:
-    fsize = int(sys.argv[2])
-fname = sys.argv[1]
-
-source = FontSource(fname, fsize)
-source.add_chars(' ', unichr(127))
-
-#source.printChar('q')
-#source.expand_chars_v()
-#source.printString('World!q01')
-#source.printChar('q')
-#source.printChar('Q')
-
-font = FontGenerator( source )
-
-font.generate_fixed_old()
