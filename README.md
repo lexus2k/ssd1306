@@ -45,8 +45,7 @@ few resources as possible, but still has powerful capabilities (NanoEngine), all
 ![Image of menu example](imgs/mainmenu_top.png)
 ![Image of color oled](imgs/fonts.png)
 
-The default i2c pins for embedded implementation can be modified in ssd1306_i2c_conf.h file.
-For other controllers pins are defined by standard Wire library.
+The i2c pins can be changed via API functions. Please, refer to documentation.
 The default spi SCLK and MOSI pins are defined by SPI library, and DC, RST, CES pins are
 configurable through API.
 
