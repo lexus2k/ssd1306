@@ -29,45 +29,46 @@
 # Get fonts
 # wget https://ftp.gnu.org/gnu/freefont/freefont-ttf-20120503.zip
 
+import os
 import freetype
 import fontcontainer
 
 class TTFSource(fontcontainer.FontContainer):
     face = None
 
-    def __init__(self, fontname, size):
+    # filename - name of TTF font file (full path is supported)
+    # size - size of font (not pixels)
+    def __init__(self, filename, size):
+        fontname = os.path.basename(os.path.splitext(filename)[0])
         fontcontainer.FontContainer.__init__(self, fontname, size)
-        self.face = freetype.Face( fontname + ".ttf" )
+        self.face = freetype.Face( filename )
         self.face.set_char_size( width=0, height=(size << 6), hres=96, vres=96 )
 
     def add_chars(self, first, last):
-        self._groups.append([])
+        index = self.add_group()
         if self.first_char is None:
             self.first_char = ord(first)
-        index = len(self._groups) - 1
         for code in range(ord(first), ord(last) + 1):
             ch = unichr( code )
             self.__add_char(index, ch)
         self._commit_updates()
 
     def __add_char(self, group_index, ch):
-        self._groups[group_index].append( {} )
-        index = len(self._groups[group_index]) - 1
         self.face.load_char(ch, freetype.FT_LOAD_MONOCHROME | freetype.FT_LOAD_RENDER )
         bitmap = self.face.glyph.bitmap
-        self._groups[group_index][index]['char'] = ch
-        self._groups[group_index][index]['width'] = bitmap.width
-        self._groups[group_index][index]['used_width'] = bitmap.width
-        self._groups[group_index][index]['height'] = bitmap.rows
-        self._groups[group_index][index]['source_data'] = bitmap.buffer
-        self._groups[group_index][index]['left'] = self.face.glyph.bitmap_left
-        self._groups[group_index][index]['top'] = self.face.glyph.bitmap_top
-        self._groups[group_index][index]['bitmap'] = []
+        bitmap_data = []
         for y in range( bitmap.rows ):
-            self._groups[group_index][index]['bitmap'].append( [] )
+            bitmap_data.append( [] )
             for x in range( bitmap.width ):
                 b_index = y * bitmap.pitch + x / 8
                 bit = 7 - (x % 8)
                 bit_data = (bitmap.buffer[ b_index ] >> bit) & 1
-                self._groups[group_index][index]['bitmap'][y].append( bit_data )
+                bitmap_data[y].append( bit_data )
+        self.add_char(group_index, ch,\
+                      source=bitmap.buffer,\
+                      bitmap=bitmap_data,\
+                      width=bitmap.width,\
+                      height=bitmap.rows,\
+                      left=self.face.glyph.bitmap_left,\
+                      top=self.face.glyph.bitmap_top)
 

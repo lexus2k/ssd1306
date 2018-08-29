@@ -30,28 +30,29 @@
 # wget https://ftp.gnu.org/gnu/freefont/freefont-ttf-20120503.zip
 
 import sys
-import freetype
 from modules import glcdsource
-from modules import ttfsource
 from modules import fontgenerator
 
 def print_help_and_exit():
-    print "Usage: ttf_fonts.py ttfFile [args] > outputFile"
+    print "Usage: ttf_fonts.py [args] > outputFile"
     print "args:"
     print "      --ttf S   use ttf name as source"
     print "      --glcd S  use glcd file as as source"
-    print "      -s N      font size (this is not pixels!) "
-    print "      -SB N     limit size in pixels to value (pixels will be cut)"
+    print "      -s <N>    font size (this is not pixels!) "
+    print "      -SB <N>   limit size in pixels to value (pixels will be cut)"
     print "      -fh       fixed height"
     print "      -fw       fixed width"
-    print "      -fo       format old 1.7.6 and below"
+    print "      -f old    old format 1.7.6 and below"
+    print "      -f new    new format 1.7.8 and above"
     print "      -d        Print demo text to console"
+    print "      --demo-only Prints demo text to console and exits"
     print "Examples:"
-    print "   [generate font in old library format to file]"
-    print "      ttf_fonts.py FreeSans -s 8 -fo > ssd1306font.c"
-    print "   [demo text for generated font]"
-    print "      ttf_fonts.py FreeSans -d"
-    print "Font name must not include .ttf extenstion. Tool will add it"
+    print "   [convert ttf font to ssd1306 old format]"
+    print "      ttf_fonts.py --ttf FreeSans.ttf -s 8 -f old > ssd1306font.h"
+    print "   [convert ttf font to ssd1306 new format with demo text and print to console]"
+    print "      ttf_fonts.py --ttf FreeSans.ttf -d -f new"
+    print "   [convert GLCD font generated file to new format]"
+    print "      ttf_fonts.py --glcd font.c -f new > ssd1306font.h"
     exit(1)
 
 if len(sys.argv) < 2:
@@ -66,6 +67,7 @@ fname = ""
 TTF = False
 GLCD = False
 demo_text = False
+generate_font = True
 source = None
 
 # parse args
@@ -90,9 +92,14 @@ while idx < len(sys.argv):
         fheight = True
     elif opt == "-fw":
         fwidth = True
-    elif opt == "-fo":
-        fold = True
+    elif opt == "-f":
+        idx += 1
+        if sys.argv[idx] == "old":
+            fold = True
     elif opt == "-d":
+        demo_text = True
+    elif opt == "--demo-only":
+        generate_font = False
         demo_text = True
     else:
         print "Unknown option: ", opt
@@ -100,6 +107,7 @@ while idx < len(sys.argv):
     idx += 1
 
 if TTF:
+    from modules import ttfsource
     source = ttfsource.TTFSource(fname, fsize)
     source.add_chars(' ', unichr(127))
 if GLCD:
@@ -114,20 +122,17 @@ if fheight:
     source.expand_chars_v()
 if flimit_bottom > 0:
     source.deflate_chars_bottom( flimit_bottom )
-#source.printChar('q')
-#source.printString('World!q01')
-#source.printChar('Q')
-#source.printChar('q')
-#source.printChar('Q')
 
 font = fontgenerator.Generator( source )
 if fold:
     source.expand_chars()
     if demo_text:
         source.printString('World!q01')
-    font.generate_fixed_old()
+    if generate_font:
+        font.generate_fixed_old()
 else:
     if demo_text:
         source.printString('World!q01')
-    font.generate_new_format()
+    if generate_font:
+        font.generate_new_format()
 

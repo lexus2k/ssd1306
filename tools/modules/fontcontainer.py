@@ -48,6 +48,32 @@ class FontContainer:
             return chars
         return map(lambda x: x['char'], self._groups[group_index])
 
+    # Adds new group and returns its index
+    def add_group(self):
+        self._groups.append([])
+        return len(self._groups) - 1
+
+    def add_char(self, group, char, source, bitmap, width=-1, height=-1, left=-1, top=-1):
+        self._groups[group].append({})
+        index = len(self._groups[group]) - 1
+        if width < 0:
+            width = len(bitmap[0])
+        if height < 0:
+            height = len(bitmap)
+        if left < 0:
+            left = 0
+        if top < 0:
+            top = height
+        self._groups[group][index]['char'] = char
+        self._groups[group][index]['width'] = width
+        self._groups[group][index]['used_width'] = width
+        self._groups[group][index]['height'] = height
+        self._groups[group][index]['source_data'] = source
+        self._groups[group][index]['left'] = left
+        self._groups[group][index]['top'] = top
+        self._groups[group][index]['bitmap'] = bitmap
+        print self._groups[group][index]
+
     def groups_count(self):
         return len(self._groups)
 

@@ -46,8 +46,10 @@ few resources as possible, but still has powerful capabilities (NanoEngine), all
 ![Image of color oled](imgs/fonts.png)
 
 The i2c pins can be changed via API functions. Please, refer to documentation.
-The default spi SCLK and MOSI pins are defined by SPI library, and DC, RST, CES pins are
-configurable through API.
+Keep in mind, that the pins, which are allowed for i2c or spi interface,
+depend on the hardware.
+The default spi SCLK and MOSI pins are defined by SPI library, and DC, RST, 
+CES pins are configurable through API.
 
 ## Supported displays:
 

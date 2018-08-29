@@ -42,7 +42,7 @@ class GLCDSource(fontcontainer.FontContainer):
             with codecs.open(filename,'r',encoding=enc) as f:
                 content = f.readlines()
 
-        self._groups.append([])
+        self.add_group()
         for line in content:
             bytes_str = line.split(', ')
             m = re.search(r'(const unsigned short)\s+(.+?)(\d+)x(\d+)', line)
@@ -70,21 +70,17 @@ class GLCDSource(fontcontainer.FontContainer):
                        else:
                            print "Parsing error"
                            exit(1)
-                self._groups[0].append({})
-                index = len(self._groups[0]) - 1
-                self._groups[0][index]['char'] = char
-                self._groups[0][index]['width'] = width
-                self._groups[0][index]['used_width'] = bytes[0]
-                self._groups[0][index]['height'] = height
-                self._groups[0][index]['source_str'] = e
-                self._groups[0][index]['source_data'] = bytes
-                self._groups[0][index]['bitmap'] = []
-                self._groups[0][index]['top'] = height
-                self._groups[0][index]['left'] = 0
+                # Cast bitmap from parsed data
+                bitmap=[]
                 for y in range(height):
-                   self._groups[0][index]['bitmap'].append( [] )
+                   bitmap.append( [] )
                    for x in range(width):
-                       row = y / 8 + x * (self.rows()) + 1
+                       row = y / 8 + x * ((height + 7) / 8) + 1
                        bit = y % 8
-                       self._groups[0][index]['bitmap'][y].append( (bytes[row] >> bit) & 0x01 )
+                       bitmap[y].append( (bytes[row] >> bit) & 0x01 )
+                # Add new char
+                self.add_char(0, char, source=bytes,\
+                                       bitmap=bitmap,\
+                                       width=width,\
+                                       height=height)
         self._commit_updates()
