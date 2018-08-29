@@ -49,6 +49,14 @@ class FontSource:
         self.face = freetype.Face( fontname + ".ttf" )
         self.face.set_char_size( width=0, height=(size << 6), hres=96, vres=96 )
 
+    def get_group_chars(self, group_index = -1):
+        if group_index < 0:
+            return self.chars
+        return map(lambda x: x['char'], self.__groups[group_index])
+
+    def groups_count(self):
+        return len(self.__groups)
+
     def add_chars(self, first, last):
         self.__groups.append([])
         if self.first_char is None:

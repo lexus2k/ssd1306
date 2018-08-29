@@ -108,4 +108,5 @@ if fold:
 else:
     if demo_text:
         source.printString('World!q01')
+    font.generate_new_format()
 

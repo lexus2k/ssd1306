@@ -37,6 +37,7 @@ class Generator:
 
     def generate_fixed_old(self):
         self.source.expand_chars()
+        print "extern const uint8_t %s[] PROGMEM;" % (self.source.name)
         print "const uint8_t %s[] PROGMEM =" % (self.source.name)
         print "{"
         print "#ifdef CONFIG_SSD1306_UNICODE_ENABLE"
@@ -67,5 +68,46 @@ class Generator:
         print "#ifdef CONFIG_SSD1306_UNICODE_ENABLE"
         print "    0x00, 0x00, 0x00, // end of unicode tables"
         print "#endif"
+        print "};"
+
+    def generate_new_format(self):
+        self.source.expand_chars_v()
+        print "extern const uint8_t %s[] PROGMEM;" % (self.source.name)
+        print "const uint8_t %s[] PROGMEM =" % (self.source.name)
+        print "{"
+        print "//  type|width|height|first char"
+        print "    0x%02X, 0x%02X, 0x%02X, 0x%02X," % (2, self.source.width, self.source.height, self.source.first_char)
+        for group in range(self.source.groups_count()):
+            chars = self.source.get_group_chars(group)
+            print "// GROUP first '%s' total %d chars" % (chars[0], len(chars))
+            print "//  unicode(LSB,MSB)|count"
+            print "    0x%02X, 0x%02X, 0x%02X, // unicode record" % \
+                 ((ord(chars[0]) >> 8) & 0xFF, ord(chars[0]) & 0xFF, len(chars) & 0xFF)
+            # jump table
+            offset = 0
+            for char in chars:
+                bitmap = self.source.charBitmap(char)
+                print "   ",
+                width = len(bitmap[0])
+                size = self.source.rows() * width
+                print "0x%02X, 0x%02X, 0x%02X, 0x%02X," % (offset >> 8, offset & 0xFF, size, width),
+                print "// char '%s' (0x%04X/%d)" % (char, ord(char), ord(char))
+                offset += size
+            print "    0x%02X, 0x%02X," % (offset >> 8, offset % 0xFF)
+            # char data
+            for char in chars:
+                bitmap = self.source.charBitmap(char)
+                print "   ",
+                for row in range(self.source.rows()):
+                    for x in range(len(bitmap[0])):
+                        data = 0
+                        for i in range(8):
+                            y = row * 8 + i
+                            if y >= len(bitmap):
+                               break
+                            data |= (self.source.charBitmap(char)[y][x] << i)
+                        print "0x%02X," % data,
+                print "// char '%s' (0x%04X/%d)" % (char, ord(char), ord(char))
+        print "    0x00, 0x00, 0x00, // end of unicode tables"
         print "};"
 
