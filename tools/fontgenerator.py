@@ -31,18 +31,21 @@
 
 import sys
 import freetype
-import modules.ttfsource
-import modules.fontgenerator
+from modules import glcdsource
+from modules import ttfsource
+from modules import fontgenerator
 
 def print_help_and_exit():
     print "Usage: ttf_fonts.py ttfFile [args] > outputFile"
     print "args:"
-    print "      -s N    font size (this is not pixels!) "
-    print "      -SB N   limit size in pixels to value (pixels will be cut)"
-    print "      -fh     fixed height"
-    print "      -fw     fixed width"
-    print "      -fo     format old 1.7.6 and below"
-    print "      -d      Print demo text to console"
+    print "      --ttf S   use ttf name as source"
+    print "      --glcd S  use glcd file as as source"
+    print "      -s N      font size (this is not pixels!) "
+    print "      -SB N     limit size in pixels to value (pixels will be cut)"
+    print "      -fh       fixed height"
+    print "      -fw       fixed width"
+    print "      -fo       format old 1.7.6 and below"
+    print "      -d        Print demo text to console"
     print "Examples:"
     print "   [generate font in old library format to file]"
     print "      ttf_fonts.py FreeSans -s 8 -fo > ssd1306font.c"
@@ -59,14 +62,25 @@ fold = False
 flimit_bottom = 0
 fwidth = False
 fheight = False
-fname = sys.argv[1]
+fname = ""
+TTF = False
+GLCD = False
 demo_text = False
+source = None
 
 # parse args
-idx = 2
+idx = 1
 while idx < len(sys.argv):
     opt = sys.argv[idx]
-    if opt == "-s":
+    if opt == "--ttf":
+        TTF = True
+        idx += 1
+        fname = sys.argv[idx]
+    elif opt == "--glcd":
+        GLCD = True
+        idx += 1
+        fname = sys.argv[idx]
+    elif opt == "-s":
         idx += 1
         fsize = int(sys.argv[idx])
     elif opt == "-SB":
@@ -85,8 +99,15 @@ while idx < len(sys.argv):
         print_help_and_exit()
     idx += 1
 
-source = modules.ttfsource.FontSource(fname, fsize)
-source.add_chars(' ', unichr(127))
+if TTF:
+    source = ttfsource.TTFSource(fname, fsize)
+    source.add_chars(' ', unichr(127))
+if GLCD:
+    source = glcdsource.GLCDSource(fname, fsize, "utf8")
+
+if source is None:
+    print_help_and_exit()
+
 if fwidth:
     source.expand_chars_h()
 if fheight:
@@ -99,7 +120,7 @@ if flimit_bottom > 0:
 #source.printChar('q')
 #source.printChar('Q')
 
-font = modules.fontgenerator.Generator( source )
+font = fontgenerator.Generator( source )
 if fold:
     source.expand_chars()
     if demo_text:

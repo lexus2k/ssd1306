@@ -46,13 +46,13 @@ class Generator:
         print "//  unicode(2B)|count"
         print "    0x%02X, 0x%02X, 0x%02X, // unicode record" % \
              (self.source.first_char & 0xFF, (self.source.first_char >> 8) & 0xFF, \
-              len(self.source.chars) & 0xFF)
+              len(self.source.get_group_chars()) & 0xFF)
         print "#else"
         print "//  type|width|height|first char"
         print "    0x%02X, 0x%02X, 0x%02X, 0x%02X," % (0, self.source.width, self.source.height, self.source.first_char)
         print "#endif"
         char_code = self.source.first_char
-        for char in self.source.chars:
+        for char in self.source.get_group_chars():
             print "   ",
             for row in range(self.source.rows()):
                 for x in range(self.source.width):
