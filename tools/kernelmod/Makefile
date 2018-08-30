@@ -7,7 +7,7 @@ include $(PWD)/src/Makefile.src
 obj-m += ssd1306.o
 ssd1306-objs := ssd1306_main.o $(OBJS_C)
 
-EXTRA_CFLAGS += -I$(PWD)/../../src -std=gnu99
+EXTRA_CFLAGS += -I$(PWD)/../../src -std=gnu99 -Wno-declaration-after-statement
 
 all:
 	$(MAKE) -C $(KERNELDIR) M=$(PWD) modules

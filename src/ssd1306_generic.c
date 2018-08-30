@@ -301,8 +301,6 @@ static const uint8_t *ssd1306_getU16CharGlyph(uint16_t unicode)
 #endif
 }
 
-#include <stdio.h>
-
 uint16_t ssd1306_unicode16FromUtf8(uint8_t ch)
 {
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
@@ -325,14 +323,14 @@ uint16_t ssd1306_unicode16FromUtf8(uint8_t ch)
 #endif
 }
 
-void ssd1306_enableUtf8Mode()
+void ssd1306_enableUtf8Mode(void)
 {
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
     g_ssd1306_unicode = 1;
 #endif
 }
 
-void ssd1306_enableAsciiMode()
+void ssd1306_enableAsciiMode(void)
 {
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
     g_ssd1306_unicode = 0;

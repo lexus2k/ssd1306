@@ -156,12 +156,12 @@ void ssd1306_getCharBitmap(uint16_t ch, SCharInfo *info);
  * Enables utf8 support for all text-functions.
  * @note Unicode-16 only supported in text decoding functions.
  */
-void ssd1306_enableUtf8Mode();
+void ssd1306_enableUtf8Mode(void);
 
 /**
  * Enables ascii mode for all text-functions. No any decoding will be performed
  */
-void ssd1306_enableAsciiMode();
+void ssd1306_enableAsciiMode(void);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 //const uint8_t *ssd1306_getCharGlyph(char ch);
