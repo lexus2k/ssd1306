@@ -71,7 +71,7 @@ class Generator:
         print "};"
 
     def generate_new_format(self):
-        self.source.expand_chars_v()
+        self.source.expand_chars_top()
         print "extern const uint8_t %s[] PROGMEM;" % (self.source.name)
         print "const uint8_t %s[] PROGMEM =" % (self.source.name)
         print "{"
@@ -85,20 +85,26 @@ class Generator:
                  ((ord(chars[0]) >> 8) & 0xFF, ord(chars[0]) & 0xFF, len(chars) & 0xFF)
             # jump table
             offset = 0
+            heights = []
             for char in chars:
                 bitmap = self.source.charBitmap(char)
                 print "   ",
                 width = len(bitmap[0])
-                size = self.source.rows() * width
-                print "0x%02X, 0x%02X, 0x%02X, 0x%02X," % (offset >> 8, offset & 0xFF, size, width),
+                height = len(bitmap)
+                while (height > 0) and (sum(bitmap[height -1]) == 0):
+                    height -= 1
+                heights.append( height )
+                size = ((height + 7) / 8) * width
+                print "0x%02X, 0x%02X, 0x%02X, 0x%02X," % (offset >> 8, offset & 0xFF, width, height),
                 print "// char '%s' (0x%04X/%d)" % (char, ord(char), ord(char))
                 offset += size
             print "    0x%02X, 0x%02X," % (offset >> 8, offset % 0xFF)
             # char data
-            for char in chars:
+            for index in range(len(chars)):
+                char = chars[index]
                 bitmap = self.source.charBitmap(char)
                 print "   ",
-                for row in range(self.source.rows()):
+                for row in range((heights[index] + 7) / 8):
                     for x in range(len(bitmap[0])):
                         data = 0
                         for i in range(8):

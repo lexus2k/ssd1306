@@ -72,7 +72,6 @@ class FontContainer:
         self._groups[group][index]['left'] = left
         self._groups[group][index]['top'] = top
         self._groups[group][index]['bitmap'] = bitmap
-        print self._groups[group][index]
 
     def groups_count(self):
         return len(self._groups)
@@ -140,6 +139,14 @@ class FontContainer:
         self.baseline_h = -left
         self.name = self._origin_name + str(self.width) + "x" + str(self.height)
 
+    # Function expands character bitmap vertically to top boundary
+    def __expand_char_top(self, data):
+        # expand top
+        for y in range(0, self.baseline - data['top']):
+            data['bitmap'].insert(0, [0] * data['width'])
+        data['top'] = self.baseline
+        data['height'] = len(data['bitmap'])
+    
     # Function expands character bitmap vertically to match the tallest char
     def __expand_char_v(self, data):
         # expand top
@@ -190,6 +197,12 @@ class FontContainer:
         data['top'] -= top
         if data['top'] < 0:
             data['top'] = 0
+
+    # Function expands all chars vertically to match the tallest char
+    def expand_chars_top(self):
+        for g in self._groups:
+            for c in g:
+                self.__expand_char_top( c )
 
     # Function expands all chars vertically to match the tallest char
     def expand_chars_v(self):
