@@ -32,6 +32,7 @@
 # Get fonts
 # wget https://ftp.gnu.org/gnu/freefont/freefont-ttf-20120503.zip
 
+import re
 import sys
 from modules import glcdsource
 from modules import fontgenerator
@@ -104,14 +105,21 @@ while idx < len(sys.argv):
             fold = True
     elif opt == "-g":
         idx += 1
-        __start_char = sys.argv[idx]
-        if __start_char.isdigit():
-            __start_char = unichr(int(__start_char)).encode("utf-8")
+        _start_char = sys.argv[idx]
+        if re.search(r'0x\d*', _start_char) is not None:
+            code = int(_start_char, 16)
+            _start_char = unichr(code)
+        elif _start_char.isdigit() and len(_start_char) > 1:
+            _start_char = unichr(int(_start_char))
+        else:
+            _start_char = _start_char.decode("utf-8")
         idx += 1
-        __end_char = sys.argv[idx]
-        if __end_char.isdigit():
-            __end_char = unichr(ord(__start_char) + int(__end_char)).encode("utf-8")
-        fgroups.append( (__start_char, __end_char ) )
+        _end_char = sys.argv[idx]
+        if _end_char.isdigit():
+            _end_char = unichr(ord(_start_char) + int(_end_char))
+        else:
+            _end_char = _end_char.decode("utf-8")
+        fgroups.append( (_start_char, _end_char ) )
     elif opt == "-d":
         demo_text = True
     elif opt == "-t":
@@ -131,8 +139,8 @@ if TTF:
     if len(fgroups) == 0:
         fgroups.append((' ', unichr(127)))
     for g in fgroups:
-        source.add_chars(g[0].decode('utf-8'), g[1].decode('utf-8'))
-        
+        source.add_chars(g[0], g[1])
+
 if GLCD:
     source = glcdsource.GLCDSource(fname, fsize, "utf8")
 
