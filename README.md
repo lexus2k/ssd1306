@@ -14,12 +14,12 @@
 
 ## Introduction
 
-SSD1306 driver is Arduino style C/C++ library. The library can be compiled for plain Linux
-(for example, raspberry spi), or you can use it with plain avr-gcc compiler without Arduino
-IDE. It supports monochrome and RGB oleds and has debug mode, allowing to execute code on PC,
-using SDL2.0.
-The library is intended for very small microcontrollers (with a little of RAM). It was developed to use as
+SSD1306 driver is Arduino style C/C++ library with unicode support. The library can be compiled for plain Linux
+(for example, raspberry spi), or you can use it with plain avr-gcc compiler without Arduino IDE. It supports
+monochrome and RGB oleds and has debug mode, allowing to execute code on PC, using SDL2.0.
+Initially the library is intended for very small microcontrollers (with a little of RAM). It was developed to use as
 few resources as possible, but still has powerful capabilities (NanoEngine), allowing to develop nice animation.
+It works on any powerful devices like raspberry pi, esp32; and can be easily ported to new platform.
 
 ## Key Features
 
@@ -45,11 +45,10 @@ few resources as possible, but still has powerful capabilities (NanoEngine), all
 ![Image of menu example](imgs/mainmenu_top.png)
 ![Image of color oled](imgs/fonts.png)
 
-The i2c pins can be changed via API functions. Please, refer to documentation.
-Keep in mind, that the pins, which are allowed for i2c or spi interface,
-depend on the hardware.
-The default spi SCLK and MOSI pins are defined by SPI library, and DC, RST, 
-CES pins are configurable through API.
+The i2c pins can be changed via API functions. Please, refer to documentation. Keep in mind,
+that the pins, which are allowed for i2c or spi interface, depend on the hardware.
+The default spi SCLK and MOSI pins are defined by SPI library, and DC, RST, CES pins are configurable
+through API.
 
 ## Supported displays:
 
