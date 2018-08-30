@@ -94,6 +94,7 @@ typedef struct
 typedef struct
 {
     SFontHeaderRecord h; ///< record, containing information on font
+    uint8_t count; ///< count of characters
     uint8_t pages; ///< height in pages (each page height is 8-pixels)
     uint8_t glyph_size;  ///< glyph size in bytes
     const uint8_t *primary_table; ///< font chars bits
@@ -107,6 +108,7 @@ typedef struct
 {
     uint8_t width;      ///< char width in pixels
     uint8_t height;     ///< char height in pixels
+    uint8_t spacing;      ///< additional spaces after char in pixels
     const uint8_t *glyph; ///< char data, located in progmem.
 } SCharInfo;
 

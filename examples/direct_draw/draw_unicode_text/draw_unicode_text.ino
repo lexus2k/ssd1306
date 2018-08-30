@@ -39,15 +39,19 @@ void setup()
     /* Replace the line below with ssd1306_128x32_i2c_init() if you need to use 128x32 display */
     ssd1306_128x64_i2c_init();
     ssd1306_fillScreen(0x00);
-    ssd1306_setFixedFont(ssd1306xled_font6x8);
-    ssd1306_setSecondaryFont(ssd1306xled_font6x8_German);
-    ssd1306_printFixed (0,  8, u8"Line 1.äöü", STYLE_NORMAL);
+    ssd1306_setFreeFont(free_calibri11x12);
+    ssd1306_setSecondaryFont(free_calibri11x12_cyrillic);
+    ssd1306_printFixed(0,  8, u8"This is Русский", STYLE_NORMAL);
+
+    ssd1306_setSecondaryFont(free_calibri11x12_latin);
+    ssd1306_printFixed(0, 24, u8"This is Deutsch Länder", STYLE_NORMAL);
 }
 
 
 void loop()
 {
 }
+
 
 
 

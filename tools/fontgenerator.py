@@ -22,9 +22,12 @@
 #    SOFTWARE.
 #
 ###################################################################################
-# Fixing pip
-# curl https://bootstrap.pypa.io/get-pip.py | python2
-# sudo pip install freetype-py
+# Linux:
+#     Fixing pip
+#     curl https://bootstrap.pypa.io/get-pip.py | python2
+#     sudo pip install freetype-py
+# Win32:
+#     pip install freetype_py-2.0.0.post6-py2.py3-none-win32.whl
 #
 # Get fonts
 # wget https://ftp.gnu.org/gnu/freefont/freefont-ttf-20120503.zip

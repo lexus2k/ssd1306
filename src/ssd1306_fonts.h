@@ -67,6 +67,16 @@ extern const PROGMEM uint8_t digital_font5x7_AB[];
 /** Digital ASCII 5x7 font */
 extern const PROGMEM uint8_t digital_font5x7[];
 
+/** Calibri ASCII 11x12 font */
+extern const uint8_t free_calibri11x12[] PROGMEM;
+
+/** Calibri ASCII 11x12 font cyrillic */
+extern const uint8_t free_calibri11x12_cyrillic[] PROGMEM;
+
+/** Calibri ASCII 11x12 font basic latin */
+extern const uint8_t free_calibri11x12_latin[] PROGMEM;
+
+
 /**
  * Standard ASCII font 11x16 with digits only (Ascii codes 32 - 64).
  * @warning can be used only with ssd1306_printFixed() and ssd1306_setFixedFont() functions.
@@ -154,9 +164,8 @@ void ssd1306_enableUtf8Mode();
 void ssd1306_enableAsciiMode();
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-const uint8_t *ssd1306_getCharGlyph(char ch);
-
-const uint8_t *ssd1306_getU16CharGlyph(uint16_t unicode);
+//const uint8_t *ssd1306_getCharGlyph(char ch);
+//const uint8_t *ssd1306_getU16CharGlyph(uint16_t unicode);
 
 /**
  * Returns 16-bit unicode char, encoded in utf8

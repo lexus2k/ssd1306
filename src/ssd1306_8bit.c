@@ -270,24 +270,15 @@ void ssd1306_setCursor8(lcduint_t x, lcduint_t y)
 
 void ssd1306_printChar8(uint8_t c)
 {
-    const uint8_t *glyph_ptr;
-#ifdef CONFIG_SSD1306_UNICODE_ENABLE
-    if (g_ssd1306_unicode)
-    {
-        uint16_t unicode = ssd1306_unicode16FromUtf8(c);
-        if (unicode == SSD1306_MORE_CHARS_REQUIRED) return;
-        glyph_ptr = ssd1306_getU16CharGlyph( unicode );
-    }
-    else
-#endif
-    {
-        glyph_ptr = ssd1306_getCharGlyph( c );
-    }
+    uint16_t unicode = ssd1306_unicode16FromUtf8(c);
+    if (unicode == SSD1306_MORE_CHARS_REQUIRED) return;
+    SCharInfo char_info;
+    ssd1306_getCharBitmap(unicode, &char_info);
     ssd1306_drawMonoBitmap8(ssd1306_cursorX,
                 ssd1306_cursorY,
-                s_fixedFont.h.width,
-                s_fixedFont.h.height,
-                glyph_ptr );
+                char_info.width,
+                char_info.height,
+                char_info.glyph );
 }
 
 size_t ssd1306_write8(uint8_t ch)
@@ -311,25 +302,16 @@ size_t ssd1306_write8(uint8_t ch)
             return 0;
         }
     }
-    const uint8_t *glyph_ptr;
-#ifdef CONFIG_SSD1306_UNICODE_ENABLE
-    if (g_ssd1306_unicode)
-    {
-        uint16_t unicode = ssd1306_unicode16FromUtf8(ch);
-        if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
-        glyph_ptr = ssd1306_getU16CharGlyph( unicode );
-    }
-    else
-#endif
-    {
-        glyph_ptr = ssd1306_getCharGlyph( ch );
-    }
+    uint16_t unicode = ssd1306_unicode16FromUtf8(ch);
+    if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
+    SCharInfo char_info;
+    ssd1306_getCharBitmap(unicode, &char_info);
     ssd1306_drawMonoBitmap8( ssd1306_cursorX,
                              ssd1306_cursorY,
-                             s_fixedFont.h.width,
-                             s_fixedFont.h.height,
-                             glyph_ptr);
-    ssd1306_cursorX += s_fixedFont.h.width;
+                             char_info.width,
+                             char_info.height,
+                             char_info.glyph);
+    ssd1306_cursorX += char_info.width + char_info.spacing;
     return 1;
 }
 
