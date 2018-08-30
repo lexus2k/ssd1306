@@ -91,22 +91,19 @@ void ssd1306_setCursor(lcdint_t x, lcdint_t y);
 /**
  * Function allows to set another fixed font for the library.
  * By default, the font supports only first 128 - 32 ascii chars.
- * First 32 chars of ascii table are non-printable, and removed
- * from the font table to reduce flash memory consumption.
- * Default font doesn't support russian characters. Using
- * this function you can implement your own fonts.
- * First font char must be started with \<space\> image.
- * Font data should be in the following format:
- * | 0x00 | 0xWW | 0xHH | 0xAA | FONT DATA |,
- * where 0xWW - width in pixels, 0xHH - height in pixels, 0xAA - ascii offset (0x20).<br>
- * For fixed font 6x8 each char is presented by 6 bytes:<br>
- * COL0, COL1, COL2, COL3, COL4, COL5.<br>
- * For fixed font 4x16 each char is presented by 4x16/8 = 8 bytes:<br>
- * ROW0: COL0, COL1, COL2, COL3,<br>
- * ROW1: COL0, COL1, COL2, COL3<br>
+ * Please refer to github wiki on how to generate new fonts.
  * @param progmemFont - font to setup located in Flash area
  */
 void ssd1306_setFixedFont(const uint8_t * progmemFont);
+
+/**
+ * Function allows to set another free font for the library.
+ * By default, the font supports only first 128 - 32 ascii chars.
+ * Please refer to github wiki on how to generate new fonts.
+ * @param progmemFont - font to setup located in Flash area
+ * @note This function supports new fonts of ssd1306 library 1.7.8 and above
+ */
+void ssd1306_setFreeFont(const uint8_t * progmemFont);
 
 /**
  * Function allows sets secondary font for specific language.
