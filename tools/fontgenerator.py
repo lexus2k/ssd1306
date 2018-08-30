@@ -42,6 +42,7 @@ def print_help_and_exit():
     print "      -SB <N>   limit size in pixels to value (pixels will be cut)"
     print "      -fh       fixed height"
     print "      -fw       fixed width"
+    print "      -g <S> <E> add chars group to the font"
     print "      -f old    old format 1.7.6 and below"
     print "      -f new    new format 1.7.8 and above"
     print "      -d        Print demo text to console"
@@ -64,9 +65,11 @@ flimit_bottom = 0
 fwidth = False
 fheight = False
 fname = ""
+fgroups = []
 TTF = False
 GLCD = False
 demo_text = False
+demo_text_ = "World!q01"
 generate_font = True
 source = None
 
@@ -96,8 +99,21 @@ while idx < len(sys.argv):
         idx += 1
         if sys.argv[idx] == "old":
             fold = True
+    elif opt == "-g":
+        idx += 1
+        __start_char = sys.argv[idx]
+        if __start_char.isdigit():
+            __start_char = unichr(int(__start_char)).encode("utf-8")
+        idx += 1
+        __end_char = sys.argv[idx]
+        if __end_char.isdigit():
+            __end_char = unichr(ord(__start_char) + int(__end_char)).encode("utf-8")
+        fgroups.append( (__start_char, __end_char ) )
     elif opt == "-d":
         demo_text = True
+    elif opt == "-t":
+        idx += 1
+        demo_text_ = sys.argv[idx]
     elif opt == "--demo-only":
         generate_font = False
         demo_text = True
@@ -109,7 +125,11 @@ while idx < len(sys.argv):
 if TTF:
     from modules import ttfsource
     source = ttfsource.TTFSource(fname, fsize)
-    source.add_chars(' ', unichr(127))
+    if len(fgroups) == 0:
+        fgroups.append((' ', unichr(127)))
+    for g in fgroups:
+        source.add_chars(g[0].decode('utf-8'), g[1].decode('utf-8'))
+        
 if GLCD:
     source = glcdsource.GLCDSource(fname, fsize, "utf8")
 
@@ -127,12 +147,12 @@ font = fontgenerator.Generator( source )
 if fold:
     source.expand_chars()
     if demo_text:
-        source.printString('World!q01')
+        source.printString(demo_text_.decode("utf-8"))
     if generate_font:
         font.generate_fixed_old()
 else:
     if demo_text:
-        source.printString('World!q01')
+        source.printString(demo_text_.decode("utf-8"))
     if generate_font:
         font.generate_new_format()
 

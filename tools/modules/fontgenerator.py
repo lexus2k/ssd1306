@@ -71,15 +71,17 @@ class Generator:
         print "};"
 
     def generate_new_format(self):
+        total_size = 4
         self.source.expand_chars_top()
-        print "extern const uint8_t %s[] PROGMEM;" % (self.source.name)
-        print "const uint8_t %s[] PROGMEM =" % (self.source.name)
+        print "extern const uint8_t %s[] PROGMEM;" % ("free_" + self.source.name)
+        print "const uint8_t %s[] PROGMEM =" % ("free_" + self.source.name)
         print "{"
         print "//  type|width|height|first char"
-        print "    0x%02X, 0x%02X, 0x%02X, 0x%02X," % (2, self.source.width, self.source.height, self.source.first_char)
+        print "    0x%02X, 0x%02X, 0x%02X, 0x%02X," % (2, self.source.width, self.source.height, 0x00)
         for group in range(self.source.groups_count()):
             chars = self.source.get_group_chars(group)
-            print "// GROUP first '%s' total %d chars" % (chars[0], len(chars))
+            total_size += 3
+            print "// GROUP first '%s' total %d chars" % (chars[0].encode("utf-8"), len(chars))
             print "//  unicode(LSB,MSB)|count"
             print "    0x%02X, 0x%02X, 0x%02X, // unicode record" % \
                  ((ord(chars[0]) >> 8) & 0xFF, ord(chars[0]) & 0xFF, len(chars) & 0xFF)
@@ -95,9 +97,11 @@ class Generator:
                     height -= 1
                 heights.append( height )
                 size = ((height + 7) / 8) * width
+                total_size += 4
                 print "0x%02X, 0x%02X, 0x%02X, 0x%02X," % (offset >> 8, offset & 0xFF, width, height),
-                print "// char '%s' (0x%04X/%d)" % (char, ord(char), ord(char))
+                print "// char '%s' (0x%04X/%d)" % (char.encode("utf-8"), ord(char), ord(char))
                 offset += size
+            total_size += 2
             print "    0x%02X, 0x%02X," % (offset >> 8, offset % 0xFF)
             # char data
             for index in range(len(chars)):
@@ -112,8 +116,11 @@ class Generator:
                             if y >= len(bitmap):
                                break
                             data |= (self.source.charBitmap(char)[y][x] << i)
+                        total_size += 1
                         print "0x%02X," % data,
-                print "// char '%s' (0x%04X/%d)" % (char, ord(char), ord(char))
+                print "// char '%s' (0x%04X/%d)" % (char.encode("utf-8"), ord(char), ord(char))
+        total_size += 3
         print "    0x00, 0x00, 0x00, // end of unicode tables"
+        print "    // FONT REQUIRES %d BYTES" % (total_size)
         print "};"
 
