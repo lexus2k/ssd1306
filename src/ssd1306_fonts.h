@@ -164,8 +164,13 @@ void ssd1306_enableUtf8Mode(void);
 void ssd1306_enableAsciiMode(void);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-//const uint8_t *ssd1306_getCharGlyph(char ch);
-//const uint8_t *ssd1306_getU16CharGlyph(uint16_t unicode);
+/**
+ * Function allows to set and use squix font.
+ * @param progmemFont - font to setup located in Flash area
+ * @note This function supports squix fonts for ssd1306 library 1.7.8 and above
+ * @warning Squix fonts are not fully supported, use them at your own risk
+ */
+void ssd1306_setSquixFont(const uint8_t * progmemFont);
 
 /**
  * Returns 16-bit unicode char, encoded in utf8
