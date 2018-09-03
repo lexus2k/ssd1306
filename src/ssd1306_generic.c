@@ -176,12 +176,18 @@ static void __ssd1306_newFormatGetBitmap(uint16_t unicode, SCharInfo *info)
             if (!data)
             {
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
-                if ( table_index > 0 ) break;
-                data = s_fixedFont.secondary_table;
-                continue;
-#else
-                break;
+                if ( table_index == 0 )
+                {
+                    table_index++;
+                    data = s_fixedFont.secondary_table;
+                    continue;
+                }
 #endif
+                info->width = 0;
+                info->height = 0;
+                info->spacing = s_fixedFont.h.width >> 1;
+                info->glyph = s_fixedFont.primary_table;
+                break;
             }
             /* Check that unicode in the section being processed */
             if ( ( unicode < r.start_code) || ( unicode >= (r.start_code + r.count) ) )
@@ -212,13 +218,13 @@ static void __ssd1306_squixFormatGetBitmap(uint16_t unicode, SCharInfo *info)
     if (info)
     {
         const uint8_t *data = s_fixedFont.primary_table;
-        if (!data)
-        {
-            return;
-        }
         /* Check that unicode in the section being processed */
-        if ( ( unicode < s_fixedFont.h.ascii_offset) || ( unicode >= (s_fixedFont.h.ascii_offset + s_fixedFont.count) ) )
+        if ( !data || ( unicode < s_fixedFont.h.ascii_offset) || ( unicode >= (s_fixedFont.h.ascii_offset + s_fixedFont.count) ) )
         {
+            info->width = 0;
+            info->height = 0;
+            info->spacing = s_fixedFont.h.width >> 1;
+            info->glyph = s_fixedFont.primary_table;
             return;
         }
         /* At this point data points to jump table (offset|offset|bytes|width) */
@@ -270,7 +276,7 @@ static const uint8_t *ssd1306_searchCharGlyph(const uint8_t * unicode_table, uin
     if (r.count == 0)
     {
         // Sorry, no glyph found for the specified character
-        return NULL;
+        return unicode_table;
     }
     return &data[ (unicode - r.start_code) * s_fixedFont.glyph_size ];
 }
