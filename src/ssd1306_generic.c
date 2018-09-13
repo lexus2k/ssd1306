@@ -254,10 +254,6 @@ static void __ssd1306_newFormatGetBitmap(uint16_t unicode, SCharInfo *info)
                     continue;
                 }
 #endif
-                info->width = 0;
-                info->height = 0;
-                info->spacing = s_fixedFont.h.width >> 1;
-                info->glyph = s_fixedFont.primary_table;
                 break;
             }
             /* Check that unicode in the section being processed */
@@ -280,6 +276,13 @@ static void __ssd1306_newFormatGetBitmap(uint16_t unicode, SCharInfo *info)
             info->spacing = glyph_width ? 1 : (s_fixedFont.h.width >> 1);
             info->glyph = data + (r.count - unicode) * 4 + 2 + offset;
             break;
+        }
+        if (!info->glyph)
+        {
+            info->width = 0;
+            info->height = 0;
+            info->spacing = s_fixedFont.h.width >> 1;
+            info->glyph = s_fixedFont.primary_table;
         }
     }
 }
