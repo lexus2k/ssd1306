@@ -68,13 +68,13 @@ extern const PROGMEM uint8_t digital_font5x7_AB[];
 extern const PROGMEM uint8_t digital_font5x7[];
 
 /** Calibri ASCII 11x12 font */
-extern const uint8_t free_calibri11x12[] PROGMEM;
+extern const PROGMEM uint8_t free_calibri11x12[];
 
 /** Calibri ASCII 11x12 font cyrillic */
-extern const uint8_t free_calibri11x12_cyrillic[] PROGMEM;
+extern const PROGMEM uint8_t free_calibri11x12_cyrillic[];
 
 /** Calibri ASCII 11x12 font basic latin */
-extern const uint8_t free_calibri11x12_latin[] PROGMEM;
+extern const PROGMEM uint8_t free_calibri11x12_latin[];
 
 
 /**
