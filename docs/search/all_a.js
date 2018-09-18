@@ -18,7 +18,7 @@ var searchData=
   ['lcdint_5ftypes_5fdefined',['LCDINT_TYPES_DEFINED',['../group___s_s_d1306___h_a_l___a_p_i.html#ga57896cfd0f578b584d58e3bef85b0e78',1,'io.h']]],
   ['lcduint_5ft',['lcduint_t',['../group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210',1,'io.h']]],
   ['lcdwriter',['LcdWriter',['../ssd1306__console_8h.html#af5099e06f17b3868b9b9961ab64263ef',1,'ssd1306_console.h']]],
-  ['left',['left',['../struct_s_s_d1306___r_e_c_t.html#a596b6b6cce11df484877b63db7d0a5b5',1,'SSD1306_RECT::left()'],['../class_nano_sprite.html#a5816b02adc463e4497d78ba7df9b659b',1,'NanoSprite::left()'],['../class_nano_fixed_sprite.html#a0f8ef1f7840aacedeb81a045c7c0d339',1,'NanoFixedSprite::left()']]],
+  ['left',['left',['../struct_s_s_d1306___r_e_c_t.html#a596b6b6cce11df484877b63db7d0a5b5',1,'SSD1306_RECT::left()'],['../class_nano_sprite.html#a3946de63cdeb5af0580e71886085ef91',1,'NanoSprite::left()'],['../class_nano_fixed_sprite.html#a5fc1cbe3699cb1431d9bd9c1200844e5',1,'NanoFixedSprite::left()']]],
   ['localcoordinates',['localCoordinates',['../class_nano_engine_tiler.html#a99a34e97116017a6ccbf187fee563516',1,'NanoEngineTiler']]],
   ['loopcallback',['loopCallback',['../class_nano_engine_core.html#a0361b8a56589feb5bd2c4f6f1473a5fa',1,'NanoEngineCore']]],
   ['lx',['lx',['../struct_s_p_r_i_t_e.html#afc5ed686d6064db045512fc72bc02dd3',1,'SPRITE']]],
