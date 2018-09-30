@@ -27,6 +27,7 @@
 void Ssd1306Console::clear()
 {
     ssd1306_clearScreen();
+    setCursor(0,0);
 }
 
 void Ssd1306Console::setCursor(lcduint_t x, lcduint_t y)
