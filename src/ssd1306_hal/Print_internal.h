@@ -37,6 +37,7 @@
 #else
 
 #include "ssd1306_hal/io.h"
+#include <stdio.h>
 
 /** Implements own Print class for plain AVR and Linux environment */
 class Print

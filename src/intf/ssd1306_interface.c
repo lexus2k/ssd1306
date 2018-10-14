@@ -30,7 +30,7 @@ static void ssd1306_send_buffer_generic(const uint8_t* buffer, uint16_t size);
 
 ssd1306_interface_t ssd1306_intf =
 {
-    .send_buffer = ssd1306_send_buffer_generic;
+    .send_buffer = ssd1306_send_buffer_generic
 };
 
 void ssd1306_commandStart(void)
