@@ -42,6 +42,7 @@
 
 #else                       // LINUX includes
 
+#include <stdio.h>
 #include <stdint.h>
 #include <unistd.h>
 #include <time.h>

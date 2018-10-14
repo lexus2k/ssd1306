@@ -68,6 +68,13 @@ public:
         return n;
     }
 
+    size_t print(int n)
+    {
+        char a[10];
+        snprintf(a, sizeof(a), "%i", n);
+        return print( a );
+    }
+
     /**
      * Prints string via write() and goes to next line.
      * @param str string to print
@@ -79,6 +86,13 @@ public:
         n += write('\n');
         return n;
     };
+
+    size_t println(int data)
+    {
+        size_t n = print(data);
+        n += write('\n');
+        return n;
+    }
 };
 
 #endif
