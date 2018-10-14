@@ -69,6 +69,11 @@ public:
         return n;
     }
 
+    /**
+     * Prints number via write()
+     * @param n integer to print
+     * @return returns number of printed symbols
+     */
     size_t print(int n)
     {
         char a[10];
@@ -88,6 +93,11 @@ public:
         return n;
     };
 
+    /**
+     * Prints number via write() and goes to next line.
+     * @param data integer to print
+     * @return returns number of printed symbols
+     */
     size_t println(int data)
     {
         size_t n = print(data);
