@@ -123,6 +123,9 @@ Ssd1306 library requires at least c++11 and c99 (by default Digispark package mi
  * Build demo code (variant 2)
    * cd ssd1306/tools && ./build_and_run.sh -p avr -m <your_mcu> ssd1306_demo
 
+ *For esp32:*
+  * Clone ssd1306 library to components/ssd1306 folder.
+
 For more information about this library, please, visit https://github.com/lexus2k/ssd1306.
 Doxygen documentation can be found at [github.io site](http://lexus2k.github.io/ssd1306).
 If you found any problem or have any idea, please, report to Issues section.
