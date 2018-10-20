@@ -196,6 +196,9 @@ void ssd1306_fillRect8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
  */
 void ssd1306_drawMonoBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
 
+void ssd1306_drawMonoBitmap8_slow(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h,
+                                  const uint8_t *bitmap, uint8_t rotation);
+
 /**
  * Draw 8-bit color bitmap, located in Flash, directly to OLED display GDRAM.
  * Each pixel of the bitmap is expected in 3-3-2 format.

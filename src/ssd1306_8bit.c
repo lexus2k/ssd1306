@@ -116,6 +116,13 @@ void ssd1306_putPixel8(lcdint_t x, lcdint_t y)
     ssd1306_intf.stop();
 }
 
+static void __ssd1306_putPixel8(lcdint_t x, lcdint_t y, uint16_t color)
+{
+    ssd1306_lcd.set_block(x, y, 0);
+    ssd1306_lcd.send_pixels8( color );
+    ssd1306_intf.stop();
+}
+
 void ssd1306_drawVLine8(lcdint_t x1, lcdint_t y1, lcdint_t y2)
 {
     ssd1306_lcd.set_block(x1, y1, 1);
@@ -237,6 +244,93 @@ void ssd1306_drawMonoBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
         }
     }
     ssd1306_intf.stop();
+}
+
+void ssd1306_drawMonoBitmap8_slow(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h,
+                                  const uint8_t *bitmap, uint8_t rotation)
+{
+    uint8_t bit = 1;
+    uint8_t blackColor = s_ssd1306_invertByte ? ssd1306_color : 0x00;
+    uint8_t color = s_ssd1306_invertByte ? 0x00 : ssd1306_color;
+    lcdint_t x_dx, x_dy;
+    lcdint_t y_dx, y_dy;
+    switch ( rotation )
+    {
+        case 0: x_dx = 1; x_dy = 0; y_dx = -w; y_dy = 1; break;
+        case 1: x_dx = 0; x_dy = -1; y_dx = 1; y_dy = -w; break;
+        case 2: x_dx = -1; x_dy = 0; y_dx = w; y_dy = -1; break;
+        case 3:
+        default: x_dx = 0; x_dy = 1; y_dx = -1; y_dy = -w; break;
+    }
+    while (h--)
+    {
+        uint8_t wx = w;
+        while ( wx-- )
+        {
+            uint8_t data = pgm_read_byte( bitmap );
+            if ( data & bit )
+                __ssd1306_putPixel8( xpos, ypos, color );
+            else
+                __ssd1306_putPixel8( xpos, ypos, blackColor );
+            bitmap++;
+            xpos += x_dx;
+            ypos += x_dy;
+        }
+        bit <<= 1;
+        if ( bit == 0 )
+        {
+            bit = 1;
+        }
+        else
+        {
+            bitmap -= w;
+        }
+        xpos += y_dx;
+        ypos += y_dy;
+    }
+#if 0
+// TODO: bits calculations are not ready here
+    uint8_t bit = 1;
+    uint8_t blackColor = s_ssd1306_invertByte ? ssd1306_color : 0x00;
+    uint8_t color = s_ssd1306_invertByte ? 0x00 : ssd1306_color;
+    lcduint16_t actual_w = (rotation & 0x01) ? h : w;
+    lcduint16_t actual_h = (rotation & 0x01) ? w : h;
+    lcdint_t actual_xpos = (rotation & 0x02) ? (xpos - actual_w): xpos;
+    lcdint_t actual_ypos = ((rotation == 0x01) || (rotation == 0x02)) ? (ypos - actual_h) : ypos;
+    lcdint_t dx, dy;
+    switch ( rotation )
+    {
+        case 0: dx = 1; dy = 0; break;
+        case 1: dx = w; dy = (lcdint_t)(w * h) - 1; bitmap += w - 1; break;
+        case 2: dx = -1; dy = 0; bitmap += w*h - 1; break;
+        case 3:
+        default: dx = -w; dy = (lcdint_t)(w * h + 1); bitmap += (w - 1)*h; break;
+    }
+    ssd1306_lcd.set_block(actual_xpos, actual_ypos, actual_w);
+    while (h--)
+    {
+        uint8_t wx = actual_w;
+        while ( wx-- )
+        {
+            uint8_t data = pgm_read_byte( bitmap );
+            if ( data & bit )
+                ssd1306_lcd.send_pixels8( color );
+            else
+                ssd1306_lcd.send_pixels8( blackColor );
+            bitmap++;
+        }
+        bit <<= 1;
+        if ( bit == 0 )
+        {
+            bit = 1;
+        }
+        else
+        {
+            bitmap -= w;
+        }
+    }
+    ssd1306_intf.stop();
+#endif
 }
 
 void ssd1306_drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
