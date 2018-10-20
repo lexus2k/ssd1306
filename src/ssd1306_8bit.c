@@ -247,7 +247,7 @@ void ssd1306_drawMonoBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
 }
 
 void ssd1306_drawMonoBitmap8_slow(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h,
-                                  const uint8_t *bitmap, uint8_t rotation)
+                                  const uint8_t *bitmap, ERotation rotation)
 {
     uint8_t bit = 1;
     uint8_t blackColor = s_ssd1306_invertByte ? ssd1306_color : 0x00;
@@ -256,10 +256,10 @@ void ssd1306_drawMonoBitmap8_slow(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcd
     lcdint_t y_dx, y_dy;
     switch ( rotation )
     {
-        case 0: x_dx = 1; x_dy = 0; y_dx = -w; y_dy = 1; break;
-        case 1: x_dx = 0; x_dy = -1; y_dx = 1; y_dy = -w; break;
-        case 2: x_dx = -1; x_dy = 0; y_dx = w; y_dy = -1; break;
-        case 3:
+        case ROTATE_0: x_dx = 1; x_dy = 0; y_dx = -w; y_dy = 1; break;
+        case ROTATE_90: x_dx = 0; x_dy = -1; y_dx = 1; y_dy = w; break;
+        case ROTATE_180: x_dx = -1; x_dy = 0; y_dx = w; y_dy = -1; break;
+        case ROTATE_270:
         default: x_dx = 0; x_dy = 1; y_dx = -1; y_dy = -w; break;
     }
     while (h--)
@@ -409,6 +409,112 @@ size_t ssd1306_write8(uint8_t ch)
     return 1;
 }
 
+static void ssd1306_gotoStart( ERotation rotation )
+{
+    switch (rotation)
+    {
+        case ROTATE_0: ssd1306_cursorX = 0; break;
+        case ROTATE_90: ssd1306_cursorY = ssd1306_lcd.height - 1; break;
+        case ROTATE_180: ssd1306_cursorX = ssd1306_lcd.width - 1; break;
+        case ROTATE_270:
+        default: ssd1306_cursorY = 0; break;
+    }
+}
+
+static int ssd1306_isNextLine( ERotation rotation )
+{
+    switch (rotation)
+    {
+        case ROTATE_0: return ssd1306_cursorX > ssd1306_lcd.width - s_fixedFont.h.width;
+        case ROTATE_90: return ssd1306_cursorY < s_fixedFont.h.width;
+        case ROTATE_180: return ssd1306_cursorX < s_fixedFont.h.width;
+        case ROTATE_270:
+        default: return ssd1306_cursorY > ssd1306_lcd.height - s_fixedFont.h.width;
+    }
+}
+
+static void ssd1306_gotoNextLine( ERotation rotation )
+{
+    switch (rotation)
+    {
+        case ROTATE_0:
+            ssd1306_cursorY += s_fixedFont.h.height;
+            if ( ssd1306_cursorY > ssd1306_lcd.height - s_fixedFont.h.height )
+            {
+                ssd1306_cursorY = 0;
+            }
+            ssd1306_clearBlock8(0, ssd1306_cursorY, ssd1306_lcd.width, s_fixedFont.h.height);
+            break;
+        case ROTATE_90:
+            ssd1306_cursorX += s_fixedFont.h.height;
+            if ( ssd1306_cursorX > ssd1306_lcd.width - s_fixedFont.h.height )
+            {
+                ssd1306_cursorX = 0;
+            }
+            ssd1306_clearBlock8(ssd1306_cursorX, 0, s_fixedFont.h.height, ssd1306_lcd.height );
+            break;
+        case ROTATE_180:
+            ssd1306_cursorY -= s_fixedFont.h.height;
+            if ( ssd1306_cursorY < s_fixedFont.h.height )
+            {
+                ssd1306_cursorY = ssd1306_lcd.height - 1;
+            }
+            ssd1306_clearBlock8(0, ssd1306_cursorY - s_fixedFont.h.height, ssd1306_lcd.width, s_fixedFont.h.height);
+            break;
+        case ROTATE_270:
+        default:
+            ssd1306_cursorX -= s_fixedFont.h.height;
+            if ( ssd1306_cursorX < s_fixedFont.h.height )
+            {
+                ssd1306_cursorX = ssd1306_lcd.width - 1;
+            }
+            ssd1306_clearBlock8(ssd1306_cursorX - s_fixedFont.h.height, 0, s_fixedFont.h.height, ssd1306_lcd.height );
+            break;
+    }
+}
+
+static void ssd1306_gotoNextChar(lcduint_t char_width, ERotation rotation)
+{
+    switch (rotation)
+    {
+        case ROTATE_0: ssd1306_cursorX += char_width; break;
+        case ROTATE_90: ssd1306_cursorY -= char_width; break;
+        case ROTATE_180: ssd1306_cursorX -= char_width; break;
+        case ROTATE_270:
+        default: ssd1306_cursorY += char_width; break;
+    }
+}
+
+size_t ssd1306_write8_slow(uint8_t ch, ERotation rotation)
+{
+    if (ch == '\r')
+    {
+        ssd1306_gotoStart( rotation );
+        return 0;
+    }
+    else if ( ssd1306_isNextLine( rotation ) || (ch == '\n') )
+    {
+        ssd1306_gotoStart( rotation );
+        ssd1306_gotoNextLine( rotation );
+        if (ch == '\n')
+        {
+            return 0;
+        }
+    }
+    uint16_t unicode = ssd1306_unicode16FromUtf8(ch);
+    if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
+    SCharInfo char_info;
+    ssd1306_getCharBitmap(unicode, &char_info);
+    ssd1306_drawMonoBitmap8_slow( ssd1306_cursorX,
+                                  ssd1306_cursorY,
+                                  char_info.width,
+                                  char_info.height,
+                                  char_info.glyph,
+                                  rotation );
+    ssd1306_gotoNextChar( char_info.width + char_info.spacing, rotation );
+    return 1;
+}
+
 size_t ssd1306_print8(const char ch[])
 {
     size_t n = 0;
@@ -420,11 +526,29 @@ size_t ssd1306_print8(const char ch[])
     return n;
 }
 
+size_t ssd1306_print8_slow(const char ch[], ERotation rotation)
+{
+    size_t n = 0;
+    while (*ch)
+    {
+        n += ssd1306_write8_slow(*ch, rotation);
+        ch++;
+    }
+    return n;
+}
+
 uint8_t ssd1306_printFixed8(lcdint_t x, lcdint_t y, const char *ch, EFontStyle style)
 {
     ssd1306_cursorX = x;
     ssd1306_cursorY = y;
     return ssd1306_print8(ch);
+}
+
+uint8_t ssd1306_printFixed8_slow(lcdint_t x, lcdint_t y, const char *ch, EFontStyle style, ERotation rotation)
+{
+    ssd1306_cursorX = x;
+    ssd1306_cursorY = y;
+    return ssd1306_print8_slow(ch, rotation);
 }
 
 

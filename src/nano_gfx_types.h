@@ -71,6 +71,15 @@ typedef enum
     FONT_SIZE_8X     = 3,
 } EFontSize;
 
+/** Supported rotation modes */
+typedef enum
+{
+    ROTATE_0 = 0,
+    ROTATE_90,
+    ROTATE_180,
+    ROTATE_270,
+} ERotation;
+
 #pragma pack(push, 1)
 /** Structure describes font format in memory */
 typedef struct

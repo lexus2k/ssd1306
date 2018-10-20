@@ -197,7 +197,7 @@ void ssd1306_fillRect8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
 void ssd1306_drawMonoBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
 
 void ssd1306_drawMonoBitmap8_slow(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h,
-                                  const uint8_t *bitmap, uint8_t rotation);
+                                  const uint8_t *bitmap, ERotation rotation);
 
 /**
  * Draw 8-bit color bitmap, located in Flash, directly to OLED display GDRAM.
@@ -274,6 +274,7 @@ size_t ssd1306_print8(const char ch[]);
  */
 uint8_t ssd1306_printFixed8(lcdint_t x, lcdint_t y, const char *ch, EFontStyle style);
 
+uint8_t ssd1306_printFixed8_slow(lcdint_t x, lcdint_t y, const char *ch, EFontStyle style, ERotation rotation);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
