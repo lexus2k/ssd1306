@@ -114,7 +114,7 @@ public:
      */
     const NanoPoint offsetEnd() const
     {
-        return offset + (NanoPoint){ m_w-1, m_h-1 };
+        return offset + (NanoPoint){ (lcdint_t)m_w-1, (lcdint_t)m_h-1 };
     }
 
     /**
