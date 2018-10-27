@@ -106,14 +106,14 @@ Ssd1306 library requires at least c++11 and c99 (by default Digispark package mi
 
 ## Setting up
 
-*Hardware setup is described [here](https://github.com/lexus2k/ssd1306/wiki/Hardware-setup)
+*i2c Hardware setup is described [here](https://github.com/lexus2k/ssd1306/wiki/Hardware-setup)
 
-*Setting up for Arduino: (variant 1)*
+*Setting up for Arduino from github sources)*
  * Download source from https://github.com/lexus2k/ssd1306
- * Put the sources to Arduino/libraries/ folder
+ * Put the sources to Arduino/libraries/ssd1306/ folder
 
-*Setting up for Arduino: (variant 2)*
- * Install ssd1306 library via Arduino IDE library manager
+*Setting up for Arduino from Arduino IDE library manager*
+ * Install ssd1306 library (named ssd1306 by Alexey Dynda) via Arduino IDE library manager
 
 *Using with plain avr-gcc:*
  * Download source from https://github.com/lexus2k/ssd1306
@@ -124,7 +124,9 @@ Ssd1306 library requires at least c++11 and c99 (by default Digispark package mi
    * cd ssd1306/tools && ./build_and_run.sh -p avr -m <your_mcu> ssd1306_demo
 
  *For esp32:*
-  * Clone ssd1306 library to components/ssd1306 folder.
+  * Download source from https://github.com/lexus2k/ssd1306
+  * Put downloaded sources to components/ssd1306/ folder.
+  * Compile your project as described in ESP-IDF build system documentation
 
 For more information about this library, please, visit https://github.com/lexus2k/ssd1306.
 Doxygen documentation can be found at [github.io site](http://lexus2k.github.io/ssd1306).
