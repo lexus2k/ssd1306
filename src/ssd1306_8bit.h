@@ -196,6 +196,19 @@ void ssd1306_fillRect8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
  */
 void ssd1306_drawMonoBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
 
+/**
+ * Draw monochrome bitmap, located in Flash, directly to OLED display GDRAM.
+ * The bitmap should be in ssd1306 format (each byte represents 8 vertical pixels)
+ *
+ * @param xpos start horizontal position in pixels
+ * @param ypos start vertical position in pixels
+ * @param w bitmap width in pixels
+ * @param h bitmap height in pixels
+ * @param rotation rotation defines bitmap orientation.
+ * @param bitmap pointer to Flash data, containing monochrome bitmap.
+ *
+ * @note set color with ssd1306_setColor() function.
+ */
 void ssd1306_drawMonoBitmap8_slow(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h,
                                   const uint8_t *bitmap, ERotation rotation);
 
@@ -274,6 +287,21 @@ size_t ssd1306_print8(const char ch[]);
  */
 uint8_t ssd1306_printFixed8(lcdint_t x, lcdint_t y, const char *ch, EFontStyle style);
 
+/**
+ * Prints text to screen using fixed font. Top-left position for the text is defined
+ * by (x,y) coordinates. Text direction is defined by rotation options.
+ * This function works slower than ssd1306_printFixed8().
+ *
+ * @param x horizontal position in pixels
+ * @param y vertical position in pixels
+ * @param ch NULL-terminated string to print
+ * @param style font style (EFontStyle), normal by default (not implemented).
+ * @param rotation orientation of text being printed (ERotation).
+ * @returns number of chars in string
+ *
+ * @see ssd1306_setFixedFont
+ * @note set color with ssd1306_setColor() function.
+ */
 uint8_t ssd1306_printFixed8_slow(lcdint_t x, lcdint_t y, const char *ch, EFontStyle style, ERotation rotation);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
