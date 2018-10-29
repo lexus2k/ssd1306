@@ -34,9 +34,6 @@
 #include "intf/ssd1306_interface.h"
 #include "ssd1306_hal/io.h"
 
-// TODO: remove
-#include "lcd/ssd1306_commands.h"
-
 uint8_t s_ssd1306_invertByte = 0x00000000;
 const uint8_t *s_font6x8 = &ssd1306xled_font6x8[4];
 extern lcduint_t ssd1306_cursorX;

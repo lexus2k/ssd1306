@@ -24,7 +24,6 @@
 
 #include "lcd_pcd8544.h"
 #include "lcd_common.h"
-#include "pcd8544_commands.h"
 #include "intf/ssd1306_interface.h"
 #include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
@@ -32,6 +31,40 @@
 #include "sdl_core.h"
 #endif
 
+/** PCD8544 LCD driver commands */
+enum ESsd1306Commands
+{
+    PCD8544_NOP             = 0x00,
+
+// Regular functions
+    PCD8544_FUNCTIONSET     = 0x20,
+    PCD8544_DISPLAYCONTROL  = 0x08,
+    PCD8544_SETYADDR        = 0x40,
+    PCD8544_SETXADDR        = 0x80,
+
+// Extended functions
+    PCD8544_SETTEMP         = 0x04,
+    PCD8544_SETBIAS         = 0x10,
+    PCD8544_SETVOP          = 0x80,
+
+};
+
+/** PCD8544 supported function modes. */
+enum EPcd8544FunctionMode
+{
+    PCD8544_POWERDOWN           = 0x04,
+    PCD8544_VERTICAL_ADDR_MODE  = 0x02,
+    PCD8544_EXTENDEDINSTRUCTION = 0x01,
+};
+
+/** PCD8544 supported display modes. */
+enum EPcd8544DisplayMode
+{
+    PCD8544_DISPLAYBLANK        = 0x0,
+    PCD8544_DISPLAYALLON        = 0x1,
+    PCD8544_DISPLAYNORMAL       = 0x4,
+    PCD8544_DISPLAYINVERTED     = 0x5,
+};
 
 static const uint8_t PROGMEM s_lcd84x48_initData[] =
 {

@@ -24,13 +24,40 @@
 
 #include "oled_ssd1331.h"
 #include "lcd_common.h"
-#include "ssd1331_commands.h"
 #include "intf/ssd1306_interface.h"
 #include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
 #ifdef SDL_EMULATION
 #include "sdl_core.h"
 #endif
+
+/** SSD1331 LCD driver commands */
+enum ESsd1331Commands
+{
+    SSD1331_COLUMNADDR       = 0x15,
+    SSD1331_DRAWLINE         = 0x21,
+    SSD1331_ROWADDR          = 0x75,
+    SSD1331_CONTRASTA        = 0x81,
+    SSD1331_CONTRASTB        = 0x82,
+    SSD1331_CONTRASTC        = 0x83,
+    SSD1331_MASTERCURRENT    = 0x87,
+    SSD1331_PRECHARGEA       = 0x8A,
+    SSD1331_PRECHARGEB       = 0x8B,
+    SSD1331_SEGREMAP         = 0xA0,
+    SSD1331_SETSTARTLINE     = 0xA1,
+    SSD1331_SETDISPLAYOFFSET = 0xA2,
+    SSD1331_NORMALDISPLAY    = 0xA4,
+    SSD1331_SETMULTIPLEX     = 0xA8,
+    SSD1331_SETMASTER        = 0xAD,
+    SSD1331_DISPLAYOFF       = 0xAE,
+    SSD1331_DISPLAYON        = 0xAF,
+    SSD1331_POWERMODE        = 0xB0,
+    SSD1331_SETPRECHARGE     = 0xB1,
+    SSD1331_CLOCKDIV         = 0xB3,
+    SSD1331_PRECHARGELEVEL   = 0xBB,
+    SSD1331_VCOMH            = 0xBE,
+    SSD1331_NOP              = 0xE3,
+};
 
 extern uint16_t ssd1306_color;
 

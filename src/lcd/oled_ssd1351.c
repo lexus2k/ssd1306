@@ -24,7 +24,6 @@
 
 #include "oled_ssd1351.h"
 #include "lcd_common.h"
-#include "ssd1351_commands.h"
 #include "intf/ssd1306_interface.h"
 #include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
@@ -32,6 +31,40 @@
 #ifdef SDL_EMULATION
 #include "sdl_core.h"
 #endif
+
+/** SSD1351 LCD driver commands */
+enum ESsd1351Commands
+{
+    SSD1351_COLUMNADDR       = 0x15,
+    SSD1331_WRITEDATA        = 0x5C,
+    SSD1351_ROWADDR          = 0x75,
+    SSD1351_SEGREMAP         = 0xA0,
+    SSD1351_SETSTARTLINE     = 0xA1,
+    SSD1351_SETDISPLAYOFFSET = 0xA2,
+    SSD1351_SETFUNCTION      = 0xAB,
+    SSD1351_NOP              = 0xAD,
+    SSD1351_ALLOFF           = 0xA4,
+    SSD1351_DISPLAYON        = 0xA5,
+    SSD1351_NORMALDISPLAY    = 0xA6,
+    SSD1351_DISPLAYINVERSE   = 0xA7,
+    SSD1351_SLEEP_ON         = 0xAE,
+    SSD1351_SLEEP_OFF        = 0xAF,
+    SSD1351_NOP2             = 0xB0,
+    SSD1351_SETPRECHARGE     = 0xB1,
+    SSD1351_CLOCKDIV         = 0xB3,
+    SSD1351_EXTVSL           = 0xB4,
+    SSD1351_SETGPIO          = 0xB5,
+    SSD1351_PRECHARGESECOND  = 0xB6,
+    SSD1351_PRECHARGELEVEL   = 0xBB,
+    SSD1351_VCOMH            = 0xBE,
+    SSD1351_CONTRAST         = 0xC1,
+    SSD1351_MASTERCURRENT    = 0xC7,
+    SSD1351_SETMULTIPLEX     = 0xCA,
+    SSD1351_PRECHARGEA       = 0x8A,
+    SSD1351_PRECHARGEB       = 0x8B,
+    SSD1351_NOP3             = 0xE3,
+    SSD1351_UNLOCK           = 0xFD,
+};
 
 #define CMD_ARG     0xFF
 
