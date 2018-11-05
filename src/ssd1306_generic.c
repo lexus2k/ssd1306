@@ -168,7 +168,7 @@ static const uint8_t *ssd1306_searchCharGlyph(const uint8_t * unicode_table, uin
     if (r.count == 0)
     {
         // Sorry, no glyph found for the specified character
-        return unicode_table;
+        return NULL;
     }
     return &data[ (unicode - r.start_code) * s_fixedFont.glyph_size ];
 }
