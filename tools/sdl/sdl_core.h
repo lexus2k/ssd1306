@@ -42,6 +42,7 @@ enum
     SDL_LCD_SSD1351,
     SDL_LCD_IL9163,
     SDL_LCD_ST7735,
+    SDL_LCD_ILI9341,
 };
 
 extern void sdl_core_init(void);

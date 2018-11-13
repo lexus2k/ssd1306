@@ -30,6 +30,7 @@
 #include "sdl_ssd1331.h"
 #include "sdl_ssd1351.h"
 #include "sdl_il9163.h"
+#include "sdl_ili9341.h"
 #include "sdl_pcd8544.h"
 #include <unistd.h>
 #include <SDL2/SDL.h>
@@ -67,6 +68,7 @@ void sdl_core_init(void)
     register_oled( &sdl_ssd1331 );
     register_oled( &sdl_ssd1351 );
     register_oled( &sdl_il9163 );
+    register_oled( &sdl_ili9341 );
     register_oled( &sdl_pcd8544 );
     sdl_graphics_init();
 }

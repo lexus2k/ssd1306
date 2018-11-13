@@ -58,7 +58,7 @@ void ssd1306_drawMonoBuffer8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
     ssd1306_lcd.set_block(xpos, ypos, w);
     while (h--)
     {
-        uint8_t wx = w;
+        lcduint_t wx = w;
         while (wx--)
         {
             uint8_t data = *bitmap;
@@ -83,7 +83,7 @@ void ssd1306_drawMonoBuffer8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
 
 void ssd1306_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data)
 {
-    uint16_t count = w * h;
+    uint32_t count = w * h;
     ssd1306_lcd.set_block(x, y, w);
     while (count--)
     {
@@ -96,7 +96,7 @@ void ssd1306_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, c
 void ssd1306_fillScreen8(uint8_t fill_Data)
 {
     ssd1306_lcd.set_block(0, 0, 0);
-    uint16_t count = ssd1306_lcd.width * ssd1306_lcd.height;
+    uint32_t count = ssd1306_lcd.width * ssd1306_lcd.height;
     while (count--)
     {
         ssd1306_lcd.send_pixels8( fill_Data );
@@ -216,7 +216,7 @@ void ssd1306_drawMonoBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
     ssd1306_lcd.set_block(xpos, ypos, w);
     while (h--)
     {
-        uint8_t wx = w;
+        lcduint_t wx = w;
         while ( wx-- )
         {
             uint8_t data = pgm_read_byte( bitmap );
@@ -242,7 +242,7 @@ void ssd1306_drawMonoBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
 void ssd1306_drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
     ssd1306_lcd.set_block(xpos, ypos, w);
-    uint16_t count = (w) * (h);
+    uint32_t count = (w) * (h);
     while (count--)
     {
         ssd1306_lcd.send_pixels8( pgm_read_byte( bitmap ) );
@@ -254,7 +254,7 @@ void ssd1306_drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h,
 void ssd1306_clearBlock8(uint8_t x, uint8_t y, uint8_t w, uint8_t h)
 {
     ssd1306_lcd.set_block(x, y, w);
-    uint16_t count = w * h;
+    uint32_t count = w * h;
     while (count--)
     {
         ssd1306_lcd.send_pixels8( 0x00 );

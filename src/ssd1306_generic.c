@@ -55,12 +55,12 @@ static void (*s_ssd1306_getCharBitmap)(uint16_t unicode, SCharInfo *info) = NULL
 static const uint8_t *ssd1306_getCharGlyph(char ch);
 static const uint8_t *ssd1306_getU16CharGlyph(uint16_t unicode);
 
-uint8_t      ssd1306_displayHeight()
+lcduint_t      ssd1306_displayHeight()
 {
     return ssd1306_lcd.height;
 }
 
-uint8_t      ssd1306_displayWidth()
+lcduint_t      ssd1306_displayWidth()
 {
     return ssd1306_lcd.width;
 }
