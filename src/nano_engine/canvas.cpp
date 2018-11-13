@@ -465,7 +465,7 @@ void NanoCanvas1_8::blt()
 
 /* We need to use multiply operation, because there are displays on the market *
  * with resolution different from 2^N (160x128, 96x64, etc.)                   */
-#define YADDR8(y) (static_cast<uint16_t>(y) * m_w)
+#define YADDR8(y) (static_cast<uint32_t>(y) * m_w)
 
 template <>
 void NanoCanvasOps<8>::putPixel(lcdint_t x, lcdint_t y)
@@ -704,7 +704,7 @@ void NanoCanvas8::blt()
 
 /* We need to use multiply operation, because there are displays on the market *
  * with resolution different from 2^N (160x128, 96x64, etc.)                   */
-#define YADDR16(y) (static_cast<uint16_t>(y) * (m_w << 1))
+#define YADDR16(y) (static_cast<uint32_t>(y) * (m_w << 1))
 
 template <>
 void NanoCanvasOps<16>::putPixel(lcdint_t x, lcdint_t y)

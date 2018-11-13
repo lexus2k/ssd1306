@@ -118,11 +118,8 @@ static void sdl_ili9341_commands(uint8_t data)
             switch (s_cmdArgIndex)
             {
                 case 0:
-                     break;
-                case 1:
                      if (!(s_verticalMode & 0b00100000))
                      {
-                         // emulating bug in ili9341 Black display
                          s_activePage = data;
                          s_pageStart = s_activePage;
                      }
@@ -132,17 +129,36 @@ static void sdl_ili9341_commands(uint8_t data)
                          s_activeColumn = data;
                      }
                      break;
-                case 2:
-                     break;
-                case 3:
+                case 1:
                      if (!(s_verticalMode & 0b00100000))
                      {
-                         // emulating bug in ili9341 Black display
+                         s_activePage = data | (s_activePage << 8);
+                         s_pageStart = s_activePage;
+                     }
+                     else
+                     {
+                         s_columnStart = data | (s_columnStart << 8);
+                         s_activeColumn = data | (s_activeColumn << 8);
+                     }
+                     break;
+                case 2:
+                     if (!(s_verticalMode & 0b00100000))
+                     {
                          s_pageEnd = data;
                      }
                      else
                      {
                          s_columnEnd = data;
+                     }
+                     break;
+                case 3:
+                     if (!(s_verticalMode & 0b00100000))
+                     {
+                         s_pageEnd = data | (s_pageEnd << 8);
+                     }
+                     else
+                     {
+                         s_columnEnd = data | (s_columnEnd << 8);
                      }
                      s_commandId = SSD_COMMAND_NONE;
                      break;
