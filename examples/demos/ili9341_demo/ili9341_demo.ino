@@ -169,12 +169,12 @@ static void drawLinesDemo()
 {
     ssd1306_clearScreen8();
     ssd1306_setColor(RGB_COLOR8(255,0,0));
-    for (uint8_t y = 0; y < ssd1306_displayHeight(); y += 8)
+    for (uint16_t y = 0; y < ssd1306_displayHeight(); y += 8)
     {
         ssd1306_drawLine8(0,0, ssd1306_displayWidth() -1, y);
     }
     ssd1306_setColor(RGB_COLOR8(0,255,0));
-    for (uint8_t x = ssd1306_displayWidth() - 1; x > 7; x -= 8)
+    for (uint16_t x = ssd1306_displayWidth() - 1; x > 7; x -= 8)
     {
         ssd1306_drawLine8(0,0, x, ssd1306_displayHeight() - 1);
     }
