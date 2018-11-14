@@ -46,21 +46,21 @@ static const PROGMEM uint8_t s_oled240x320_initData[] =
     SDL_LCD_ILI9341,
     0x00,
 #endif
-//    0x01,                     // sw reset. not needed, we do hardware reset
+    0x01,                     // sw reset. not needed, we do hardware reset
     0x11,                       // exit sleep mode
     0x3A, CMD_ARG, 0x05,        // set 16-bit pixel format
     0x26, CMD_ARG, 0x04,        // set gamma curve: valid values 1, 2, 4, 8
-//    0xF2, CMD_ARG, 0x01,        // enable gamma adjustment, 0 - to disable
-//    0xE0, CMD_ARG, 0x3F, CMD_ARG, 0x25, CMD_ARG, 0x1C,
-//          CMD_ARG, 0x1E, CMD_ARG, 0x20, CMD_ARG, 0x12,
-//          CMD_ARG, 0x2A, CMD_ARG, 0x90, CMD_ARG, 0x24,
-//          CMD_ARG, 0x11, CMD_ARG, 0x00, CMD_ARG, 0x00,
-//          CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, // positive gamma correction
-//    0xE1, CMD_ARG, 0x20, CMD_ARG, 0x20, CMD_ARG, 0x20,
-//          CMD_ARG, 0x20, CMD_ARG, 0x05, CMD_ARG, 0x00,
-//          CMD_ARG, 0x15, CMD_ARG, 0xA7, CMD_ARG, 0x3D,
-//          CMD_ARG, 0x18, CMD_ARG, 0x25, CMD_ARG, 0x2A,
-//          CMD_ARG, 0x2B, CMD_ARG, 0x2B, CMD_ARG, 0x3A, // negative gamma correction
+    0xF2, CMD_ARG, 0x01,        // enable gamma adjustment, 0 - to disable
+    0xE0, CMD_ARG, 0x3F, CMD_ARG, 0x25, CMD_ARG, 0x1C,
+          CMD_ARG, 0x1E, CMD_ARG, 0x20, CMD_ARG, 0x12,
+          CMD_ARG, 0x2A, CMD_ARG, 0x90, CMD_ARG, 0x24,
+          CMD_ARG, 0x11, CMD_ARG, 0x00, CMD_ARG, 0x00,
+          CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, // positive gamma correction
+    0xE1, CMD_ARG, 0x20, CMD_ARG, 0x20, CMD_ARG, 0x20,
+          CMD_ARG, 0x20, CMD_ARG, 0x05, CMD_ARG, 0x00,
+          CMD_ARG, 0x15, CMD_ARG, 0xA7, CMD_ARG, 0x3D,
+          CMD_ARG, 0x18, CMD_ARG, 0x25, CMD_ARG, 0x2A,
+          CMD_ARG, 0x2B, CMD_ARG, 0x2B, CMD_ARG, 0x3A, // negative gamma correction
 //    0xB1,  CMD_ARG,  0x08, CMD_ARG, 0x08, // frame rate control 1, use by default
 //    0xB4,  CMD_ARG, 0x07,                 // display inversion, use by default
     0xC0,  CMD_ARG,  0x0A, CMD_ARG, 0x02, // power control 1
@@ -69,7 +69,7 @@ static const PROGMEM uint8_t s_oled240x320_initData[] =
     0xC7,  CMD_ARG,  0x40,                // vcom offset
 //    0x2A,  CMD_ARG,  0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x7F,   // set column address, not needed. set by direct API
 //    0x2B,  CMD_ARG,  0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x9F,   // set page address, not needed. set by direct API
-    0x36,  CMD_ARG,  0b00101000,          // enable fake "vertical addressing" mode (for ili9341_setBlock() )
+    0x36,  CMD_ARG,  0b10100000,          // enable fake "vertical addressing" mode (for ili9341_setBlock() )
     0x29,                                 // display on
 };
 
@@ -136,13 +136,17 @@ static void ili9341_nextPage2(void)
 
 void    ili9341_setMode(lcd_mode_t mode)
 {
-    ssd1306_intf.start();
+    s_rotation &= 0x03;
+    s_rotation |= (mode == LCD_MODE_SSD1306_COMPAT ? 0x00 : 0x04);
+    ili9341_setRotation( s_rotation );
+//    s_rotation = (s_rotation & 0x03) | (mode == LCD_MODE_SSD1306_COMPAT ? 0x00 : 0x04);
+/*    ssd1306_intf.start();
     ssd1306_spiDataMode(0);
     ssd1306_intf.send( 0x36 );
     ssd1306_spiDataMode(1);
-    ssd1306_intf.send( mode ? 0b00101000 : 0b00001000 );
-    ssd1306_intf.stop();
-    if (mode)
+    ssd1306_intf.send( (mode == LCD_MODE_SSD1306_COMPAT ? 0b10000100 : 0b10001100) | s_rgb_bit );
+    ssd1306_intf.stop(); */
+    if (mode == LCD_MODE_SSD1306_COMPAT)
     {
         ssd1306_lcd.set_block = ili9341_setBlock;
         ssd1306_lcd.next_page = ili9341_nextPage;
@@ -152,7 +156,6 @@ void    ili9341_setMode(lcd_mode_t mode)
         ssd1306_lcd.set_block = ili9341_setBlock2;
         ssd1306_lcd.next_page = ili9341_nextPage2;
     }
-    s_rotation = mode ? 0x00 : 0x04;
 }
 
 static void ili9341_sendPixels(uint8_t data)
@@ -214,10 +217,9 @@ void   ili9341_240x320_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
         delay(1);
         /* Perform reset operation of LCD display */
         digitalWrite(rstPin, LOW);
-        delay(20);
+        delay(100);
         digitalWrite(rstPin, HIGH);
     }
-    /* ssd1351 cannot work faster than at 4MHz per datasheet */
     s_ssd1306_spi_clock = 8000000;
     ssd1306_spiInit(cesPin, dcPin);
     ili9341_240x320_init();
@@ -241,28 +243,28 @@ void ili9341_setRotation(uint8_t rotation)
     switch (s_rotation)
     {
     case 0:
-        ram_mode = 0b00100000;
+        ram_mode = 0b10100000;
         break;
     case 1: // 90 degree CW
-        ram_mode = 0b01000000;
+        ram_mode = 0b11010000;
         break;
     case 2: // 180 degree CW
-        ram_mode = 0b11100000;
-        break;
-    case 3: // 270 degree CW
-        ram_mode = 0b10000000;
-        break;
-    case 4:
-        ram_mode = 0b00000000;
-        break;
-    case 5: // 90 degree CW
         ram_mode = 0b01100000;
         break;
+    case 3: // 270 degree CW
+        ram_mode = 0b00000000;
+        break;
+    case 4:
+        ram_mode = 0b10000100;
+        break;
+    case 5: // 90 degree CW
+        ram_mode = 0b11100000;
+        break;
     case 6: // 180 degree CW
-        ram_mode = 0b11000000;
+        ram_mode = 0b01010100;
         break;
     default: // 270 degree CW
-        ram_mode = 0b10100000;
+        ram_mode = 0b00100000;
         break;
     }
     ssd1306_intf.send( ram_mode | s_rgb_bit );

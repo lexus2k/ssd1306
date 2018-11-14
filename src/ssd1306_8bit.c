@@ -96,7 +96,7 @@ void ssd1306_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, c
 void ssd1306_fillScreen8(uint8_t fill_Data)
 {
     ssd1306_lcd.set_block(0, 0, 0);
-    uint32_t count = ssd1306_lcd.width * ssd1306_lcd.height;
+    uint32_t count = (uint32_t)ssd1306_lcd.width * (uint32_t)ssd1306_lcd.height;
     while (count--)
     {
         ssd1306_lcd.send_pixels8( fill_Data );

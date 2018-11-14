@@ -192,12 +192,12 @@ void sdl_ili9341_data(uint8_t data)
     int rx, ry;
     if (s_verticalMode & 0b00100000)
     {
-        rx = (s_verticalMode & 0b01000000) ? (sdl_ili9341.width - 1 - x) : x;
+        rx = (s_verticalMode & 0b01000000) ? x: (sdl_ili9341.width - 1 - x);
         ry = (s_verticalMode & 0b10000000) ? (sdl_ili9341.height - 1 - y) : y;
     }
     else
     {
-        rx = (s_verticalMode & 0b10000000) ? (sdl_ili9341.width - 1 - x) : x;
+        rx = (s_verticalMode & 0b10000000) ? x: (sdl_ili9341.width - 1 - x);
         ry = (s_verticalMode & 0b01000000) ? (sdl_ili9341.height - 1 - y) : y;
     }
     sdl_put_pixel(rx, ry, (dataFirst<<8) | data);
