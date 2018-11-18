@@ -95,6 +95,17 @@ void         ili9341_240x320_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin
 void ili9341_setRotation(uint8_t rotation);
 
 /**
+ * @brief Sets rotation of all output functions
+ *
+ * Sets rotation of all output functions. 0 - no rotation, 1 - change by 90 degrees
+ * Actually doesn't change screen orientation, only rotates primitives being output
+ *
+ * @param on enable (1) of disable (0)
+ * @warning experimental feature, may work incorrectly
+ */
+void ili9341_rotateOutput(uint8_t on);
+
+/**
  * @}
  */
 

@@ -39,6 +39,8 @@ extern uint32_t s_ssd1306_spi_clock;
 
 static uint8_t s_rotation = 0x00;
 static uint8_t s_rgb_bit  = 0b00001000;
+static uint8_t s_rotate_output = 0;
+
 
 static const PROGMEM uint8_t s_oled240x320_initData[] =
 {
@@ -67,8 +69,6 @@ static const PROGMEM uint8_t s_oled240x320_initData[] =
     0xC1,  CMD_ARG,  0x02,                // power control 2
     0xC5,  CMD_ARG,  0x50, CMD_ARG, 0x5B, // vcom control 1
     0xC7,  CMD_ARG,  0x40,                // vcom offset
-//    0x2A,  CMD_ARG,  0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x7F,   // set column address, not needed. set by direct API
-//    0x2B,  CMD_ARG,  0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x9F,   // set page address, not needed. set by direct API
     0x36,  CMD_ARG,  0b10100000,          // enable fake "vertical addressing" mode (for ili9341_setBlock() )
     0x29,                                 // display on
 };
@@ -103,22 +103,24 @@ static void ili9341_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 
 static void ili9341_setBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
 {
-    lcduint_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
+    lcduint_t width = s_rotate_output ? ssd1306_lcd.height : ssd1306_lcd.width;
+    lcduint_t height = s_rotate_output ? ssd1306_lcd.width : ssd1306_lcd.height;
+    lcduint_t rx = w ? (x + w - 1) : (width - 1);
     ssd1306_intf.start();
     ssd1306_spiDataMode(0);
     ssd1306_intf.send(0x2A);
     ssd1306_spiDataMode(1);  // According to datasheet all args must be passed in data mode
     ssd1306_intf.send(x >> 8);
     ssd1306_intf.send(x & 0xFF);
-    ssd1306_intf.send((rx < ssd1306_lcd.width ? rx : (ssd1306_lcd.width - 1))>>8);
-    ssd1306_intf.send((rx < ssd1306_lcd.width ? rx : (ssd1306_lcd.width - 1)) & 0xFF);
+    ssd1306_intf.send((rx < width ? rx : (width - 1))>>8);
+    ssd1306_intf.send((rx < width ? rx : (width - 1)) & 0xFF);
     ssd1306_spiDataMode(0);
     ssd1306_intf.send(0x2B);
     ssd1306_spiDataMode(1);  // According to datasheet all args must be passed in data mode
     ssd1306_intf.send(y >> 8);
     ssd1306_intf.send(y & 0xFF);
-    ssd1306_intf.send((ssd1306_lcd.height - 1) >> 8);
-    ssd1306_intf.send((ssd1306_lcd.height - 1) & 0xFF);
+    ssd1306_intf.send((height - 1) >> 8);
+    ssd1306_intf.send((height - 1) & 0xFF);
     ssd1306_spiDataMode(0);
     ssd1306_intf.send(0x2C);
     ssd1306_spiDataMode(1);
@@ -220,7 +222,7 @@ void   ili9341_240x320_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
         delay(100);
         digitalWrite(rstPin, HIGH);
     }
-    s_ssd1306_spi_clock = 8000000;
+    s_ssd1306_spi_clock = 10000000;
     ssd1306_spiInit(cesPin, dcPin);
     ili9341_240x320_init();
 }
@@ -255,7 +257,7 @@ void ili9341_setRotation(uint8_t rotation)
         ram_mode = 0b00000000;
         break;
     case 4:
-        ram_mode = 0b10000100;
+        ram_mode = s_rotate_output ? 0b11100100: 0b10000100;
         break;
     case 5: // 90 degree CW
         ram_mode = 0b11100000;
@@ -273,3 +275,8 @@ void ili9341_setRotation(uint8_t rotation)
     ssd1306_intf.stop();
 }
 
+void ili9341_rotateOutput(uint8_t on)
+{
+    s_rotate_output = on;
+    ili9341_setRotation( s_rotation );
+}
