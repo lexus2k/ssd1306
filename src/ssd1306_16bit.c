@@ -29,7 +29,7 @@
 
 void ssd1306_drawBufferFast16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data)
 {
-    uint16_t count = (w * h) << 1;
+    uint32_t count = (w * h) << 1;
     ssd1306_lcd.set_block(x, y, w);
     while (count--)
     {

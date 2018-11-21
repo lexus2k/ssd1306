@@ -69,7 +69,7 @@ static const PROGMEM uint8_t s_oled128x128_initData[] =
     0xC7,  CMD_ARG,  0x40,                // vcom offset
 //    0x2A,  CMD_ARG,  0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x7F,   // set column address, not needed. set by direct API
 //    0x2B,  CMD_ARG,  0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x9F,   // set page address, not needed. set by direct API
-    0x36,  CMD_ARG,  0b00101000,          // enable fake "vertical addressing" mode (for il9163_setBlock() )
+    0x36,  CMD_ARG,  0b10001100,          // enable fake "vertical addressing" mode (for il9163_setBlock() )
     0x29,                                 // display on
 };
 
@@ -278,7 +278,7 @@ void il9163_setRotation(uint8_t rotation)
     switch (s_rotation)
     {
     case 0:
-        ram_mode = 0b00100000;
+        ram_mode = 0b00000000;
         break;
     case 1: // 90 degree CW
         ram_mode = 0b01000000;

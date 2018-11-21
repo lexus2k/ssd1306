@@ -1,4 +1,4 @@
-# SSD1306/SSD1331/SSD1351/IL9163/ST7735 OLED display driver, PCD8544 LED display driver
+# SSD1306/SSD1331/SSD1351/IL9163/ILI9341/ST7735/ILI9341 OLED display driver, PCD8544 LED display driver
 
 [tocstart]: # (toc start)
 
@@ -61,6 +61,7 @@ through API.
 | ssd1351 128x128 |   | X |   |   |
 | il9163 128x128 |   | X | X |   |
 | st7735 128x160 |   | X | X |   |
+| ili9341 240x320 |   | X | X |    |
 | pcd8544 84x48 |   | X  |   | Nokia 5110 |
 | vga 96x40 color |   |   |   | direct D-sub output, atmega328p only |
 | vga 128x64 bw |   |   |   | direct D-sub output, atmega328p only |
