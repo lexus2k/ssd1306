@@ -114,6 +114,38 @@ uint8_t NanoEngineInputs::gpioButtons()
     return buttons;
 }
 
+void NanoEngineInputs::connectKY40encoder(uint8_t pina_clk, uint8_t pinb_dt, int8_t pinc_sw)
+{
+    s_ky40_clk = pina_clk;
+    s_ky40_dt = pinb_dt;
+    s_ky40_sw = pinc_sw;
+    m_onButtons = ky40Buttons;
+}
+
+uint8_t NanoEngineInputs::ky40Buttons()
+{
+    static uint8_t last_clk = digitalRead( s_ky40_clk );
+    uint8_t buttons = BUTTON_NONE;
+    uint8_t clk = digitalRead( s_ky40_clk );
+    if ( clk != last_clk )
+    {
+        if ( clk == HIGH )
+        {
+            buttons = digitalRead( s_ky40_dt ) == LOW ? BUTTON_DOWN : BUTTON_UP;
+        }
+        else
+        {
+            buttons = digitalRead( s_ky40_dt ) == HIGH ? BUTTON_DOWN : BUTTON_UP;
+        }
+    }
+    last_clk = clk;
+    if ( s_ky40_sw >=0 && digitalRead( s_ky40_sw ) == LOW )
+    {
+        buttons |= BUTTON_A;
+    }
+    return buttons;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 ////// NANO ENGINE CORE CLASS /////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
