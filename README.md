@@ -107,7 +107,7 @@ Ssd1306 library requires at least c++11 and c99 (by default Digispark package mi
 
 ## Setting up
 
-*i2c Hardware setup is described [here](https://github.com/lexus2k/ssd1306/wiki/Hardware-setup)
+*i2c Hardware setup is described [here](https://github.com/lexus2k/ssd1306/wiki/Hardware-setup)*
 
 *Setting up for Arduino from github sources)*
  * Download source from https://github.com/lexus2k/ssd1306
