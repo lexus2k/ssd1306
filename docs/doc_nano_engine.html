@@ -74,7 +74,7 @@ $(function() {
 <li><a href="#draw-moving-bitmap">Draw moving bitmap</a></li>
 <li><a href="#what-if-not-to-use-draw-callbacks">What if not to use draw callbacks</a></li>
 <li><a href="#using-adafruit-gfx-with-nanoengine">Using Adafruit GFX with NanoEngine</a></li>
-<li><a class="el" href="doc_src.html">To upper level</a></li>
+<li><a class="el" href="index.html">To upper level</a></li>
 </ul>
 <p><a class="anchor" id="introduction"></a> </p><h2>Introduction</h2>
 <p>Many applications use double-buffered output to physical display to avoid flickering effect, when a user observed non-completed picture for a short time. When working with color OLED/LCD displays like ssd1331, some micro-controllers do not have enough RAM to fit display buffer in. For example, in 8-bit mode ssd1331 OLED display needs 6144 bytes (<code>96*64</code>). But simple micro-controller like Atmega328 has only 2KiB, and Attiny85 has only 512B of RAM. But with ssd1306 library you still can create applications for those ones with good graphics. ssd1306 library represents NanoEngine8, intended to be used with color OLED displays. Digit 8 means that engine implements 8-bit color mode. Refer to arkanoid8 as example, which can be run even on small Attiny85 with color ssd1331 display. The system supports NanoEngine1 for monochrome OLED displays, NanoEngine8 for 8-bit RGB OLED displays, NanoEngine16 for 16-bit RGB OLED displays.</p>
