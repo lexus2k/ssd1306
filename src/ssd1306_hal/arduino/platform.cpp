@@ -54,23 +54,6 @@ static void ssd1306_i2cStop_Wire(void)
     Wire.endTransmission();
 }
 
-void ssd1306_i2cConfigure_Wire(int8_t scl, int8_t sda)
-{
-#if defined(ESP8266) || defined(ESP32) || defined(ESP31B)
-    if ((scl>=0) && (sda >=0))
-    {
-        Wire.begin(sda, scl);
-    }
-    else
-#endif
-    {
-        Wire.begin();
-    }
-    #ifdef SSD1306_WIRE_CLOCK_CONFIGURABLE
-        Wire.setClock(400000);
-    #endif
-}
-
 /**
  * Inputs: SCL is LOW, SDA is has no meaning
  * Outputs: SCL is LOW
