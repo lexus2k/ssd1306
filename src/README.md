@@ -1,7 +1,6 @@
-# ssd1306 library introduction {#doc_src}
+# ssd1306 library introduction # {#index}
 
 ***
-@page doc_src
 
 [tocstart]: # (toc start)
 

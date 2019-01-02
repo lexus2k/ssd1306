@@ -12,7 +12,7 @@
   * [Draw moving bitmap](#draw-moving-bitmap)
   * [What if not to use draw callbacks](#what-if-not-to-use-draw-callbacks)
   * [Using Adafruit GFX with NanoEngine](#using-adafruit-gfx-with-nanoengine)
-  * [To upper level](@ref doc_src)
+  * [To upper level](@ref index)
 
 [tocend]: # (toc end)
 
