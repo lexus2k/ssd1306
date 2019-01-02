@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.12</span>
+   &#160;<span id="projectnumber">1.7.13</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -61,7 +61,6 @@ $(function() {
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -72,11 +71,6 @@ $(function() {
 <p>LCD direct draw functions for all display types: color and monochrome.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_app_menu.html">SAppMenu</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga9c3f2c5fca79b5111a8407989a8bc1e6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga9c3f2c5fca79b5111a8407989a8bc1e6">ssd1306_drawCanvas</a>(x,  y,  w,  h,  buf)&#160;&#160;&#160;<a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga7a7f8e761a45eb4b4d53d76dd5f72a35">ssd1306_drawBuffer</a>(x, y, w, h, buf)</td></tr>
@@ -84,8 +78,6 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gad46c35ee4a2f53bee496bea6fdb23847"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#gad46c35ee4a2f53bee496bea6fdb23847">ssd1306_setPos</a> (uint8_t x, uint8_t y)</td></tr>
-<tr class="separator:gad46c35ee4a2f53bee496bea6fdb23847"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5f874b5383858fd6566f7e4f76555c22"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga5f874b5383858fd6566f7e4f76555c22">ssd1306_fillScreen</a> (uint8_t fill_Data)</td></tr>
 <tr class="separator:ga5f874b5383858fd6566f7e4f76555c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga96cae701774193ce8abc0f7058506723"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga96cae701774193ce8abc0f7058506723">ssd1306_clearScreen</a> (void)</td></tr>
@@ -146,22 +138,6 @@ Functions</h2></td></tr>
 <tr class="separator:gaa5f53fa7fbe48dc1a06e5fe4b1710c26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4ab1b9180be9247898ae4d2031988cd4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga4ab1b9180be9247898ae4d2031988cd4">ssd1306_replaceSprite</a> (<a class="el" href="struct_s_p_r_i_t_e.html">SPRITE</a> *sprite, const uint8_t *data)</td></tr>
 <tr class="separator:ga4ab1b9180be9247898ae4d2031988cd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac16788c7c32b72b3d485cf9db0929e4a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#gac16788c7c32b72b3d485cf9db0929e4a">ssd1306_createMenu</a> (<a class="el" href="struct_s_app_menu.html">SAppMenu</a> *menu, const char **items, uint8_t count)</td></tr>
-<tr class="separator:gac16788c7c32b72b3d485cf9db0929e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4353274677f513ae61778927f110d507"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga4353274677f513ae61778927f110d507">ssd1306_showMenu</a> (<a class="el" href="struct_s_app_menu.html">SAppMenu</a> *menu)</td></tr>
-<tr class="separator:ga4353274677f513ae61778927f110d507"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga99f737f48aa960ab40a176590099a304"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga99f737f48aa960ab40a176590099a304">ssd1306_showMenu8</a> (<a class="el" href="struct_s_app_menu.html">SAppMenu</a> *menu)</td></tr>
-<tr class="separator:ga99f737f48aa960ab40a176590099a304"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga26b4b11e4bc8b566855b2dbb3979210a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga26b4b11e4bc8b566855b2dbb3979210a">ssd1306_updateMenu</a> (<a class="el" href="struct_s_app_menu.html">SAppMenu</a> *menu)</td></tr>
-<tr class="separator:ga26b4b11e4bc8b566855b2dbb3979210a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafa64c69880dc6157ca05d89f45b9a958"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#gafa64c69880dc6157ca05d89f45b9a958">ssd1306_updateMenu8</a> (<a class="el" href="struct_s_app_menu.html">SAppMenu</a> *menu)</td></tr>
-<tr class="separator:gafa64c69880dc6157ca05d89f45b9a958"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab2ab0120154044ea38d8b1c45c811def"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#gab2ab0120154044ea38d8b1c45c811def">ssd1306_menuSelection</a> (<a class="el" href="struct_s_app_menu.html">SAppMenu</a> *menu)</td></tr>
-<tr class="separator:gab2ab0120154044ea38d8b1c45c811def"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad2a5de3ddd3260495288fa46fc9c78a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#gad2a5de3ddd3260495288fa46fc9c78a0">ssd1306_menuDown</a> (<a class="el" href="struct_s_app_menu.html">SAppMenu</a> *menu)</td></tr>
-<tr class="separator:gad2a5de3ddd3260495288fa46fc9c78a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5d1ea78a9e0ac5d92bc1efd9c6a14f44"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga5d1ea78a9e0ac5d92bc1efd9c6a14f44">ssd1306_menuUp</a> (<a class="el" href="struct_s_app_menu.html">SAppMenu</a> *menu)</td></tr>
-<tr class="separator:ga5d1ea78a9e0ac5d92bc1efd9c6a14f44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>LCD direct draw functions for all display types: color and monochrome. </p>
@@ -224,7 +200,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8h_source.html#l00317">317</a> of file <a class="el" href="ssd1306__1bit_8h_source.html">ssd1306_1bit.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8h_source.html#l00310">310</a> of file <a class="el" href="ssd1306__1bit_8h_source.html">ssd1306_1bit.h</a>.</p>
 
 </div>
 </div>
@@ -524,51 +500,6 @@ Functions</h2></td></tr>
 <p>Fills screen with zero-byte </p>
 
 <p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00064">64</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
-
-</div>
-</div>
-<a id="gac16788c7c32b72b3d485cf9db0929e4a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac16788c7c32b72b3d485cf9db0929e4a">&#9670;&nbsp;</a></span>ssd1306_createMenu()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_createMenu </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_s_app_menu.html">SAppMenu</a> *&#160;</td>
-          <td class="paramname"><em>menu</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char **&#160;</td>
-          <td class="paramname"><em>items</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>count</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Creates menu object with the provided list of menu items. List of menu items (strings) must exist all until menu object is no longer needed. Selection is set to the first item by default.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">menu</td><td>- Pointer to <a class="el" href="struct_s_app_menu.html">SAppMenu</a> structure </td></tr>
-    <tr><td class="paramname">items</td><td>- array of null-termintated strings (located in SRAM) </td></tr>
-    <tr><td class="paramname">count</td><td>- count of menu items in the array </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="ssd1306__menu_8c_source.html#l00041">41</a> of file <a class="el" href="ssd1306__menu_8c_source.html">ssd1306_menu.c</a>.</p>
 
 </div>
 </div>
@@ -1143,88 +1074,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="gad2a5de3ddd3260495288fa46fc9c78a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad2a5de3ddd3260495288fa46fc9c78a0">&#9670;&nbsp;</a></span>ssd1306_menuDown()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_menuDown </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_s_app_menu.html">SAppMenu</a> *&#160;</td>
-          <td class="paramname"><em>menu</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Moves selection pointer down by 1 item. If there are no items below, it will set selection pointer to the first item. Use <a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga26b4b11e4bc8b566855b2dbb3979210a">ssd1306_updateMenu()</a> to refresh menu state on the display.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">menu</td><td>- Pointer to <a class="el" href="struct_s_app_menu.html">SAppMenu</a> structure </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="ssd1306__menu_8c_source.html#l00156">156</a> of file <a class="el" href="ssd1306__menu_8c_source.html">ssd1306_menu.c</a>.</p>
-
-</div>
-</div>
-<a id="gab2ab0120154044ea38d8b1c45c811def"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab2ab0120154044ea38d8b1c45c811def">&#9670;&nbsp;</a></span>ssd1306_menuSelection()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ssd1306_menuSelection </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_s_app_menu.html">SAppMenu</a> *&#160;</td>
-          <td class="paramname"><em>menu</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Returns currently selected menu item. First item has zero-index.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">menu</td><td>- Pointer to <a class="el" href="struct_s_app_menu.html">SAppMenu</a> structure</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section warning"><dt>Warning</dt><dd>works only in 8-bit RGB normal mode. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="ssd1306__menu_8c_source.html#l00151">151</a> of file <a class="el" href="ssd1306__menu_8c_source.html">ssd1306_menu.c</a>.</p>
-
-</div>
-</div>
-<a id="ga5d1ea78a9e0ac5d92bc1efd9c6a14f44"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga5d1ea78a9e0ac5d92bc1efd9c6a14f44">&#9670;&nbsp;</a></span>ssd1306_menuUp()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_menuUp </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_s_app_menu.html">SAppMenu</a> *&#160;</td>
-          <td class="paramname"><em>menu</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Moves selection pointer up by 1 item. If selected item is the first one, then selection pointer will set to the last item in menu list. Use <a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga26b4b11e4bc8b566855b2dbb3979210a">ssd1306_updateMenu()</a> to refresh menu state on the display.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">menu</td><td>- Pointer to <a class="el" href="struct_s_app_menu.html">SAppMenu</a> structure </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="ssd1306__menu_8c_source.html#l00168">168</a> of file <a class="el" href="ssd1306__menu_8c_source.html">ssd1306_menu.c</a>.</p>
-
-</div>
-</div>
 <a id="ga48dbae0a3d28d8708f9a5f552afdd8c0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga48dbae0a3d28d8708f9a5f552afdd8c0">&#9670;&nbsp;</a></span>ssd1306_negativeMode()</h2>
 
@@ -1343,7 +1192,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>number of chars in string </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___f_o_n_t_s.html#gac38e07839ff23bd17a6f0c79f5f92d2d">ssd1306_setFixedFont</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___g_e_n_e_r_i_c___a_p_i.html#gac38e07839ff23bd17a6f0c79f5f92d2d">ssd1306_setFixedFont</a> </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga8000e9cfe2aa02fc552ea80cb23d49fa">ssd1306_printFixed()</a> can output chars at fixed y positions: 0, 8, 16, 24, 32, etc. If you specify [10,18], <a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga8000e9cfe2aa02fc552ea80cb23d49fa">ssd1306_printFixed()</a> will output text starting at [10,16] position. </dd>
 <dd>
 Be careful with you flash space! Do not mix too many different functions in single sketch. <a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga30a785aa6d528a3fddbe2de853211fb9">ssd1306_printFixedN()</a> uses much flash: ~396 bytes, <a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga8000e9cfe2aa02fc552ea80cb23d49fa">ssd1306_printFixed()</a> needs 388 bytes. Placing both of these functions to your sketch will consume almost 1KiB. </dd></dl>
@@ -1399,7 +1248,7 @@ Be careful with you flash space! Do not mix too many different functions in sing
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>number of chars in string </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___f_o_n_t_s.html#gac38e07839ff23bd17a6f0c79f5f92d2d">ssd1306_setFixedFont</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___g_e_n_e_r_i_c___a_p_i.html#gac38e07839ff23bd17a6f0c79f5f92d2d">ssd1306_setFixedFont</a> </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#gaf8feb46eefebc30d9a3e4e94a92eec75">ssd1306_printFixed2x()</a> can output chars at fixed y positions: 0, 8, 16, 24, 32, etc. If you specify [10,18], <a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#gaf8feb46eefebc30d9a3e4e94a92eec75">ssd1306_printFixed2x()</a> will output text starting at [10,16] position. </dd>
 <dd>
 Be careful with you flash space! Do not mix too many different functions in single sketch. <a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga30a785aa6d528a3fddbe2de853211fb9">ssd1306_printFixedN()</a> uses much flash: ~474 bytes, <a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga8000e9cfe2aa02fc552ea80cb23d49fa">ssd1306_printFixed()</a> needs 388 bytes. Placing both of these functions to your sketch will consume almost 1KiB. </dd></dl>
@@ -1468,7 +1317,7 @@ Be careful with you flash space! Do not mix too many different functions in sing
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>number of chars in string </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___f_o_n_t_s.html#gac38e07839ff23bd17a6f0c79f5f92d2d">ssd1306_setFixedFont</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___g_e_n_e_r_i_c___a_p_i.html#gac38e07839ff23bd17a6f0c79f5f92d2d">ssd1306_setFixedFont</a> </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#gaf8feb46eefebc30d9a3e4e94a92eec75">ssd1306_printFixed2x()</a> can output chars at fixed y positions: 0, 8, 16, 24, 32, etc. If you specify [10,18], <a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#gaf8feb46eefebc30d9a3e4e94a92eec75">ssd1306_printFixed2x()</a> will output text starting at [10,16] position. </dd>
 <dd>
 Be careful with you flash space! Do not mix too many different functions in single sketch. <a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga30a785aa6d528a3fddbe2de853211fb9">ssd1306_printFixedN()</a> uses much flash: ~474 bytes, <a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga8000e9cfe2aa02fc552ea80cb23d49fa">ssd1306_printFixed()</a> needs 388 bytes. Placing both of these functions to your sketch will consume almost 1KiB. </dd></dl>
@@ -1595,152 +1444,6 @@ Be careful with you flash space! Do not mix too many different functions in sing
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00865">865</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
-
-</div>
-</div>
-<a id="gad46c35ee4a2f53bee496bea6fdb23847"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad46c35ee4a2f53bee496bea6fdb23847">&#9670;&nbsp;</a></span>ssd1306_setPos()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_setPos </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>y</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Set position in terms of display. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x</td><td>- horizontal position in pixels </td></tr>
-    <tr><td class="paramname">y</td><td>- vertical position in blocks (pixels/8) </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ga4353274677f513ae61778927f110d507"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga4353274677f513ae61778927f110d507">&#9670;&nbsp;</a></span>ssd1306_showMenu()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_showMenu </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_s_app_menu.html">SAppMenu</a> *&#160;</td>
-          <td class="paramname"><em>menu</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Shows menu items on the display. If menu items cannot fit the display, the function provides scrolling.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">menu</td><td>- Pointer to <a class="el" href="struct_s_app_menu.html">SAppMenu</a> structure</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section warning"><dt>Warning</dt><dd>works only in SSD1306 compatible mode. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="ssd1306__menu_8c_source.html#l00091">91</a> of file <a class="el" href="ssd1306__menu_8c_source.html">ssd1306_menu.c</a>.</p>
-
-</div>
-</div>
-<a id="ga99f737f48aa960ab40a176590099a304"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga99f737f48aa960ab40a176590099a304">&#9670;&nbsp;</a></span>ssd1306_showMenu8()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_showMenu8 </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_s_app_menu.html">SAppMenu</a> *&#160;</td>
-          <td class="paramname"><em>menu</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Shows menu items on the display. If menu items cannot fit the display, the function provides scrolling.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">menu</td><td>- Pointer to <a class="el" href="struct_s_app_menu.html">SAppMenu</a> structure</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section warning"><dt>Warning</dt><dd>works only in 8-bit RGB normal mode. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="ssd1306__menu_8c_source.html#l00102">102</a> of file <a class="el" href="ssd1306__menu_8c_source.html">ssd1306_menu.c</a>.</p>
-
-</div>
-</div>
-<a id="ga26b4b11e4bc8b566855b2dbb3979210a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga26b4b11e4bc8b566855b2dbb3979210a">&#9670;&nbsp;</a></span>ssd1306_updateMenu()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_updateMenu </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_s_app_menu.html">SAppMenu</a> *&#160;</td>
-          <td class="paramname"><em>menu</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Updates menu items on the display. That is if selection is changed, the function will update only those areas, affected by the change.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">menu</td><td>- Pointer to <a class="el" href="struct_s_app_menu.html">SAppMenu</a> structure </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="ssd1306__menu_8c_source.html#l00113">113</a> of file <a class="el" href="ssd1306__menu_8c_source.html">ssd1306_menu.c</a>.</p>
-
-</div>
-</div>
-<a id="gafa64c69880dc6157ca05d89f45b9a958"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gafa64c69880dc6157ca05d89f45b9a958">&#9670;&nbsp;</a></span>ssd1306_updateMenu8()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_updateMenu8 </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_s_app_menu.html">SAppMenu</a> *&#160;</td>
-          <td class="paramname"><em>menu</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Updates menu items on the display. That is if selection is changed, the function will update only those areas, affected by the change.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">menu</td><td>- Pointer to <a class="el" href="struct_s_app_menu.html">SAppMenu</a> structure</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section warning"><dt>Warning</dt><dd>works only in SSD1306 compatible mode. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="ssd1306__menu_8c_source.html#l00132">132</a> of file <a class="el" href="ssd1306__menu_8c_source.html">ssd1306_menu.c</a>.</p>
 
 </div>
 </div>

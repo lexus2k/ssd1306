@@ -22,7 +22,6 @@ var searchData=
   ['m_5fsize',['m_size',['../class_nano_fixed_sprite.html#a6b601c5a85bf9a388c9bce4fd1c98924',1,'NanoFixedSprite']]],
   ['m_5ftextmode',['m_textMode',['../class_nano_canvas_ops.html#aa1960bb47eb7a5ee51466740c6ad7b42',1,'NanoCanvasOps']]],
   ['m_5fw',['m_w',['../class_nano_canvas_ops.html#a56d0c52199326b808ddecef112c4cb38',1,'NanoCanvasOps']]],
-  ['mainpage_2edox',['mainpage.dox',['../mainpage_8dox.html',1,'']]],
   ['max',['max',['../nano__gfx__types_8h.html#affe776513b24d84b39af8ab0930fef7f',1,'nano_gfx_types.h']]],
   ['max_5fsprites',['MAX_SPRITES',['../class_sprite_pool.html#aa7522b59d079d63cfbb0612aaaee58df',1,'SpritePool']]],
   ['min',['min',['../nano__gfx__types_8h.html#ac6afabdc09a49a433ee19d8a9486056d',1,'nano_gfx_types.h']]],
