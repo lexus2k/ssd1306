@@ -129,12 +129,12 @@ void    ssd1351_setMode(lcd_mode_t mode)
     ssd1306_spiDataMode(1);
     ssd1306_intf.send( 0B00110100 | mode );
     ssd1306_intf.stop();
-    if (mode)
+    if (mode == LCD_MODE_SSD1306_COMPAT)
     {
         ssd1306_lcd.set_block = ssd1351_setBlock;
         ssd1306_lcd.next_page = ssd1351_nextPage;
     }
-    else
+    else if (mode == LCD_MODE_NORMAL )
     {
         ssd1306_lcd.set_block = ssd1351_setBlock2;
         ssd1306_lcd.next_page = ssd1351_nextPage2;

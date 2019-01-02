@@ -141,19 +141,12 @@ void    ili9341_setMode(lcd_mode_t mode)
     s_rotation &= 0x03;
     s_rotation |= (mode == LCD_MODE_SSD1306_COMPAT ? 0x00 : 0x04);
     ili9341_setRotation( s_rotation );
-//    s_rotation = (s_rotation & 0x03) | (mode == LCD_MODE_SSD1306_COMPAT ? 0x00 : 0x04);
-/*    ssd1306_intf.start();
-    ssd1306_spiDataMode(0);
-    ssd1306_intf.send( 0x36 );
-    ssd1306_spiDataMode(1);
-    ssd1306_intf.send( (mode == LCD_MODE_SSD1306_COMPAT ? 0b10000100 : 0b10001100) | s_rgb_bit );
-    ssd1306_intf.stop(); */
     if (mode == LCD_MODE_SSD1306_COMPAT)
     {
         ssd1306_lcd.set_block = ili9341_setBlock;
         ssd1306_lcd.next_page = ili9341_nextPage;
     }
-    else
+    else if (mode == LCD_MODE_NORMAL)
     {
         ssd1306_lcd.set_block = ili9341_setBlock2;
         ssd1306_lcd.next_page = ili9341_nextPage2;

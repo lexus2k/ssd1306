@@ -1,48 +1,65 @@
-/**
- @file
- @brief SSD1306/SSD1331/SSD1351 oled display driver for Arduino, AVR, Extensa platforms.
+# ssd1306 library introduction {#doc_src}
 
- \mainpage SSD1306/SSD1331/SSD1351/PCD8544 API.
+***
+@page doc_src
 
- This is SSD1306/SSD1331/SSD1351 OLED display driver implementation for Arduino, AVR, Extensa platforms.
- The driver supports i2c and spi displays, and is also capable to work with pcd8544
- (nokia 5110) LCD over SPI.
+[tocstart]: # (toc start)
 
-# SSD1306/SSD1331 OLED display driver, PCD8544 LED display driver
+  * [Introduction](#introduction)
+  * [Key Features](#key-features)
+  * [Supported displays](#supported-displays)
+  * [Supported platforms](#supported-platforms)
+  * [Setting up](#setting-up)
+  * [License](#license)
 
+[tocend]: # (toc end)
+
+
+<a name="introduction"></a>
 ## Introduction
 
-SSD1306 driver is Arduino style C/C++ library. it can be compiled with plain avr-gcc compiler
-without Arduino libraries and supports monochrome and RGB oleds. It is intended for use with
-very small microcontrollers (with a little of RAM). It was developed to use as
-few resources as possible. Since ATTiny controllers have no division and multiply
-operations, the library uses shift operation to speed up calculations.
+SSD1306 driver is Arduino style C/C++ library with unicode support. The library can be compiled for plain Linux
+(for example, raspberry spi), or you can use it with plain avr-gcc compiler without Arduino IDE, or with
+ESP32 IDF. It supports monochrome and RGB oleds and has debug mode, allowing to execute code on PC, using SDL2.0.
+Initially the library is intended for very small microcontrollers (with a little of RAM). It was developed to use as
+few resources as possible, but still has powerful capabilities (NanoEngine), allowing to develop nice animation.
+It works on any powerful devices like raspberry pi, esp32; and can be easily ported to new platform.
 
-Do not forget pull-up resistors for i2c lines.
+Since ssd1306 library supports different display types: monochrome, 8-bit color, 16-bit color displays, -
+there are several group of API functions:
 
+  * Generic API functions (font specific, cursor positioning, menu implementation)
+  * 1-bit API functions for monochrome displays (these ones can be used both for color and mono lcd)
+  * 8-bit API functions for color displays (these ones work only for color displays)
+  * 16-bit API functions for color displays (only color displays)
+
+Also, for graphics animation there special C++ API, called [Nano Engine](@ref doc_nano_engine)
+
+<a name="key-features"></a>
 ## Key Features
 
- - Supports color, monochrome OLED displays, and VGA monitor
- - The library has modular structure, and some modules can be excluded from compilation at all to reduce flash usage.
- - Needs very little RAM (Attiny85 with Damellis package needs minimum 25 bytes of RAM to communicate with OLED)
- - Fast implementation to provide reasonable speed on slow microcontrollers
- - Supports i2c and spi interfaces:
-   - i2c (software implementation, Wire library, AVR Twi, Linux i2c-dev)
-   - spi (4-wire spi via Arduino SPI library, AVR Spi, AVR USI module)
- - Primitive graphics functions (lines, rectangles, pixels, bitmaps)
- - Printing text to display (using fonts of different size, you can use GLCD Font Creator to create new fonts)
- - Includes [graphics engine](https://github.com/lexus2k/ssd1306/wiki/Using-NanoEngine-for-systems-with-low-resources) to support
+ * Supports color, monochrome OLED displays, and VGA monitor
+ * The library has modular structure, and some modules can be excluded from compilation at all to reduce flash usage.
+ * Needs very little RAM (Attiny85 with Damellis package needs minimum 25 bytes of RAM to communicate with OLED)
+ * Fast implementation to provide reasonable speed on slow microcontrollers
+ * Supports i2c and spi interfaces:
+   * i2c (software implementation, Wire library, AVR Twi, Linux i2c-dev)
+   * spi (4-wire spi via Arduino SPI library, AVR Spi, AVR USI module)
+ * Primitive graphics functions (lines, rectangles, pixels, bitmaps)
+ * Printing text to display (using fonts of different size, you can use GLCD Font Creator to create new fonts)
+ * Includes [graphics engine](https://github.com/lexus2k/ssd1306/wiki/Using-NanoEngine-for-systems-with-low-resources) to support
    double buffering on tiny microcontrollers.
- - Can be used for game development (bonus examples):
-   - Arkanoid game ([arkanoid](examples/games/arkanoid) in old style API and [arkanoid8](examples/games/arkanoid8) in new style API)
-   - Simple [Lode runner](examples/games/lode_runner) game.
-   - [Snowflakes](examples/nano_engine/snowflakes)
+ * Can be used for game development (bonus examples):
+   * Arkanoid game ([arkanoid](examples/games/arkanoid) in old style API and [arkanoid8](examples/games/arkanoid8) in new style API)
+   * Simple [Lode runner](examples/games/lode_runner) game.
+   * [Snowflakes](examples/nano_engine/snowflakes)
 
-The default i2c pins for embedded implementation can be modified in ssd1306_i2c_conf.h file.
-For other controllers pins are defined by standard Wire library.
-The default spi SCLK and MOSI pins are defined by SPI library, and DC, RST, CES pins are
-configurable through API.
+The i2c pins can be changed via API functions. Please, refer to documentation. Keep in mind,
+that the pins, which are allowed for i2c or spi interface, depend on the hardware.
+The default spi SCLK and MOSI pins are defined by SPI library, and DC, RST, CES pins are configurable
+through API.
 
+<a name="supported-displays"></a>
 ## Supported displays:
 
 | **Display** | **I2C** | **SPI** | **Orientation** | **Comments** |
@@ -54,10 +71,12 @@ configurable through API.
 | ssd1351 128x128 |   | X |   |   |
 | il9163 128x128 |   | X | X |   |
 | st7735 128x160 |   | X | X |   |
+| ili9341 240x320 |   | X | X |    |
 | pcd8544 84x48 |   | X  |   | Nokia 5110 |
 | vga 96x40 color |   |   |   | direct D-sub output, atmega328p only |
 | vga 128x64 bw |   |   |   | direct D-sub output, atmega328p only |
 
+<a name="supported-platforms"></a>
 ## Supported platforms
 
 | **Platforms** | **I2C** | **SPI** | **Comments** |
@@ -72,6 +91,8 @@ configurable through API.
 | ESP8266  |  X  |  X  | check [examples compatibility list](examples/ESP8266_compatibility.txt)   |
 | ESP32  |  X  |  X  | check [examples compatibility list](examples/ESP8266_compatibility.txt)   |
 | STM32  |  X  |  X  | [stm32duino](https://github.com/stm32duino/wiki/wiki)  |
+| Arduino Zero | X  | X  |    |
+| Nordic nRF5 (nRF51, nRF52) | X | X | nRF users, enable c++11 in platform.txt `-std=gnu++11`   |
 | **Plain AVR** |   |     |          |
 | Attiny85, Attiny45 |  X  |  X  |         |
 | Atmega328p, Atmega168 |  X  |  X  |         |
@@ -88,43 +109,43 @@ Digispark users, please check compilation options in your Arduino prior to using
 Ssd1306 library requires at least c++11 and c99 (by default Digispark package misses the options
 -std=gnu11, -std=gnu++11).
 
-## The goals of ssd1306 library
-
- * To use as few RAM as possible
- * To use as few Flash as possible
- * To be as fast as possible
- * To fit [Arkanoid game example](examples/arkanoid) to Attiny85 microcontroller
-
+<a name="setting-up"></a>
 ## Setting up
 
-*Hardware setup is described [here](https://github.com/lexus2k/ssd1306/wiki/Hardware-setup)
+*i2c Hardware setup is described [here](https://github.com/lexus2k/ssd1306/wiki/Hardware-setup)
 
-*Setting up for Arduino: (variant 1)*
+*Setting up for Arduino from github sources)*
  * Download source from https://github.com/lexus2k/ssd1306
- * Put the sources to Arduino/libraries/ folder
+ * Put the sources to Arduino/libraries/ssd1306/ folder
 
-*Setting up for Arduino: (variant 2)*
- * Install ssd1306 library via Arduino IDE library manager
+*Setting up for Arduino from Arduino IDE library manager*
+ * Install ssd1306 library (named ssd1306 by Alexey Dynda) via Arduino IDE library manager
 
 *Using with plain avr-gcc:*
  * Download source from https://github.com/lexus2k/ssd1306
  * Build the library (variant 1)
-   * `cd ssd1306/src && make -f Makefile.avr MCU=<your_mcu>`
+   * cd ssd1306/src && make -f Makefile.avr MCU=\<your_mcu\>
    * Link library to your project (refer to [Makefile.avr](examples/Makefile.avr) in examples folder).
  * Build demo code (variant 2)
-   * `cd ssd1306/tools && ./build_and_run.sh -p avr -m <your_mcu> ssd1306_demo`
+   * cd ssd1306/tools && ./build_and_run.sh -p avr -m \<your_mcu\> ssd1306_demo
+
+ *For esp32:*
+  * Download source from https://github.com/lexus2k/ssd1306
+  * Put downloaded sources to components/ssd1306/ folder.
+  * Compile your project as described in ESP-IDF build system documentation
 
 For more information about this library, please, visit https://github.com/lexus2k/ssd1306.
 Doxygen documentation can be found at [github.io site](http://lexus2k.github.io/ssd1306).
 If you found any problem or have any idea, please, report to Issues section.
 
+<a name="license"></a>
 ## License
 
-The library is free. If this project helps you, you can give me a cup of coffee.
+The library is free. If this project helps you, you can give me a cup of coffee. [Donate via Paypal](https://www.paypal.me/lexus2k)
 
 MIT License
 
-Copyright (c) 2016-2018, Alexey Dynda
+Copyright (c) 2016-2019, Alexey Dynda
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -144,4 +165,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-*/
+

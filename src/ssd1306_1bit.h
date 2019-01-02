@@ -53,13 +53,6 @@ extern "C" {
  */
 
 /**
- * Set position in terms of display.
- * @param x - horizontal position in pixels
- * @param y - vertical position in blocks (pixels/8)
- */
-void         ssd1306_setPos(uint8_t x, uint8_t y);
-
-/**
  * Fills screen with pattern byte
  */
 void         ssd1306_fillScreen(uint8_t fill_Data);
@@ -393,118 +386,6 @@ SPRITE       ssd1306_createSprite(uint8_t x, uint8_t y, uint8_t w, const uint8_t
  * @param data - pointer to data, located in Flash: each byte represents 8 vertical pixels.
  */
 void         ssd1306_replaceSprite(SPRITE *sprite, const uint8_t *data);
-
-///////////////////////////////////////////////////////////////////////
-//                 HIGH-LEVEL GRAPH FUNCTIONS
-///////////////////////////////////////////////////////////////////////
-
-/**
- * Describes menu object
- */
-typedef struct
-{
-    /// list of menu items of the menu
-    const char **items;
-    /// count of menu items in the menu
-    uint8_t     count;
-    /// currently selected item. Internally updated.
-    uint8_t     selection;
-    /// selected item, when last redraw operation was performed. Internally updated.
-    uint8_t     oldSelection;
-    /// position of menu scrolling. Internally updated
-    uint8_t     scrollPosition;
-} SAppMenu;
-
-/**
- * Creates menu object with the provided list of menu items.
- * List of menu items (strings) must exist all until menu object is no longer needed.
- * Selection is set to the first item by default.
- *
- * @param menu - Pointer to SAppMenu structure
- * @param items - array of null-termintated strings (located in SRAM)
- * @param count - count of menu items in the array
- */
-void ssd1306_createMenu(SAppMenu *menu, const char **items, uint8_t count);
-
-/**
- * Shows menu items on the display. If menu items cannot fit the display,
- * the function provides scrolling.
- *
- * @param menu - Pointer to SAppMenu structure
- *
- * @warning works only in SSD1306 compatible mode.
- */
-void ssd1306_showMenu(SAppMenu *menu);
-
-/**
- * Shows menu items on the display. If menu items cannot fit the display,
- * the function provides scrolling.
- *
- * @param menu - Pointer to SAppMenu structure
- *
- * @warning works only in 8-bit RGB normal mode.
- */
-void ssd1306_showMenu8(SAppMenu *menu);
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-static inline void ssd1331_showMenu8(SAppMenu *menu)
-{
-    ssd1306_showMenu8(menu);
-}
-#endif
-
-/**
- * Updates menu items on the display. That is if selection is changed,
- * the function will update only those areas, affected by the change.
- *
- * @param menu - Pointer to SAppMenu structure
- */
-void ssd1306_updateMenu(SAppMenu *menu);
-
-/**
- * Updates menu items on the display. That is if selection is changed,
- * the function will update only those areas, affected by the change.
- *
- * @param menu - Pointer to SAppMenu structure
- *
- * @warning works only in SSD1306 compatible mode.
- */
-void ssd1306_updateMenu8(SAppMenu *menu);
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-static inline void ssd1331_updateMenu8(SAppMenu *menu)
-{
-    ssd1306_updateMenu8(menu);
-}
-#endif
-
-/**
- * Returns currently selected menu item.
- * First item has zero-index.
- *
- * @param menu - Pointer to SAppMenu structure
- *
- * @warning works only in 8-bit RGB normal mode.
- */
-uint8_t ssd1306_menuSelection(SAppMenu *menu);
-
-/**
- * Moves selection pointer down by 1 item. If there are no items below,
- * it will set selection pointer to the first item.
- * Use ssd1306_updateMenu() to refresh menu state on the display.
- *
- * @param menu - Pointer to SAppMenu structure
- */
-void ssd1306_menuDown(SAppMenu *menu);
-
-/**
- * Moves selection pointer up by 1 item. If selected item is the first one,
- * then selection pointer will set to the last item in menu list.
- * Use ssd1306_updateMenu() to refresh menu state on the display.
- *
- * @param menu - Pointer to SAppMenu structure
- */
-void ssd1306_menuUp(SAppMenu *menu);
 
 /**
  * @}

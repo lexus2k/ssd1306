@@ -29,6 +29,7 @@
 #define _SSD1306_H_
 
 #include "nano_gfx_types.h"
+#include "ssd1306_generic.h"
 #include "ssd1306_1bit.h"
 #include "ssd1306_8bit.h"
 #include "ssd1306_16bit.h"
