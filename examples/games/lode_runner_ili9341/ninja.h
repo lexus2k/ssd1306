@@ -30,7 +30,7 @@
 class Ninja: public NanoFixedSprite<GraphicsEngine, engine>
 {
 public:
-    Ninja(NanoPoint pos)
+    explicit Ninja(NanoPoint pos)
         : NanoFixedSprite<GraphicsEngine, engine>(pos, {8,8}, playerFlyingImage[0][0]) {}
 
     void move(const NanoPoint &target);

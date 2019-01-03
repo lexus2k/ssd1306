@@ -104,7 +104,7 @@ void    ssd1325_setMode(lcd_mode_t mode)
     ssd1306_intf.start();
     ssd1306_spiDataMode(0);
     ssd1306_intf.send( 0xA0 );
-    ssd1306_intf.send( 0x10 | 0x00 | 0x00 | (mode == LCD_MODE_NORMAL ? 0x00 : 0x04) );
+    ssd1306_intf.send( 0x10 | (mode == LCD_MODE_NORMAL ? 0x00 : 0x04) );
     ssd1306_intf.stop();
     return;
 }

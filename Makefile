@@ -28,9 +28,19 @@ help:
 	@echo "============== SSD1306 library ================"
 	@echo "make docs          generates documentation"
 	@echo "make help          prints this help"
+	@echo "make check         run cppcheck tests"
 	@echo ""
 	@echo "to build examples use scripts in tools subdir"
 
 docs:
-	doxygen doxygen.cfg 1>/dev/null
+	@cd src && doxygen doxygen.cfg 1>/dev/null
+	@echo "[DONE] check docs folder"
+
+check:
+	@cppcheck --force \
+	    --enable=warning,style,performance,portability \
+	    --suppress=information \
+	    -q -I ./src \
+	    --error-exitcode=1 .
+	@echo "[DONE]"
 

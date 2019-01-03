@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -172,8 +172,11 @@ void NanoEngineCore::begin()
 
 void NanoEngineCore::setFrameRate(uint8_t fps)
 {
-    m_fps = fps;
-    m_frameDurationMs = 1000/fps;
+    if ( fps > 0 )
+    {
+        m_fps = fps;
+        m_frameDurationMs = 1000/fps;
+    }
 }
 
 bool NanoEngineCore::nextFrame()

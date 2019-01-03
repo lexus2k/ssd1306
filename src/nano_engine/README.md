@@ -1,4 +1,4 @@
-# Using NanoEngine for systems with low resources {#doc_nano_engine}
+# Using NanoEngine for systems with low resources
 
 ***
 

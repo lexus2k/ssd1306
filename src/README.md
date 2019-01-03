@@ -21,7 +21,7 @@ SSD1306 driver is Arduino style C/C++ library with unicode support. The library 
 (for example, raspberry spi), or you can use it with plain avr-gcc compiler without Arduino IDE, or with
 ESP32 IDF. It supports monochrome and RGB oleds and has debug mode, allowing to execute code on PC, using SDL2.0.
 Initially the library is intended for very small microcontrollers (with a little of RAM). It was developed to use as
-few resources as possible, but still has powerful capabilities (NanoEngine), allowing to develop nice animation.
+few resources as possible, but still has powerful capabilities, allowing to develop nice animation.
 It works on any powerful devices like raspberry pi, esp32; and can be easily ported to new platform.
 
 Since ssd1306 library supports different display types: monochrome, 8-bit color, 16-bit color displays, -
@@ -32,7 +32,7 @@ there are several group of API functions:
   * 8-bit API functions for color displays (these ones work only for color displays)
   * 16-bit API functions for color displays (only color displays)
 
-Also, for graphics animation there special C++ API, called [Nano Engine](@ref doc_nano_engine)
+Also, for graphics animation there special C++ API, called [Nano Engine](nano_engine/README.md).
 
 <a name="key-features"></a>
 ## Key Features
@@ -111,7 +111,7 @@ Ssd1306 library requires at least c++11 and c99 (by default Digispark package mi
 <a name="setting-up"></a>
 ## Setting up
 
-*i2c Hardware setup is described [here](https://github.com/lexus2k/ssd1306/wiki/Hardware-setup)
+*i2c Hardware setup is described [here](https://github.com/lexus2k/ssd1306/wiki/Hardware-setup)*
 
 *Setting up for Arduino from github sources)*
  * Download source from https://github.com/lexus2k/ssd1306
