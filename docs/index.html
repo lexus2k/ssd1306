@@ -74,7 +74,7 @@ $(function() {
 <li><a href="#license">License</a></li>
 </ul>
 <p><a class="anchor" id="introduction"></a> </p><h2>Introduction</h2>
-<p>SSD1306 driver is Arduino style C/C++ library with unicode support. The library can be compiled for plain Linux (for example, raspberry spi), or you can use it with plain avr-gcc compiler without Arduino IDE, or with ESP32 IDF. It supports monochrome and RGB oleds and has debug mode, allowing to execute code on PC, using SDL2.0. Initially the library is intended for very small microcontrollers (with a little of RAM). It was developed to use as few resources as possible, but still has powerful capabilities (<a class="el" href="class_nano_engine.html">NanoEngine</a>), allowing to develop nice animation. It works on any powerful devices like raspberry pi, esp32; and can be easily ported to new platform.</p>
+<p>SSD1306 driver is Arduino style C/C++ library with unicode support. The library can be compiled for plain Linux (for example, raspberry spi), or you can use it with plain avr-gcc compiler without Arduino IDE, or with ESP32 IDF. It supports monochrome and RGB oleds and has debug mode, allowing to execute code on PC, using SDL2.0. Initially the library is intended for very small microcontrollers (with a little of RAM). It was developed to use as few resources as possible, but still has powerful capabilities, allowing to develop nice animation. It works on any powerful devices like raspberry pi, esp32; and can be easily ported to new platform.</p>
 <p>Since ssd1306 library supports different display types: monochrome, 8-bit color, 16-bit color displays, - there are several group of API functions:</p>
 <ul>
 <li>Generic API functions (font specific, cursor positioning, menu implementation)</li>
@@ -82,7 +82,7 @@ $(function() {
 <li>8-bit API functions for color displays (these ones work only for color displays)</li>
 <li>16-bit API functions for color displays (only color displays)</li>
 </ul>
-<p>Also, for graphics animation there special C++ API, called <a class="el" href="doc_nano_engine.html">Nano Engine</a></p>
+<p>Also, for graphics animation there special C++ API, called <a class="el" href="md_nano_engine__r_e_a_d_m_e.html">Nano Engine</a>.</p>
 <p><a class="anchor" id="key-features"></a> </p><h2>Key Features</h2>
 <ul>
 <li>Supports color, monochrome OLED displays, and VGA monitor</li>
@@ -185,7 +185,7 @@ $(function() {
 </table>
 <p>Digispark users, please check compilation options in your Arduino prior to using this library. Ssd1306 library requires at least c++11 and c99 (by default Digispark package misses the options -std=gnu11, -std=gnu++11).</p>
 <p><a class="anchor" id="setting-up"></a> </p><h2>Setting up</h2>
-<p>*i2c Hardware setup is described <a href="https://github.com/lexus2k/ssd1306/wiki/Hardware-setup">here</a></p>
+<p><em>i2c Hardware setup is described <a href="https://github.com/lexus2k/ssd1306/wiki/Hardware-setup">here</a></em></p>
 <p><em>Setting up for Arduino from github sources)</em></p><ul>
 <li>Download source from <a href="https://github.com/lexus2k/ssd1306">https://github.com/lexus2k/ssd1306</a></li>
 <li>Put the sources to Arduino/libraries/ssd1306/ folder</li>
