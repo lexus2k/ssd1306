@@ -509,7 +509,7 @@ uint8_t      ssd1306_charF6x8_eol(uint8_t left,
                                   EFontStyle style,
                                   uint8_t right)
 {
-    uint8_t len = ssd1306_charF6x8(left, y, ch, style);
+    uint8_t len = ssd1306_printFixed(left, y<<3, ch, style);
     uint8_t text_end_pos = len * 6 + left;
     if (text_end_pos <= right)
     {

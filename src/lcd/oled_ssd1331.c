@@ -114,7 +114,7 @@ void    ssd1331_setMode(lcd_mode_t mode)
         ssd1306_lcd.set_block = set_block_native;
         ssd1306_lcd.next_page = next_page_native;
     }
-    else
+    else if (mode == LCD_MODE_SSD1306_COMPAT )
     {
         s_rotation |= 0x04;
         ssd1306_lcd.set_block = set_block_compat;

@@ -179,12 +179,12 @@ void    il9163_setMode(lcd_mode_t mode)
     ssd1306_spiDataMode(1);
     ssd1306_intf.send( mode ? 0b00101000 : 0b00001000 );
     ssd1306_intf.stop();
-    if (mode)
+    if (mode == LCD_MODE_SSD1306_COMPAT )
     {
         ssd1306_lcd.set_block = il9163_setBlock;
         ssd1306_lcd.next_page = il9163_nextPage;
     }
-    else
+    else if ( mode == LCD_MODE_NORMAL )
     {
         ssd1306_lcd.set_block = il9163_setBlock2;
         ssd1306_lcd.next_page = il9163_nextPage2;

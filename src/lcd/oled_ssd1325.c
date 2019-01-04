@@ -96,7 +96,7 @@ void    ssd1325_setMode(lcd_mode_t mode)
         ssd1306_lcd.set_block = set_block_native;
         ssd1306_lcd.next_page = next_page_native;
     }
-    else
+    else if (mode == LCD_MODE_SSD1306_COMPAT )
     {
         ssd1306_lcd.set_block = set_block_compat;
         ssd1306_lcd.next_page = next_page_compat;
@@ -104,7 +104,7 @@ void    ssd1325_setMode(lcd_mode_t mode)
     ssd1306_intf.start();
     ssd1306_spiDataMode(0);
     ssd1306_intf.send( 0xA0 );
-    ssd1306_intf.send( 0x10 | 0x00 | 0x00 | (mode == LCD_MODE_NORMAL ? 0x00 : 0x04) );
+    ssd1306_intf.send( 0x10 | (mode == LCD_MODE_NORMAL ? 0x00 : 0x04) );
     ssd1306_intf.stop();
     return;
 }
@@ -127,7 +127,6 @@ void    ssd1325_128x64_init()
     // one needs to be used. For example, ssd1331 is OK with ssd1306_configureI2cDisplay(),
     // while st7735 can be initialized only with ssd1306_configureSpiDisplay().
     ssd1306_configureI2cDisplay(s_oled_128x64_initData, sizeof(s_oled_128x64_initData));
-//    ssd1306_configureSpiDisplay(s_oled_WxH_initData, sizeof(s_oled_WxH_initData));
 }
 
 void   ssd1325_128x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
