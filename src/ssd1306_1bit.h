@@ -329,7 +329,23 @@ void         ssd1306_drawBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, cons
  * @param h - height of bitmap in pixels (must be divided by 8)
  * @param buf - pointer to data, located in Flash: each byte represents 8 vertical pixels.
  */
-void         gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buf);
+void ssd1306_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buf);
+
+/**
+ * Draws bitmap, located in Flash, on the display
+ *
+ * @param x - horizontal position in pixels
+ * @param y - vertical position in pixels
+ * @param w - width of bitmap in pixels
+ * @param h - height of bitmap in pixels (must be divided by 8)
+ * @param buf - pointer to data, located in Flash: each byte represents 8 vertical pixels.
+ *
+ * @deprecated Use ssd1306_drawMonoBitmap() instead.
+ */
+static inline void gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buf) __attribute__ ((deprecated));
+{
+    ssd1306_drawMonoBitmap( x, y, w, h, buf );
+}
 
 /**
  * Fills block with black pixels

@@ -138,7 +138,7 @@ int execute_mono_cmd(int argc, char *argv[])
     else if (!strcmp(argv[0], "line"))
         ssd1306_drawLine(atoi_(argv[1]), atoi_(argv[2]), atoi_(argv[3]), atoi_(argv[4]));
     else if (!strcmp(argv[0], "bitmap"))
-        gfx_drawMonoBitmap(atoi_(argv[1]), atoi_(argv[2]), atoi_(argv[3]), atoi_(argv[4]), atoi_b(argv[5]));
+        ssd1306_drawMonoBitmap(atoi_(argv[1]), atoi_(argv[2]), atoi_(argv[3]), atoi_(argv[4]), atoi_b(argv[5]));
     else if (argv[0][0] != '\0')
         fprintf(stderr, "commands:\nclear [pattern]\nrect x1,y1,x2,y2\n"
                         "line x1,y1,x2,y2\n"

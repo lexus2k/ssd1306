@@ -171,7 +171,7 @@ void drawIntro()
     ssd1306_setColor(RGB_COLOR8(255,0,0));
     for (int8_t y=-24; y<16; y++)
     {
-        gfx_drawMonoBitmap(16 - OUTPUT_OFFSET, y, 96, 24, arkanoid_2);
+        ssd1306_drawMonoBitmap(16 - OUTPUT_OFFSET, y, 96, 24, arkanoid_2);
         delay(20);
     }
     ssd1306_setColor(RGB_COLOR8(255,255,0));

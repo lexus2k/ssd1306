@@ -684,7 +684,7 @@ void ssd1306_drawBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_
     ssd1306_intf.stop();
 }
 
-void gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buf)
+void ssd1306_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buf)
 {
     lcduint_t origin_width = w;
     uint8_t offset = y & 0x07;

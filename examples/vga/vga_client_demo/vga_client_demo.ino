@@ -76,7 +76,7 @@ const char *menuItems[] =
 static void bitmapDemo()
 {
     ssd1306_setColor(RGB_COLOR8(64,64,255));
-    gfx_drawMonoBitmap(0, 0, 128, 64, Sova);
+    ssd1306_drawMonoBitmap(0, 0, 128, 64, Sova);
     delay(3000);
 }
 
