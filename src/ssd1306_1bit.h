@@ -342,7 +342,7 @@ void ssd1306_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, co
  *
  * @deprecated Use ssd1306_drawMonoBitmap() instead.
  */
-static inline void gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buf) __attribute__ ((deprecated))
+static inline void gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buf)
 {
     ssd1306_drawMonoBitmap( x, y, w, h, buf );
 }
