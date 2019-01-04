@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2016-2018, Alexey Dynda
+    Copyright (c) 2016-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -67,8 +67,16 @@ static void ssd1306_i2cSendByte_Wire(uint8_t data)
     if (s_bytesWritten >= 64)
 #elif defined(BUFFER_LENGTH)
     if (s_bytesWritten >= (BUFFER_LENGTH - 2))
-#else
+#elif defined(SERIAL_BUFFER_LENGTH)
+    if (s_bytesWritten >= (SERIAL_BUFFER_LENGTH - 2))
+#elif defined(USI_BUF_SIZE)
     if (s_bytesWritten >= (USI_BUF_SIZE -2))
+#else
+    if ( Wire.write(data) != 0 )
+    {
+        s_bytesWritten++;
+        return;
+    }
 #endif
     {
         ssd1306_i2cStop_Wire();
