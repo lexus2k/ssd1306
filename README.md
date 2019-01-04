@@ -82,7 +82,7 @@ through API.
 | STM32  |  X  |  X  | [stm32duino](https://github.com/stm32duino/wiki/wiki)  |
 | Arduino Zero | X  | X  |    |
 | Nordic nRF5 (nRF51, nRF52) | X | X | via Standard Arduino nRF52 boards. nRF users, enable c++11 in platform.txt `-std=gnu++11` |
-| Nordic nRF5 (nRF51, nRF52) | X | X | via Sandeep Mistry arduino-nRF5 package |
+| Nordic nRF5 (nRF51, nRF52) | X | X | via [Sandeep Mistry arduino-nRF5](https://github.com/sandeepmistry/arduino-nRF5) package |
 | **Plain AVR** |   |     |          |
 | Attiny85, Attiny45 |  X  |  X  |         |
 | Atmega328p, Atmega168 |  X  |  X  |         |
