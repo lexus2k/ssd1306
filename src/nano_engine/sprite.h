@@ -280,6 +280,11 @@ public:
      */
     lcdint_t y( ) const { return m_pos.y; }
 
+    /**
+     * Returns current sprite position (top-left corner)
+     */
+    const NanoPoint & pos() const { return m_pos; }
+
 protected:
     /** fixed size of sprite */
     const NanoPoint   m_size;

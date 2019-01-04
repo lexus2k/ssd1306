@@ -324,7 +324,7 @@ void ssd1306_resetController(int8_t rstPin, uint8_t delayMs);
         ssd1306_intf.send(((y<<3) + 7) < ssd1306_lcd.height ? ((y<<3) + 7) : (ssd1306_lcd.height - 1)); \
         ssd1306_spiDataMode(1); \
     } \
-    static void next_page_compat() \
+    static void next_page_compat(void) \
     { \
         ssd1306_intf.stop(); \
         set_block_compat(__s_column,__s_page+1,0); \
@@ -356,7 +356,7 @@ void ssd1306_resetController(int8_t rstPin, uint8_t delayMs);
         ssd1306_intf.send(ssd1306_lcd.height - 1); \
         ssd1306_spiDataMode(1); \
     } \
-    static void next_page_native() \
+    static void next_page_native(void) \
     { \
     } \
 

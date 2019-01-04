@@ -72,7 +72,7 @@ INCLUDES += \
         -I.
 
 CCFLAGS += -MD -g -Os $(INCLUDES) -Wall -Werror -ffunction-sections -fdata-sections \
-	-fno-exceptions -Wno-error=deprecated-declarations
+	-fno-exceptions
 
 CXXFLAGS += -fno-rtti
 

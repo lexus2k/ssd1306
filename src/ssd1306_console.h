@@ -88,7 +88,8 @@ public:
     using LcdConsole::LcdConsole;
 
     /**
-     * Fills screen with zero-byte
+     * Fills screen with zero-byte and sets
+     * cursor position to top-left corner of the screen.
      */
     void   clear();
 

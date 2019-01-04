@@ -87,12 +87,11 @@ static inline char *utoa(unsigned int num, char *str, int radix)
                     //at radix 2 (binary) the string
                     //is at most 16 + 1 null long.
     int temp_loc = 0;
-    int digit;
     int str_loc = 0;
 
     //construct a backward string of the number.
     do {
-        digit = (unsigned int)num % radix;
+        int digit = (unsigned int)num % radix;
         if (digit < 10)
             temp[temp_loc++] = digit + '0';
         else

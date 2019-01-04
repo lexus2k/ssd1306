@@ -280,9 +280,9 @@ void ssd1306_debug_print_vga_buffer_96x40(void (*func)(uint8_t))
 
 void ssd1306_vga_delay(uint32_t ms)
 {
-    uint8_t vga_frames;
     while (ms >= 16)
     {
+         uint8_t vga_frames;
          vga_frames = s_vga_frames;
          while (vga_frames == s_vga_frames);
          ms-=16;

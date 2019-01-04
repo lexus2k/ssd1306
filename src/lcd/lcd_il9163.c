@@ -69,7 +69,7 @@ static const PROGMEM uint8_t s_oled128x128_initData[] =
     0xC7,  CMD_ARG,  0x40,                // vcom offset
 //    0x2A,  CMD_ARG,  0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x7F,   // set column address, not needed. set by direct API
 //    0x2B,  CMD_ARG,  0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x9F,   // set page address, not needed. set by direct API
-    0x36,  CMD_ARG,  0b00101000,          // enable fake "vertical addressing" mode (for il9163_setBlock() )
+    0x36,  CMD_ARG,  0b10001100,          // enable fake "vertical addressing" mode (for il9163_setBlock() )
     0x29,                                 // display on
 };
 
@@ -179,12 +179,12 @@ void    il9163_setMode(lcd_mode_t mode)
     ssd1306_spiDataMode(1);
     ssd1306_intf.send( mode ? 0b00101000 : 0b00001000 );
     ssd1306_intf.stop();
-    if (mode)
+    if (mode == LCD_MODE_SSD1306_COMPAT )
     {
         ssd1306_lcd.set_block = il9163_setBlock;
         ssd1306_lcd.next_page = il9163_nextPage;
     }
-    else
+    else if ( mode == LCD_MODE_NORMAL )
     {
         ssd1306_lcd.set_block = il9163_setBlock2;
         ssd1306_lcd.next_page = il9163_nextPage2;
@@ -278,7 +278,7 @@ void il9163_setRotation(uint8_t rotation)
     switch (s_rotation)
     {
     case 0:
-        ram_mode = 0b00100000;
+        ram_mode = 0b00000000;
         break;
     case 1: // 90 degree CW
         ram_mode = 0b01000000;

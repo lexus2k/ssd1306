@@ -118,6 +118,15 @@ public:
     static void connectArduboyKeys();
 
     /**
+     * @brief Configures NanoEngine to use KY40 Rotary Encoder.
+     * Configures NanoEngine to use KY40 Rotary Encoder.
+     * @param pina_clk pin number to use as clk (see KY40 docs).
+     * @param pinb_dt pin number to use as direction pin (see KY40 docs).
+     * @param pinc_sw optional pin number ot use as push button.
+     */
+    static void connectKY40encoder(uint8_t pina_clk, uint8_t pinb_dt, int8_t pinc_sw = -1);
+
+    /**
      * @brief Enables engine to use GPIO keys
      *
      * Enables engine  to use gpio-keys. You need to pass globally defined array,
@@ -139,9 +148,13 @@ protected:
 private:
     static uint8_t s_zkeypadPin;
     static const uint8_t * s_gpioKeypadPins;
+    static uint8_t s_ky40_clk;
+    static uint8_t s_ky40_dt;
+    static uint8_t s_ky40_sw;
     static uint8_t zkeypadButtons();
     static uint8_t arduboyButtons();
     static uint8_t gpioButtons();
+    static uint8_t ky40Buttons();
 };
 
 

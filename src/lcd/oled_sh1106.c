@@ -70,8 +70,8 @@ static void sh1106_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
     else
         ssd1306_intf.send(0x00);
     ssd1306_intf.send(SSD1306_SETPAGE | y);
-    ssd1306_intf.send((x>>4) | SSD1306_SETHIGHCOLUMN);
-    ssd1306_intf.send((x & 0x0f) | SSD1306_SETLOWCOLUMN);
+    ssd1306_intf.send(((x+2)>>4) | SSD1306_SETHIGHCOLUMN);
+    ssd1306_intf.send(((x+2) & 0x0f) | SSD1306_SETLOWCOLUMN);
     if (ssd1306_intf.spi)
     {
         ssd1306_spiDataMode(1);
@@ -98,7 +98,7 @@ void    sh1106_128x64_init()
 {
     ssd1306_lcd.type = LCD_TYPE_SH1106;
     ssd1306_lcd.height = 64;
-    ssd1306_lcd.width = 132;
+    ssd1306_lcd.width = 128;
     ssd1306_lcd.set_block = sh1106_setBlock;
     ssd1306_lcd.next_page = sh1106_nextPage;
     ssd1306_lcd.send_pixels1 = ssd1306_intf.send;

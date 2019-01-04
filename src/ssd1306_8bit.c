@@ -23,7 +23,8 @@
 */
 
 #include "ssd1306_8bit.h"
-#include "ssd1306_fonts.h"
+#include "ssd1306_generic.h"
+//#include "ssd1306_fonts.h"
 #include "intf/ssd1306_interface.h"
 #include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
@@ -58,7 +59,7 @@ void ssd1306_drawMonoBuffer8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
     ssd1306_lcd.set_block(xpos, ypos, w);
     while (h--)
     {
-        uint8_t wx = w;
+        lcduint_t wx = w;
         while (wx--)
         {
             uint8_t data = *bitmap;
@@ -83,7 +84,7 @@ void ssd1306_drawMonoBuffer8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
 
 void ssd1306_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data)
 {
-    uint16_t count = w * h;
+    uint32_t count = w * h;
     ssd1306_lcd.set_block(x, y, w);
     while (count--)
     {
@@ -96,7 +97,7 @@ void ssd1306_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, c
 void ssd1306_fillScreen8(uint8_t fill_Data)
 {
     ssd1306_lcd.set_block(0, 0, 0);
-    uint16_t count = ssd1306_lcd.width * ssd1306_lcd.height;
+    uint32_t count = (uint32_t)ssd1306_lcd.width * (uint32_t)ssd1306_lcd.height;
     while (count--)
     {
         ssd1306_lcd.send_pixels8( fill_Data );
@@ -216,7 +217,7 @@ void ssd1306_drawMonoBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
     ssd1306_lcd.set_block(xpos, ypos, w);
     while (h--)
     {
-        uint8_t wx = w;
+        lcduint_t wx = w;
         while ( wx-- )
         {
             uint8_t data = pgm_read_byte( bitmap );
@@ -242,7 +243,7 @@ void ssd1306_drawMonoBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
 void ssd1306_drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
     ssd1306_lcd.set_block(xpos, ypos, w);
-    uint16_t count = (w) * (h);
+    uint32_t count = (w) * (h);
     while (count--)
     {
         ssd1306_lcd.send_pixels8( pgm_read_byte( bitmap ) );
@@ -254,7 +255,7 @@ void ssd1306_drawBitmap8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h,
 void ssd1306_clearBlock8(uint8_t x, uint8_t y, uint8_t w, uint8_t h)
 {
     ssd1306_lcd.set_block(x, y, w);
-    uint16_t count = w * h;
+    uint32_t count = w * h;
     while (count--)
     {
         ssd1306_lcd.send_pixels8( 0x00 );
@@ -270,24 +271,15 @@ void ssd1306_setCursor8(lcduint_t x, lcduint_t y)
 
 void ssd1306_printChar8(uint8_t c)
 {
-    const uint8_t *glyph_ptr;
-#ifdef CONFIG_SSD1306_UNICODE_ENABLE
-    if (g_ssd1306_unicode)
-    {
-        uint16_t unicode = ssd1306_unicode16FromUtf8(c);
-        if (unicode == SSD1306_MORE_CHARS_REQUIRED) return;
-        glyph_ptr = ssd1306_getU16CharGlyph( unicode );
-    }
-    else
-#endif
-    {
-        glyph_ptr = ssd1306_getCharGlyph( c );
-    }
+    uint16_t unicode = ssd1306_unicode16FromUtf8(c);
+    if (unicode == SSD1306_MORE_CHARS_REQUIRED) return;
+    SCharInfo char_info;
+    ssd1306_getCharBitmap(unicode, &char_info);
     ssd1306_drawMonoBitmap8(ssd1306_cursorX,
                 ssd1306_cursorY,
-                s_fixedFont.h.width,
-                s_fixedFont.h.height,
-                glyph_ptr );
+                char_info.width,
+                char_info.height,
+                char_info.glyph );
 }
 
 size_t ssd1306_write8(uint8_t ch)
@@ -311,25 +303,16 @@ size_t ssd1306_write8(uint8_t ch)
             return 0;
         }
     }
-    const uint8_t *glyph_ptr;
-#ifdef CONFIG_SSD1306_UNICODE_ENABLE
-    if (g_ssd1306_unicode)
-    {
-        uint16_t unicode = ssd1306_unicode16FromUtf8(ch);
-        if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
-        glyph_ptr = ssd1306_getU16CharGlyph( unicode );
-    }
-    else
-#endif
-    {
-        glyph_ptr = ssd1306_getCharGlyph( ch );
-    }
+    uint16_t unicode = ssd1306_unicode16FromUtf8(ch);
+    if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
+    SCharInfo char_info;
+    ssd1306_getCharBitmap(unicode, &char_info);
     ssd1306_drawMonoBitmap8( ssd1306_cursorX,
                              ssd1306_cursorY,
-                             s_fixedFont.h.width,
-                             s_fixedFont.h.height,
-                             glyph_ptr);
-    ssd1306_cursorX += s_fixedFont.h.width;
+                             char_info.width,
+                             char_info.height,
+                             char_info.glyph);
+    ssd1306_cursorX += char_info.width + char_info.spacing;
     return 1;
 }
 

@@ -86,7 +86,7 @@ uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle s
     for(;;)
     {
         uint8_t ldata;
-        if( (x > ssd1306_lcd.width - s_fixedFont.h.width) || (ch[j] == '\0') )
+        if ((x > ssd1306_lcd.width - s_fixedFont.h.width) || (ch[j] == '\0'))
         {
             x = xpos;
             y++;
@@ -111,49 +111,48 @@ uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle s
             ssd1306_intf.stop();
             ssd1306_lcd.set_block(xpos, y, ssd1306_lcd.width - xpos);
         }
-        const uint8_t * glyph_ptr;
-#ifdef CONFIG_SSD1306_UNICODE_ENABLE
-        if (g_ssd1306_unicode)
+        uint16_t unicode;
+        do
         {
-            uint16_t unicode;
-            do
+            unicode = ssd1306_unicode16FromUtf8(ch[j]);
+            j++;
+        } while ( unicode == SSD1306_MORE_CHARS_REQUIRED );
+        SCharInfo char_info;
+        ssd1306_getCharBitmap(unicode, &char_info);
+        ldata = 0;
+        x += char_info.width + char_info.spacing;
+        if (char_info.height > page_offset * 8)
+        {
+            char_info.glyph += page_offset * char_info.width;
+            for( i = char_info.width; i>0; i--)
             {
-                unicode = ssd1306_unicode16FromUtf8(ch[j]);
-                j++;
-            } while ( unicode == SSD1306_MORE_CHARS_REQUIRED );
-            glyph_ptr = ssd1306_getU16CharGlyph( unicode );
+                uint8_t data;
+                if ( style == STYLE_NORMAL )
+                {
+                    data = pgm_read_byte(&char_info.glyph[0]);
+                }
+                else if ( style == STYLE_BOLD )
+                {
+                    uint8_t temp = pgm_read_byte(&char_info.glyph[0]);
+                    data = temp | ldata;
+                    ldata = temp;
+                }
+                else
+                {
+                    uint8_t temp = pgm_read_byte(&char_info.glyph[1]);
+                    data = (temp & 0xF0) | ldata;
+                    ldata = (temp & 0x0F);
+                }
+                ssd1306_lcd.send_pixels1(data^s_ssd1306_invertByte);
+                char_info.glyph++;
+            }
         }
         else
-#endif
         {
-            glyph_ptr = ssd1306_getCharGlyph( ch[j] );
-            j++;
+            char_info.spacing += char_info.width;
         }
-        ldata = 0;
-        glyph_ptr += page_offset * s_fixedFont.h.width;
-        for( i=s_fixedFont.h.width; i>0; i--)
-        {
-            uint8_t data;
-            if ( style == STYLE_NORMAL )
-            {
-                data = pgm_read_byte(glyph_ptr);
-            }
-            else if ( style == STYLE_BOLD )
-            {
-                uint8_t temp = pgm_read_byte(glyph_ptr);
-                data = temp | ldata;
-                ldata = temp;
-            }
-            else
-            {
-                uint8_t temp = pgm_read_byte(glyph_ptr + 1);
-                data = (temp & 0xF0) | ldata;
-                ldata = (temp & 0x0F);
-            }
-            ssd1306_lcd.send_pixels1(data^s_ssd1306_invertByte);
-            glyph_ptr++;
-        }
-        x += s_fixedFont.h.width;
+        for (i = 0; i < char_info.spacing; i++)
+            ssd1306_lcd.send_pixels1(s_ssd1306_invertByte);
     }
     ssd1306_intf.stop();
     return j;
@@ -198,9 +197,9 @@ uint8_t ssd1306_printFixed2x(uint8_t xpos, uint8_t y, const char ch[], EFontStyl
             ssd1306_lcd.set_block(xpos, y, ssd1306_lcd.width - xpos);
         }
         c = ch[j];
-        if ( c >= s_fixedFont.h.ascii_offset )
+        if ( c >= 32 )
         {
-            c -= s_fixedFont.h.ascii_offset;
+            c -= 32;
         }
         ldata = 0;
         offset = (c * s_fixedFont.pages + (page_offset >> 1)) * s_fixedFont.h.width;
@@ -276,67 +275,66 @@ uint8_t ssd1306_printFixedN(uint8_t xpos, uint8_t y, const char ch[], EFontStyle
             ssd1306_intf.stop();
             ssd1306_lcd.set_block(xpos, y, ssd1306_lcd.width - xpos);
         }
-        const uint8_t *glyph_ptr;
-#ifdef CONFIG_SSD1306_UNICODE_ENABLE
-        if (g_ssd1306_unicode)
+        uint16_t unicode;
+        do
         {
-            uint16_t unicode;
-            do
+            unicode = ssd1306_unicode16FromUtf8(ch[j]);
+            j++;
+        } while ( unicode == SSD1306_MORE_CHARS_REQUIRED );
+        SCharInfo char_info;
+        ssd1306_getCharBitmap(unicode, &char_info);
+        ldata = 0;
+        x += ((char_info.width + char_info.spacing) << factor);
+        if (char_info.height > (page_offset >> factor) * 8)
+        {
+            char_info.glyph += (page_offset >> factor) * char_info.width;
+            for( i=char_info.width; i>0; i--)
             {
-                unicode = ssd1306_unicode16FromUtf8(ch[j]);
-                j++;
-            } while ( unicode == SSD1306_MORE_CHARS_REQUIRED );
-            glyph_ptr = ssd1306_getU16CharGlyph( unicode );
+                uint8_t data;
+                if ( style == STYLE_NORMAL )
+                {
+                    data = pgm_read_byte(char_info.glyph);
+                }
+                else if ( style == STYLE_BOLD )
+                {
+                    uint8_t temp = pgm_read_byte(char_info.glyph);
+                    data = temp | ldata;
+                    ldata = temp;
+                }
+                else
+                {
+                    uint8_t temp = pgm_read_byte(char_info.glyph+1);
+                    data = (temp & 0xF0) | ldata;
+                    ldata = (temp & 0x0F);
+                }
+                if ( factor > 0 )
+                {
+                    uint8_t accum = 0;
+                    uint8_t mask = ~((0xFF) << (1<<factor));
+                    // N=0  ->   right shift is always 0
+                    // N=1  ->   right shift goes through 0, 4
+                    // N=2  ->   right shift goes through 0, 2, 4, 6
+                    // N=3  ->   right shift goes through 0, 1, 2, 3, 4, 5, 6, 7
+                    data >>= ((page_offset & ((1<<factor) - 1))<<(3-factor));
+                    for (uint8_t idx = 0; idx < 1<<(3-factor); idx++)
+                    {
+                         accum |= (((data>>idx) & 0x01) ? (mask<<(idx<<factor)) : 0);
+                    }
+                    data = accum;
+                }
+                for (uint8_t z=(1<<factor); z>0; z--)
+                {
+                    ssd1306_lcd.send_pixels1(data^s_ssd1306_invertByte);
+                }
+                char_info.glyph++;
+            }
         }
         else
-#endif
         {
-            glyph_ptr = ssd1306_getCharGlyph( ch[j] );
-            j++;
+            char_info.spacing += char_info.width;
         }
-        ldata = 0;
-        glyph_ptr += (page_offset >> factor) * s_fixedFont.h.width;
-        for( i=s_fixedFont.h.width; i>0; i--)
-        {
-            uint8_t data;
-            if ( style == STYLE_NORMAL )
-            {
-                data = pgm_read_byte(glyph_ptr);
-            }
-            else if ( style == STYLE_BOLD )
-            {
-                uint8_t temp = pgm_read_byte(glyph_ptr);
-                data = temp | ldata;
-                ldata = temp;
-            }
-            else
-            {
-                uint8_t temp = pgm_read_byte(glyph_ptr+1);
-                data = (temp & 0xF0) | ldata;
-                ldata = (temp & 0x0F);
-            }
-            if ( factor > 0 )
-            {
-                uint8_t accum = 0;
-                uint8_t mask = ~((0xFF) << (1<<factor));
-                // N=0  ->   right shift is always 0
-                // N=1  ->   right shift goes through 0, 4
-                // N=2  ->   right shift goes through 0, 2, 4, 6
-                // N=3  ->   right shift goes through 0, 1, 2, 3, 4, 5, 6, 7
-                data >>= ((page_offset & ((1<<factor) - 1))<<(3-factor));
-                for (uint8_t idx = 0; idx < 1<<(3-factor); idx++)
-                {
-                     accum |= (((data>>idx) & 0x01) ? (mask<<(idx<<factor)) : 0);
-                }
-                data = accum;
-            }
-            for (uint8_t z=(1<<factor); z>0; z--)
-            {
-                ssd1306_lcd.send_pixels1(data^s_ssd1306_invertByte);
-            }
-            glyph_ptr++;
-        }
-        x += (s_fixedFont.h.width << factor);
+        for (i = 0; i < (char_info.spacing << factor); i++)
+            ssd1306_lcd.send_pixels1(s_ssd1306_invertByte);
     }
     ssd1306_intf.stop();
     return j;
@@ -363,25 +361,16 @@ size_t ssd1306_write(uint8_t ch)
             return 0;
         }
     }
-    const uint8_t *glyph_ptr;
-#ifdef CONFIG_SSD1306_UNICODE_ENABLE
-    if (g_ssd1306_unicode)
-    {
-        uint16_t unicode = ssd1306_unicode16FromUtf8(ch);
-        if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
-        glyph_ptr = ssd1306_getU16CharGlyph( unicode );
-    }
-    else
-#endif
-    {
-        glyph_ptr = ssd1306_getCharGlyph( ch );
-    }
+    uint16_t unicode = ssd1306_unicode16FromUtf8(ch);
+    if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
+    SCharInfo char_info;
+    ssd1306_getCharBitmap(unicode, &char_info);
     ssd1306_drawBitmap( ssd1306_cursorX,
                         ssd1306_cursorY >> 3,
-                        s_fixedFont.h.width,
-                        s_fixedFont.h.height,
-                        glyph_ptr );
-    ssd1306_cursorX += s_fixedFont.h.width;
+                        char_info.width,
+                        char_info.height,
+                        char_info.glyph );
+    ssd1306_cursorX += char_info.width + char_info.spacing;
     return 1;
 }
 
@@ -523,7 +512,7 @@ uint8_t      ssd1306_charF6x8_eol(uint8_t left,
                                   EFontStyle style,
                                   uint8_t right)
 {
-    uint8_t len = ssd1306_charF6x8(left, y, ch, style);
+    uint8_t len = ssd1306_printFixed(left, y<<3, ch, style);
     uint8_t text_end_pos = len * 6 + left;
     if (text_end_pos <= right)
     {

@@ -161,7 +161,7 @@ public:
             timer = random(24, 48);
         }
         moveTo( scaled_position/8 );
-        if (y() >= ssd1306_displayHeight() )
+        if (y() >= static_cast<lcdint_t>(ssd1306_displayHeight()) )
         {
             falling = false;
         }
