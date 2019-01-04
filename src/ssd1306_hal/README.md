@@ -1,4 +1,4 @@
-# Hardware abstraction layer # {#doc_ssd1306_hal}
+# Hardware abstraction layer
 
 This directory contain platform specific implementation of hardware abstraction layer.
 
