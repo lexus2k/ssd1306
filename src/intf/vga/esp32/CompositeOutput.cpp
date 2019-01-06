@@ -148,12 +148,11 @@ void CompositeOutput::sendFrameHalfResolution(const uint8_t *frame)
         generate_blank_line();  // top blank lines
     }
 
-    const uint8_t *p = frame;
-    for(int y = 0; y < targetYresEven; y++)
+    for (int y = 0; y < targetYresEven; y++)
     {
-        p = generate_line_from_buffer( &frame[(y >> 3)*(m_buffer_width * m_bpp / 8)] );  // real data
+        generate_line_from_buffer( &frame[(y >> 3)*(m_buffer_width * m_bpp / 8)] );  // real data
     }
-    for(int y = 0; y < linesEvenBlankBottom; y++)
+    for (int y = 0; y < linesEvenBlankBottom; y++)
     {
         generate_blank_line();  // bottom blank lines
     }
@@ -167,14 +166,13 @@ void CompositeOutput::sendFrameHalfResolution(const uint8_t *frame)
     generate_short_sync();      // 317
 
     generate_short_blank_sync(); // 318
-    for(int y = 0; y < linesOddBlankTop; y++)
+    for (int y = 0; y < linesOddBlankTop; y++)
     {
         generate_blank_line();  // top blank lines
     }
-    p = frame;
-    for(int y = 0; y < targetYresOdd; y++)
+    for (int y = 0; y < targetYresOdd; y++)
     {
-        p = generate_line_from_buffer( &frame[(y>>3)*(m_buffer_width * m_bpp / 8)] );  // real data
+        generate_line_from_buffer( &frame[(y>>3)*(m_buffer_width * m_bpp / 8)] );  // real data
     }
     for(int y = 0; y < linesOddBlankBottom; y++)
     {

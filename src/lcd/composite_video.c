@@ -27,6 +27,7 @@
 #include "lcd_common.h"
 #include "intf/ssd1306_interface.h"
 #include "ssd1306_hal/io.h"
+#include "intf/vga/vga.h"
 
 static const uint8_t PROGMEM s_composite128x64_initData[] =
 {
