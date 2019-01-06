@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -42,9 +42,11 @@ extern "C" {
 /* TODO: Move defines out of this file */
 static const uint8_t H_SYNC_PIN = 3;
 static const uint8_t V_SYNC_PIN = 10;
+extern volatile uint8_t __vga_buffer[];
+#elif defined(ESP32)
+extern uint8_t __vga_buffer[];
 #endif
 
-extern volatile uint8_t __vga_buffer[];
 #endif // DOXYGEN_SHOULD_SKIP_THIS
 
 /**
