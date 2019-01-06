@@ -2,10 +2,6 @@
  * Credits to https://github.com/bitluni/ESP32CompositeVideo
  */
 
-
-
-#pragma once
-
 #include "CompositeOutput.h"
 
 #if defined(CONFIG_VGA_AVAILABLE) && defined(CONFIG_VGA_ENABLE) && defined(__XTENSA__)
@@ -52,8 +48,18 @@ const TechProperties NTSCProperties = {
   .imageAspect = 4./3.
 };
 
-CompositeOutput::CompositeOutput(Mode mode, int xres, int yres, double Vcc)
+CompositeOutput::CompositeOutput(Mode mode, double Vcc)
     :properties((mode==NTSC) ? NTSCProperties: PALProperties)
+{
+    double dacPerVolt = 255.0 / Vcc;
+    levelSync = 0;
+    levelBlank = (properties.blankVolts - properties.syncVolts) * dacPerVolt + 0.5;
+    levelBlack = (properties.blackVolts - properties.syncVolts) * dacPerVolt + 0.5;
+    levelWhite = (properties.whiteVolts - properties.syncVolts) * dacPerVolt + 0.5;
+    grayValues = levelWhite - levelBlack + 1;
+}
+
+void CompositeOutput::init(int xres, int yres, int bpp)
 {
     int linesSyncTop = 5;
     int linesSyncBottom = 3;
@@ -62,7 +68,7 @@ CompositeOutput::CompositeOutput(Mode mode, int xres, int yres, double Vcc)
     linesEven = properties.lines - linesOdd;
     linesEvenActive = linesEven - properties.linesFirstTop - linesSyncBottom;
     linesOddActive = linesOdd - properties.linesFirstTop - linesSyncBottom;
-    linesEvenVisible = linesEvenActive - properties.linesOverscanTop - properties.linesOverscanBottom; 
+    linesEvenVisible = linesEvenActive - properties.linesOverscanTop - properties.linesOverscanBottom;
     linesOddVisible = linesOddActive - properties.linesOverscanTop - properties.linesOverscanBottom;
 
     targetYresOdd = (yres / 2 < linesOddVisible) ? yres / 2 : linesOddVisible;
@@ -85,23 +91,21 @@ CompositeOutput::CompositeOutput(Mode mode, int xres, int yres, double Vcc)
     targetXres = xres < samplesActive ? xres : samplesActive;
 
     samplesVSyncShort = samplesPerMicro * properties.shortVSyncMicros + 0.5;
+
     samplesBlackLeft = (samplesActive - targetXres) / 2;
     samplesBlackRight = samplesActive - targetXres - samplesBlackLeft;
-    double dacPerVolt = 255.0 / Vcc;
-    levelSync = 0;
-    levelBlank = (properties.blankVolts - properties.syncVolts) * dacPerVolt + 0.5;
-    levelBlack = (properties.blackVolts - properties.syncVolts) * dacPerVolt + 0.5;
-    levelWhite = (properties.whiteVolts - properties.syncVolts) * dacPerVolt + 0.5;
-    grayValues = levelWhite - levelBlack + 1;
 
     pixelAspect = (float(samplesActive) / (linesEvenVisible + linesOddVisible)) / properties.imageAspect;
-}
 
-void CompositeOutput::init()
-{
     line = (uint16_t*)malloc(sizeof(uint16_t) * m_samples_per_line * 2);
     m_ptr = line;
     m_end = line + m_samples_per_line * 2 / sizeof(uint16_t);
+
+    init_hardware();
+}
+
+void CompositeOutput::init_hardware()
+{
     i2s_config_t i2s_config = {
        .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_TX | I2S_MODE_DAC_BUILT_IN),
        .sample_rate = I2S_VGA_SAMPLE_RATE,  //not really used
@@ -179,11 +183,6 @@ void CompositeOutput::sendFrameHalfResolution(const uint8_t *frame)
         i2s_write_bytes(I2S_PORT, (char*)line, (m_ptr - line) * sizeof(uint16_t), portMAX_DELAY);
         m_ptr = line;
     }
-}
-
-void CompositeOutput::sendLine()
-{
-    i2s_write_bytes(I2S_PORT, (char*)line, m_samples_per_line * sizeof(uint16_t), portMAX_DELAY);
 }
 
 void CompositeOutput::generate_long_sync()

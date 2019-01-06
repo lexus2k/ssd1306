@@ -21,43 +21,21 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-/**
- * @file vga_monitor.h Interface to vga_monitor
- */
-
-#ifndef _SSD1306_COMPOSITE_VIDEO_H_
-#define _SSD1306_COMPOSITE_VIDEO_H_
 
 #include "ssd1306_hal/io.h"
+#include "vga.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/**
- * @ingroup LCD_INTERFACE_API
- * @{
- */
-
-/**
- * @brief Inits 128x64 monochrome VGA display.
- *
- * Inits 128x64 monochrome VGA display. This mode supports 2 colors: black and white.
- * User must init communication interface (uart) for vga client mode or init vga
- * interface for host mode prior to calling this function.
- *
- * @see ssd1306_uartInit_Builtin()
- * @see ssd1306_vga_controller_init()
- */
-void composite_video_128x64_mono_init(void);
-
-/**
- * @}
- */
-
-#ifdef __cplusplus
+#if defined(CONFIG_VGA_AVAILABLE) && defined(CONFIG_VGA_ENABLE) && defined(ESP32)
+extern void ssd1306_CompositeVideoInit_esp32(void);
+void ssd1306_vgaInit()
+{
+    ssd1306_CompositeVideoInit_esp32();
 }
-#endif
+
+#else
+
+void ssd1306_vgaInit()
+{
+}
 
 #endif
-

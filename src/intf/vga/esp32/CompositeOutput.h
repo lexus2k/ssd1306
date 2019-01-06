@@ -43,9 +43,9 @@ class CompositeOutput
     NTSC
   };
 
-  CompositeOutput(Mode mode, int xres, int yres, double Vcc = 3.3);
+  CompositeOutput(Mode mode, double Vcc = 3.3);
 
-  void init();
+  void init(int xres, int yres, int bpp);
 
   void fillValues(uint8_t value, int count);
 
@@ -93,8 +93,7 @@ private:
   uint16_t *m_end;
   uint16_t *m_ptr;
 
-  void sendLine();
-
+    void init_hardware();
     void check_buffer();
     void generate_vsync();
     void generate_long_sync();

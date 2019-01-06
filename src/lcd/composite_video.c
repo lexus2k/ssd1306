@@ -28,13 +28,15 @@
 #include "intf/ssd1306_interface.h"
 #include "ssd1306_hal/io.h"
 
-#if defined(CONFIG_VGA_AVAILABLE) && defined(CONFIG_VGA_ENABLE) && defined(ESP32)
-extern void ssd1306_vga_controller_128x64_init_enable_output(void);
-#else
-static void ssd1306_vga_controller_128x64_init_enable_output(void)
+static const uint8_t PROGMEM s_composite128x64_initData[] =
 {
-}
+#ifdef SDL_EMULATION
+    SDL_LCD_SSD1306,
+    0x00,
 #endif
+    VGA_SET_RESOLUTION,128,64,1,
+    VGA_DISPLAY_ON,
+};
 
 static uint8_t s_column = 0;
 static uint8_t s_page = 0;
@@ -128,7 +130,9 @@ static void vga_set_mode(lcd_mode_t mode)
 
 void composite_video_128x64_mono_init(void)
 {
-    ssd1306_vga_controller_128x64_init_enable_output();
+    // init vga interface
+    ssd1306_vgaInit();
+    // init display
     ssd1306_lcd.type = LCD_TYPE_SSD1306;
     ssd1306_lcd.width = 128;
     ssd1306_lcd.height = 64;
@@ -137,5 +141,6 @@ void composite_video_128x64_mono_init(void)
     ssd1306_lcd.send_pixels1  = ssd1306_intf.send;
     ssd1306_lcd.send_pixels_buffer1 = ssd1306_intf.send_buffer;
     ssd1306_lcd.set_mode = vga_set_mode;
+    ssd1306_configureI2cDisplay( s_composite128x64_initData, sizeof(s_composite128x64_initData));
 }
 

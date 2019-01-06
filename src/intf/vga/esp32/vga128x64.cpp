@@ -33,18 +33,8 @@
 
 //#define VGA_CONTROLLER_DEBUG
 
-uint8_t __vga_buffer[1024];
+static uint8_t *__vga_buffer = nullptr;
 extern uint16_t ssd1306_color;
-
-/* This buffer fits 128x64 pixels
-   Each 8 pixels are packed to 3 bytes:
-
-   BYTE1: B7 R2 G2 B2 B8 R1 G1 B1
-   BYTE2: G7 R4 G4 B4 G8 R3 G3 B3
-   BYTE3: R7 R6 G6 B6 R8 R5 G5 B5
-
-   Yeah, a little bit complicated, but this allows to quickly unpack structure
-*/
 
 // Set to ssd1306 compatible mode by default
 static uint8_t s_mode = 0x01;
@@ -54,7 +44,20 @@ static uint8_t s_column = 0;
 static uint8_t s_column_end = 0;
 static uint8_t s_cursor_x = 0;
 static uint8_t s_cursor_y = 0;
-volatile uint8_t s_vga_frames;
+static uint8_t s_width = 0;
+static uint8_t s_height = 0;
+static uint8_t s_bpp = 0;
+
+static CompositeOutput output(CompositeOutput::PAL);
+
+static void compositeCore(void *data)
+{
+    while (true)
+    {
+        //just send the graphics frontbuffer whithout any interruption 
+        output.sendFrameHalfResolution(__vga_buffer);
+    }
+}
 
 static void vga_controller_init(void)
 {
@@ -138,9 +141,24 @@ static void vga_controller_send_byte(uint8_t data)
         if (s_vga_arg == 3) { s_cursor_y = (data << 3); }
         if (s_vga_arg == 4) { s_vga_command = 0; }
     }
-    if (s_vga_command == VGA_SET_MODE)
+    else if (s_vga_command == VGA_SET_MODE)
     {
         if (s_vga_arg == 1) { s_mode = data; s_vga_command = 0; }
+        if (s_vga_arg == 2) { s_vga_command = 0; }
+    }
+    else if (s_vga_command == VGA_SET_RESOLUTION )
+    {
+        if (s_vga_arg == 1) { s_width = data; }
+        if (s_vga_arg == 2) { s_height = data; }
+        if (s_vga_arg == 3) { s_bpp = data; }
+        if (s_vga_arg == 4) { s_vga_command = 0; }
+    }
+    else if (s_vga_command == VGA_DISPLAY_ON )
+    {
+        __vga_buffer = (uint8_t *)malloc(s_width * s_height * s_bpp / 8);
+        output.init(s_width, s_height, s_bpp);
+        xTaskCreatePinnedToCore(compositeCore, "c", 1024, NULL, 1, NULL, 0);
+        s_vga_command = 0;
     }
     s_vga_arg++;
 }
@@ -154,7 +172,8 @@ static void vga_controller_send_bytes(const uint8_t *buffer, uint16_t len)
     }
 }
 
-void ssd1306_vga_controller_128x64_init_no_output(void)
+extern "C" void ssd1306_CompositeVideoInit_esp32(void);
+void ssd1306_CompositeVideoInit_esp32(void)
 {
     ssd1306_intf.spi = 0;
     ssd1306_intf.start = vga_controller_init;
@@ -162,25 +181,6 @@ void ssd1306_vga_controller_128x64_init_no_output(void)
     ssd1306_intf.send = vga_controller_send_byte;
     ssd1306_intf.send_buffer = vga_controller_send_bytes;
     ssd1306_intf.close = vga_controller_close;
-}
-
-static CompositeOutput output(CompositeOutput::PAL, 128, 64);
-
-static void compositeCore(void *data)
-{
-    while (true)
-    {
-        //just send the graphics frontbuffer whithout any interruption 
-        output.sendFrameHalfResolution(&__vga_buffer[0]);
-    }
-}
-
-extern "C" void ssd1306_vga_controller_128x64_init_enable_output(void)
-{
-    ssd1306_vga_controller_128x64_init_no_output();
-    output.init();
-    xTaskCreatePinnedToCore(compositeCore, "c", 1024, NULL, 1, NULL, 0);
-    // init
 }
 
 void ssd1306_debug_print_vga_buffer_128x64(void (*func)(uint8_t))
@@ -193,12 +193,10 @@ void ssd1306_debug_print_vga_buffer_128x64(void (*func)(uint8_t))
             if (color)
             {
                 func('#');
-//                func('#');
             }
             else
             {
                 func(' ');
-//                func(' ');
             }
         }
         func('\n');
