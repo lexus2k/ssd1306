@@ -63,14 +63,14 @@ const TechProperties NTSCProperties = {
   .syncVolts = -0.286,
   .blankVolts = 0.0,
   .blackVolts = 0.05, //specs 0.054,
-  .whiteVolts = 0.714,  
+  .whiteVolts = 0.714,
   .lines = 525,
   .linesFirstTop = 20,
   .linesOverscanTop = 6,
   .linesOverscanBottom = 9,
   .imageAspect = 4./3.
 };
-  
+
 class CompositeOutput
 {
   public:
@@ -108,22 +108,22 @@ class CompositeOutput
   int linesOddBlankBottom;
 
   float pixelAspect;
-    
+
   unsigned short *line;
 
   static const i2s_port_t I2S_PORT = (i2s_port_t)I2S_NUM_0;
-    
+
   enum Mode
   {
     PAL,
-    NTSC  
+    NTSC
   };
-  
+
   const TechProperties &properties;
-  
+
   CompositeOutput(Mode mode, int xres, int yres, double Vcc = 3.3)
     :properties((mode==NTSC) ? NTSCProperties: PALProperties)
-  {    
+  {
     int linesSyncTop = 5;
     int linesSyncBottom = 3;
 
@@ -137,13 +137,13 @@ class CompositeOutput
     targetYresOdd = (yres / 2 < linesOddVisible) ? yres / 2 : linesOddVisible;
     targetYresEven = (yres - targetYresOdd < linesEvenVisible) ? yres - targetYresOdd : linesEvenVisible;
     targetYres = targetYresEven + targetYresOdd;
-    
+
     linesEvenBlankTop = properties.linesFirstTop - linesSyncTop + properties.linesOverscanTop + (linesEvenVisible - targetYresEven) / 2;
     linesEvenBlankBottom = linesEven - linesEvenBlankTop - targetYresEven - linesSyncBottom;
     linesOddBlankTop = linesEvenBlankTop;
     linesOddBlankBottom = linesOdd - linesOddBlankTop - targetYresOdd - linesSyncBottom;
-    
-    double samplesPerSecond = 160000000.0 / 3.0 / 2.0 / 2.0;
+
+    double samplesPerSecond = I2S_VGA_SAMPLE_RATE;
     double samplesPerMicro = samplesPerSecond * 0.000001;
     samplesLine = (int)(samplesPerMicro * properties.lineMicros + 1.5) & ~1;
     samplesSync = samplesPerMicro * properties.syncMicros + 0.5;
@@ -183,12 +183,6 @@ class CompositeOutput
     i2s_driver_install(I2S_PORT, &i2s_config, 0, NULL);    //start i2s driver
     i2s_set_pin(I2S_PORT, NULL);                           //use internal DAC
     i2s_set_sample_rates(I2S_PORT, I2S_VGA_SAMPLE_RATE);   //dummy sample rate, since the function fails at high values
-
-    //this is the hack that enables the highest sampling rate possible 13.333MHz, have fun
-    SET_PERI_REG_BITS(I2S_CLKM_CONF_REG(I2S_PORT), I2S_CLKM_DIV_A_V, 1, I2S_CLKM_DIV_A_S);
-    SET_PERI_REG_BITS(I2S_CLKM_CONF_REG(I2S_PORT), I2S_CLKM_DIV_B_V, 1, I2S_CLKM_DIV_B_S);
-    SET_PERI_REG_BITS(I2S_CLKM_CONF_REG(I2S_PORT), I2S_CLKM_DIV_NUM_V, 2, I2S_CLKM_DIV_NUM_S); 
-    SET_PERI_REG_BITS(I2S_SAMPLE_RATE_CONF_REG(I2S_PORT), I2S_TX_BCK_DIV_NUM_V, 2, I2S_TX_BCK_DIV_NUM_S);
   }
 
   void sendLine()
