@@ -33,65 +33,67 @@ typedef struct
 
 class CompositeOutput
 {
-  public:
+public:
 
-  static const i2s_port_t I2S_PORT = (i2s_port_t)I2S_NUM_0;
+    enum Mode
+    {
+        PAL,
+        NTSC
+    };
 
-  enum Mode
-  {
-    PAL,
-    NTSC
-  };
+    CompositeOutput(Mode mode, double Vcc = 3.3);
 
-  CompositeOutput(Mode mode, double Vcc = 3.3);
+    void init(int xres, int yres, int bpp);
 
-  void init(int xres, int yres, int bpp);
+    void fillValues(uint8_t value, int count);
 
-  void fillValues(uint8_t value, int count);
-
-  void sendFrameHalfResolution(const uint8_t *frame);
+    void sendFrameHalfResolution(const uint8_t *frame);
 
 private:
-  const TechProperties &properties;
+    const TechProperties &properties;
 
-  int m_samples_per_line;
-  int samplesSync;
-  int samplesBlank;
-  int samplesBack;
-  int samplesActive;
-  int samplesBlackLeft;
-  int samplesBlackRight;
+    int m_samples_per_line;
+    int samplesSync;
+    int samplesBlank;
+    int samplesBack;
+    int samplesActive;
+    int samplesBlackLeft;
+    int samplesBlackRight;
 
-  int samplesVSyncShort;
-  int samplesVSyncLong;
+    int samplesVSyncShort;
+    int samplesVSyncLong;
 
-  char levelSync;
-  char levelBlank;
-  char levelBlack;
-  char levelWhite;
-  char grayValues;
+    char levelSync;
+    char levelBlank;
+    char levelBlack;
+    char levelWhite;
+    char grayValues;
 
-  int targetXres;
-  int targetYres;
-  int targetYresEven;
-  int targetYresOdd;
+    int targetXres;
+    int targetYres;
+    int targetYresEven;
+    int targetYresOdd;
 
-  int linesEven;
-  int linesOdd;
-  int linesEvenActive;
-  int linesOddActive;
-  int linesEvenVisible;
-  int linesOddVisible;
-  int linesEvenBlankTop;
-  int linesEvenBlankBottom;
-  int linesOddBlankTop;
-  int linesOddBlankBottom;
+    int linesEven;
+    int linesOdd;
+    int linesEvenActive;
+    int linesOddActive;
+    int linesEvenVisible;
+    int linesOddVisible;
+    int linesEvenBlankTop;
+    int linesEvenBlankBottom;
+    int linesOddBlankTop;
+    int linesOddBlankBottom;
 
-  float pixelAspect;
+    int m_buffer_width;
+    int m_buffer_height;
+    int m_bpp;
 
-  uint16_t *line;
-  uint16_t *m_end;
-  uint16_t *m_ptr;
+//    float pixelAspect;
+
+    uint16_t *line;
+    uint16_t *m_end;
+    uint16_t *m_ptr;
 
     void init_hardware();
     void check_buffer();

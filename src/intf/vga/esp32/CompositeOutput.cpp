@@ -9,6 +9,7 @@
 #include "driver/i2s.h"
 
 #define I2S_VGA_SAMPLE_RATE   (1000000)
+static const i2s_port_t I2S_PORT = (i2s_port_t)I2S_NUM_0;
 
 const TechProperties PALProperties = {
   .lineMicros = 64,
@@ -61,13 +62,17 @@ CompositeOutput::CompositeOutput(Mode mode, double Vcc)
 
 void CompositeOutput::init(int xres, int yres, int bpp)
 {
-    int linesSyncTop = 5;
-    int linesSyncBottom = 3;
+    const int LINES_SYNC_TOP = 5;
+    const int LINES_SYNC_BOTTOM = 3;
+
+    m_buffer_width = xres;
+    m_buffer_height = yres;
+    m_bpp = bpp;
 
     linesOdd = properties.lines / 2;
     linesEven = properties.lines - linesOdd;
-    linesEvenActive = linesEven - properties.linesFirstTop - linesSyncBottom;
-    linesOddActive = linesOdd - properties.linesFirstTop - linesSyncBottom;
+    linesEvenActive = linesEven - properties.linesFirstTop - LINES_SYNC_BOTTOM;
+    linesOddActive = linesOdd - properties.linesFirstTop - LINES_SYNC_BOTTOM;
     linesEvenVisible = linesEvenActive - properties.linesOverscanTop - properties.linesOverscanBottom;
     linesOddVisible = linesOddActive - properties.linesOverscanTop - properties.linesOverscanBottom;
 
@@ -75,10 +80,10 @@ void CompositeOutput::init(int xres, int yres, int bpp)
     targetYresEven = (yres - targetYresOdd < linesEvenVisible) ? yres - targetYresOdd : linesEvenVisible;
     targetYres = targetYresEven + targetYresOdd;
 
-    linesEvenBlankTop = properties.linesFirstTop - linesSyncTop + properties.linesOverscanTop + (linesEvenVisible - targetYresEven) / 2;
-    linesEvenBlankBottom = linesEven - linesEvenBlankTop - targetYresEven - linesSyncBottom;
+    linesEvenBlankTop = properties.linesFirstTop - LINES_SYNC_TOP + properties.linesOverscanTop + (linesEvenVisible - targetYresEven) / 2;
+    linesEvenBlankBottom = linesEven - linesEvenBlankTop - targetYresEven - LINES_SYNC_BOTTOM;
     linesOddBlankTop = linesEvenBlankTop;
-    linesOddBlankBottom = linesOdd - linesOddBlankTop - targetYresOdd - linesSyncBottom;
+    linesOddBlankBottom = linesOdd - linesOddBlankTop - targetYresOdd - LINES_SYNC_BOTTOM;
 
     double samplesPerSecond = I2S_VGA_SAMPLE_RATE;
     double samplesPerMicro = samplesPerSecond * 0.000001;
@@ -95,7 +100,7 @@ void CompositeOutput::init(int xres, int yres, int bpp)
     samplesBlackLeft = (samplesActive - targetXres) / 2;
     samplesBlackRight = samplesActive - targetXres - samplesBlackLeft;
 
-    pixelAspect = (float(samplesActive) / (linesEvenVisible + linesOddVisible)) / properties.imageAspect;
+//    pixelAspect = (float(samplesActive) / (linesEvenVisible + linesOddVisible)) / properties.imageAspect;
 
     line = (uint16_t*)malloc(sizeof(uint16_t) * m_samples_per_line * 2);
     m_ptr = line;
@@ -146,7 +151,7 @@ void CompositeOutput::sendFrameHalfResolution(const uint8_t *frame)
     const uint8_t *p = frame;
     for(int y = 0; y < targetYresEven; y++)
     {
-        p = generate_line_from_buffer( &frame[(y >> 3)*16] );  // real data
+        p = generate_line_from_buffer( &frame[(y >> 3)*(m_buffer_width * m_bpp / 8)] );  // real data
     }
     for(int y = 0; y < linesEvenBlankBottom; y++)
     {
@@ -169,7 +174,7 @@ void CompositeOutput::sendFrameHalfResolution(const uint8_t *frame)
     p = frame;
     for(int y = 0; y < targetYresOdd; y++)
     {
-        p = generate_line_from_buffer( &frame[(y>>3)*16] );  // real data
+        p = generate_line_from_buffer( &frame[(y>>3)*(m_buffer_width * m_bpp / 8)] );  // real data
     }
     for(int y = 0; y < linesOddBlankBottom; y++)
     {
@@ -264,7 +269,7 @@ const uint8_t* CompositeOutput::generate_line_from_buffer(const uint8_t *pixels)
     fillValues(levelBlack, samplesBlackRight);
     fillValues(levelBlank, samplesBack);
     check_buffer();
-    return pixels + 16;
+    return pixels + m_buffer_width * m_bpp / 8;
 //    return pixels + targetXres;
 }
 
