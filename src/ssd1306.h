@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2016-2018, Alexey Dynda
+    Copyright (c) 2016-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@
 #define _SSD1306_H_
 
 #include "nano_gfx_types.h"
+#include "ssd1306_generic.h"
 #include "ssd1306_1bit.h"
 #include "ssd1306_8bit.h"
 #include "ssd1306_16bit.h"
@@ -42,6 +43,8 @@
 #include "lcd/oled_sh1106.h"
 #include "lcd/lcd_pcd8544.h"
 #include "lcd/lcd_il9163.h"
+#include "lcd/lcd_ili9341.h"
+#include "lcd/composite_video.h"
 
 #include "lcd/oled_template.h"
 
@@ -53,13 +56,13 @@ extern "C" {
  * @ingroup LCD_INTERFACE_API
  * Returns display height in pixels
  */
-uint8_t      ssd1306_displayHeight(void);
+lcduint_t      ssd1306_displayHeight(void);
 
 /**
  * @ingroup LCD_INTERFACE_API
  * Returns display width in pixels
  */
-uint8_t      ssd1306_displayWidth(void);
+lcduint_t      ssd1306_displayWidth(void);
 
 #ifdef __cplusplus
 }

@@ -46,7 +46,7 @@ enum
 uint16_t ssd1306_color = 0xFFFF;
 lcduint_t ssd1306_cursorX = 0;
 lcduint_t ssd1306_cursorY = 0;
-SFixedFontInfo s_fixedFont = { {0} };
+SFixedFontInfo s_fixedFont = { 0 };
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
 uint8_t g_ssd1306_unicode = 1;
 #endif
@@ -55,12 +55,12 @@ static void (*s_ssd1306_getCharBitmap)(uint16_t unicode, SCharInfo *info) = NULL
 static const uint8_t *ssd1306_getCharGlyph(char ch);
 static const uint8_t *ssd1306_getU16CharGlyph(uint16_t unicode);
 
-uint8_t      ssd1306_displayHeight()
+lcduint_t      ssd1306_displayHeight()
 {
     return ssd1306_lcd.height;
 }
 
-uint8_t      ssd1306_displayWidth()
+lcduint_t      ssd1306_displayWidth()
 {
     return ssd1306_lcd.width;
 }
@@ -168,7 +168,7 @@ static const uint8_t *ssd1306_searchCharGlyph(const uint8_t * unicode_table, uin
     if (r.count == 0)
     {
         // Sorry, no glyph found for the specified character
-        return unicode_table;
+        return NULL;
     }
     return &data[ (unicode - r.start_code) * s_fixedFont.glyph_size ];
 }

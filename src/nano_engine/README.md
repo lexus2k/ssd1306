@@ -12,15 +12,17 @@
   * [Draw moving bitmap](#draw-moving-bitmap)
   * [What if not to use draw callbacks](#what-if-not-to-use-draw-callbacks)
   * [Using Adafruit GFX with NanoEngine](#using-adafruit-gfx-with-nanoengine)
+  * [To upper level](@ref index)
 
 [tocend]: # (toc end)
 
-
+<a name="introduction"></a>
 ## Introduction
 
 Many applications use double-buffered output to physical display to avoid flickering effect, when a user observed non-completed picture for a short time. When working with color OLED/LCD displays like ssd1331, some micro-controllers do not have enough RAM to fit display buffer in. For example, in 8-bit mode ssd1331 OLED display needs 6144 bytes (`96*64`). But simple micro-controller like Atmega328 has only 2KiB, and Attiny85 has only 512B of RAM. But with ssd1306 library you still can create applications for those ones with good graphics.
 ssd1306 library represents NanoEngine8, intended to be used with color OLED displays. Digit 8 means that engine implements 8-bit color mode. Refer to arkanoid8 as example, which can be run even on small Attiny85 with color ssd1331 display. The system supports NanoEngine1 for monochrome OLED displays, NanoEngine8 for 8-bit RGB OLED displays, NanoEngine16 for 16-bit RGB OLED displays.
 
+<a name="main-idea-of-nanoengine"></a>
 ## Main idea of NanoEngine
 
 There are 2 issues with tiny controllers:
@@ -31,6 +33,7 @@ The first problem is solved in NanoEngine by using double-buffer to redraw only 
 The second problem is solved almost the same way: refresh only those part of display content, which were changed since last frame update. For example, ssd1331 oled display work on SPI at 8MHz frequency, that means in ideal conditions the screen content can be refreshed 162 times per second (`8000000/(96*64*8)`). But with the data, you need to send also commands to the display and to do some other stuff. And real tests with Atmega328p show that `ssd1306_clearScreen()` can run only at 58 FPS, coping data from buffer to OLED memory runs slower. 
 There is no such issue for Arduboy, since it uses monochrome OLED ssd1306 with only 1KiB of RAM buffer, and theoretical fps can be up to 976. For color display and small controllers the main solution is to refresh only part of display content. Arkanoid8 can give easily 60 fps with NanoEngine8
 
+<a name="simple-nanoengine-demo"></a>
 ## Simple NanoEngine demo
 
 ```cpp
@@ -66,6 +69,7 @@ void loop()
 }
 ```
 
+<a name="reading-keys-with-nanoengine"></a>
 ## Reading keys with NanoEngine
 
 What, if we want to move yellow rectangle. There is easy way to do this with NanoEngine8. The engine supports up-to 6 keys: `BUTTON_DOWN`, `BUTTON_LEFT`, `BUTTON_RIGHT`, `BUTTON_UP`, `BUTTON_A`, `BUTTON_B`. All you need is to say the engine how it can get buttons state on your board. There are already 2 built-in implementations: `connectArduboyKeys()` allows using Arduboy platform hardware (remember that you need to replace ssd1306 oled with color ssd1331 oled), and `connectZKeypad()` allows using standard 5-keys Z-keypad (you can find it on E-bay). Or you can set custom key processing handler via `connectCustomKeys()` and implement your own hardware driver.
@@ -114,6 +118,7 @@ void loop()
 }
 ```
 
+<a name="draw-monochrome-bitmap"></a>
 ## Draw monochrome bitmap
 
 ```cpp
@@ -159,6 +164,7 @@ void loop()
 }
 ```
 
+<a name="draw-moving-bitmap"></a>
 ## Draw moving bitmap
 
 In some applications like games, there is need to move bitmaps. It is easy to do this with ssd1306 library using NanoSprite objects. NanoSprite object is responsible for refreshing areas, touched by sprite. So, you need only to move sprite, where you want, the engine will take care of updating display content.
@@ -209,7 +215,7 @@ void loop()
 }
 ```
 
-
+<a name="what-if-not-to-use-draw-callbacks"></a>
 ## What if not to use draw callbacks
 
 If you don't want to use draw callbacks in your application, but still need a power of NanoEngine, then there is one way for you: to use full-screen double-buffering with NanoEngine. The example, you will find below, shows how to use full-screen double buffering for monochrome 128x64 ssd1306 oled display. This example can be run on Atmega328p and more powerful micro controllers. It clears back-buffer every time engine says to redraw the frame. But you can preserve previously prepared image by removing call to `engine.canvas.clear()`.
@@ -239,6 +245,7 @@ void loop()
 }
 ```
 
+<a name="using-adafruit-gfx-with-nanoengine"></a>
 ## Using Adafruit GFX with NanoEngine
 
 Many developers are familiar with nice AdafruitGFX library. It provides rich set of graphics functions. Starting with 1.7.0 ssd1306 library it is possible to use AdafruiGFX api in combination with NanoEngine. And it is really easy.

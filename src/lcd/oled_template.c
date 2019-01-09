@@ -128,7 +128,7 @@ void    template_setMode(lcd_mode_t mode)
         ssd1306_lcd.set_block = template_setBlock;
         ssd1306_lcd.next_page = template_nextPage;
     }
-    else
+    else if (mode == LCD_MODE_SSD1306_COMPAT)
     {
         ssd1306_lcd.set_block = template_setBlock_compat;
         ssd1306_lcd.next_page = template_nextPage_compat;

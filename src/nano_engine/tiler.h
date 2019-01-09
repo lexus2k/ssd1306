@@ -76,7 +76,7 @@ typedef bool (*TNanoEngineOnDraw)(void);
  * If you need to have single big buffer, holding the whole content for monochrome display,
  * you can specify something like this NanoEngineTiler<NanoCanvas1,128,64,7>.
  */
-template<class C, uint8_t W, uint8_t H, uint8_t B>
+template<class C, lcduint_t W, lcduint_t H, uint8_t B>
 class NanoEngineTiler
 {
 protected:
@@ -90,11 +90,11 @@ public:
     /** Number of bits in tile size. 5 corresponds to 1<<5 = 32 tile size */
     static const uint8_t NE_TILE_SIZE_BITS = B;
     /** Width of tile in pixels */
-    static const uint8_t NE_TILE_WIDTH = W;
+    static const lcduint_t NE_TILE_WIDTH = W;
     /** Height of tile in pixels */
-    static const uint8_t NE_TILE_HEIGHT = H;
+    static const lcduint_t NE_TILE_HEIGHT = H;
     /** Max tiles supported in X */
-    static const uint8_t NE_MAX_TILES_NUM = 16 >> (B - 3);
+    static const uint8_t NE_MAX_TILES_NUM = 64 >> (B - 3);
 
     /** object, representing canvas. Use it in your draw handler */
     static C canvas;
@@ -282,22 +282,22 @@ private:
     static NanoPoint offset;
 };
 
-template<class C, uint8_t W, uint8_t H, uint8_t B>
+template<class C, lcduint_t W, lcduint_t H, uint8_t B>
 uint16_t NanoEngineTiler<C,W,H,B>::m_refreshFlags[NE_MAX_TILES_NUM];
 
-template<class C, uint8_t W, uint8_t H, uint8_t B>
+template<class C, lcduint_t W, lcduint_t H, uint8_t B>
 uint8_t NanoEngineTiler<C,W,H,B>::m_buffer[W * H * C::BITS_PER_PIXEL / 8];
 
-template<class C, uint8_t W, uint8_t H, uint8_t B>
+template<class C, lcduint_t W, lcduint_t H, uint8_t B>
 C NanoEngineTiler<C,W,H,B>::canvas(W, H, m_buffer);
 
-template<class C, uint8_t W, uint8_t H, uint8_t B>
+template<class C, lcduint_t W, lcduint_t H, uint8_t B>
 NanoPoint NanoEngineTiler<C,W,H,B>::offset = {0, 0};
 
-template<class C, uint8_t W, uint8_t H, uint8_t B>
+template<class C, lcduint_t W, lcduint_t H, uint8_t B>
 TNanoEngineOnDraw NanoEngineTiler<C,W,H,B>::m_onDraw = nullptr;
 
-template<class C, uint8_t W, uint8_t H, uint8_t B>
+template<class C, lcduint_t W, lcduint_t H, uint8_t B>
 void NanoEngineTiler<C,W,H,B>::displayBuffer()
 {
     if (!m_onDraw)  // If onDraw handler is not set, just output current canvas
@@ -305,11 +305,11 @@ void NanoEngineTiler<C,W,H,B>::displayBuffer()
         canvas.blt();
         return;
     }
-    for (uint8_t y = 0; y < ssd1306_lcd.height; y = y + NE_TILE_HEIGHT)
+    for (lcduint_t y = 0; y < ssd1306_lcd.height; y = y + NE_TILE_HEIGHT)
     {
         uint16_t flag = m_refreshFlags[y >> NE_TILE_SIZE_BITS];
         m_refreshFlags[y >> NE_TILE_SIZE_BITS] = 0;
-        for (uint8_t x = 0; x < ssd1306_lcd.width; x = x + NE_TILE_WIDTH)
+        for (lcduint_t x = 0; x < ssd1306_lcd.width; x = x + NE_TILE_WIDTH)
         {
             if (flag & 0x01)
             {
@@ -325,18 +325,18 @@ void NanoEngineTiler<C,W,H,B>::displayBuffer()
     }
 }
 
-template<class C, uint8_t W, uint8_t H, uint8_t B>
+template<class C, lcduint_t W, lcduint_t H, uint8_t B>
 void NanoEngineTiler<C,W,H,B>::displayPopup(const char *msg)
 {
     NanoRect rect = { {8, (ssd1306_lcd.height>>1) - 8}, {ssd1306_lcd.width - 8, (ssd1306_lcd.height>>1) + 8} };
     // TODO: It would be nice to calculate message height
     NanoPoint textPos = { (ssd1306_lcd.width - (lcdint_t)strlen(msg)*s_fixedFont.h.width) >> 1, (ssd1306_lcd.height>>1) - 4 };
     refresh(rect);
-    for (uint8_t y = 0; y < ssd1306_lcd.height; y = y + NE_TILE_HEIGHT)
+    for (lcduint_t y = 0; y < ssd1306_lcd.height; y = y + NE_TILE_HEIGHT)
     {
         uint16_t flag = m_refreshFlags[y >> NE_TILE_SIZE_BITS];
         m_refreshFlags[y >> NE_TILE_SIZE_BITS] = 0;
-        for (uint8_t x = 0; x < ssd1306_lcd.width; x = x + NE_TILE_WIDTH)
+        for (lcduint_t x = 0; x < ssd1306_lcd.width; x = x + NE_TILE_WIDTH)
         {
             if (flag & 0x01)
             {

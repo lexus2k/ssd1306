@@ -1,4 +1,4 @@
-# SSD1306/SSD1331/SSD1351/IL9163/ST7735 OLED display driver, PCD8544 LED display driver
+# SSD1306/SSD1331/SSD1351/IL9163/ILI9341/ST7735/ILI9341 OLED display driver, PCD8544 LED display driver
 
 [tocstart]: # (toc start)
 
@@ -61,6 +61,7 @@ through API.
 | ssd1351 128x128 |   | X |   |   |
 | il9163 128x128 |   | X | X |   |
 | st7735 128x160 |   | X | X |   |
+| ili9341 240x320 |   | X | X |    |
 | pcd8544 84x48 |   | X  |   | Nokia 5110 |
 | vga 96x40 color |   |   |   | direct D-sub output, atmega328p only |
 | vga 128x64 bw |   |   |   | direct D-sub output, atmega328p only |
@@ -80,7 +81,8 @@ through API.
 | ESP32  |  X  |  X  | check [examples compatibility list](examples/ESP8266_compatibility.txt)   |
 | STM32  |  X  |  X  | [stm32duino](https://github.com/stm32duino/wiki/wiki)  |
 | Arduino Zero | X  | X  |    |
-| Nordic nRF5 (nRF51, nRF52) | X | X | nRF users, enable c++11 in platform.txt `-std=gnu++11`   |
+| Nordic nRF5 (nRF51, nRF52) | X | X | via Standard Arduino nRF52 boards. nRF users, enable c++11 in platform.txt `-std=gnu++11` |
+| Nordic nRF5 (nRF51, nRF52) | X | X | via [Sandeep Mistry arduino-nRF5](https://github.com/sandeepmistry/arduino-nRF5) package |
 | **Plain AVR** |   |     |          |
 | Attiny85, Attiny45 |  X  |  X  |         |
 | Atmega328p, Atmega168 |  X  |  X  |         |
@@ -106,14 +108,14 @@ Ssd1306 library requires at least c++11 and c99 (by default Digispark package mi
 
 ## Setting up
 
-*Hardware setup is described [here](https://github.com/lexus2k/ssd1306/wiki/Hardware-setup)
+*i2c Hardware setup is described [here](https://github.com/lexus2k/ssd1306/wiki/Hardware-setup)*
 
-*Setting up for Arduino: (variant 1)*
+*Setting up for Arduino from github sources)*
  * Download source from https://github.com/lexus2k/ssd1306
- * Put the sources to Arduino/libraries/ folder
+ * Put the sources to Arduino/libraries/ssd1306/ folder
 
-*Setting up for Arduino: (variant 2)*
- * Install ssd1306 library via Arduino IDE library manager
+*Setting up for Arduino from Arduino IDE library manager*
+ * Install ssd1306 library (named ssd1306 by Alexey Dynda) via Arduino IDE library manager
 
 *Using with plain avr-gcc:*
  * Download source from https://github.com/lexus2k/ssd1306
@@ -124,7 +126,9 @@ Ssd1306 library requires at least c++11 and c99 (by default Digispark package mi
    * cd ssd1306/tools && ./build_and_run.sh -p avr -m <your_mcu> ssd1306_demo
 
  *For esp32:*
-  * Clone ssd1306 library to components/ssd1306 folder.
+  * Download source from https://github.com/lexus2k/ssd1306
+  * Put downloaded sources to components/ssd1306/ folder.
+  * Compile your project as described in ESP-IDF build system documentation
 
 For more information about this library, please, visit https://github.com/lexus2k/ssd1306.
 Doxygen documentation can be found at [github.io site](http://lexus2k.github.io/ssd1306).
@@ -138,7 +142,7 @@ The library is free. If this project helps you, you can give me a cup of coffee.
 
 MIT License
 
-Copyright (c) 2016-2018, Alexey Dynda
+Copyright (c) 2016-2019, Alexey Dynda
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -45,8 +45,8 @@ const uint8_t g_customUnicodeFont_6x8[] PROGMEM =
     0x08,  // 0x08 = 8 - font height in pixels
     0x00,  // This byte has no meaning for unicode fonts
     // Start of unicode table
-    0xE4,  // First unicode char in block (LSB)
-    0x00,  // First unicode char in block (MSB)  = 0x00E4
+    0x00,  // First unicode char in block (LSB)
+    0xE4,  // First unicode char in block (MSB)  = 0x00E4
     0x01,  // number of chars encoded in the block
     // 'ä'
     0B00111000,
@@ -56,8 +56,8 @@ const uint8_t g_customUnicodeFont_6x8[] PROGMEM =
     0B01000100,
     0B00000000,
 
-    0xC4,  // First unicode char in block (LSB)
-    0x00,  // First unicode char in block (MSB)  = 0x00C4
+    0x00,  // First unicode char in block (LSB)
+    0xC4,  // First unicode char in block (MSB)  = 0x00C4
     0x01,  // number of chars encoded in the block
     // 'Ä'
     0B00000000,
