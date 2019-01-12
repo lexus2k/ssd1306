@@ -246,6 +246,20 @@ void   ssd1306_128x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
     ssd1306_128x64_init();
 }
 
+/////////////////////////////////////////////////////////////////////////////// 
+//  SPI SSD1306 128x32  
+/////////////////////////////////////////////////////////////////////////////// 
+
+ void   ssd1306_128x32_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin) 
+{   
+    if (rstPin >=0) 
+    {   
+        ssd1306_resetController( rstPin, 10 );  
+    }   
+    ssd1306_spiInit(cesPin, dcPin); 
+    ssd1306_128x32_init();  
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 //  I2C SSD1306 128x32
 ///////////////////////////////////////////////////////////////////////////////
@@ -258,7 +272,7 @@ void    ssd1306_128x32_init()
     ssd1306_lcd.set_block = ssd1306_setBlock;
     ssd1306_lcd.next_page = ssd1306_nextPage;
     ssd1306_lcd.send_pixels1  = ssd1306_intf.send;
-    ssd1306_lcd.set_mode = ssd1306_setMode;
+    ssd1306_lcd.set_mode = ssd1306_setMode_int;
     for( uint8_t i=0; i < sizeof(s_oled128x32_initData); i++)
     {
         ssd1306_sendCommand(pgm_read_byte(&s_oled128x32_initData[i]));
