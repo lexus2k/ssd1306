@@ -76,7 +76,7 @@ void ssd1306_debug_print_vga_buffer(void (*func)(uint8_t));
 /**
  *
  */
-void ssd1306_vgaInit();
+void ssd1306_vgaInit(void);
 
 #ifdef __cplusplus
 }
