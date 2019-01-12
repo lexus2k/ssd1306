@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2019, Alexey Dynda
+    Copyright (c) 2017-2018, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -134,6 +134,34 @@ void ssd1306_setContrast(uint8_t contrast)
     ssd1306_intf.stop();
 }
 
+void ssd1306_horizontal_scroll(uint8_t startpage,uint8_t endpage,uint8_t interval,uint8_t direct)
+{
+    ssd1306_commandStart();
+    if(direct == 0){
+        //right
+        ssd1306_intf.send(SSD1306_RIGHT_HORIZONTAL_SCROLL);
+    }else
+    {
+        //left
+        ssd1306_intf.send(SSD1306_LEFT_HORIZONTAL_SCROLL);
+    }
+    ssd1306_intf.send(0x0);//dummy
+    ssd1306_intf.send(startpage);
+    ssd1306_intf.send(interval);
+    ssd1306_intf.send(endpage);
+    ssd1306_intf.send(0x0);//dummy
+    ssd1306_intf.send(0xff);//dummy
+    ssd1306_intf.stop();
+}
+
+void ssd1306_active_scroll(){
+    ssd1306_sendCommand(SSD1306_ACTIVE_SCROLL);
+}
+
+void ssd1306_deactive_scroll(){
+    ssd1306_sendCommand(SSD1306_DEACTIVE_SCROLL);
+}
+
 void ssd1306_invertMode()
 {
     if (ssd1306_lcd.type != LCD_TYPE_SSD1331)
@@ -230,7 +258,7 @@ void    ssd1306_128x32_init()
     ssd1306_lcd.set_block = ssd1306_setBlock;
     ssd1306_lcd.next_page = ssd1306_nextPage;
     ssd1306_lcd.send_pixels1  = ssd1306_intf.send;
-    ssd1306_lcd.set_mode = ssd1306_setMode_int;
+    ssd1306_lcd.set_mode = ssd1306_setMode;
     for( uint8_t i=0; i < sizeof(s_oled128x32_initData); i++)
     {
         ssd1306_sendCommand(pgm_read_byte(&s_oled128x32_initData[i]));
@@ -241,19 +269,5 @@ void    ssd1306_128x32_init()
 void    ssd1306_128x32_i2c_init()
 {
     ssd1306_i2cInit();
-    ssd1306_128x32_init();
-}
-
-///////////////////////////////////////////////////////////////////////////////
-//  SPI SSD1306 128x32
-///////////////////////////////////////////////////////////////////////////////
-
-void   ssd1306_128x32_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
-{
-    if (rstPin >=0)
-    {
-        ssd1306_resetController( rstPin, 10 );
-    }
-    ssd1306_spiInit(cesPin, dcPin);
     ssd1306_128x32_init();
 }

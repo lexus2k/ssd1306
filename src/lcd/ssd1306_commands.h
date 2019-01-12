@@ -64,6 +64,11 @@ enum ESsd1306Commands
 
     SSD1306_SWITCHCAPVCC     = 0x02,
     SSD1306_NOP              = 0xE3,
+    //add by tony for  horizontal scroll
+    SSD1306_RIGHT_HORIZONTAL_SCROLL = 0x26,
+    SSD1306_LEFT_HORIZONTAL_SCROLL = 0x27,
+    SSD1306_ACTIVE_SCROLL = 0x2f,
+    SSD1306_DEACTIVE_SCROLL = 0x2e,
 };
 
 /** SSD1306 supported memory modes. */

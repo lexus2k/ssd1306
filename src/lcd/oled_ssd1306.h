@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2019, Alexey Dynda
+    Copyright (c) 2017-2018, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -88,16 +88,6 @@ void         ssd1306_128x64_i2c_initEx(int8_t scl, int8_t sda, int8_t sa);
 void         ssd1306_128x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin);
 
 /**
- * @brief Inits 128x32 OLED display over spi (based on SSD1306 controller).
- *
- * Inits 128x32 OLED display over spi (based on SSD1306 controller)
- * @param rstPin - pin controlling LCD reset (-1 if not used)
- * @param cesPin - chip enable pin to LCD slave (-1 if not used)
- * @param dcPin - data/command pin to control LCD dc (required)
- */
-void         ssd1306_128x32_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin);
-
-/**
  * @copydoc ssd1306_128x64_i2c_init
  * @deprecated Use ssd1306_128x64_i2c_init() instead.
  */
@@ -173,6 +163,34 @@ void         ssd1306_flipHorizontal(uint8_t mode);
  *               1 to enable vertical flip
  */
 void         ssd1306_flipVertical(uint8_t mode);
+
+//add by tony for  horizontal scroll
+/**
+ * [ssd1306_horizontal_scroll description]
+ * @author Tony
+ * @DateTime 2019-01-12T16:50:37+0800
+ * @param    startpage                start page 0-7
+ * @param    endpage                  end page 0-7 must bigger or equal than start
+ * @param    interval                 interval between each scrool step in items 
+ *                                    0-7 <=> 5,64,128,256,3,4,25,2 
+ * @param    direct                   0 right,1 lest
+ * @return                            void
+ */
+void ssd1306_horizontal_scroll(uint8_t startpage,uint8_t endpage,uint8_t interval,uint8_t direct);
+
+/**
+ * [ssd1306_enable_horizontal_scroll description]
+ * @author Tony
+ * @DateTime 2019-01-12T17:03:25+0800
+ */
+void ssd1306_active_scroll();
+
+/**
+ * [ssd1306_disable_horizontal_scroll description]
+ * @author Tony
+ * @DateTime 2019-01-12T17:03:30+0800
+ */
+void ssd1306_deactive_scroll();
 
 /**
  * @}
