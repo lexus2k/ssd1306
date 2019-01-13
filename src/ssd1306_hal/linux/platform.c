@@ -525,6 +525,18 @@ void ssd1306_platform_spiInit(int8_t busId, int8_t ces, int8_t dcPin)
 
 #endif // CONFIG_PLATFORM_SPI_AVAILABLE
 
-#endif // !KERNEL
+#else  // end of !KERNEL, KERNEL is below
+
+void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, int8_t arg)
+{
+}
+
+void ssd1306_platform_spiInit(int8_t busId,
+                              int8_t ces,
+                              int8_t dcPin)
+{
+}
+
+#endif // KERNEL
 
 #endif // __linux__

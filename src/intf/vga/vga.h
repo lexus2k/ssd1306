@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,8 @@
  * @file vga.h VGA basic data. Do not include this header in your project!!!
  */
 
-#ifndef _SSD1306_VGA_CONTROLLER_H_
-#define _SSD1306_VGA_CONTROLLER_H_
+#ifndef _SSD1306_VGA_H_
+#define _SSD1306_VGA_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -42,10 +42,7 @@ extern "C" {
 /* TODO: Move defines out of this file */
 static const uint8_t H_SYNC_PIN = 3;
 static const uint8_t V_SYNC_PIN = 10;
-#endif
-
 extern volatile uint8_t __vga_buffer[];
-#endif // DOXYGEN_SHOULD_SKIP_THIS
 
 /**
  * Make ms milliseconds delay. This function has very low precision: 16ms.
@@ -53,6 +50,12 @@ extern volatile uint8_t __vga_buffer[];
  * @param ms time in milliseconds
  */
 void ssd1306_vga_delay(uint32_t ms);
+
+#elif defined(ESP32)
+
+#endif
+
+#endif // DOXYGEN_SHOULD_SKIP_THIS
 
 /**
  * Prints vga buffer in text form using passed callback
@@ -69,6 +72,11 @@ void ssd1306_debug_print_vga_buffer(void (*func)(uint8_t));
 //void ssd1306_vga_controller_init(void);
 
 #endif
+
+/**
+ *
+ */
+void ssd1306_vgaInit(void);
 
 #ifdef __cplusplus
 }

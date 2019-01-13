@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2018, Alexey Dynda
+    Copyright (c) 2017-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -86,6 +86,16 @@ void         ssd1306_128x64_i2c_initEx(int8_t scl, int8_t sda, int8_t sa);
  * @param dcPin - data/command pin to control LCD dc (required)
  */
 void         ssd1306_128x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin);
+
+/**
+ * @brief Inits 128x32 OLED display over spi (based on SSD1306 controller).
+ *
+ * Inits 128x32 OLED display over spi (based on SSD1306 controller)
+ * @param rstPin - pin controlling LCD reset (-1 if not used)
+ * @param cesPin - chip enable pin to LCD slave (-1 if not used)
+ * @param dcPin - data/command pin to control LCD dc (required)
+ */
+void         ssd1306_128x32_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin);
 
 /**
  * @copydoc ssd1306_128x64_i2c_init

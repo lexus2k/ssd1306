@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -115,6 +115,10 @@
     #define SSD1306_WIRE_CLOCK_CONFIGURABLE
     /** The macro is defined when SPI library is available */
     #define CONFIG_PLATFORM_SPI_AVAILABLE
+    #if defined(ESP32)
+        /** The macro is defined when composite audio support is available */
+        #define CONFIG_VGA_AVAILABLE
+    #endif
 
 #elif defined(__AVR_ATmega328P__)
     /** The macro is defined when i2c Wire library is available */

@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2016-2019, Alexey Dynda
+    Copyright (c) 2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,31 +22,13 @@
     SOFTWARE.
 */
 /**
- * @file ssd1306.h SSD1306 basic draw functions
+ * @file vga_monitor.h Interface to vga_monitor
  */
 
-#ifndef _SSD1306_H_
-#define _SSD1306_H_
+#ifndef _SSD1306_COMPOSITE_VIDEO_H_
+#define _SSD1306_COMPOSITE_VIDEO_H_
 
-#include "nano_gfx_types.h"
-#include "ssd1306_generic.h"
-#include "ssd1306_1bit.h"
-#include "ssd1306_8bit.h"
-#include "ssd1306_16bit.h"
-#include "ssd1306_fonts.h"
-
-#include "lcd/lcd_common.h"
-#include "lcd/oled_ssd1306.h"
-#include "lcd/oled_ssd1325.h"
-#include "lcd/oled_ssd1331.h"
-#include "lcd/oled_ssd1351.h"
-#include "lcd/oled_sh1106.h"
-#include "lcd/lcd_pcd8544.h"
-#include "lcd/lcd_il9163.h"
-#include "lcd/lcd_ili9341.h"
-#include "lcd/composite_video.h"
-
-#include "lcd/oled_template.h"
+#include "ssd1306_hal/io.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -54,18 +36,28 @@ extern "C" {
 
 /**
  * @ingroup LCD_INTERFACE_API
- * Returns display height in pixels
+ * @{
  */
-lcduint_t      ssd1306_displayHeight(void);
 
 /**
- * @ingroup LCD_INTERFACE_API
- * Returns display width in pixels
+ * @brief Inits 128x64 monochrome VGA display.
+ *
+ * Inits 128x64 monochrome VGA display. This mode supports 2 colors: black and white.
+ * User must init communication interface (uart) for vga client mode or init vga
+ * interface for host mode prior to calling this function.
+ *
+ * @see ssd1306_uartInit_Builtin()
+ * @see ssd1306_vga_controller_init()
  */
-lcduint_t      ssd1306_displayWidth(void);
+void composite_video_128x64_mono_init(void);
+
+/**
+ * @}
+ */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // _SSD1306_H_
+#endif
+

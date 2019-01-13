@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2018, Alexey Dynda
+    Copyright (c) 2017-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -241,5 +241,19 @@ void    ssd1306_128x32_init()
 void    ssd1306_128x32_i2c_init()
 {
     ssd1306_i2cInit();
+    ssd1306_128x32_init();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//  SPI SSD1306 128x32
+///////////////////////////////////////////////////////////////////////////////
+
+void   ssd1306_128x32_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
+{
+    if (rstPin >=0)
+    {
+        ssd1306_resetController( rstPin, 10 );
+    }
+    ssd1306_spiInit(cesPin, dcPin);
     ssd1306_128x32_init();
 }
