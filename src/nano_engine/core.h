@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -117,14 +117,17 @@ public:
      */
     static void connectArduboyKeys();
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
     /**
      * @brief Configures NanoEngine to use KY40 Rotary Encoder.
      * Configures NanoEngine to use KY40 Rotary Encoder.
      * @param pina_clk pin number to use as clk (see KY40 docs).
      * @param pinb_dt pin number to use as direction pin (see KY40 docs).
      * @param pinc_sw optional pin number ot use as push button.
+     * @warning do not use, not tested
      */
     static void connectKY40encoder(uint8_t pina_clk, uint8_t pinb_dt, int8_t pinc_sw = -1);
+#endif
 
     /**
      * @brief Enables engine to use GPIO keys
