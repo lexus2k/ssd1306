@@ -150,12 +150,11 @@ static void vga_controller_send_byte(uint8_t data)
     {
         if (s_vga_arg == 1) { s_width = data; }
         if (s_vga_arg == 2) { s_height = data; }
-        if (s_vga_arg == 3) { s_bpp = data; }
-        if (s_vga_arg == 4) { s_vga_command = 0; }
+        if (s_vga_arg == 3) { s_bpp = data; s_vga_command = 0; }
     }
     else if (s_vga_command == VGA_DISPLAY_ON )
     {
-        __vga_buffer = (uint8_t *)malloc(s_width * s_height * s_bpp / 8);
+        __vga_buffer = (uint8_t *) malloc(s_width * s_height * s_bpp / 8);
         output.init(s_width, s_height, s_bpp);
         xTaskCreatePinnedToCore(compositeCore, "c", 1024, NULL, 1, NULL, 0);
         s_vga_command = 0;

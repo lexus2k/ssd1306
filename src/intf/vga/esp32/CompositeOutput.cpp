@@ -8,7 +8,7 @@
 
 #include "driver/i2s.h"
 
-#define I2S_VGA_SAMPLE_RATE   (1000000)
+#define I2S_VGA_SAMPLE_RATE   (4000000)
 static const i2s_port_t I2S_PORT = (i2s_port_t)I2S_NUM_0;
 
 const TechProperties PALProperties = {
