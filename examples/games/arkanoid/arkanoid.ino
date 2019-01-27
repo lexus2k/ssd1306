@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2016-2018, Alexey Dynda
+    Copyright (c) 2016-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -175,7 +175,7 @@ void drawIntro()
         delay(20);
     }
     ssd1306_setColor(RGB_COLOR8(255,255,0));
-    ssd1306_printFixed(40 - OUTPUT_OFFSET, 40, "BREAKOUT", STYLE_NORMAL);
+    ssd1306_printFixed_oldStyle(40 - OUTPUT_OFFSET, 40, "BREAKOUT", STYLE_NORMAL);
     beep(200,600);
     beep(300,200);
     beep(400,300);
@@ -192,7 +192,7 @@ void drawStatusPanel()
     ssd1306_setColor(RGB_COLOR8(255,255,0));
     arkanoidUtoa(score);
     tempStr[2] = '\0';
-    ssd1306_printFixed(RIGHT_EDGE + 1, 8, tempStr, STYLE_NORMAL);
+    ssd1306_printFixed_oldStyle(RIGHT_EDGE + 1, 8, tempStr, STYLE_NORMAL);
     ssd1306_setColor(RGB_COLOR8(0,255,255));
     SPRITE power = ssd1306_createSprite( RIGHT_EDGE + 4, 40, 8, powerSprite );
     if (platformPower)
@@ -306,8 +306,8 @@ void startLevel()
     ssd1306_setColor(RGB_COLOR8(255,128,0));
     arkanoidUtoa(level);
     ssd1306_clearScreen();
-    ssd1306_printFixed(40 - OUTPUT_OFFSET, 24, "LEVEL ", STYLE_BOLD);
-    ssd1306_printFixed(76 - OUTPUT_OFFSET, 24, tempStr, STYLE_BOLD);
+    ssd1306_printFixed_oldStyle(40 - OUTPUT_OFFSET, 24, "LEVEL ", STYLE_BOLD);
+    ssd1306_printFixed_oldStyle(76 - OUTPUT_OFFSET, 24, tempStr, STYLE_BOLD);
     delay(2000);
     resetBlocks();
     hSpeed = INITIAL_H_SPEED;
@@ -639,13 +639,13 @@ void gameOver()
     }
 #endif
     ssd1306_clearScreen( );
-    ssd1306_printFixed(32 - OUTPUT_OFFSET, 16, "GAME OVER", STYLE_NORMAL);
-    ssd1306_printFixed(32 - OUTPUT_OFFSET, 32, "SCORE ", STYLE_NORMAL);
+    ssd1306_printFixed_oldStyle(32 - OUTPUT_OFFSET, 16, "GAME OVER", STYLE_NORMAL);
+    ssd1306_printFixed_oldStyle(32 - OUTPUT_OFFSET, 32, "SCORE ", STYLE_NORMAL);
     arkanoidUtoa(score);
-    ssd1306_printFixed(70 - OUTPUT_OFFSET, 32, tempStr, STYLE_NORMAL);
-    ssd1306_printFixed(32 - OUTPUT_OFFSET, 40, "TOP SCORE ", STYLE_NORMAL);
+    ssd1306_printFixed_oldStyle(70 - OUTPUT_OFFSET, 32, tempStr, STYLE_NORMAL);
+    ssd1306_printFixed_oldStyle(32 - OUTPUT_OFFSET, 40, "TOP SCORE ", STYLE_NORMAL);
     arkanoidUtoa(topScore);
-    ssd1306_printFixed(90 - OUTPUT_OFFSET, 40, tempStr, STYLE_NORMAL);
+    ssd1306_printFixed_oldStyle(90 - OUTPUT_OFFSET, 40, tempStr, STYLE_NORMAL);
     for (int i = 0; i<1000; i++)
     {
        beep(1,random(0,i*2));
