@@ -74,6 +74,10 @@ void ssd1306_setCursor(lcdint_t x, lcdint_t y);
  */
 void ssd1306_setFixedFont(const uint8_t * progmemFont);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+void ssd1306_setFixedFont_oldStyle(const uint8_t * progmemFont);
+#endif
+
 /**
  * Function allows to set another free font for the library.
  * By default, the font supports only first 128 - 32 ascii chars.

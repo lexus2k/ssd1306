@@ -336,7 +336,7 @@ void resetGame()
 
 void setup()
 {
-    ssd1306_setFixedFont(ssd1306xled_font6x8_AB);
+    ssd1306_setFixedFont_oldStyle(ssd1306xled_font6x8_AB);
     randomSeed(analogRead(0));
 #if defined(CONFIG_PLATFORM_I2C_AVAILABLE)
     // no need to do anything here

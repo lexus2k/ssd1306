@@ -232,6 +232,17 @@ void ssd1306_setFixedFont(const uint8_t * progmemFont)
 #endif
 }
 
+void ssd1306_setFixedFont_oldStyle(const uint8_t * progmemFont)
+{
+    s_fixedFont.h.type   = pgm_read_byte( &progmemFont[0] );
+    s_fixedFont.h.width  = pgm_read_byte(&progmemFont[1]);
+    s_fixedFont.h.height = pgm_read_byte(&progmemFont[2]);
+    s_fixedFont.h.ascii_offset = pgm_read_byte(&progmemFont[3]);
+    s_fixedFont.primary_table = progmemFont + 4;
+    s_fixedFont.pages = (s_fixedFont.h.height + 7) >> 3;
+    s_fixedFont.glyph_size = s_fixedFont.pages * s_fixedFont.h.width;
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /// NEW FORMAT: 1.7.8 and later
 /// NEW FORMAT is supported only by latest versions of ssd1306 library
