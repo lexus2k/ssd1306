@@ -271,7 +271,7 @@ void resetBlocks()
     blocksLeft = 0;
     for (uint8_t i =0; i<BLOCKS_PER_ROW; i++)
     {
-        for (int j=0; j<BLOCK_NUM_ROWS; j++)
+        for (uint8_t j=0; j<BLOCK_NUM_ROWS; j++)
         {
             gameField[j][i] = pgm_read_byte( &levels[level-1][j][i] );
             if ((gameField[j][i]) && (gameField[j][i] != BLOCK_STRONG))
@@ -315,10 +315,7 @@ void startLevel()
     platformPos = random(0, (RIGHT_EDGE - LEFT_EDGE - 1 - platformWidth));
     ballx = ( platformPos + ( platformWidth >> 1 ) ) << SPEED_SHIFT;
     bally = ( SCREEN_HEIGHT - PLATFORM_HEIGHT ) << SPEED_SHIFT;
-    for(uint8_t i=0; i<MAX_GAME_OBJECTS; i++)
-    {
-        objects[i].type = 0;
-    }
+    memset(&objects[0], 0, sizeof(objects));
     drawStartScreen();
     lastDrawTimestamp = millis();
 }

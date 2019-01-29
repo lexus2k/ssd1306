@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2018, Alexey Dynda
+    Copyright (c) 2017-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 
 #pragma once
 
-const int MAX_LEVELS          = 8;
+const int MAX_LEVELS          = 5;
 #ifdef ARKANOID_SSD1331
 const int BLOCKS_PER_ROW      = 5;
 #else
@@ -61,6 +61,7 @@ const PROGMEM uint8_t levels[MAX_LEVELS][BLOCK_NUM_ROWS][MAX_BLOCKS_PER_ROW] =
         { 0,1,2,6,2,1,0,0 },
         { 0,0,1,5,1,0,0,0 }
     },
+#if 0
     {
         { 0,4,0,4,0,4,0,0 },
         { 4,5,4,5,4,5,4,0 },
@@ -76,5 +77,6 @@ const PROGMEM uint8_t levels[MAX_LEVELS][BLOCK_NUM_ROWS][MAX_BLOCKS_PER_ROW] =
         { 0,0,0,0,0,0,0,0 },
         { 0,0,0,0,0,0,0,0 }
     },
+#endif
 };
 
