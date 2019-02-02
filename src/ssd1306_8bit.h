@@ -73,6 +73,19 @@ void ssd1306_setColor(uint16_t color);
 void ssd1306_setRgbColor(uint8_t r, uint8_t g, uint8_t b);
 
 /**
+ * @brief Sets default color.
+ *
+ * Sets default color for monochrome operations.
+ * For now this function supports only 8-bit RGB mode.
+ * To work with RGB colors in 16-bit mode, please refer to ssd1306_setColor() function
+ * and RGB_COLOR16 macros.
+ * @param r - red in 0-255 range.
+ * @param g - green in 0-255 range.
+ * @param b - blue in 0-255 range.
+ */
+void ssd1306_setRgbColor8(uint8_t r, uint8_t g, uint8_t b);
+
+/**
  * Draws 1-bit bitmap, located in SRAM, on the display
  * Each bit represents separate pixel: refer to ssd1306 datasheet for more information.
  *
@@ -117,6 +130,15 @@ void ssd1306_clearScreen8(void);
  * @note set color with ssd1306_setColor() function.
  */
 void ssd1306_putPixel8(lcdint_t x, lcdint_t y);
+
+/**
+ * Puts single color point directly in OLED display GDRAM.
+ *
+ * @param x - horizontal position in pixels
+ * @param y - vertical position in pixels
+ * @param color color in RGB8 format (2-3-2)
+ */
+void ssd1306_putColorPixel8(lcdint_t x, lcdint_t y, uint8_t color);
 
 /**
  * Draw vertical line directly in OLED display GDRAM.

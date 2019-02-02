@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -51,6 +51,19 @@ extern "C" {
  */
 
 /**
+ * @brief Sets default color.
+ *
+ * Sets default color for monochrome operations.
+ * This function supports only 16-bit RGB mode.
+ * To work with RGB colors in 8-bit mode, please refer to ssd1306_setRgbColor8() function
+ * and RGB_COLOR8 macros.
+ * @param r - red in 0-255 range.
+ * @param g - green in 0-255 range.
+ * @param b - blue in 0-255 range.
+ */
+void ssd1306_setRgbColor16(uint8_t r, uint8_t g, uint8_t b);
+
+/**
  * Draws 16-bit bitmap, located in SRAM, on the display
  * Each byte represents separate pixel: refer to RGB_COLOR16 to understand RGB scheme, being used.
  *
@@ -68,6 +81,112 @@ static inline void ssd1331_drawBufferFast16(lcdint_t x, lcdint_t y, lcduint_t w,
     ssd1306_drawBufferFast16(x, y, w, h, data);
 }
 #endif
+
+/**
+ * Draws 1-bit bitmap, located in SRAM, on the display
+ * Each bit represents separate pixel: refer to ssd1306 datasheet for more information.
+ *
+ * @param xpos horizontal position in pixels
+ * @param ypos vertical position in pixels
+ * @param w width of bitmap in pixels
+ * @param h height of bitmap in pixels
+ * @param bitmap pointer to data, located in SRAM.
+ */
+void ssd1306_drawMonoBuffer16(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
+
+/**
+ * Fills screen with pattern byte
+ *
+ * @param fill_Data pattern color to fill screen with
+ */
+void ssd1306_fillScreen16(uint16_t fill_Data);
+
+/**
+ * Fills screen with zero-byte
+ */
+void ssd1306_clearScreen16(void);
+
+/**
+ * Puts single color point directly in OLED display GDRAM.
+ *
+ * @param x - horizontal position in pixels
+ * @param y - vertical position in pixels
+ *
+ * @note set color with ssd1306_setColor() function.
+ */
+void ssd1306_putPixel16(lcdint_t x, lcdint_t y);
+
+/**
+ * Puts single color point directly in OLED display GDRAM.
+ *
+ * @param x - horizontal position in pixels
+ * @param y - vertical position in pixels
+ */
+void ssd1306_putColorPixel16(lcdint_t x, lcdint_t y, uint16_t color);
+
+/**
+ * Draw vertical line directly in OLED display GDRAM.
+ *
+ * @param x1 - horizontal position in pixels
+ * @param y1 - top vertical position in pixels
+ * @param y2 - bottom vertical position in pixels
+ *
+ * @note set color with ssd1306_setColor() function.
+ */
+void ssd1306_drawVLine16(lcdint_t x1, lcdint_t y1, lcdint_t y2);
+
+/**
+ * Draw horizontal line directly in OLED display GDRAM.
+ *
+ * @param x1 - left position in pixels
+ * @param y1 - vertical vertical position in pixels
+ * @param x2 - right position in pixels
+ *
+ * @note set color with ssd1306_setColor() function.
+ */
+void ssd1306_drawHLine16(lcdint_t x1, lcdint_t y1, lcdint_t x2);
+
+/**
+ * Draw line directly in OLED display GDRAM.
+ * This is software implementation. Some OLED controllers have hardware implementation.
+ * Refer to datasheet.
+ *
+ * @param x1 - start horizontal position in pixels
+ * @param y1 - start vertical position in pixels
+ * @param x2 - end horizontal position in pixels
+ * @param y2 - end vertical position in pixels
+ *
+ * @note set color with ssd1306_setColor() function.
+ */
+void ssd1306_drawLine8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
+
+/**
+ * Draw rectangle directly in OLED display GDRAM.
+ * This is software implementation. Some OLED controllers have hardware implementation.
+ * Refer to datasheet.
+ *
+ * @param x1 - start horizontal position in pixels
+ * @param y1 - start vertical position in pixels
+ * @param x2 - end horizontal position in pixels
+ * @param y2 - end vertical position in pixels
+ *
+ * @note set color with ssd1306_setColor() function.
+ */
+void ssd1306_drawRect16(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
+
+/**
+ * Fill rectangle directly in OLED display GDRAM.
+ * This is software implementation. Some OLED controllers have hardware implementation.
+ * Refer to datasheet.
+ *
+ * @param x1 - start horizontal position in pixels
+ * @param y1 - start vertical position in pixels
+ * @param x2 - end horizontal position in pixels
+ * @param y2 - end vertical position in pixels
+ *
+ * @note set color with ssd1306_setColor() function.
+ */
+void ssd1306_fillRect16(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
 
 /**
  * @}

@@ -51,6 +51,11 @@ void    ssd1306_setRgbColor(uint8_t r, uint8_t g, uint8_t b)
     ssd1306_color = RGB_COLOR8(r,g,b);
 }
 
+void    ssd1306_setRgbColor8(uint8_t r, uint8_t g, uint8_t b)
+{
+    ssd1306_color = RGB_COLOR8(r,g,b);
+}
+
 void ssd1306_drawMonoBuffer8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
     uint8_t bit = 1;
@@ -114,6 +119,13 @@ void ssd1306_putPixel8(lcdint_t x, lcdint_t y)
 {
     ssd1306_lcd.set_block(x, y, 0);
     ssd1306_lcd.send_pixels8( ssd1306_color );
+    ssd1306_intf.stop();
+}
+
+void ssd1306_putColorPixel8(lcdint_t x, lcdint_t y, uint8_t color)
+{
+    ssd1306_lcd.set_block(x, y, 0);
+    ssd1306_lcd.send_pixels8( color );
     ssd1306_intf.stop();
 }
 
