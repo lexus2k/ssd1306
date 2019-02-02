@@ -90,6 +90,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a881f5629ba5b0e9b4d89a1a176ce2668"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structssd1306__lcd__t.html#a881f5629ba5b0e9b4d89a1a176ce2668">send_pixels8</a> )(uint8_t data)</td></tr>
 <tr class="memdesc:a881f5629ba5b0e9b4d89a1a176ce2668"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends RGB pixel encoded in 3-3-2 format to OLED driver. Sends RGB pixel encoded in 3-3-2 format to OLED driver.  <a href="#a881f5629ba5b0e9b4d89a1a176ce2668">More...</a><br /></td></tr>
 <tr class="separator:a881f5629ba5b0e9b4d89a1a176ce2668"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a409b80d44b201f777b8bb6a34df4288e"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structssd1306__lcd__t.html#a409b80d44b201f777b8bb6a34df4288e">send_pixels16</a> )(uint16_t data)</td></tr>
+<tr class="memdesc:a409b80d44b201f777b8bb6a34df4288e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends RGB pixel encoded in 5-6-5 format to OLED driver. Sends RGB pixel encoded in 5-6-5 format to OLED driver.  <a href="#a409b80d44b201f777b8bb6a34df4288e">More...</a><br /></td></tr>
+<tr class="separator:a409b80d44b201f777b8bb6a34df4288e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abace095df95cc15051f0fcb6e44522c7"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structssd1306__lcd__t.html#abace095df95cc15051f0fcb6e44522c7">set_mode</a> )(<a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gad2c71a26fa32dfcee88db3a3058ce596">lcd_mode_t</a> mode)</td></tr>
 <tr class="memdesc:abace095df95cc15051f0fcb6e44522c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets library display mode for direct draw functions.  <a href="#abace095df95cc15051f0fcb6e44522c7">More...</a><br /></td></tr>
 <tr class="separator:abace095df95cc15051f0fcb6e44522c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,6 +155,30 @@ Public Attributes</h2></td></tr>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00128">128</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
+
+</div>
+</div>
+<a id="a409b80d44b201f777b8bb6a34df4288e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a409b80d44b201f777b8bb6a34df4288e">&#9670;&nbsp;</a></span>send_pixels16</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* ssd1306_lcd_t::send_pixels16) (uint16_t data)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sends RGB pixel encoded in 5-6-5 format to OLED driver. Sends RGB pixel encoded in 5-6-5 format to OLED driver. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>16-bit word, representing RGB16 pixel </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00149">149</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
 
 </div>
 </div>
@@ -255,7 +282,7 @@ Public Attributes</h2></td></tr>
 <dd>
 <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gad2c71a26fa32dfcee88db3a3058ce596">lcd_mode_t</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00157">157</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00164">164</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
 
 </div>
 </div>
