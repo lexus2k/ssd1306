@@ -189,6 +189,32 @@ void ssd1306_drawRect16(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
 void ssd1306_fillRect16(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
 
 /**
+ * Draw monochrome bitmap, located in Flash, directly to OLED display GDRAM.
+ * The bitmap should be in ssd1306 format (each byte represents 8 vertical pixels)
+ *
+ * @param xpos start horizontal position in pixels
+ * @param ypos start vertical position in pixels
+ * @param w bitmap width in pixels
+ * @param h bitmap height in pixels
+ * @param bitmap pointer to Flash data, containing monochrome bitmap.
+ *
+ * @note set color with ssd1306_setColor() function.
+ */
+void ssd1306_drawMonoBitmap16(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
+
+/**
+ * Draw 16-bit color bitmap, located in Flash, directly to OLED display GDRAM.
+ * Each pixel of the bitmap is expected in 5-6-5 format.
+ *
+ * @param xpos start horizontal position in pixels
+ * @param ypos start vertical position in pixels
+ * @param w bitmap width in pixels
+ * @param h bitmap height in pixels
+ * @param bitmap pointer to Flash data, containing 16-bit color bitmap.
+ */
+void ssd1306_drawBitmap16(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
+
+/**
  * @}
  */
 

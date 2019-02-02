@@ -210,3 +210,46 @@ void ssd1306_fillRect16(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
     ssd1306_intf.stop();
 }
 
+void ssd1306_drawMonoBitmap16(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+{
+    uint8_t bit = 1;
+    uint16_t blackColor = s_ssd1306_invertByte ? ssd1306_color : 0x00;
+    uint16_t color = s_ssd1306_invertByte ? 0x00 : ssd1306_color;
+    ssd1306_lcd.set_block(xpos, ypos, w);
+    while (h--)
+    {
+        lcduint_t wx = w;
+        while ( wx-- )
+        {
+            uint8_t data = pgm_read_byte( bitmap );
+            if ( data & bit )
+                ssd1306_lcd.send_pixels16( color );
+            else
+                ssd1306_lcd.send_pixels16( blackColor );
+            bitmap++;
+        }
+        bit <<= 1;
+        if ( bit == 0 )
+        {
+            bit = 1;
+        }
+        else
+        {
+            bitmap -= w;
+        }
+    }
+    ssd1306_intf.stop();
+}
+
+void ssd1306_drawBitmap16(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+{
+    ssd1306_lcd.set_block(xpos, ypos, w);
+    uint32_t count = (w) * (h);
+    while (count--)
+    {
+        ssd1306_lcd.send_pixels16( (pgm_read_byte( &bitmap[0] ) << 8) | pgm_read_byte( &bitmap[1] ) );
+        bitmap += 2;
+    }
+    ssd1306_intf.stop();
+}
+
