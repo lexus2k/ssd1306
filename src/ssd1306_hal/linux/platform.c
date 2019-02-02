@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -43,6 +43,11 @@
 #include <linux/i2c-dev.h>
 #include <linux/spi/spidev.h>
 
+#if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE) \
+    && !defined(SDL_EMULATION)
+#define LINUX_SPI_AVAILABLE
+#endif
+
 #define MAX_GPIO_COUNT   256
 
 #ifdef IN
@@ -54,6 +59,10 @@
 #undef OUT
 #endif
 #define OUT 1
+
+#ifdef LINUX_SPI_AVAILABLE
+static void platform_spi_send_cache();
+#endif
 
 int gpio_export(int pin)
 {
@@ -213,6 +222,13 @@ void pinMode(int pin, int mode)
 
 void digitalWrite(int pin, int level)
 {
+#ifdef LINUX_SPI_AVAILABLE
+    if (s_ssd1306_dc == pin)
+    {
+        platform_spi_send_cache();
+    }
+#endif
+
     if (!s_exported_pin[pin])
     {
         if ( gpio_export(pin)<0 )
@@ -375,27 +391,33 @@ void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, int8_t arg)
 
 static int     s_spi_fd = -1;
 extern uint32_t s_ssd1306_spi_clock;
+static uint8_t s_spi_cache[1024];
+static int s_spi_cached_count = 0;
 
 static void platform_spi_start(void)
 {
+    s_spi_cached_count = 0;
 }
 
 static void platform_spi_stop(void)
 {
+    platform_spi_send_cache();
 }
 
-static void platform_spi_send(uint8_t data)
+static void platform_spi_send_cache()
 {
     /* TODO: Yeah, sending single bytes is too slow, but *
      * need to figure out how to detect data/command bytes *
      * to send bytes as one block */
-    uint8_t buf[1];
+    if ( s_spi_cached_count == 0 )
+    {
+        return;
+    }
     struct spi_ioc_transfer mesg;
-    buf[0] = data;
     memset(&mesg, 0, sizeof mesg);
-    mesg.tx_buf = (unsigned long)&buf[0];
+    mesg.tx_buf = (unsigned long)&s_spi_cache[0];
     mesg.rx_buf = 0;
-    mesg.len = 1;
+    mesg.len = s_spi_cached_count;
     mesg.delay_usecs = 0;
     mesg.speed_hz = 0;
     mesg.bits_per_word = 8;
@@ -403,6 +425,17 @@ static void platform_spi_send(uint8_t data)
     if (ioctl(s_spi_fd, SPI_IOC_MESSAGE(1), &mesg) < 1)
     {
         fprintf(stderr, "SPI failed to send SPI message: %s\n", strerror (errno)) ;
+    }
+    s_spi_cached_count = 0;
+}
+
+static void platform_spi_send(uint8_t data)
+{
+    s_spi_cache[s_spi_cached_count] = data;
+    s_spi_cached_count++;
+    if ( s_spi_cached_count >= sizeof( s_spi_cache ) )
+    {
+        platform_spi_send_cache();
     }
 }
 
