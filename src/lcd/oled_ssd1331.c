@@ -38,7 +38,7 @@ extern uint16_t ssd1306_color;
 static const PROGMEM uint8_t s_oled96x64_initData[] =
 {
 #ifdef SDL_EMULATION
-    SDL_LCD_SSD1331,
+    SDL_LCD_SSD1331_X8,
     0x00,
 #endif
     SSD1331_DISPLAYOFF,             // display off
@@ -65,7 +65,7 @@ static const PROGMEM uint8_t s_oled96x64_initData[] =
 static const PROGMEM uint8_t s_oled96x64_initData16[] =
 {
 #ifdef SDL_EMULATION
-    SDL_LCD_SSD1331,
+    SDL_LCD_SSD1331_X16,
     0x00,
 #endif
     SSD1331_DISPLAYOFF,             // display off
