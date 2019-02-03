@@ -220,7 +220,7 @@ void   ssd1351_128x128_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
         ssd1306_resetController( rstPin, 20 );
     }
     /* ssd1351 cannot work faster than at 4MHz per datasheet */
-    s_ssd1306_spi_clock = 4000000;
+    s_ssd1306_spi_clock = 4400000;
     ssd1306_spiInit(cesPin, dcPin);
     ssd1351_128x128_init();
 }
