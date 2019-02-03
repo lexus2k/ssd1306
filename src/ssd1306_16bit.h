@@ -121,6 +121,7 @@ void ssd1306_putPixel16(lcdint_t x, lcdint_t y);
  *
  * @param x - horizontal position in pixels
  * @param y - vertical position in pixels
+ * @param color color in 16-bit format: 5-6-5
  */
 void ssd1306_putColorPixel16(lcdint_t x, lcdint_t y, uint16_t color);
 
