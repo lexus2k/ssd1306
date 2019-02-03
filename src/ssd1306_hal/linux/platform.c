@@ -81,14 +81,16 @@ int gpio_export(int pin)
     fd = open("/sys/class/gpio/export", O_WRONLY);
     if (-1 == fd)
     {
-        fprintf(stderr, "Failed to allocate gpio pin resources[%d]: %s!\n", pin, strerror (errno));
+        fprintf(stderr, "Failed to allocate gpio pin[%d]: %s%s!\n",
+                pin, strerror (errno), getuid() == 0 ? "" : ", need to be root");
         return(-1);
     }
 
     bytes_written = snprintf(buffer, sizeof(buffer), "%d", pin);
     if (write(fd, buffer, bytes_written) < 0)
     {
-        fprintf(stderr, "Failed to allocate gpio pin resources[%d]: %s!\n", pin, strerror (errno));
+        fprintf(stderr, "Failed to allocate gpio pin[%d]: %s%s!\n",
+                pin, strerror (errno), getuid() == 0 ? "" : ", need to be root");
         close(fd);
         return -1;
     }
@@ -129,13 +131,15 @@ int gpio_direction(int pin, int dir)
     fd = open(path, O_WRONLY);
     if (-1 == fd)
     {
-        fprintf(stderr, "Failed to set gpio pin direction1[%d]: %s!\n", pin, strerror(errno));
+        fprintf(stderr, "Failed to set gpio pin direction1[%d]: %s!\n",
+                pin, strerror(errno));
         return(-1);
     }
 
     if (-1 == write(fd, &s_directions_str[IN == dir ? 0 : 3], IN == dir ? 2 : 3))
     {
-        fprintf(stderr, "Failed to set gpio pin direction2[%d]: %s!\n", pin, strerror(errno));
+        fprintf(stderr, "Failed to set gpio pin direction2[%d]: %s!\n",
+                pin, strerror(errno));
         return(-1);
     }
 
@@ -179,13 +183,15 @@ int gpio_write(int pin, int value)
     fd = open(path, O_WRONLY);
     if (-1 == fd)
     {
-        fprintf(stderr, "Failed to set gpio pin value[%d]: %s!\n", pin, strerror(errno));
+        fprintf(stderr, "Failed to set gpio pin value[%d]: %s%s!\n",
+                pin, strerror (errno), getuid() == 0 ? "" : ", need to be root");
         return(-1);
     }
 
     if (1 != write(fd, &s_values_str[LOW == value ? 0 : 1], 1))
     {
-        fprintf(stderr, "Failed to set gpio pin value[%d]: %s!\n", pin, strerror (errno));
+        fprintf(stderr, "Failed to set gpio pin value[%d]: %s%s!\n",
+                pin, strerror (errno), getuid() == 0 ? "" : ", need to be root");
         return(-1);
     }
 
@@ -334,7 +340,8 @@ void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, int8_t arg)
     ssd1306_intf.send_buffer = empty_function_two_args;
     if ((s_fd = open(filename, O_RDWR)) < 0)
     {
-        fprintf(stderr, "Failed to open the i2c bus\n");
+        fprintf(stderr, "Failed to open the i2c bus %s\n",
+                getuid() == 0 ? "": ": need to be root");
         return;
     }
     if (sa)
@@ -494,7 +501,8 @@ void ssd1306_platform_spiInit(int8_t busId,
     snprintf(filename, 19, "/dev/spidev%d.%d", busId, ces);
     if ((s_spi_fd = open(filename, O_RDWR)) < 0)
     {
-        printf("Failed to initialize SPI: %s!\n", strerror(errno));
+        printf("Failed to initialize SPI: %s%s!\n",
+               strerror(errno), getuid() == 0 ? "": ", need to be root");
         return;
     }
     unsigned int speed = s_ssd1306_spi_clock;
