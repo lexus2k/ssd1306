@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -455,6 +455,18 @@ void NanoCanvas1_8::blt(lcdint_t x, lcdint_t y)
 void NanoCanvas1_8::blt()
 {
     ssd1306_drawMonoBuffer8(offset.x, offset.y, m_w, m_h, m_buf);
+}
+
+//                 NANO CANVAS 1_16
+
+void NanoCanvas1_16::blt(lcdint_t x, lcdint_t y)
+{
+    ssd1306_drawMonoBuffer16(x, y, m_w, m_h, m_buf);
+}
+
+void NanoCanvas1_16::blt()
+{
+    ssd1306_drawMonoBuffer16(offset.x, offset.y, m_w, m_h, m_buf);
 }
 
 /////////////////////////////////////////////////////////////////////////////////

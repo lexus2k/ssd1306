@@ -23,6 +23,7 @@
 */
 
 #include "ssd1306_16bit.h"
+#include "ssd1306_generic.h"
 #include "intf/ssd1306_interface.h"
 #include "lcd/lcd_common.h"
 #include "ssd1306_hal/io.h"
@@ -53,9 +54,8 @@ void ssd1306_drawBufferFast16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, 
     ssd1306_intf.stop();
 }
 
-// IMPORTANT: ALL 16-BIT OLED DISPLAYS SUPPORT 8-BIT DIRECT DRAW FUNCTIONS
+// IMPORTANT: ALL 16-BIT OLED DISPLAYS ALSO SUPPORT 8-BIT DIRECT DRAW FUNCTIONS
 //            REFER TO ssd1306_8bit.c
-// 16-BIT DIRECT DRAW FUNCTIONS ARE NOT FULLY IMPLEMENTED. ANY HELP IS WELCOME.
 
 void ssd1306_drawMonoBuffer16(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
@@ -252,4 +252,87 @@ void ssd1306_drawBitmap16(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h
     }
     ssd1306_intf.stop();
 }
+
+void ssd1306_clearBlock16(uint8_t x, uint8_t y, uint8_t w, uint8_t h)
+{
+    ssd1306_lcd.set_block(x, y, w);
+    uint32_t count = w * h;
+    while (count--)
+    {
+        ssd1306_lcd.send_pixels16( 0x0000 );
+    }
+    ssd1306_intf.stop();
+}
+
+void ssd1306_setCursor16(lcduint_t x, lcduint_t y)
+{
+    ssd1306_cursorX = x;
+    ssd1306_cursorY = y;
+}
+
+void ssd1306_printChar16(uint8_t c)
+{
+    uint16_t unicode = ssd1306_unicode16FromUtf8(c);
+    if (unicode == SSD1306_MORE_CHARS_REQUIRED) return;
+    SCharInfo char_info;
+    ssd1306_getCharBitmap(unicode, &char_info);
+    ssd1306_drawMonoBitmap16(ssd1306_cursorX,
+                ssd1306_cursorY,
+                char_info.width,
+                char_info.height,
+                char_info.glyph );
+}
+
+size_t ssd1306_write16(uint8_t ch)
+{
+    if (ch == '\r')
+    {
+        ssd1306_cursorX = 0;
+        return 0;
+    }
+    else if ( (ssd1306_cursorX > ssd1306_lcd.width - s_fixedFont.h.width) || (ch == '\n') )
+    {
+        ssd1306_cursorX = 0;
+        ssd1306_cursorY += s_fixedFont.h.height;
+        if ( ssd1306_cursorY > ssd1306_lcd.height - s_fixedFont.h.height )
+        {
+            ssd1306_cursorY = 0;
+        }
+        ssd1306_clearBlock16(0, ssd1306_cursorY, ssd1306_lcd.width, s_fixedFont.h.height);
+        if (ch == '\n')
+        {
+            return 0;
+        }
+    }
+    uint16_t unicode = ssd1306_unicode16FromUtf8(ch);
+    if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
+    SCharInfo char_info;
+    ssd1306_getCharBitmap(unicode, &char_info);
+    ssd1306_drawMonoBitmap16( ssd1306_cursorX,
+                              ssd1306_cursorY,
+                              char_info.width,
+                              char_info.height,
+                              char_info.glyph);
+    ssd1306_cursorX += char_info.width + char_info.spacing;
+    return 1;
+}
+
+size_t ssd1306_print16(const char ch[])
+{
+    size_t n = 0;
+    while (*ch)
+    {
+        n += ssd1306_write16(*ch);
+        ch++;
+    }
+    return n;
+}
+
+uint8_t ssd1306_printFixed16(lcdint_t x, lcdint_t y, const char *ch, EFontStyle style)
+{
+    ssd1306_cursorX = x;
+    ssd1306_cursorY = y;
+    return ssd1306_print16(ch);
+}
+
 

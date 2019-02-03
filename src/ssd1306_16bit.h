@@ -159,7 +159,7 @@ void ssd1306_drawHLine16(lcdint_t x1, lcdint_t y1, lcdint_t x2);
  *
  * @note set color with ssd1306_setColor() function.
  */
-void ssd1306_drawLine8(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
+void ssd1306_drawLine16(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
 
 /**
  * Draw rectangle directly in OLED display GDRAM.
@@ -214,6 +214,69 @@ void ssd1306_drawMonoBitmap16(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint
  * @param bitmap pointer to Flash data, containing 16-bit color bitmap.
  */
 void ssd1306_drawBitmap16(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
+
+/**
+ * Clears block, filling it with black pixels, directly in OLED display GDRAM.
+ *
+ * @param x start horizontal position in pixels
+ * @param y start vertical position in pixels
+ * @param w block width in pixels
+ * @param h block height in pixels
+ */
+void ssd1306_clearBlock16(uint8_t x, uint8_t y, uint8_t w, uint8_t h);
+
+/**
+ * Set cursor position for text functions
+ *
+ * @param x horizontal position in pixels.
+ * @param y vertical position in pixels.
+ */
+void ssd1306_setCursor16(lcduint_t x, lcduint_t y);
+
+/**
+ * Draws single character to canvas. Cursor position is defined
+ * by ssd1306_setCursor16(). Do not changes cursor position
+ *
+ * @param c - character code to print
+ *
+ * @note set color with ssd1306_setColor() function.
+ */
+void ssd1306_printChar16(uint8_t c);
+
+/**
+ * @brief Prints single character to display at current cursor position
+ *
+ * Prints single character to display at current cursor position.
+ * Cursor position can be set by ssd1306_setCursor16().
+ *
+ * @param ch - character to print to the display. 'LF' and 'CR' are skipped
+ * @return returns number of printed characters.
+ */
+size_t ssd1306_write16(uint8_t ch);
+
+/**
+ * @brief Prints null-terminated string to display at current cursor position
+ *
+ * Prints null-terminated string to display at current cursor position
+ * Cursor position can be set by ssd1306_setCursor16().
+ *
+ * @param ch - string to print to the display. 'LF' and 'CR' are skipped
+ * @return returns number of printed characters.
+ */
+size_t ssd1306_print16(const char ch[]);
+
+/**
+ * Prints text to screen using fixed font.
+ * @param x horizontal position in pixels
+ * @param y vertical position in pixels
+ * @param ch NULL-terminated string to print
+ * @param style font style (EFontStyle), normal by default (not implemented).
+ * @returns number of chars in string
+ *
+ * @see ssd1306_setFixedFont
+ * @note set color with ssd1306_setColor() function.
+ */
+uint8_t ssd1306_printFixed16(lcdint_t x, lcdint_t y, const char *ch, EFontStyle style);
 
 /**
  * @}

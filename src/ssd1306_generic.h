@@ -207,6 +207,16 @@ void ssd1306_showMenu(SAppMenu *menu);
  */
 void ssd1306_showMenu8(SAppMenu *menu);
 
+/**
+ * Shows menu items on the display. If menu items cannot fit the display,
+ * the function provides scrolling.
+ *
+ * @param menu - Pointer to SAppMenu structure
+ *
+ * @warning works only in 16-bit RGB normal mode.
+ */
+void ssd1306_showMenu16(SAppMenu *menu);
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 static inline void ssd1331_showMenu8(SAppMenu *menu)
 {
@@ -231,6 +241,16 @@ void ssd1306_updateMenu(SAppMenu *menu);
  * @warning works only in SSD1306 compatible mode.
  */
 void ssd1306_updateMenu8(SAppMenu *menu);
+
+/**
+ * Updates menu items on the display. That is if selection is changed,
+ * the function will update only those areas, affected by the change.
+ *
+ * @param menu - Pointer to SAppMenu structure
+ *
+ * @warning works only in SSD1306 compatible mode.
+ */
+void ssd1306_updateMenu16(SAppMenu *menu);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 static inline void ssd1331_updateMenu8(SAppMenu *menu)
