@@ -42,16 +42,30 @@ void    ssd1306_setRgbColor16(uint8_t r, uint8_t g, uint8_t b)
     ssd1306_color = RGB_COLOR16(r,g,b);
 }
 
-void ssd1306_drawBufferFast16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data)
+static void ssd1306_drawBufferPitch16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, lcduint_t pitch, const uint8_t *data)
 {
-    uint32_t count = (w * h) << 1;
     ssd1306_lcd.set_block(x, y, w);
-    while (count--)
+    while (h--)
     {
-        ssd1306_intf.send( *data );
-        data++;
+        lcduint_t line = w << 1;
+        while (line--)
+        {
+            ssd1306_intf.send( *data );
+            data++;
+        }
+        data += pitch - (w << 1);
     }
     ssd1306_intf.stop();
+}
+
+void ssd1306_drawBufferFast16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data)
+{
+    ssd1306_drawBufferPitch16(x, y, w, h, w<<1, data);
+}
+
+void ssd1306_drawBufferEx16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, lcduint_t pitch, const uint8_t *data)
+{
+    ssd1306_drawBufferPitch16( x, y, w, h, pitch, data );
 }
 
 // IMPORTANT: ALL 16-BIT OLED DISPLAYS ALSO SUPPORT 8-BIT DIRECT DRAW FUNCTIONS

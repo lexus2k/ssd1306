@@ -110,6 +110,20 @@ void ssd1306_drawMonoBuffer8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
 void ssd1306_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data);
 
 /**
+ * Draws 8-bit bitmap, located in SRAM, on the display, taking into account pitch parameter.
+ * Each byte represents separate pixel: refer to RGB_COLOR8 to understand RGB scheme, being used.
+ * pitch parameter specifies, length of single line in bytes.
+ *
+ * @param x - horizontal position in pixels
+ * @param y - vertical position in pixels
+ * @param w - width of bitmap in pixels
+ * @param h - height of bitmap in pixels
+ * @param pitch length of bitmap buffer line in bytes
+ * @param data - pointer to data, located in SRAM.
+ */
+void ssd1306_drawBufferEx8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, lcduint_t pitch, const uint8_t *data);
+
+/**
  * Fills screen with pattern byte
  *
  * @param fill_Data pattern color to fill screen with

@@ -87,16 +87,30 @@ void ssd1306_drawMonoBuffer8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
     ssd1306_intf.stop();
 }
 
-void ssd1306_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data)
+static void ssd1306_drawBufferPitch8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, lcduint_t pitch, const uint8_t *data)
 {
-    uint32_t count = w * h;
     ssd1306_lcd.set_block(x, y, w);
-    while (count--)
+    while (h--)
     {
-        ssd1306_lcd.send_pixels8( *data );
-        data++;
+        lcduint_t line = w;
+        while (line--)
+        {
+            ssd1306_lcd.send_pixels8( *data );
+            data++;
+        }
+        data += pitch - w;
     }
     ssd1306_intf.stop();
+}
+
+void ssd1306_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data)
+{
+    ssd1306_drawBufferPitch8( x, y, w, h, w, data );
+}
+
+void ssd1306_drawBufferEx8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, lcduint_t pitch, const uint8_t *data)
+{
+    ssd1306_drawBufferPitch8( x, y, w, h, pitch, data );
 }
 
 void ssd1306_fillScreen8(uint8_t fill_Data)
