@@ -76,10 +76,10 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a42807b68550e08a7753a63f6a4ab0caf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vga_8h.html#a42807b68550e08a7753a63f6a4ab0caf">ssd1306_vga_delay</a> (uint32_t ms)</td></tr>
-<tr class="separator:a42807b68550e08a7753a63f6a4ab0caf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2303fa117264d3e1e97f9e7ff72b64df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vga_8h.html#a2303fa117264d3e1e97f9e7ff72b64df">ssd1306_debug_print_vga_buffer</a> (void(*func)(uint8_t))</td></tr>
 <tr class="separator:a2303fa117264d3e1e97f9e7ff72b64df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace720344cc6e6fc75079d7529ae33d48"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vga_8h.html#ace720344cc6e6fc75079d7529ae33d48">ssd1306_vgaInit</a> (void)</td></tr>
+<tr class="separator:ace720344cc6e6fc75079d7529ae33d48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>VGA basic data. Do not include this header in your project!!! </p>
@@ -111,28 +111,24 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a42807b68550e08a7753a63f6a4ab0caf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42807b68550e08a7753a63f6a4ab0caf">&#9670;&nbsp;</a></span>ssd1306_vga_delay()</h2>
+<a id="ace720344cc6e6fc75079d7529ae33d48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace720344cc6e6fc75079d7529ae33d48">&#9670;&nbsp;</a></span>ssd1306_vgaInit()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ssd1306_vga_delay </td>
+          <td class="memname">void ssd1306_vgaInit </td>
           <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>ms</em></td><td>)</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Make ms milliseconds delay. This function has very low precision: 16ms.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ms</td><td>time in milliseconds </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Initializes hardware VGA controller Be careful, this function reinitialized Atmega328p timers. delay() function will not work after call. </p>
+
+<p class="definition">Definition at line <a class="el" href="vga_8c_source.html#l00037">37</a> of file <a class="el" href="vga_8c_source.html">vga.c</a>.</p>
 
 </div>
 </div>

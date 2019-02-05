@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -226,6 +226,12 @@ static void il9163_sendPixel8(uint8_t data)
     ssd1306_intf.send( color & 0xFF );
 }
 
+static void il9163_sendPixel16(uint16_t color)
+{
+    ssd1306_intf.send( color >> 8 );
+    ssd1306_intf.send( color & 0xFF );
+}
+
 void    il9163_128x128_init()
 {
     ssd1306_lcd.type = LCD_TYPE_SSD1331;
@@ -237,6 +243,7 @@ void    il9163_128x128_init()
     ssd1306_lcd.send_pixels1  = il9163_sendPixels;
     ssd1306_lcd.send_pixels_buffer1 = il9163_sendPixelsBuffer;
     ssd1306_lcd.send_pixels8 = il9163_sendPixel8;
+    ssd1306_lcd.send_pixels16 = il9163_sendPixel16;
     ssd1306_lcd.set_mode = il9163_setMode;
     ssd1306_configureSpiDisplay(s_oled128x128_initData, sizeof(s_oled128x128_initData));
 }
@@ -373,6 +380,7 @@ void    st7735_128x160_init()
     ssd1306_lcd.send_pixels1  = il9163_sendPixels;
     ssd1306_lcd.send_pixels_buffer1 = il9163_sendPixelsBuffer;
     ssd1306_lcd.send_pixels8 = il9163_sendPixel8;
+    ssd1306_lcd.send_pixels16 = il9163_sendPixel16;
     ssd1306_lcd.set_mode = il9163_setMode;
     ssd1306_configureSpiDisplay(s_oled128x160_initData, sizeof(s_oled128x160_initData));
 }

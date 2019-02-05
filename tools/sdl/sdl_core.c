@@ -65,7 +65,8 @@ void sdl_core_init(void)
 {
     register_oled( &sdl_ssd1306 );
     register_oled( &sdl_ssd1325 );
-    register_oled( &sdl_ssd1331 );
+    register_oled( &sdl_ssd1331x8 );
+    register_oled( &sdl_ssd1331x16 );
     register_oled( &sdl_ssd1351 );
     register_oled( &sdl_il9163 );
     register_oled( &sdl_ili9341 );

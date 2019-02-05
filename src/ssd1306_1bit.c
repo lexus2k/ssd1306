@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2016-2018, Alexey Dynda
+    Copyright (c) 2016-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -153,6 +153,80 @@ uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle s
         }
         for (i = 0; i < char_info.spacing; i++)
             ssd1306_lcd.send_pixels1(s_ssd1306_invertByte);
+    }
+    ssd1306_intf.stop();
+    return j;
+}
+
+uint8_t ssd1306_printFixed_oldStyle(uint8_t xpos, uint8_t y, const char *ch, EFontStyle style)
+{
+    uint8_t i, j=0;
+    uint8_t text_index = 0;
+    uint8_t page_offset = 0;
+    uint8_t x = xpos;
+    y >>= 3;
+    ssd1306_lcd.set_block(xpos, y, ssd1306_lcd.width - xpos);
+    for(;;)
+    {
+        uint8_t c;
+        uint8_t ldata;
+        uint16_t offset;
+        if( (x > ssd1306_lcd.width - s_fixedFont.h.width) || (ch[j] == '\0') )
+        {
+            x = xpos;
+            y++;
+            if (y >= (ssd1306_lcd.height >> 3))
+            {
+                break;
+            }
+            page_offset++;
+            if (page_offset == s_fixedFont.pages)
+            {
+                text_index = j;
+                page_offset = 0;
+                if (ch[j] == '\0')
+                {
+                    break;
+                }
+            }
+            else
+            {
+                j = text_index;
+            }
+            ssd1306_intf.stop();
+            ssd1306_lcd.set_block(xpos, y, ssd1306_lcd.width - xpos);
+        }
+        c = ch[j];
+        if ( c >= s_fixedFont.h.ascii_offset )
+        {
+            c -= s_fixedFont.h.ascii_offset;
+        }
+        ldata = 0;
+        offset = (c * s_fixedFont.pages + page_offset) * s_fixedFont.h.width;
+        for( i=s_fixedFont.h.width; i>0; i--)
+        {
+            uint8_t data;
+            if ( style == STYLE_NORMAL )
+            {
+                data = pgm_read_byte(&s_fixedFont.primary_table[offset]);
+            }
+            else if ( style == STYLE_BOLD )
+            {
+                uint8_t temp = pgm_read_byte(&s_fixedFont.primary_table[offset]);
+                data = temp | ldata;
+                ldata = temp;
+            }
+            else
+            {
+                uint8_t temp = pgm_read_byte(&s_fixedFont.primary_table[offset + 1]);
+                data = (temp & 0xF0) | ldata;
+                ldata = (temp & 0x0F);
+            }
+            ssd1306_lcd.send_pixels1(data^s_ssd1306_invertByte);
+            offset++;
+        }
+        x += s_fixedFont.h.width;
+        j++;
     }
     ssd1306_intf.stop();
     return j;

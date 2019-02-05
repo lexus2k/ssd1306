@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2016-2018, Alexey Dynda
+    Copyright (c) 2016-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -89,6 +89,10 @@ void         ssd1306_positiveMode(void);
  *          Placing both of these functions to your sketch will consume almost 1KiB.
  */
 uint8_t     ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle style);
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+uint8_t ssd1306_printFixed_oldStyle(uint8_t xpos, uint8_t y, const char *ch, EFontStyle style);
+#endif
 
 /**
  * Prints text to screen using double size fixed font.

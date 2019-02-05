@@ -6,6 +6,7 @@ var searchData=
   ['refreshscreen',['refreshScreen',['../class_sprite_pool.html#a2dc3ee649258b377b5a6bb7c0e2fdb16',1,'SpritePool']]],
   ['refreshworld',['refreshWorld',['../class_nano_engine_tiler.html#a701599513e1157f93e30cf64f4984f0b',1,'NanoEngineTiler::refreshWorld(const NanoRect &amp;rect)'],['../class_nano_engine_tiler.html#a6d9795c4758c1138b825bdafa1d44557',1,'NanoEngineTiler::refreshWorld(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)'],['../class_nano_engine_tiler.html#a670262f9b356b1e20df49c4ad356d040',1,'NanoEngineTiler::refreshWorld(const NanoPoint &amp;point)']]],
   ['remove',['remove',['../class_sprite_pool.html#adce65ce2eaf9c7389e357f6f039ae7d6',1,'SpritePool']]],
+  ['rgb16_5fto_5frgb8',['RGB16_TO_RGB8',['../nano__gfx__types_8h.html#ab7332c54dc2b98a7d65df62d2785f58d',1,'nano_gfx_types.h']]],
   ['rgb8_5fto_5frgb16',['RGB8_TO_RGB16',['../nano__gfx__types_8h.html#a4ab6a81b88d852058c6522940bc236c5',1,'nano_gfx_types.h']]],
   ['rgb_5fcolor16',['RGB_COLOR16',['../nano__gfx__types_8h.html#a5ffae889173a34bb16146d3a3b869c04',1,'nano_gfx_types.h']]],
   ['rgb_5fcolor8',['RGB_COLOR8',['../nano__gfx__types_8h.html#ade80ecbb039cb905f9e27cf08657dedc',1,'nano_gfx_types.h']]],

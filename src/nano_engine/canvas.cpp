@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -445,6 +445,11 @@ void NanoCanvas1::blt()
     ssd1306_drawBufferFast(offset.x, offset.y, m_w, m_h, m_buf);
 }
 
+void NanoCanvas1::blt(const NanoRect &rect)
+{
+    // TODO: NOT IMPLEMENTED
+}
+
 //                 NANO CANVAS 1_8
 
 void NanoCanvas1_8::blt(lcdint_t x, lcdint_t y)
@@ -455,6 +460,28 @@ void NanoCanvas1_8::blt(lcdint_t x, lcdint_t y)
 void NanoCanvas1_8::blt()
 {
     ssd1306_drawMonoBuffer8(offset.x, offset.y, m_w, m_h, m_buf);
+}
+
+void NanoCanvas1_8::blt(const NanoRect &rect)
+{
+    // TODO: NOT IMPLEMENTED
+}
+
+//                 NANO CANVAS 1_16
+
+void NanoCanvas1_16::blt(lcdint_t x, lcdint_t y)
+{
+    ssd1306_drawMonoBuffer16(x, y, m_w, m_h, m_buf);
+}
+
+void NanoCanvas1_16::blt()
+{
+    ssd1306_drawMonoBuffer16(offset.x, offset.y, m_w, m_h, m_buf);
+}
+
+void NanoCanvas1_16::blt(const NanoRect &rect)
+{
+    // TODO: NOT IMPLEMENTED
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -694,6 +721,16 @@ void NanoCanvas8::blt(lcdint_t x, lcdint_t y)
 void NanoCanvas8::blt()
 {
     ssd1306_drawBufferFast8(offset.x, offset.y, m_w, m_h, m_buf);
+}
+
+void NanoCanvas8::blt(const NanoRect &rect)
+{
+    ssd1306_drawBufferEx8(offset.x + rect.p1.x,
+                          offset.y + rect.p1.y,
+                          rect.width(),
+                          rect.height(),
+                          m_w,
+                          m_buf + rect.p1.x + rect.p1.y * m_w );
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -959,3 +996,12 @@ void NanoCanvas16::blt()
     ssd1306_drawBufferFast16(offset.x, offset.y, m_w, m_h, m_buf);
 }
 
+void NanoCanvas16::blt(const NanoRect &rect)
+{
+    ssd1306_drawBufferEx16(offset.x + rect.p1.x,
+                           offset.y + rect.p1.y,
+                           rect.width(),
+                           rect.height(),
+                           m_w<<1,
+                           m_buf + (rect.p1.x<<1) + rect.p1.y * (m_w<<1) );
+}
