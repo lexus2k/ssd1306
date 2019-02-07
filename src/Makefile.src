@@ -59,7 +59,9 @@ SRCS_C = \
 
 SRCS_CPP = \
 	nano_engine/canvas.cpp \
+	nano_engine/canvas_ops.cpp \
 	nano_engine/core.cpp \
+	nano_engine/object.cpp \
 	nano_gfx.cpp \
 	sprite_pool.cpp \
 	ssd1306_console.cpp \

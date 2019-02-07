@@ -29,41 +29,23 @@
 #ifndef _NANO_CANVAS_H_
 #define _NANO_CANVAS_H_
 
-#include "point.h"
-#include "rect.h"
-#include "ssd1306_hal/io.h"
-#include "ssd1306_hal/Print_internal.h"
-#include "nano_gfx_types.h"
+#include "canvas_ops.h"
 
 /**
  * @ingroup NANO_ENGINE_API
  * @{
  */
 
-enum
-{
-    CANVAS_MODE_BASIC           = 0x00,
-    /** If the flag is specified, text cursor is moved to new line when end of screen is reached */
-    CANVAS_TEXT_WRAP            = 0x01,
-    /** This flag make bitmaps transparent (Black color) */
-    CANVAS_MODE_TRANSPARENT     = 0x02,
-    /** If the flag is specified, text cursor is moved to new line when end of canvas is reached */
-    CANVAS_TEXT_WRAP_LOCAL      = 0x04,
-};
-
 /**
  * NanoCanvasOps provides operations for drawing in memory buffer.
  * Depending on BPP argument, this class can work with 1,8,16-bit canvas areas.
  */
 template <uint8_t BPP>
-class NanoCanvasOps: public Print
+class NanoCanvasOps: public NanoCanvasOpsInterface
 {
 public:
     /** number of bits per single pixel in buffer */
     static const uint8_t BITS_PER_PIXEL = BPP;
-
-    /** Fixed offset for all operation of NanoCanvasOps in pixels */
-    NanoPoint offset;
 
     /**
      * Creates new empty canvas object.
@@ -102,13 +84,6 @@ public:
     void begin(lcdint_t w, lcdint_t h, uint8_t *bytes);
 
     /**
-     * Sets offset
-     * @param ox - X offset in pixels
-     * @param oy - Y offset in pixels
-     */
-    void setOffset(lcdint_t ox, lcdint_t oy) { offset.x = ox; offset.y = oy; };
-
-    /**
      * Returns right-bottom point of the canvas in offset terms.
      * If offset is (0,0), then offsetEnd() will return (width-1,height-1).
      */
@@ -132,14 +107,7 @@ public:
      * @param y - position Y
      * @note color can be set via setColor()
      */
-    void putPixel(lcdint_t x, lcdint_t y);
-
-    /**
-     * Draws pixel on specified position
-     * @param p - NanoPoint
-     * @note color can be set via setColor()
-     */
-    void putPixel(const NanoPoint &p);
+    void putPixel(lcdint_t x, lcdint_t y) override;
 
     /**
      * Draws horizontal or vertical line
@@ -148,7 +116,7 @@ public:
      * @param y2 - position Y
      * @note color can be set via setColor()
      */
-    void drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2);
+    void drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2) override;
 
     /**
      * Draws horizontal or vertical line
@@ -157,41 +125,7 @@ public:
      * @param x2 - position X
      * @note color can be set via setColor()
      */
-    void drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2);
-
-    /**
-     * Draws line
-     * @param x1 - position X
-     * @param y1 - position Y
-     * @param x2 - position X
-     * @param y2 - position Y
-     * @note color can be set via setColor()
-     */
-    void drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
-
-    /**
-     * Draws line
-     * @param rect - structure, describing rectangle area
-     * @note color can be set via setColor()
-     */
-    void drawLine(const NanoRect &rect);
-
-    /**
-     * Draws rectangle
-     * @param x1 - position X
-     * @param y1 - position Y
-     * @param x2 - position X
-     * @param y2 - position Y
-     * @note color can be set via setColor()
-     */
-    void drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
-
-    /**
-     * Draws rectangle
-     * @param rect - structure, describing rectangle area
-     * @note color can be set via setColor()
-     */
-    void drawRect(const NanoRect &rect);
+    void drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2) override;
 
     /**
      * Fills rectangle area
@@ -202,13 +136,6 @@ public:
      * @note color can be set via setColor()
      */
     void fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
-
-    /**
-     * Fills rectangle area
-     * @param rect - structure, describing rectangle area
-     * @note color can be set via setColor()
-     */
-    void fillRect(const NanoRect &rect);
 
     /**
      * @brief Draws monochrome bitmap in color buffer using color, specified via setColor() method
@@ -224,7 +151,7 @@ public:
      *       In transparent mode, those pixels of source monochrome image, which are black, do not overwrite pixels
      *       in the screen buffer.
      */
-    void drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
+    void drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap) override;
 
     /**
      * @brief Draws 8-bit color bitmap in color buffer.
@@ -235,73 +162,16 @@ public:
      * @param h - height in pixels
      * @param bitmap - 8-bit color bitmap data, located in flash
      */
-    void drawBitmap8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
+    void drawBitmap8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap) override;
 
     /**
      * Clears canvas
      */
-    void clear();
-
-    /**
-     * Writes single character to canvas
-     * @param c - character code to print
-     */
-    size_t write(uint8_t c) override;
-
-    /**
-     * Draws single character to canvas
-     * @param c - character code to print
-     * @returns 0 if char is not printed
-     */
-    uint8_t printChar(uint8_t c);
-
-    /**
-     * Print text at specified position to canvas
-     *
-     * @param xpos  position in pixels
-     * @param y     position in pixels
-     * @param ch    pointer to NULL-terminated string.
-     * @param style specific font style to use
-     *
-     * @note Supports only STYLE_NORMAL and STYLE_BOLD
-     */
-    void printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style = STYLE_NORMAL);
-
-    /**
-     * Print text at specified position to canvas
-     *
-     * @param xpos  position in pixels
-     * @param y     position in pixels
-     * @param ch    pointer to NULL-terminated string, located in flash
-     * @param style specific font style to use
-     *
-     * @note Supports only STYLE_NORMAL and STYLE_BOLD
-     */
-    void printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style = STYLE_NORMAL);
-
-    /**
-     * @brief Sets canvas drawing mode
-     * Sets canvas drawing mode. The set flags define transparency of output images
-     * @param modeFlags - combination of flags: CANVAS_TEXT_WRAP, CANVAS_MODE_TRANSPARENT
-     */
-    void setMode(uint8_t modeFlags) { m_textMode = modeFlags; };
-
-    /**
-     * Sets color for monochrome operations
-     * @param color - color to set (refer to RGB_COLOR8 definition)
-     */
-    void setColor(uint16_t color) { m_color = color; };
+    void clear() override;
 
 protected:
-    lcduint_t m_w;    ///< width of NanoCanvas area in pixels
-    lcduint_t m_h;    ///< height of NanoCanvas area in pixels
-    lcduint_t m_p;    ///< number of bits, used by width value: 3 equals to 8 pixels width
-    lcdint_t  m_cursorX;  ///< current X cursor position for text output
-    lcdint_t  m_cursorY;  ///< current Y cursor position for text output
-    uint8_t   m_textMode; ///< Flags for current NanoCanvas mode
-    EFontStyle   m_fontStyle; ///< currently active font style
+    lcduint_t m_p;        ///< number of bits, used by width value: 3 equals to 8 pixels width
     uint8_t * m_buf;      ///< Canvas data
-    uint16_t  m_color;    ///< current color for monochrome operations
 };
 
 /**

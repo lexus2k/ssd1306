@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -67,6 +67,50 @@ extern "C" SFixedFontInfo s_fixedFont;
  */
 typedef bool (*TNanoEngineOnDraw)(void);
 
+class NanoEngineTilerBase
+{
+protected:
+    NanoEngineTilerBase(NanoCanvasOpsInterface& canvas): m_canvas( canvas )
+    {
+    }
+
+public:
+
+    NanoCanvasOpsInterface& get_canvas() { return m_canvas; }
+
+    /**
+     * Mark specified area in pixels for redrawing by NanoEngine.
+     * Actual update will take place in display() method.
+     */
+    virtual void refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2) = 0;
+
+    /**
+     * Marks for refresh lcd area, which corresponds to specified rectangle in
+     * global (World) coordinates. If engine offset is (0,0), then this function
+     * refreshes the same area as refresh().
+     */
+    void refreshWorld(const NanoRect &rect)
+    {
+        refreshWorld(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
+    }
+
+    /**
+     * Marks for refresh lcd area, which corresponds to specified rectangle in
+     * global (World) coordinates. If engine offset is (0,0), then this function
+     * refreshes the same area as refresh().
+     */
+    void refreshWorld(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+    {
+        refresh(x1 - offset.x, y1 - offset.y, x2 - offset.x, y2 - offset.y);
+    }
+
+protected:
+    NanoPoint offset = {0, 0};
+
+    NanoCanvasOpsInterface& m_canvas;
+};
+
+
 /**
  * This class template is responsible for holding and updating data about areas to be refreshed
  * on LCD display. It accepts canvas class, tile width in pixels, tile height in pixels and
@@ -77,14 +121,14 @@ typedef bool (*TNanoEngineOnDraw)(void);
  * you can specify something like this NanoEngineTiler<NanoCanvas1,128,64,7>.
  */
 template<class C, lcduint_t W, lcduint_t H, uint8_t B>
-class NanoEngineTiler
+class NanoEngineTiler: public NanoEngineTilerBase
 {
 protected:
     /** Only child classes can initialize the engine */
     NanoEngineTiler():
+        NanoEngineTilerBase( canvas ),
         m_onDraw(nullptr),
-        canvas(W, H, m_buffer),
-        offset{0, 0}
+        canvas(W, H, m_buffer)
     {
         refresh();
     };
@@ -102,6 +146,9 @@ public:
     /** object, representing canvas. Use it in your draw handler */
     C canvas;
 
+    using NanoEngineTilerBase::refresh;
+
+    using NanoEngineTilerBase::refreshWorld;
     /**
      * Marks all tiles for update. Actual update will take place in display() method.
      */
@@ -134,7 +181,7 @@ public:
      * Mark specified area in pixels for redrawing by NanoEngine.
      * Actual update will take place in display() method.
      */
-    void refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+    void refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2) override
     {
         if (y2 < 0) return;
         if (y1 < 0) y1 = 0;
@@ -148,26 +195,6 @@ public:
                 m_refreshFlags[y] |= (1<<x);
             }
         }
-    }
-
-    /**
-     * Marks for refresh lcd area, which corresponds to specified rectangle in
-     * global (World) coordinates. If engine offset is (0,0), then this function
-     * refreshes the same area as refresh().
-     */
-    void refreshWorld(const NanoRect &rect)
-    {
-        refreshWorld(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
-    }
-
-    /**
-     * Marks for refresh lcd area, which corresponds to specified rectangle in
-     * global (World) coordinates. If engine offset is (0,0), then this function
-     * refreshes the same area as refresh().
-     */
-    void refreshWorld(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
-    {
-        refresh(x1 - offset.x, y1 - offset.y, x2 - offset.x, y2 - offset.y);
     }
 
     /**
@@ -281,8 +308,6 @@ protected:
 private:
     /** Buffer, used by NanoCanvas */
     uint8_t    m_buffer[W * H * C::BITS_PER_PIXEL / 8];
-
-    NanoPoint offset;
 };
 
 template<class C, lcduint_t W, lcduint_t H, uint8_t B>

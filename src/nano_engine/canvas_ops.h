@@ -59,17 +59,14 @@ class NanoCanvasOpsInterface: public Print
 {
 public:
     /** number of bits per single pixel in buffer */
-    uint8_t BITS_PER_PIXEL;
+    uint8_t BITS_PER_PIXEL_EX;
 
     /** Fixed offset for all operation of NanoCanvasOps in pixels */
     NanoPoint offset;
 
-    /**
-     * Sets offset
-     * @param ox - X offset in pixels
-     * @param oy - Y offset in pixels
-     */
-    void setOffset(lcdint_t ox, lcdint_t oy) { offset.x = ox; offset.y = oy; };
+    /////////////////////////////////////////////////////////////////////////////////
+    //                       IMPLEMENTATION-SPECIFIC GRAPHICS
+    /////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Draws pixel on specified position
@@ -78,91 +75,6 @@ public:
      * @note color can be set via setColor()
      */
     virtual void putPixel(lcdint_t x, lcdint_t y) = 0;
-
-    /**
-     * Draws pixel on specified position
-     * @param p - NanoPoint
-     * @note color can be set via setColor()
-     */
-    void putPixel(const NanoPoint &p)
-    {
-        putPixel(p.x, p.y);
-    }
-
-    /**
-     * Draws horizontal or vertical line
-     * @param x1 - position X
-     * @param y1 - position Y
-     * @param y2 - position Y
-     * @note color can be set via setColor()
-     */
-    virtual void drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
-    {
-        for (lcdint_t y = y1; y <= y2; y++) putPixel(x1, y);
-    }
-
-    /**
-     * Draws horizontal or vertical line
-     * @param x1 - position X
-     * @param y1 - position Y
-     * @param x2 - position X
-     * @note color can be set via setColor()
-     */
-    virtual void drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
-    {
-        for (lcdint_t x = x1; x <= x2; x++) putPixel(x, y1);
-    }
-
-    /**
-     * Draws line
-     * @param x1 - position X
-     * @param y1 - position Y
-     * @param x2 - position X
-     * @param y2 - position Y
-     * @note color can be set via setColor()
-     */
-    virtual void drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
-
-    /**
-     * Draws line
-     * @param rect - structure, describing rectangle area
-     * @note color can be set via setColor()
-     */
-    void drawLine(const NanoRect &rect);
-
-    /**
-     * Draws rectangle
-     * @param x1 - position X
-     * @param y1 - position Y
-     * @param x2 - position X
-     * @param y2 - position Y
-     * @note color can be set via setColor()
-     */
-    virtual void drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
-
-    /**
-     * Draws rectangle
-     * @param rect - structure, describing rectangle area
-     * @note color can be set via setColor()
-     */
-    void drawRect(const NanoRect &rect);
-
-    /**
-     * Fills rectangle area
-     * @param x1 - position X
-     * @param y1 - position Y
-     * @param x2 - position X
-     * @param y2 - position Y
-     * @note color can be set via setColor()
-     */
-    virtual void fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
-
-    /**
-     * Fills rectangle area
-     * @param rect - structure, describing rectangle area
-     * @note color can be set via setColor()
-     */
-    void fillRect(const NanoRect &rect);
 
     /**
      * @brief Draws monochrome bitmap in color buffer using color, specified via setColor() method
@@ -178,7 +90,7 @@ public:
      *       In transparent mode, those pixels of source monochrome image, which are black, do not overwrite pixels
      *       in the screen buffer.
      */
-    virtual void drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
+    virtual void drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap) = 0;
 
     /**
      * @brief Draws 8-bit color bitmap in color buffer.
@@ -189,18 +101,102 @@ public:
      * @param h - height in pixels
      * @param bitmap - 8-bit color bitmap data, located in flash
      */
-    virtual void drawBitmap8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
+    virtual void drawBitmap8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap) = 0;
 
     /**
      * Clears canvas
      */
-    virtual void clear();
+    virtual void clear() = 0;
+
+    /////////////////////////////////////////////////////////////////////////////////
+    //                       IMPLEMENTED, OVERRIDABLE GRAPHICS
+    /////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Draws horizontal or vertical line
+     * @param x1 - position X
+     * @param y1 - position Y
+     * @param y2 - position Y
+     * @note color can be set via setColor()
+     */
+    virtual void drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2);
+
+    /**
+     * Draws horizontal or vertical line
+     * @param x1 - position X
+     * @param y1 - position Y
+     * @param x2 - position X
+     * @note color can be set via setColor()
+     */
+    virtual void drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2);
+
+    /**
+     * Draws line
+     * @param x1 - position X
+     * @param y1 - position Y
+     * @param x2 - position X
+     * @param y2 - position Y
+     * @note color can be set via setColor()
+     */
+    virtual void drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
+
+    /**
+     * Draws rectangle
+     * @param x1 - position X
+     * @param y1 - position Y
+     * @param x2 - position X
+     * @param y2 - position Y
+     * @note color can be set via setColor()
+     */
+    virtual void drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
+
+    /**
+     * Fills rectangle area
+     * @param x1 - position X
+     * @param y1 - position Y
+     * @param x2 - position X
+     * @param y2 - position Y
+     * @note color can be set via setColor()
+     */
+    virtual void fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
 
     /**
      * Writes single character to canvas
      * @param c - character code to print
      */
     size_t write(uint8_t c) override;
+
+    /////////////////////////////////////////////////////////////////////////////////
+    //                       FIXED IMPLEMENTATION GRAPHICS
+    /////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Draws pixel on specified position
+     * @param p - NanoPoint
+     * @note color can be set via setColor()
+     */
+    void putPixel(const NanoPoint &p);
+
+    /**
+     * Draws line
+     * @param rect - structure, describing rectangle area
+     * @note color can be set via setColor()
+     */
+    void drawLine(const NanoRect &rect);
+
+    /**
+     * Draws rectangle
+     * @param rect - structure, describing rectangle area
+     * @note color can be set via setColor()
+     */
+    void drawRect(const NanoRect &rect);
+
+    /**
+     * Fills rectangle area
+     * @param rect - structure, describing rectangle area
+     * @note color can be set via setColor()
+     */
+    void fillRect(const NanoRect &rect);
 
     /**
      * Draws single character to canvas
@@ -246,15 +242,21 @@ public:
      */
     void setColor(uint16_t color) { m_color = color; };
 
+    /**
+     * Sets offset
+     * @param ox - X offset in pixels
+     * @param oy - Y offset in pixels
+     */
+    void setOffset(lcdint_t ox, lcdint_t oy) { offset.x = ox; offset.y = oy; };
+
 protected:
-    lcduint_t m_w;    ///< width of NanoCanvas area in pixels
-    lcduint_t m_h;    ///< height of NanoCanvas area in pixels
-    lcduint_t m_p;    ///< number of bits, used by width value: 3 equals to 8 pixels width
-    lcdint_t  m_cursorX;  ///< current X cursor position for text output
-    lcdint_t  m_cursorY;  ///< current Y cursor position for text output
-    uint8_t   m_textMode; ///< Flags for current NanoCanvas mode
-    EFontStyle   m_fontStyle; ///< currently active font style
-    uint16_t  m_color;    ///< current color for monochrome operations
+    lcduint_t  m_w = 0;     ///< width of NanoCanvas area in pixels
+    lcduint_t  m_h = 0;     ///< height of NanoCanvas area in pixels
+    lcdint_t   m_cursorX;   ///< current X cursor position for text output
+    lcdint_t   m_cursorY;   ///< current Y cursor position for text output
+    uint8_t    m_textMode;  ///< Flags for current NanoCanvas mode
+    EFontStyle m_fontStyle; ///< currently active font style
+    uint16_t   m_color;     ///< current color for monochrome operations
 };
 
 /**

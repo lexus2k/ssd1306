@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -37,6 +37,8 @@
  * @{
  */
 
+class NanoEngineTilerBase;
+
 /**
  * This is base class for all NanoObjects.
  */
@@ -46,7 +48,7 @@ public:
     /**
      * Creates basic object.
      */
-    NanoObject(): default;
+    NanoObject(const NanoPoint &pos) {};
 
     /**
      * Draws nano object Engine canvas
@@ -56,11 +58,81 @@ public:
     /**
      * Marks nano object location for refreshing on the new frame
      */
-    virtual void refresh() = 0;
-};
+    virtual void refresh();
 
-class NanoSquareObject
-{
+    /**
+     * Moves sprite to new position
+     */
+    void moveTo(const NanoPoint &p)
+    {
+        refresh();
+        m_rect = { p, p + m_rect.size() };
+        refresh();
+    }
+
+    /**
+     * Moves sprite to new position by specified offset
+     */
+    void moveBy(const NanoPoint &p)
+    {
+        refresh();
+        m_rect += p;
+        refresh();
+    }
+
+    /**
+     * Returns bottom-center point of the sprite
+     */
+    const NanoPoint bottom() const
+    {
+        return { (m_rect.p1.x + m_rect.p2.x) >> 1, m_rect.p2.y  };
+    }
+
+    /**
+     * Returns top-center point of the sprite
+     */
+    const NanoPoint top() const
+    {
+        return { (m_rect.p1.x + m_rect.p2.x) >> 1, m_rect.p1.y  };
+    }
+
+    /**
+     * Returns left-center point of the sprite
+     */
+    const NanoPoint left() const
+    {
+        return { m_rect.p1.x, (m_rect.p1.y + m_rect.p2.y) >> 1  };
+    }
+
+    /**
+     * Returns right-center point of the sprite
+     */
+    const NanoPoint right() const
+    {
+        return { m_rect.p2.x, (m_rect.p1.y + m_rect.p2.y) >> 1  };
+    }
+
+    /**
+     * Returns center point of the sprite
+     */
+    const NanoPoint center() const
+    {
+        return { (m_rect.p1.x + m_rect.p2.x) >> 1, (m_rect.p1.y + m_rect.p2.y) >> 1  };
+    }
+
+    /**
+     * Returns sprite x position
+     */
+    lcdint_t x( ) const { return m_rect.p1.x; }
+
+    /**
+     * Returns sprite y position
+     */
+    lcdint_t y( ) const { return m_rect.p1.y; }
+
+protected:
+    NanoRect       m_rect;
+    NanoEngineTilerBase *m_tiler = nullptr;
 };
 
 /**
