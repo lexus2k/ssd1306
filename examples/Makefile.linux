@@ -1,6 +1,6 @@
 #    MIT License
 #
-#    Copyright (c) 2018, Alexey Dynda
+#    Copyright (c) 2018-2019, Alexey Dynda
 #
 #    Permission is hereby granted, free of charge, to any person obtaining a copy
 #    of this software and associated documentation files (the "Software"), to deal
@@ -45,7 +45,7 @@ include Makefile.common
 
 ifeq ($(SDL_EMULATION),y)
      CCFLAGS += -I../tools/sdl -DSDL_EMULATION
-     LDFLAGS += -L/mingw/lib -lssd1306_sdl $(shell sdl2-config --libs)
+     LDFLAGS += -L/mingw/lib -lssd1306_sdl $(shell sdl2-config --libs) -lstdc++
 endif
 
 flash: $(OUTFILE)

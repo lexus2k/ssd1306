@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -130,10 +130,10 @@ const PROGMEM uint8_t snowFlakeImage[8][8] =
 
 NanoEngine1 engine;
 
-class SnowFlake: public NanoFixedSprite<NanoEngine1, engine>
+class SnowFlake: public NanoFixedSprite
 {
 public:
-    SnowFlake(): NanoFixedSprite<NanoEngine1, engine>({0, 0}, {8, 8}, nullptr) { }
+    SnowFlake(): NanoFixedSprite(engine, {0, 0}, {8, 8}, nullptr) { }
 
     bool isAlive() { return falling; }
 

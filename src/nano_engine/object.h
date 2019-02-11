@@ -48,7 +48,9 @@ public:
     /**
      * Creates basic object.
      */
-    NanoObject(const NanoPoint &pos) {};
+    NanoObject(const NanoPoint &pos);
+
+    NanoObject(const NanoPoint &pos, const NanoPoint &size);
 
     /**
      * Draws nano object Engine canvas
@@ -66,7 +68,7 @@ public:
     void moveTo(const NanoPoint &p)
     {
         refresh();
-        m_rect = { p, p + m_rect.size() };
+        m_rect = { p, p + m_rect.size() - (NanoPoint){1,1} };
         refresh();
     }
 
@@ -133,6 +135,11 @@ public:
 protected:
     NanoRect       m_rect;
     NanoEngineTilerBase *m_tiler = nullptr;
+
+    void set_tiler( NanoEngineTilerBase *tiler )
+    {
+         m_tiler = tiler;
+    }
 };
 
 /**

@@ -22,21 +22,15 @@
     SOFTWARE.
 */
 
-#include "object.h"
+#include "sprite.h"
 #include "tiler.h"
 
-NanoObject::NanoObject(const NanoPoint &pos):
-    m_rect{pos, pos}
+void NanoSprite::draw()
 {
+    m_tiler->get_canvas().drawBitmap1(m_rect.p1.x, m_rect.p1.y, m_rect.width(), m_rect.height(), m_bitmap);
 }
 
-NanoObject::NanoObject(const NanoPoint &pos, const NanoPoint &size):
-    m_rect{pos, pos + size - (NanoPoint){1,1}}
-{
-}
-
-void NanoObject::refresh()
+void NanoSprite::refresh()
 {
     m_tiler->refreshWorld( m_rect );
 }
-
