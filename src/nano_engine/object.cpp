@@ -40,3 +40,6 @@ void NanoObject::refresh()
     m_tiler->refreshWorld( m_rect );
 }
 
+void NanoObject::update()
+{
+}

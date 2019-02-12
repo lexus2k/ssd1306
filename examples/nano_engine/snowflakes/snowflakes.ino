@@ -148,9 +148,10 @@ public:
         timer = random(24, 48);
         moveTo( scaled_position/8 );
         falling = true;
+        engine.insert( *this );
     }
 
-    void move()
+    void update() override
     {
         scaled_position += speed;
         timer--;
@@ -163,6 +164,7 @@ public:
         moveTo( scaled_position/8 );
         if (y() >= static_cast<lcdint_t>(ssd1306_displayHeight()) )
         {
+            engine.remove( *this );
             falling = false;
         }
     }
@@ -182,13 +184,13 @@ SnowFlake snowFlakes[maxCount];
 bool onDraw()
 {
     engine.canvas.clear();
-    for (uint8_t i=0; i<maxCount; i++)
+/*    for (uint8_t i=0; i<maxCount; i++)
     {
         if (snowFlakes[i].isAlive())
         {
             snowFlakes[i].draw();
         }
-    }
+    }*/
     return true;
 }
 
@@ -219,19 +221,6 @@ void addSnowFlake()
     }
 }
 
-
-void moveSnowFlakes()
-{
-    for (uint8_t i=0; i<maxCount; i++)
-    {
-        if (snowFlakes[i].isAlive())
-        {
-            snowFlakes[i].move();
-        }
-    }
-}
-
-
 static uint8_t globalTimer=3;
 
 void loop()
@@ -243,7 +232,7 @@ void loop()
         globalTimer = 3;
         addSnowFlake();
     }
-    moveSnowFlakes();
+    engine.update();
     engine.display();
 }
 

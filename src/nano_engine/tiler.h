@@ -30,6 +30,7 @@
 #define _NANO_ENGINE_TILER_H_
 
 #include "canvas.h"
+#include "object.h"
 #include "lcd/lcd_common.h"
 
 /**
@@ -104,10 +105,66 @@ public:
         refresh(x1 - offset.x, y1 - offset.y, x2 - offset.x, y2 - offset.y);
     }
 
+    void insert(NanoObject &object)
+    {
+        object.m_next = m_first;
+        object.m_tiler = this;
+        m_first = &object;
+    }
+
+    void remove(NanoObject &object)
+    {
+        if ( m_first == nullptr )
+        {
+        }
+        else if ( &object == m_first )
+        {
+            m_first = object.m_next;
+            object.m_next = nullptr;
+        }
+        else
+        {
+            NanoObject *p = m_first;
+            while ( p->m_next )
+            {
+                if ( p->m_next == &object )
+                {
+                    p->m_next = object.m_next;
+                    object.m_next = nullptr;
+                    break;
+                }
+                p = p->m_next;
+            }
+        }
+    }
+
+    void update()
+    {
+        NanoObject *p = m_first;
+        while (p)
+        {
+            p->update();
+            p = p->m_next;
+        }
+    }
+
+    void draw()
+    {
+        NanoObject *p = m_first;
+        while (p)
+        {
+            p->draw();
+            p = p->m_next;
+        }
+    }
+
 protected:
     NanoPoint offset = {0, 0};
 
     NanoCanvasOpsInterface& m_canvas;
+
+private:
+    NanoObject  *m_first;
 };
 
 
@@ -315,6 +372,7 @@ void NanoEngineTiler<C,W,H,B>::displayBuffer()
 {
     if (!m_onDraw)  // If onDraw handler is not set, just output current canvas
     {
+        draw();
         canvas.blt();
         return;
     }
@@ -327,9 +385,15 @@ void NanoEngineTiler<C,W,H,B>::displayBuffer()
             if (flag & 0x01)
             {
                 canvas.setOffset(x, y);
-                if (m_onDraw())
+                if (!m_onDraw)
                 {
-                    canvas.setOffset(x, y);
+                    canvas.clear();
+                    draw();
+                    canvas.blt();
+                }
+                else if (m_onDraw())
+                {
+                    draw();
                     canvas.blt();
                 }
             }
@@ -354,7 +418,11 @@ void NanoEngineTiler<C,W,H,B>::displayPopup(const char *msg)
             if (flag & 0x01)
             {
                 canvas.setOffset(x, y);
-                if (m_onDraw) m_onDraw();
+                if (m_onDraw)
+                {
+                    m_onDraw();
+                    draw();
+                }
                 canvas.setOffset(x, y);
                 canvas.setColor(RGB_COLOR8(0,0,0));
                 canvas.fillRect(rect);

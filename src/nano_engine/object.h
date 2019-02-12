@@ -45,6 +45,7 @@ class NanoEngineTilerBase;
 class NanoObject
 {
 public:
+    friend class NanoEngineTilerBase;
     /**
      * Creates basic object.
      */
@@ -61,6 +62,8 @@ public:
      * Marks nano object location for refreshing on the new frame
      */
     virtual void refresh();
+
+    virtual void update();
 
     /**
      * Moves sprite to new position
@@ -140,6 +143,9 @@ protected:
     {
          m_tiler = tiler;
     }
+
+private:
+    NanoObject     *m_next = nullptr;
 };
 
 /**
