@@ -135,6 +135,11 @@ public:
      */
     lcdint_t y( ) const { return m_rect.p1.y; }
 
+    /**
+     * Returns current sprite position (top-left corner)
+     */
+    const NanoPoint & getPosition() const { return m_rect.p1; }
+
 protected:
     NanoRect       m_rect;
     NanoEngineTilerBase *m_tiler = nullptr;

@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -82,7 +82,7 @@ uint8_t blockColors[] =
  */
 void beep(int bCount,int bDelay);
 
-NanoFixedSprite<GraphicsEngine, engine> player( { 8, 8 }, { 8, 8 }, playerFlyingImage[0][0] );
+NanoFixedSprite player( { 8, 8 }, { 8, 8 }, playerFlyingImage[0][0] );
 
 /* The variable is used for player animation      *
  * The graphics defined for the hero has 2 images *
@@ -105,7 +105,7 @@ void showGameInfo()
     engine.canvas.drawBitmap1(0, 0, 8, 8, coinImage);
 
     ssd1306_setFixedFont(digital_font5x7_AB);
-    char score[3] = {goldCollection/10 + '0', goldCollection%10 + '0', 0};
+    char score[3] = { goldCollection/10 + '0', goldCollection%10 + '0', 0 };
     engine.canvas.setColor(RGB_COLOR8(0,0,0));
     engine.canvas.printFixed(9,1,score);
     engine.canvas.setColor(RGB_COLOR8(255,255,255));
@@ -138,13 +138,18 @@ static bool onDraw()
             }
         }
         engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
-        engine.canvas.setColor(RGB_COLOR8(64,255,255));
-        player.draw();
-        engine.canvas.setColor(RGB_COLOR8(64,64,255));
-        ninja.draw();
+//        engine.canvas.setColor(RGB_COLOR8(64,255,255));
+//        player.draw();
+//        engine.canvas.setColor(RGB_COLOR8(64,64,255));
+//        ninja.draw();
         engine.localCoordinates();
+        showGameInfo();
+//        engine.worldCoordinates();
     }
-    showGameInfo();
+    else
+    {
+        showGameInfo();
+    }
     return true;
 }
 
@@ -322,6 +327,8 @@ void setup()
     engine.begin();
     engine.setFrameRate(45);
     engine.refresh();
+    engine.insert( player );
+    engine.insert( ninja );
     pinMode(BUZZER, OUTPUT);
 }
 
@@ -330,6 +337,7 @@ void loop()
     if (!engine.nextFrame()) return;
     movePlayer(engine.buttonsState());
     ninja.move(player.getPosition());
+    engine.update();
     engine.display();
 }
 
