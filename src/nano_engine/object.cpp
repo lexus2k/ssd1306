@@ -37,7 +37,7 @@ NanoObject::NanoObject(const NanoPoint &pos, const NanoPoint &size):
 
 void NanoObject::refresh()
 {
-    m_tiler->refreshWorld( m_rect );
+    if (m_tiler) m_tiler->refreshWorld( m_rect );
 }
 
 void NanoObject::update()

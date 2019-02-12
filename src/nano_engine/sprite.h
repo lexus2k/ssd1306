@@ -53,22 +53,16 @@ public:
      * @param size size of sprite
      * @param bitmap sprite content (in flash memory)
      */
-    NanoSprite(NanoEngineTilerBase &tiler, const NanoPoint &pos, const NanoPoint &size, const uint8_t *bitmap)
+    NanoSprite(const NanoPoint &pos, const NanoPoint &size, const uint8_t *bitmap)
          : NanoObject( pos, size )
          , m_bitmap( bitmap )
     {
-         set_tiler( &tiler );
     }
 
     /**
      * Draws monochrome sprite on Engine canvas
      */
     void draw() override;
-
-    /**
-     * Marks sprite locate for refreshing on the new frame
-     */
-    void refresh() override;
 
     /**
      * Replaces sprite bitmap with new one.

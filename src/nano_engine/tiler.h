@@ -110,6 +110,7 @@ public:
         object.m_next = m_first;
         object.m_tiler = this;
         m_first = &object;
+        object.refresh();
     }
 
     void remove(NanoObject &object)
@@ -119,8 +120,10 @@ public:
         }
         else if ( &object == m_first )
         {
+            object.refresh();
             m_first = object.m_next;
             object.m_next = nullptr;
+            object.m_tiler = nullptr;
         }
         else
         {
@@ -129,8 +132,10 @@ public:
             {
                 if ( p->m_next == &object )
                 {
+                    object.refresh();
                     p->m_next = object.m_next;
                     object.m_next = nullptr;
+                    object.m_tiler = nullptr;
                     break;
                 }
                 p = p->m_next;
@@ -370,12 +375,6 @@ private:
 template<class C, lcduint_t W, lcduint_t H, uint8_t B>
 void NanoEngineTiler<C,W,H,B>::displayBuffer()
 {
-    if (!m_onDraw)  // If onDraw handler is not set, just output current canvas
-    {
-        draw();
-        canvas.blt();
-        return;
-    }
     for (lcduint_t y = 0; y < ssd1306_lcd.height; y = y + NE_TILE_HEIGHT)
     {
         uint16_t flag = m_refreshFlags[y >> NE_TILE_SIZE_BITS];
@@ -393,6 +392,7 @@ void NanoEngineTiler<C,W,H,B>::displayBuffer()
                 }
                 else if (m_onDraw())
                 {
+                    canvas.setOffset(x, y);
                     draw();
                     canvas.blt();
                 }
@@ -418,9 +418,13 @@ void NanoEngineTiler<C,W,H,B>::displayPopup(const char *msg)
             if (flag & 0x01)
             {
                 canvas.setOffset(x, y);
-                if (m_onDraw)
+                if (!m_onDraw)
                 {
-                    m_onDraw();
+                    canvas.clear();
+                    draw();
+                }
+                else if (m_onDraw())
+                {
                     draw();
                 }
                 canvas.setOffset(x, y);

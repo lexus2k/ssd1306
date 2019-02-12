@@ -133,11 +133,16 @@ NanoEngine1 engine;
 class SnowFlake: public NanoFixedSprite
 {
 public:
-    SnowFlake(): NanoFixedSprite(engine, {0, 0}, {8, 8}, nullptr) { }
+    SnowFlake(): NanoFixedSprite({0, 0}, {8, 8}, nullptr)
+    {
+    }
 
-    bool isAlive() { return falling; }
+    bool isAlive()
+    {
+        return m_tiler != nullptr;
+    }
 
-    void bringToLife()
+    void generate()
     {
         setBitmap( &snowFlakeImage[random(8)][0] );
         /* Set initial position in scaled coordinates */
@@ -147,8 +152,6 @@ public:
         /* After countdown timer ticks to 0, change X direction */
         timer = random(24, 48);
         moveTo( scaled_position/8 );
-        falling = true;
-        engine.insert( *this );
     }
 
     void update() override
@@ -164,8 +167,7 @@ public:
         moveTo( scaled_position/8 );
         if (y() >= static_cast<lcdint_t>(ssd1306_displayHeight()) )
         {
-            engine.remove( *this );
-            falling = false;
+            m_tiler->remove( *this );
         }
     }
 
@@ -173,26 +175,12 @@ private:
     NanoPoint scaled_position;
     NanoPoint speed;
     uint8_t timer;
-    bool falling = false;
 };
 
 static const uint8_t maxCount = 20;
 
 /* These are our snow flakes */
 SnowFlake snowFlakes[maxCount];
-
-bool onDraw()
-{
-    engine.canvas.clear();
-/*    for (uint8_t i=0; i<maxCount; i++)
-    {
-        if (snowFlakes[i].isAlive())
-        {
-            snowFlakes[i].draw();
-        }
-    }*/
-    return true;
-}
 
 void setup()
 {
@@ -203,7 +191,6 @@ void setup()
 
     engine.setFrameRate( 30 );
     engine.begin();
-    engine.drawCallback( onDraw );
 
     engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
     engine.refresh();
@@ -215,7 +202,8 @@ void addSnowFlake()
     {
         if (!snowFlakes[i].isAlive())
         {
-            snowFlakes[i].bringToLife();
+            snowFlakes[i].generate();
+            engine.insert( snowFlakes[i] );
             break;
         }
     }

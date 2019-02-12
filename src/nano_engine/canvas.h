@@ -109,6 +109,8 @@ public:
      */
     void putPixel(lcdint_t x, lcdint_t y) override;
 
+    using NanoCanvasOpsInterface::putPixel;
+
     /**
      * Draws horizontal or vertical line
      * @param x1 - position X
@@ -117,6 +119,8 @@ public:
      * @note color can be set via setColor()
      */
     void drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2) override;
+
+    using NanoCanvasOpsInterface::drawVLine;
 
     /**
      * Draws horizontal or vertical line
@@ -127,6 +131,8 @@ public:
      */
     void drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2) override;
 
+    using NanoCanvasOpsInterface::drawHLine;
+
     /**
      * Fills rectangle area
      * @param x1 - position X
@@ -136,6 +142,8 @@ public:
      * @note color can be set via setColor()
      */
     void fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
+
+    using NanoCanvasOpsInterface::fillRect;
 
     /**
      * @brief Draws monochrome bitmap in color buffer using color, specified via setColor() method

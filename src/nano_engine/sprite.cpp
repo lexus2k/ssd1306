@@ -30,7 +30,3 @@ void NanoSprite::draw()
     m_tiler->get_canvas().drawBitmap1(m_rect.p1.x, m_rect.p1.y, m_rect.width(), m_rect.height(), m_bitmap);
 }
 
-void NanoSprite::refresh()
-{
-    m_tiler->refreshWorld( m_rect );
-}
