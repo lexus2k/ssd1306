@@ -38,11 +38,41 @@
  * @{
  */
 
+class NanoMenuItem: public NanoObject
+{
+public:
+    NanoMenuItem(): NanoObject( {0, 0}, {32, 8} )
+    {
+    }
+
+    void draw() override;
+
+    void mark()
+    {
+        m_marked = true;
+        refresh();
+    }
+
+    void unmark()
+    {
+        m_marked = false;
+        refresh();
+    }
+
+    bool isMarked() const
+    {
+        return m_marked;
+    }
+
+private:
+    bool m_marked = false;
+};
+
 /**
  * This is base class for user menu implementations.
  * NanoMenu can work only as part of NanoEngine.
  */
-class NanoMenu: public NanoObject
+class NanoMenu: public NanoObjectList
 {
 public:
     /**
@@ -51,18 +81,51 @@ public:
      * @param bitmap sprite content (in flash memory)
      */
     NanoMenu(const NanoPoint &pos )
-         : NanoObject( pos )
+         : NanoObjectList( pos )
     {
     }
 
-    /**
-     * Draws monochrome sprite on Engine canvas
-     */
-    void draw() override {}
+    NanoMenu(): NanoObjectList( {0,0} )
+    {
+    }
 
-    void refresh() override {}
+    void add( NanoMenuItem &item )
+    {
+        if ( getNext( nullptr ) )
+            item.moveBy( { 0, 10 } );
+        NanoObjectList::insert( item );
+    }
 
-    void update() override {}
+    void insert( NanoMenuItem &item )
+    {
+        if ( getNext( nullptr ) )
+            item.moveBy( { 0, 10 } );
+        NanoObjectList::insert( item );
+    }
+
+    void down()
+    {
+        NanoMenuItem *p = static_cast<NanoMenuItem*>(getNext( nullptr ));
+        if (!p) return;
+        while (p)
+        {
+            if ( p->isMarked() )
+            {
+                p->unmark();
+                p = static_cast<NanoMenuItem*>(getNext( p ));
+                if ( !p ) p = static_cast<NanoMenuItem*>(getNext( nullptr ));
+                p->mark();
+                return;
+            }
+            p = static_cast<NanoMenuItem*>(getNext( p ));
+        }
+        p = static_cast<NanoMenuItem*>(getNext( nullptr ));
+        p->mark();
+    }
+
+    void up()
+    {
+    }
 };
 
 /**

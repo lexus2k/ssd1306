@@ -38,6 +38,7 @@
  */
 
 class NanoEngineTilerBase;
+class NanoObjectList;
 
 /**
  * This is base class for all NanoObjects.
@@ -46,6 +47,7 @@ class NanoObject
 {
 public:
     friend class NanoEngineTilerBase;
+    friend class NanoObjectList;
     /**
      * Creates basic object.
      */
@@ -151,6 +153,90 @@ protected:
 
 private:
     NanoObject     *m_next = nullptr;
+};
+
+class NanoObjectList: public NanoObject
+{
+public:
+    using NanoObject::NanoObject;
+
+    NanoObject *getNext(NanoObject *prev)
+    {
+        return prev ? prev->m_next : m_first;
+    }
+
+    void update() override
+    {
+        NanoObject *p = m_first;
+        while (p)
+        {
+            p->update();
+            p = p->m_next;
+        }
+    }
+
+    void refresh() override
+    {
+        NanoObject *p = m_first;
+        while (p)
+        {
+            p->m_tiler = m_tiler;
+            p->refresh();
+            p = p->m_next;
+        }
+    }
+
+    void draw() override
+    {
+        NanoObject *p = m_first;
+        while (p)
+        {
+            p->m_tiler = m_tiler;
+            p->draw();
+            p = p->m_next;
+        }
+    }
+
+    void insert(NanoObject &object)
+    {
+        object.m_next = m_first;
+        object.m_tiler = this->m_tiler;
+        m_first = &object;
+        object.refresh();
+    }
+
+    void remove(NanoObject &object)
+    {
+        if ( m_first == nullptr )
+        {
+        }
+        else if ( &object == m_first )
+        {
+            object.refresh();
+            m_first = object.m_next;
+            object.m_next = nullptr;
+            object.m_tiler = nullptr;
+        }
+        else
+        {
+            NanoObject *p = m_first;
+            while ( p->m_next )
+            {
+                if ( p->m_next == &object )
+                {
+                    object.refresh();
+                    p->m_next = object.m_next;
+                    object.m_next = nullptr;
+                    object.m_tiler = nullptr;
+                    break;
+                }
+                p = p->m_next;
+            }
+        }
+    }
+
+private:
+    NanoObject *m_first;
 };
 
 /**

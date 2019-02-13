@@ -30,6 +30,7 @@
 #define _NANO_ENGINE_H_
 
 #include "nano_engine/sprite.h"
+#include "nano_engine/menu.h"
 #include "nano_engine/canvas.h"
 #include "nano_engine/adafruit.h"
 #include "nano_engine/tiler.h"
