@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018-2019, Alexey Dynda
+    Copyright (c) 2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,11 +22,11 @@
     SOFTWARE.
 */
 /**
- * @file sprite.h Sprite class
+ * @file menu.h Menu class
  */
 
-#ifndef _NANO_SPRITE_H_
-#define _NANO_SPRITE_H_
+#ifndef _NANO_MENU_H_
+#define _NANO_MENU_H_
 
 #include "point.h"
 #include "object.h"
@@ -39,46 +39,30 @@
  */
 
 /**
- * This is template class for user sprites implementations.
- * NanoSprite can work only as part of NanoEngine.
+ * This is base class for user menu implementations.
+ * NanoMenu can work only as part of NanoEngine.
  */
-class NanoSprite: public NanoObject
+class NanoMenu: public NanoObject
 {
 public:
     /**
-     * Creates sprite object of variable size. Such sprites can
-     * change their size and bitmap content.
+     * Creates menu object.
      * @param pos position of the sprite in global coordinates
-     * @param size size of sprite
      * @param bitmap sprite content (in flash memory)
      */
-    NanoSprite(const NanoPoint &pos, const NanoPoint &size, const uint8_t *bitmap)
-         : NanoObject( pos, size )
-         , m_bitmap( bitmap )
+    NanoMenu(const NanoPoint &pos )
+         : NanoObject( pos )
     {
     }
 
     /**
      * Draws monochrome sprite on Engine canvas
      */
-    void draw() override;
+    void draw() override {}
 
-    /**
-     * Replaces sprite bitmap with new one.
-     */
-    void setBitmap(const uint8_t *bitmap) { m_bitmap = bitmap; }
+    void refresh() override {}
 
-private:
-    const uint8_t *m_bitmap;
-};
-
-/**
- * This is base class for user sprites implementation.
- */
-class NanoFixedSprite: public NanoSprite
-{
-public:
-    using NanoSprite::NanoSprite;
+    void update() override {}
 };
 
 /**
