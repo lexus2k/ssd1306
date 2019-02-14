@@ -91,35 +91,52 @@ public:
 
     void add( NanoMenuItem &item )
     {
-        if ( getNext( nullptr ) )
-            item.moveBy( { 0, 10 } );
         NanoObjectList::insert( item );
+        refresh();
     }
 
     void insert( NanoMenuItem &item )
     {
-        if ( getNext( nullptr ) )
-            item.moveBy( { 0, 10 } );
         NanoObjectList::insert( item );
+        refresh();
     }
 
-    void down()
+    void refresh() override
     {
-        NanoMenuItem *p = static_cast<NanoMenuItem*>(getNext( nullptr ));
-        if (!p) return;
+        NanoObject *p = getNext( );
+        lcdint_t y_pos = m_rect.p1.y;
+        while (p)
+        {
+            p->setPos( { m_rect.p1.x, y_pos } );
+            y_pos += p->height() + 1;
+            p = getNext( p );
+        }
+        NanoObjectList::refresh();
+    }
+
+    NanoMenuItem *getSelected()
+    {
+        NanoMenuItem *p = static_cast<NanoMenuItem*>(getNext( ));
         while (p)
         {
             if ( p->isMarked() )
             {
-                p->unmark();
-                p = static_cast<NanoMenuItem*>(getNext( p ));
-                if ( !p ) p = static_cast<NanoMenuItem*>(getNext( nullptr ));
-                p->mark();
-                return;
+                break;
             }
             p = static_cast<NanoMenuItem*>(getNext( p ));
         }
-        p = static_cast<NanoMenuItem*>(getNext( nullptr ));
+        return p;
+    }
+
+    void down()
+    {
+        NanoMenuItem *p = getSelected();
+        if (p)
+        {
+            p->unmark();
+        }
+        p = static_cast<NanoMenuItem*>(getNext( p ));
+        if (!p) p = static_cast<NanoMenuItem*>(getNext());
         p->mark();
     }
 

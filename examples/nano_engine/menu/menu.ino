@@ -42,6 +42,8 @@
 NanoEngine1 engine;
 NanoMenuItem item1;
 NanoMenuItem item2;
+NanoMenuItem item3;
+NanoMenuItem item4;
 NanoMenu menu;
 
 uint16_t lastMillis;
@@ -61,6 +63,8 @@ void setup()
     menu.insert( item2 );
     engine.insert( menu );
     menu.insert( item1 );
+    menu.insert( item3 );
+    menu.insert( item4 );
 
     lastMillis = millis();
 }

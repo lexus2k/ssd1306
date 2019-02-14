@@ -67,13 +67,23 @@ public:
 
     virtual void update();
 
+    lcdint_t width()
+    {
+        return m_rect.width();
+    }
+
+    lcdint_t height()
+    {
+        return m_rect.height();
+    }
+
     /**
      * Moves sprite to new position
      */
     void moveTo(const NanoPoint &p)
     {
         refresh();
-        m_rect = { p, p + m_rect.size() - (NanoPoint){1,1} };
+        setPos( p );
         refresh();
     }
 
@@ -83,8 +93,16 @@ public:
     void moveBy(const NanoPoint &p)
     {
         refresh();
-        m_rect += p;
+        setPos( m_rect.p1 + p );
         refresh();
+    }
+
+    /**
+     * Sets position of NanoObject, doesn't mark for update content on the screen
+     */
+    void setPos(const NanoPoint &p)
+    {
+        m_rect = { p, p + m_rect.size() - (NanoPoint){1,1} };
     }
 
     /**
@@ -160,40 +178,53 @@ class NanoObjectList: public NanoObject
 public:
     using NanoObject::NanoObject;
 
-    NanoObject *getNext(NanoObject *prev)
+    NanoObject *getNext(NanoObject *prev = nullptr)
     {
         return prev ? prev->m_next : m_first;
     }
 
+    NanoObject *getPrev(NanoObject *curr = nullptr)
+    {
+        NanoObject *p = getNext();
+        while (p)
+        {
+            if (p->m_next == curr)
+            {
+                break;
+            }
+            p = getNext(p);
+        }
+        return p;
+    }
+
     void update() override
     {
-        NanoObject *p = m_first;
+        NanoObject *p = getNext();
         while (p)
         {
             p->update();
-            p = p->m_next;
+            p = getNext( p );
         }
     }
 
     void refresh() override
     {
-        NanoObject *p = m_first;
+        NanoObject *p = getNext();
         while (p)
         {
             p->m_tiler = m_tiler;
             p->refresh();
-            p = p->m_next;
+            p = getNext( p );
         }
     }
 
     void draw() override
     {
-        NanoObject *p = m_first;
+        NanoObject *p = getNext();
         while (p)
         {
-            p->m_tiler = m_tiler;
             p->draw();
-            p = p->m_next;
+            p = getNext(p);
         }
     }
 

@@ -64,6 +64,24 @@ public:
     /** Fixed offset for all operation of NanoCanvasOps in pixels */
     NanoPoint offset;
 
+    /**
+     * Returns right-bottom point of the canvas in offset terms.
+     * If offset is (0,0), then offsetEnd() will return (width-1,height-1).
+     */
+    const NanoPoint offsetEnd() const
+    {
+        return offset + (NanoPoint){ (lcdint_t)m_w-1, (lcdint_t)m_h-1 };
+    }
+
+    /**
+     * Returns rectangle area, covered by canvas in offset terms.
+     * If offset is (0,0), then rect() will return ((0,0),(width-1,height-1))
+     */
+    const NanoRect rect() const
+    {
+        return { offset, offsetEnd() };
+    }
+
     /////////////////////////////////////////////////////////////////////////////////
     //                       IMPLEMENTATION-SPECIFIC GRAPHICS
     /////////////////////////////////////////////////////////////////////////////////

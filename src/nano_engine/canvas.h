@@ -84,24 +84,6 @@ public:
     void begin(lcdint_t w, lcdint_t h, uint8_t *bytes);
 
     /**
-     * Returns right-bottom point of the canvas in offset terms.
-     * If offset is (0,0), then offsetEnd() will return (width-1,height-1).
-     */
-    const NanoPoint offsetEnd() const
-    {
-        return offset + (NanoPoint){ (lcdint_t)m_w-1, (lcdint_t)m_h-1 };
-    }
-
-    /**
-     * Returns rectangle area, covered by canvas in offset terms.
-     * If offset is (0,0), then rect() will return ((0,0),(width-1,height-1))
-     */
-    const NanoRect rect() const
-    {
-        return { offset, offsetEnd() };
-    }
-
-    /**
      * Draws pixel on specified position
      * @param x - position X
      * @param y - position Y
