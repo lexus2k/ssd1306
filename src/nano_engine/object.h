@@ -110,7 +110,7 @@ public:
      */
     const NanoPoint bottom() const
     {
-        return { (m_rect.p1.x + m_rect.p2.x) >> 1, m_rect.p2.y  };
+        return { (lcdint_t)((m_rect.p1.x + m_rect.p2.x) >> 1), m_rect.p2.y  };
     }
 
     /**
@@ -118,7 +118,7 @@ public:
      */
     const NanoPoint top() const
     {
-        return { (m_rect.p1.x + m_rect.p2.x) >> 1, m_rect.p1.y  };
+        return { (lcdint_t)((m_rect.p1.x + m_rect.p2.x) >> 1), m_rect.p1.y  };
     }
 
     /**
@@ -126,7 +126,7 @@ public:
      */
     const NanoPoint left() const
     {
-        return { m_rect.p1.x, (m_rect.p1.y + m_rect.p2.y) >> 1  };
+        return { m_rect.p1.x, (lcdint_t)((m_rect.p1.y + m_rect.p2.y) >> 1)  };
     }
 
     /**
@@ -134,7 +134,7 @@ public:
      */
     const NanoPoint right() const
     {
-        return { m_rect.p2.x, (m_rect.p1.y + m_rect.p2.y) >> 1  };
+        return { m_rect.p2.x, (lcdint_t)((m_rect.p1.y + m_rect.p2.y) >> 1)  };
     }
 
     /**
@@ -142,7 +142,8 @@ public:
      */
     const NanoPoint center() const
     {
-        return { (m_rect.p1.x + m_rect.p2.x) >> 1, (m_rect.p1.y + m_rect.p2.y) >> 1  };
+        return { (lcdint_t)((m_rect.p1.x + m_rect.p2.x) >> 1),
+                 (lcdint_t)((m_rect.p1.y + m_rect.p2.y) >> 1) };
     }
 
     /**
@@ -160,6 +161,23 @@ public:
      */
     const NanoPoint & getPosition() const { return m_rect.p1; }
 
+    void focus()
+    {
+        m_focused = true;
+        refresh();
+    }
+
+    void defocus()
+    {
+        m_focused = false;
+        refresh();
+    }
+
+    bool isFocused()
+    {
+        return m_focused;
+    }
+
 protected:
     NanoRect       m_rect;
     NanoEngineTilerBase *m_tiler = nullptr;
@@ -171,6 +189,7 @@ protected:
 
 private:
     NanoObject     *m_next = nullptr;
+    bool m_focused = false;
 };
 
 class NanoObjectList: public NanoObject

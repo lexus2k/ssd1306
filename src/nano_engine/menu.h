@@ -47,21 +47,6 @@ public:
     }
 
     void draw() override;
-
-    void focus()
-    {
-        m_focused = true;
-        refresh();
-    }
-
-    void defocus()
-    {
-        m_focused = false;
-        refresh();
-    }
-
-private:
-    bool m_focused = false;
 };
 
 /**
@@ -85,7 +70,7 @@ public:
     {
     }
 
-    void add( NanoMenuItem &item )
+    void add( NanoObject &item )
     {
         NanoObjectList::add( item );
         updateMenuItemsPosition();
@@ -96,7 +81,7 @@ public:
         }
     }
 
-    void insert( NanoMenuItem &item )
+    void insert( NanoObject &item )
     {
         NanoObjectList::insert( item );
         updateMenuItemsPosition();
@@ -112,7 +97,7 @@ public:
         NanoObjectList::refresh();
     }
 
-    NanoMenuItem *getSelected()
+    NanoObject *getSelected()
     {
         return m_selected;
     }
@@ -120,10 +105,10 @@ public:
     void down()
     {
         m_selected->defocus();
-        m_selected = static_cast<NanoMenuItem*>(getNext( m_selected ));
+        m_selected = getNext( m_selected );
         if ( !m_selected )
         {
-            m_selected = static_cast<NanoMenuItem*>(getNext());
+            m_selected = getNext();
         }
         m_selected->focus();
     }
@@ -131,10 +116,10 @@ public:
     void up()
     {
         m_selected->defocus();
-        m_selected = static_cast<NanoMenuItem*>(getPrev( m_selected ));
+        m_selected = getPrev( m_selected );
         if ( !m_selected )
         {
-            m_selected = static_cast<NanoMenuItem*>(getPrev());
+            m_selected = getPrev();
         }
         m_selected->focus();
     }
@@ -143,7 +128,7 @@ protected:
     virtual void updateMenuItemsPosition() = 0;
 
 private:
-    NanoMenuItem *m_selected = nullptr;
+    NanoObject *m_selected = nullptr;
 };
 
 class NanoListMenu: public NanoMenu
@@ -160,7 +145,7 @@ private:
         lcdint_t y_pos = m_rect.p1.y + 8;
         while (p)
         {
-            p->setPos( { m_rect.p1.x + 8, y_pos } );
+            p->setPos( { (lcdint_t)(m_rect.p1.x + 8), y_pos } );
             y_pos += p->height() + 1;
             p = getNext( p );
         }

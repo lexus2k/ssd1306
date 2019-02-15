@@ -26,7 +26,7 @@
 
 void NanoMenuItem::draw()
 {
-    if ( m_focused )
+    if ( isFocused() )
     {
         m_tiler->get_canvas().setColor( 0xFFFF );
         m_tiler->get_canvas().fillRect( m_rect );
