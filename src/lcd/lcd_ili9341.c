@@ -197,7 +197,8 @@ void    ili9341_240x320_init()
 {
     ssd1306_lcd.type = LCD_TYPE_SSD1331;
     ssd1306_lcd.width = 240;
-    ssd1306_lcd.height = 320;
+    // casting to lcduint_t is hack for attiny arch
+    ssd1306_lcd.height = (lcduint_t)320;
     s_rgb_bit = 0b00001000; // set BGR mode mapping
     ssd1306_lcd.set_block = ili9341_setBlock;
     ssd1306_lcd.next_page = ili9341_nextPage;
