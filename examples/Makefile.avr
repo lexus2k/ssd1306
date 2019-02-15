@@ -1,6 +1,6 @@
 #    MIT License
 #
-#    Copyright (c) 2018, Alexey Dynda
+#    Copyright (c) 2018-2019, Alexey Dynda
 #
 #    Permission is hereby granted, free of charge, to any person obtaining a copy
 #    of this software and associated documentation files (the "Software"), to deal
@@ -42,6 +42,7 @@ FREQUENCY ?= 16000000
 platform=avr
 
 CCFLAGS += -g -Os -w -ffreestanding -mmcu=$(MCU) -DF_CPU=$(FREQUENCY)
+SRCS += avr_abi.cpp
 
 ifeq ($(ADAFRUIT),y)
 INCLUDES += -I../src/ssd1306_hal/avr/arduino
