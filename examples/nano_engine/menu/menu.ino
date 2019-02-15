@@ -44,7 +44,7 @@ NanoMenuItem item1;
 NanoMenuItem item2;
 NanoMenuItem item3;
 NanoMenuItem item4;
-NanoMenu menu;
+NanoListMenu menu;
 
 uint16_t lastMillis;
 
@@ -62,7 +62,7 @@ void setup()
     engine.refresh();
 
     menu.add( item1 );
-    menu.add( item1 );
+    menu.add( item2 );
     menu.add( item3 );
     menu.add( item4 );
     engine.insert( menu );

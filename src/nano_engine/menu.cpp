@@ -39,3 +39,12 @@ void NanoMenuItem::draw()
         m_tiler->get_canvas().drawRect( m_rect );
     }
 }
+
+void NanoListMenu::draw()
+{
+    m_tiler->get_canvas().setColor( 0xFFFF );
+    m_tiler->get_canvas().drawRect( { m_rect.p1 + (NanoPoint){3, 3},
+                                      m_rect.p2 - (NanoPoint){3, 3} } );
+    NanoMenu::draw();
+}
+

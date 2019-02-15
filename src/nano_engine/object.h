@@ -185,14 +185,14 @@ public:
 
     NanoObject *getPrev(NanoObject *curr = nullptr)
     {
-        NanoObject *p = getNext();
+        NanoObject *p = m_first;
         while (p)
         {
             if (p->m_next == curr)
             {
                 break;
             }
-            p = getNext(p);
+            p = p->m_next;
         }
         return p;
     }
@@ -228,8 +228,22 @@ public:
         }
     }
 
+    bool has(NanoObject &object)
+    {
+        NanoObject *p = getNext();
+        while (p && p != &object)
+        {
+            p = getNext(p);
+        }
+        return p != nullptr;
+    }
+
     void add(NanoObject &object)
     {
+        if ( has( object ) )
+        {
+            return;
+        }
         object.m_next = nullptr;
         object.m_tiler = m_tiler;
         if ( !m_first )
@@ -245,6 +259,10 @@ public:
 
     void insert(NanoObject &object)
     {
+        if ( has( object ) )
+        {
+            return;
+        }
         object.m_next = m_first;
         object.m_tiler = m_tiler;
         m_first = &object;

@@ -32,6 +32,7 @@
 #include "object.h"
 #include "rect.h"
 #include "ssd1306_hal/io.h"
+#include "lcd/lcd_common.h"
 
 /**
  * @ingroup NANO_ENGINE_API
@@ -87,7 +88,7 @@ public:
     void add( NanoMenuItem &item )
     {
         NanoObjectList::add( item );
-        refresh();
+        updateMenuItemsPosition();
         if ( !m_selected )
         {
             m_selected = &item;
@@ -98,7 +99,7 @@ public:
     void insert( NanoMenuItem &item )
     {
         NanoObjectList::insert( item );
-        refresh();
+        updateMenuItemsPosition();
         if ( !m_selected )
         {
             m_selected = &item;
@@ -108,7 +109,6 @@ public:
 
     void refresh() override
     {
-        updateMenuItemsPosition();
         NanoObjectList::refresh();
     }
 
@@ -140,20 +140,33 @@ public:
     }
 
 protected:
-    virtual void updateMenuItemsPosition()
-    {
-        NanoObject *p = getNext( );
-        lcdint_t y_pos = m_rect.p1.y;
-        while (p)
-        {
-            p->setPos( { m_rect.p1.x, y_pos } );
-            y_pos += p->height() + 1;
-            p = getNext( p );
-        }
-    }
+    virtual void updateMenuItemsPosition() = 0;
 
 private:
     NanoMenuItem *m_selected = nullptr;
+};
+
+class NanoListMenu: public NanoMenu
+{
+public:
+    using NanoMenu::NanoMenu;
+
+    void draw() override;
+
+private:
+    void updateMenuItemsPosition() override
+    {
+        NanoObject *p = getNext();
+        lcdint_t y_pos = m_rect.p1.y + 8;
+        while (p)
+        {
+            p->setPos( { m_rect.p1.x + 8, y_pos } );
+            y_pos += p->height() + 1;
+            p = getNext( p );
+        }
+        m_rect.p2.y = y_pos + 7;
+        m_rect.p2.x = ssd1306_lcd.width;
+    }
 };
 
 /**
