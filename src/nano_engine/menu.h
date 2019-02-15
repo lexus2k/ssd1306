@@ -41,31 +41,26 @@
 class NanoMenuItem: public NanoObject
 {
 public:
-    NanoMenuItem(): NanoObject( {0, 0}, {32, 8} )
+    NanoMenuItem(): NanoObject( {0, 0}, {48, 8} )
     {
     }
 
     void draw() override;
 
-    void mark()
+    void focus()
     {
-        m_marked = true;
+        m_focused = true;
         refresh();
     }
 
-    void unmark()
+    void defocus()
     {
-        m_marked = false;
+        m_focused = false;
         refresh();
-    }
-
-    bool isMarked() const
-    {
-        return m_marked;
     }
 
 private:
-    bool m_marked = false;
+    bool m_focused = false;
 };
 
 /**
@@ -91,17 +86,61 @@ public:
 
     void add( NanoMenuItem &item )
     {
-        NanoObjectList::insert( item );
+        NanoObjectList::add( item );
         refresh();
+        if ( !m_selected )
+        {
+            m_selected = &item;
+            item.focus();
+        }
     }
 
     void insert( NanoMenuItem &item )
     {
         NanoObjectList::insert( item );
         refresh();
+        if ( !m_selected )
+        {
+            m_selected = &item;
+            item.focus();
+        }
     }
 
     void refresh() override
+    {
+        updateMenuItemsPosition();
+        NanoObjectList::refresh();
+    }
+
+    NanoMenuItem *getSelected()
+    {
+        return m_selected;
+    }
+
+    void down()
+    {
+        m_selected->defocus();
+        m_selected = static_cast<NanoMenuItem*>(getNext( m_selected ));
+        if ( !m_selected )
+        {
+            m_selected = static_cast<NanoMenuItem*>(getNext());
+        }
+        m_selected->focus();
+    }
+
+    void up()
+    {
+        m_selected->defocus();
+        m_selected = static_cast<NanoMenuItem*>(getPrev( m_selected ));
+        if ( !m_selected )
+        {
+            m_selected = static_cast<NanoMenuItem*>(getPrev());
+        }
+        m_selected->focus();
+    }
+
+protected:
+    virtual void updateMenuItemsPosition()
     {
         NanoObject *p = getNext( );
         lcdint_t y_pos = m_rect.p1.y;
@@ -111,38 +150,10 @@ public:
             y_pos += p->height() + 1;
             p = getNext( p );
         }
-        NanoObjectList::refresh();
     }
 
-    NanoMenuItem *getSelected()
-    {
-        NanoMenuItem *p = static_cast<NanoMenuItem*>(getNext( ));
-        while (p)
-        {
-            if ( p->isMarked() )
-            {
-                break;
-            }
-            p = static_cast<NanoMenuItem*>(getNext( p ));
-        }
-        return p;
-    }
-
-    void down()
-    {
-        NanoMenuItem *p = getSelected();
-        if (p)
-        {
-            p->unmark();
-        }
-        p = static_cast<NanoMenuItem*>(getNext( p ));
-        if (!p) p = static_cast<NanoMenuItem*>(getNext());
-        p->mark();
-    }
-
-    void up()
-    {
-    }
+private:
+    NanoMenuItem *m_selected = nullptr;
 };
 
 /**

@@ -21,21 +21,25 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-#include "menu.h"
-#include "tiler.h"
+/**
+ * @file menu_items.h Menu items classes
+ */
 
-void NanoMenuItem::draw()
-{
-    if ( m_focused )
-    {
-        m_tiler->get_canvas().setColor( 0xFFFF );
-        m_tiler->get_canvas().fillRect( m_rect );
-    }
-    else
-    {
-        m_tiler->get_canvas().setColor( 0 );
-        m_tiler->get_canvas().fillRect( m_rect );
-        m_tiler->get_canvas().setColor( 0xFFFF );
-        m_tiler->get_canvas().drawRect( m_rect );
-    }
-}
+#ifndef _NANO_MENU_ITEMS_H_
+#define _NANO_MENU_ITEMS_H_
+
+#include "menu.h"
+#include "ssd1306_hal/io.h"
+
+/**
+ * @ingroup NANO_ENGINE_API
+ * @{
+ */
+
+
+/**
+ * @}
+ */
+
+#endif
+

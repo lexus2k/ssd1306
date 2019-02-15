@@ -63,6 +63,7 @@ SRCS_CPP = \
 	nano_engine/core.cpp \
 	nano_engine/object.cpp \
 	nano_engine/menu.cpp \
+	nano_engine/menu_items.cpp \
 	nano_engine/sprite.cpp \
 	nano_gfx.cpp \
 	sprite_pool.cpp \

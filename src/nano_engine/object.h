@@ -228,10 +228,25 @@ public:
         }
     }
 
+    void add(NanoObject &object)
+    {
+        object.m_next = nullptr;
+        object.m_tiler = m_tiler;
+        if ( !m_first )
+        {
+            m_first = &object;
+        }
+        else
+        {
+            getPrev()->m_next = &object;
+        }
+        object.refresh();
+    }
+
     void insert(NanoObject &object)
     {
         object.m_next = m_first;
-        object.m_tiler = this->m_tiler;
+        object.m_tiler = m_tiler;
         m_first = &object;
         object.refresh();
     }
