@@ -68,111 +68,6 @@ extern "C" SFixedFontInfo s_fixedFont;
  */
 typedef bool (*TNanoEngineOnDraw)(void);
 
-class NanoEngineTilerBase
-{
-protected:
-    NanoEngineTilerBase(NanoCanvasOpsInterface& canvas): m_canvas( canvas )
-    {
-    }
-
-public:
-
-    NanoCanvasOpsInterface& get_canvas() { return m_canvas; }
-
-    /**
-     * Mark specified area in pixels for redrawing by NanoEngine.
-     * Actual update will take place in display() method.
-     */
-    virtual void refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2) = 0;
-
-    /**
-     * Marks for refresh lcd area, which corresponds to specified rectangle in
-     * global (World) coordinates. If engine offset is (0,0), then this function
-     * refreshes the same area as refresh().
-     */
-    void refreshWorld(const NanoRect &rect)
-    {
-        refreshWorld(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
-    }
-
-    /**
-     * Marks for refresh lcd area, which corresponds to specified rectangle in
-     * global (World) coordinates. If engine offset is (0,0), then this function
-     * refreshes the same area as refresh().
-     */
-    void refreshWorld(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
-    {
-        refresh(x1 - offset.x, y1 - offset.y, x2 - offset.x, y2 - offset.y);
-    }
-
-    void insert(NanoObject &object)
-    {
-        object.m_next = m_first;
-        object.m_tiler = this;
-        m_first = &object;
-        object.refresh();
-    }
-
-    void remove(NanoObject &object)
-    {
-        if ( m_first == nullptr )
-        {
-        }
-        else if ( &object == m_first )
-        {
-            object.refresh();
-            m_first = object.m_next;
-            object.m_next = nullptr;
-            object.m_tiler = nullptr;
-        }
-        else
-        {
-            NanoObject *p = m_first;
-            while ( p->m_next )
-            {
-                if ( p->m_next == &object )
-                {
-                    object.refresh();
-                    p->m_next = object.m_next;
-                    object.m_next = nullptr;
-                    object.m_tiler = nullptr;
-                    break;
-                }
-                p = p->m_next;
-            }
-        }
-    }
-
-    void update()
-    {
-        NanoObject *p = m_first;
-        while (p)
-        {
-            p->update();
-            p = p->m_next;
-        }
-    }
-
-    void draw()
-    {
-        NanoObject *p = m_first;
-        while (p)
-        {
-            p->draw();
-            p = p->m_next;
-        }
-    }
-
-protected:
-    NanoPoint offset = {0, 0};
-
-    NanoCanvasOpsInterface& m_canvas;
-
-private:
-    NanoObject  *m_first;
-};
-
-
 /**
  * This class template is responsible for holding and updating data about areas to be refreshed
  * on LCD display. It accepts canvas class, tile width in pixels, tile height in pixels and
@@ -183,19 +78,21 @@ private:
  * you can specify something like this NanoEngineTiler<NanoCanvas1,128,64,7>.
  */
 template<class C, lcduint_t W, lcduint_t H, uint8_t B>
-class NanoEngineTiler: public NanoEngineTilerBase
+class NanoEngineTiler
 {
 protected:
     /** Only child classes can initialize the engine */
     NanoEngineTiler():
-        NanoEngineTilerBase( canvas ),
         m_onDraw(nullptr),
-        canvas(W, H, m_buffer)
+        canvas(W, H, m_buffer),
+        offset{0, 0}
     {
         refresh();
     };
 
 public:
+    using NanoObjectT = NanoObject<NanoEngineTiler<C,W,H,B>>;
+
     /** Number of bits in tile size. 5 corresponds to 1<<5 = 32 tile size */
     static const uint8_t NE_TILE_SIZE_BITS = B;
     /** Width of tile in pixels */
@@ -208,9 +105,6 @@ public:
     /** object, representing canvas. Use it in your draw handler */
     C canvas;
 
-    using NanoEngineTilerBase::refresh;
-
-    using NanoEngineTilerBase::refreshWorld;
     /**
      * Marks all tiles for update. Actual update will take place in display() method.
      */
@@ -243,7 +137,7 @@ public:
      * Mark specified area in pixels for redrawing by NanoEngine.
      * Actual update will take place in display() method.
      */
-    void refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2) override
+    void refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
     {
         if (y2 < 0) return;
         if (y1 < 0) y1 = 0;
@@ -257,6 +151,26 @@ public:
                 m_refreshFlags[y] |= (1<<x);
             }
         }
+    }
+
+    /**
+     * Marks for refresh lcd area, which corresponds to specified rectangle in
+     * global (World) coordinates. If engine offset is (0,0), then this function
+     * refreshes the same area as refresh().
+     */
+    void refreshWorld(const NanoRect &rect)
+    {
+        refreshWorld(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
+    }
+
+    /**
+     * Marks for refresh lcd area, which corresponds to specified rectangle in
+     * global (World) coordinates. If engine offset is (0,0), then this function
+     * refreshes the same area as refresh().
+     */
+    void refreshWorld(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+    {
+        refresh(x1 - offset.x, y1 - offset.y, x2 - offset.x, y2 - offset.y);
     }
 
     /**
@@ -343,6 +257,54 @@ public:
      */
     bool collision(NanoPoint &p, NanoRect &rect) { return rect.collision( p ); }
 
+    void insert(NanoObjectT &object)
+    {
+        object.m_next = m_first;
+        object.m_tiler = this;
+        m_first = &object;
+        object.refresh();
+    }
+
+    void remove(NanoObjectT &object)
+    {
+        if ( m_first == nullptr )
+        {
+        }
+        else if ( &object == m_first )
+        {
+            object.refresh();
+            m_first = object.m_next;
+            object.m_next = nullptr;
+            object.m_tiler = nullptr;
+        }
+        else
+        {
+            NanoObjectT *p = m_first;
+            while ( p->m_next )
+            {
+                if ( p->m_next == &object )
+                {
+                    object.refresh();
+                    p->m_next = object.m_next;
+                    object.m_next = nullptr;
+                    object.m_tiler = nullptr;
+                    break;
+                }
+                p = p->m_next;
+            }
+        }
+    }
+
+    void update()
+    {
+        NanoObjectT *p = m_first;
+        while (p)
+        {
+            p->update();
+            p = p->m_next;
+        }
+    }
+
 protected:
     /**
      * Contains information on tiles to be updated.
@@ -367,9 +329,26 @@ protected:
      * @param msg - message to display
      */
     void displayPopup(const char *msg);
+
+    C& get_canvas() { return canvas; }
+
 private:
     /** Buffer, used by NanoCanvas */
     uint8_t    m_buffer[W * H * C::BITS_PER_PIXEL / 8];
+
+    NanoPoint offset;
+
+    NanoObjectT  *m_first;
+
+    void draw()
+    {
+        NanoObjectT *p = m_first;
+        while (p)
+        {
+            p->draw();
+            p = p->m_next;
+        }
+    }
 };
 
 template<class C, lcduint_t W, lcduint_t H, uint8_t B>

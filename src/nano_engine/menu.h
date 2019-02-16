@@ -38,8 +38,8 @@
  * @ingroup NANO_ENGINE_API
  * @{
  */
-
-class NanoMenuItem: public NanoObject
+template<class T>
+class NanoMenuItem: public NanoObject<T>
 {
 public:
     NanoMenuItem(): NanoObject( {0, 0}, {48, 8} )
@@ -53,9 +53,12 @@ public:
  * This is base class for user menu implementations.
  * NanoMenu can work only as part of NanoEngine.
  */
-class NanoMenu: public NanoObjectList
+template<class T>
+class NanoMenu: public NanoObjectList<T>
 {
 public:
+    using NanoObjectT = NanoObject<T>;
+
     /**
      * Creates menu object.
      * @param pos position of the sprite in global coordinates
@@ -70,7 +73,7 @@ public:
     {
     }
 
-    void add( NanoObject &item )
+    void add( NanoObjectT &item )
     {
         NanoObjectList::add( item );
         updateMenuItemsPosition();
@@ -81,7 +84,7 @@ public:
         }
     }
 
-    void insert( NanoObject &item )
+    void insert( NanoObjectT &item )
     {
         NanoObjectList::insert( item );
         updateMenuItemsPosition();
@@ -97,7 +100,7 @@ public:
         NanoObjectList::refresh();
     }
 
-    NanoObject *getSelected()
+    NanoObjectT *getSelected()
     {
         return m_selected;
     }
@@ -128,10 +131,11 @@ protected:
     virtual void updateMenuItemsPosition() = 0;
 
 private:
-    NanoObject *m_selected = nullptr;
+    NanoObjectT *m_selected = nullptr;
 };
 
-class NanoListMenu: public NanoMenu
+template<class T>
+class NanoListMenu: public NanoMenu<T>
 {
 public:
     using NanoMenu::NanoMenu;
@@ -141,7 +145,7 @@ public:
 private:
     void updateMenuItemsPosition() override
     {
-        NanoObject *p = getNext();
+        NanoObject<T> *p = getNext();
         lcdint_t y_pos = m_rect.p1.y + 8;
         while (p)
         {

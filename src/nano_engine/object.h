@@ -37,23 +37,30 @@
  * @{
  */
 
-class NanoEngineTilerBase;
+class NanoEngineTiler;
 class NanoObjectList;
 
 /**
  * This is base class for all NanoObjects.
  */
+template<class T>
 class NanoObject
 {
 public:
-    friend class NanoEngineTilerBase;
-    friend class NanoObjectList;
+    friend class NanoEngineTiler;
+    friend class NanoObjectList<T>;
     /**
      * Creates basic object.
      */
-    NanoObject(const NanoPoint &pos);
+    NanoObject(const NanoPoint &pos)
+        : m_rect{pos, pos}
+    {
+    }
 
     NanoObject(const NanoPoint &pos, const NanoPoint &size);
+        : m_rect{pos, pos + size - (NanoPoint){1,1}}
+    {
+    }
 
     /**
      * Draws nano object Engine canvas
@@ -63,9 +70,12 @@ public:
     /**
      * Marks nano object location for refreshing on the new frame
      */
-    virtual void refresh();
+    virtual void refresh()
+    {
+        if (m_tiler) m_tiler->refreshWorld( m_rect );
+    }
 
-    virtual void update();
+    virtual void update() {}
 
     lcdint_t width()
     {
@@ -182,31 +192,34 @@ public:
 
 protected:
     NanoRect       m_rect;
-    NanoEngineTilerBase *m_tiler = nullptr;
+    T*             m_tiler = nullptr;
 
-    void set_tiler( NanoEngineTilerBase *tiler )
+    void set_tiler( T *tiler )
     {
          m_tiler = tiler;
     }
 
 private:
-    NanoObject     *m_next = nullptr;
+    NanoObject<T>     *m_next = nullptr;
     bool m_focused = false;
 };
 
-class NanoObjectList: public NanoObject
+template<class T>
+class NanoObjectList: public NanoObject<T>
 {
 public:
+    using NanoObjectT = NanoObject<T>;
+
     using NanoObject::NanoObject;
 
-    NanoObject *getNext(NanoObject *prev = nullptr)
+    NanoObjectT *getNext(NanoObjectT *prev = nullptr)
     {
         return prev ? prev->m_next : m_first;
     }
 
-    NanoObject *getPrev(NanoObject *curr = nullptr)
+    NanoObjectT *getPrev(NanoObjectT *curr = nullptr)
     {
-        NanoObject *p = m_first;
+        NanoObjectT *p = m_first;
         while (p)
         {
             if (p->m_next == curr)
@@ -220,7 +233,7 @@ public:
 
     void update() override
     {
-        NanoObject *p = getNext();
+        NanoObjectT *p = getNext();
         while (p)
         {
             p->update();
@@ -230,7 +243,7 @@ public:
 
     void refresh() override
     {
-        NanoObject *p = getNext();
+        NanoObjectT *p = getNext();
         while (p)
         {
             p->m_tiler = m_tiler;
@@ -241,7 +254,7 @@ public:
 
     void draw() override
     {
-        NanoObject *p = getNext();
+        NanoObjectT *p = getNext();
         while (p)
         {
             p->draw();
@@ -249,9 +262,9 @@ public:
         }
     }
 
-    bool has(NanoObject &object)
+    bool has(NanoObjectT &object)
     {
-        NanoObject *p = getNext();
+        NanoObjectT *p = getNext();
         while (p && p != &object)
         {
             p = getNext(p);
@@ -259,7 +272,7 @@ public:
         return p != nullptr;
     }
 
-    void add(NanoObject &object)
+    void add(NanoObjectT &object)
     {
         if ( has( object ) )
         {
@@ -278,7 +291,7 @@ public:
         object.refresh();
     }
 
-    void insert(NanoObject &object)
+    void insert(NanoObjectT &object)
     {
         if ( has( object ) )
         {
@@ -290,7 +303,7 @@ public:
         object.refresh();
     }
 
-    void remove(NanoObject &object)
+    void remove(NanoObjectT &object)
     {
         if ( m_first == nullptr )
         {
@@ -304,7 +317,7 @@ public:
         }
         else
         {
-            NanoObject *p = m_first;
+            NanoObjectT *p = m_first;
             while ( p->m_next )
             {
                 if ( p->m_next == &object )
@@ -321,7 +334,7 @@ public:
     }
 
 private:
-    NanoObject *m_first;
+    NanoObjectT *m_first;
 };
 
 /**

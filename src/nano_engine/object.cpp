@@ -25,21 +25,3 @@
 #include "object.h"
 #include "tiler.h"
 
-NanoObject::NanoObject(const NanoPoint &pos):
-    m_rect{pos, pos}
-{
-}
-
-NanoObject::NanoObject(const NanoPoint &pos, const NanoPoint &size):
-    m_rect{pos, pos + size - (NanoPoint){1,1}}
-{
-}
-
-void NanoObject::refresh()
-{
-    if (m_tiler) m_tiler->refreshWorld( m_rect );
-}
-
-void NanoObject::update()
-{
-}

@@ -40,11 +40,11 @@
 #include "nano_engine.h"
 
 NanoEngine1 engine;
-NanoMenuItem item1;
-NanoMenuItem item2;
-NanoMenuItem item3;
-NanoMenuItem item4;
-NanoListMenu menu;
+NanoMenuItem<NanoEngine1> item1;
+NanoMenuItem<NanoEngine1> item2;
+NanoMenuItem<NanoEngine1> item3;
+NanoMenuItem<NanoEngine1> item4;
+NanoListMenu<NanoEngine1> menu;
 
 uint16_t lastMillis;
 
