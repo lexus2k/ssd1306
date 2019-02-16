@@ -102,7 +102,9 @@ public:
      */
     void setPos(const NanoPoint &p)
     {
-        m_rect = { p, p + m_rect.size() - (NanoPoint){1,1} };
+        m_rect = { p,
+                   { (lcdint_t)p.x + m_rect.p2.x - m_rect.p1.x,
+                     (lcdint_t)p.y + m_rect.p2.y - m_rect.p1.y } };
     }
 
     /**
