@@ -59,7 +59,6 @@ void setup()
     engine.begin();
 
     engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
-    engine.refresh();
 
     menu.add( item1 );
     menu.add( item2 );
@@ -67,6 +66,7 @@ void setup()
     menu.add( item4 );
     engine.insert( menu );
 
+    engine.refresh();
     lastMillis = millis();
 }
 
