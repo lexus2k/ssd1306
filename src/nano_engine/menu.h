@@ -75,7 +75,7 @@ public:
 
     void add( NanoObjectT &item )
     {
-        NanoObjectList::add( item );
+        NanoObjectList<T>::add( item );
         updateMenuItemsPosition();
         if ( !m_selected )
         {
@@ -86,7 +86,7 @@ public:
 
     void insert( NanoObjectT &item )
     {
-        NanoObjectList::insert( item );
+        NanoObjectList<T>::insert( item );
         updateMenuItemsPosition();
         if ( !m_selected )
         {
@@ -97,7 +97,7 @@ public:
 
     void refresh() override
     {
-        NanoObjectList::refresh();
+        NanoObjectList<T>::refresh();
     }
 
     NanoObjectT *getSelected()

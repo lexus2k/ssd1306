@@ -31,20 +31,18 @@
 #include "point.h"
 #include "rect.h"
 #include "ssd1306_hal/io.h"
+#include "tiler.h"
 
 /**
  * @ingroup NANO_ENGINE_API
  * @{
  */
 
-class NanoEngineTiler;
-class NanoObjectList;
-
 /**
  * This is base class for all NanoObjects.
  */
 template<class T>
-class NanoObject
+class NanoObject: public NanoObjectBase
 {
 public:
     friend class NanoEngineTiler;
@@ -57,7 +55,7 @@ public:
     {
     }
 
-    NanoObject(const NanoPoint &pos, const NanoPoint &size);
+    NanoObject(const NanoPoint &pos, const NanoPoint &size)
         : m_rect{pos, pos + size - (NanoPoint){1,1}}
     {
     }
@@ -72,7 +70,10 @@ public:
      */
     virtual void refresh()
     {
-        if (m_tiler) m_tiler->refreshWorld( m_rect );
+        if (m_tiler)
+        {
+             m_tiler->refreshWorld( m_rect );
+        }
     }
 
     virtual void update() {}
@@ -112,9 +113,9 @@ public:
      */
     void setPos(const NanoPoint &p)
     {
-        m_rect = { p,
-                   { (lcdint_t)p.x + m_rect.p2.x - m_rect.p1.x,
-                     (lcdint_t)p.y + m_rect.p2.y - m_rect.p1.y } };
+        m_rect = (NanoRect){ p,
+                   (NanoPoint){ (lcdint_t)(p.x + m_rect.p2.x - m_rect.p1.x),
+                                (lcdint_t)(p.y + m_rect.p2.y - m_rect.p1.y) } };
     }
 
     /**
@@ -173,53 +174,26 @@ public:
      */
     const NanoPoint & getPosition() const { return m_rect.p1; }
 
-    void focus()
-    {
-        m_focused = true;
-        refresh();
-    }
-
-    void defocus()
-    {
-        m_focused = false;
-        refresh();
-    }
-
-    bool isFocused()
-    {
-        return m_focused;
-    }
+    NanoObject<T> *m_next = nullptr;
 
 protected:
     NanoRect       m_rect;
-    T*             m_tiler = nullptr;
-
-    void set_tiler( T *tiler )
-    {
-         m_tiler = tiler;
-    }
-
-private:
-    NanoObject<T>     *m_next = nullptr;
-    bool m_focused = false;
 };
 
 template<class T>
 class NanoObjectList: public NanoObject<T>
 {
 public:
-    using NanoObjectT = NanoObject<T>;
+    using NanoObject<T>::NanoObject;
 
-    using NanoObject::NanoObject;
-
-    NanoObjectT *getNext(NanoObjectT *prev = nullptr)
+    NanoObject<T> *getNext(NanoObject<T> *prev = nullptr)
     {
         return prev ? prev->m_next : m_first;
     }
 
-    NanoObjectT *getPrev(NanoObjectT *curr = nullptr)
+    NanoObject<T> *getPrev(NanoObject<T> *curr = nullptr)
     {
-        NanoObjectT *p = m_first;
+        NanoObject<T> *p = m_first;
         while (p)
         {
             if (p->m_next == curr)
@@ -233,7 +207,7 @@ public:
 
     void update() override
     {
-        NanoObjectT *p = getNext();
+        NanoObject<T> *p = getNext();
         while (p)
         {
             p->update();
@@ -243,10 +217,10 @@ public:
 
     void refresh() override
     {
-        NanoObjectT *p = getNext();
+        NanoObject<T> *p = getNext();
         while (p)
         {
-            p->m_tiler = m_tiler;
+            p->setTiler( m_tiler );
             p->refresh();
             p = getNext( p );
         }
@@ -254,7 +228,7 @@ public:
 
     void draw() override
     {
-        NanoObjectT *p = getNext();
+        NanoObject<T> *p = getNext();
         while (p)
         {
             p->draw();
@@ -262,9 +236,9 @@ public:
         }
     }
 
-    bool has(NanoObjectT &object)
+    bool has(NanoObject<T> &object)
     {
-        NanoObjectT *p = getNext();
+        NanoObject<T> *p = getNext();
         while (p && p != &object)
         {
             p = getNext(p);
@@ -272,14 +246,14 @@ public:
         return p != nullptr;
     }
 
-    void add(NanoObjectT &object)
+    void add(NanoObject<T> &object)
     {
         if ( has( object ) )
         {
             return;
         }
         object.m_next = nullptr;
-        object.m_tiler = m_tiler;
+        object.setTiler( m_tiler );
         if ( !m_first )
         {
             m_first = &object;
@@ -291,7 +265,7 @@ public:
         object.refresh();
     }
 
-    void insert(NanoObjectT &object)
+    void insert(NanoObject<T> &object)
     {
         if ( has( object ) )
         {
@@ -303,7 +277,7 @@ public:
         object.refresh();
     }
 
-    void remove(NanoObjectT &object)
+    void remove(NanoObject<T> &object)
     {
         if ( m_first == nullptr )
         {
@@ -317,7 +291,7 @@ public:
         }
         else
         {
-            NanoObjectT *p = m_first;
+            NanoObject<T> *p = m_first;
             while ( p->m_next )
             {
                 if ( p->m_next == &object )
@@ -334,7 +308,7 @@ public:
     }
 
 private:
-    NanoObjectT *m_first;
+    NanoObject<T> *m_first = nullptr;
 };
 
 /**

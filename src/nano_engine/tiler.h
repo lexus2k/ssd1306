@@ -30,7 +30,7 @@
 #define _NANO_ENGINE_TILER_H_
 
 #include "canvas.h"
-#include "object.h"
+//#include "object.h"
 #include "lcd/lcd_common.h"
 
 /**
@@ -68,6 +68,43 @@ extern "C" SFixedFontInfo s_fixedFont;
  */
 typedef bool (*TNanoEngineOnDraw)(void);
 
+class NanoObjectBase
+{
+public:
+    virtual void draw() = 0;
+    virtual void update() = 0;
+    virtual void refresh() = 0;
+
+    void focus()
+    {
+        m_focused = true;
+        refresh();
+    }
+
+    void defocus()
+    {
+        m_focused = false;
+        refresh();
+    }
+
+    bool isFocused()
+    {
+        return m_focused;
+    }
+
+//    NanoObjectBase    *m_next = nullptr;
+
+protected:
+    void              *m_tiler = nullptr;
+
+    void setTiler(void *tiler) { m_tiler = tiler; }
+
+    void *getTiler() { return m_tiler; }
+
+private:
+    bool m_focused;
+};
+
 /**
  * This class template is responsible for holding and updating data about areas to be refreshed
  * on LCD display. It accepts canvas class, tile width in pixels, tile height in pixels and
@@ -91,7 +128,7 @@ protected:
     };
 
 public:
-    using NanoObjectT = NanoObject<NanoEngineTiler<C,W,H,B>>;
+    using NanoObjectBase = NanoObject<NanoEngineTiler<C,W,H,B>>;
 
     /** Number of bits in tile size. 5 corresponds to 1<<5 = 32 tile size */
     static const uint8_t NE_TILE_SIZE_BITS = B;
@@ -257,7 +294,7 @@ public:
      */
     bool collision(NanoPoint &p, NanoRect &rect) { return rect.collision( p ); }
 
-    void insert(NanoObjectT &object)
+    void insert(NanoObjectBase &object)
     {
         object.m_next = m_first;
         object.m_tiler = this;
@@ -265,7 +302,7 @@ public:
         object.refresh();
     }
 
-    void remove(NanoObjectT &object)
+    void remove(NanoObjectBase &object)
     {
         if ( m_first == nullptr )
         {
@@ -279,7 +316,7 @@ public:
         }
         else
         {
-            NanoObjectT *p = m_first;
+            NanoObjectBase *p = m_first;
             while ( p->m_next )
             {
                 if ( p->m_next == &object )
@@ -297,7 +334,7 @@ public:
 
     void update()
     {
-        NanoObjectT *p = m_first;
+        NanoObjectBase *p = m_first;
         while (p)
         {
             p->update();
@@ -338,11 +375,11 @@ private:
 
     NanoPoint offset;
 
-    NanoObjectT  *m_first;
+    NanoObjectBase  *m_first;
 
     void draw()
     {
-        NanoObjectT *p = m_first;
+        NanoObjectBase *p = m_first;
         while (p)
         {
             p->draw();
