@@ -41,7 +41,8 @@ MCU ?= atmega328p
 FREQUENCY ?= 16000000
 platform=avr
 
-CCFLAGS += -g -Os -w -ffreestanding -mmcu=$(MCU) -DF_CPU=$(FREQUENCY)
+CCFLAGS += -g -Os -w -ffreestanding -mmcu=$(MCU) -DF_CPU=$(FREQUENCY) -fno-rtti
+LDFLAGS += -fno-implicit-templates
 SRCS += avr_abi.cpp
 
 ifeq ($(ADAFRUIT),y)
