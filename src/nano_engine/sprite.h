@@ -38,12 +38,14 @@
  * @{
  */
 
+#define NanoSprite(e) NanoSpriteImpl<e,NanoSpriteDraw<e>>
+
 /**
  * This is template class for user sprites implementations.
  * NanoSprite can work only as part of NanoEngine.
  */
 template<class T>
-class NanoSprite: public NanoObject<T>
+class INanoSprite: public NanoObject<T>
 {
 public:
     /**
@@ -53,40 +55,66 @@ public:
      * @param size size of sprite
      * @param bitmap sprite content (in flash memory)
      */
-    NanoSprite(const NanoPoint &pos, const NanoPoint &size, const uint8_t *bitmap)
+    INanoSprite(const NanoPoint &pos, const NanoPoint &size, const uint8_t *bitmap)
          : NanoObject<T>( pos, size )
          , m_bitmap( bitmap )
     {
     }
 
-    /**
-     * Draws monochrome sprite on Engine canvas
-     */
-    void draw() override
-    {
-/*        this->m_tiler->get_canvas().drawBitmap1(
-            this->m_rect.p1.x, this->m_rect.p1.y,
-            this->m_rect.width(), this->m_rect.height(), m_bitmap);*/
-    }
-
+    void draw() override {}
 
     /**
      * Replaces sprite bitmap with new one.
      */
     void setBitmap(const uint8_t *bitmap) { m_bitmap = bitmap; }
 
+    const uint8_t *getBitmap() { return m_bitmap; }
+
 private:
     const uint8_t *m_bitmap;
 };
 
+template<class E>
+static void NanoSpriteDraw(NanoObject<E> &obj)
+{
+    obj.getTiler()->get_canvas().drawBitmap1(
+        obj.getRect().p1.x, obj.getRect().p1.y,
+        obj.getRect().width(), obj.getRect().height(),
+        static_cast<INanoSprite<E>&>(obj).getBitmap());
+}
+
+/**
+ * This is template class for user sprites implementations.
+ * NanoSprite can work only as part of NanoEngine.
+ */
+template<class T, void(*F)(NanoObject<T> &obj)>
+class NanoSpriteImpl: public INanoSprite<T>
+{
+public:
+    using INanoSprite<T>::INanoSprite;
+
+    /**
+     * Draws monochrome sprite on Engine canvas
+     */
+    void draw() override
+    {
+        F(*this);
+/*        this->m_tiler->get_canvas().drawBitmap1(
+            this->m_rect.p1.x, this->m_rect.p1.y,
+            this->m_rect.width(), this->m_rect.height(), m_bitmap);*/
+    }
+};
+
+
+
 /**
  * This is base class for user sprites implementation.
  */
-template<class T>
-class NanoFixedSprite: public NanoSprite<T>
+template<class T, void(*F)(NanoObject<T> &obj)>
+class NanoFixedSpriteImpl: public NanoSpriteImpl<T,F>
 {
 public:
-    using NanoSprite<T>::NanoSprite;
+    using NanoSpriteImpl<T,F>::NanoSpriteImpl;
 };
 
 /**

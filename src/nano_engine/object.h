@@ -176,6 +176,8 @@ public:
      */
     const NanoPoint & getPosition() const { return m_rect.p1; }
 
+    const NanoRect & getRect() const { return m_rect; }
+
 protected:
     NanoRect       m_rect;
 };

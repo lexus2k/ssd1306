@@ -49,7 +49,7 @@ public:
 
     void draw() override
     {
-/*        if ( this->isFocused() )
+        if ( this->isFocused() )
         {
             this->getTiler()->get_canvas().setColor( 0xFFFF );
             this->getTiler()->get_canvas().fillRect( this->m_rect );
@@ -60,7 +60,7 @@ public:
             this->getTiler()->get_canvas().fillRect( this->m_rect );
             this->getTiler()->get_canvas().setColor( 0xFFFF );
             this->getTiler()->get_canvas().drawRect( this->m_rect );
-        }*/
+        }
     }
 };
 
@@ -155,10 +155,10 @@ public:
 
     void draw() override
     {
-/*        this->getTiler()->get_canvas().setColor( 0xFFFF );
+        this->getTiler()->get_canvas().setColor( 0xFFFF );
         this->getTiler()->get_canvas().drawRect( { this->m_rect.p1 + (NanoPoint){3, 3},
                                                 this->m_rect.p2 - (NanoPoint){3, 3} } );
-        NanoMenu<T>::draw();*/
+        NanoMenu<T>::draw();
     }
 
 private:

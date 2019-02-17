@@ -113,6 +113,8 @@ public:
                                 (lcdint_t)(p.y + m_rect.p2.y - m_rect.p1.y) } };
     }
 
+    T *getTiler() { return static_cast<T*>(m_tiler); }
+
 protected:
     void           *m_tiler = nullptr;
     NanoRect        m_rect;
@@ -120,8 +122,6 @@ protected:
     NanoEngineObject<T>  *m_next = nullptr;
 
     void setTiler(void *tiler) { m_tiler = tiler; }
-
-    T *getTiler() { return static_cast<T*>(m_tiler); }
 
 private:
     bool m_focused;

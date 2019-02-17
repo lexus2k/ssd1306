@@ -39,11 +39,24 @@
 #include "ssd1306.h"
 #include "nano_engine.h"
 
+const PROGMEM uint8_t heartImage[8] =
+{
+    0B00001110,
+    0B00011111,
+    0B00111111,
+    0B01111110,
+    0B01111110,
+    0B00111101,
+    0B00011001,
+    0B00001110
+};
+
 NanoEngine1 engine;
 NanoMenuItem<NanoEngine1> item1;
 NanoMenuItem<NanoEngine1> item2;
 NanoMenuItem<NanoEngine1> item3;
 NanoMenuItem<NanoEngine1> item4;
+NanoSprite(NanoEngine1) sprite( {100,55}, {8,8}, heartImage );
 NanoListMenu<NanoEngine1> menu;
 
 uint16_t lastMillis;
@@ -65,6 +78,7 @@ void setup()
     menu.add( item3 );
     menu.add( item4 );
     engine.insert( menu );
+    engine.insert( sprite );
 
     engine.refresh();
     lastMillis = millis();
