@@ -150,7 +150,7 @@ uint8_t NanoCanvasOps<BPP>::printChar(uint8_t c)
 template <uint8_t BPP>
 size_t NanoCanvasOps<BPP>::write(uint8_t c)
 {
-    if (c == '\n')
+/*    if (c == '\n')
     {
         m_cursorY += (lcdint_t)s_fixedFont.h.height;
         m_cursorX = 0;
@@ -162,7 +162,7 @@ size_t NanoCanvasOps<BPP>::write(uint8_t c)
     else
     {
         return printChar( c );
-    }
+    }*/
     return 1;
 }
 

@@ -49,18 +49,18 @@ public:
 
     void draw() override
     {
-        if ( this->isFocused() )
+/*        if ( this->isFocused() )
         {
-            this->m_tiler->get_canvas().setColor( 0xFFFF );
-            this->m_tiler->get_canvas().fillRect( this->m_rect );
+            this->getTiler()->get_canvas().setColor( 0xFFFF );
+            this->getTiler()->get_canvas().fillRect( this->m_rect );
         }
         else
         {
-            this->m_tiler->get_canvas().setColor( 0 );
-            this->m_tiler->get_canvas().fillRect( this->m_rect );
-            this->m_tiler->get_canvas().setColor( 0xFFFF );
-            this->m_tiler->get_canvas().drawRect( this->m_rect );
-        }
+            this->getTiler()->get_canvas().setColor( 0 );
+            this->getTiler()->get_canvas().fillRect( this->m_rect );
+            this->getTiler()->get_canvas().setColor( 0xFFFF );
+            this->getTiler()->get_canvas().drawRect( this->m_rect );
+        }*/
     }
 };
 
@@ -86,7 +86,7 @@ public:
     {
     }
 
-    void add( NanoEngine<T> &item )
+    void add( NanoObject<T> &item )
     {
         NanoObjectList<T>::add( item );
         updateMenuItemsPosition();
@@ -97,7 +97,7 @@ public:
         }
     }
 
-    void insert( NanoEngine<T> &item )
+    void insert( NanoObject<T> &item )
     {
         NanoObjectList<T>::insert( item );
         updateMenuItemsPosition();
@@ -113,7 +113,7 @@ public:
         NanoObjectList<T>::refresh();
     }
 
-    NanoEngine<T> *getSelected()
+    NanoObject<T> *getSelected()
     {
         return m_selected;
     }
@@ -155,10 +155,10 @@ public:
 
     void draw() override
     {
-        this->m_tiler->get_canvas().setColor( 0xFFFF );
-        this->m_tiler->get_canvas().drawRect( { this->m_rect.p1 + (NanoPoint){3, 3},
+/*        this->getTiler()->get_canvas().setColor( 0xFFFF );
+        this->getTiler()->get_canvas().drawRect( { this->m_rect.p1 + (NanoPoint){3, 3},
                                                 this->m_rect.p2 - (NanoPoint){3, 3} } );
-        NanoMenu<T>::draw();
+        NanoMenu<T>::draw();*/
     }
 
 private:

@@ -114,14 +114,14 @@ public:
     }
 
 protected:
-    T              *m_tiler = nullptr;
+    void           *m_tiler = nullptr;
     NanoRect        m_rect;
 
     NanoEngineObject<T>  *m_next = nullptr;
 
-    void setTiler(T *tiler) { m_tiler = tiler; }
+    void setTiler(void *tiler) { m_tiler = tiler; }
 
-    T *getTiler() { return m_tiler; }
+    T *getTiler() { return static_cast<T*>(m_tiler); }
 
 private:
     bool m_focused;

@@ -40,11 +40,11 @@
 #include "nano_engine.h"
 
 NanoEngine1 engine;
-/*NanoMenuItem<NanoEngine1> item1;
+NanoMenuItem<NanoEngine1> item1;
 NanoMenuItem<NanoEngine1> item2;
 NanoMenuItem<NanoEngine1> item3;
 NanoMenuItem<NanoEngine1> item4;
-NanoListMenu<NanoEngine1> menu;*/
+NanoListMenu<NanoEngine1> menu;
 
 uint16_t lastMillis;
 
@@ -60,11 +60,11 @@ void setup()
 
     engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
 
-/*    menu.add( item1 );
+    menu.add( item1 );
     menu.add( item2 );
     menu.add( item3 );
     menu.add( item4 );
-    engine.insert( menu );*/
+    engine.insert( menu );
 
     engine.refresh();
     lastMillis = millis();
@@ -75,7 +75,7 @@ void loop()
     if (static_cast<uint16_t>(millis() - lastMillis) > 2000 )
     {
         lastMillis = millis();
-//        menu.down();
+        menu.down();
     }
     if (!engine.nextFrame()) return;
     engine.update();

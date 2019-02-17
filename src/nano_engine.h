@@ -35,7 +35,7 @@
 #include "nano_engine/tiler.h"
 #include "nano_engine/object.h"
 #include "nano_engine/sprite.h"
-//#include "nano_engine/menu.h"
+#include "nano_engine/menu.h"
 #include "nano_engine/core.h"
 
 // DO NOT DECLARE NanoEngine8, NanoEngine16, NanoEngine1 as class NAME: public NanoEngine<T>
