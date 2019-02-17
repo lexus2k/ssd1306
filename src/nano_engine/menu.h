@@ -42,11 +42,26 @@ template<class T>
 class NanoMenuItem: public NanoObject<T>
 {
 public:
-    NanoMenuItem(): NanoObject( {0, 0}, {48, 8} )
+    NanoMenuItem()
+       : NanoObject<T>( {0, 0}, {48, 8} )
     {
     }
 
-    void draw() override;
+    void draw() override
+    {
+        if ( this->isFocused() )
+        {
+            this->m_tiler->get_canvas().setColor( 0xFFFF );
+            this->m_tiler->get_canvas().fillRect( this->m_rect );
+        }
+        else
+        {
+            this->m_tiler->get_canvas().setColor( 0 );
+            this->m_tiler->get_canvas().fillRect( this->m_rect );
+            this->m_tiler->get_canvas().setColor( 0xFFFF );
+            this->m_tiler->get_canvas().drawRect( this->m_rect );
+        }
+    }
 };
 
 /**
@@ -57,23 +72,21 @@ template<class T>
 class NanoMenu: public NanoObjectList<T>
 {
 public:
-    using NanoObjectT = NanoObject<T>;
-
     /**
      * Creates menu object.
      * @param pos position of the sprite in global coordinates
      * @param bitmap sprite content (in flash memory)
      */
     NanoMenu(const NanoPoint &pos )
-         : NanoObjectList( pos )
+         : NanoObjectList<T>( pos )
     {
     }
 
-    NanoMenu(): NanoObjectList( {0,0} )
+    NanoMenu(): NanoObjectList<T>( {0,0} )
     {
     }
 
-    void add( NanoObjectT &item )
+    void add( NanoEngine<T> &item )
     {
         NanoObjectList<T>::add( item );
         updateMenuItemsPosition();
@@ -84,7 +97,7 @@ public:
         }
     }
 
-    void insert( NanoObjectT &item )
+    void insert( NanoEngine<T> &item )
     {
         NanoObjectList<T>::insert( item );
         updateMenuItemsPosition();
@@ -100,7 +113,7 @@ public:
         NanoObjectList<T>::refresh();
     }
 
-    NanoObjectT *getSelected()
+    NanoEngine<T> *getSelected()
     {
         return m_selected;
     }
@@ -108,10 +121,10 @@ public:
     void down()
     {
         m_selected->defocus();
-        m_selected = getNext( m_selected );
+        m_selected = this->getNext( m_selected );
         if ( !m_selected )
         {
-            m_selected = getNext();
+            m_selected = this->getNext();
         }
         m_selected->focus();
     }
@@ -122,7 +135,7 @@ public:
         m_selected = getPrev( m_selected );
         if ( !m_selected )
         {
-            m_selected = getPrev();
+            m_selected = this->getPrev();
         }
         m_selected->focus();
     }
@@ -131,30 +144,36 @@ protected:
     virtual void updateMenuItemsPosition() = 0;
 
 private:
-    NanoObjectT *m_selected = nullptr;
+    NanoObject<T> *m_selected = nullptr;
 };
 
 template<class T>
 class NanoListMenu: public NanoMenu<T>
 {
 public:
-    using NanoMenu::NanoMenu;
+    using NanoMenu<T>::NanoMenu;
 
-    void draw() override;
+    void draw() override
+    {
+        this->m_tiler->get_canvas().setColor( 0xFFFF );
+        this->m_tiler->get_canvas().drawRect( { this->m_rect.p1 + (NanoPoint){3, 3},
+                                                this->m_rect.p2 - (NanoPoint){3, 3} } );
+        NanoMenu<T>::draw();
+    }
 
 private:
     void updateMenuItemsPosition() override
     {
-        NanoObject<T> *p = getNext();
-        lcdint_t y_pos = m_rect.p1.y + 8;
+        NanoObject<T> *p = this->getNext();
+        lcdint_t y_pos = this->m_rect.p1.y + 8;
         while (p)
         {
-            p->setPos( { (lcdint_t)(m_rect.p1.x + 8), y_pos } );
+            p->setPos( { (lcdint_t)(this->m_rect.p1.x + 8), y_pos } );
             y_pos += p->height() + 1;
-            p = getNext( p );
+            p = this->getNext( p );
         }
-        m_rect.p2.y = y_pos + 7;
-        m_rect.p2.x = ssd1306_lcd.width;
+        this->m_rect.p2.y = y_pos + 7;
+        this->m_rect.p2.x = ssd1306_lcd.width;
     }
 };
 

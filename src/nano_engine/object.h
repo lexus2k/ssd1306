@@ -38,15 +38,17 @@
  * @{
  */
 
+template<class T>
+class NanoObjectList;
+
 /**
  * This is base class for all NanoObjects.
  */
 template<class T>
-class NanoObject: public NanoObjectBase
+class NanoObject: public NanoEngineObject<T>
 {
 public:
-    friend class NanoEngineTiler;
-    friend class NanoObjectList<T>;
+    template<class N> friend class NanoObjectList;
     /**
      * Creates basic object.
      */
@@ -70,9 +72,9 @@ public:
      */
     virtual void refresh()
     {
-        if (m_tiler)
+        if (this->getTiler())
         {
-             m_tiler->refreshWorld( m_rect );
+             this->getTiler()->refreshWorld( m_rect );
         }
     }
 
@@ -174,8 +176,6 @@ public:
      */
     const NanoPoint & getPosition() const { return m_rect.p1; }
 
-    NanoObject<T> *m_next = nullptr;
-
 protected:
     NanoRect       m_rect;
 };
@@ -188,7 +188,7 @@ public:
 
     NanoObject<T> *getNext(NanoObject<T> *prev = nullptr)
     {
-        return prev ? prev->m_next : m_first;
+        return static_cast<NanoObject<T>*>(prev ? prev->m_next : m_first);
     }
 
     NanoObject<T> *getPrev(NanoObject<T> *curr = nullptr)
@@ -200,7 +200,7 @@ public:
             {
                 break;
             }
-            p = p->m_next;
+            p = static_cast<NanoObject<T>*>(p->m_next);
         }
         return p;
     }
@@ -220,7 +220,7 @@ public:
         NanoObject<T> *p = getNext();
         while (p)
         {
-            p->setTiler( m_tiler );
+            p->setTiler( this->m_tiler );
             p->refresh();
             p = getNext( p );
         }
@@ -253,7 +253,7 @@ public:
             return;
         }
         object.m_next = nullptr;
-        object.setTiler( m_tiler );
+        object.setTiler( this->m_tiler );
         if ( !m_first )
         {
             m_first = &object;
@@ -272,7 +272,7 @@ public:
             return;
         }
         object.m_next = m_first;
-        object.m_tiler = m_tiler;
+        object.m_tiler = this->m_tiler;
         m_first = &object;
         object.refresh();
     }

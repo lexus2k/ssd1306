@@ -226,7 +226,7 @@ protected:
 /**
  * Base class for NanoEngine.
  */
-template<class C, uint8_t W, uint8_t H, uint8_t B>
+template<class C, lcduint_t W, lcduint_t H, uint8_t B>
 class NanoEngine: public NanoEngineCore,
                   public NanoEngineTiler<C,W,H,B>
 {
@@ -260,13 +260,13 @@ public:
 protected:
 };
 
-template<class C, uint8_t W, uint8_t H, uint8_t B>
+template<class C, lcduint_t W, lcduint_t H, uint8_t B>
 NanoEngine<C,W,H,B>::NanoEngine()
     : NanoEngineCore(), NanoEngineTiler<C,W,H,B>()
 {
 }
 
-template<class C, uint8_t W, uint8_t H, uint8_t B>
+template<class C, lcduint_t W, lcduint_t H, uint8_t B>
 void NanoEngine<C,W,H,B>::display()
 {
     m_lastFrameTs = millis();
@@ -274,7 +274,7 @@ void NanoEngine<C,W,H,B>::display()
     m_cpuLoad = ((millis() - m_lastFrameTs)*100)/m_frameDurationMs;
 }
 
-template<class C, uint8_t W, uint8_t H, uint8_t B>
+template<class C, lcduint_t W, lcduint_t H, uint8_t B>
 void NanoEngine<C,W,H,B>::begin()
 {
     NanoEngineCore::begin();
@@ -284,7 +284,7 @@ void NanoEngine<C,W,H,B>::begin()
     }
 }
 
-template<class C, uint8_t W, uint8_t H, uint8_t B>
+template<class C, lcduint_t W, lcduint_t H, uint8_t B>
 void NanoEngine<C,W,H,B>::notify(const char *str)
 {
     NanoEngineTiler<C,W,H,B>::displayPopup(str);

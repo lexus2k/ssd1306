@@ -42,7 +42,8 @@
  * This is template class for user sprites implementations.
  * NanoSprite can work only as part of NanoEngine.
  */
-class NanoSprite: public NanoObject
+template<class T>
+class NanoSprite: public NanoObject<T>
 {
 public:
     /**
@@ -53,7 +54,7 @@ public:
      * @param bitmap sprite content (in flash memory)
      */
     NanoSprite(const NanoPoint &pos, const NanoPoint &size, const uint8_t *bitmap)
-         : NanoObject( pos, size )
+         : NanoObject<T>( pos, size )
          , m_bitmap( bitmap )
     {
     }
@@ -61,7 +62,13 @@ public:
     /**
      * Draws monochrome sprite on Engine canvas
      */
-    void draw() override;
+    void draw() override
+    {
+        this->m_tiler->get_canvas().drawBitmap1(
+            this->m_rect.p1.x, this->m_rect.p1.y,
+            this->m_rect.width(), this->m_rect.height(), m_bitmap);
+    }
+
 
     /**
      * Replaces sprite bitmap with new one.
@@ -75,10 +82,11 @@ private:
 /**
  * This is base class for user sprites implementation.
  */
-class NanoFixedSprite: public NanoSprite
+template<class T>
+class NanoFixedSprite: public NanoSprite<T>
 {
 public:
-    using NanoSprite::NanoSprite;
+    using NanoSprite<T>::NanoSprite;
 };
 
 /**

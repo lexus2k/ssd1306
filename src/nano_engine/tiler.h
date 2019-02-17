@@ -30,6 +30,7 @@
 #define _NANO_ENGINE_TILER_H_
 
 #include "canvas.h"
+#include "rect.h"
 //#include "object.h"
 #include "lcd/lcd_common.h"
 
@@ -68,9 +69,19 @@ extern "C" SFixedFontInfo s_fixedFont;
  */
 typedef bool (*TNanoEngineOnDraw)(void);
 
-class NanoObjectBase
+template<class C, lcduint_t W, lcduint_t H, uint8_t B>
+class NanoEngine;
+
+template<class C, lcduint_t W, lcduint_t H, uint8_t B>
+class NanoEngineTiler;
+
+template<class T>
+class NanoEngineObject
 {
 public:
+    template<class C, lcduint_t W, lcduint_t H, uint8_t B>
+    friend class NanoEngineTiler;
+
     virtual void draw() = 0;
     virtual void update() = 0;
     virtual void refresh() = 0;
@@ -92,14 +103,25 @@ public:
         return m_focused;
     }
 
-//    NanoObjectBase    *m_next = nullptr;
+    /**
+     * Sets position of NanoObject, doesn't mark for update content on the screen
+     */
+    void setPos(const NanoPoint &p)
+    {
+        m_rect = (NanoRect){ p,
+                   (NanoPoint){ (lcdint_t)(p.x + m_rect.p2.x - m_rect.p1.x),
+                                (lcdint_t)(p.y + m_rect.p2.y - m_rect.p1.y) } };
+    }
 
 protected:
-    void              *m_tiler = nullptr;
+    T              *m_tiler = nullptr;
+    NanoRect        m_rect;
 
-    void setTiler(void *tiler) { m_tiler = tiler; }
+    NanoEngineObject<T>  *m_next = nullptr;
 
-    void *getTiler() { return m_tiler; }
+    void setTiler(T *tiler) { m_tiler = tiler; }
+
+    T *getTiler() { return m_tiler; }
 
 private:
     bool m_focused;
@@ -128,8 +150,6 @@ protected:
     };
 
 public:
-    using NanoObjectBase = NanoObject<NanoEngineTiler<C,W,H,B>>;
-
     /** Number of bits in tile size. 5 corresponds to 1<<5 = 32 tile size */
     static const uint8_t NE_TILE_SIZE_BITS = B;
     /** Width of tile in pixels */
@@ -294,29 +314,29 @@ public:
      */
     bool collision(NanoPoint &p, NanoRect &rect) { return rect.collision( p ); }
 
-    void insert(NanoObjectBase &object)
+    void insert(NanoEngineObject<NanoEngine<C,W,H,B>> &object)
     {
-        object.m_next = m_first;
+        object.m_next = this->m_first;
         object.m_tiler = this;
         m_first = &object;
         object.refresh();
     }
 
-    void remove(NanoObjectBase &object)
+    void remove(NanoEngineObject<NanoEngine<C,W,H,B>> &object)
     {
-        if ( m_first == nullptr )
+        if ( this->m_first == nullptr )
         {
         }
         else if ( &object == m_first )
         {
             object.refresh();
-            m_first = object.m_next;
+            this->m_first = object.m_next;
             object.m_next = nullptr;
             object.m_tiler = nullptr;
         }
         else
         {
-            NanoObjectBase *p = m_first;
+            NanoEngineObject<NanoEngine<C,W,H,B>> *p = this->m_first;
             while ( p->m_next )
             {
                 if ( p->m_next == &object )
@@ -334,13 +354,15 @@ public:
 
     void update()
     {
-        NanoObjectBase *p = m_first;
+        NanoEngineObject<NanoEngine<C,W,H,B>> *p = m_first;
         while (p)
         {
             p->update();
             p = p->m_next;
         }
     }
+
+    C& get_canvas() { return canvas; }
 
 protected:
     /**
@@ -367,19 +389,17 @@ protected:
      */
     void displayPopup(const char *msg);
 
-    C& get_canvas() { return canvas; }
-
 private:
     /** Buffer, used by NanoCanvas */
     uint8_t    m_buffer[W * H * C::BITS_PER_PIXEL / 8];
 
     NanoPoint offset;
 
-    NanoObjectBase  *m_first;
+    NanoEngineObject<NanoEngine<C,W,H,B>>  *m_first;
 
     void draw()
     {
-        NanoObjectBase *p = m_first;
+        NanoEngineObject<NanoEngine<C,W,H,B>> *p = m_first;
         while (p)
         {
             p->draw();
