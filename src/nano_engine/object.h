@@ -65,12 +65,12 @@ public:
     /**
      * Draws nano object Engine canvas
      */
-    virtual void draw() = 0;
+    void draw() override {};
 
     /**
      * Marks nano object location for refreshing on the new frame
      */
-    virtual void refresh()
+    void refresh() override
     {
         if (this->getTiler())
         {
@@ -78,7 +78,7 @@ public:
         }
     }
 
-    virtual void update() {}
+    void update() override {}
 
     lcdint_t width()
     {

@@ -61,8 +61,6 @@ public:
     {
     }
 
-    void draw() override {}
-
     /**
      * Replaces sprite bitmap with new one.
      */
@@ -99,13 +97,8 @@ public:
     void draw() override
     {
         F(*this);
-/*        this->m_tiler->get_canvas().drawBitmap1(
-            this->m_rect.p1.x, this->m_rect.p1.y,
-            this->m_rect.width(), this->m_rect.height(), m_bitmap);*/
     }
 };
-
-
 
 /**
  * This is base class for user sprites implementation.
