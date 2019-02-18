@@ -38,14 +38,12 @@
  * @{
  */
 
-#define NanoSprite(e) NanoSpriteImpl<e,NanoSpriteDraw<e>>
-
 /**
  * This is template class for user sprites implementations.
  * NanoSprite can work only as part of NanoEngine.
  */
 template<class T>
-class INanoSprite: public NanoObject<T>
+class NanoSprite: public NanoObject<T>
 {
 public:
     /**
@@ -55,10 +53,18 @@ public:
      * @param size size of sprite
      * @param bitmap sprite content (in flash memory)
      */
-    INanoSprite(const NanoPoint &pos, const NanoPoint &size, const uint8_t *bitmap)
+    NanoSprite(const NanoPoint &pos, const NanoPoint &size, const uint8_t *bitmap)
          : NanoObject<T>( pos, size )
          , m_bitmap( bitmap )
     {
+    }
+
+    void draw() override
+    {
+        this->getTiler()->get_canvas().drawBitmap1(
+            this->getRect().p1.x, this->getRect().p1.y,
+            this->getRect().width(), this->getRect().height(),
+            this->getBitmap());
     }
 
     /**
@@ -72,42 +78,14 @@ private:
     const uint8_t *m_bitmap;
 };
 
-template<class E>
-static void NanoSpriteDraw(NanoObject<E> &obj)
-{
-    obj.getTiler()->get_canvas().drawBitmap1(
-        obj.getRect().p1.x, obj.getRect().p1.y,
-        obj.getRect().width(), obj.getRect().height(),
-        static_cast<INanoSprite<E>&>(obj).getBitmap());
-}
-
-/**
- * This is template class for user sprites implementations.
- * NanoSprite can work only as part of NanoEngine.
- */
-template<class T, void(*F)(NanoObject<T> &obj)>
-class NanoSpriteImpl: public INanoSprite<T>
-{
-public:
-    using INanoSprite<T>::INanoSprite;
-
-    /**
-     * Draws monochrome sprite on Engine canvas
-     */
-    void draw() override
-    {
-        F(*this);
-    }
-};
-
 /**
  * This is base class for user sprites implementation.
  */
-template<class T, void(*F)(NanoObject<T> &obj)>
-class NanoFixedSpriteImpl: public NanoSpriteImpl<T,F>
+template<class T>
+class NanoFixedSprite: public NanoSprite<T>
 {
 public:
-    using NanoSpriteImpl<T,F>::NanoSpriteImpl;
+    using NanoSprite<T>::NanoSprite;
 };
 
 /**

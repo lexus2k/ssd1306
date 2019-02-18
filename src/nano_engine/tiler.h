@@ -428,7 +428,6 @@ void NanoEngineTiler<C,W,H,B>::displayBuffer()
                 }
                 else if (m_onDraw())
                 {
-                    canvas.setOffset(x, y);
                     draw();
                     canvas.blt();
                 }
