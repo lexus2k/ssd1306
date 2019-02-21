@@ -29,12 +29,58 @@
 #define _NANO_MENU_ITEMS_H_
 
 #include "menu.h"
-#include "ssd1306_hal/io.h"
+#include "nano_gfx_types.h"
 
 /**
  * @ingroup NANO_ENGINE_API
  * @{
  */
+
+template<class T>
+class NanoMenuTestItem: public NanoMenuItem<T>
+{
+public:
+    NanoMenuTestItem()
+       : NanoMenuItem<T>( {0, 0}, {48, 8} )
+    {
+    }
+
+    void draw() override
+    {
+        if ( this->isFocused() )
+        {
+            this->getTiler()->get_canvas().setColor( 0xFFFF );
+            this->getTiler()->get_canvas().fillRect( this->m_rect );
+        }
+        else
+        {
+            this->getTiler()->get_canvas().setColor( 0 );
+            this->getTiler()->get_canvas().fillRect( this->m_rect );
+            this->getTiler()->get_canvas().setColor( 0xFFFF );
+            this->getTiler()->get_canvas().drawRect( this->m_rect );
+        }
+    }
+};
+
+template<class T>
+class NanoMenuTextItem: public NanoMenuItem<T>
+{
+public:
+    NanoMenuTextItem(const uint8_t *font, const char *name)
+       : NanoMenuItem<T>( {0, 0} )
+       , m_font( font )
+       , name( name )
+    {
+    }
+
+    void draw() override
+    {
+    }
+
+protected:
+    const uint8_t *m_font = nullptr;
+    const uint8_t *m_name;
+};
 
 
 /**

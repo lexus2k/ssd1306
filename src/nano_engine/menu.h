@@ -38,30 +38,12 @@
  * @ingroup NANO_ENGINE_API
  * @{
  */
+
 template<class T>
 class NanoMenuItem: public NanoObject<T>
 {
 public:
-    NanoMenuItem()
-       : NanoObject<T>( {0, 0}, {48, 8} )
-    {
-    }
-
-    void draw() override
-    {
-        if ( this->isFocused() )
-        {
-            this->getTiler()->get_canvas().setColor( 0xFFFF );
-            this->getTiler()->get_canvas().fillRect( this->m_rect );
-        }
-        else
-        {
-            this->getTiler()->get_canvas().setColor( 0 );
-            this->getTiler()->get_canvas().fillRect( this->m_rect );
-            this->getTiler()->get_canvas().setColor( 0xFFFF );
-            this->getTiler()->get_canvas().drawRect( this->m_rect );
-        }
-    }
+    using NanoObject<T>::NanoObject;
 };
 
 /**

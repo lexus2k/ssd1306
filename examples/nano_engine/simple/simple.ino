@@ -40,7 +40,7 @@
 #include "nano_engine.h"
 
 NanoEngine1 engine;
-//NanoMenuItem<NanoEngine1> item1;
+//NanoMenuTestItem<NanoEngine1> item1;
 //NanoListMenu<NanoEngine1> menu;
 NanoSprite<NanoEngine1> sprite( {100,55}, {8,8}, nullptr );
 

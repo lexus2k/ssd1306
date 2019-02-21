@@ -124,6 +124,8 @@ void ssd1306_setFont6x8(const uint8_t * progmemFont) __attribute__ ((deprecated)
  */
 void ssd1306_getCharBitmap(uint16_t ch, SCharInfo *info);
 
+lcduint_t ssd1306_getTextSize(const char *text, lcduint_t *height);
+
 /**
  * Enables utf8 support for all text-functions.
  * @note Unicode-16 only supported in text decoding functions.

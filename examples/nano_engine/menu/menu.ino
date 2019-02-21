@@ -52,11 +52,11 @@ const PROGMEM uint8_t heartImage[8] =
 };
 
 NanoEngine1 engine;
-NanoMenuItem<NanoEngine1> item1;
-NanoMenuItem<NanoEngine1> item2;
-NanoMenuItem<NanoEngine1> item3;
-NanoMenuItem<NanoEngine1> item4;
-NanoSprite(NanoEngine1) sprite( {100,55}, {8,8}, heartImage );
+NanoMenuTestItem<NanoEngine1> item1;
+NanoMenuTestItem<NanoEngine1> item2;
+NanoMenuTestItem<NanoEngine1> item3;
+NanoMenuTestItem<NanoEngine1> item4;
+NanoSprite<NanoEngine1> sprite( {100,55}, {8,8}, heartImage );
 NanoListMenu<NanoEngine1> menu;
 
 uint16_t lastMillis;

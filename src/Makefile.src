@@ -67,12 +67,6 @@ SRCS_CPP = \
 	intf/vga/esp32/vga128x64.cpp \
 	intf/vga/esp32/CompositeOutput.cpp \
 
-#	nano_engine/object.cpp \
-#	nano_engine/menu.cpp \
-#	nano_engine/menu_items.cpp \
-#	nano_engine/sprite.cpp \
-#	nano_engine/canvas_ops.cpp \
-
 SRCS = $(SRCS_C) $(SRCS_CPP)
 
 # Due to absence of Print class tiny_ssd1306.cpp cannot be compiled without Arduino libs.
