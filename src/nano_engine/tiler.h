@@ -103,21 +103,10 @@ public:
         return m_focused;
     }
 
-    /**
-     * Sets position of NanoObject, doesn't mark for update content on the screen
-     */
-    void setPos(const NanoPoint &p)
-    {
-        m_rect = (NanoRect){ p,
-                   (NanoPoint){ (lcdint_t)(p.x + m_rect.p2.x - m_rect.p1.x),
-                                (lcdint_t)(p.y + m_rect.p2.y - m_rect.p1.y) } };
-    }
-
     T *getTiler() { return static_cast<T*>(m_tiler); }
 
 protected:
     void           *m_tiler = nullptr;
-    NanoRect        m_rect;
 
     NanoEngineObject<T>  *m_next = nullptr;
 
