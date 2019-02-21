@@ -30,6 +30,7 @@
 
 #include "menu.h"
 #include "nano_gfx_types.h"
+#include "ssd1306_generic.h"
 
 /**
  * @ingroup NANO_ENGINE_API
@@ -37,10 +38,10 @@
  */
 
 template<class T>
-class NanoMenuTestItem: public NanoMenuItem<T>
+class NanoTestMenuItem: public NanoMenuItem<T>
 {
 public:
-    NanoMenuTestItem()
+    NanoTestMenuItem()
        : NanoMenuItem<T>( {0, 0}, {48, 8} )
     {
     }
@@ -62,24 +63,46 @@ public:
     }
 };
 
+/**
+ * Template class for fixed font menu item
+ */
 template<class T>
-class NanoMenuTextItem: public NanoMenuItem<T>
+class NanoTextMenuItem: public NanoMenuItem<T>
 {
 public:
-    NanoMenuTextItem(const uint8_t *font, const char *name)
+    NanoTextMenuItem(const char *name)
        : NanoMenuItem<T>( {0, 0} )
-       , m_font( font )
-       , name( name )
+       , m_name( name )
     {
+    }
+
+    void calcTextSize()
+    {
+        lcduint_t height;
+        lcduint_t width = ssd1306_getTextSize(m_name, &height);
+        this->setSize( {width, height} );
     }
 
     void draw() override
     {
+        if ( this->isFocused() )
+        {
+            this->getTiler()->get_canvas().setMode( CANVAS_MODE_TRANSPARENT );
+            this->getTiler()->get_canvas().setColor( 0xFFFF );
+            this->getTiler()->get_canvas().fillRect( this->m_rect );
+            this->getTiler()->get_canvas().setColor( 0x0000 );
+            this->getTiler()->get_canvas().printFixed( this->m_rect.p1.x, this->m_rect.p1.y, m_name );
+        }
+        else
+        {
+            this->getTiler()->get_canvas().setMode( CANVAS_MODE_BASIC );
+            this->getTiler()->get_canvas().setColor( 0xFFFF );
+            this->getTiler()->get_canvas().printFixed( this->m_rect.p1.x, this->m_rect.p1.y, m_name );
+        }
     }
 
 protected:
-    const uint8_t *m_font = nullptr;
-    const uint8_t *m_name;
+    const char *m_name;
 };
 
 

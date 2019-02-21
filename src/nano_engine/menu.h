@@ -138,8 +138,8 @@ public:
     void draw() override
     {
         this->getTiler()->get_canvas().setColor( 0xFFFF );
-        this->getTiler()->get_canvas().drawRect( { this->m_rect.p1 + (NanoPoint){3, 3},
-                                                this->m_rect.p2 - (NanoPoint){3, 3} } );
+        this->getTiler()->get_canvas().drawRect( { this->m_rect.p1 + (NanoPoint){2, 2},
+                                                this->m_rect.p2 - (NanoPoint){2, 2} } );
         NanoMenu<T>::draw();
     }
 
@@ -147,15 +147,48 @@ private:
     void updateMenuItemsPosition() override
     {
         NanoObject<T> *p = this->getNext();
-        lcdint_t y_pos = this->m_rect.p1.y + 8;
+        lcdint_t y_pos = this->m_rect.p1.y + 4;
         while (p)
         {
-            p->setPos( { (lcdint_t)(this->m_rect.p1.x + 8), y_pos } );
+            p->setPos( { (lcdint_t)(this->m_rect.p1.x + 4), y_pos } );
             y_pos += p->height() + 1;
             p = this->getNext( p );
         }
         this->m_rect.p2.y = y_pos + 7;
         this->m_rect.p2.x = ssd1306_lcd.width;
+    }
+};
+
+template<class T>
+class NanoFixedWidthMenu: public NanoMenu<T>
+{
+public:
+    NanoFixedWidthMenu(const NanoPoint &pos, const NanoPoint &size)
+        : NanoMenu<T>( pos )
+    {
+        this->setSize( size );
+    }
+
+    void draw() override
+    {
+        this->getTiler()->get_canvas().setColor( 0xFFFF );
+        this->getTiler()->get_canvas().drawRect( { this->m_rect.p1 + (NanoPoint){2, 2},
+                                                this->m_rect.p2 - (NanoPoint){2, 2} } );
+        NanoMenu<T>::draw();
+    }
+
+private:
+    void updateMenuItemsPosition() override
+    {
+        NanoObject<T> *p = this->getNext();
+        lcdint_t y_pos = this->m_rect.p1.y + 4;
+        while (p)
+        {
+            p->setPos( { (lcdint_t)(this->m_rect.p1.x + 4), y_pos } );
+            p->setSize( { (lcdint_t)(this->m_rect.width() - 8), p->height() } );
+            y_pos += p->height() + 1;
+            p = this->getNext( p );
+        }
     }
 };
 

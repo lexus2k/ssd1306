@@ -110,6 +110,19 @@ public:
         refresh();
     }
 
+    void resize(const NanoPoint &size)
+    {
+        refresh();
+        setSize( size );
+        refresh();
+    }
+
+    void setSize(const NanoPoint &size)
+    {
+        m_rect.p2.x = m_rect.p1.x + size.x - 1;
+        m_rect.p2.y = m_rect.p1.y + size.y - 1;
+    }
+
     /**
      * Sets position of NanoObject, doesn't mark for update content on the screen
      */
