@@ -128,6 +128,7 @@ static void textDemo()
     delay(3000);
 }
 
+#if !defined(__AVR_ATtiny85__)
 static void canvasDemo()
 {
     uint8_t buffer[64*16/8];
@@ -145,6 +146,7 @@ static void canvasDemo()
     canvas.blt((ssd1306_displayWidth()-64)/2, 1);
     delay(3000);
 }
+#endif
 
 static void drawLinesDemo()
 {
@@ -193,9 +195,11 @@ void loop()
             textDemo();
             break;
 
+#if !defined(__AVR_ATtiny85__)
         case 3:
             canvasDemo();
             break;
+#endif
 
         case 4:
             drawLinesDemo();
