@@ -130,10 +130,10 @@ const PROGMEM uint8_t snowFlakeImage[8][8] =
 
 NanoEngine1 engine;
 
-class SnowFlake: public NanoFixedSprite
+class SnowFlake: public NanoFixedSprite<NanoEngine1>
 {
 public:
-    SnowFlake(): NanoFixedSprite({0, 0}, {8, 8}, nullptr)
+    SnowFlake(): NanoFixedSprite<NanoEngine1>({0, 0}, {8, 8}, nullptr)
     {
     }
 
@@ -167,7 +167,7 @@ public:
         moveTo( scaled_position/8 );
         if (y() >= static_cast<lcdint_t>(ssd1306_displayHeight()) )
         {
-            m_tiler->remove( *this );
+            getTiler()->remove( *this );
         }
     }
 
