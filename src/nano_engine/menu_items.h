@@ -76,11 +76,14 @@ public:
     {
     }
 
-    void calcTextSize()
+    void update() override
     {
-        lcduint_t height;
-        lcduint_t width = ssd1306_getTextSize(m_name, &height);
-        this->setSize( {width, height} );
+        if ( this->m_rect.width() <= 1 )
+        {
+            lcduint_t height;
+            lcduint_t width = ssd1306_getTextSize(m_name, &height);
+            this->setSize( {width, height} );
+        }
     }
 
     void draw() override

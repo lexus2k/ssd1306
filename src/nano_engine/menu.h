@@ -71,6 +71,7 @@ public:
     void add( NanoObject<T> &item )
     {
         NanoObjectList<T>::add( item );
+        item.update(); // update item to init all params
         updateMenuItemsPosition();
         if ( !m_selected )
         {
@@ -82,6 +83,7 @@ public:
     void insert( NanoObject<T> &item )
     {
         NanoObjectList<T>::insert( item );
+        item.update(); // update item to init all params
         updateMenuItemsPosition();
         if ( !m_selected )
         {

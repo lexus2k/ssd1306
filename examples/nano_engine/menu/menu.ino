@@ -52,11 +52,10 @@ const PROGMEM uint8_t heartImage[8] =
 };
 
 NanoEngine1 engine;
-NanoTestMenuItem<NanoEngine1> item1;
+NanoTextMenuItem<NanoEngine1> item1("First menu item");
 NanoTestMenuItem<NanoEngine1> item2;
 NanoTextMenuItem<NanoEngine1> item3("Demo");
 NanoTestMenuItem<NanoEngine1> item4;
-NanoSprite<NanoEngine1> sprite( {100,55}, {8,8}, heartImage );
 NanoFixedWidthMenu<NanoEngine1> menu( {0,0}, {128,64} );
 
 uint16_t lastMillis;
@@ -68,7 +67,6 @@ void setup()
 //    ssd1351_128x128_spi_init(3,4,5);
 //    il9163_128x128_spi_init(3,4,5);
     ssd1306_setFixedFont(ssd1306xled_font6x8);
-    item3.calcTextSize();
 
     engine.setFrameRate( 30 );
     engine.begin();
@@ -80,7 +78,6 @@ void setup()
     menu.add( item3 );
     menu.add( item4 );
     engine.insert( menu );
-    engine.insert( sprite );
 
     engine.refresh();
     lastMillis = millis();
