@@ -157,3 +157,8 @@ void Ninja::move(const NanoPoint &target)
     }
 }
 
+void Ninja::draw()
+{
+    getTiler()->get_canvas().setColor(RGB_COLOR8(64,64,255));
+    NanoFixedSprite::draw();
+}

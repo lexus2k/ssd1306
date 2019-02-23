@@ -34,6 +34,8 @@ public:
         : NanoFixedSprite<GraphicsEngine>(pos, {8,8}, playerFlyingImage[0][0]) {}
 
     void move(const NanoPoint &target);
+
+    void draw() override;
 };
 
 extern Ninja ninja;

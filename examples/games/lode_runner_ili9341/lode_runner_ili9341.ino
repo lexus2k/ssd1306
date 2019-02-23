@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -81,7 +81,19 @@ uint8_t blockColors[] =
  */
 void beep(int bCount,int bDelay);
 
-NanoFixedSprite<GraphicsEngine, engine> player( { 8, 8 }, { 8, 8 }, playerFlyingImage[0][0] );
+class Player: public NanoFixedSprite<GraphicsEngine>
+{
+public:
+    using NanoFixedSprite<GraphicsEngine>::NanoFixedSprite;
+
+    void draw() override
+    {
+        getTiler()->get_canvas().setColor(RGB_COLOR8(64,255,255));
+        NanoFixedSprite<GraphicsEngine>::draw();
+    }
+};
+
+Player player( { 8, 8 }, { 8, 8 }, playerFlyingImage[0][0] );
 
 /* The variable is used for player animation      *
  * The graphics defined for the hero has 2 images *
@@ -116,6 +128,7 @@ static bool onDraw()
 {
     engine.canvas.clear();
     engine.canvas.setMode(CANVAS_MODE_BASIC);
+    engine.localCoordinates();
     if (game_window.containsPartOf( engine.canvas.rect() ))
     {
         engine.worldCoordinates();
@@ -136,14 +149,11 @@ static bool onDraw()
                 }
             }
         }
-        engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
-        engine.canvas.setColor(RGB_COLOR8(64,255,255));
-        player.draw();
-        engine.canvas.setColor(RGB_COLOR8(64,64,255));
-        ninja.draw();
         engine.localCoordinates();
     }
     showGameInfo();
+    engine.worldCoordinates();
+    engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
     return true;
 }
 
@@ -289,6 +299,8 @@ void setup()
     engine.drawCallback( onDraw );
     engine.begin();
     engine.setFrameRate(45);
+    engine.insert( player );
+    engine.insert( ninja );
     engine.refresh();
     pinMode(BUZZER, OUTPUT);
 }
@@ -298,6 +310,7 @@ void loop()
     if (!engine.nextFrame()) return;
     movePlayer(engine.buttonsState());
     ninja.move(player.getPosition());
+    engine.update();
     engine.display();
 }
 

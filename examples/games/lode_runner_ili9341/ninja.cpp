@@ -45,13 +45,13 @@ void Ninja::move(const NanoPoint &target)
     if ( !isSolid(feetBlock) &&
          (!isPipe(handBlock) || !isPipe(bottomBlock)) )
     {
-        moveTo( { center().x & ~0x07, m_pos.y + 1 } );
+        moveTo( { center().x & ~0x07, m_rect.p1.y + 1 } );
         setBitmap( &playerFlyingImage[MAN_ANIM_FLYING][ninjaAnimation][0] );
         animated = true;
     }
     else
     {
-        if (target.y < m_pos.y - 1)
+        if (target.y < m_rect.p1.y - 1)
         {
             bool right = true;
             bool left = true;
@@ -73,7 +73,7 @@ void Ninja::move(const NanoPoint &target)
             }
             if (isStair(centerBlock) || isStair(bottomBlock)) direction = BUTTON_UP;
         }
-        else if (target.y > m_pos.y + 1)
+        else if (target.y > m_rect.p1.y + 1)
         {
             if (isPipe(handBlock))
             {
@@ -110,11 +110,11 @@ void Ninja::move(const NanoPoint &target)
                 if (isWalkable(feetBlock)) direction = BUTTON_DOWN;
             }
         }
-        else if (target.x > m_pos.x)
+        else if (target.x > m_rect.p1.x)
         {
             if (isWalkable(rightBlock)) direction = BUTTON_RIGHT;
         }
-        else if (target.x < m_pos.x)
+        else if (target.x < m_rect.p1.x)
         {
             if (isWalkable(leftBlock)) direction = BUTTON_LEFT;
         }
@@ -157,3 +157,8 @@ void Ninja::move(const NanoPoint &target)
     }
 }
 
+void Ninja::draw()
+{
+    getTiler()->get_canvas().setColor(RGB_COLOR8(64,64,255));
+    NanoFixedSprite::draw();
+}
