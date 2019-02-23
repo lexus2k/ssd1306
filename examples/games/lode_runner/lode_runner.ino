@@ -82,7 +82,7 @@ uint8_t blockColors[] =
  */
 void beep(int bCount,int bDelay);
 
-NanoFixedSprite player( { 8, 8 }, { 8, 8 }, playerFlyingImage[0][0] );
+NanoFixedSprite<GraphicsEngine> player( { 8, 8 }, { 8, 8 }, playerFlyingImage[0][0] );
 
 /* The variable is used for player animation      *
  * The graphics defined for the hero has 2 images *
