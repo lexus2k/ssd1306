@@ -75,6 +75,14 @@ void ssd1306_clearScreen()
     ssd1306_intf.stop();
 }
 
+#if 0
+uint8_t ssd1306_printFixed(uint8_t x, uint8_t y, const char *ch, EFontStyle style)
+{
+    ssd1306_cursorX = x;
+    ssd1306_cursorY = y;
+    return ssd1306_print(ch);
+}
+#else
 uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle style)
 {
     uint8_t i, j=0;
@@ -86,7 +94,7 @@ uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle s
     for(;;)
     {
         uint8_t ldata;
-        if ((x > ssd1306_lcd.width - s_fixedFont.h.width) || (ch[j] == '\0'))
+        if ( (x > ssd1306_lcd.width - s_fixedFont.h.width) || (ch[j] == '\0') )
         {
             x = xpos;
             y++;
@@ -157,6 +165,8 @@ uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle s
     ssd1306_intf.stop();
     return j;
 }
+
+#endif
 
 uint8_t ssd1306_printFixed_oldStyle(uint8_t xpos, uint8_t y, const char *ch, EFontStyle style)
 {
