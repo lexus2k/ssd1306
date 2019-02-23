@@ -68,8 +68,7 @@ static const uint8_t g_buttonsPins[6] = { 2, 6, 7, 8, 9, 12 };
 
 const NanoRect game_window = { {0, 0}, {95, 63} };
 
-uint8_t blockColors[] =
-{
+uint8_t blockColors[] = {
     RGB_COLOR8(255,96,0),
     RGB_COLOR8(255,255,192),
     RGB_COLOR8(255,255,255),
@@ -144,11 +143,12 @@ static bool onDraw()
 //        ninja.draw();
         engine.localCoordinates();
         showGameInfo();
-//        engine.worldCoordinates();
+        engine.worldCoordinates();
     }
     else
     {
         showGameInfo();
+        engine.worldCoordinates();
     }
     return true;
 }
