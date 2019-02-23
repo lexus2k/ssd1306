@@ -276,12 +276,13 @@ public:
 
     /**
      * Sets user-defined draw callback. This callback will be called everytime, engine needs
-     * to update display content. If callback returns false, engine will not update those area.
+     * to update display content. If user callback returns false, engine will not update that area.
      * You always have a way to find out, which area is being updated by engine via
      * NanoEngine<>::canvas::getOffset() and NanoEngine<>::NE_TILE_SIZE.
-     * @warning   By default canvas in the engine is initialized with local screen coordinates. So
-     *            graphics object with [0,0] coordinates will be placed at topleft position on the
-     *            display. But engine supports also global coordinates, in this case actual object
+     * @warning   By default canvas in the engine is initialized with world coordinates. So
+     *            graphics object with [0,0] coordinates will be placed at topleft position fo the window
+     *            pointed by offset property of NanoEngine. But engine supports also local coordinates,
+     *            if you need to draw some dialog, for example. In this case actual object
      *            position depends on current engine offset. Refer to worldCoordinates() and
      *            localCoordinates().
      * @param callback - user-defined draw callback.
@@ -408,19 +409,17 @@ void NanoEngineTiler<C,W,H,B>::displayBuffer()
         {
             if (flag & 0x01)
             {
-                canvas.setOffset(x, y);
+                canvas.setOffset(x + offset.x, y + offset.y);
                 if (!m_onDraw)
                 {
                     canvas.clear();
                     draw();
-                    canvas.setOffset(x, y);
-                    canvas.blt();
+                    canvas.blt(x, y);
                 }
                 else if (m_onDraw())
                 {
                     draw();
-                    canvas.setOffset(x, y);
-                    canvas.blt();
+                    canvas.blt(x, y);
                 }
             }
             flag >>=1;
@@ -443,7 +442,7 @@ void NanoEngineTiler<C,W,H,B>::displayPopup(const char *msg)
         {
             if (flag & 0x01)
             {
-                canvas.setOffset(x, y);
+                canvas.setOffset(x + offset.x, y + offset.y);
                 if (!m_onDraw)
                 {
                     canvas.clear();
@@ -460,7 +459,7 @@ void NanoEngineTiler<C,W,H,B>::displayPopup(const char *msg)
                 canvas.drawRect(rect);
                 canvas.printFixed( textPos.x, textPos.y, msg);
 
-                canvas.blt();
+                canvas.blt(x, y);
             }
             flag >>=1;
         }
