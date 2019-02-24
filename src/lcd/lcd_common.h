@@ -50,7 +50,7 @@ extern "C" {
 typedef enum
 {
     /** Default type of LCD display: ssd1306 oled */
-    LCD_TYPE_SSD1306,
+    LCD_TYPE_SSD1306 = 65,
     /** Experimental type of LCD display: pcd8544 led */
     LCD_TYPE_PCD8544,
     /** Support for sh1106 OLED display */
@@ -163,6 +163,57 @@ typedef struct
      */
     void (*set_mode)(lcd_mode_t mode);
 } ssd1306_lcd_t;
+
+/**
+ * Structure, describing display driver configuration
+ */
+typedef struct
+{
+    /** Current selected lcd display type */
+    lcd_type_t type;
+
+    /**
+     * Sends 8 monochrome vertical pixels to OLED driver.
+     * @param data - byte, representing 8 pixels.
+     */
+    void (*send_pixels1)(uint8_t data);
+
+    /**
+     * Sends buffer containing 8 monochrome vertical pixels, encoded in each byte.
+     * @param buffer - buffer containing monochrome pixels.
+     * @param len - length of buffer in bytes.
+     */
+    void (*send_pixels_buffer1)(const uint8_t *buffer, uint16_t len);
+
+    /**
+     * @brief Sends RGB pixel encoded in 3-3-2 format to OLED driver.
+     * Sends RGB pixel encoded in 3-3-2 format to OLED driver.
+     * @param data - byte, representing RGB8 pixel.
+     */
+    void (*send_pixels8)(uint8_t data);
+
+    /**
+     * @brief Sends RGB pixel encoded in 5-6-5 format to OLED driver.
+     * Sends RGB pixel encoded in 5-6-5 format to OLED driver.
+     * @param data 16-bit word, representing RGB16 pixel
+     */
+    void (*send_pixels16)(uint16_t data);
+
+    /**
+     * @brief Sets library display mode for direct draw functions.
+     *
+     * Sets library display mode for direct draw functions.
+     * There are currently 2 modes supported: LCD_MODE_SSD1306_COMPAT and
+     * LCD_MODE_NORMAL. In general, ssd1306 compatible mode uses different GDRAM
+     * addressing mode, than normal mode, intended for using with RBG full-color functions.
+     *
+     * @param mode lcd mode to activate.
+     * @see LCD_MODE_SSD1306_COMPAT
+     * @see LCD_MODE_NORMAL
+     * @see lcd_mode_t
+     */
+    void (*set_mode)(lcd_mode_t mode);
+} ssd1306_lcd2_t;
 
 /**
  * Structure containing callback to low level function for currently enabled display

@@ -33,6 +33,7 @@
 #include "intf/spi/ssd1306_spi.h"
 #include "intf/ssd1306_interface.h"
 #include "ssd1306_hal/io.h"
+#include "ssd1306_generic.h"
 
 // TODO: remove
 #include "lcd/ssd1306_commands.h"
@@ -519,6 +520,7 @@ uint8_t ssd1306_charF12x16(uint8_t xpos, uint8_t y, const char ch[], EFontStyle 
 {
     uint8_t i, j=0;
     uint8_t text_index = 0;
+
     uint8_t odd = 0;
     uint8_t x = xpos;
     ssd1306_lcd.set_block(xpos, y, ssd1306_lcd.width - xpos);
@@ -781,9 +783,9 @@ void gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const 
     uint8_t pages;
     lcduint_t i, j;
     if (y + (lcdint_t)h <= 0) return;
-    if (y >= ssd1306_lcd.height) return;
+    if (y >= (lcdint_t)ssd1306_lcd.height) return;
     if (x + (lcdint_t)w <= 0) return;
-    if (x >= ssd1306_lcd.width)  return;
+    if (x >= (lcdint_t)ssd1306_lcd.width)  return;
     if (y < 0)
     {
          buf += ((lcduint_t)((-y) + 7) >> 3) * w;
@@ -811,7 +813,7 @@ void gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const 
     ssd1306_lcd.set_block(x, y >> 3, w);
     for(j=0; j < pages; j++)
     {
-        if ( j == max_pages - 1 ) mainFlag = !offset;
+        if ( j == (lcduint_t)(max_pages - 1) ) mainFlag = !offset;
         for( i=w; i > 0; i--)
         {
             uint8_t data = 0;
@@ -868,7 +870,7 @@ void ssd1306_drawSprite(SPRITE *sprite)
         }
         ssd1306_intf.stop();
     }
-    if (offsety && (sprite->y + 8 < ssd1306_lcd.height))
+    if (offsety && (sprite->y + 8 < (lcdint_t)ssd1306_lcd.height))
     {
         ssd1306_lcd.set_block(sprite->x, (sprite->y >> 3) + 1, sprite->w);
         for (uint8_t i=0; i < sprite->w; i++)
@@ -966,3 +968,309 @@ void ssd1306_setFont6x8(const uint8_t * progmemFont)
     s_font6x8 = progmemFont + 4;
 }
 
+/////////////////////////////////////////////////////////////////////////////////
+//
+//                            COMMON GRAPHICS
+//
+/////////////////////////////////////////////////////////////////////////////////
+
+template class NanoDisplayOps<1>;
+
+template <uint8_t BPP>
+void NanoDisplayOps<BPP>::putPixel(const NanoPoint &p)
+{
+    putPixel(p.x, p.y);
+}
+
+template <uint8_t BPP>
+void NanoDisplayOps<BPP>::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+{
+    drawHLine(x1, y1, x2);
+    drawHLine(x1, y2, x2);
+    drawVLine(x1, y1, y2);
+    drawVLine(x2, y1, y2);
+}
+
+template <uint8_t BPP>
+void NanoDisplayOps<BPP>::drawRect(const NanoRect &rect)
+{
+    drawRect(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
+}
+
+template <uint8_t BPP>
+void NanoDisplayOps<BPP>::drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+{
+    lcduint_t  dx = x1 > x2 ? (x1 - x2): (x2 - x1);
+    lcduint_t  dy = y1 > y2 ? (y1 - y2): (y2 - y1);
+    lcduint_t  err = 0;
+    if (dy > dx)
+    {
+        if (y1 > y2)
+        {
+            ssd1306_swap_data(x1, x2, lcdint_t);
+            ssd1306_swap_data(y1, y2, lcdint_t);
+        }
+        for(; y1<=y2; y1++)
+        {
+            err += dx;
+            if (err >= dy)
+            {
+                 err -= dy;
+                 x1 < x2 ? x1++: x1--;
+            }
+            putPixel( x1, y1 );
+        }
+    }
+    else
+    {
+        if (x1 > x2)
+        {
+            ssd1306_swap_data(x1, x2, lcdint_t);
+            ssd1306_swap_data(y1, y2, lcdint_t);
+        }
+        for(; x1<=x2; x1++)
+        {
+            err += dy;
+            if (err >= dx)
+            {
+                 err -= dx;
+                 if (y1 < y2) y1++; else y1--;
+            }
+            putPixel( x1, y1 );
+        }
+    }
+}
+
+template <uint8_t BPP>
+void NanoDisplayOps<BPP>::drawLine(const NanoRect &rect)
+{
+    drawLine(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
+}
+
+template <uint8_t BPP>
+void NanoDisplayOps<BPP>::fillRect(const NanoRect &rect)
+{
+    fillRect(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
+}
+
+template <uint8_t BPP>
+uint8_t NanoDisplayOps<BPP>::printChar(uint8_t c)
+{
+    uint16_t unicode = ssd1306_unicode16FromUtf8(c);
+    if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
+    SCharInfo char_info;
+    ssd1306_getCharBitmap(unicode, &char_info);
+    uint8_t mode = m_textMode;
+    for (uint8_t i = 0; i<(m_fontStyle == STYLE_BOLD ? 2: 1); i++)
+    {
+        drawBitmap1(m_cursorX + i,
+                    m_cursorY,
+                    char_info.width,
+                    char_info.height,
+                    char_info.glyph );
+        m_textMode |= CANVAS_MODE_TRANSPARENT;
+    }
+    m_textMode = mode;
+    m_cursorX += (lcdint_t)(char_info.width + char_info.spacing);
+    if ( ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorX > ((lcdint_t)m_w - (lcdint_t)s_fixedFont.h.width) ) )
+       || ( (m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)m_w - (lcdint_t)s_fixedFont.h.width)) ) )
+    {
+        m_cursorY += (lcdint_t)s_fixedFont.h.height;
+        m_cursorX = 0;
+        if ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorY > ((lcdint_t)m_h - (lcdint_t)s_fixedFont.h.height)) )
+        {
+            m_cursorY = 0;
+        }
+    }
+    return 1;
+}
+
+template <uint8_t BPP>
+size_t NanoDisplayOps<BPP>::write(uint8_t c)
+{
+    if (c == '\n')
+    {
+        m_cursorY += (lcdint_t)s_fixedFont.h.height;
+        m_cursorX = 0;
+    }
+    else if (c == '\r')
+    {
+        // skip non-printed char
+    }
+    else
+    {
+        return printChar( c );
+    }
+    return 1;
+}
+
+template <uint8_t BPP>
+void NanoDisplayOps<BPP>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style)
+{
+    m_fontStyle = style;
+    m_cursorX = xpos;
+    m_cursorY = y;
+    while (*ch)
+    {
+        write(*ch);
+        ch++;
+    }
+}
+
+template <uint8_t BPP>
+void NanoDisplayOps<BPP>::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style)
+{
+    m_fontStyle = style;
+    m_cursorX = xpos;
+    m_cursorY = y;
+    for (;;)
+    {
+        char c = pgm_read_byte(ch);
+        if (!c) break;
+        write(c);
+        ch++;
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+//
+//                             1-BIT GRAPHICS
+//
+/////////////////////////////////////////////////////////////////////////////////
+
+template <>
+void NanoDisplayOps<1>::putPixel(lcdint_t x, lcdint_t y)
+{
+    setBlock(x, y >> 3, 1);
+    m_lcd.send_pixels1((1 << (y & 0x07))^s_ssd1306_invertByte);
+    ssd1306_intf.stop();
+}
+
+template <>
+void NanoDisplayOps<1>::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
+{
+    setBlock(x1, y1 >> 3, x2 - x1 + 1);
+    for (uint8_t x = x1; x <= x2; x++)
+    {
+        m_lcd.send_pixels1((1 << (y1 & 0x07))^s_ssd1306_invertByte);
+    }
+    ssd1306_intf.stop();
+}
+
+template <>
+void NanoDisplayOps<1>::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
+{
+    uint8_t topPage = y1 >> 3;
+    uint8_t bottomPage = y2 >> 3;
+    uint8_t height = y2-y1;
+    uint8_t y;
+    setBlock(x1, topPage, 1);
+    if (topPage == bottomPage)
+    {
+        m_lcd.send_pixels1( ((0xFF >> (0x07 - height)) << (y1 & 0x07))^s_ssd1306_invertByte );
+        ssd1306_intf.stop();
+        return;
+    }
+    m_lcd.send_pixels1( (0xFF << (y1 & 0x07))^s_ssd1306_invertByte );
+    for ( y = (topPage + 1); y <= (bottomPage - 1); y++)
+    {
+        nextPage();
+        m_lcd.send_pixels1( 0xFF^s_ssd1306_invertByte );
+    }
+    nextPage();
+    m_lcd.send_pixels1( (0xFF >> (0x07 - (y2 & 0x07)))^s_ssd1306_invertByte );
+    ssd1306_intf.stop();
+}
+
+template <>
+void NanoDisplayOps<1>::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+{
+}
+
+template <>
+void NanoDisplayOps<1>::clear()
+{
+    setBlock(0, 0, 0);
+    for(uint8_t m=(m_h >> 3); m>0; m--)
+    {
+        for(uint8_t n=m_w; n>0; n--)
+        {
+            m_lcd.send_pixels1( s_ssd1306_invertByte );
+        }
+        nextPage();
+    }
+    ssd1306_intf.stop();
+}
+
+template <>
+void NanoDisplayOps<1>::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+{
+    lcduint_t origin_width = w;
+    uint8_t offset = y & 0x07;
+    uint8_t complexFlag = 0;
+    uint8_t mainFlag = 1;
+    uint8_t max_pages;
+    uint8_t pages;
+    lcduint_t i, j;
+    if (y + (lcdint_t)h <= 0) return;
+    if (y >= (lcdint_t)m_h) return;
+    if (x + (lcdint_t)w <= 0) return;
+    if (x >= (lcdint_t)m_w)  return;
+    if (y < 0)
+    {
+         bitmap += ((lcduint_t)((-y) + 7) >> 3) * w;
+         h += y;
+         y = 0;
+         complexFlag = 1;
+    }
+    if (x < 0)
+    {
+         bitmap += -x;
+         w += x;
+         x = 0;
+    }
+    max_pages = (lcduint_t)(h + 15 - offset) >> 3;
+    if ((lcduint_t)((lcduint_t)y + h) > (lcduint_t)m_h)
+    {
+         h = (lcduint_t)(m_h - (lcduint_t)y);
+    }
+    if ((lcduint_t)((lcduint_t)x + w) > (lcduint_t)m_w)
+    {
+         w = (lcduint_t)(m_w - (lcduint_t)x);
+    }
+    pages = ((y + h - 1) >> 3) - (y >> 3) + 1;
+
+    setBlock(x, y >> 3, w);
+    for(j=0; j < pages; j++)
+    {
+        if ( j == (lcduint_t)(max_pages - 1) ) mainFlag = !offset;
+        for( i=w; i > 0; i--)
+        {
+            uint8_t data = 0;
+            if ( mainFlag )    data |= (pgm_read_byte(bitmap) << offset);
+            if ( complexFlag ) data |= (pgm_read_byte(bitmap - origin_width) >> (8 - offset));
+            bitmap++;
+            m_lcd.send_pixels1(s_ssd1306_invertByte^data);
+        }
+        bitmap += origin_width - w;
+        complexFlag = offset;
+        nextPage();
+    }
+    ssd1306_intf.stop();
+}
+
+template <>
+void NanoDisplayOps<1>::fill(uint16_t color)
+{
+    color ^= s_ssd1306_invertByte;
+    setBlock(0, 0, 0);
+    for(uint8_t m=(m_h >> 3); m>0; m--)
+    {
+        for(uint8_t n=m_w; n>0; n--)
+        {
+            m_lcd.send_pixels1(color);
+        }
+        nextPage();
+    }
+    ssd1306_intf.stop();
+}

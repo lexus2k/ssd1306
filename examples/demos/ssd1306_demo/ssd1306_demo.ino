@@ -37,8 +37,11 @@
  */
 
 #include "ssd1306.h"
+#include "intf/i2c/ssd1306_i2c.h"
 #include "nano_gfx.h"
 #include "sova.h"
+
+DisplaySSD1306 display;
 
 /*
  * Heart image below is defined directly in flash memory.
@@ -78,7 +81,7 @@ const char *menuItems[] =
 
 static void bitmapDemo()
 {
-    ssd1306_drawBitmap(0, 0, 128, 64, Sova);
+    display.drawBitmap1(0, 0, 128, 64, Sova);
     delay(1000);
     ssd1306_invertMode();
     delay(2000);
@@ -87,7 +90,7 @@ static void bitmapDemo()
 
 static void spriteDemo()
 {
-    ssd1306_clearScreen();
+    display.clear();
     /* Declare variable that represents our sprite */
     SPRITE sprite;
     /* Create sprite at 0,0 position. The function initializes sprite structure. */
@@ -96,35 +99,34 @@ static void spriteDemo()
     {
         delay(15);
         sprite.x++;
-        if (sprite.x >= ssd1306_displayWidth())
+        if (sprite.x >= display.width())
         {
             sprite.x = 0;
         }
         sprite.y++;
-        if (sprite.y >= ssd1306_displayHeight())
+        if (sprite.y >= display.height())
         {
             sprite.y = 0;
         }
         /* Erase sprite on old place. The library knows old position of the sprite. */
-        sprite.eraseTrace();
+        display.setColor( 0 );
+        display.drawBitmap1( sprite.lx, sprite.ly, sprite.w, 8, sprite.data );
         /* Draw sprite on new place */
-        sprite.draw();
+        display.setColor( 0xFFFF );
+        display.drawBitmap1( sprite.x, sprite.y, sprite.w, 8, sprite.data );
     }
 }
 
 static void textDemo()
 {
     ssd1306_setFixedFont(ssd1306xled_font6x8);
-    ssd1306_clearScreen();
-    ssd1306_printFixed(0,  8, "Normal text", STYLE_NORMAL);
-    ssd1306_printFixed(0, 16, "Bold text", STYLE_BOLD);
-    ssd1306_printFixed(0, 24, "Italic text", STYLE_ITALIC);
+    display.clear();
+    display.printFixed(0,  8, "Normal text", STYLE_NORMAL);
+    display.printFixed(0, 16, "Bold text", STYLE_BOLD);
+    display.printFixed(0, 24, "Italic text", STYLE_ITALIC);
     ssd1306_negativeMode();
-    ssd1306_printFixed(0, 32, "Inverted bold", STYLE_BOLD);
+    display.printFixed(0, 32, "Inverted bold", STYLE_BOLD);
     ssd1306_positiveMode();
-    delay(3000);
-    ssd1306_clearScreen();
-    ssd1306_printFixedN(0, 0, "N3", STYLE_NORMAL, FONT_SIZE_8X);
     delay(3000);
 }
 
@@ -134,30 +136,30 @@ static void canvasDemo()
     uint8_t buffer[64*16/8];
     NanoCanvas canvas(64,16, buffer);
     ssd1306_setFixedFont(ssd1306xled_font6x8);
-    ssd1306_clearScreen();
+    display.clear();
     canvas.clear();
     canvas.fillRect(10, 3, 80, 5, 0xFF);
-    canvas.blt((ssd1306_displayWidth()-64)/2, 1);
+    canvas.blt((display.width()-64)/2, 1);
     delay(500);
     canvas.fillRect(50, 1, 60, 15, 0xFF);
-    canvas.blt((ssd1306_displayWidth()-64)/2, 1);
+    canvas.blt((display.width()-64)/2, 1);
     delay(1500);
     canvas.printFixed(20, 1, " DEMO ", STYLE_BOLD );
-    canvas.blt((ssd1306_displayWidth()-64)/2, 1);
+    canvas.blt((display.width()-64)/2, 1);
     delay(3000);
 }
 #endif
 
 static void drawLinesDemo()
 {
-    ssd1306_clearScreen();
-    for (uint8_t y = 0; y < ssd1306_displayHeight(); y += 8)
+    display.clear();
+    for (uint8_t y = 0; y < display.height(); y += 8)
     {
-        ssd1306_drawLine(0,0, ssd1306_displayWidth() -1, y);
+        display.drawLine(0,0, display.width() -1, y);
     }
-    for (uint8_t x = ssd1306_displayWidth() - 1; x > 7; x -= 8)
+    for (uint8_t x = display.width() - 1; x > 7; x -= 8)
     {
-        ssd1306_drawLine(0,0, x, ssd1306_displayHeight() - 1);
+        display.drawLine(0,0, x, display.height() - 1);
     }
     delay(3000);
 }
@@ -167,15 +169,18 @@ void setup()
     /* Select the font to use with menu and all font functions */
     ssd1306_setFixedFont(ssd1306xled_font6x8);
 
-    ssd1306_128x64_i2c_init();
-//    ssd1306_128x64_spi_init(3,4,5);     // Use this line for Atmega328p (3=RST, 4=CE, 5=D/C)
-//    ssd1306_128x64_spi_init(24, 0, 23); // Use this line for Raspberry  (gpio24=RST, 0=CE, gpio23=D/C)
-//    ssd1306_128x64_spi_init(22, 5, 21); // Use this line for ESP32 (VSPI)  (gpio22=RST, gpio5=CE for VSPI, gpio21=D/C)
+    ssd1306_i2cInit();
+    display.init();
+
+//    display.128x64_i2c_init();
+//    display.128x64_spi_init(3,4,5);     // Use this line for Atmega328p (3=RST, 4=CE, 5=D/C)
+//    display.128x64_spi_init(24, 0, 23); // Use this line for Raspberry  (gpio24=RST, 0=CE, gpio23=D/C)
+//    display.128x64_spi_init(22, 5, 21); // Use this line for ESP32 (VSPI)  (gpio22=RST, gpio5=CE for VSPI, gpio21=D/C)
 //    composite_video_128x64_mono_init(); // Use this line for ESP32 with Composite video support
 
-    ssd1306_fillScreen( 0x00 );
+    display.fill( 0x00 );
     ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
-    ssd1306_showMenu( &menu );
+//    display.showMenu( &menu );
 }
 
 void loop()
@@ -208,9 +213,9 @@ void loop()
         default:
             break;
     }
-    ssd1306_fillScreen( 0x00 );
-    ssd1306_showMenu(&menu);
+    display.fill( 0x00 );
+//    display.showMenu(&menu);
     delay(500);
     ssd1306_menuDown(&menu);
-    ssd1306_updateMenu(&menu);
+//    display.updateMenu(&menu);
 }

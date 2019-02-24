@@ -23,8 +23,6 @@
 
 SRCS_C = \
 	ssd1306_fonts.c \
-	ssd1306_generic.c \
-	ssd1306_1bit.c \
 	ssd1306_8bit.c \
 	ssd1306_16bit.c \
 	ssd1306_menu.c \
@@ -46,7 +44,6 @@ SRCS_C = \
 	lcd/lcd_il9163.c \
 	lcd/lcd_ili9341.c \
 	lcd/oled_sh1106.c \
-	lcd/oled_ssd1306.c \
 	lcd/oled_ssd1325.c \
 	lcd/oled_ssd1331.c \
 	lcd/oled_ssd1351.c \
@@ -66,6 +63,9 @@ SRCS_CPP = \
 	ssd1306_hal/arduino/platform.cpp \
 	intf/vga/esp32/vga128x64.cpp \
 	intf/vga/esp32/CompositeOutput.cpp \
+	lcd/oled_ssd1306.cpp \
+	ssd1306_generic.cpp \
+	ssd1306_1bit.cpp \
 
 SRCS = $(SRCS_C) $(SRCS_CPP)
 

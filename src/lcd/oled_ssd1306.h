@@ -32,6 +32,25 @@
 #include "ssd1306_hal/io.h"
 
 #ifdef __cplusplus
+
+#include "nano_engine/display.h"
+#include "lcd/lcd_common.h"
+
+class DisplaySSD1306: public NanoDisplayOps<1>
+{
+public:
+    DisplaySSD1306(): NanoDisplayOps<1>() {}
+
+    void init();
+
+    void setBlock(lcduint_t x, lcduint_t y, lcduint_t w) override;
+
+    void nextPage() override;
+
+protected:
+    ssd1306_lcd2_t ssd1306_lcd;
+};
+
 extern "C" {
 #endif
 

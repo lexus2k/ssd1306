@@ -393,3 +393,4 @@ void ssd1306_setSquixFont(const uint8_t * progmemFont)
     s_fixedFont.secondary_table = NULL;
 #endif
 }
+
