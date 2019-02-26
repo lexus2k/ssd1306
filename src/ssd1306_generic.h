@@ -158,6 +158,10 @@ void ssd1306_setSquixFont(const uint8_t * progmemFont);
 uint16_t ssd1306_unicode16FromUtf8(uint8_t ch);
 #endif
 
+#ifdef __cplusplus
+}
+
+#include "nano_engine/display.h"
 
 ///////////////////////////////////////////////////////////////////////
 //                 HIGH-LEVEL GRAPH FUNCTIONS
@@ -199,34 +203,8 @@ void ssd1306_createMenu(SAppMenu *menu, const char **items, uint8_t count);
  *
  * @warning works only in SSD1306 compatible mode.
  */
-void ssd1306_showMenu(SAppMenu *menu);
-
-/**
- * Shows menu items on the display. If menu items cannot fit the display,
- * the function provides scrolling.
- *
- * @param menu - Pointer to SAppMenu structure
- *
- * @warning works only in 8-bit RGB normal mode.
- */
-void ssd1306_showMenu8(SAppMenu *menu);
-
-/**
- * Shows menu items on the display. If menu items cannot fit the display,
- * the function provides scrolling.
- *
- * @param menu - Pointer to SAppMenu structure
- *
- * @warning works only in 16-bit RGB normal mode.
- */
-void ssd1306_showMenu16(SAppMenu *menu);
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-static inline void ssd1331_showMenu8(SAppMenu *menu)
-{
-    ssd1306_showMenu8(menu);
-}
-#endif
+template <uint8_t BPP>
+void ssd1306_showMenu( NanoDisplayOps<BPP> &display, SAppMenu *menu);
 
 /**
  * Updates menu items on the display. That is if selection is changed,
@@ -234,34 +212,8 @@ static inline void ssd1331_showMenu8(SAppMenu *menu)
  *
  * @param menu - Pointer to SAppMenu structure
  */
-void ssd1306_updateMenu(SAppMenu *menu);
-
-/**
- * Updates menu items on the display. That is if selection is changed,
- * the function will update only those areas, affected by the change.
- *
- * @param menu - Pointer to SAppMenu structure
- *
- * @warning works only in SSD1306 compatible mode.
- */
-void ssd1306_updateMenu8(SAppMenu *menu);
-
-/**
- * Updates menu items on the display. That is if selection is changed,
- * the function will update only those areas, affected by the change.
- *
- * @param menu - Pointer to SAppMenu structure
- *
- * @warning works only in SSD1306 compatible mode.
- */
-void ssd1306_updateMenu16(SAppMenu *menu);
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-static inline void ssd1331_updateMenu8(SAppMenu *menu)
-{
-    ssd1306_updateMenu8(menu);
-}
-#endif
+template <uint8_t BPP>
+void ssd1306_updateMenu( NanoDisplayOps<BPP> &display, SAppMenu *menu);
 
 /**
  * Returns currently selected menu item.
@@ -291,12 +243,10 @@ void ssd1306_menuDown(SAppMenu *menu);
  */
 void ssd1306_menuUp(SAppMenu *menu);
 
+#endif
+
 /**
  * @}
  */
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif // _SSD1306_GENERIC_H_

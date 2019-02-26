@@ -435,17 +435,17 @@ void NanoCanvasOps<1>::begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
 
 //                 NANO CANVAS 1
 
-void NanoCanvas1::blt(lcdint_t x, lcdint_t y)
+void NanoCanvas1::blt(NanoDisplayOps<1> &display, lcdint_t x, lcdint_t y)
 {
-    ssd1306_drawBufferFast(x, y, m_w, m_h, m_buf);
+    display.drawBitmap1(x, y, m_w, m_h, m_buf);
 }
 
-void NanoCanvas1::blt()
+void NanoCanvas1::blt(NanoDisplayOps<1> &display)
 {
-    ssd1306_drawBufferFast(offset.x, offset.y, m_w, m_h, m_buf);
+    display.drawBitmap1(offset.x, offset.y, m_w, m_h, m_buf);
 }
 
-void NanoCanvas1::blt(const NanoRect &rect)
+void NanoCanvas1::blt(NanoDisplayOps<1> &display, const NanoRect &rect)
 {
     // TODO: NOT IMPLEMENTED
 }

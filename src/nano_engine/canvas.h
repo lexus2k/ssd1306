@@ -308,12 +308,12 @@ public:
      * @param x - horizontal position in pixels
      * @param y - vertical position in blocks (pixels/8)
      */
-    virtual void blt(lcdint_t x, lcdint_t y) = 0;
+//    virtual void blt(lcdint_t x, lcdint_t y) = 0;
 
     /**
      * Draws canvas on the LCD display using offset values.
      */
-    virtual void blt() = 0;
+//    virtual void blt(NanoDisplayOps<BPP>) = 0;
 
     /**
      * Draws only part of canvas on the LCD display.
@@ -326,7 +326,7 @@ public:
      * to screen at position {20,3}.
      * @param rect rectagle describing part of canvas to move to display.
      */
-    virtual void blt(const NanoRect &rect) = 0;
+//    virtual void blt(const NanoRect &rect) = 0;
 };
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -356,12 +356,12 @@ public:
      * @param x - horizontal position in pixels
      * @param y - vertical position in pixels
      */
-    void blt(lcdint_t x, lcdint_t y) override;
+    void blt(NanoDisplayOps<1> &display, lcdint_t x, lcdint_t y);
 
     /**
      * Draws canvas on the LCD display using offset values.
      */
-    void blt() override;
+    void blt(NanoDisplayOps<1> &display);
 
     /**
      * Draws only part of canvas on the LCD display.
@@ -374,7 +374,7 @@ public:
      * to screen at position {20,3}.
      * @param rect rectagle describing part of canvas to move to display.
      */
-    void blt(const NanoRect &rect) override;
+    void blt(NanoDisplayOps<1> &display, const NanoRect &rect);
 };
 
 /**
@@ -392,12 +392,12 @@ public:
      * @param x - horizontal position in pixels
      * @param y - vertical position in pixels
      */
-    void blt(lcdint_t x, lcdint_t y) override;
+    void blt(lcdint_t x, lcdint_t y);
 
     /**
      * Draws canvas on the LCD display using offset values.
      */
-    void blt() override;
+    void blt();
 
     /**
      * Draws only part of canvas on the LCD display.
@@ -410,7 +410,7 @@ public:
      * to screen at position {20,3}.
      * @param rect rectagle describing part of canvas to move to display.
      */
-    void blt(const NanoRect &rect) override;
+    void blt(const NanoRect &rect);
 };
 
 /**
@@ -428,12 +428,12 @@ public:
      * @param x - horizontal position in pixels
      * @param y - vertical position in pixels
      */
-    void blt(lcdint_t x, lcdint_t y) override;
+    void blt(lcdint_t x, lcdint_t y);
 
     /**
      * Draws canvas on the LCD display using offset values.
      */
-    void blt() override;
+    void blt();
 
     /**
      * Draws only part of canvas on the LCD display.
@@ -446,7 +446,7 @@ public:
      * to screen at position {20,3}.
      * @param rect rectagle describing part of canvas to move to display.
      */
-    void blt(const NanoRect &rect) override;
+    void blt(const NanoRect &rect);
 };
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -470,12 +470,12 @@ public:
      * @param x - horizontal position in pixels
      * @param y - vertical position in pixels
      */
-    void blt(lcdint_t x, lcdint_t y) override;
+    void blt(lcdint_t x, lcdint_t y);
 
     /**
      * Draws canvas on the LCD display using offset values.
      */
-    void blt() override;
+    void blt();
 
     /**
      * Draws only part of canvas on the LCD display.
@@ -488,7 +488,7 @@ public:
      * to screen at position {20,3}.
      * @param rect rectagle describing part of canvas to move to display.
      */
-    void blt(const NanoRect &rect) override;
+    void blt(const NanoRect &rect);
 };
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -512,12 +512,12 @@ public:
      * @param x - horizontal position in pixels
      * @param y - vertical position in pixels
      */
-    void blt(lcdint_t x, lcdint_t y) override;
+    void blt(lcdint_t x, lcdint_t y);
 
     /**
      * Draws canvas on the LCD display using offset values.
      */
-    void blt() override;
+    void blt();
 
     /**
      * Draws only part of canvas on the LCD display.
@@ -530,7 +530,7 @@ public:
      * to screen at position {20,3}.
      * @param rect rectagle describing part of canvas to move to display.
      */
-    void blt(const NanoRect &rect) override;
+    void blt(const NanoRect &rect);
 };
 
 /**

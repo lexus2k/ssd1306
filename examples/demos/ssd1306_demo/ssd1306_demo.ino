@@ -37,6 +37,7 @@
  */
 
 #include "ssd1306.h"
+#include "nano_engine.h"
 #include "intf/i2c/ssd1306_i2c.h"
 #include "nano_gfx.h"
 #include "sova.h"
@@ -134,18 +135,20 @@ static void textDemo()
 static void canvasDemo()
 {
     uint8_t buffer[64*16/8];
-    NanoCanvas canvas(64,16, buffer);
+    NanoCanvas1 canvas(64,16, buffer);
     ssd1306_setFixedFont(ssd1306xled_font6x8);
     display.clear();
     canvas.clear();
-    canvas.fillRect(10, 3, 80, 5, 0xFF);
-    canvas.blt((display.width()-64)/2, 1);
+    canvas.setColor( 0xFF );
+    canvas.fillRect(10, 3, 80, 5);
+    canvas.blt(display, (display.width()-64)/2, 1);
     delay(500);
-    canvas.fillRect(50, 1, 60, 15, 0xFF);
-    canvas.blt((display.width()-64)/2, 1);
+    canvas.setColor( 0xFF );
+    canvas.fillRect(50, 1, 60, 15);
+    canvas.blt(display, (display.width()-64)/2, 1);
     delay(1500);
     canvas.printFixed(20, 1, " DEMO ", STYLE_BOLD );
-    canvas.blt((display.width()-64)/2, 1);
+    canvas.blt(display, (display.width()-64)/2, 1);
     delay(3000);
 }
 #endif
@@ -180,7 +183,7 @@ void setup()
 
     display.fill( 0x00 );
     ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
-//    display.showMenu( &menu );
+    ssd1306_showMenu( display, &menu );
 }
 
 void loop()
@@ -214,8 +217,8 @@ void loop()
             break;
     }
     display.fill( 0x00 );
-//    display.showMenu(&menu);
+    ssd1306_showMenu(display, &menu);
     delay(500);
     ssd1306_menuDown(&menu);
-//    display.updateMenu(&menu);
+    ssd1306_updateMenu(display, &menu);
 }
