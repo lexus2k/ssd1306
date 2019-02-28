@@ -251,5 +251,22 @@ typedef struct SPRITE
 #endif
 } SPRITE;
 
+/**
+ * Describes menu object
+ */
+typedef struct
+{
+    /// list of menu items of the menu
+    const char **items;
+    /// count of menu items in the menu
+    uint8_t     count;
+    /// currently selected item. Internally updated.
+    uint8_t     selection;
+    /// selected item, when last redraw operation was performed. Internally updated.
+    uint8_t     oldSelection;
+    /// position of menu scrolling. Internally updated
+    uint8_t     scrollPosition;
+} SAppMenu;
+
 // ----------------------------------------------------------------------------
 #endif // _NANO_GFX_TYPES_H_

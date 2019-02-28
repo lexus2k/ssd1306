@@ -265,6 +265,18 @@ public:
      */
     void setColor(uint16_t color) { m_color = color; };
 
+    void createMenu(SAppMenu *menu, const char **items, uint8_t count);
+
+    void showMenu( SAppMenu *menu);
+
+    void updateMenu(SAppMenu *menu);
+
+    uint8_t menuSelection(SAppMenu *menu);
+
+    void menuDown(SAppMenu *menu);
+
+    void menuUp(SAppMenu *menu);
+
     virtual void setBlock(lcduint_t x, lcduint_t y, lcduint_t w) = 0;
 
     virtual void nextPage() = 0;

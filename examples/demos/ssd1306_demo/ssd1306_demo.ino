@@ -184,14 +184,14 @@ void setup()
 //    composite_video_128x64_mono_init(); // Use this line for ESP32 with Composite video support
 
     display.fill( 0x00 );
-    ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
-    ssd1306_showMenu( display, &menu );
+    display.createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
+    display.showMenu( &menu );
 }
 
 void loop()
 {
     delay(1000);
-    switch (ssd1306_menuSelection(&menu))
+    switch (display.menuSelection(&menu))
     {
         case 0:
             bitmapDemo();
@@ -219,8 +219,8 @@ void loop()
             break;
     }
     display.fill( 0x00 );
-    ssd1306_showMenu(display, &menu);
+    display.showMenu(&menu);
     delay(500);
-    ssd1306_menuDown(&menu);
-    ssd1306_updateMenu(display, &menu);
+    display.menuDown(&menu);
+    display.updateMenu(&menu);
 }

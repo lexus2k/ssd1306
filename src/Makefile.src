@@ -65,7 +65,6 @@ SRCS_CPP = \
 	lcd/oled_ssd1306.cpp \
 	ssd1306_generic.cpp \
 	ssd1306_1bit.cpp \
-	ssd1306_menu.cpp \
 
 SRCS = $(SRCS_C) $(SRCS_CPP)
 

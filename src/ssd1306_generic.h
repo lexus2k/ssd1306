@@ -161,6 +161,7 @@ uint16_t ssd1306_unicode16FromUtf8(uint8_t ch);
 #ifdef __cplusplus
 }
 
+#if 0
 #include "nano_engine/display.h"
 
 ///////////////////////////////////////////////////////////////////////
@@ -242,6 +243,8 @@ void ssd1306_menuDown(SAppMenu *menu);
  * @param menu - Pointer to SAppMenu structure
  */
 void ssd1306_menuUp(SAppMenu *menu);
+#endif
+
 
 #endif
 

@@ -1078,6 +1078,132 @@ void NanoDisplayOps<BPP>::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *c
     }
 }
 
+#ifndef min
+#define min(x,y) ((x)<(y)?(x):(y))
+#endif
+
+#ifndef max
+#define max(x,y) ((x)>(y)?(x):(y))
+#endif
+
+template <uint8_t BPP>
+static uint8_t getMaxScreenItems(NanoDisplayOps<BPP> &display)
+{
+    return (display.height() >> 3) - 2;
+}
+
+template <uint8_t BPP>
+static uint8_t calculateScrollPosition(NanoDisplayOps<BPP> &display, SAppMenu *menu, uint8_t selection)
+{
+    if ( selection < menu->scrollPosition )
+    {
+        return selection;
+    }
+    else if ( selection - menu->scrollPosition > getMaxScreenItems<BPP>(display) - 1)
+    {
+        return selection - getMaxScreenItems<BPP>(display) + 1;
+    }
+    return menu->scrollPosition;
+}
+
+template <uint8_t BPP>
+static void drawMenuItem(NanoDisplayOps<BPP> &display, SAppMenu *menu, uint8_t index)
+{
+    if (index == menu->selection)
+    {
+        ssd1306_negativeMode();
+    }
+    else
+    {
+        ssd1306_positiveMode();
+    }
+    display.setColor( 0xFF );
+    display.printFixed(8, (index - menu->scrollPosition + 1)*8, menu->items[index], STYLE_NORMAL );
+    ssd1306_positiveMode();
+}
+
+template <uint8_t BPP>
+void NanoDisplayOps<BPP>::createMenu(SAppMenu *menu, const char **items, uint8_t count)
+{
+    menu->items = items;
+    menu->count = count;
+    menu->selection = 0;
+    menu->oldSelection = 0;
+    menu->scrollPosition = 0;
+}
+
+template <uint8_t BPP>
+void NanoDisplayOps<BPP>::showMenu( SAppMenu *menu)
+{
+    drawRect(4, 4, m_w - 5, m_h - 5);
+    menu->scrollPosition = calculateScrollPosition<BPP>(*this, menu, menu->selection );
+    for (uint8_t i = menu->scrollPosition; i < min(menu->count, menu->scrollPosition + getMaxScreenItems<BPP>( *this )); i++)
+    {
+        drawMenuItem<BPP>(*this, menu, i);
+    }
+    menu->oldSelection = menu->selection;
+}
+
+template <uint8_t BPP>
+void NanoDisplayOps<BPP>::updateMenu(SAppMenu *menu)
+{
+    if (menu->selection != menu->oldSelection)
+    {
+        uint8_t scrollPosition = calculateScrollPosition<BPP>( *this, menu, menu->selection );
+        if ( scrollPosition != menu->scrollPosition )
+        {
+            clear();
+            showMenu(menu);
+        }
+        else
+        {
+            drawMenuItem<BPP>( *this, menu, menu->oldSelection);
+            drawMenuItem<BPP>( *this, menu, menu->selection);
+            menu->oldSelection = menu->selection;
+        }
+    }
+}
+
+template <uint8_t BPP>
+uint8_t NanoDisplayOps<BPP>::menuSelection(SAppMenu *menu)
+{
+    return menu->selection;
+}
+
+template <uint8_t BPP>
+void NanoDisplayOps<BPP>::menuDown(SAppMenu *menu)
+{
+    if (menu->selection < menu->count - 1)
+    {
+        menu->selection++;
+    }
+    else
+    {
+        menu->selection = 0;
+    }
+}
+
+template <uint8_t BPP>
+void NanoDisplayOps<BPP>::menuUp(SAppMenu *menu)
+{
+    if (menu->selection > 0)
+    {
+        menu->selection--;
+    }
+    else
+    {
+        menu->selection = menu->count - 1;
+    }
+}
+
+/*
+template
+void ssd1306_showMenu<1>( NanoDisplayOps<1> &display, SAppMenu *menu);
+
+template
+void ssd1306_updateMenu<1>( NanoDisplayOps<1> &display, SAppMenu *menu);
+*/
+
 /////////////////////////////////////////////////////////////////////////////////
 //
 //                             1-BIT GRAPHICS
@@ -1220,3 +1346,4 @@ void NanoDisplayOps<1>::fill(uint16_t color)
     }
     ssd1306_intf.stop();
 }
+
