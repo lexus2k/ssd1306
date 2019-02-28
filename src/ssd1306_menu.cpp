@@ -73,6 +73,7 @@ static void drawMenuItem(NanoDisplayOps<BPP> &display, SAppMenu *menu, uint8_t i
     {
         ssd1306_positiveMode();
     }
+    display.setColor( 0xFF );
     display.printFixed(8, (index - menu->scrollPosition + 1)*8, menu->items[index], STYLE_NORMAL );
     ssd1306_positiveMode();
 }

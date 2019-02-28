@@ -470,143 +470,6 @@ size_t ssd1306_print(const char ch[])
     return n;
 }
 
-uint8_t ssd1306_charF6x8(uint8_t x, uint8_t y, const char ch[], EFontStyle style)
-{
-    uint8_t i, j=0;
-    ssd1306_lcd.set_block(x, y, ssd1306_lcd.width - x);
-    while(ch[j] != '\0')
-    {
-        uint8_t ldata;
-        uint8_t c = ch[j] - 32;
-        if ( c > 224 )
-        {
-            c = 0;
-        }
-        if(x > ssd1306_lcd.width - 6)
-        {
-            x=0;
-            y++;
-        }
-        ldata = 0;
-        for(i=0;i<6;i++)
-        {
-            uint8_t data;
-            if ( style == STYLE_NORMAL )
-            {
-                data = pgm_read_byte(&s_font6x8[c*6+i]);
-            }
-            else if ( style == STYLE_BOLD )
-            {
-                uint8_t temp = pgm_read_byte(&s_font6x8[c*6+i]);
-                data = temp | ldata;
-                ldata = temp;
-            }
-            else
-            {
-                uint8_t temp = pgm_read_byte(&s_font6x8[c*6+i + 1]);
-                data = (temp & 0xF0) | ldata;
-                ldata = (temp & 0x0F);
-            }
-            ssd1306_lcd.send_pixels1(data^s_ssd1306_invertByte);
-        }
-        x += 6;
-        j++;
-    }
-    ssd1306_intf.stop();
-    return j;
-}
-
-uint8_t ssd1306_charF12x16(uint8_t xpos, uint8_t y, const char ch[], EFontStyle style)
-{
-    uint8_t i, j=0;
-    uint8_t text_index = 0;
-
-    uint8_t odd = 0;
-    uint8_t x = xpos;
-    ssd1306_lcd.set_block(xpos, y, ssd1306_lcd.width - xpos);
-    for(;;)
-    {
-        uint8_t c;
-        uint8_t ldata;
-        if( (x > ssd1306_lcd.width-12) || (ch[j] == '\0') )
-        {
-            x = xpos;
-            y++;
-            if (y >= (ssd1306_lcd.height >> 3))
-            {
-                break;
-            }
-            if (odd)
-            {
-                text_index = j;
-                if (ch[j] == '\0')
-                {
-                    break;
-                }
-            }
-            else
-            {
-                j = text_index;
-            }
-            odd = !odd;
-            ssd1306_intf.stop();
-            ssd1306_lcd.set_block(xpos, y, ssd1306_lcd.width - xpos);
-        }
-        c = ch[j] - 32;
-        if ( c > 224 )
-        {
-            c = 0;
-        }
-        ldata = 0;
-        for(i=0;i<6;i++)
-        {
-            uint8_t data;
-            if ( style == STYLE_NORMAL )
-            {
-                data = pgm_read_byte(&s_font6x8[c*6+i]);
-            }
-            else if ( style == STYLE_BOLD )
-            {
-                uint8_t temp = pgm_read_byte(&s_font6x8[c*6+i]);
-                data = temp | ldata;
-                ldata = temp;
-            }
-            else
-            {
-                uint8_t temp = pgm_read_byte(&s_font6x8[c*6+i + 1]);
-                data = (temp & 0xF0) | ldata;
-                ldata = (temp & 0x0F);
-            }
-            if (odd) data >>= 4;
-            data = ((data & 0x01) ? 0x03: 0x00) |
-                   ((data & 0x02) ? 0x0C: 0x00) |
-                   ((data & 0x04) ? 0x30: 0x00) |
-                   ((data & 0x08) ? 0xC0: 0x00);
-            ssd1306_lcd.send_pixels1(data^s_ssd1306_invertByte);
-            ssd1306_lcd.send_pixels1(data^s_ssd1306_invertByte);
-        }
-        x += 12;
-        j++;
-    }
-    ssd1306_intf.stop();
-    return j;
-}
-
-uint8_t      ssd1306_charF6x8_eol(uint8_t left,
-                                  uint8_t y,
-                                  const char ch[],
-                                  EFontStyle style,
-                                  uint8_t right)
-{
-    uint8_t len = ssd1306_printFixed(left, y<<3, ch, style);
-    uint8_t text_end_pos = len * 6 + left;
-    if (text_end_pos <= right)
-    {
-        ssd1306_clearBlock(text_end_pos, y, right - text_end_pos + 1, 8);
-    }
-    return len;
-}
-
 void         ssd1306_putPixel(uint8_t x, uint8_t y)
 {
     ssd1306_lcd.set_block(x, y >> 3, 1);
@@ -1117,6 +980,89 @@ void NanoDisplayOps<BPP>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, 
     }
 }
 
+template <>
+void NanoDisplayOps<1>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style)
+{
+    uint8_t i, j=0;
+    uint8_t text_index = 0;
+    uint8_t page_offset = 0;
+    uint8_t x = xpos;
+    y >>= 3;
+    setBlock(xpos, y, m_w - xpos);
+    for(;;)
+    {
+        uint8_t ldata;
+        if ( (x > m_w - s_fixedFont.h.width) || (ch[j] == '\0') )
+        {
+            x = xpos;
+            y++;
+            if (y >= (lcdint_t)( m_h >> 3))
+            {
+                break;
+            }
+            page_offset++;
+            if (page_offset == s_fixedFont.pages)
+            {
+                text_index = j;
+                page_offset = 0;
+                if (ch[j] == '\0')
+                {
+                    break;
+                }
+            }
+            else
+            {
+                j = text_index;
+            }
+            ssd1306_intf.stop();
+            setBlock(xpos, y, m_w - xpos);
+        }
+        uint16_t unicode;
+        do
+        {
+            unicode = ssd1306_unicode16FromUtf8(ch[j]);
+            j++;
+        } while ( unicode == SSD1306_MORE_CHARS_REQUIRED );
+        SCharInfo char_info;
+        ssd1306_getCharBitmap(unicode, &char_info);
+        ldata = 0;
+        x += char_info.width + char_info.spacing;
+        if (char_info.height > page_offset * 8)
+        {
+            char_info.glyph += page_offset * char_info.width;
+            for( i = char_info.width; i>0; i--)
+            {
+                uint8_t data;
+                if ( style == STYLE_NORMAL )
+                {
+                    data = pgm_read_byte(&char_info.glyph[0]);
+                }
+                else if ( style == STYLE_BOLD )
+                {
+                    uint8_t temp = pgm_read_byte(&char_info.glyph[0]);
+                    data = temp | ldata;
+                    ldata = temp;
+                }
+                else
+                {
+                    uint8_t temp = pgm_read_byte(&char_info.glyph[1]);
+                    data = (temp & 0xF0) | ldata;
+                    ldata = (temp & 0x0F);
+                }
+                m_lcd.send_pixels1(data^s_ssd1306_invertByte);
+                char_info.glyph++;
+            }
+        }
+        else
+        {
+            char_info.spacing += char_info.width;
+        }
+        for (i = 0; i < char_info.spacing; i++)
+            m_lcd.send_pixels1(s_ssd1306_invertByte);
+    }
+    ssd1306_intf.stop();
+}
+
 template <uint8_t BPP>
 void NanoDisplayOps<BPP>::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style)
 {
@@ -1247,8 +1193,8 @@ void NanoDisplayOps<1>::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint
         for( i=w; i > 0; i--)
         {
             uint8_t data = 0;
-            if ( mainFlag )    data |= (pgm_read_byte(bitmap) << offset);
-            if ( complexFlag ) data |= (pgm_read_byte(bitmap - origin_width) >> (8 - offset));
+            if ( mainFlag )    data |= ((pgm_read_byte(bitmap) << offset) & m_color);
+            if ( complexFlag ) data |= ((pgm_read_byte(bitmap - origin_width) >> (8 - offset)) & m_color);
             bitmap++;
             m_lcd.send_pixels1(s_ssd1306_invertByte^data);
         }

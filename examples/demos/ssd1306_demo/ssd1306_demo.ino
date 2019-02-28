@@ -115,6 +115,8 @@ static void spriteDemo()
         /* Draw sprite on new place */
         display.setColor( 0xFFFF );
         display.drawBitmap1( sprite.x, sprite.y, sprite.w, 8, sprite.data );
+        sprite.lx = sprite.x;
+        sprite.ly = sprite.y;
     }
 }
 
