@@ -125,14 +125,13 @@ private:
  * If you need to have single big buffer, holding the whole content for monochrome display,
  * you can specify something like this NanoEngineTiler<NanoCanvas1,128,64,7>.
  */
-template<class C, lcduint_t W, lcduint_t H, uint8_t B>
+template<class C, uint8_t B>
 class NanoEngineTiler
 {
 protected:
     /** Only child classes can initialize the engine */
     NanoEngineTiler():
         m_onDraw(nullptr),
-        canvas(W, H, m_buffer),
         offset{0, 0}
     {
         refresh();
@@ -141,10 +140,6 @@ protected:
 public:
     /** Number of bits in tile size. 5 corresponds to 1<<5 = 32 tile size */
     static const uint8_t NE_TILE_SIZE_BITS = B;
-    /** Width of tile in pixels */
-    static const lcduint_t NE_TILE_WIDTH = W;
-    /** Height of tile in pixels */
-    static const lcduint_t NE_TILE_HEIGHT = H;
     /** Max tiles supported in X */
     static const uint8_t NE_MAX_TILES_NUM = 64 >> (B - 3);
 
@@ -156,7 +151,7 @@ public:
      */
     void refresh()
     {
-        memset(m_refreshFlags,0xFF,sizeof(uint16_t) * NanoEngineTiler<C,W,H,B>::NE_MAX_TILES_NUM);
+        memset(m_refreshFlags,0xFF,sizeof(uint16_t) * NanoEngineTiler<C,B>::NE_MAX_TILES_NUM);
     }
 
     /**
@@ -304,7 +299,7 @@ public:
      */
     bool collision(NanoPoint &p, NanoRect &rect) { return rect.collision( p ); }
 
-    void insert(NanoEngineObject<NanoEngine<C,W,H,B>> &object)
+    void insert(NanoEngineObject<NanoEngine<C,B>> &object)
     {
         object.m_next = this->m_first;
         object.m_tiler = this;
@@ -312,7 +307,7 @@ public:
         object.refresh();
     }
 
-    void remove(NanoEngineObject<NanoEngine<C,W,H,B>> &object)
+    void remove(NanoEngineObject<NanoEngine<C,B>> &object)
     {
         if ( this->m_first == nullptr )
         {
@@ -326,7 +321,7 @@ public:
         }
         else
         {
-            NanoEngineObject<NanoEngine<C,W,H,B>> *p = this->m_first;
+            NanoEngineObject<NanoEngine<C,B>> *p = this->m_first;
             while ( p->m_next )
             {
                 if ( p->m_next == &object )
@@ -344,7 +339,7 @@ public:
 
     void update()
     {
-        NanoEngineObject<NanoEngine<C,W,H,B>> *p = m_first;
+        NanoEngineObject<NanoEngine<C,B>> *p = m_first;
         while (p)
         {
             p->update();
@@ -380,16 +375,13 @@ protected:
     void displayPopup(const char *msg);
 
 private:
-    /** Buffer, used by NanoCanvas */
-    uint8_t    m_buffer[W * H * C::BITS_PER_PIXEL / 8];
-
     NanoPoint offset;
 
-    NanoEngineObject<NanoEngine<C,W,H,B>>  *m_first;
+    NanoEngineObject<NanoEngine<C,B>>  *m_first;
 
     void draw()
     {
-        NanoEngineObject<NanoEngine<C,W,H,B>> *p = m_first;
+        NanoEngineObject<NanoEngine<C,B>> *p = m_first;
         while (p)
         {
             p->draw();
@@ -398,14 +390,14 @@ private:
     }
 };
 
-template<class C, lcduint_t W, lcduint_t H, uint8_t B>
-void NanoEngineTiler<C,W,H,B>::displayBuffer()
+template<class C, uint8_t B>
+void NanoEngineTiler<C,B>::displayBuffer()
 {
-    for (lcduint_t y = 0; y < ssd1306_lcd.height; y = y + NE_TILE_HEIGHT)
+    for (lcduint_t y = 0; y < ssd1306_lcd.height; y = y + canvas.height())
     {
         uint16_t flag = m_refreshFlags[y >> NE_TILE_SIZE_BITS];
         m_refreshFlags[y >> NE_TILE_SIZE_BITS] = 0;
-        for (lcduint_t x = 0; x < ssd1306_lcd.width; x = x + NE_TILE_WIDTH)
+        for (lcduint_t x = 0; x < ssd1306_lcd.width; x = x + canvas.width())
         {
             if (flag & 0x01)
             {
@@ -427,18 +419,18 @@ void NanoEngineTiler<C,W,H,B>::displayBuffer()
     }
 }
 
-template<class C, lcduint_t W, lcduint_t H, uint8_t B>
-void NanoEngineTiler<C,W,H,B>::displayPopup(const char *msg)
+template<class C, uint8_t B>
+void NanoEngineTiler<C,B>::displayPopup(const char *msg)
 {
     NanoRect rect = { {8, (ssd1306_lcd.height>>1) - 8}, {ssd1306_lcd.width - 8, (ssd1306_lcd.height>>1) + 8} };
     // TODO: It would be nice to calculate message height
     NanoPoint textPos = { (ssd1306_lcd.width - (lcdint_t)strlen(msg)*s_fixedFont.h.width) >> 1, (ssd1306_lcd.height>>1) - 4 };
     refresh(rect);
-    for (lcduint_t y = 0; y < ssd1306_lcd.height; y = y + NE_TILE_HEIGHT)
+    for (lcduint_t y = 0; y < ssd1306_lcd.height; y = y + canvas.height())
     {
         uint16_t flag = m_refreshFlags[y >> NE_TILE_SIZE_BITS];
         m_refreshFlags[y >> NE_TILE_SIZE_BITS] = 0;
-        for (lcduint_t x = 0; x < ssd1306_lcd.width; x = x + NE_TILE_WIDTH)
+        for (lcduint_t x = 0; x < ssd1306_lcd.width; x = x + canvas.width())
         {
             if (flag & 0x01)
             {

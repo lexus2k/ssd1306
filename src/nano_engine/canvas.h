@@ -329,6 +329,18 @@ public:
 //    virtual void blt(const NanoRect &rect) = 0;
 };
 
+template <lcduint_t W, lcduint_t H, uint8_t BPP>
+class NanoCanvas: public NanoCanvasBase<BPP>
+{
+public:
+    NanoCanvas(): NanoCanvasBase<BPP>( W, H, m_buffer )
+    {
+    }
+
+private:
+    uint8_t m_buffer[W * H * BPP / 8];
+};
+
 /////////////////////////////////////////////////////////////////////////////////
 //
 //                             1-BIT GRAPHICS
@@ -351,6 +363,7 @@ class NanoCanvas1: public NanoCanvasBase<1>
 public:
     using NanoCanvasBase::NanoCanvasBase;
 
+#if 0
     /**
      * Draws canvas on the LCD display
      * @param x - horizontal position in pixels
@@ -375,6 +388,7 @@ public:
      * @param rect rectagle describing part of canvas to move to display.
      */
     void blt(NanoDisplayOps<1> &display, const NanoRect &rect);
+#endif
 };
 
 /**
@@ -387,6 +401,7 @@ class NanoCanvas1_8: public NanoCanvasBase<1>
 public:
     using NanoCanvasBase::NanoCanvasBase;
 
+#if 0
     /**
      * Draws canvas on the LCD display
      * @param x - horizontal position in pixels
@@ -411,6 +426,7 @@ public:
      * @param rect rectagle describing part of canvas to move to display.
      */
     void blt(const NanoRect &rect);
+#endif
 };
 
 /**
@@ -423,6 +439,7 @@ class NanoCanvas1_16: public NanoCanvasBase<1>
 public:
     using NanoCanvasBase::NanoCanvasBase;
 
+#if 0
     /**
      * Draws canvas on the LCD display
      * @param x - horizontal position in pixels
@@ -447,6 +464,7 @@ public:
      * @param rect rectagle describing part of canvas to move to display.
      */
     void blt(const NanoRect &rect);
+#endif
 };
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -465,6 +483,7 @@ class NanoCanvas8: public NanoCanvasBase<8>
 public:
     using NanoCanvasBase::NanoCanvasBase;
 
+#if 0
     /**
      * Draws canvas on the LCD display
      * @param x - horizontal position in pixels
@@ -489,6 +508,7 @@ public:
      * @param rect rectagle describing part of canvas to move to display.
      */
     void blt(const NanoRect &rect);
+#endif
 };
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -507,6 +527,7 @@ class NanoCanvas16: public NanoCanvasBase<16>
 public:
     using NanoCanvasBase::NanoCanvasBase;
 
+#if 0
     /**
      * Draws canvas on the LCD display
      * @param x - horizontal position in pixels
@@ -531,6 +552,7 @@ public:
      * @param rect rectagle describing part of canvas to move to display.
      */
     void blt(const NanoRect &rect);
+#endif
 };
 
 /**
