@@ -433,6 +433,8 @@ void NanoCanvasOps<1>::begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
     clear();
 }
 
+#if 0
+
 //                 NANO CANVAS 1
 
 void NanoCanvas1::blt(NanoDisplayOps<1> &display, lcdint_t x, lcdint_t y)
@@ -483,6 +485,8 @@ void NanoCanvas1_16::blt(const NanoRect &rect)
 {
     // TODO: NOT IMPLEMENTED
 }
+
+#endif
 
 /////////////////////////////////////////////////////////////////////////////////
 //
@@ -711,6 +715,7 @@ void NanoCanvasOps<8>::begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
     clear();
 }
 
+#if 0
 //                NANO CANVAS 8
 
 void NanoCanvas8::blt(lcdint_t x, lcdint_t y)
@@ -732,6 +737,7 @@ void NanoCanvas8::blt(const NanoRect &rect)
                           m_w,
                           m_buf + rect.p1.x + rect.p1.y * m_w );
 }
+#endif
 
 /////////////////////////////////////////////////////////////////////////////////
 //
@@ -983,7 +989,7 @@ template class NanoCanvasOps<1>;
 template class NanoCanvasOps<8>;
 template class NanoCanvasOps<16>;
 
-
+#if 0
 //              NANO CANVAS 16
 
 void NanoCanvas16::blt(lcdint_t x, lcdint_t y)
@@ -1005,3 +1011,5 @@ void NanoCanvas16::blt(const NanoRect &rect)
                            m_w<<1,
                            m_buf + (rect.p1.x<<1) + rect.p1.y * (m_w<<1) );
 }
+
+#endif

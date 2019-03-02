@@ -46,19 +46,19 @@
 extern "C" SFixedFontInfo s_fixedFont;
 
 /* The table below defines arguments for NanoEngineTiler.          *
- *                            canvas        width   height  bits   */
+ *                            canvas                    bits   */
 // Tiles for monochrome displays
-#define TILE_128x64_MONO      NanoCanvas1,  128,    64,     7    ///< Full-screen 1-bit tile for SSD1306
-#define TILE_8x8_MONO         NanoCanvas1,  8,      8,      3    ///< Standard 1-bit tile 8x8 for monochrome mode
-#define TILE_16x16_MONO       NanoCanvas1,  16,     16,     4    ///< Standard 1-bit tile 16x16 for monochrome mode
-#define TILE_32x32_MONO       NanoCanvas1,  32,     32,     4    ///< Standard 1-bit tile 32x32 for monochrome mode
+#define TILE_128x64_MONO      NanoCanvas<128,64,1>,     1    ///< Full-screen 1-bit tile for SSD1306
+#define TILE_8x8_MONO         NanoCanvas<8,8,1>,        1    ///< Standard 1-bit tile 8x8 for monochrome mode
+#define TILE_16x16_MONO       NanoCanvas<16,16,1>,      1    ///< Standard 1-bit tile 16x16 for monochrome mode
+#define TILE_32x32_MONO       NanoCanvas<32,32,1>,      1    ///< Standard 1-bit tile 32x32 for monochrome mode
 // Tiles for 8-bit displays
-#define TILE_8x8_RGB8         NanoCanvas8,  8,      8,      3    ///< Standard 8-bit RGB tile 8x8
-#define TILE_16x16_RGB8       NanoCanvas8,  16,     16,     4    ///< Standard 8-bit RGB tile 16x16
-#define TILE_32x32_RGB8       NanoCanvas8,  32,     32,     5    ///< Standard 8-bit RGB tile 32x32
-#define TILE_8x8_MONO_8       NanoCanvas1_8,8,      8,      3    ///< Standard 1-bit tile 8x8 for RGB mode
+#define TILE_8x8_RGB8         NanoCanvas<8,8,8>,        8    ///< Standard 8-bit RGB tile 8x8
+#define TILE_16x16_RGB8       NanoCanvas<16,16,8>,      8    ///< Standard 8-bit RGB tile 16x16
+#define TILE_32x32_RGB8       NanoCanvas<32,32,8>,      8    ///< Standard 8-bit RGB tile 32x32
+#define TILE_8x8_MONO_8       NanoCanvas<8,8,1>,        8    ///< Standard 1-bit tile 8x8 for RGB mode
 // Tiles for 16-bit displays
-#define TILE_8x8_RGB16        NanoCanvas16, 8,      8,      3    ///< Standard 16-bit RGB tile 8x8
+#define TILE_8x8_RGB16        NanoCanvas<8,8,16>,       16    ///< Standard 16-bit RGB tile 8x8
 // Adafruit tiles
 #define ADATILE_8x8_MONO      AdafruitCanvas1,  8,  8,      3    ///< Use Adafruit GFX implementation as NanoEngine canvas
 #define ADATILE_8x8_RGB8      AdafruitCanvas8,  8,  8,      3    ///< Use Adafruit GFX implementation as NanoEngine canvas
@@ -69,10 +69,10 @@ extern "C" SFixedFontInfo s_fixedFont;
  */
 typedef bool (*TNanoEngineOnDraw)(void);
 
-template<class C, lcduint_t W, lcduint_t H, uint8_t B>
+template<class C, uint8_t B>
 class NanoEngine;
 
-template<class C, lcduint_t W, lcduint_t H, uint8_t B>
+template<class C, uint8_t B>
 class NanoEngineTiler;
 
 template<class T>

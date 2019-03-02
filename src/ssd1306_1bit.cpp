@@ -1204,6 +1204,13 @@ template
 void ssd1306_updateMenu<1>( NanoDisplayOps<1> &display, SAppMenu *menu);
 */
 
+
+template <uint8_t BPP>
+void NanoDisplayOps<BPP>::drawCanvas(lcdint_t x, lcdint_t y, NanoCanvasOps<1> &canvas)
+{
+    drawBitmap1( x, y, canvas.width(), canvas.height(), canvas.getData() );
+}
+
 /////////////////////////////////////////////////////////////////////////////////
 //
 //                             1-BIT GRAPHICS

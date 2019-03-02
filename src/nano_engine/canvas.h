@@ -34,7 +34,6 @@
 #include "ssd1306_hal/io.h"
 #include "ssd1306_hal/Print_internal.h"
 #include "nano_gfx_types.h"
-#include "display.h"
 
 /**
  * @ingroup NANO_ENGINE_API
@@ -280,7 +279,13 @@ public:
      * Sets color for monochrome operations
      * @param color - color to set (refer to RGB_COLOR8 definition)
      */
-    void setColor(uint16_t color) { m_color = color; };
+    void setColor(uint16_t color) { m_color = color; }
+
+    uint8_t * getData() { return m_buf; }
+
+    lcduint_t width() { return m_w; }
+
+    lcduint_t height() { return m_h; }
 
 protected:
     lcduint_t m_w;    ///< width of NanoCanvas area in pixels

@@ -56,8 +56,6 @@ SRCS_C = \
 SRCS_CPP = \
 	nano_engine/canvas.cpp \
 	nano_engine/core.cpp \
-	nano_gfx.cpp \
-	sprite_pool.cpp \
 	ssd1306_console.cpp \
 	ssd1306_hal/arduino/platform.cpp \
 	intf/vga/esp32/vga128x64.cpp \

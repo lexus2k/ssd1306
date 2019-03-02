@@ -31,6 +31,7 @@
 
 #include "point.h"
 #include "rect.h"
+#include "canvas.h"
 #include "ssd1306_hal/io.h"
 #include "ssd1306_hal/Print_internal.h"
 #include "nano_gfx_types.h"
@@ -212,6 +213,8 @@ public:
      * Clears canvas
      */
     void clear();
+
+    void drawCanvas(lcdint_t x, lcdint_t y, NanoCanvasOps<1> &canvas);
 
     void fill(uint16_t color);
 

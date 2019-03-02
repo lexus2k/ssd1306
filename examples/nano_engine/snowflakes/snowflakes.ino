@@ -39,6 +39,8 @@
 #include "ssd1306.h"
 #include "nano_engine.h"
 
+DisplaySSD1306_128x64 display;
+
 /*
  * Define snowflake images directly in flash memory.
  * This reduces SRAM consumption.
@@ -184,7 +186,11 @@ SnowFlake snowFlakes[maxCount];
 
 void setup()
 {
-    ssd1306_128x64_i2c_init();
+
+    ssd1306_i2cInit();
+    display.begin();
+
+//    ssd1306_128x64_i2c_init();
 //    ssd1331_96x64_spi_init(3,4,5);
 //    ssd1351_128x128_spi_init(3,4,5);
 //    il9163_128x128_spi_init(3,4,5);

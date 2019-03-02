@@ -39,10 +39,9 @@
 #include "ssd1306.h"
 #include "nano_engine.h"
 #include "intf/i2c/ssd1306_i2c.h"
-#include "nano_gfx.h"
 #include "sova.h"
 
-DisplaySSD1306 display;
+DisplaySSD1306_128x64 display;
 
 /*
  * Heart image below is defined directly in flash memory.
@@ -143,14 +142,14 @@ static void canvasDemo()
     canvas.clear();
     canvas.setColor( 0xFF );
     canvas.fillRect(10, 3, 80, 5);
-    canvas.blt(display, (display.width()-64)/2, 1);
+    display.drawCanvas((display.width()-64)/2, 1, canvas);
     delay(500);
     canvas.setColor( 0xFF );
     canvas.fillRect(50, 1, 60, 15);
-    canvas.blt(display, (display.width()-64)/2, 1);
+    display.drawCanvas((display.width()-64)/2, 1, canvas);
     delay(1500);
     canvas.printFixed(20, 1, " DEMO ", STYLE_BOLD );
-    canvas.blt(display, (display.width()-64)/2, 1);
+    display.drawCanvas((display.width()-64)/2, 1, canvas);
     delay(3000);
 }
 #endif
@@ -175,7 +174,7 @@ void setup()
     ssd1306_setFixedFont(ssd1306xled_font6x8);
 
     ssd1306_i2cInit();
-    display.init();
+    display.begin();
 
 //    display.128x64_i2c_init();
 //    display.128x64_spi_init(3,4,5);     // Use this line for Atmega328p (3=RST, 4=CE, 5=D/C)
