@@ -37,17 +37,11 @@
 #include "sdl_core.h"
 #endif
 
-#if defined(__KERNEL__)     // KERNEL includes
-#include <linux/types.h>
-
-#else                       // LINUX includes
-
 #include <stdio.h>
 #include <stdint.h>
 #include <unistd.h>
 #include <time.h>
 #include <string.h>
-#endif
 
 /** Standard defines */
 #define LOW  0

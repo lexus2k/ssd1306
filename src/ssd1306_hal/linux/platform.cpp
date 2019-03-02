@@ -30,8 +30,6 @@
 #include "intf/spi/ssd1306_spi_conf.h"
 #include "intf/spi/ssd1306_spi.h"
 
-#ifndef __KERNEL__
-
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <errno.h>
@@ -384,6 +382,40 @@ void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, int8_t arg)
     ssd1306_intf.close = sdl_core_close;
 }
 
+PlatformI2c::PlatformI2c()
+{
+    sdl_core_init();
+}
+
+PlatformI2c::~PlatformI2c()
+{
+    sdl_core_close();
+}
+
+void PlatformI2c::start()
+{
+    sdl_send_init();
+}
+
+void PlatformI2c::stop()
+{
+    sdl_send_stop();
+}
+
+void PlatformI2c::send(uint8_t data)
+{
+    sdl_send_byte(data);
+}
+
+void PlatformI2c::sendBuffer(const uint8_t *buffer, uint16_t size)
+{
+    while (size--)
+    {
+        send(*buffer);
+        buffer++;
+    }
+}
+
 #endif /* SDL_EMULATION */
 
 #endif // CONFIG_PLATFORM_I2C_AVAILABLE
@@ -562,22 +594,9 @@ void ssd1306_platform_spiInit(int8_t busId, int8_t ces, int8_t dcPin)
     ssd1306_intf.close = sdl_core_close;
 }
 
+
 #endif /* SDL_EMULATION */
 
 #endif // CONFIG_PLATFORM_SPI_AVAILABLE
-
-#else  // end of !KERNEL, KERNEL is below
-
-void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, int8_t arg)
-{
-}
-
-void ssd1306_platform_spiInit(int8_t busId,
-                              int8_t ces,
-                              int8_t dcPin)
-{
-}
-
-#endif // KERNEL
 
 #endif // __linux__

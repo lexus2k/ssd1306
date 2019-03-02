@@ -25,7 +25,6 @@
  * @file display.h Drawing in hardware buffer
  */
 
-
 #ifndef _NANO_DISPLAY_H_
 #define _NANO_DISPLAY_H_
 
@@ -34,6 +33,7 @@
 #include "canvas.h"
 #include "ssd1306_hal/io.h"
 #include "ssd1306_hal/Print_internal.h"
+#include "intf/ssd1306_interface.h"
 #include "nano_gfx_types.h"
 #include "lcd/lcd_common.h"
 
@@ -69,9 +69,7 @@ public:
      * If you this constructor is used, you must call begin() method before
      * working with canvas.
      */
-    NanoDisplayOps()
-    {
-    }
+    NanoDisplayOps(IWireInterface& intf): m_intf( intf ) {}
 
     /**
      * Sets offset
@@ -284,6 +282,19 @@ public:
 
     virtual void nextPage() = 0;
 
+    /**
+     * Sends 8 monochrome vertical pixels to OLED driver.
+     * @param data - byte, representing 8 pixels.
+     */
+    virtual void sendPixels1(uint8_t data) = 0;
+
+    /**
+     * Sends buffer containing 8 monochrome vertical pixels, encoded in each byte.
+     * @param buffer - buffer containing monochrome pixels.
+     * @param len - length of buffer in bytes.
+     */
+    virtual void sendPixelsBuffer1(const uint8_t *buffer, uint16_t len) = 0;
+
     lcduint_t width() { return m_w; }
 
     lcduint_t height() { return m_h; }
@@ -299,6 +310,7 @@ protected:
     uint16_t  m_color = 0xFFFF;    ///< current color for monochrome operations
 
     ssd1306_lcd2_t m_lcd;
+    IWireInterface& m_intf;
 };
 
 /**

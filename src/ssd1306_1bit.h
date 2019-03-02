@@ -39,6 +39,8 @@ extern "C" {
 //                 DIRECT GRAPH FUNCTIONS
 ///////////////////////////////////////////////////////////////////////
 
+#if 0
+
 /**
  * @defgroup LCD_1BIT_GRAPHICS DIRECT DRAW: 1-bit graphic functions for ssd1306 compatible mode.
  * @{
@@ -390,6 +392,8 @@ SPRITE       ssd1306_createSprite(uint8_t x, uint8_t y, uint8_t w, const uint8_t
  * @param data - pointer to data, located in Flash: each byte represents 8 vertical pixels.
  */
 void         ssd1306_replaceSprite(SPRITE *sprite, const uint8_t *data);
+
+#endif
 
 /**
  * @}

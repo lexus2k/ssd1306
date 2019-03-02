@@ -41,7 +41,7 @@
 #include "intf/i2c/ssd1306_i2c.h"
 
 
-DisplaySSD1306_128x64 display;
+DisplaySSD1306_128x64_I2C display;
 
 /*
  * Define snowflake images directly in flash memory.
@@ -190,8 +190,6 @@ SnowFlake snowFlakes[maxCount];
 
 void setup()
 {
-
-    ssd1306_i2cInit();
     display.begin();
 
 //    display.128x64_i2c_init();

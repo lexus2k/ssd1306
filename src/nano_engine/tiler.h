@@ -171,7 +171,7 @@ public:
      */
     void refresh(const NanoPoint &point)
     {
-        if ((point.y<0) || ((point.y/canvas.height())>=NE_MAX_TILES_NUM)) return;
+        if ((point.x<0)||(point.y<0) || ((point.y/canvas.height())>=NE_MAX_TILES_NUM)) return;
         m_refreshFlags[(point.y/canvas.height())] |= (1<<(point.x/canvas.width()));
     }
 

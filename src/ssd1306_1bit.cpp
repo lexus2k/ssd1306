@@ -47,6 +47,7 @@ extern SFixedFontInfo s_fixedFont;
 extern uint8_t g_ssd1306_unicode;
 #endif
 
+#if 0
 void ssd1306_fillScreen(uint8_t fill_Data)
 {
     fill_Data ^= s_ssd1306_invertByte;
@@ -76,14 +77,6 @@ void ssd1306_clearScreen()
     ssd1306_intf.stop();
 }
 
-#if 0
-uint8_t ssd1306_printFixed(uint8_t x, uint8_t y, const char *ch, EFontStyle style)
-{
-    ssd1306_cursorX = x;
-    ssd1306_cursorY = y;
-    return ssd1306_print(ch);
-}
-#else
 uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle style)
 {
     uint8_t i, j=0;
@@ -166,8 +159,6 @@ uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle s
     ssd1306_intf.stop();
     return j;
 }
-
-#endif
 
 uint8_t ssd1306_printFixed_oldStyle(uint8_t xpos, uint8_t y, const char *ch, EFontStyle style)
 {
@@ -816,6 +807,8 @@ void         ssd1306_replaceSprite(SPRITE *sprite, const uint8_t *data)
     sprite->data = data;
 }
 
+#endif
+
 void         ssd1306_negativeMode()
 {
     s_ssd1306_invertByte = 0xFF;
@@ -1014,7 +1007,7 @@ void NanoDisplayOps<1>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EF
             {
                 j = text_index;
             }
-            ssd1306_intf.stop();
+            m_intf.stop();
             setBlock(xpos, y, m_w - xpos);
         }
         uint16_t unicode;
@@ -1049,7 +1042,7 @@ void NanoDisplayOps<1>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EF
                     data = (temp & 0xF0) | ldata;
                     ldata = (temp & 0x0F);
                 }
-                m_lcd.send_pixels1(data^s_ssd1306_invertByte);
+                sendPixels1(data^s_ssd1306_invertByte);
                 char_info.glyph++;
             }
         }
@@ -1058,9 +1051,9 @@ void NanoDisplayOps<1>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EF
             char_info.spacing += char_info.width;
         }
         for (i = 0; i < char_info.spacing; i++)
-            m_lcd.send_pixels1(s_ssd1306_invertByte);
+            sendPixels1(s_ssd1306_invertByte);
     }
-    ssd1306_intf.stop();
+    m_intf.stop();
 }
 
 template <uint8_t BPP>
@@ -1221,8 +1214,8 @@ template <>
 void NanoDisplayOps<1>::putPixel(lcdint_t x, lcdint_t y)
 {
     setBlock(x, y >> 3, 1);
-    m_lcd.send_pixels1((1 << (y & 0x07))^s_ssd1306_invertByte);
-    ssd1306_intf.stop();
+    sendPixels1((1 << (y & 0x07))^s_ssd1306_invertByte);
+    m_intf.stop();
 }
 
 template <>
@@ -1231,9 +1224,9 @@ void NanoDisplayOps<1>::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
     setBlock(x1, y1 >> 3, x2 - x1 + 1);
     for (uint8_t x = x1; x <= x2; x++)
     {
-        m_lcd.send_pixels1((1 << (y1 & 0x07))^s_ssd1306_invertByte);
+        sendPixels1((1 << (y1 & 0x07))^s_ssd1306_invertByte);
     }
-    ssd1306_intf.stop();
+    m_intf.stop();
 }
 
 template <>
@@ -1246,19 +1239,19 @@ void NanoDisplayOps<1>::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
     setBlock(x1, topPage, 1);
     if (topPage == bottomPage)
     {
-        m_lcd.send_pixels1( ((0xFF >> (0x07 - height)) << (y1 & 0x07))^s_ssd1306_invertByte );
-        ssd1306_intf.stop();
+        sendPixels1( ((0xFF >> (0x07 - height)) << (y1 & 0x07))^s_ssd1306_invertByte );
+        m_intf.stop();
         return;
     }
-    m_lcd.send_pixels1( (0xFF << (y1 & 0x07))^s_ssd1306_invertByte );
+    sendPixels1( (0xFF << (y1 & 0x07))^s_ssd1306_invertByte );
     for ( y = (topPage + 1); y <= (bottomPage - 1); y++)
     {
         nextPage();
-        m_lcd.send_pixels1( 0xFF^s_ssd1306_invertByte );
+        sendPixels1( 0xFF^s_ssd1306_invertByte );
     }
     nextPage();
-    m_lcd.send_pixels1( (0xFF >> (0x07 - (y2 & 0x07)))^s_ssd1306_invertByte );
-    ssd1306_intf.stop();
+    sendPixels1( (0xFF >> (0x07 - (y2 & 0x07)))^s_ssd1306_invertByte );
+    m_intf.stop();
 }
 
 template <>
@@ -1274,11 +1267,11 @@ void NanoDisplayOps<1>::clear()
     {
         for(uint8_t n=m_w; n>0; n--)
         {
-            m_lcd.send_pixels1( s_ssd1306_invertByte );
+            sendPixels1( s_ssd1306_invertByte );
         }
         nextPage();
     }
-    ssd1306_intf.stop();
+    m_intf.stop();
 }
 
 template <>
@@ -1329,13 +1322,13 @@ void NanoDisplayOps<1>::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint
             if ( mainFlag )    data |= ((pgm_read_byte(bitmap) << offset) & m_color);
             if ( complexFlag ) data |= ((pgm_read_byte(bitmap - origin_width) >> (8 - offset)) & m_color);
             bitmap++;
-            m_lcd.send_pixels1(s_ssd1306_invertByte^data);
+            sendPixels1(s_ssd1306_invertByte^data);
         }
         bitmap += origin_width - w;
         complexFlag = offset;
         nextPage();
     }
-    ssd1306_intf.stop();
+    m_intf.stop();
 }
 
 template <>
@@ -1347,10 +1340,10 @@ void NanoDisplayOps<1>::fill(uint16_t color)
     {
         for(uint8_t n=m_w; n>0; n--)
         {
-            m_lcd.send_pixels1(color);
+            sendPixels1(color);
         }
         nextPage();
     }
-    ssd1306_intf.stop();
+    m_intf.stop();
 }
 

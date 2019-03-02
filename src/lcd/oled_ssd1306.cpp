@@ -35,6 +35,8 @@
 
 #include "ssd1306_generic.h"
 
+extern uint8_t s_ssd1306_invertByte;
+
 static const uint8_t PROGMEM s_oled128x64_initData[] =
 {
 #ifdef SDL_EMULATION
@@ -260,26 +262,26 @@ void   ssd1306_128x32_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
 
 void DisplaySSD1306::setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 {
-    ssd1306_intf.start();
-    if (ssd1306_intf.spi)
-        ssd1306_spiDataMode(0);
+    m_intf.start();
+    if (m_isSPI)
+        spiDataMode(0);
     else
-        ssd1306_intf.send(0x00);
-    ssd1306_intf.send(SSD1306_COLUMNADDR);
-    ssd1306_intf.send(x);
-    ssd1306_intf.send(w ? (x + w - 1) : (m_w - 1));
-    ssd1306_intf.send(SSD1306_PAGEADDR);
-    ssd1306_intf.send(y);
-    ssd1306_intf.send((m_h >> 3) - 1);
-    if (ssd1306_intf.spi)
+        m_intf.send(0x00);
+    m_intf.send(SSD1306_COLUMNADDR);
+    m_intf.send(x);
+    m_intf.send(w ? (x + w - 1) : (m_w - 1));
+    m_intf.send(SSD1306_PAGEADDR);
+    m_intf.send(y);
+    m_intf.send((m_h >> 3) - 1);
+    if (m_isSPI)
     {
-        ssd1306_spiDataMode(1);
+        spiDataMode(1);
     }
     else
     {
-        ssd1306_intf.stop();
-        ssd1306_intf.start();
-        ssd1306_intf.send(0x40);
+        m_intf.stop();
+        m_intf.start();
+        m_intf.send(0x40);
     }
 }
 
@@ -287,21 +289,88 @@ void DisplaySSD1306::nextPage()
 {
 }
 
+void DisplaySSD1306::sendPixels1(uint8_t data)
+{
+    m_intf.send( data );
+}
+
+void DisplaySSD1306::sendPixelsBuffer1(const uint8_t *buffer, uint16_t len)
+{
+    m_intf.sendBuffer(buffer, len);
+}
+
+void DisplaySSD1306::spiDataMode(uint8_t mode)
+{
+    // TODO:
+/*    if (s_ssd1306_dc)
+    {
+        digitalWrite(s_ssd1306_dc, mode ? HIGH : LOW);
+    }*/
+}
+
+void DisplaySSD1306::commandStart(void)
+{
+    m_intf.start();
+    if (m_isSPI)
+        spiDataMode(0);
+    else
+        m_intf.send(0x00);
+}
+
+void DisplaySSD1306::negativeMode()
+{
+    s_ssd1306_invertByte = 0xFF;
+}
+
+void DisplaySSD1306::positiveMode()
+{
+    s_ssd1306_invertByte = 0x00;
+}
+
+void DisplaySSD1306::invertMode()
+{
+    commandStart();
+    m_intf.send(SSD1306_INVERTDISPLAY);
+    m_intf.stop();
+}
+
+void DisplaySSD1306::normalMode()
+{
+    commandStart();
+    m_intf.send(SSD1306_NORMALDISPLAY);
+    m_intf.stop();
+}
+
 void DisplaySSD1306_128x64::begin()
 {
     m_lcd.type = LCD_TYPE_SSD1306;
     m_w = 128;
     m_h = 64;
-    m_lcd.send_pixels1  = ssd1306_intf.send;
-    m_lcd.send_pixels_buffer1 = ssd1306_intf.send_buffer;
     m_lcd.set_mode = ssd1306_setMode_int;
-    for( uint8_t i=0; i < sizeof(s_oled128x32_initData); i++)
+    for( uint8_t i=0; i < sizeof(s_oled128x64_initData); i++)
     {
-        ssd1306_sendCommand(pgm_read_byte(&s_oled128x32_initData[i]));
+        commandStart();
+        m_intf.send(pgm_read_byte(&s_oled128x64_initData[i]));
+        m_intf.stop();
     }
 }
 
 void DisplaySSD1306_128x64::end()
 {
+}
+
+
+void DisplaySSD1306_128x64_I2C::begin()
+{
+    // TODO:
+    // m_i2c.begin();
+    DisplaySSD1306_128x64::begin();
+}
+
+void DisplaySSD1306_128x64_I2C::end()
+{
+    DisplaySSD1306_128x64::end();
+    // TODO:
+    // m_i2c.end();
 }
 

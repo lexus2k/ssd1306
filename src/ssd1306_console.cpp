@@ -24,14 +24,17 @@
 
 #include "ssd1306_console.h"
 
+// TODO:
+#if 0
 void Ssd1306Console::clear()
 {
-    ssd1306_clearScreen();
-    setCursor(0,0);
+//    ssd1306_clearScreen();
+//    setCursor(0,0);
 }
 
 void Ssd1306Console::setCursor(lcduint_t x, lcduint_t y)
 {
-    ssd1306_setCursor8(x,y);
+//    ssd1306_setCursor8(x,y);
 }
 
+#endif

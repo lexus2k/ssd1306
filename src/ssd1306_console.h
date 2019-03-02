@@ -69,6 +69,8 @@ private:
 
 };
 
+// TODO
+#if 0
 /**
  * Ssd1306Console represents object to work with LCD display.
  * Easy to use:
@@ -104,6 +106,8 @@ public:
 private:
 
 };
+
+#endif
 
 #endif
 

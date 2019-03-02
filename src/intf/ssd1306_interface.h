@@ -32,6 +32,31 @@
 #include "ssd1306_hal/io.h"
 
 #ifdef __cplusplus
+
+class IWireInterface
+{
+public:
+    virtual void start() = 0;
+    virtual void stop() = 0;
+    virtual void send(uint8_t data) = 0;
+    virtual void sendBuffer(const uint8_t *buffer, uint16_t size) = 0;
+};
+
+// !!! PLATFORM I2C IMPLEMENTATION OPTIONAL !!!
+#if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && defined(CONFIG_PLATFORM_I2C_ENABLE)
+class PlatformI2c: public IWireInterface
+{
+public:
+    PlatformI2c();
+    virtual ~PlatformI2c();
+    void start() override;
+    void stop() override;
+    void send(uint8_t data) override;
+    void sendBuffer(const uint8_t *buffer, uint16_t size) override;
+private:
+};
+#endif
+
 extern "C" {
 #endif
 

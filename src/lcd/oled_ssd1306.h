@@ -39,14 +39,41 @@
 class DisplaySSD1306: public NanoDisplayOps<1>
 {
 public:
-    DisplaySSD1306(): NanoDisplayOps<1>() {}
+    DisplaySSD1306(IWireInterface &intf, bool isSPI = false)
+        : NanoDisplayOps<1>(intf)
+        , m_isSPI( isSPI ) {}
+
+    void negativeMode();
+
+    void positiveMode();
+
+    void normalMode();
+
+    void invertMode();
 
     void setBlock(lcduint_t x, lcduint_t y, lcduint_t w) override;
 
     void nextPage() override;
 
+    void commandStart();
+
+    /**
+     * Sends 8 monochrome vertical pixels to OLED driver.
+     * @param data - byte, representing 8 pixels.
+     */
+    void sendPixels1(uint8_t data) override;
+
+    /**
+     * Sends buffer containing 8 monochrome vertical pixels, encoded in each byte.
+     * @param buffer - buffer containing monochrome pixels.
+     * @param len - length of buffer in bytes.
+     */
+    void sendPixelsBuffer1(const uint8_t *buffer, uint16_t len) override;
+
 protected:
-    ssd1306_lcd2_t ssd1306_lcd;
+    bool m_isSPI;
+
+    void spiDataMode(uint8_t mode);
 };
 
 class DisplaySSD1306_128x64: public DisplaySSD1306
@@ -57,6 +84,19 @@ public:
     void begin();
 
     void end();
+};
+
+class DisplaySSD1306_128x64_I2C: public DisplaySSD1306_128x64
+{
+public:
+    DisplaySSD1306_128x64_I2C(): DisplaySSD1306_128x64(m_i2c, false) {}
+
+    void begin();
+
+    void end();
+
+private:
+    PlatformI2c m_i2c;
 };
 
 extern "C" {

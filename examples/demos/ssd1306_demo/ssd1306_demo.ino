@@ -41,7 +41,7 @@
 #include "intf/i2c/ssd1306_i2c.h"
 #include "sova.h"
 
-DisplaySSD1306_128x64 display;
+DisplaySSD1306_128x64_I2C display;
 
 /*
  * Heart image below is defined directly in flash memory.
@@ -83,21 +83,22 @@ static void bitmapDemo()
 {
     display.drawBitmap1(0, 0, 128, 64, Sova);
     delay(1000);
-    ssd1306_invertMode();
+    display.invertMode();
     delay(2000);
-    ssd1306_normalMode();
+    display.normalMode();
 }
 
 static void spriteDemo()
 {
     display.clear();
     /* Declare variable that represents our sprite */
-    SPRITE sprite;
-    /* Create sprite at 0,0 position. The function initializes sprite structure. */
-    sprite = ssd1306_createSprite( 0, 0, spriteWidth, heartImage );
+    NanoPoint sprite = {0, 0};
     for (int i=0; i<250; i++)
     {
         delay(15);
+        /* Erase sprite on old place. The library knows old position of the sprite. */
+        display.setColor( 0 );
+        display.drawBitmap1( sprite.x, sprite.y, spriteWidth, 8, heartImage );
         sprite.x++;
         if (sprite.x >= display.width())
         {
@@ -108,14 +109,9 @@ static void spriteDemo()
         {
             sprite.y = 0;
         }
-        /* Erase sprite on old place. The library knows old position of the sprite. */
-        display.setColor( 0 );
-        display.drawBitmap1( sprite.lx, sprite.ly, sprite.w, 8, sprite.data );
         /* Draw sprite on new place */
         display.setColor( 0xFFFF );
-        display.drawBitmap1( sprite.x, sprite.y, sprite.w, 8, sprite.data );
-        sprite.lx = sprite.x;
-        sprite.ly = sprite.y;
+        display.drawBitmap1( sprite.x, sprite.y, spriteWidth, 8, heartImage );
     }
 }
 
@@ -126,9 +122,9 @@ static void textDemo()
     display.printFixed(0,  8, "Normal text", STYLE_NORMAL);
     display.printFixed(0, 16, "Bold text", STYLE_BOLD);
     display.printFixed(0, 24, "Italic text", STYLE_ITALIC);
-    ssd1306_negativeMode();
+    display.negativeMode();
     display.printFixed(0, 32, "Inverted bold", STYLE_BOLD);
-    ssd1306_positiveMode();
+    display.positiveMode();
     delay(3000);
 }
 
@@ -173,9 +169,7 @@ void setup()
     /* Select the font to use with menu and all font functions */
     ssd1306_setFixedFont(ssd1306xled_font6x8);
 
-    ssd1306_i2cInit();
     display.begin();
-
 //    display.128x64_i2c_init();
 //    display.128x64_spi_init(3,4,5);     // Use this line for Atmega328p (3=RST, 4=CE, 5=D/C)
 //    display.128x64_spi_init(24, 0, 23); // Use this line for Raspberry  (gpio24=RST, 0=CE, gpio23=D/C)
