@@ -234,7 +234,7 @@ public:
     /**
      * Initializes Nano Engine Base object.
      */
-    NanoEngine();
+    NanoEngine(NanoDisplayOps<B> &display);
 
     /**
      * @brief refreshes content on oled display.
@@ -261,8 +261,8 @@ protected:
 };
 
 template<class C, uint8_t B>
-NanoEngine<C,B>::NanoEngine()
-    : NanoEngineCore(), NanoEngineTiler<C,B>()
+NanoEngine<C,B>::NanoEngine( NanoDisplayOps<B> & display)
+    : NanoEngineCore(), NanoEngineTiler<C,B>(display)
 {
 }
 

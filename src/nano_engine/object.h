@@ -72,9 +72,9 @@ public:
      */
     void refresh() override
     {
-        if (this->getTiler())
+        if (this->hasTiler())
         {
-             this->getTiler()->refreshWorld( m_rect );
+             this->getTiler().refreshWorld( m_rect );
         }
     }
 

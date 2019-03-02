@@ -30,6 +30,7 @@
 #define _NANO_ENGINE_TILER_H_
 
 #include "canvas.h"
+#include "display.h"
 #include "rect.h"
 //#include "object.h"
 #include "lcd/lcd_common.h"
@@ -38,6 +39,8 @@
  * @ingroup NANO_ENGINE_API
  * @{
  */
+
+#define NE_MAX_TILES_NUM 16
 
 /**
  * Structure, holding currently set font.
@@ -79,7 +82,7 @@ template<class T>
 class NanoEngineObject
 {
 public:
-    template<class C, lcduint_t W, lcduint_t H, uint8_t B>
+    template<class C, uint8_t B>
     friend class NanoEngineTiler;
 
     virtual void draw() = 0;
@@ -103,7 +106,9 @@ public:
         return m_focused;
     }
 
-    T *getTiler() { return static_cast<T*>(m_tiler); }
+    bool hasTiler() { return m_tiler != nullptr; }
+
+    T &getTiler() { return *(static_cast<T*>(m_tiler)); }
 
 protected:
     void           *m_tiler = nullptr;
@@ -130,19 +135,15 @@ class NanoEngineTiler
 {
 protected:
     /** Only child classes can initialize the engine */
-    NanoEngineTiler():
+    NanoEngineTiler(NanoDisplayOps<B> &display):
         m_onDraw(nullptr),
-        offset{0, 0}
+        offset{0, 0},
+        m_display( display )
     {
         refresh();
     };
 
 public:
-    /** Number of bits in tile size. 5 corresponds to 1<<5 = 32 tile size */
-    static const uint8_t NE_TILE_SIZE_BITS = B;
-    /** Max tiles supported in X */
-    static const uint8_t NE_MAX_TILES_NUM = 64 >> (B - 3);
-
     /** object, representing canvas. Use it in your draw handler */
     C canvas;
 
@@ -151,7 +152,7 @@ public:
      */
     void refresh()
     {
-        memset(m_refreshFlags,0xFF,sizeof(uint16_t) * NanoEngineTiler<C,B>::NE_MAX_TILES_NUM);
+        memset(m_refreshFlags,0xFF,sizeof(m_refreshFlags));
     }
 
     /**
@@ -170,8 +171,8 @@ public:
      */
     void refresh(const NanoPoint &point)
     {
-        if ((point.y<0) || ((point.y>>B)>=NE_MAX_TILES_NUM)) return;
-        m_refreshFlags[(point.y>>B)] |= (1<<(point.x>>B));
+        if ((point.y<0) || ((point.y/canvas.height())>=NE_MAX_TILES_NUM)) return;
+        m_refreshFlags[(point.y/canvas.height())] |= (1<<(point.x/canvas.width()));
     }
 
     /**
@@ -180,14 +181,14 @@ public:
      */
     void refresh(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
     {
-        if (y2 < 0) return;
+        if (y2 < 0 || x2 < 0) return;
         if (y1 < 0) y1 = 0;
         if (x1 < 0) x1 = 0;
-        y1 = y1>>B;
-        y2 = min((y2>>B), NE_MAX_TILES_NUM - 1);
+        y1 = y1/canvas.height();
+        y2 = min((y2/canvas.height()), NE_MAX_TILES_NUM - 1);
         for (uint8_t y=y1; y<=y2; y++)
         {
-            for(uint8_t x=x1>>B; x<=(x2>>B); x++)
+            for(uint8_t x=x1/canvas.width(); x<=(x2/canvas.width()); x++)
             {
                 m_refreshFlags[y] |= (1<<x);
             }
@@ -349,12 +350,16 @@ public:
 
     C& get_canvas() { return canvas; }
 
+    NanoDisplayOps<B>& getDisplay() { return m_display; }
+
 protected:
     /**
      * Contains information on tiles to be updated.
      * Elements of array are rows and bits are columns.
      */
     uint16_t   m_refreshFlags[NE_MAX_TILES_NUM];
+
+    NanoDisplayOps<B>& m_display;
 
     /** Callback to call if specific tile needs to be updated */
     TNanoEngineOnDraw m_onDraw;
@@ -393,11 +398,11 @@ private:
 template<class C, uint8_t B>
 void NanoEngineTiler<C,B>::displayBuffer()
 {
-    for (lcduint_t y = 0; y < ssd1306_lcd.height; y = y + canvas.height())
+    for (lcduint_t y = 0; y < m_display.height(); y = y + canvas.height())
     {
-        uint16_t flag = m_refreshFlags[y >> NE_TILE_SIZE_BITS];
-        m_refreshFlags[y >> NE_TILE_SIZE_BITS] = 0;
-        for (lcduint_t x = 0; x < ssd1306_lcd.width; x = x + canvas.width())
+        uint16_t flag = m_refreshFlags[y/canvas.height()];
+        m_refreshFlags[y/canvas.height()] = 0;
+        for (lcduint_t x = 0; x < m_display.width(); x = x + canvas.width())
         {
             if (flag & 0x01)
             {
@@ -406,12 +411,12 @@ void NanoEngineTiler<C,B>::displayBuffer()
                 {
                     canvas.clear();
                     draw();
-                    canvas.blt(x, y);
+                    m_display.drawCanvas(x,y,canvas);
                 }
                 else if (m_onDraw())
                 {
                     draw();
-                    canvas.blt(x, y);
+                    m_display.drawCanvas(x,y,canvas);
                 }
             }
             flag >>=1;
@@ -422,15 +427,15 @@ void NanoEngineTiler<C,B>::displayBuffer()
 template<class C, uint8_t B>
 void NanoEngineTiler<C,B>::displayPopup(const char *msg)
 {
-    NanoRect rect = { {8, (ssd1306_lcd.height>>1) - 8}, {ssd1306_lcd.width - 8, (ssd1306_lcd.height>>1) + 8} };
+    NanoRect rect = { {8, (m_display.height()>>1) - 8}, {m_display.width() - 8, (m_display.height()>>1) + 8} };
     // TODO: It would be nice to calculate message height
-    NanoPoint textPos = { (ssd1306_lcd.width - (lcdint_t)strlen(msg)*s_fixedFont.h.width) >> 1, (ssd1306_lcd.height>>1) - 4 };
+    NanoPoint textPos = { (m_display.width() - (lcdint_t)strlen(msg)*s_fixedFont.h.width) >> 1, (m_display.height()>>1) - 4 };
     refresh(rect);
-    for (lcduint_t y = 0; y < ssd1306_lcd.height; y = y + canvas.height())
+    for (lcduint_t y = 0; y < m_display.height(); y = y + canvas.height())
     {
-        uint16_t flag = m_refreshFlags[y >> NE_TILE_SIZE_BITS];
-        m_refreshFlags[y >> NE_TILE_SIZE_BITS] = 0;
-        for (lcduint_t x = 0; x < ssd1306_lcd.width; x = x + canvas.width())
+        uint16_t flag = m_refreshFlags[y/canvas.height()];
+        m_refreshFlags[y/canvas.height()] = 0;
+        for (lcduint_t x = 0; x < m_display.width(); x = x + canvas.width())
         {
             if (flag & 0x01)
             {
@@ -451,7 +456,7 @@ void NanoEngineTiler<C,B>::displayPopup(const char *msg)
                 canvas.drawRect(rect);
                 canvas.printFixed( textPos.x, textPos.y, msg);
 
-                canvas.blt(x, y);
+                m_display.drawCanvas(x,y,canvas);
             }
             flag >>=1;
         }

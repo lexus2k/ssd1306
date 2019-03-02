@@ -38,6 +38,8 @@
 
 #include "ssd1306.h"
 #include "nano_engine.h"
+#include "intf/i2c/ssd1306_i2c.h"
+
 
 DisplaySSD1306_128x64 display;
 
@@ -130,7 +132,7 @@ const PROGMEM uint8_t snowFlakeImage[8][8] =
     },
 };
 
-NanoEngine1 engine;
+NanoEngine1 engine(display);
 
 class SnowFlake: public NanoFixedSprite<NanoEngine1>
 {
@@ -141,14 +143,16 @@ public:
 
     bool isAlive()
     {
-        return m_tiler != nullptr;
+        return hasTiler();
     }
 
     void generate()
     {
         setBitmap( &snowFlakeImage[random(8)][0] );
         /* Set initial position in scaled coordinates */
-        scaled_position = { random(ssd1306_displayWidth() * 8), -8 * 8 };
+        /* We do not use getTiler().getDisplay() here, because if snowflake is not placed to
+           engine, it has no tiler */
+        scaled_position = { random(display.width() * 8), -8 * 8 };
         /* Use some random speed */
         speed = { random(-16, 16), random(4, 12) };
         /* After countdown timer ticks to 0, change X direction */
@@ -167,9 +171,9 @@ public:
             timer = random(24, 48);
         }
         moveTo( scaled_position/8 );
-        if (y() >= static_cast<lcdint_t>(ssd1306_displayHeight()) )
+        if (y() >= static_cast<lcdint_t>(getTiler().getDisplay().height()) )
         {
-            getTiler()->remove( *this );
+            getTiler().remove( *this );
         }
     }
 
@@ -190,8 +194,8 @@ void setup()
     ssd1306_i2cInit();
     display.begin();
 
-//    ssd1306_128x64_i2c_init();
-//    ssd1331_96x64_spi_init(3,4,5);
+//    display.128x64_i2c_init();
+//    display.96x64_spi_init(3,4,5);
 //    ssd1351_128x128_spi_init(3,4,5);
 //    il9163_128x128_spi_init(3,4,5);
 

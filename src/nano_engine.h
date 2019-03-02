@@ -106,7 +106,7 @@ public:
     /**
      * Creates new Graphics Engine object.
      */
-    NanoEngine1_8(): NanoEngine() {};
+    using NanoEngine<TILE_8x8_MONO_8>::NanoEngine;
 };
 
 /**

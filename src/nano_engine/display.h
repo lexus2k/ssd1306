@@ -296,7 +296,7 @@ protected:
     lcdint_t  m_cursorY;  ///< current Y cursor position for text output
     uint8_t   m_textMode; ///< Flags for current NanoCanvas mode
     EFontStyle   m_fontStyle; ///< currently active font style
-    uint16_t  m_color;    ///< current color for monochrome operations
+    uint16_t  m_color = 0xFFFF;    ///< current color for monochrome operations
 
     ssd1306_lcd2_t m_lcd;
 };

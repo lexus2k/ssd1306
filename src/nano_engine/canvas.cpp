@@ -135,7 +135,7 @@ uint8_t NanoCanvasOps<BPP>::printChar(uint8_t c)
     m_textMode = mode;
     m_cursorX += (lcdint_t)(char_info.width + char_info.spacing);
     if ( ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorX > ((lcdint_t)m_w - (lcdint_t)s_fixedFont.h.width) ) )
-       || ( (m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)ssd1306_lcd.width - (lcdint_t)s_fixedFont.h.width)) ) )
+       /* TODO: || ( (m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)ssd1306_lcd.width - (lcdint_t)s_fixedFont.h.width)) )*/ )
     {
         m_cursorY += (lcdint_t)s_fixedFont.h.height;
         m_cursorX = 0;
