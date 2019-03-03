@@ -28,11 +28,11 @@
 #ifndef _SSD1306_VGA_H_
 #define _SSD1306_VGA_H_
 
+#include "ssd1306_hal/io.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include "ssd1306_hal/io.h"
 
 #if defined(CONFIG_VGA_AVAILABLE) && defined(CONFIG_VGA_ENABLE)
 
