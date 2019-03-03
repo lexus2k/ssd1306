@@ -33,6 +33,7 @@
 #include "sdl_core.h"
 #endif
 
+#if 0
 
 static const uint8_t PROGMEM s_oled128x64_initData[] =
 {
@@ -125,3 +126,5 @@ void   sh1106_128x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
     ssd1306_spiInit(cesPin, dcPin);
     sh1106_128x64_init();
 }
+
+#endif

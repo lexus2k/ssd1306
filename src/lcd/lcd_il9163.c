@@ -32,6 +32,8 @@
 #include "sdl_core.h"
 #endif
 
+#if 0
+
 #define CMD_ARG     0xFF
 
 extern uint16_t ssd1306_color;
@@ -398,3 +400,5 @@ void   st7735_128x160_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
     ssd1306_spiInit(cesPin, dcPin);
     st7735_128x160_init();
 }
+
+#endif

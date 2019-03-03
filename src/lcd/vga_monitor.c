@@ -28,6 +28,8 @@
 #include "intf/ssd1306_interface.h"
 #include "ssd1306_hal/io.h"
 
+#if 0
+
 static uint8_t s_column = 0;
 static uint8_t s_page = 0;
 
@@ -143,3 +145,4 @@ void vga_128x64_mono_init(void)
     ssd1306_lcd.set_mode = vga_set_mode;
 }
 
+#endif

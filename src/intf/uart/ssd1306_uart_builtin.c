@@ -28,6 +28,8 @@
 
 #include "ssd1306_hal/io.h"
 
+#if 0
+
 #if defined(CONFIG_AVR_UART_AVAILABLE) && defined(CONFIG_AVR_UART_ENABLE)
 
 #include "ssd1306_uart.h"
@@ -73,3 +75,6 @@ void ssd1306_uartInit_Builtin(uint32_t baud)
 }
 
 #endif
+
+#endif
+

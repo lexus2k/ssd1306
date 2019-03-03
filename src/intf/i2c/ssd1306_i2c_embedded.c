@@ -28,6 +28,8 @@
 
 #include "ssd1306_hal/io.h"
 
+#if 0
+
 #if defined(CONFIG_SOFTWARE_I2C_AVAILABLE) && defined(CONFIG_SOFTWARE_I2C_ENABLE)
 
 /**
@@ -186,5 +188,7 @@ void ssd1306_i2cInit_Embedded(int8_t scl, int8_t sda, uint8_t sa)
     ssd1306_intf.send_buffer = ssd1306_i2cSendBytes_Embedded;
     ssd1306_intf.close = ssd1306_i2cClose_Embedded;
 }
+
+#endif
 
 #endif

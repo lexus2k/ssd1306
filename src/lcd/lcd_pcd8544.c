@@ -32,7 +32,7 @@
 #include "sdl_core.h"
 #endif
 
-
+#if 0
 static const uint8_t PROGMEM s_lcd84x48_initData[] =
 {
 #ifdef SDL_EMULATION
@@ -53,6 +53,7 @@ static uint8_t s_width;
 
 static void pcd8544_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 {
+#if 0
     s_width = w;
     s_column = x;
     s_page = y;
@@ -62,15 +63,18 @@ static void pcd8544_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
     ssd1306_intf.send(0x80 | x);
     ssd1306_intf.send(0x40 | y);
     ssd1306_spiDataMode(1);
+#endif
 }
 
 static void pcd8544_nextPage(void)
 {
+#if 0
     if ( s_width != 1)
     {
         ssd1306_intf.stop();
         pcd8544_setBlock(s_column, s_page+1, s_width);
     }
+#endif
 }
 
 static void pcd8544_setMode(lcd_mode_t mode)
@@ -79,6 +83,7 @@ static void pcd8544_setMode(lcd_mode_t mode)
 
 void pcd8544_84x48_init()
 {
+#if 0
     ssd1306_lcd.type = LCD_TYPE_PCD8544;
     ssd1306_lcd.width = 84;
     ssd1306_lcd.height = 48;
@@ -95,6 +100,7 @@ void pcd8544_84x48_init()
         ssd1306_intf.send(pgm_read_byte(&s_lcd84x48_initData[i]));
     }
     ssd1306_intf.stop();
+#endif
 }
 
 void    pcd8544_84x48_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
@@ -106,3 +112,5 @@ void    pcd8544_84x48_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
     ssd1306_spiInit(cesPin, dcPin);
     pcd8544_84x48_init();
 }
+
+#endif

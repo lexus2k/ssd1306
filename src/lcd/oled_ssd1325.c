@@ -31,6 +31,8 @@
 #include "sdl_core.h"
 #endif
 
+#if 0
+
 extern uint16_t ssd1306_color;
 
 static const PROGMEM uint8_t s_oled_128x64_initData[] =
@@ -138,3 +140,5 @@ void   ssd1325_128x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
     ssd1306_spiInit(cesPin, dcPin);
     ssd1325_128x64_init();
 }
+
+#endif

@@ -25,7 +25,6 @@
  * @file ssd1306_interface.h SSD1306 interface functions.
  */
 
-
 #ifndef _SSD1306_INTERFACE_H_
 #define _SSD1306_INTERFACE_H_
 
@@ -33,12 +32,47 @@
 
 #ifdef __cplusplus
 
+/**
+ * @defgroup LCD_HW_INTERFACE_API I2C/SPI: physical interface functions
+ * @{
+ *
+ * @brief i2c/spi initialization functions for different platforms
+ *
+ * @details This group of API functions serves to prepare the library to work via specific hardware
+ *          interface. There are a bunch of functions for different platforms. In general display
+ *          initialization goes in two steps: hardware interface initialization, and then display
+ *          driver initialization. But there are functions, which combine 2 steps in single call:
+ *          ssd1306_128x64_i2c_initEx(), ssd1351_128x128_spi_init(), etc.
+ */
+
 class IWireInterface
 {
 public:
+    /**
+     * Starts communication with SSD1306 display.
+     */
     virtual void start() = 0;
+
+    /**
+     * Ends communication with SSD1306 display.
+     */
     virtual void stop() = 0;
+
+    /**
+     * Sends byte to SSD1306 device
+     * @param data - byte to send
+     */
     virtual void send(uint8_t data) = 0;
+
+    /**
+     * @brief Sends bytes to SSD1306 device
+     *
+     * Sends bytes to SSD1306 device. This functions gives
+     * ~ 30% performance increase than ssd1306_intf.send.
+     *
+     * @param buffer - bytes to send
+     * @param size - number of bytes to send
+     */
     virtual void sendBuffer(const uint8_t *buffer, uint16_t size) = 0;
 };
 
@@ -49,9 +83,32 @@ class PlatformI2c: public IWireInterface
 public:
     PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00);
     virtual ~PlatformI2c();
+
+    /**
+     * Starts communication with SSD1306 display.
+     */
     void start() override;
+
+    /**
+     * Ends communication with SSD1306 display.
+     */
     void stop() override;
+
+    /**
+     * Sends byte to SSD1306 device
+     * @param data - byte to send
+     */
     void send(uint8_t data) override;
+
+    /**
+     * @brief Sends bytes to SSD1306 device
+     *
+     * Sends bytes to SSD1306 device. This functions gives
+     * ~ 30% performance increase than ssd1306_intf.send.
+     *
+     * @param buffer - bytes to send
+     * @param size - number of bytes to send
+     */
     void sendBuffer(const uint8_t *buffer, uint16_t size) override;
 private:
     int8_t m_scl;
@@ -67,53 +124,23 @@ class PlatformSpi: public IWireInterface
 public:
     PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 0);
     virtual ~PlatformSpi();
-    void start() override;
-    void stop() override;
-    void send(uint8_t data) override;
-    void sendBuffer(const uint8_t *buffer, uint16_t size) override;
-private:
-    int8_t m_cs = -1;
-    int8_t m_dc = -1;
-    uint32_t m_frequency = 0;
-};
-#endif
 
-extern "C" {
-#endif
-
-/**
- * @defgroup LCD_HW_INTERFACE_API I2C/SPI: physical interface functions
- * @{
- *
- * @brief i2c/spi initialization functions for different platforms
- *
- * @details This group of API functions serves to prepare the library to work via specific hardware
- *          interface. There are a bunch of functions for different platforms. In general display
- *          initialization goes in two steps: hardware interface initialization, and then display
- *          driver initialization. But there are functions, which combine 2 steps in single call:
- *          ssd1306_128x64_i2c_initEx(), ssd1351_128x128_spi_init(), etc.
- */
-
-/** Describes low level hardware API */
-typedef struct
-{
-    /**
-     * Indicates if spi or i2c interface is used.
-     */
-    uint8_t spi;
     /**
      * Starts communication with SSD1306 display.
      */
-    void (*start)(void);
+    void start() override;
+
     /**
      * Ends communication with SSD1306 display.
      */
-    void (*stop)(void);
+    void stop() override;
+
     /**
      * Sends byte to SSD1306 device
      * @param data - byte to send
      */
-    void (*send)(uint8_t data);
+    void send(uint8_t data) override;
+
     /**
      * @brief Sends bytes to SSD1306 device
      *
@@ -123,76 +150,25 @@ typedef struct
      * @param buffer - bytes to send
      * @param size - number of bytes to send
      */
-    void (*send_buffer)(const uint8_t *buffer, uint16_t size);
-    /**
-     * @brief deinitializes internal resources, allocated for interface.
-     *
-     * Deinitializes internal resources, allocated for interface.
-     * There is no need to use this function for microcontrollers. In general
-     * the function has meaning in Linux-like systems.
-     */
-    void (*close)(void);
-} ssd1306_interface_t;
+    void sendBuffer(const uint8_t *buffer, uint16_t size) override;
+private:
+    int8_t m_cs = -1;
+    int8_t m_dc = -1;
+    uint32_t m_frequency = 0;
+};
+#endif
 
-/**
- * Holds pointers to functions of currently initialized interface.
- */
-extern ssd1306_interface_t ssd1306_intf;
+extern "C" void ssd1306_resetController(int8_t rstPin, uint8_t delayMs);
 
-/**
- * Deprecated
- */
-#define ssd1306_dcQuickSwitch ssd1306_intf.spi
+#else
 
-/**
- * Deprecated
- */
-#define ssd1306_startTransmission     ssd1306_intf.start
+void ssd1306_resetController(int8_t rstPin, uint8_t delayMs);
 
-/**
- * Deprecated
- */
-#define ssd1306_endTransmission       ssd1306_intf.stop
-
-/**
- * Deprecated
- */
-#define ssd1306_sendByte              ssd1306_intf.send
-
-/**
- * Deprecated
- */
-#define ssd1306_sendBytes             ssd1306_intf.send_buffer
-
-/**
- * Deprecated
- */
-#define ssd1306_closeInterface        ssd1306_intf.close
-
-/**
- * Sends command to SSD1306 device: includes initiating of
- * transaction, sending data and completing transaction.
- * @param command - command to send
- */
-void ssd1306_sendCommand(uint8_t command);
-
-/**
- * Starts transaction for sending commands.
- */
-void ssd1306_commandStart(void);
-
-/**
- * Starts transaction for sending bitmap data.
- */
-void ssd1306_dataStart(void);
+#endif
 
 /**
  * @}
  */
-
-#ifdef __cplusplus
-}
-#endif
 
 // ----------------------------------------------------------------------------
 #endif // _SSD1306_INTERFACE_H_

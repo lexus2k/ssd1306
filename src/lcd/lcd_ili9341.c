@@ -32,6 +32,8 @@
 #include "sdl_core.h"
 #endif
 
+#if 0
+
 #define CMD_ARG     0xFF
 
 extern uint16_t ssd1306_color;
@@ -281,3 +283,5 @@ void ili9341_rotateOutput(uint8_t on)
     s_rotate_output = on;
     ili9341_setRotation( s_rotation );
 }
+
+#endif

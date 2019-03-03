@@ -362,26 +362,6 @@ void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, int8_t arg)
 
 #include "sdl_core.h"
 
-static void platform_i2c_send_buffer(const uint8_t *buffer, uint16_t size)
-{
-    while (size--)
-    {
-        sdl_send_byte(*buffer);
-        buffer++;
-    };
-}
-
-void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, int8_t arg)
-{
-    sdl_core_init();
-    ssd1306_intf.spi = 0;
-    ssd1306_intf.start = sdl_send_init;
-    ssd1306_intf.stop = sdl_send_stop;
-    ssd1306_intf.send = sdl_send_byte;
-    ssd1306_intf.send_buffer = platform_i2c_send_buffer;
-    ssd1306_intf.close = sdl_core_close;
-}
-
 PlatformI2c::PlatformI2c(int8_t scl, int8_t sda, uint8_t sa)
 {
     sdl_core_init();
@@ -564,36 +544,6 @@ void ssd1306_platform_spiInit(int8_t busId,
 #else /* SDL_EMULATION */
 
 #include "sdl_core.h"
-
-static void sdl_send_bytes(const uint8_t *buffer, uint16_t size)
-{
-    while (size--)
-    {
-        sdl_send_byte(*buffer);
-        buffer++;
-    };
-}
-
-void ssd1306_platform_spiInit(int8_t busId, int8_t ces, int8_t dcPin)
-{
-    sdl_core_init();
-    if (ces >= 0)
-    {
-        s_ssd1306_cs = ces;
-    }
-    if (dcPin >= 0)
-    {
-        s_ssd1306_dc = dcPin;
-    }
-    sdl_set_dc_pin(dcPin);
-    ssd1306_intf.spi = 1;
-    ssd1306_intf.start = sdl_send_init;
-    ssd1306_intf.stop = sdl_send_stop;
-    ssd1306_intf.send = sdl_send_byte;
-    ssd1306_intf.send_buffer = sdl_send_bytes;
-    ssd1306_intf.close = sdl_core_close;
-}
-
 
 PlatformSpi::PlatformSpi(int8_t csPin, int8_t dcPin, uint32_t frequency)
 {

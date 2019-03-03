@@ -29,6 +29,8 @@
 
 #define CMD_ARG 0xFF
 
+#if 0
+
 ssd1306_lcd_t ssd1306_lcd = { 0 };
 
 void ssd1306_sendData(uint8_t data)
@@ -71,13 +73,7 @@ void ssd1306_configureSpiDisplay(const uint8_t *config, uint8_t configSize)
     ssd1306_intf.stop();
 }
 
-void ssd1306_setMode(lcd_mode_t mode)
-{
-    if (ssd1306_lcd.set_mode)
-    {
-        ssd1306_lcd.set_mode( mode );
-    }
-}
+#endif
 
 void ssd1306_resetController(int8_t rstPin, uint8_t delayMs)
 {
@@ -90,4 +86,3 @@ void ssd1306_resetController(int8_t rstPin, uint8_t delayMs)
     delay(delayMs);
     digitalWrite(rstPin, HIGH);
 }
-

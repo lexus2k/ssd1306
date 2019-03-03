@@ -29,6 +29,8 @@
 #include "ssd1306_hal/io.h"
 #include "intf/vga/vga.h"
 
+#if 0
+
 static const uint8_t PROGMEM s_composite128x64_initData[] =
 {
 #ifdef SDL_EMULATION
@@ -144,4 +146,6 @@ void composite_video_128x64_mono_init(void)
     ssd1306_lcd.set_mode = vga_set_mode;
     ssd1306_configureI2cDisplay( s_composite128x64_initData, sizeof(s_composite128x64_initData));
 }
+
+#endif
 

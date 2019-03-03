@@ -29,6 +29,8 @@
 #include "lcd/lcd_common.h"
 #include "ssd1306_hal/io.h"
 
+#if 0
+
 #if defined(CONFIG_AVR_SPI_AVAILABLE) && defined(CONFIG_AVR_SPI_ENABLE)
 
 #include <stdlib.h>
@@ -139,4 +141,4 @@ void ssd1306_spiInit_avr(int8_t cesPin, int8_t dcPin)
 
 #endif
 
-
+#endif

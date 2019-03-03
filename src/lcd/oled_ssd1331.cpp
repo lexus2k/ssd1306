@@ -33,8 +33,6 @@
 #endif
 #include "nano_gfx_types.h"
 
-extern uint16_t ssd1306_color;
-
 static const PROGMEM uint8_t s_oled96x64_initData[] =
 {
 #ifdef SDL_EMULATION
@@ -89,7 +87,7 @@ static const PROGMEM uint8_t s_oled96x64_initData16[] =
     SSD1331_DISPLAYON,
 };
 
-static uint8_t s_rotation = 0x04;
+#if 0
 
 //////////////////////// SSD1331 NATIVE MODE ///////////////////////////////////
 
@@ -272,6 +270,8 @@ void ssd1331_copyBlock(uint8_t left, uint8_t top, uint8_t right, uint8_t bottom,
     ssd1306_intf.send(newTop);
     ssd1306_intf.stop();
 }
+
+#endif
 
 extern uint8_t s_ssd1306_invertByte;
 

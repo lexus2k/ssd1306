@@ -33,7 +33,6 @@ SRCS_C = \
 	intf/spi/ssd1306_spi.c \
 	intf/spi/ssd1306_spi_avr.c \
 	intf/spi/ssd1306_spi_usi.c \
-	intf/ssd1306_interface.c \
 	intf/uart/ssd1306_uart_builtin.c \
 	lcd/lcd_common.c \
 	lcd/lcd_pcd8544.c \
@@ -53,6 +52,7 @@ SRCS_CPP = \
 	nano_engine/canvas.cpp \
 	nano_engine/core.cpp \
 	ssd1306_console.cpp \
+	intf/ssd1306_interface.cpp \
 	ssd1306_hal/linux/platform.cpp \
 	ssd1306_hal/arduino/platform.cpp \
 	intf/vga/esp32/vga128x64.cpp \

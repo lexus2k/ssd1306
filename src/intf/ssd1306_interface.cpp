@@ -26,6 +26,8 @@
 #include "spi/ssd1306_spi.h"
 #include <stddef.h>
 
+#if 0
+
 static void ssd1306_send_buffer_generic(const uint8_t* buffer, uint16_t size);
 
 ssd1306_interface_t ssd1306_intf =
@@ -66,3 +68,5 @@ void ssd1306_send_buffer_generic(const uint8_t* buffer, uint16_t size)
         buffer++;
     }
 }
+
+#endif
