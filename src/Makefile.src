@@ -23,7 +23,6 @@
 
 SRCS_C = \
 	ssd1306_fonts.c \
-	ssd1306_hal/avr/platform.c \
 	ssd1306_hal/mingw/platform.c \
 	ssd1306_hal/stm32/platform.c \
 	ssd1306_hal/template/platform.c \
@@ -53,6 +52,7 @@ SRCS_CPP = \
 	nano_engine/core.cpp \
 	ssd1306_console.cpp \
 	intf/ssd1306_interface.cpp \
+	ssd1306_hal/avr/platform.cpp \
 	ssd1306_hal/linux/platform.cpp \
 	ssd1306_hal/arduino/platform.cpp \
 	intf/vga/esp32/vga128x64.cpp \

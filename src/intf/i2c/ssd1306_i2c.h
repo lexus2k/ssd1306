@@ -34,6 +34,7 @@
 #include "ssd1306_i2c_twi.h"
 
 #ifdef __cplusplus
+
 extern "C" {
 #endif
 

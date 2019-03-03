@@ -26,8 +26,6 @@
 #include "intf/ssd1306_interface.h"
 #include "ssd1306_i2c.h"
 
-#if 0
-
 #if defined(CONFIG_TWI_I2C_AVAILABLE) && defined(CONFIG_TWI_I2C_ENABLE)
 
 #include <avr/io.h>
@@ -87,27 +85,9 @@ static uint8_t ssd1306_twi_send(uint8_t data)
     return twsr;
 }
 
-
 static void ssd1306_twi_stop(void)
 {
     TWCR = (1<<TWEN) | (1<<TWSTO) | (1<<TWINT);
-}
-
-static void ssd1306_i2cStart_Twi(void)
-{
-    do
-    {
-        if (ssd1306_twi_start() != 0)
-        {
-            /* Some serious error happened, but we don't care. Our API functions have void type */
-            return;
-        }
-    } while (ssd1306_twi_send(s_sa << 1) == TW_MT_ARB_LOST);
-}
-
-static void ssd1306_i2cStop_Twi(void)
-{
-    ssd1306_twi_stop();
 }
 
 void ssd1306_i2cConfigure_Twi(uint8_t arg)
@@ -125,6 +105,47 @@ void ssd1306_i2cConfigure_Twi(uint8_t arg)
 }
 
 static void ssd1306_i2cSendByte_Twi(uint8_t data)
+{
+}
+
+static void ssd1306_i2cSendBytes_Twi(const uint8_t *buffer, uint16_t size)
+{
+    while (size--)
+    {
+        ssd1306_i2cSendByte_Twi(*buffer);
+        buffer++;
+    }
+}
+
+TwiI2c::TwiI2c(int8_t scl, int8_t sda, uint8_t sa)
+   : m_scl( scl )
+   , m_sda( sda )
+   , m_sa( sa )
+{
+}
+
+TwiI2c::~TwiI2c()
+{
+}
+
+void TwiI2c::start()
+{
+    do
+    {
+        if (ssd1306_twi_start() != 0)
+        {
+            /* Some serious error happened, but we don't care. Our API functions have void type */
+            return;
+        }
+    } while (ssd1306_twi_send(s_sa << 1) == TW_MT_ARB_LOST);
+}
+
+void TwiI2c::stop()
+{
+    ssd1306_twi_stop();
+}
+
+void TwiI2c::send(uint8_t data)
 {
     for(;;)
     {
@@ -145,31 +166,13 @@ static void ssd1306_i2cSendByte_Twi(uint8_t data)
     }
 }
 
-static void ssd1306_i2cSendBytes_Twi(const uint8_t *buffer, uint16_t size)
+void TwiI2c::sendBuffer(const uint8_t *buffer, uint16_t size)
 {
     while (size--)
     {
-        ssd1306_i2cSendByte_Twi(*buffer);
+        send(*buffer);
         buffer++;
     }
 }
-
-
-static void ssd1306_i2cClose_Twi()
-{
-}
-
-void ssd1306_i2cInit_Twi(uint8_t sa)
-{
-    if (sa) s_sa = sa;
-    ssd1306_intf.spi = 0;
-    ssd1306_intf.start = ssd1306_i2cStart_Twi;
-    ssd1306_intf.stop = ssd1306_i2cStop_Twi;
-    ssd1306_intf.send = ssd1306_i2cSendByte_Twi;
-    ssd1306_intf.send_buffer = ssd1306_i2cSendBytes_Twi;
-    ssd1306_intf.close = ssd1306_i2cClose_Twi;
-}
-
-#endif
 
 #endif

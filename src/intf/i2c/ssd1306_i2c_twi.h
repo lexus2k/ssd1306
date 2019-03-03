@@ -35,6 +35,52 @@
 #if defined(CONFIG_TWI_I2C_AVAILABLE) && defined(CONFIG_TWI_I2C_ENABLE)
 
 #ifdef __cplusplus
+
+#include "intf/ssd1306_interface.h"
+
+class TwiI2c: public IWireInterface
+{
+public:
+    TwiI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00);
+    virtual ~TwiI2c();
+
+    /**
+     * Starts communication with SSD1306 display.
+     */
+    void start() override;
+
+    /**
+     * Ends communication with SSD1306 display.
+     */
+    void stop() override;
+
+    /**
+     * Sends byte to SSD1306 device
+     * @param data - byte to send
+     */
+    void send(uint8_t data) override;
+
+    /**
+     * @brief Sends bytes to SSD1306 device
+     *
+     * Sends bytes to SSD1306 device. This functions gives
+     * ~ 30% performance increase than ssd1306_intf.send.
+     *
+     * @param buffer - bytes to send
+     * @param size - number of bytes to send
+     */
+    void sendBuffer(const uint8_t *buffer, uint16_t size) override;
+
+private:
+    int8_t m_scl;
+    int8_t m_sda;
+    uint8_t m_sa;
+};
+
+#if !defined(CONFIG_PLATFORM_I2C_AVAILABLE) || !defined(CONFIG_PLATFORM_I2C_ENABLE)
+#define PlatformI2c TwiI2c
+#endif
+
 extern "C" {
 #endif
 
