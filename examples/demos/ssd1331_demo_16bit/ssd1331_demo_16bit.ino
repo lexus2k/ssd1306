@@ -33,7 +33,7 @@
 #include "nano_engine.h"
 #include "sova.h"
 
-DisplaySSD1331_96x64_SPI display(4, 5);
+DisplaySSD1331_96x64x16_SPI display(4, 5);
 
 /*
  * Heart image below is defined directly in flash memory.
@@ -86,13 +86,13 @@ uint8_t rotation = 0;
 
 static void bitmapDemo()
 {
-    display.setColor(RGB_COLOR8(64,64,255));
+    display.setColor(RGB_COLOR16(64,64,255));
     if ( rotation & 1 )
         display.drawBitmap1(0, 0, 64, 64, Owl_64x64);
     else
         display.drawBitmap1(0, 0, 96, 64, Owl);
     display.drawBitmap8(0, 0, 8, 8, heartImage8);
-    display.setColor(RGB_COLOR8(255,64,64));
+    display.setColor(RGB_COLOR16(255,64,64));
     display.drawBitmap1(0, 16, 8, 8, heartImage);
     delay(3000);
 }
@@ -104,7 +104,7 @@ static void bitmapDemo()
  * Refer to C++ documentation.
  */
 NanoPoint sprite;
-NanoEngine8 engine(display);
+NanoEngine16 engine(display);
 static void spriteDemo()
 {
     // We not need to clear screen, engine will do it for us
@@ -114,7 +114,7 @@ static void spriteDemo()
     // Set function to draw our sprite
     engine.drawCallback( []()->bool {
         engine.canvas.clear();
-        engine.canvas.setColor( RGB_COLOR8(255, 32, 32) );
+        engine.canvas.setColor( RGB_COLOR16(255, 32, 32) );
         engine.canvas.drawBitmap1( sprite.x, sprite.y, 8, 8, heartImage );
         return true;
     } );
@@ -146,17 +146,17 @@ static void textDemo()
 {
     display.clear();
     ssd1306_setFixedFont(digital_font5x7);
-    display.setColor(RGB_COLOR8(0,64,255));
+    display.setColor(RGB_COLOR16(0,64,255));
     display.printFixed(0,  0, "0123456789", STYLE_NORMAL);
     ssd1306_setFixedFont(ssd1306xled_font6x8);
-    display.setColor(RGB_COLOR8(255,255,0));
+    display.setColor(RGB_COLOR16(255,255,0));
     display.printFixed(0,  8, "Normal text", STYLE_NORMAL);
-    display.setColor(RGB_COLOR8(0,255,0));
+    display.setColor(RGB_COLOR16(0,255,0));
     display.printFixed(0, 16, "Bold text?", STYLE_BOLD);
-    display.setColor(RGB_COLOR8(0,255,255));
+    display.setColor(RGB_COLOR16(0,255,255));
     display.printFixed(0, 24, "Italic text?", STYLE_ITALIC);
     display.negativeMode();
-    display.setColor(RGB_COLOR8(255,255,255));
+    display.setColor(RGB_COLOR16(255,255,255));
     display.printFixed(0, 32, "Inverted bold?", STYLE_BOLD);
     display.positiveMode();
     delay(3000);
@@ -165,7 +165,7 @@ static void textDemo()
 static void canvasDemo()
 {
     NanoCanvas<64,16,1> canvas;
-    display.setColor(RGB_COLOR8(0,255,0));
+    display.setColor(RGB_COLOR16(0,255,0));
     ssd1306_setFixedFont(ssd1306xled_font6x8);
     display.clear();
     canvas.clear();
@@ -187,11 +187,11 @@ static void drawLinesDemo()
     display.clear();
     for (lcduint_t y = 0; y < display.height(); y += 8)
     {
-        display.drawLine(0,0, display.width() -1, y, RGB_COLOR8(0,255,0));
+        display.drawLine(0,0, display.width() -1, y, RGB_COLOR16(0,255,0));
     }
     for (lcduint_t x = display.width() - 1; x > 7; x -= 8)
     {
-        display.drawLine(0,0, x, display.height() - 1, RGB_COLOR8(0,0,255));
+        display.drawLine(0,0, x, display.height() - 1, RGB_COLOR16(0,0,255));
     }
     delay(3000);
 }
@@ -207,6 +207,7 @@ void setup()
 
     // RGB functions do not work in default SSD1306 compatible mode
     display.fill( 0x00 );
+    display.setColor(RGB_COLOR16(255,255,255));
     display.createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
     display.showMenu( &menu );
 }
@@ -243,8 +244,8 @@ void loop()
     {
          display.setRotation((++rotation) & 0x03);
     }
-    display.fill( 0x00 );
-    display.setColor(RGB_COLOR8(255,255,255));
+    display.fill( 0x0000 );
+    display.setColor(RGB_COLOR16(255,255,255));
     display.showMenu(&menu);
     delay(500);
     display.menuDown(&menu);

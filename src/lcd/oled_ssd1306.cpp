@@ -289,16 +289,6 @@ void DisplaySSD1306::nextPage()
 {
 }
 
-void DisplaySSD1306::sendPixels1(uint8_t data)
-{
-    m_intf.send( data );
-}
-
-void DisplaySSD1306::sendPixelsBuffer1(const uint8_t *buffer, uint16_t len)
-{
-    m_intf.sendBuffer(buffer, len);
-}
-
 void DisplaySSD1306::spiDataMode(uint8_t mode)
 {
     // TODO:
@@ -317,16 +307,6 @@ void DisplaySSD1306::commandStart(void)
         m_intf.send(0x00);
 }
 
-void DisplaySSD1306::negativeMode()
-{
-    s_ssd1306_invertByte = 0xFF;
-}
-
-void DisplaySSD1306::positiveMode()
-{
-    s_ssd1306_invertByte = 0x00;
-}
-
 void DisplaySSD1306::invertMode()
 {
     commandStart();
@@ -343,10 +323,10 @@ void DisplaySSD1306::normalMode()
 
 void DisplaySSD1306_128x64::begin()
 {
-    m_lcd.type = LCD_TYPE_SSD1306;
+//    m_lcd.type = LCD_TYPE_SSD1306;
     m_w = 128;
     m_h = 64;
-    m_lcd.set_mode = ssd1306_setMode_int;
+//    m_lcd.set_mode = ssd1306_setMode_int;
     for( uint8_t i=0; i < sizeof(s_oled128x64_initData); i++)
     {
         commandStart();

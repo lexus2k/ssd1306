@@ -278,10 +278,6 @@ template<class C, uint8_t B>
 void NanoEngine<C,B>::begin()
 {
     NanoEngineCore::begin();
-    if (C::BITS_PER_PIXEL > 1)
-    {
-        ssd1306_setMode(LCD_MODE_NORMAL);
-    }
 }
 
 template<class C, uint8_t B>

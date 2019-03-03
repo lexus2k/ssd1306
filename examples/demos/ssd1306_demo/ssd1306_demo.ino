@@ -131,8 +131,7 @@ static void textDemo()
 #if !defined(__AVR_ATtiny85__)
 static void canvasDemo()
 {
-    uint8_t buffer[64*16/8];
-    NanoCanvas1 canvas(64,16, buffer);
+    NanoCanvas<64,16,1> canvas;
     ssd1306_setFixedFont(ssd1306xled_font6x8);
     display.clear();
     canvas.clear();

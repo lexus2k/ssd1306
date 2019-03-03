@@ -47,13 +47,34 @@ public:
 class PlatformI2c: public IWireInterface
 {
 public:
-    PlatformI2c();
+    PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00);
     virtual ~PlatformI2c();
     void start() override;
     void stop() override;
     void send(uint8_t data) override;
     void sendBuffer(const uint8_t *buffer, uint16_t size) override;
 private:
+    int8_t m_scl;
+    int8_t m_sda;
+    uint8_t m_sa;
+};
+#endif
+
+// !!! PLATFORM SPI IMPLEMENTATION OPTIONAL !!!
+#if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)
+class PlatformSpi: public IWireInterface
+{
+public:
+    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 0);
+    virtual ~PlatformSpi();
+    void start() override;
+    void stop() override;
+    void send(uint8_t data) override;
+    void sendBuffer(const uint8_t *buffer, uint16_t size) override;
+private:
+    int8_t m_cs = -1;
+    int8_t m_dc = -1;
+    uint32_t m_frequency = 0;
 };
 #endif
 

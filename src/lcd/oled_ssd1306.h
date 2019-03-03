@@ -43,10 +43,6 @@ public:
         : NanoDisplayOps<1>(intf)
         , m_isSPI( isSPI ) {}
 
-    void negativeMode();
-
-    void positiveMode();
-
     void normalMode();
 
     void invertMode();
@@ -56,19 +52,6 @@ public:
     void nextPage() override;
 
     void commandStart();
-
-    /**
-     * Sends 8 monochrome vertical pixels to OLED driver.
-     * @param data - byte, representing 8 pixels.
-     */
-    void sendPixels1(uint8_t data) override;
-
-    /**
-     * Sends buffer containing 8 monochrome vertical pixels, encoded in each byte.
-     * @param buffer - buffer containing monochrome pixels.
-     * @param len - length of buffer in bytes.
-     */
-    void sendPixelsBuffer1(const uint8_t *buffer, uint16_t len) override;
 
 protected:
     bool m_isSPI;
@@ -89,7 +72,9 @@ public:
 class DisplaySSD1306_128x64_I2C: public DisplaySSD1306_128x64
 {
 public:
-    DisplaySSD1306_128x64_I2C(): DisplaySSD1306_128x64(m_i2c, false) {}
+    DisplaySSD1306_128x64_I2C( int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x3C)
+        : DisplaySSD1306_128x64(m_i2c, false)
+        , m_i2c( scl, sda, sa ) {}
 
     void begin();
 

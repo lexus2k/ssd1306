@@ -39,6 +39,10 @@ static int s_newColumn;
 static int s_newPage;
 static uint32_t s_color = 0;
 
+static uint8_t s_verticalMode = 1;
+static uint8_t s_leftToRight = 0;
+static uint8_t s_topToBottom = 0;
+static uint8_t s_16bitmode = 0;
 
 static void copyBlock()
 {
@@ -110,11 +114,6 @@ static int sdl_ssd1331_detect_x16(uint8_t data)
     return 0;
 }
 
-static uint8_t s_verticalMode = 1;
-static uint8_t s_leftToRight = 0;
-static uint8_t s_topToBottom = 0;
-static uint8_t s_16bitmode = 0;
-
 static void sdl_ssd1331_commands(uint8_t data)
 {
     switch (s_commandId)
@@ -150,9 +149,23 @@ static void sdl_ssd1331_commands(uint8_t data)
                 case 1: s_pageStart = data; break;
                 case 2: s_columnEnd = data; break;
                 case 3: s_pageEnd = data; break;
-                case 4: s_color |= ((data & 0x30) >> 4); break;
-                case 5: s_color |= ((data & 0x30) >> 1); break;
-                case 6: s_color |= ((data & 0x38) << 2);
+                case 4:
+                    if (s_16bitmode)
+                        s_color |= ((data & 0x3F) >> 1);
+                    else
+                        s_color |= ((data & 0x30) >> 4);
+                    break;
+                case 5:
+                    if (s_16bitmode)
+                        s_color |= ((data & 0x3F) << 5);
+                    else
+                        s_color |= ((data & 0x30) >> 1);
+                    break;
+                case 6:
+                     if (s_16bitmode)
+                        s_color |= ((data & 0x3E) << 10);
+                     else
+                        s_color |= ((data & 0x38) << 2);
                      drawLine();
                      s_commandId = SSD_COMMAND_NONE;
                      break;
@@ -203,16 +216,22 @@ static void sdl_ssd1331_data(uint8_t data)
     int y = s_topToBottom ? s_activePage : (sdl_ssd1331x8.height - s_activePage - 1);
     int x = s_leftToRight ? s_activeColumn: (sdl_ssd1331x8.width - s_activeColumn - 1);
     static uint8_t firstByte = 1;  /// SSD1331
-//    static uint8_t dataFirst = 0x00;  /// SSD1331
+    static uint8_t dataFirst = 0x00;  /// SSD1331
     if (firstByte && s_16bitmode)
     {
-//        dataFirst = data;
+        dataFirst = data;
         firstByte = 0;
         return;
     }
     firstByte = 1;
-//    sdl_put_pixel(x, y, (dataFirst<<8) | data);
-    sdl_put_pixel(x, y, data);
+    if ( s_16bitmode )
+    {
+        sdl_put_pixel(x, y, (dataFirst<<8) | data);
+    }
+    else
+    {
+        sdl_put_pixel(x, y, data);
+    }
 
     if (s_verticalMode)
     {

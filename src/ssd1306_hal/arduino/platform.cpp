@@ -126,6 +126,80 @@ void ssd1306_platform_i2cInit(int8_t scl, uint8_t sa, int8_t sda)
     ssd1306_intf.close = ssd1306_i2cClose_Wire;
 }
 
+PlatformI2c::PlatformI2c(int8_t scl, int8_t sda, uint8_t sa)
+    : m_scl( scl )
+    , m_sda( sda )
+    , m_sa( sa )
+{
+#if defined(ESP8266) || defined(ESP32) || defined(ESP31B)
+    if ((scl >= 0) && (sda >=0))
+    {
+        Wire.begin(sda, scl);
+    }
+    else
+#endif
+    {
+        Wire.begin();
+    }
+    #ifdef SSD1306_WIRE_CLOCK_CONFIGURABLE
+        Wire.setClock(400000);
+    #endif
+}
+
+PlatformI2c::~PlatformI2c()
+{
+}
+
+void PlatformI2c::start()
+{
+    Wire.beginTransmission(m_sa);
+    s_bytesWritten = 0;
+}
+
+void PlatformI2c::stop()
+{
+    Wire.endTransmission();
+}
+
+void PlatformI2c::send(uint8_t data)
+{
+    // Do not write too many bytes for standard Wire.h. It may become broken
+#if defined(ESP32) || defined(ESP31B)
+    if (s_bytesWritten >= (I2C_BUFFER_LENGTH >> 4))
+#elif defined(ARDUINO_ARCH_SAMD)
+    if (s_bytesWritten >= 64)
+#elif defined(BUFFER_LENGTH)
+    if (s_bytesWritten >= (BUFFER_LENGTH - 2))
+#elif defined(SERIAL_BUFFER_LENGTH)
+    if (s_bytesWritten >= (SERIAL_BUFFER_LENGTH - 2))
+#elif defined(USI_BUF_SIZE)
+    if (s_bytesWritten >= (USI_BUF_SIZE -2))
+#else
+    if ( Wire.write(data) != 0 )
+    {
+        s_bytesWritten++;
+        return;
+    }
+#endif
+    {
+        stop();
+        start();
+        send(0x40);
+        /* Commands never require many bytes. Thus assume that user tries to send data */
+    }
+    Wire.write(data);
+    s_bytesWritten++;
+}
+
+void PlatformI2c::sendBuffer(const uint8_t *buffer, uint16_t size)
+{
+    while (size--)
+    {
+        send(*buffer);
+        buffer++;
+    }
+}
+
 #endif // CONFIG_PLATFORM_I2C_AVAILABLE
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -194,6 +268,62 @@ void ssd1306_platform_spiInit(int8_t busId, int8_t cesPin, int8_t dcPin)
     ssd1306_intf.send = ssd1306_spiSendByte_hw;
     ssd1306_intf.send_buffer = ssd1306_spiSendBytes_hw;
     ssd1306_intf.close = ssd1306_spiClose_hw;
+}
+
+PlatformSpi::PlatformSpi(int8_t csPin, int8_t dcPin, uint32_t frequency = 0)
+    : m_cs( csPin )
+    , m_dc( dcPin )
+{
+    if (csPin >=0) pinMode(csPin, OUTPUT);
+    if (dcPin >= 0) pinMode(dcPin, OUTPUT);
+    SPI.begin();
+}
+
+PlatformSpi::~PlatformSpi()
+{
+    SPI.end();
+}
+
+void PlatformSpi::start()
+{
+    /* anyway, oled ssd1331 cannot work faster, clock cycle should be > 150ns: *
+     * 1s / 150ns ~ 6.7MHz                                                     */
+    SPI.beginTransaction(SPISettings(m_frequency, MSBFIRST, SPI_MODE0));
+    if (m_cs >= 0)
+    {
+        digitalWrite(m_cs,LOW);
+    }
+}
+
+void PlatformSpi::stop()
+{
+    // TODO: PCD8854
+//    if (ssd1306_lcd.type == LCD_TYPE_PCD8544)
+//    {
+//        digitalWrite(s_ssd1306_dc, LOW);
+//        SPI.transfer( 0x00 ); // Send NOP command to allow last data byte to pass (bug in PCD8544?)
+//                              // ssd1306 E3h is NOP command
+//    }
+    if (m_cs >= 0)
+    {
+        digitalWrite(m_cs, HIGH);
+    }
+    SPI.endTransaction();
+}
+
+void PlatformSpi::send(uint8_t data)
+{
+    SPI.transfer(data);
+}
+
+void PlatformSpi::sendBuffer(const uint8_t *buffer, uint16_t size)
+{
+    /* Do not use SPI.transfer(buffer, size)! this method corrupts buffer content */
+    while (size--)
+    {
+        SPI.transfer(*buffer);
+        buffer++;
+    };
 }
 
 #endif // CONFIG_PLATFORM_SPI_AVAILABLE

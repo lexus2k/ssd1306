@@ -33,46 +33,110 @@
 #include "lcd/lcd_common.h"
 
 #ifdef __cplusplus
+
+#include "nano_engine/display.h"
+
+class DisplaySSD1331: public NanoDisplayOps<8>
+{
+public:
+    DisplaySSD1331(IWireInterface &intf, int8_t dcPin)
+        : NanoDisplayOps<8>(intf), m_dcPin( dcPin ) {}
+
+    void negativeMode();
+
+    void positiveMode();
+
+    void setBlock(lcduint_t x, lcduint_t y, lcduint_t w) override;
+
+    void nextPage() override;
+
+    void commandStart();
+
+    using NanoDisplayOps<8>::drawLine;
+
+    void drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, uint16_t color);
+
+    void copyBlock(uint8_t left, uint8_t top, uint8_t right, uint8_t bottom, uint8_t newLeft, uint8_t newTop);
+
+    void setRotation(uint8_t rotation);
+
+protected:
+    int8_t m_dcPin;
+
+    uint8_t m_rotation = 0x00;
+
+    void spiDataMode(uint8_t mode);
+};
+
+class DisplaySSD1331_96x64_SPI: public DisplaySSD1331
+{
+public:
+    DisplaySSD1331_96x64_SPI(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 0)
+       : DisplaySSD1331(m_spi, dcPin)
+       , m_spi(csPin, dcPin, freq ? freq : 8000000 ) {}
+
+    void begin();
+
+    void end();
+
+private:
+    PlatformSpi m_spi;
+};
+
+class DisplaySSD1331x16: public NanoDisplayOps<16>
+{
+public:
+    DisplaySSD1331x16(IWireInterface &intf, int8_t dcPin)
+        : NanoDisplayOps<16>(intf), m_dcPin( dcPin ) {}
+
+    void negativeMode();
+
+    void positiveMode();
+
+    void setBlock(lcduint_t x, lcduint_t y, lcduint_t w) override;
+
+    void nextPage() override;
+
+    void commandStart();
+
+    using NanoDisplayOps<16>::drawLine;
+
+    void drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, uint16_t color);
+
+    void copyBlock(uint8_t left, uint8_t top, uint8_t right, uint8_t bottom, uint8_t newLeft, uint8_t newTop);
+
+    void setRotation(uint8_t rotation);
+
+protected:
+    int8_t m_dcPin;
+
+    uint8_t m_rotation = 0x00;
+
+    void spiDataMode(uint8_t mode);
+};
+
+class DisplaySSD1331_96x64x16_SPI: public DisplaySSD1331x16
+{
+public:
+    DisplaySSD1331_96x64x16_SPI(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 0)
+       : DisplaySSD1331x16(m_spi, dcPin)
+       , m_spi(csPin, dcPin, freq ? freq : 8000000) {}
+
+    void begin();
+
+    void end();
+
+private:
+    PlatformSpi m_spi;
+};
+
 extern "C" {
 #endif
-
-/**
- * @defgroup SSD1331_API SSD1331: ssd1331 control functions
- * @{
- */
-
-/**
- * @brief Sets screen orientation (rotation)
- *
- * Sets screen orientation (rotation): 0 - normal, 1 - 90 CW, 2 - 180 CW, 3 - 270 CW
- * @param rotation - screen rotation 0 - normal, 1 - 90 CW, 2 - 180 CW, 3 - 270 CW
- * @note works only with ssd1331 display
- */
-void ssd1331_setRotation(uint8_t rotation);
-
-/**
- * @}
- */
 
 /**
  * @ingroup LCD_INTERFACE_API
  * @{
  */
-
-/**
- * @brief Sets GDRAM autoincrement mode
- *
- * Sets GDRAM autoincrement mode. By default, to make
- * ssd1306_xxx functions compatible with RGB oled display,
- * RGB oled is initialized in vertical auto-increment mode.
- * But for pure rbg oled operations horizontal auto-increment mode is more suitable.
- * So, if you're going to use NanoCanvas8 functions, please call
- * ssd1331_setMode(0) prior to using pure RGB methods.
- *
- * @param mode 0 or 1
- * @deprecated Use ssd1306_setMode() instead.
- */
-void        ssd1331_setMode(lcd_mode_t mode);
 
 /**
  * @brief Inits 96x64 RGB OLED display (based on SSD1331 controller).

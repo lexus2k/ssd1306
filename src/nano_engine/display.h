@@ -208,11 +208,33 @@ public:
     void drawBitmap8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
 
     /**
+     * Draw 16-bit color bitmap, located in Flash, directly to OLED display GDRAM.
+     * Each pixel of the bitmap is expected in 5-6-5 format.
+     *
+     * @param xpos start horizontal position in pixels
+     * @param ypos start vertical position in pixels
+     * @param w bitmap width in pixels
+     * @param h bitmap height in pixels
+     * @param bitmap pointer to Flash data, containing 16-bit color bitmap.
+     */
+    void drawBitmap16(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
+
+    void drawBuffer1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buffer);
+
+    void drawBuffer8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buffer);
+
+    void drawBuffer16(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *buffer);
+
+    /**
      * Clears canvas
      */
     void clear();
 
     void drawCanvas(lcdint_t x, lcdint_t y, NanoCanvasOps<1> &canvas);
+
+    void drawCanvas(lcdint_t x, lcdint_t y, NanoCanvasOps<8> &canvas);
+
+    void drawCanvas(lcdint_t x, lcdint_t y, NanoCanvasOps<16> &canvas);
 
     void fill(uint16_t color);
 
@@ -254,13 +276,6 @@ public:
     void printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style = STYLE_NORMAL);
 
     /**
-     * @brief Sets canvas drawing mode
-     * Sets canvas drawing mode. The set flags define transparency of output images
-     * @param modeFlags - combination of flags: CANVAS_TEXT_WRAP, CANVAS_MODE_TRANSPARENT
-     */
-    void setMode(uint8_t modeFlags) { m_textMode = modeFlags; };
-
-    /**
      * Sets color for monochrome operations
      * @param color - color to set (refer to RGB_COLOR8 definition)
      */
@@ -278,22 +293,13 @@ public:
 
     void menuUp(SAppMenu *menu);
 
+    void negativeMode();
+
+    void positiveMode();
+
     virtual void setBlock(lcduint_t x, lcduint_t y, lcduint_t w) = 0;
 
     virtual void nextPage() = 0;
-
-    /**
-     * Sends 8 monochrome vertical pixels to OLED driver.
-     * @param data - byte, representing 8 pixels.
-     */
-    virtual void sendPixels1(uint8_t data) = 0;
-
-    /**
-     * Sends buffer containing 8 monochrome vertical pixels, encoded in each byte.
-     * @param buffer - buffer containing monochrome pixels.
-     * @param len - length of buffer in bytes.
-     */
-    virtual void sendPixelsBuffer1(const uint8_t *buffer, uint16_t len) = 0;
 
     lcduint_t width() { return m_w; }
 
@@ -309,7 +315,7 @@ protected:
     EFontStyle   m_fontStyle; ///< currently active font style
     uint16_t  m_color = 0xFFFF;    ///< current color for monochrome operations
 
-    ssd1306_lcd2_t m_lcd;
+//    ssd1306_lcd2_t m_lcd;
     IWireInterface& m_intf;
 };
 

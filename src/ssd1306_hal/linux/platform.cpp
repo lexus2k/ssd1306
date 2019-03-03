@@ -382,7 +382,7 @@ void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, int8_t arg)
     ssd1306_intf.close = sdl_core_close;
 }
 
-PlatformI2c::PlatformI2c()
+PlatformI2c::PlatformI2c(int8_t scl, int8_t sda, uint8_t sa)
 {
     sdl_core_init();
 }
@@ -594,6 +594,41 @@ void ssd1306_platform_spiInit(int8_t busId, int8_t ces, int8_t dcPin)
     ssd1306_intf.close = sdl_core_close;
 }
 
+
+PlatformSpi::PlatformSpi(int8_t csPin, int8_t dcPin, uint32_t frequency)
+{
+    sdl_core_init();
+    sdl_set_dc_pin(dcPin);
+}
+
+PlatformSpi::~PlatformSpi()
+{
+    sdl_core_close();
+}
+
+void PlatformSpi::start()
+{
+    sdl_send_init();
+}
+
+void PlatformSpi::stop()
+{
+    sdl_send_stop();
+}
+
+void PlatformSpi::send(uint8_t data)
+{
+    sdl_send_byte(data);
+}
+
+void PlatformSpi::sendBuffer(const uint8_t *buffer, uint16_t size)
+{
+    while (size--)
+    {
+        send(*buffer);
+        buffer++;
+    }
+}
 
 #endif /* SDL_EMULATION */
 

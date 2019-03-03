@@ -41,7 +41,6 @@ SRCS_C = \
 	lcd/lcd_ili9341.c \
 	lcd/oled_sh1106.c \
 	lcd/oled_ssd1325.c \
-	lcd/oled_ssd1331.c \
 	lcd/oled_ssd1351.c \
 	lcd/oled_template.c \
 	lcd/vga_monitor.c \
@@ -59,6 +58,7 @@ SRCS_CPP = \
 	intf/vga/esp32/vga128x64.cpp \
 	intf/vga/esp32/CompositeOutput.cpp \
 	lcd/oled_ssd1306.cpp \
+	lcd/oled_ssd1331.cpp \
 	ssd1306_generic.cpp \
 	ssd1306_1bit.cpp \
 	ssd1306_8bit.cpp \

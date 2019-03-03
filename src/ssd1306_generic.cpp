@@ -43,9 +43,9 @@ enum
     SSD1306_SQUIX_FORMAT     = 0x03,
 };
 
-uint16_t ssd1306_color = 0xFFFF;
-lcduint_t ssd1306_cursorX = 0;
-lcduint_t ssd1306_cursorY = 0;
+//uint16_t ssd1306_color = 0xFFFF;
+//lcduint_t ssd1306_cursorX = 0;
+//lcduint_t ssd1306_cursorY = 0;
 SFixedFontInfo s_fixedFont = { { 0 }, 0 };
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
 uint8_t g_ssd1306_unicode = 1;
@@ -65,11 +65,11 @@ lcduint_t      ssd1306_displayWidth()
     return ssd1306_lcd.width;
 }
 
-void       ssd1306_setCursor(lcdint_t x, lcdint_t y)
-{
-    ssd1306_cursorX = x;
-    ssd1306_cursorY = y;
-}
+//void       ssd1306_setCursor(lcdint_t x, lcdint_t y)
+//{
+//    ssd1306_cursorX = x;
+//    ssd1306_cursorY = y;
+//}
 
 static const uint8_t * ssd1306_readUnicodeRecord(SUnicodeBlockRecord *r, const uint8_t *p)
 {

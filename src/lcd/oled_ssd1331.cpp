@@ -91,16 +91,6 @@ static const PROGMEM uint8_t s_oled96x64_initData16[] =
 
 static uint8_t s_rotation = 0x04;
 
-//////////////////////// SSD1306 COMPATIBLE MODE ///////////////////////////////
-
-SSD1306_COMPAT_SPI_BLOCK_8BIT_CMDS(
-     (s_rotation & 1) ? SSD1331_ROWADDR: SSD1331_COLUMNADDR,
-     (s_rotation & 1) ? SSD1331_COLUMNADDR: SSD1331_ROWADDR );
-
-SSD1306_COMPAT_SEND_PIXELS_RGB8_CMDS();
-
-SSD1306_COMPAT_SEND_PIXELS_RGB16_CMDS();
-
 //////////////////////// SSD1331 NATIVE MODE ///////////////////////////////////
 
 CONTROLLER_NATIVE_SPI_BLOCK_8BIT_CMDS(
@@ -120,10 +110,10 @@ void    ssd1331_setMode(lcd_mode_t mode)
     else if (mode == LCD_MODE_SSD1306_COMPAT )
     {
         s_rotation |= 0x04;
-        ssd1306_lcd.set_block = set_block_compat;
-        ssd1306_lcd.next_page = next_page_compat;
+//        ssd1306_lcd.set_block = set_block_compat;
+//        ssd1306_lcd.next_page = next_page_compat;
     }
-    ssd1331_setRotation( s_rotation );
+//    ssd1331_setRotation( s_rotation );
     return;
 }
 
@@ -203,10 +193,10 @@ void    ssd1331_96x64_init()
     ssd1306_lcd.type = LCD_TYPE_SSD1331;
     ssd1306_lcd.height = 64;
     ssd1306_lcd.width = 96;
-    ssd1306_lcd.set_block = set_block_compat;
-    ssd1306_lcd.next_page = next_page_compat;
-    ssd1306_lcd.send_pixels1  = send_pixels_compat;
-    ssd1306_lcd.send_pixels_buffer1 = send_pixels_buffer_compat;
+//    ssd1306_lcd.set_block = set_block_compat;
+//    ssd1306_lcd.next_page = next_page_compat;
+//    ssd1306_lcd.send_pixels1  = send_pixels_compat;
+//    ssd1306_lcd.send_pixels_buffer1 = send_pixels_buffer_compat;
 
     ssd1306_lcd.send_pixels8 = ssd1306_intf.send;
     ssd1306_lcd.send_pixels16 = ssd1331_sendPixel16_8;
@@ -221,11 +211,9 @@ void    ssd1331_96x64_init16()
 {
     ssd1306_lcd.type = LCD_TYPE_SSD1331;
     ssd1306_lcd.height = 64;
-    ssd1306_lcd.width = 96;
-    ssd1306_lcd.set_block = set_block_compat;
-    ssd1306_lcd.next_page = next_page_compat;
-    ssd1306_lcd.send_pixels1  = send_pixels_compat16;
-    ssd1306_lcd.send_pixels_buffer1 = send_pixels_buffer_compat16;
+    ssd1306_lcd.width = 96; // ssd1306_lcd.set_block = set_block_compat; // ssd1306_lcd.next_page = next_page_compat;
+//    ssd1306_lcd.send_pixels1  = send_pixels_compat16;
+//    ssd1306_lcd.send_pixels_buffer1 = send_pixels_buffer_compat16;
 
     ssd1306_lcd.send_pixels8 = ssd1331_sendPixel8_16;
     ssd1306_lcd.send_pixels16 = ssd1331_sendPixel16;
@@ -285,3 +273,264 @@ void ssd1331_copyBlock(uint8_t left, uint8_t top, uint8_t right, uint8_t bottom,
     ssd1306_intf.stop();
 }
 
+extern uint8_t s_ssd1306_invertByte;
+
+void DisplaySSD1331::setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
+{
+    uint8_t rx = w ? (x + w - 1) : (m_w - 1);
+    m_intf.start();
+    spiDataMode(0);
+    m_intf.send((m_rotation & 1) ? SSD1331_ROWADDR: SSD1331_COLUMNADDR);
+    m_intf.send(x);
+    m_intf.send(rx < m_w ? rx : (m_w - 1));
+    m_intf.send((m_rotation & 1) ? SSD1331_COLUMNADDR: SSD1331_ROWADDR);
+    m_intf.send(y);
+    m_intf.send(m_h - 1);
+    spiDataMode(1);
+}
+
+void DisplaySSD1331::nextPage()
+{
+}
+
+void DisplaySSD1331::spiDataMode(uint8_t mode)
+{
+    // TODO:
+    if (m_dcPin)
+    {
+        digitalWrite(m_dcPin, mode ? HIGH : LOW);
+    }
+}
+
+void DisplaySSD1331::commandStart(void)
+{
+    m_intf.start();
+    spiDataMode(0);
+}
+
+void DisplaySSD1331::setRotation(uint8_t rotation)
+{
+    uint8_t ram_mode;
+    if ((rotation^m_rotation) & 0x01)
+    {
+        uint16_t t = m_w;
+        m_w = m_h;
+        m_h = t;
+    }
+    m_rotation = (rotation & 0x03) | (m_rotation & 0x04);
+    m_intf.start();
+    spiDataMode(0);
+    m_intf.send( SSD1331_SEGREMAP );
+    switch (m_rotation)
+    {
+    // NORMAL FULL COLOR MODE
+    case 0:
+        ram_mode = 0b00110010;
+        break;
+    case 1: // 90 degree CW
+        ram_mode = 0b00110001;
+        break;
+    case 2: // 180 degree CW
+        ram_mode = 0b00100000;
+        break;
+    case 3: // 270 degree CW
+    default:
+        ram_mode = 0b00100011;
+        break;
+    }
+    m_intf.send( ram_mode );
+    m_intf.stop();
+}
+
+void DisplaySSD1331::negativeMode()
+{
+    s_ssd1306_invertByte = 0xFF;
+}
+
+void DisplaySSD1331::positiveMode()
+{
+    s_ssd1306_invertByte = 0x00;
+}
+
+void DisplaySSD1331::drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, uint16_t color)
+{
+    m_intf.start();
+    spiDataMode(0);
+    m_intf.send(SSD1331_DRAWLINE);
+    m_intf.send(x1);
+    m_intf.send(y1);
+    m_intf.send(x2);
+    m_intf.send(y2);
+    m_intf.send( (color & 0x03) << 4 );
+    m_intf.send( (color & 0x1C) << 2 );
+    m_intf.send( (color & 0xE0) >> 2 );
+    m_intf.stop();
+}
+
+void DisplaySSD1331::copyBlock(uint8_t left, uint8_t top,
+     uint8_t right, uint8_t bottom, uint8_t newLeft, uint8_t newTop)
+{
+    m_intf.start();
+    spiDataMode(0);
+    m_intf.send(0x23);
+    m_intf.send(left);
+    m_intf.send(top);
+    m_intf.send(right);
+    m_intf.send(bottom);
+    m_intf.send(newLeft);
+    m_intf.send(newTop);
+    m_intf.stop();
+}
+
+
+
+void DisplaySSD1331_96x64_SPI::begin()
+{
+//    m_spi.begin();
+//    m_lcd.type = LCD_TYPE_SSD1331;
+    m_w = 96;
+    m_h = 64;
+    for( uint8_t i=0; i < sizeof(s_oled96x64_initData); i++)
+    {
+        commandStart();
+        m_intf.send(pgm_read_byte(&s_oled96x64_initData[i]));
+        m_intf.stop();
+    }
+    setRotation( m_rotation );
+}
+
+void DisplaySSD1331_96x64_SPI::end()
+{
+//    m_spi.end();
+}
+
+//////////////////////////////////////////////////////////////////////////////
+//                  16-bit
+//////////////////////////////////////////////////////////////////////////////
+
+void DisplaySSD1331x16::setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
+{
+    uint8_t rx = w ? (x + w - 1) : (m_w - 1);
+    m_intf.start();
+    spiDataMode(0);
+    m_intf.send((m_rotation & 1) ? SSD1331_ROWADDR: SSD1331_COLUMNADDR);
+    m_intf.send(x);
+    m_intf.send(rx < m_w ? rx : (m_w - 1));
+    m_intf.send((m_rotation & 1) ? SSD1331_COLUMNADDR: SSD1331_ROWADDR);
+    m_intf.send(y);
+    m_intf.send(m_h - 1);
+    spiDataMode(1);
+}
+
+void DisplaySSD1331x16::nextPage()
+{
+}
+
+void DisplaySSD1331x16::spiDataMode(uint8_t mode)
+{
+    // TODO:
+    if (m_dcPin)
+    {
+        digitalWrite(m_dcPin, mode ? HIGH : LOW);
+    }
+}
+
+void DisplaySSD1331x16::commandStart(void)
+{
+    m_intf.start();
+    spiDataMode(0);
+}
+
+void DisplaySSD1331x16::setRotation(uint8_t rotation)
+{
+    uint8_t ram_mode;
+    if ((rotation^m_rotation) & 0x01)
+    {
+        uint16_t t = m_w;
+        m_w = m_h;
+        m_h = t;
+    }
+    m_rotation = (rotation & 0x03) | (m_rotation & 0x04);
+    m_intf.start();
+    spiDataMode(0);
+    m_intf.send( SSD1331_SEGREMAP );
+    switch (m_rotation)
+    {
+    // NORMAL FULL COLOR MODE
+    case 0:
+        ram_mode = 0b00110010;
+        break;
+    case 1: // 90 degree CW
+        ram_mode = 0b00110001;
+        break;
+    case 2: // 180 degree CW
+        ram_mode = 0b00100000;
+        break;
+    case 3: // 270 degree CW
+    default:
+        ram_mode = 0b00100011;
+        break;
+    }
+    m_intf.send( ram_mode | 0x40 );
+    m_intf.stop();
+}
+
+void DisplaySSD1331x16::negativeMode()
+{
+    s_ssd1306_invertByte = 0xFF;
+}
+
+void DisplaySSD1331x16::positiveMode()
+{
+    s_ssd1306_invertByte = 0x00;
+}
+
+void DisplaySSD1331x16::drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, uint16_t color)
+{
+    m_intf.start();
+    spiDataMode(0);
+    m_intf.send(SSD1331_DRAWLINE);
+    m_intf.send(x1);
+    m_intf.send(y1);
+    m_intf.send(x2);
+    m_intf.send(y2);
+    m_intf.send( (color & 0x001F) << 1 );
+    m_intf.send( (color & 0x07E0) >> 5 );
+    m_intf.send( (color & 0xF800) >> 10 );
+    m_intf.stop();
+}
+
+void DisplaySSD1331x16::copyBlock(uint8_t left, uint8_t top,
+     uint8_t right, uint8_t bottom, uint8_t newLeft, uint8_t newTop)
+{
+    m_intf.start();
+    spiDataMode(0);
+    m_intf.send(0x23);
+    m_intf.send(left);
+    m_intf.send(top);
+    m_intf.send(right);
+    m_intf.send(bottom);
+    m_intf.send(newLeft);
+    m_intf.send(newTop);
+    m_intf.stop();
+}
+
+void DisplaySSD1331_96x64x16_SPI::begin()
+{
+//    m_spi.begin();
+//    m_lcd.type = LCD_TYPE_SSD1331;
+    m_w = 96;
+    m_h = 64;
+    for( uint8_t i=0; i < sizeof(s_oled96x64_initData16); i++)
+    {
+        commandStart();
+        m_intf.send(pgm_read_byte(&s_oled96x64_initData16[i]));
+        m_intf.stop();
+    }
+    setRotation( m_rotation );
+}
+
+void DisplaySSD1331_96x64x16_SPI::end()
+{
+//    m_spi.end();
+}
