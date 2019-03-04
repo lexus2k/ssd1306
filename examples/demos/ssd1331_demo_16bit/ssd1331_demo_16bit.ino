@@ -33,7 +33,7 @@
 #include "nano_engine.h"
 #include "sova.h"
 
-DisplaySSD1331_96x64x16_SPI display(4, 5);
+DisplaySSD1331_96x64x16_SPI display(3, 4, 5);
 
 /*
  * Heart image below is defined directly in flash memory.

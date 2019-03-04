@@ -275,6 +275,30 @@ void ssd1331_copyBlock(uint8_t left, uint8_t top, uint8_t right, uint8_t bottom,
 
 extern uint8_t s_ssd1306_invertByte;
 
+DisplaySSD1331::DisplaySSD1331(IWireInterface &intf, int8_t rstPin, int8_t dcPin)
+    : NanoDisplayOps<8>(intf)
+    , m_rstPin( rstPin)
+    , m_dcPin( dcPin )
+{
+}
+
+void DisplaySSD1331::begin()
+{
+    if (m_rstPin >=0)
+    {
+        ssd1306_resetController( m_rstPin, 10 );
+    }
+    m_w = 96;
+    m_h = 64;
+    for( uint8_t i=0; i < sizeof(s_oled96x64_initData); i++)
+    {
+        commandStart();
+        m_intf.send(pgm_read_byte(&s_oled96x64_initData[i]));
+        m_intf.stop();
+    }
+    setRotation( m_rotation );
+}
+
 void DisplaySSD1331::setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     uint8_t rx = w ? (x + w - 1) : (m_w - 1);
@@ -388,15 +412,7 @@ void DisplaySSD1331_96x64_SPI::begin()
 {
 //    m_spi.begin();
 //    m_lcd.type = LCD_TYPE_SSD1331;
-    m_w = 96;
-    m_h = 64;
-    for( uint8_t i=0; i < sizeof(s_oled96x64_initData); i++)
-    {
-        commandStart();
-        m_intf.send(pgm_read_byte(&s_oled96x64_initData[i]));
-        m_intf.stop();
-    }
-    setRotation( m_rotation );
+    DisplaySSD1331::begin();
 }
 
 void DisplaySSD1331_96x64_SPI::end()
@@ -407,6 +423,30 @@ void DisplaySSD1331_96x64_SPI::end()
 //////////////////////////////////////////////////////////////////////////////
 //                  16-bit
 //////////////////////////////////////////////////////////////////////////////
+
+DisplaySSD1331x16::DisplaySSD1331x16(IWireInterface &intf, int8_t rstPin, int8_t dcPin)
+    : NanoDisplayOps<16>(intf)
+    , m_rstPin( rstPin)
+    , m_dcPin( dcPin )
+{
+}
+
+void DisplaySSD1331x16::begin()
+{
+    if (m_rstPin >=0)
+    {
+        ssd1306_resetController( m_rstPin, 10 );
+    }
+    m_w = 96;
+    m_h = 64;
+    for( uint8_t i=0; i < sizeof(s_oled96x64_initData16); i++)
+    {
+        commandStart();
+        m_intf.send(pgm_read_byte(&s_oled96x64_initData16[i]));
+        m_intf.stop();
+    }
+    setRotation( m_rotation );
+}
 
 void DisplaySSD1331x16::setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 {
@@ -519,15 +559,7 @@ void DisplaySSD1331_96x64x16_SPI::begin()
 {
 //    m_spi.begin();
 //    m_lcd.type = LCD_TYPE_SSD1331;
-    m_w = 96;
-    m_h = 64;
-    for( uint8_t i=0; i < sizeof(s_oled96x64_initData16); i++)
-    {
-        commandStart();
-        m_intf.send(pgm_read_byte(&s_oled96x64_initData16[i]));
-        m_intf.stop();
-    }
-    setRotation( m_rotation );
+    DisplaySSD1331x16::begin();
 }
 
 void DisplaySSD1331_96x64x16_SPI::end()

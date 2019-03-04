@@ -39,8 +39,7 @@
 class DisplaySSD1331: public NanoDisplayOps<8>
 {
 public:
-    DisplaySSD1331(IWireInterface &intf, int8_t dcPin)
-        : NanoDisplayOps<8>(intf), m_dcPin( dcPin ) {}
+    DisplaySSD1331(IWireInterface &intf, int8_t rstPin, int8_t dcPin);
 
     void negativeMode();
 
@@ -61,9 +60,12 @@ public:
     void setRotation(uint8_t rotation);
 
 protected:
+    int8_t m_rstPin;
     int8_t m_dcPin;
 
     uint8_t m_rotation = 0x00;
+
+    void begin();
 
     void spiDataMode(uint8_t mode);
 };
@@ -71,9 +73,10 @@ protected:
 class DisplaySSD1331_96x64_SPI: public DisplaySSD1331
 {
 public:
-    DisplaySSD1331_96x64_SPI(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 0)
-       : DisplaySSD1331(m_spi, dcPin)
-       , m_spi(csPin, dcPin, freq ? freq : 8000000 ) {}
+    DisplaySSD1331_96x64_SPI(int8_t rstPin = -1, int8_t csPin = -1,
+                             int8_t dcPin = -1, uint32_t freq = 0)
+       : DisplaySSD1331(m_spi, rstPin, dcPin)
+       , m_spi(csPin, dcPin, freq ? freq : 6000000 ) {}
 
     void begin();
 
@@ -86,8 +89,7 @@ private:
 class DisplaySSD1331x16: public NanoDisplayOps<16>
 {
 public:
-    DisplaySSD1331x16(IWireInterface &intf, int8_t dcPin)
-        : NanoDisplayOps<16>(intf), m_dcPin( dcPin ) {}
+    DisplaySSD1331x16(IWireInterface &intf, int8_t rstPin, int8_t dcPin);
 
     void negativeMode();
 
@@ -108,9 +110,12 @@ public:
     void setRotation(uint8_t rotation);
 
 protected:
+    int8_t m_rstPin;
     int8_t m_dcPin;
 
     uint8_t m_rotation = 0x00;
+
+    void begin();
 
     void spiDataMode(uint8_t mode);
 };
@@ -118,9 +123,10 @@ protected:
 class DisplaySSD1331_96x64x16_SPI: public DisplaySSD1331x16
 {
 public:
-    DisplaySSD1331_96x64x16_SPI(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 0)
-       : DisplaySSD1331x16(m_spi, dcPin)
-       , m_spi(csPin, dcPin, freq ? freq : 8000000) {}
+    DisplaySSD1331_96x64x16_SPI(int8_t rstPin = -1, int8_t csPin = -1,
+                                int8_t dcPin = -1, uint32_t freq = 0)
+       : DisplaySSD1331x16(m_spi, rstPin, dcPin)
+       , m_spi(csPin, dcPin, freq ? freq : 6000000) {}
 
     void begin();
 
