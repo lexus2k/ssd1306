@@ -104,7 +104,7 @@ void CompositeOutput::init(int xres, int yres, int bpp)
 
     line = (uint16_t*)malloc(sizeof(uint16_t) * m_samples_per_line * 2);
     m_ptr = line;
-    m_end = line + m_samples_per_line * 2 / sizeof(uint16_t);
+    m_end = line + m_samples_per_line * 2;
 
     init_hardware();
 }
