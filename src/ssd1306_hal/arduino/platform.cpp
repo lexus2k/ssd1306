@@ -126,9 +126,10 @@ void PlatformI2c::sendBuffer(const uint8_t *buffer, uint16_t size)
 /* STANDARD branch */
 #include <SPI.h>
 
-PlatformSpi::PlatformSpi(int8_t csPin, int8_t dcPin, uint32_t frequency = 0)
+PlatformSpi::PlatformSpi(int8_t csPin, int8_t dcPin, uint32_t frequency)
     : m_cs( csPin )
     , m_dc( dcPin )
+    , m_frequency( frequency )
 {
     if (csPin >=0) pinMode(csPin, OUTPUT);
     if (dcPin >= 0) pinMode(dcPin, OUTPUT);

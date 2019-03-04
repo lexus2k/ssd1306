@@ -189,7 +189,7 @@ static void drawLinesDemo()
     {
         display.drawLine(0,0, display.width() -1, y, RGB_COLOR8(0,255,0));
     }
-    for (lcduint_t x = display.width() - 1; x > 7; x -= 8)
+    for (lcduint_t x = 0; x < display.width(); x += 8)
     {
         display.drawLine(0,0, x, display.height() - 1, RGB_COLOR8(0,0,255));
     }

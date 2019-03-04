@@ -152,9 +152,9 @@ public:
      */
     void sendBuffer(const uint8_t *buffer, uint16_t size) override;
 private:
-    int8_t m_cs = -1;
-    int8_t m_dc = -1;
-    uint32_t m_frequency = 0;
+    int8_t m_cs;
+    int8_t m_dc;
+    uint32_t m_frequency;
 };
 #endif
 

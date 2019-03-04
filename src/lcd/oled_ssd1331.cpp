@@ -385,9 +385,9 @@ void DisplaySSD1331::drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2
     m_intf.send(y1);
     m_intf.send(x2);
     m_intf.send(y2);
-    m_intf.send( (color & 0x03) << 4 );
-    m_intf.send( (color & 0x1C) << 2 );
     m_intf.send( (color & 0xE0) >> 2 );
+    m_intf.send( (color & 0x1C) << 2 );
+    m_intf.send( (color & 0x03) << 4 );
     m_intf.stop();
 }
 
@@ -534,9 +534,9 @@ void DisplaySSD1331x16::drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t
     m_intf.send(y1);
     m_intf.send(x2);
     m_intf.send(y2);
-    m_intf.send( (color & 0x001F) << 1 );
-    m_intf.send( (color & 0x07E0) >> 5 );
     m_intf.send( (color & 0xF800) >> 10 );
+    m_intf.send( (color & 0x07E0) >> 5 );
+    m_intf.send( (color & 0x001F) << 1 );
     m_intf.stop();
 }
 
