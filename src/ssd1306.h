@@ -48,24 +48,4 @@
 
 #include "lcd/oled_template.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/**
- * @ingroup LCD_INTERFACE_API
- * Returns display height in pixels
- */
-lcduint_t      ssd1306_displayHeight(void);
-
-/**
- * @ingroup LCD_INTERFACE_API
- * Returns display width in pixels
- */
-lcduint_t      ssd1306_displayWidth(void);
-
-#ifdef __cplusplus
-}
-#endif
-
 #endif // _SSD1306_H_
