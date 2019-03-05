@@ -30,6 +30,7 @@
 #define _SSD1306_ARDUINO_IO_H_
 
 #include "ssd1306_hal/UserSettings.h"
+#include "ssd1306_hal/ssd1306_interface.h"
 
 #if defined(ARDUINO_ARCH_STM32)   // stm32duino support
     #include <Arduino.h>
@@ -204,7 +205,12 @@ private:
     uint32_t m_frequency;
 };
 
-class PlatformSpi: public ArduinoSpi;
+class PlatformSpi: public ArduinoSpi
+{
+public:
+    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 0):
+        ArduinoSpi(csPin, dcPin, freq) {}
+};
 
 #endif
 
@@ -247,7 +253,12 @@ private:
     uint8_t m_sa;
 };
 
-class PlatformI2c: public ArduinoI2c;
+class PlatformI2c: public ArduinoI2c
+{
+public:
+     PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00):
+         ArduinoI2c(scl, sda, sa) {}
+};
 
 #endif
 

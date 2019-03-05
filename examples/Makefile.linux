@@ -43,9 +43,11 @@ endif
 
 include Makefile.common
 
+LDFLAGS += -lstdc++
+
 ifeq ($(SDL_EMULATION),y)
      CCFLAGS += -I../tools/sdl -DSDL_EMULATION
-     LDFLAGS += -L/mingw/lib -lssd1306_sdl $(shell sdl2-config --libs) -lstdc++
+     LDFLAGS += -L/mingw/lib -lssd1306_sdl $(shell sdl2-config --libs)
 endif
 
 flash: $(OUTFILE)
