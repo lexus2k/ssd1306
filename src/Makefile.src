@@ -30,7 +30,6 @@ SRCS_CPP = \
 	ssd1306_hal/mingw/platform.cpp \
 	ssd1306_hal/stm32/platform.cpp \
 	ssd1306_hal/template/platform.cpp \
-	intf/ssd1306_interface.cpp \
 	intf/i2c/ssd1306_i2c.cpp \
 	intf/i2c/ssd1306_i2c_embedded.cpp \
 	intf/i2c/ssd1306_i2c_twi.cpp \

@@ -24,7 +24,6 @@
 
 #include "ssd1306_hal/io.h"
 
-#include "intf/ssd1306_interface.h"
 #include "intf/i2c/ssd1306_i2c.h"
 #include "intf/spi/ssd1306_spi.h"
 #include "lcd/lcd_common.h"
@@ -42,7 +41,7 @@
 
 static uint8_t s_bytesWritten = 0;
 
-PlatformI2c::PlatformI2c(int8_t scl, int8_t sda, uint8_t sa)
+ArduinoI2c::ArduinoI2c(int8_t scl, int8_t sda, uint8_t sa)
     : m_scl( scl )
     , m_sda( sda )
     , m_sa( sa )
@@ -62,22 +61,22 @@ PlatformI2c::PlatformI2c(int8_t scl, int8_t sda, uint8_t sa)
     #endif
 }
 
-PlatformI2c::~PlatformI2c()
+ArduinoI2c::~ArduinoI2c()
 {
 }
 
-void PlatformI2c::start()
+void ArduinoI2c::start()
 {
     Wire.beginTransmission(m_sa);
     s_bytesWritten = 0;
 }
 
-void PlatformI2c::stop()
+void ArduinoI2c::stop()
 {
     Wire.endTransmission();
 }
 
-void PlatformI2c::send(uint8_t data)
+void ArduinoI2c::send(uint8_t data)
 {
     // Do not write too many bytes for standard Wire.h. It may become broken
 #if defined(ESP32) || defined(ESP31B)
@@ -107,7 +106,7 @@ void PlatformI2c::send(uint8_t data)
     s_bytesWritten++;
 }
 
-void PlatformI2c::sendBuffer(const uint8_t *buffer, uint16_t size)
+void ArduinoI2c::sendBuffer(const uint8_t *buffer, uint16_t size)
 {
     while (size--)
     {
@@ -126,7 +125,7 @@ void PlatformI2c::sendBuffer(const uint8_t *buffer, uint16_t size)
 /* STANDARD branch */
 #include <SPI.h>
 
-PlatformSpi::PlatformSpi(int8_t csPin, int8_t dcPin, uint32_t frequency)
+ArduinoSpi::ArduinoSpi(int8_t csPin, int8_t dcPin, uint32_t frequency)
     : m_cs( csPin )
     , m_dc( dcPin )
     , m_frequency( frequency )
@@ -136,12 +135,12 @@ PlatformSpi::PlatformSpi(int8_t csPin, int8_t dcPin, uint32_t frequency)
     SPI.begin();
 }
 
-PlatformSpi::~PlatformSpi()
+ArduinoSpi::~ArduinoSpi()
 {
     SPI.end();
 }
 
-void PlatformSpi::start()
+void ArduinoSpi::start()
 {
     /* anyway, oled ssd1331 cannot work faster, clock cycle should be > 150ns: *
      * 1s / 150ns ~ 6.7MHz                                                     */
@@ -152,7 +151,7 @@ void PlatformSpi::start()
     }
 }
 
-void PlatformSpi::stop()
+void ArduinoSpi::stop()
 {
     // TODO: PCD8854
 //    if (ssd1306_lcd.type == LCD_TYPE_PCD8544)
@@ -168,12 +167,12 @@ void PlatformSpi::stop()
     SPI.endTransaction();
 }
 
-void PlatformSpi::send(uint8_t data)
+void ArduinoSpi::send(uint8_t data)
 {
     SPI.transfer(data);
 }
 
-void PlatformSpi::sendBuffer(const uint8_t *buffer, uint16_t size)
+void ArduinoSpi::sendBuffer(const uint8_t *buffer, uint16_t size)
 {
     /* Do not use SPI.transfer(buffer, size)! this method corrupts buffer content */
     while (size--)

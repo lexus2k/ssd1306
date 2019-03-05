@@ -25,7 +25,6 @@
 #if defined(__linux__) && !defined(ARDUINO)
 
 #include "ssd1306_hal/io.h"
-#include "intf/ssd1306_interface.h"
 #include "intf/i2c/ssd1306_i2c.h"
 #include "intf/spi/ssd1306_spi_conf.h"
 #include "intf/spi/ssd1306_spi.h"
@@ -40,6 +39,8 @@
 #include <sys/ioctl.h>
 #include <linux/i2c-dev.h>
 #include <linux/spi/spidev.h>
+
+#include <map>
 
 #if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE) \
     && !defined(SDL_EMULATION)
@@ -57,10 +58,6 @@
 #undef OUT
 #endif
 #define OUT 1
-
-#ifdef LINUX_SPI_AVAILABLE
-static void platform_spi_send_cache();
-#endif
 
 int gpio_export(int pin)
 {
@@ -199,8 +196,15 @@ int gpio_write(int pin, int value)
 
 #if !defined(SDL_EMULATION)
 
+typedef struct
+{
+    void (*on_pin_change)(void *);
+    void *arg;
+} SPinEvent;
+
 static uint8_t s_exported_pin[MAX_GPIO_COUNT] = {0};
 static uint8_t s_pin_mode[MAX_GPIO_COUNT] = {0};
+std::map<int, SPinEvent> s_events;
 
 void pinMode(int pin, int mode)
 {
@@ -227,9 +231,9 @@ void pinMode(int pin, int mode)
 void digitalWrite(int pin, int level)
 {
 #ifdef LINUX_SPI_AVAILABLE
-    if (s_ssd1306_dc == pin)
+    if (s_events.find(pin) != s_events.end())
     {
-        platform_spi_send_cache();
+        s_events[pin].on_pin_change( s_events[pin].arg );
     }
 #endif
 
@@ -259,135 +263,106 @@ void digitalWrite(int pin, int level)
 
 #if !defined(SDL_EMULATION)
 
-
-static uint8_t s_sa = SSD1306_SA;
-static int     s_fd = -1;
-static uint8_t s_buffer[128];
-static uint8_t s_dataSize = 0;
-
-static void platform_i2c_start(void)
-{
-    s_dataSize = 0;
-}
-
-static void platform_i2c_stop(void)
-{
-    if (write(s_fd, s_buffer, s_dataSize) != s_dataSize)
-    {
-        fprintf(stderr, "Failed to write to the i2c bus: %s.\n", strerror(errno));
-    }
-    s_dataSize = 0;
-}
-
-static void platform_i2c_send(uint8_t data)
-{
-    s_buffer[s_dataSize] = data;
-    s_dataSize++;
-    if (s_dataSize == sizeof(s_buffer))
-    {
-        /* Send function puts all data to internal buffer.  *
-         * Restart transmission if internal buffer is full. */
-        ssd1306_intf.stop();
-        ssd1306_intf.start();
-        ssd1306_intf.send(0x40);
-    }
-}
-
-static void platform_i2c_send_buffer(const uint8_t *buffer, uint16_t size)
-{
-    while (size--)
-    {
-        platform_i2c_send(*buffer);
-        buffer++;
-    }
-}
-
-static void platform_i2c_close()
-{
-    if (s_fd >= 0)
-    {
-        close(s_fd);
-        s_fd = -1;
-    }
-}
-
-static void empty_function()
-{
-}
-
-static void empty_function_single_arg(uint8_t arg)
-{
-}
-
-static void empty_function_two_args(const uint8_t *arg1, uint16_t arg2)
-{
-}
-
-void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, int8_t arg)
+LinuxI2c::LinuxI2c(int8_t busId, uint8_t sa)
+    : m_busId( busId )
+    , m_sa( sa )
 {
     char filename[20];
-    if (busId < 0)
+    if (m_busId < 0)
     {
-        busId = 1;
+        m_busId = 1;
     }
-    snprintf(filename, 19, "/dev/i2c-%d", busId);
-    ssd1306_intf.start = empty_function;
-    ssd1306_intf.stop = empty_function;
-    ssd1306_intf.close = empty_function;
-    ssd1306_intf.send = empty_function_single_arg;
-    ssd1306_intf.send_buffer = empty_function_two_args;
-    if ((s_fd = open(filename, O_RDWR)) < 0)
+    snprintf(filename, 19, "/dev/i2c-%d", m_busId);
+    if ((m_fd = open(filename, O_RDWR)) < 0)
     {
         fprintf(stderr, "Failed to open the i2c bus %s\n",
                 getuid() == 0 ? "": ": need to be root");
         return;
     }
-    if (sa)
-    {
-        s_sa = sa;
-    }
-    if (ioctl(s_fd, I2C_SLAVE, s_sa) < 0)
+    if (ioctl(m_fd, I2C_SLAVE, m_sa) < 0)
     {
         fprintf(stderr, "Failed to acquire bus access and/or talk to slave.\n");
         return;
     }
-    ssd1306_intf.start = platform_i2c_start;
-    ssd1306_intf.stop = platform_i2c_stop;
-    ssd1306_intf.send = platform_i2c_send;
-    ssd1306_intf.send_buffer = platform_i2c_send_buffer;
-    ssd1306_intf.close = platform_i2c_close;
 }
+
+LinuxI2c::~LinuxI2c()
+{
+    if (m_fd >= 0)
+    {
+        close(m_fd);
+        m_fd = -1;
+    }
+}
+
+void LinuxI2c::start()
+{
+    m_dataSize = 0;
+}
+
+void LinuxI2c::stop()
+{
+    if (write(m_fd, m_buffer, m_dataSize) != m_dataSize)
+    {
+        fprintf(stderr, "Failed to write to the i2c bus: %s.\n", strerror(errno));
+    }
+    m_dataSize = 0;
+}
+
+void LinuxI2c::send(uint8_t data)
+{
+    m_buffer[m_dataSize] = data;
+    m_dataSize++;
+    if (m_dataSize == sizeof(m_buffer))
+    {
+        /* Send function puts all data to internal buffer.  *
+         * Restart transmission if internal buffer is full. */
+        stop();
+        start();
+        send(0x40);
+    }
+}
+
+void LinuxI2c::sendBuffer(const uint8_t *buffer, uint16_t size)
+{
+    while (size--)
+    {
+        send(*buffer);
+        buffer++;
+    }
+}
+
 
 #else /* SDL_EMULATION */
 
 #include "sdl_core.h"
 
-PlatformI2c::PlatformI2c(int8_t scl, int8_t sda, uint8_t sa)
+SdlI2c::SdlI2c(int8_t scl, int8_t sda, uint8_t sa)
 {
     sdl_core_init();
 }
 
-PlatformI2c::~PlatformI2c()
+SdlI2c::~SdlI2c()
 {
     sdl_core_close();
 }
 
-void PlatformI2c::start()
+void SdlI2c::start()
 {
     sdl_send_init();
 }
 
-void PlatformI2c::stop()
+void SdlI2c::stop()
 {
     sdl_send_stop();
 }
 
-void PlatformI2c::send(uint8_t data)
+void SdlI2c::send(uint8_t data)
 {
     sdl_send_byte(data);
 }
 
-void PlatformI2c::sendBuffer(const uint8_t *buffer, uint16_t size)
+void SdlI2c::sendBuffer(const uint8_t *buffer, uint16_t size)
 {
     while (size--)
     {
@@ -408,170 +383,150 @@ void PlatformI2c::sendBuffer(const uint8_t *buffer, uint16_t size)
 
 #if !defined(SDL_EMULATION)
 
-static int     s_spi_fd = -1;
-extern uint32_t s_ssd1306_spi_clock;
-static uint8_t s_spi_cache[1024];
-static int s_spi_cached_count = 0;
-
-static void platform_spi_start(void)
-{
-    s_spi_cached_count = 0;
-}
-
-static void platform_spi_stop(void)
-{
-    platform_spi_send_cache();
-}
-
-static void platform_spi_send_cache()
-{
-    /* TODO: Yeah, sending single bytes is too slow, but *
-     * need to figure out how to detect data/command bytes *
-     * to send bytes as one block */
-    if ( s_spi_cached_count == 0 )
-    {
-        return;
-    }
-    struct spi_ioc_transfer mesg;
-    memset(&mesg, 0, sizeof mesg);
-    mesg.tx_buf = (unsigned long)&s_spi_cache[0];
-    mesg.rx_buf = 0;
-    mesg.len = s_spi_cached_count;
-    mesg.delay_usecs = 0;
-    mesg.speed_hz = 0;
-    mesg.bits_per_word = 8;
-    mesg.cs_change = 0;
-    if (ioctl(s_spi_fd, SPI_IOC_MESSAGE(1), &mesg) < 1)
-    {
-        fprintf(stderr, "SPI failed to send SPI message: %s\n", strerror (errno)) ;
-    }
-    s_spi_cached_count = 0;
-}
-
-static void platform_spi_send(uint8_t data)
-{
-    s_spi_cache[s_spi_cached_count] = data;
-    s_spi_cached_count++;
-    if ( s_spi_cached_count >= sizeof( s_spi_cache ) )
-    {
-        platform_spi_send_cache();
-    }
-}
-
-static void platform_spi_close(void)
-{
-    if (s_spi_fd >= 0)
-    {
-        close(s_spi_fd);
-        s_spi_fd = -1;
-    }
-}
-
-static void platform_spi_send_buffer(const uint8_t *data, uint16_t len)
-{
-    while (len--)
-    {
-        platform_spi_send(*data);
-        data++;
-    }
-}
-
-static void empty_function_spi(void)
-{
-}
-
-static void empty_function_arg_spi(uint8_t byte)
-{
-}
-
-static void empty_function_args_spi(const uint8_t *buffer, uint16_t bytes)
-{
-}
-
-void ssd1306_platform_spiInit(int8_t busId,
-                              int8_t ces,
-                              int8_t dcPin)
+LinuxSpi::LinuxSpi(int busId, int8_t devId, int8_t dcPin, uint32_t frequency)
+    : m_busId( busId )
+    , m_devId( devId )
+    , m_dc( dcPin )
+    , m_frequency( frequency )
+    , m_spi_cached_count( 0 )
 {
     char filename[20];
-    if (busId < 0)
+    if (m_busId < 0)
     {
-        busId = 0;
+        m_busId = 0; // SPI bus - default 0
     }
-    if (ces < 0)
+    if (m_devId < 0)
     {
-        ces = 0;
+        m_devId = 0; // SPI device - default 0
     }
-    s_ssd1306_cs = -1;    // SPI interface does't need separate ces pin
-    s_ssd1306_dc = dcPin;
-    ssd1306_intf.spi = 1;
-    ssd1306_intf.start = empty_function_spi;
-    ssd1306_intf.stop = empty_function_spi;
-    ssd1306_intf.send = empty_function_arg_spi;
-    ssd1306_intf.send_buffer = empty_function_args_spi;
-    ssd1306_intf.close = empty_function;
 
-    snprintf(filename, 19, "/dev/spidev%d.%d", busId, ces);
-    if ((s_spi_fd = open(filename, O_RDWR)) < 0)
+    snprintf(filename, 19, "/dev/spidev%d.%d", m_busId, m_devId);
+    if ((m_spi_fd = open(filename, O_RDWR)) < 0)
     {
         printf("Failed to initialize SPI: %s%s!\n",
                strerror(errno), getuid() == 0 ? "": ", need to be root");
         return;
     }
-    unsigned int speed = s_ssd1306_spi_clock;
-    if (ioctl(s_spi_fd, SPI_IOC_WR_MAX_SPEED_HZ, &speed) < 0)
+    unsigned int speed = m_frequency;
+    if (ioctl(m_spi_fd, SPI_IOC_WR_MAX_SPEED_HZ, &speed) < 0)
     {
         printf("Failed to set speed on SPI line: %s!\n", strerror(errno));
     }
     uint8_t mode = SPI_MODE_0;
-    if (ioctl (s_spi_fd, SPI_IOC_WR_MODE, &mode) < 0)
+    if (ioctl (m_spi_fd, SPI_IOC_WR_MODE, &mode) < 0)
     {
         printf("Failed to set SPI mode: %s!\n", strerror(errno));
     }
     uint8_t spi_bpw = 8;
-    if (ioctl (s_spi_fd, SPI_IOC_WR_BITS_PER_WORD, &spi_bpw) < 0)
+    if (ioctl (m_spi_fd, SPI_IOC_WR_BITS_PER_WORD, &spi_bpw) < 0)
     {
         printf("Failed to set SPI BPW: %s!\n", strerror(errno));
     }
+    s_events[m_dc].arg = this;
+    s_events[m_dc].on_pin_change = OnDcChange;
+}
 
-    ssd1306_intf.spi = 1;
-    ssd1306_intf.start = platform_spi_start;
-    ssd1306_intf.stop = platform_spi_stop;
-    ssd1306_intf.send = platform_spi_send;
-    ssd1306_intf.send_buffer = platform_spi_send_buffer;
-    ssd1306_intf.close = platform_spi_close;
+LinuxSpi::~LinuxSpi()
+{
+    s_events.erase( m_dc );
+    if (m_spi_fd >= 0)
+    {
+        close(m_spi_fd);
+        m_spi_fd = -1;
+    }
+}
+
+void LinuxSpi::start()
+{
+    m_spi_cached_count = 0;
+}
+
+void LinuxSpi::stop()
+{
+    sendCache();
+}
+
+void LinuxSpi::OnDcChange(void *arg)
+{
+    LinuxSpi *obj = reinterpret_cast<LinuxSpi*>(arg);
+    obj->sendCache();
+}
+
+void LinuxSpi::sendCache()
+{
+    /* TODO: Yeah, sending single bytes is too slow, but *
+     * need to figure out how to detect data/command bytes *
+     * to send bytes as one block */
+    if ( m_spi_cached_count == 0 )
+    {
+        return;
+    }
+    struct spi_ioc_transfer mesg;
+    memset(&mesg, 0, sizeof mesg);
+    mesg.tx_buf = (unsigned long)&m_spi_cache[0];
+    mesg.rx_buf = 0;
+    mesg.len = m_spi_cached_count;
+    mesg.delay_usecs = 0;
+    mesg.speed_hz = 0;
+    mesg.bits_per_word = 8;
+    mesg.cs_change = 0;
+    if (ioctl(m_spi_fd, SPI_IOC_MESSAGE(1), &mesg) < 1)
+    {
+        fprintf(stderr, "SPI failed to send SPI message: %s\n", strerror (errno)) ;
+    }
+    m_spi_cached_count = 0;
+}
+
+void LinuxSpi::send(uint8_t data)
+{
+    m_spi_cache[m_spi_cached_count] = data;
+    m_spi_cached_count++;
+    if ( m_spi_cached_count >= sizeof( m_spi_cache ) )
+    {
+        sendCache();
+    }
+}
+
+void LinuxSpi::sendBuffer(const uint8_t *buffer, uint16_t size)
+{
+    while (size--)
+    {
+        send(*buffer);
+        buffer++;
+    }
 }
 
 #else /* SDL_EMULATION */
 
 #include "sdl_core.h"
 
-PlatformSpi::PlatformSpi(int8_t csPin, int8_t dcPin, uint32_t frequency)
+SdlSpi::SdlSpi(int8_t dcPin)
 {
     sdl_core_init();
     sdl_set_dc_pin(dcPin);
 }
 
-PlatformSpi::~PlatformSpi()
+SdlSpi::~SdlSpi()
 {
     sdl_core_close();
 }
 
-void PlatformSpi::start()
+void SdlSpi::start()
 {
     sdl_send_init();
 }
 
-void PlatformSpi::stop()
+void SdlSpi::stop()
 {
     sdl_send_stop();
 }
 
-void PlatformSpi::send(uint8_t data)
+void SdlSpi::send(uint8_t data)
 {
     sdl_send_byte(data);
 }
 
-void PlatformSpi::sendBuffer(const uint8_t *buffer, uint16_t size)
+void SdlSpi::sendBuffer(const uint8_t *buffer, uint16_t size)
 {
     while (size--)
     {

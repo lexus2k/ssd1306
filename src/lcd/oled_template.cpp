@@ -24,7 +24,6 @@
 
 #include "oled_template.h"
 #include "lcd_common.h"
-#include "intf/ssd1306_interface.h"
 #include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
 #ifdef SDL_EMULATION

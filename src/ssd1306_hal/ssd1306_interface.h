@@ -28,9 +28,7 @@
 #ifndef _SSD1306_INTERFACE_H_
 #define _SSD1306_INTERFACE_H_
 
-#include "ssd1306_hal/io.h"
-
-#ifdef __cplusplus
+#include <stdint.h>
 
 /**
  * @defgroup LCD_HW_INTERFACE_API I2C/SPI: physical interface functions
@@ -76,95 +74,7 @@ public:
     virtual void sendBuffer(const uint8_t *buffer, uint16_t size) = 0;
 };
 
-// !!! PLATFORM I2C IMPLEMENTATION OPTIONAL !!!
-#if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && defined(CONFIG_PLATFORM_I2C_ENABLE)
-class PlatformI2c: public IWireInterface
-{
-public:
-    PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00);
-    virtual ~PlatformI2c();
-
-    /**
-     * Starts communication with SSD1306 display.
-     */
-    void start() override;
-
-    /**
-     * Ends communication with SSD1306 display.
-     */
-    void stop() override;
-
-    /**
-     * Sends byte to SSD1306 device
-     * @param data - byte to send
-     */
-    void send(uint8_t data) override;
-
-    /**
-     * @brief Sends bytes to SSD1306 device
-     *
-     * Sends bytes to SSD1306 device. This functions gives
-     * ~ 30% performance increase than ssd1306_intf.send.
-     *
-     * @param buffer - bytes to send
-     * @param size - number of bytes to send
-     */
-    void sendBuffer(const uint8_t *buffer, uint16_t size) override;
-private:
-    int8_t m_scl;
-    int8_t m_sda;
-    uint8_t m_sa;
-};
-#endif
-
-// !!! PLATFORM SPI IMPLEMENTATION OPTIONAL !!!
-#if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)
-class PlatformSpi: public IWireInterface
-{
-public:
-    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 0);
-    virtual ~PlatformSpi();
-
-    /**
-     * Starts communication with SSD1306 display.
-     */
-    void start() override;
-
-    /**
-     * Ends communication with SSD1306 display.
-     */
-    void stop() override;
-
-    /**
-     * Sends byte to SSD1306 device
-     * @param data - byte to send
-     */
-    void send(uint8_t data) override;
-
-    /**
-     * @brief Sends bytes to SSD1306 device
-     *
-     * Sends bytes to SSD1306 device. This functions gives
-     * ~ 30% performance increase than ssd1306_intf.send.
-     *
-     * @param buffer - bytes to send
-     * @param size - number of bytes to send
-     */
-    void sendBuffer(const uint8_t *buffer, uint16_t size) override;
-private:
-    int8_t m_cs;
-    int8_t m_dc;
-    uint32_t m_frequency;
-};
-#endif
-
 extern "C" void ssd1306_resetController(int8_t rstPin, uint8_t delayMs);
-
-#else
-
-void ssd1306_resetController(int8_t rstPin, uint8_t delayMs);
-
-#endif
 
 /**
  * @}

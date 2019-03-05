@@ -24,7 +24,6 @@
 
 #include "intf/vga/vga.h"
 // Never include vga96x40_isr.h here!!!
-#include "intf/ssd1306_interface.h"
 #include "lcd/lcd_common.h"
 #include "lcd/vga_commands.h"
 

@@ -23,7 +23,6 @@
 */
 
 #include "ssd1306_i2c.h"
-#include "intf/ssd1306_interface.h"
 
 void ssd1306_i2cInitEx(int8_t scl, int8_t sda, int8_t sa)
 {

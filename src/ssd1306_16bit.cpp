@@ -24,7 +24,6 @@
 
 #include "ssd1306_16bit.h"
 #include "ssd1306_generic.h"
-#include "intf/ssd1306_interface.h"
 #include "lcd/lcd_common.h"
 #include "ssd1306_hal/io.h"
 #include "nano_engine/display.h"

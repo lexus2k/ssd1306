@@ -31,7 +31,6 @@
 
 #include "nano_gfx_types.h"
 #include "lcd/lcd_common.h"
-#include "intf/ssd1306_interface.h"
 
 #ifdef __cplusplus
 extern "C" {

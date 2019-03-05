@@ -25,7 +25,6 @@
 #include "oled_sh1106.h"
 #include "lcd_common.h"
 #include "ssd1306_commands.h"
-#include "intf/ssd1306_interface.h"
 #include "intf/i2c/ssd1306_i2c.h"
 #include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"

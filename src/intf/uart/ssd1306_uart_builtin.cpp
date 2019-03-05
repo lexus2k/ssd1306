@@ -24,7 +24,6 @@
 
 
 #include "ssd1306_uart_builtin.h"
-#include "intf/ssd1306_interface.h"
 
 #include "ssd1306_hal/io.h"
 

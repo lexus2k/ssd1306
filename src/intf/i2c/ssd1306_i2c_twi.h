@@ -36,8 +36,6 @@
 
 #ifdef __cplusplus
 
-#include "intf/ssd1306_interface.h"
-
 class TwiI2c: public IWireInterface
 {
 public:

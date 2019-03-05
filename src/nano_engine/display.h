@@ -33,7 +33,6 @@
 #include "canvas.h"
 #include "ssd1306_hal/io.h"
 #include "ssd1306_hal/Print_internal.h"
-#include "intf/ssd1306_interface.h"
 #include "nano_gfx_types.h"
 #include "lcd/lcd_common.h"
 

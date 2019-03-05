@@ -29,6 +29,8 @@
 #ifndef _SSD1306_ARDUINO_IO_H_
 #define _SSD1306_ARDUINO_IO_H_
 
+#include "ssd1306_hal/UserSettings.h"
+
 #if defined(ARDUINO_ARCH_STM32)   // stm32duino support
     #include <Arduino.h>
     #include <avr/pgmspace.h>
@@ -159,6 +161,94 @@
     #define CONFIG_PLATFORM_SPI_AVAILABLE
     /** The macro is defined when SPI module is available (ATMEGA) */
     #define CONFIG_AVR_SPI_AVAILABLE
+#endif
+
+#if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)
+
+class ArduinoSpi: public IWireInterface
+{
+public:
+    ArduinoSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 0);
+    virtual ~ArduinoSpi();
+
+    /**
+     * Starts communication with SSD1306 display.
+     */
+    void start() override;
+
+    /**
+     * Ends communication with SSD1306 display.
+     */
+    void stop() override;
+
+    /**
+     * Sends byte to SSD1306 device
+     * @param data - byte to send
+     */
+    void send(uint8_t data) override;
+
+    /**
+     * @brief Sends bytes to SSD1306 device
+     *
+     * Sends bytes to SSD1306 device. This functions gives
+     * ~ 30% performance increase than ssd1306_intf.send.
+     *
+     * @param buffer - bytes to send
+     * @param size - number of bytes to send
+     */
+    void sendBuffer(const uint8_t *buffer, uint16_t size) override;
+
+private:
+    int8_t m_cs;
+    int8_t m_dc;
+    uint32_t m_frequency;
+};
+
+class PlatformSpi: public ArduinoSpi;
+
+#endif
+
+#if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && defined(CONFIG_PLATFORM_I2C_ENABLE)
+class ArduinoI2c: public IWireInterface
+{
+public:
+    ArduinoI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00);
+    virtual ~ArduinoI2c();
+
+    /**
+     * Starts communication with SSD1306 display.
+     */
+    void start() override;
+
+    /**
+     * Ends communication with SSD1306 display.
+     */
+    void stop() override;
+
+    /**
+     * Sends byte to SSD1306 device
+     * @param data - byte to send
+     */
+    void send(uint8_t data) override;
+
+    /**
+     * @brief Sends bytes to SSD1306 device
+     *
+     * Sends bytes to SSD1306 device. This functions gives
+     * ~ 30% performance increase than ssd1306_intf.send.
+     *
+     * @param buffer - bytes to send
+     * @param size - number of bytes to send
+     */
+    void sendBuffer(const uint8_t *buffer, uint16_t size) override;
+private:
+    int8_t m_scl;
+    int8_t m_sda;
+    uint8_t m_sa;
+};
+
+class PlatformI2c: public ArduinoI2c;
+
 #endif
 
 //#ifdef CONFIG_PLATFORM_I2C_AVAILABLE
