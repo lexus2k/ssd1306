@@ -34,6 +34,8 @@
 
 #include "ssd1306.h"
 
+DisplaySSD1306_128x64_I2C display;
+
 uint32_t lastMillis;
 uint8_t  hours = 10;
 uint8_t  minutes = 35;
@@ -43,11 +45,11 @@ void printSeconds()
 {
     if (seconds & 1)
     {
-        ssd1306_printFixed(54,  8, ":", STYLE_NORMAL);
+        display.printFixed(54,  8, ":", STYLE_NORMAL);
     }
     else
     {
-        ssd1306_printFixed(54,  8, " ", STYLE_NORMAL);
+        display.printFixed(54,  8, " ", STYLE_NORMAL);
     }
 }
 
@@ -56,7 +58,7 @@ void printMinutes()
     char minutesStr[3] = "00";
     minutesStr[0] = '0' + minutes / 10;
     minutesStr[1] = '0' + minutes % 10;
-    ssd1306_printFixed(78,  8, minutesStr, STYLE_NORMAL);
+    display.printFixed(78,  8, minutesStr, STYLE_NORMAL);
 }
 
 void printHours()
@@ -64,13 +66,13 @@ void printHours()
     char hoursStr[3] = "00";
     hoursStr[0] = '0' + hours / 10;
     hoursStr[1] = '0' + hours % 10;
-    ssd1306_printFixed(6,  8, hoursStr, STYLE_NORMAL);
+    display.printFixed(6,  8, hoursStr, STYLE_NORMAL);
 }
 
-void setup() {
-    /* Replace the line below with ssd1306_128x32_i2c_init() if you need to use 128x32 display */
-    ssd1306_128x64_i2c_init();
-    ssd1306_fillScreen(0x00);
+void setup()
+{
+    display.begin();
+    display.fill(0x00);
     ssd1306_setFixedFont(comic_sans_font24x32_123);
     lastMillis = millis();
     printHours();
