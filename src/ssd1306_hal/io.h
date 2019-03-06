@@ -40,7 +40,7 @@
 
 #include "UserSettings.h"
 #if defined(ARDUINO)
-#include "arduino/io.h"
+#include "arduino/platform_io.h"
 #elif defined(__AVR__) && !defined(ARDUINO)
 #include "avr/io.h"
 #elif defined(__XTENSA__) && !defined(ARDUINO)
@@ -48,7 +48,7 @@
 #elif defined(STM32F1) || defined(STM32F2) || defined(STM32F4)
 #include "stm32/io.h"
 #elif defined(__linux__)
-#include "linux/io.h"
+#include "linux/platform_io.h"
 #elif defined(__MINGW32__)
 #include "mingw/io.h"
 #else
