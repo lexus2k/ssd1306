@@ -29,7 +29,7 @@
 #ifndef _SSD1306_AVR_PLATFORM_IO_H_
 #define _SSD1306_AVR_PLATFORM_IO_H_
 
-#include "io.h"
+#include "ssd1306_hal/io.h"
 
 #if defined(CONFIG_TWI_I2C_AVAILABLE) && defined(CONFIG_TWI_I2C_ENABLE)
 
@@ -114,7 +114,9 @@ private:
 
 #endif
 
-#if defined(CONFIG_TWI_I2C_AVAILABLE) && defined(CONFIG_TWI_I2C_ENABLE)
+#if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && defined(CONFIG_PLATFORM_I2C_ENABLE)
+
+#elif defined(CONFIG_TWI_I2C_AVAILABLE) && defined(CONFIG_TWI_I2C_ENABLE)
 
 class PlatformI2c: public TwiI2c
 {
@@ -127,7 +129,9 @@ public:
 
 #endif
 
-#if defined(CONFIG_AVR_SPI_AVAILABLE) && defined(CONFIG_AVR_SPI_ENABLE)
+#if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)
+
+#elif defined(CONFIG_AVR_SPI_AVAILABLE) && defined(CONFIG_AVR_SPI_ENABLE)
 
 class PlatformSpi: public AvrSpi
 {

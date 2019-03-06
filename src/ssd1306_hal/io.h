@@ -39,9 +39,12 @@
  */
 
 #include "UserSettings.h"
+
 #if defined(ARDUINO)
 #include "arduino/platform_io.h"
+#include "avr/platform_io.h"
 #elif defined(__AVR__) && !defined(ARDUINO)
+#include "avr/io.h"
 #include "avr/platform_io.h"
 #elif defined(__XTENSA__) && !defined(ARDUINO)
 #include "esp/io.h"
