@@ -30,8 +30,8 @@
 #define _SSD1306_I2C_H_
 
 #include "ssd1306_i2c_conf.h"
-#include "ssd1306_i2c_embedded.h"
-#include "ssd1306_i2c_twi.h"
+
+#if 0
 
 #ifdef __cplusplus
 
@@ -81,6 +81,8 @@ void ssd1306_i2cInitEx(int8_t scl, int8_t sda, int8_t sa);
 
 #ifdef __cplusplus
 }
+#endif
+
 #endif
 
 // ----------------------------------------------------------------------------

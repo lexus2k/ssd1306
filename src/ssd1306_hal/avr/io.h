@@ -29,6 +29,9 @@
 #ifndef _SSD1306_AVR_IO_H_
 #define _SSD1306_AVR_IO_H_
 
+#include "ssd1306_hal/UserSettings.h"
+#include "ssd1306_hal/ssd1306_interface.h"
+
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
@@ -57,6 +60,7 @@
     typedef uint8_t lcduint_t;
     /** The macro is defined when micro controller doesn't support multiplication operation */
     #define CONFIG_MULTIPLICATION_NOT_SUPPORTED
+
 #elif defined(__AVR_ATmega328P__)
     /** The macro is defined when software i2c implementation is available */
     #define CONFIG_SOFTWARE_I2C_AVAILABLE
@@ -76,6 +80,7 @@
     #define CONFIG_TWI_I2C_AVAILABLE
     /** The macro is defined when SPI module is available */
     #define CONFIG_AVR_SPI_AVAILABLE
+
 #endif
 
 #ifdef __cplusplus

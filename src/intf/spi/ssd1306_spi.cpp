@@ -22,9 +22,9 @@
     SOFTWARE.
 */
 
+#if 0
 
 #include "ssd1306_spi.h"
-#include "ssd1306_spi_avr.h"
 #include "ssd1306_spi_usi.h"
 #include "lcd/lcd_common.h"
 #include "ssd1306_hal/io.h"
@@ -53,3 +53,5 @@ void ssd1306_spiDataMode(uint8_t mode)
         digitalWrite(s_ssd1306_dc, mode ? HIGH : LOW);
     }
 }
+
+#endif

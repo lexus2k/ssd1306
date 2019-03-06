@@ -24,3 +24,8 @@
 
 extern "C" void __cxa_pure_virtual(void) { while (1); }
 extern "C" void __cxa_deleted_virtual(void) { while (1); }
+extern void operator delete(void *p) __attribute__((weak));
+
+void operator delete(void * p)
+{
+}

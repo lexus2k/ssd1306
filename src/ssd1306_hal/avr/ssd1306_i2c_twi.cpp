@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,7 @@
     SOFTWARE.
 */
 
-#include "ssd1306_i2c_twi.h"
-#include "ssd1306_i2c.h"
+#include "ssd1306_hal/io.h"
 
 #if defined(CONFIG_TWI_I2C_AVAILABLE) && defined(CONFIG_TWI_I2C_ENABLE)
 
@@ -33,8 +32,6 @@
 /* Max i2c frequency, supported by OLED controllers */
 #define SSD1306_TWI_FREQ  400000
 #define MAX_RETRIES       64
-
-static uint8_t s_sa = SSD1306_SA;
 
 static uint8_t ssd1306_twi_start(void)
 {
@@ -103,23 +100,9 @@ void ssd1306_i2cConfigure_Twi(uint8_t arg)
     TWCR = (1 << TWEN) | (1 << TWEA);
 }
 
-static void ssd1306_i2cSendByte_Twi(uint8_t data)
-{
-}
 
-static void ssd1306_i2cSendBytes_Twi(const uint8_t *buffer, uint16_t size)
-{
-    while (size--)
-    {
-        ssd1306_i2cSendByte_Twi(*buffer);
-        buffer++;
-    }
-}
-
-TwiI2c::TwiI2c(int8_t scl, int8_t sda, uint8_t sa)
-   : m_scl( scl )
-   , m_sda( sda )
-   , m_sa( sa )
+TwiI2c::TwiI2c(uint8_t sa)
+   : m_sa( sa )
 {
 }
 
@@ -136,7 +119,7 @@ void TwiI2c::start()
             /* Some serious error happened, but we don't care. Our API functions have void type */
             return;
         }
-    } while (ssd1306_twi_send(s_sa << 1) == TW_MT_ARB_LOST);
+    } while (ssd1306_twi_send(m_sa << 1) == TW_MT_ARB_LOST);
 }
 
 void TwiI2c::stop()
@@ -157,7 +140,7 @@ void TwiI2c::send(uint8_t data)
             /* Some serious error happened, but we don't care. Our API functions have void type */
             break;
         }
-        if (ssd1306_twi_send(s_sa << 1) != TW_MT_ARB_LOST)
+        if (ssd1306_twi_send(m_sa << 1) != TW_MT_ARB_LOST)
         {
             /* Some serious error happened, but we don't care. Our API functions have void type */
             break;

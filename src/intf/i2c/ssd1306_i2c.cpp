@@ -24,6 +24,7 @@
 
 #include "ssd1306_i2c.h"
 
+#if 0
 void ssd1306_i2cInitEx(int8_t scl, int8_t sda, int8_t sa)
 {
 #if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && defined(CONFIG_PLATFORM_I2C_ENABLE)
@@ -42,3 +43,5 @@ void ssd1306_i2cInit()
 {
     ssd1306_i2cInitEx(-1, -1, SSD1306_SA);
 }
+
+#endif

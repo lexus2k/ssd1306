@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,13 +22,7 @@
     SOFTWARE.
 */
 
-#include "ssd1306_spi_avr.h"
-#include "ssd1306_spi.h"
-
-#include "lcd/lcd_common.h"
 #include "ssd1306_hal/io.h"
-
-#if 0
 
 #if defined(CONFIG_AVR_SPI_AVAILABLE) && defined(CONFIG_AVR_SPI_ENABLE)
 
@@ -43,7 +37,7 @@
 #define SPI_CLOCK_MASK   0x03
 #define SPI_2XCLOCK_MASK 0x01
 
-extern uint32_t s_ssd1306_spi_clock;
+static uint32_t s_ssd1306_spi_clock;
 
 static void ssd1306_spiConfigure_avr()
 {
@@ -77,26 +71,52 @@ static void ssd1306_spiConfigure_avr()
     delay(10);
 }
 
-static void ssd1306_spiClose_avr()
+AvrSpi::AvrSpi(int8_t csPin, int8_t dcPin, uint32_t frequency)
+    : IWireInterface()
+    , m_cs( csPin )
+    , m_dc( dcPin )
+{
+    if (csPin >= 0) pinMode(csPin, OUTPUT);
+    if (dcPin >= 0) pinMode(dcPin, OUTPUT);
+    s_ssd1306_spi_clock = frequency;
+    ssd1306_spiConfigure_avr();
+}
+
+AvrSpi::~AvrSpi()
 {
 }
 
-static void ssd1306_spiStart_avr()
+void AvrSpi::start()
 {
-    if (s_ssd1306_cs >= 0)
+    if ( m_cs >= 0 )
     {
-        digitalWrite(s_ssd1306_cs,LOW);
+        digitalWrite( m_cs, LOW);
     }
 }
 
-static void ssd1306_spiSendByte_avr(uint8_t data)
+void AvrSpi::stop()
+{
+// TODO: PCD8544
+//    if (ssd1306_lcd.type == LCD_TYPE_PCD8544)
+//    {
+//        digitalWrite(s_ssd1306_dc, LOW);
+//        ssd1306_spiSendByte_avr( 0x00 ); // Send NOP command to allow last data byte to pass (bug in PCD8544?)
+//                                         // ssd1306 E3h is NOP command
+//    }
+    if ( m_cs >= 0 )
+    {
+        digitalWrite( m_cs, HIGH );
+    }
+}
+
+void AvrSpi::send(uint8_t data)
 {
     SPDR = data;
     asm volatile("nop");
     while((SPSR & (1<<SPIF))==0);
 }
 
-static void ssd1306_spiSendBytes_avr(const uint8_t * buffer, uint16_t size)
+void AvrSpi::sendBuffer(const uint8_t *buffer, uint16_t size)
 {
     const uint8_t *p = buffer;
     while (size--)
@@ -109,35 +129,5 @@ static void ssd1306_spiSendBytes_avr(const uint8_t * buffer, uint16_t size)
     }
 }
 
-static void ssd1306_spiStop_avr()
-{
-    if (ssd1306_lcd.type == LCD_TYPE_PCD8544)
-    {
-        digitalWrite(s_ssd1306_dc, LOW);
-        ssd1306_spiSendByte_avr( 0x00 ); // Send NOP command to allow last data byte to pass (bug in PCD8544?)
-                                         // ssd1306 E3h is NOP command
-    }
-    if (s_ssd1306_cs >= 0)
-    {
-        digitalWrite(s_ssd1306_cs, HIGH);
-    }
-}
-
-void ssd1306_spiInit_avr(int8_t cesPin, int8_t dcPin)
-{
-    if (cesPin >=0) pinMode(cesPin, OUTPUT);
-    if (dcPin >= 0) pinMode(dcPin, OUTPUT);
-    if (cesPin) s_ssd1306_cs = cesPin;
-    if (dcPin) s_ssd1306_dc = dcPin;
-    ssd1306_intf.spi = 1;
-    ssd1306_spiConfigure_avr();
-    ssd1306_intf.start = ssd1306_spiStart_avr;
-    ssd1306_intf.stop = ssd1306_spiStop_avr;
-    ssd1306_intf.send = ssd1306_spiSendByte_avr;
-    ssd1306_intf.send_buffer = ssd1306_spiSendBytes_avr;
-    ssd1306_intf.close = ssd1306_spiClose_avr;
-}
-
 #endif
 
-#endif
