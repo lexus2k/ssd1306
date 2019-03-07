@@ -89,6 +89,10 @@
  */
 #define CONFIG_SSD1306_UNICODE_ENABLE
 
+#define CONFIG_ESP32_I2C_ENABLE
+
+#define CONFIG_ESP32_SPI_ENABLE
+
 /**
  * @}
  */
