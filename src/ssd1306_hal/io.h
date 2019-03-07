@@ -39,21 +39,32 @@
  */
 
 #include "UserSettings.h"
+#include "ssd1306_interface.h"
 
 #if defined(ARDUINO)
-#include "arduino/platform_io.h"
-#include "avr/platform_io.h"
+#include "arduino/io.h"
+#include "arduino/arduino_spi.h"
+#include "arduino/arduino_wire.h"
+#include "avr/avr_spi.h"
+#include "avr/avr_twi.h"
 #elif defined(__AVR__) && !defined(ARDUINO)
 #include "avr/io.h"
-#include "avr/platform_io.h"
+#include "avr/avr_spi.h"
+#include "avr/avr_twi.h"
 #elif defined(__XTENSA__) && !defined(ARDUINO)
 #include "esp/io.h"
 #elif defined(STM32F1) || defined(STM32F2) || defined(STM32F4)
 #include "stm32/io.h"
 #elif defined(__linux__)
-#include "linux/platform_io.h"
+#include "linux/io.h"
+#include "linux/linux_i2c.h"
+#include "linux/linux_spi.h"
+#include "linux/sdl_i2c.h"
+#include "linux/sdl_spi.h"
 #elif defined(__MINGW32__)
 #include "mingw/io.h"
+#include "linux/sdl_i2c.h"
+#include "linux/sdl_spi.h"
 #else
 #warning "Platform is not supported. Use template to add support"
 #include "template/io.h"
@@ -72,6 +83,101 @@ typedef unsigned int lcduint_t;
 #define ssd1306_swap_data(a, b, type)  { type t = a; a = b; b = t; }
 
 #ifdef __cplusplus
+
+////////////////////////////////////////////////////////////////////////////////
+//                    I2C PLATFORM
+////////////////////////////////////////////////////////////////////////////////
+
+#if defined(CONFIG_ARDUINO_I2C_AVAILABLE) && defined(CONFIG_ARDUINO_I2C_ENABLE)
+
+class PlatformI2c: public ArduinoI2c
+{
+public:
+     PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00):
+         ArduinoI2c(scl, sda, sa) {}
+};
+
+#elif defined(CONFIG_TWI_I2C_AVAILABLE) && defined(CONFIG_TWI_I2C_ENABLE)
+
+class PlatformI2c: public TwiI2c
+{
+public:
+    PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00):
+        TwiI2c(sa) {}
+};
+
+#elif defined(CONFIG_LINUX_I2C_AVAILABLE) && defined(CONFIG_LINUX_I2C_ENABLE)
+
+#if defined(SDL_EMULATION)
+class PlatformI2c: public SdlI2c
+{
+public:
+    PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00):
+        SdlI2c(scl, sda, sa) {}
+};
+#else
+class PlatformI2c: public LinuxI2c
+{
+public:
+    PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00):
+         LinuxI2c( scl, sa ) {}
+};
+#endif
+
+#else
+
+#error "Platform not supported"
+
+#endif
+
+////////////////////////////////////////////////////////////////////////////////
+//                    SPI PLATFORM
+////////////////////////////////////////////////////////////////////////////////
+
+#if defined(CONFIG_AVR_SPI_AVAILABLE) && defined(CONFIG_AVR_SPI_ENABLE)
+
+class PlatformSpi: public AvrSpi
+{
+public:
+    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t frequency = 8000000):
+        AvrSpi(csPin, dcPin, frequency) {}
+};
+
+#elif defined(CONFIG_ARDUINO_SPI_AVAILABLE) && defined(CONFIG_ARDUINO_SPI_ENABLE)
+
+class PlatformSpi: public ArduinoSpi
+{
+public:
+    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 0):
+        ArduinoSpi(csPin, dcPin, freq) {}
+};
+
+#elif defined(CONFIG_LINUX_SPI_AVAILABLE) && defined(CONFIG_LINUX_SPI_ENABLE)
+
+#if defined(SDL_EMULATION)
+class PlatformSpi: public SdlSpi
+{
+public:
+    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 0):
+        SdlSpi(dcPin) {}
+};
+#else
+class PlatformSpi: public LinuxSpi
+{
+public:
+    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 0):
+        LinuxSpi( 0, csPin, dcPin, freq ) {}
+};
+#endif
+
+#else
+
+#error "Platform not supported"
+
+#endif
+
+
+
 extern "C" {
 #endif
 
@@ -95,7 +201,6 @@ extern "C" {
  */
 void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, int8_t arg);
 #endif
-
 
 // !!! PLATFORM SPI IMPLEMENTATION OPTIONAL !!!
 #if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)

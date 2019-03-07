@@ -24,10 +24,6 @@
 
 #include "ssd1306_hal/io.h"
 
-#include "intf/i2c/ssd1306_i2c.h"
-#include "intf/spi/ssd1306_spi.h"
-#include "lcd/lcd_common.h"
-
 #if defined(ARDUINO)
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -116,72 +112,5 @@ void ArduinoI2c::sendBuffer(const uint8_t *buffer, uint16_t size)
 }
 
 #endif // CONFIG_PLATFORM_I2C_AVAILABLE
-
-//////////////////////////////////////////////////////////////////////////////////
-//                        ARDUINO SPI IMPLEMENTATION
-//////////////////////////////////////////////////////////////////////////////////
-#if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)
-
-/* STANDARD branch */
-#include <SPI.h>
-
-ArduinoSpi::ArduinoSpi(int8_t csPin, int8_t dcPin, uint32_t frequency)
-    : m_cs( csPin )
-    , m_dc( dcPin )
-    , m_frequency( frequency )
-{
-    if (csPin >=0) pinMode(csPin, OUTPUT);
-    if (dcPin >= 0) pinMode(dcPin, OUTPUT);
-    SPI.begin();
-}
-
-ArduinoSpi::~ArduinoSpi()
-{
-    SPI.end();
-}
-
-void ArduinoSpi::start()
-{
-    /* anyway, oled ssd1331 cannot work faster, clock cycle should be > 150ns: *
-     * 1s / 150ns ~ 6.7MHz                                                     */
-    SPI.beginTransaction(SPISettings(m_frequency, MSBFIRST, SPI_MODE0));
-    if (m_cs >= 0)
-    {
-        digitalWrite(m_cs,LOW);
-    }
-}
-
-void ArduinoSpi::stop()
-{
-    // TODO: PCD8854
-//    if (ssd1306_lcd.type == LCD_TYPE_PCD8544)
-//    {
-//        digitalWrite(s_ssd1306_dc, LOW);
-//        SPI.transfer( 0x00 ); // Send NOP command to allow last data byte to pass (bug in PCD8544?)
-//                              // ssd1306 E3h is NOP command
-//    }
-    if (m_cs >= 0)
-    {
-        digitalWrite(m_cs, HIGH);
-    }
-    SPI.endTransaction();
-}
-
-void ArduinoSpi::send(uint8_t data)
-{
-    SPI.transfer(data);
-}
-
-void ArduinoSpi::sendBuffer(const uint8_t *buffer, uint16_t size)
-{
-    /* Do not use SPI.transfer(buffer, size)! this method corrupts buffer content */
-    while (size--)
-    {
-        SPI.transfer(*buffer);
-        buffer++;
-    };
-}
-
-#endif // CONFIG_PLATFORM_SPI_AVAILABLE
 
 #endif // ARDUINO

@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -82,6 +82,18 @@
  * If you use Arduino platform, this macro enables Arduino SPI library module for compilation.
  */
 #define CONFIG_PLATFORM_SPI_ENABLE
+
+/** Define this macro if you need to enable Linux I2C module for compilation */
+#define CONFIG_LINUX_I2C_ENABLE
+
+/** Define this macro if you need to enable Linux SPI module for compilation */
+#define CONFIG_LINUX_SPI_ENABLE
+
+/** Define this macro if you need to enable Arduino Wire module for compilation */
+#define CONFIG_ARDUINO_I2C_ENABLE
+
+/** Define this macro if you need to enable Arduino SPI module for compilation */
+#define CONFIG_ARDUINO_SPI_ENABLE
 
 /**
  * Defines, whenever ssd1306 library supports unicode.

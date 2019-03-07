@@ -23,13 +23,11 @@
 */
 
 /*
- * @file ssd1306_hal/avr/platform_io.h SSD1306 AVR IO communication functions
+ * @file ssd1306_hal/avr/avr_twi.h SSD1306 AVR I2C communication functions
  */
 
-#ifndef _SSD1306_AVR_PLATFORM_IO_H_
-#define _SSD1306_AVR_PLATFORM_IO_H_
-
-#include "ssd1306_hal/io.h"
+#ifndef _SSD1306_AVR_TWI_H_
+#define _SSD1306_AVR_TWI_H_
 
 #if defined(CONFIG_TWI_I2C_AVAILABLE) && defined(CONFIG_TWI_I2C_ENABLE)
 
@@ -69,78 +67,6 @@ public:
 private:
     uint8_t m_sa;
 };
-
-#endif
-
-#if defined(CONFIG_AVR_SPI_AVAILABLE) && defined(CONFIG_AVR_SPI_ENABLE)
-
-class AvrSpi: public IWireInterface
-{
-public:
-    AvrSpi(int8_t csPin, int8_t dcPin, uint32_t frequency);
-    virtual ~AvrSpi();
-
-    /**
-     * Starts communication with SSD1306 display.
-     */
-    void start() override;
-
-    /**
-     * Ends communication with SSD1306 display.
-     */
-    void stop() override;
-
-    /**
-     * Sends byte to SSD1306 device
-     * @param data - byte to send
-     */
-    void send(uint8_t data) override;
-
-    /**
-     * @brief Sends bytes to SSD1306 device
-     *
-     * Sends bytes to SSD1306 device. This functions gives
-     * ~ 30% performance increase than ssd1306_intf.send.
-     *
-     * @param buffer - bytes to send
-     * @param size - number of bytes to send
-     */
-    void sendBuffer(const uint8_t *buffer, uint16_t size) override;
-
-private:
-    int8_t m_cs;
-    int8_t m_dc;
-};
-
-#endif
-
-#if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && defined(CONFIG_PLATFORM_I2C_ENABLE)
-
-#elif defined(CONFIG_TWI_I2C_AVAILABLE) && defined(CONFIG_TWI_I2C_ENABLE)
-
-class PlatformI2c: public TwiI2c
-{
-public:
-    PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00):
-        TwiI2c(sa) {}
-};
-
-#elif defined(CONFIG_SOFTWARE_I2C_AVAILABLE) && defined(CONFIG_SOFTWARE_I2C_ENABLE)
-
-#endif
-
-#if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)
-
-#elif defined(CONFIG_AVR_SPI_AVAILABLE) && defined(CONFIG_AVR_SPI_ENABLE)
-
-class PlatformSpi: public AvrSpi
-{
-public:
-    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t frequency = 8000000):
-        AvrSpi(csPin, dcPin, frequency) {}
-};
-
-#else
 
 #endif
 

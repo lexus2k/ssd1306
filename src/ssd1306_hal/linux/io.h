@@ -29,8 +29,8 @@
 #ifndef _SSD1306_LINUX_IO_H_
 #define _SSD1306_LINUX_IO_H_
 
-#define CONFIG_PLATFORM_I2C_AVAILABLE
-#define CONFIG_PLATFORM_SPI_AVAILABLE
+#define CONFIG_LINUX_I2C_AVAILABLE
+#define CONFIG_LINUX_SPI_AVAILABLE
 
 #include "ssd1306_hal/UserSettings.h"
 
@@ -53,9 +53,11 @@
 #define PROGMEM
 
 #ifdef __cplusplus
-#include "ssd1306_hal/ssd1306_interface.h"
 extern "C" {
 #endif
+
+void ssd1306_registerPinEvent(int pin, void (*on_pin_change)(void *), void *arg);
+void ssd1306_unregisterPinEvent(int pin);
 
 #if defined(__KERNEL__)      // ============== KERNEL
 static inline int  digitalRead(int pin) { return LOW; };

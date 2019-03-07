@@ -23,70 +23,20 @@
 */
 
 /*
- * @file hal/arduino/platform_io.h SSD1306 ARDUINO IO communication functions
+ * @file ssd1306_hal/linux/linux_i2c.h SSD1306 LINUX I2C communication functions
  */
 
-#ifndef _SSD1306_ARDUINO_PLATFORM_IO_H_
-#define _SSD1306_ARDUINO_PLATFORM_IO_H_
+#ifndef _SSD1306_LINUX_LINUX_I2C_H_
+#define _SSD1306_LINUX_LINUX_I2C_H_
 
-#include "io.h"
+#if defined(CONFIG_LINUX_I2C_AVAILABLE) && defined(CONFIG_LINUX_I2C_ENABLE) && \
+    !defined(SDL_EMULATION)
 
-#if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)
-
-class ArduinoSpi: public IWireInterface
+class LinuxI2c: public IWireInterface
 {
 public:
-    ArduinoSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 0);
-    virtual ~ArduinoSpi();
-
-    /**
-     * Starts communication with SSD1306 display.
-     */
-    void start() override;
-
-    /**
-     * Ends communication with SSD1306 display.
-     */
-    void stop() override;
-
-    /**
-     * Sends byte to SSD1306 device
-     * @param data - byte to send
-     */
-    void send(uint8_t data) override;
-
-    /**
-     * @brief Sends bytes to SSD1306 device
-     *
-     * Sends bytes to SSD1306 device. This functions gives
-     * ~ 30% performance increase than ssd1306_intf.send.
-     *
-     * @param buffer - bytes to send
-     * @param size - number of bytes to send
-     */
-    void sendBuffer(const uint8_t *buffer, uint16_t size) override;
-
-private:
-    int8_t m_cs;
-    int8_t m_dc;
-    uint32_t m_frequency;
-};
-
-class PlatformSpi: public ArduinoSpi
-{
-public:
-    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 0):
-        ArduinoSpi(csPin, dcPin, freq) {}
-};
-
-#endif
-
-#if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && defined(CONFIG_PLATFORM_I2C_ENABLE)
-class ArduinoI2c: public IWireInterface
-{
-public:
-    ArduinoI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00);
-    virtual ~ArduinoI2c();
+    LinuxI2c(int8_t busId = -1, uint8_t sa = 0x00);
+    virtual ~LinuxI2c();
 
     /**
      * Starts communication with SSD1306 display.
@@ -115,19 +65,14 @@ public:
      */
     void sendBuffer(const uint8_t *buffer, uint16_t size) override;
 private:
-    int8_t m_scl;
-    int8_t m_sda;
+    int8_t m_busId;
     uint8_t m_sa;
-};
-
-class PlatformI2c: public ArduinoI2c
-{
-public:
-     PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00):
-         ArduinoI2c(scl, sda, sa) {}
+    int m_fd;
+    uint16_t m_dataSize;
+    uint8_t m_buffer[1024];
 };
 
 #endif
 
-#endif // _SSD1306_ARDUINO_PLATFORM_IO_H_
+#endif
 
