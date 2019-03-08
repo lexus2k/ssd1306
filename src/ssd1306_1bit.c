@@ -761,6 +761,39 @@ void ssd1306_drawBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_
     ssd1306_intf.stop();
 }
 
+void ssd1306_drawXBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)
+{
+    uint8_t i, j;
+    lcduint_t pitch = (w + 7) >> 3;
+    ssd1306_lcd.set_block(x, y, w);
+    for(j=(h >> 3); j>0; j--)
+    {
+        uint8_t bit = 0;
+        for(i=w;i>0;i--)
+        {
+            uint8_t data = 0;
+            for (uint8_t k = 0; k<8; k++)
+            {
+                data |= ( ((pgm_read_byte(&buf[k*pitch]) >> bit) & 0x01) << k );
+            }
+            ssd1306_lcd.send_pixels1(s_ssd1306_invertByte^data);
+            bit++;
+            if (bit >= 8)
+            {
+                buf++;
+                bit=0;
+            }
+        }
+        if (bit)
+        {
+            buf++;
+        }
+        buf += pitch * 7;
+        ssd1306_lcd.next_page();
+    }
+    ssd1306_intf.stop();
+}
+
 void gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buf)
 {
     lcduint_t origin_width = w;

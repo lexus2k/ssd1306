@@ -315,6 +315,7 @@ void         ssd1306_drawBufferFast(lcdint_t x, lcdint_t y, lcduint_t w, lcduint
 
 /**
  * Draws bitmap, located in Flash, on the display
+ * The bitmap should be in native ssd1306 format
  *
  * @param x - horizontal position in pixels
  * @param y - vertical position in blocks (pixels/8)
@@ -323,6 +324,18 @@ void         ssd1306_drawBufferFast(lcdint_t x, lcdint_t y, lcduint_t w, lcduint
  * @param buf - pointer to data, located in Flash: each byte represents 8 vertical pixels.
  */
 void         ssd1306_drawBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf);
+
+/**
+ * Draws bitmap, located in Flash, on the display
+ * The bitmap should be in XBMP format
+ *
+ * @param x - horizontal position in pixels
+ * @param y - vertical position in blocks (pixels/8)
+ * @param w - width of bitmap in pixels
+ * @param h - height of bitmap in pixels (must be divided by 8)
+ * @param buf - pointer to data, located in Flash: each byte represents 8 vertical pixels.
+ */
+void         ssd1306_drawXBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf);
 
 /**
  * Draws bitmap, located in Flash, on the display
