@@ -34,7 +34,6 @@ SRCS_CPP = \
 	ssd1306_hal/linux/sdl_spi.cpp \
 	ssd1306_hal/arduino/arduino_spi.cpp \
 	ssd1306_hal/arduino/arduino_wire.cpp \
-	ssd1306_hal/mingw/platform.cpp \
 	ssd1306_hal/stm32/platform.cpp \
 	ssd1306_hal/template/platform.cpp \
 	intf/i2c/ssd1306_i2c.cpp \

@@ -30,8 +30,8 @@
 #define _SSD1306_MINGW_IO_H_
 
 // Use the same library interface as for Linux
-#define CONFIG_PLATFORM_I2C_AVAILABLE
-#define CONFIG_PLATFORM_SPI_AVAILABLE
+#define CONFIG_LINUX_I2C_AVAILABLE
+#define CONFIG_LINUX_SPI_AVAILABLE
 
 #if defined(SDL_EMULATION)  // SDL Emulation mode includes
 #include "sdl_core.h"
