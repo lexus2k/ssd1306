@@ -29,7 +29,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 //                        ARDUINO SPI IMPLEMENTATION
 //////////////////////////////////////////////////////////////////////////////////
-#if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)
+#if defined(CONFIG_ARDUINO_SPI_AVAILABLE) && defined(CONFIG_ARDUINO_SPI_ENABLE)
 
 /* STANDARD branch */
 #include <SPI.h>

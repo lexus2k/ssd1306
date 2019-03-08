@@ -34,7 +34,7 @@
 class TwiI2c: public IWireInterface
 {
 public:
-    TwiI2c(uint8_t sa = 0x00);
+    explicit TwiI2c(uint8_t sa = 0x00);
     virtual ~TwiI2c();
 
     /**

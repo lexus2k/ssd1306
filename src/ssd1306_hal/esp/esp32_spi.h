@@ -36,8 +36,8 @@
 class EspSpi: public IWireInterface
 {
 public:
-    EspSpi( int8_t m_busId = -1, int8_t m_cs = -1, int8_t m_dc = -1,
-            uint32_t m_frequency = 8000000 );
+    EspSpi( int8_t busId = -1, int8_t csPin = -1, int8_t dcPin = -1,
+            uint32_t frequency = 8000000 );
     virtual ~EspSpi();
 
     /**
@@ -72,7 +72,7 @@ private:
     int8_t m_dc;
     bool m_first_spi_session;
     uint32_t m_frequency;
-    spi_device_handle_t s_spi;
+    spi_device_handle_t m_spi;
 };
 
 

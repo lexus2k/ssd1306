@@ -24,9 +24,7 @@
 
 #include "ssd1306_hal/io.h"
 
-#if defined(SSD1306_ESP_PLATFORM)
-
-#include "intf/ssd1306_interface.h"
+#if defined(__XTENSA__) && !defined(ARDUINO)
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -36,20 +34,20 @@
 
 int  digitalRead(int pin)
 {
-    return gpio_get_level(pin);
+    return gpio_get_level(static_cast<gpio_num_t>(pin));
 }
 
 void digitalWrite(int pin, int level)
 {
-    gpio_set_level(pin, level);
+    gpio_set_level(static_cast<gpio_num_t>(pin), level);
 }
 
 void pinMode(int pin, int mode)
 {
     if (mode == INPUT)
-        gpio_set_direction(pin, GPIO_MODE_INPUT);
+        gpio_set_direction(static_cast<gpio_num_t>(pin), GPIO_MODE_INPUT);
     else if (mode == OUTPUT)
-        gpio_set_direction(pin, GPIO_MODE_OUTPUT);
+        gpio_set_direction(static_cast<gpio_num_t>(pin), GPIO_MODE_OUTPUT);
 }
 
 uint32_t millis(void)
@@ -64,4 +62,4 @@ void delay(uint32_t ms)     // delay()
 
 #endif
 
-#endif // SSD1306_ESP_PLATFORM
+#endif

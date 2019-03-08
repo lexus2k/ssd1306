@@ -26,6 +26,8 @@
 #include "lcd/lcd_common.h"
 #include "lcd/vga_commands.h"
 
+#if 0
+
 #if defined(CONFIG_VGA_AVAILABLE) && defined(CONFIG_VGA_ENABLE) && defined(ESP32)
 
 #include "CompositeOutput.h"
@@ -165,7 +167,7 @@ static void vga_controller_send_bytes(const uint8_t *buffer, uint16_t len)
 {
     while (len--)
     {
-        ssd1306_intf.send(*buffer);
+//        ssd1306_intf.send(*buffer);
         buffer++;
     }
 }
@@ -206,5 +208,7 @@ void ssd1306_debug_print_vga_buffer(void (*func)(uint8_t))
 {
     ssd1306_debug_print_vga_buffer_128x64(func);
 }
+
+#endif
 
 #endif

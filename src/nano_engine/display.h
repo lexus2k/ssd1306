@@ -305,12 +305,12 @@ public:
     lcduint_t height() { return m_h; }
 
 protected:
-    lcduint_t m_w;    ///< width of NanoCanvas area in pixels
-    lcduint_t m_h;    ///< height of NanoCanvas area in pixels
-    lcduint_t m_p;    ///< number of bits, used by width value: 3 equals to 8 pixels width
-    lcdint_t  m_cursorX;  ///< current X cursor position for text output
-    lcdint_t  m_cursorY;  ///< current Y cursor position for text output
-    uint8_t   m_textMode; ///< Flags for current NanoCanvas mode
+    lcduint_t m_w = 0;    ///< width of NanoCanvas area in pixels
+    lcduint_t m_h = 0;    ///< height of NanoCanvas area in pixels
+    lcduint_t m_p = 0;    ///< number of bits, used by width value: 3 equals to 8 pixels width
+    lcdint_t  m_cursorX = 0;  ///< current X cursor position for text output
+    lcdint_t  m_cursorY = 0;  ///< current Y cursor position for text output
+    uint8_t   m_textMode = 0; ///< Flags for current NanoCanvas mode
     EFontStyle   m_fontStyle; ///< currently active font style
     uint16_t  m_color = 0xFFFF;    ///< current color for monochrome operations
 

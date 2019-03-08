@@ -95,15 +95,17 @@
 /** Define this macro if you need to enable Arduino SPI module for compilation */
 #define CONFIG_ARDUINO_SPI_ENABLE
 
+/** Define this macro if you need to enable ESP32 I2C module for compilation */
+#define CONFIG_ESP32_I2C_ENABLE
+
+/** Define this macro if you need to enable ESP32 SPI module for compilation */
+#define CONFIG_ESP32_SPI_ENABLE
+
 /**
  * Defines, whenever ssd1306 library supports unicode.
  * Support of unicode increases RAM and Flasg memory consumption
  */
 #define CONFIG_SSD1306_UNICODE_ENABLE
-
-#define CONFIG_ESP32_I2C_ENABLE
-
-#define CONFIG_ESP32_SPI_ENABLE
 
 /**
  * @}

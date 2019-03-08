@@ -30,8 +30,7 @@
 //                        ARDUINO I2C IMPLEMENTATION
 //////////////////////////////////////////////////////////////////////////////////
 
-#if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && \
-    defined(CONFIG_PLATFORM_I2C_ENABLE)
+#if defined(CONFIG_ARDUINO_I2C_AVAILABLE) && defined(CONFIG_ARDUINO_I2C_ENABLE)
 
 #include <Wire.h>
 

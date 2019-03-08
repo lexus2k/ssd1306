@@ -47,6 +47,8 @@
 #include "arduino/arduino_wire.h"
 #include "avr/avr_spi.h"
 #include "avr/avr_twi.h"
+#include "esp/esp32_i2c.h"
+#include "esp/esp32_spi.h"
 #elif defined(__AVR__) && !defined(ARDUINO)
 #include "avr/io.h"
 #include "avr/avr_spi.h"
@@ -126,6 +128,15 @@ public:
 };
 #endif
 
+#elif defined(CONFIG_ESP32_I2C_AVAILABLE) && defined(CONFIG_ESP32_I2C_ENABLE)
+
+class PlatformI2c: public EspI2c
+{
+public:
+    PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00):
+        EspI2c(-1, sa, scl, sda, 400000) {}
+};
+
 #else
 
 #error "Platform not supported"
@@ -172,6 +183,13 @@ public:
 };
 #endif
 
+#elif defined(CONFIG_ESP32_SPI_AVAILABLE) && defined(CONFIG_ESP32_SPI_ENABLE)
+class PlatformSpi: public EspSpi
+{
+public:
+    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 8000000):
+        EspSpi( -1, csPin, dcPin, freq ) {}
+};
 #else
 
 #error "Platform not supported"

@@ -29,7 +29,7 @@
 #ifndef _SSD1306_ESP_ESP32_I2C_H_
 #define _SSD1306_ESP_ESP32_I2C_H_
 
-#if defined(CONFIG_ESP32_I2C_AVAILABLE) && defined(CONFIG_PLATFORM_I2C_ENABLE)
+#if defined(CONFIG_ESP32_I2C_AVAILABLE) && defined(CONFIG_ESP32_I2C_ENABLE)
 
 #include "driver/i2c.h"
 

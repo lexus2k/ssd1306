@@ -31,15 +31,7 @@
 #include "driver/gpio.h"
 #include "driver/spi_master.h"
 
-// Store spi handle globally for all spi callbacks
-static spi_device_handle_t s_spi;
-
-
-static void platform_spi_send_buffer(const uint8_t *data, uint16_t len)
-{
-}
-
-EspSpi::EspSpi(int8_t dcPin)
+EspSpi::EspSpi(int8_t busId, int8_t csPin, int8_t dcPin, uint32_t frequency)
    : IWireInterface()
    , m_busId( busId )
    , m_cs( csPin )
@@ -59,15 +51,13 @@ EspSpi::EspSpi(int8_t dcPin)
     if (m_dc >= 0) pinMode( m_dc, OUTPUT );
 
     // init your interface here
-    spi_bus_config_t buscfg=
-    {
-        .miso_io_num= m_busId ? 19 : 12,
-        .mosi_io_num= m_busId ? 23 : 13,
-        .sclk_io_num= m_busId ? 18 : 14,
-        .quadwp_io_num=-1,
-        .quadhd_io_num=-1,
-        .max_transfer_sz=32
-    };
+    spi_bus_config_t buscfg{};
+    buscfg.miso_io_num = m_busId ? 19 : 12;
+    buscfg.mosi_io_num = m_busId ? 23 : 13;
+    buscfg.sclk_io_num = m_busId ? 18 : 14;
+    buscfg.quadwp_io_num = -1;
+    buscfg.quadhd_io_num = -1;
+    buscfg.max_transfer_sz = 32;
     spi_bus_initialize( m_busId ? VSPI_HOST : HSPI_HOST, &buscfg, 0 ); // 0 -no dma
 }
 
@@ -80,13 +70,11 @@ void EspSpi::start()
     // ... Open spi channel for your device with specific s_ssd1306_cs, s_ssd1306_dc
     if (m_first_spi_session)
     {
-        spi_device_interface_config_t devcfg=
-        {
-            .clock_speed_hz = m_frequency,
-            .mode=0,
-            .spics_io_num = m_cs,
-            .queue_size=7,       // max 7 transactions at a time
-        };
+        spi_device_interface_config_t devcfg{};
+        devcfg.clock_speed_hz = m_frequency;
+        devcfg.mode=0;
+        devcfg.spics_io_num = m_cs;
+        devcfg.queue_size=7;
         spi_bus_add_device( m_busId ? VSPI_HOST : HSPI_HOST, &devcfg, &m_spi);
         m_first_spi_session = false;
     }
