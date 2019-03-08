@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -53,6 +53,8 @@
 #include "avr/avr_twi.h"
 #elif defined(__XTENSA__) && !defined(ARDUINO)
 #include "esp/io.h"
+#include "esp/esp32_i2c.h"
+#include "esp/esp32_spi.h"
 #elif defined(STM32F1) || defined(STM32F2) || defined(STM32F4)
 #include "stm32/io.h"
 #elif defined(__linux__)

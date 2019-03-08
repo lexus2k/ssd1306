@@ -29,11 +29,6 @@
 #ifndef _SSD1306_ESP_IO_H_
 #define _SSD1306_ESP_IO_H_
 
-// TODO: To complete support. Any help is welcome
-
-#define SSD1306_ESP_PLATFORM
-//========================== I. Include libraries =========================
-/* 1. Include all required headers, specific for your platform here */
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -45,14 +40,10 @@
 /* Progmem attribute for data, located in Flash */
 #define PROGMEM
 
-//========================== II. Define options ===========================
-/* 2. Uncomment all options, you have support for on your platform   *
- *    Remember that you will need to implement low level intf/i2c or *
- *    intf/spi layers for your platform                              */
-
-/** The macro is defined when STM32 i2c implementation is available */
-#define CONFIG_PLATFORM_I2C_AVAILABLE
-#define CONFIG_PLATFORM_SPI_AVAILABLE
+/** The macro is defined when ESP32 i2c implementation is available */
+#define CONFIG_ESP32_I2C_AVAILABLE
+/** The macro is defined when ESP32 spi implementation is available */
+#define CONFIG_ESP32_SPI_AVAILABLE
 
 #ifdef __cplusplus
 extern "C" {
@@ -107,13 +98,6 @@ static inline uint16_t eeprom_read_word(const void *ptr)  // eeprom_read_word() 
 static inline void eeprom_write_word(const void *ptr, uint16_t val) // eeprom_write_word() - can be skipped
 {
 }
-
-// utoa is already defined in stdlib c
-//static inline char *utoa(unsigned int num, char *str, int radix)    // util utoa() - can be skipped
-//{
-//    *str = '\0';
-//    return str;
-//}
 
 #ifdef __cplusplus
 }
