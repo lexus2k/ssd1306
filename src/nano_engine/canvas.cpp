@@ -417,6 +417,78 @@ void NanoCanvasOps<1>::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_
 }
 
 template <>
+void NanoCanvasOps<1>::drawXBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+{
+    x -= offset.x;
+    y -= offset.y;
+    lcduint_t origin_width = w;
+    if (y + (lcdint_t)h <= 0) return;
+    if (y >= (lcdint_t)m_h) return;
+    if (x + (lcdint_t)w <= 0) return;
+    if (x >= (lcdint_t)m_w)  return;
+
+    uint8_t start_bit = 0;
+    lcduint_t pitch_delta = 0;
+    if (y < 0)
+    {
+        bitmap += /*pitch*/((origin_width + 7) >> 3) * (lcduint_t)(-y);
+        h += y;
+        y = 0;
+    }
+    if (x < 0)
+    {
+        bitmap += ((lcduint_t)(-x)) / 8;
+        start_bit = ((lcduint_t)(-x)) & 0x07;
+        w += x;
+        x = 0;
+    }
+    if ((lcduint_t)(y + (lcdint_t)h) > (lcduint_t)m_h)
+    {
+        h = (lcduint_t)(m_h - (lcduint_t)y);
+    }
+    if ((lcduint_t)(x + (lcdint_t)w) > (lcduint_t)m_w)
+    {
+        w = (lcduint_t)(m_w - (lcduint_t)x);
+    }
+    pitch_delta = ((origin_width - w - start_bit ) >> 3);
+
+    for(lcduint_t j = 0; j < h; j++)
+    {
+        uint8_t bit = start_bit;
+        for(lcduint_t i = 0; i < w; i++)
+        {
+            uint8_t data = 0;
+            data = (pgm_read_byte(bitmap) >> bit) & 0x01;
+            if (data)
+            {
+                if (m_color == BLACK)
+                    m_buf[YADDR1(y + j) + (x + i)] &= ~(1 << ((y + j) & 0x7));
+                else
+                    m_buf[YADDR1(y + j) + (x + i)] |= (1 << ((y + j) & 0x7));
+            }
+            else if (CANVAS_MODE_TRANSPARENT != (m_textMode & CANVAS_MODE_TRANSPARENT))
+            {
+                if (m_color == BLACK)
+                    m_buf[YADDR1(y + j) + (x + i)] |= (1 << ((y + j) & 0x7));
+                else
+                    m_buf[YADDR1(y + j) + (x + i)] &= ~(1 << ((y + j) & 0x7));
+            }
+            bit++;
+            if (bit >= 8)
+            {
+                bitmap++;
+                bit=0;
+            }
+        }
+        if (bit)
+        {
+            bitmap++;
+        }
+        bitmap += pitch_delta;
+    }
+}
+
+template <>
 void NanoCanvasOps<1>::begin(lcdint_t w, lcdint_t h, uint8_t *bytes)
 {
     m_w = w;
@@ -637,6 +709,72 @@ void NanoCanvasOps<8>::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lc
         y = y + offs2;
         offs = 0;
         offs2 = 8;
+    }
+}
+
+template <>
+void NanoCanvasOps<8>::drawXBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+{
+    x -= offset.x;
+    y -= offset.y;
+    lcduint_t origin_width = w;
+    if (y + (lcdint_t)h <= 0) return;
+    if (y >= (lcdint_t)m_h) return;
+    if (x + (lcdint_t)w <= 0) return;
+    if (x >= (lcdint_t)m_w)  return;
+
+    uint8_t start_bit = 0;
+    lcduint_t pitch_delta = 0;
+    if (y < 0)
+    {
+        bitmap += /*pitch*/((origin_width + 7) >> 3) * (lcduint_t)(-y);
+        h += y;
+        y = 0;
+    }
+    if (x < 0)
+    {
+        bitmap += ((lcduint_t)(-x)) / 8;
+        start_bit = ((lcduint_t)(-x)) & 0x07;
+        w += x;
+        x = 0;
+    }
+    if ((lcduint_t)(y + (lcdint_t)h) > (lcduint_t)m_h)
+    {
+        h = (lcduint_t)(m_h - (lcduint_t)y);
+    }
+    if ((lcduint_t)(x + (lcdint_t)w) > (lcduint_t)m_w)
+    {
+        w = (lcduint_t)(m_w - (lcduint_t)x);
+    }
+    pitch_delta = ((origin_width - w - start_bit ) >> 3);
+
+    for(lcduint_t j = 0; j < h; j++)
+    {
+        uint8_t bit = start_bit;
+        for(lcduint_t i = 0; i < w; i++)
+        {
+            uint8_t data = 0;
+            data = (pgm_read_byte(bitmap) >> bit) & 0x01;
+            if (data)
+            {
+                m_buf[YADDR8(y + j) + (x + i)] = m_color;
+            }
+            else if (CANVAS_MODE_TRANSPARENT != (m_textMode & CANVAS_MODE_TRANSPARENT))
+            {
+                m_buf[YADDR8(y + j) + (x + i)] = 0x00;
+            }
+            bit++;
+            if (bit >= 8)
+            {
+                bitmap++;
+                bit=0;
+            }
+        }
+        if (bit)
+        {
+            bitmap++;
+        }
+        bitmap += pitch_delta;
     }
 }
 
@@ -896,6 +1034,74 @@ void NanoCanvasOps<16>::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, l
         y = y + offs2;
         offs = 0;
         offs2 = 8;
+    }
+}
+
+template <>
+void NanoCanvasOps<16>::drawXBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+{
+    x -= offset.x;
+    y -= offset.y;
+    lcduint_t origin_width = w;
+    if (y + (lcdint_t)h <= 0) return;
+    if (y >= (lcdint_t)m_h) return;
+    if (x + (lcdint_t)w <= 0) return;
+    if (x >= (lcdint_t)m_w)  return;
+
+    uint8_t start_bit = 0;
+    lcduint_t pitch_delta = 0;
+    if (y < 0)
+    {
+        bitmap += /*pitch*/((origin_width + 7) >> 3) * (lcduint_t)(-y);
+        h += y;
+        y = 0;
+    }
+    if (x < 0)
+    {
+        bitmap += ((lcduint_t)(-x)) / 8;
+        start_bit = ((lcduint_t)(-x)) & 0x07;
+        w += x;
+        x = 0;
+    }
+    if ((lcduint_t)(y + (lcdint_t)h) > (lcduint_t)m_h)
+    {
+        h = (lcduint_t)(m_h - (lcduint_t)y);
+    }
+    if ((lcduint_t)(x + (lcdint_t)w) > (lcduint_t)m_w)
+    {
+        w = (lcduint_t)(m_w - (lcduint_t)x);
+    }
+    pitch_delta = ((origin_width - w - start_bit ) >> 3);
+
+    for(lcduint_t j = 0; j < h; j++)
+    {
+        uint8_t bit = start_bit;
+        for(lcduint_t i = 0; i < w; i++)
+        {
+            uint8_t data = 0;
+            data = (pgm_read_byte(bitmap) >> bit) & 0x01;
+            if (data)
+            {
+                m_buf[YADDR16(y + j) + ((x + i)<<1)] = m_color >> 8;
+                m_buf[YADDR16(y + j) + ((x + i)<<1) + 1] = m_color & 0xFF;
+            }
+            else if (CANVAS_MODE_TRANSPARENT != (m_textMode & CANVAS_MODE_TRANSPARENT))
+            {
+                m_buf[YADDR16(y + j) + ((x + i)<<1)] = 0x00;
+                m_buf[YADDR16(y + j) + ((x + i)<<1) + 1] = 0x00;
+            }
+            bit++;
+            if (bit >= 8)
+            {
+                bitmap++;
+                bit=0;
+            }
+        }
+        if (bit)
+        {
+            bitmap++;
+        }
+        bitmap += pitch_delta;
     }
 }
 

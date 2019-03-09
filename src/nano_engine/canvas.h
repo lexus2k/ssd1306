@@ -213,6 +213,8 @@ public:
     /**
      * @brief Draws monochrome bitmap in color buffer using color, specified via setColor() method
      * Draws monochrome bitmap in color buffer using color, specified via setColor() method
+     * The bitmap is expected in Native ssd1306 controller format.
+     *
      * @param x - position X in pixels
      * @param y - position Y in pixels
      * @param w - width in pixels
@@ -225,6 +227,24 @@ public:
      *       in the screen buffer.
      */
     void drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
+
+    /**
+     * @brief Draws monochrome bitmap in color buffer using color, specified via setColor() method
+     * Draws monochrome bitmap in color buffer using color, specified via setColor() method
+     * The bitmap is expected in XBMP format.
+     *
+     * @param x - position X in pixels
+     * @param y - position Y in pixels
+     * @param w - width in pixels
+     * @param h - height in pixels
+     * @param bitmap - monochrome bitmap data, located in flash
+     *
+     * @note There are 2 modes: transparent and non-transparent mode, - and 2 colors available: black and white.
+     *       In non-transparent mode, when black color is selected, the monochrome image just inverted.
+     *       In transparent mode, those pixels of source monochrome image, which are black, do not overwrite pixels
+     *       in the screen buffer.
+     */
+    void drawXBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
 
     /**
      * @brief Draws 8-bit color bitmap in color buffer.
