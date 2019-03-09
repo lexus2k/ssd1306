@@ -44,8 +44,14 @@ public:
         : NanoDisplayOps<1>(intf)
         , m_isSPI( isSPI ) {}
 
+    /**
+     * Switches display to normal mode.
+     */
     void normalMode();
 
+    /**
+     * Switches display to normal mode.
+     */
     void invertMode();
 
     void setBlock(lcduint_t x, lcduint_t y, lcduint_t w) override;
@@ -87,6 +93,8 @@ private:
 
 extern "C" {
 #endif
+
+#if 0
 
 /**
  * @ingroup LCD_INTERFACE_API
@@ -193,19 +201,6 @@ void         ssd1306_displayOn(void);
 void         ssd1306_setContrast(uint8_t contrast);
 
 /**
- * Switches display to inverse mode.
- * LCD will display 0-pixels as white, and 1-pixels as black.
- * @note Not supported for SSD1331
- */
-void         ssd1306_invertMode(void);
-
-/**
- * Switches display to normal mode.
- * @note Not supported for SSD1331
- */
-void         ssd1306_normalMode(void);
-
-/**
  * @brief performs horizontal flip
  *
  * Performs horizontal flip. If you need to turn display by 180 degree,
@@ -227,9 +222,12 @@ void         ssd1306_flipHorizontal(uint8_t mode);
  */
 void         ssd1306_flipVertical(uint8_t mode);
 
+
 /**
  * @}
  */
+
+#endif
 
 #ifdef __cplusplus
 }

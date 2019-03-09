@@ -85,36 +85,71 @@ public:
     template<class C, uint8_t B>
     friend class NanoEngineTiler;
 
+    /**
+     * draw() method is called by NanoEngine, when it needs to refresh
+     * object graphics.
+     */
     virtual void draw() = 0;
+
+    /**
+     * update() method is called by NanoEngine, when it needs all objects
+     * to update their logic state.
+     */
     virtual void update() = 0;
+
+    /**
+     * update() method is called by NanoEngine, when it needs object to
+     * mark occupied place for refreshing.
+     */
     virtual void refresh() = 0;
 
+    /**
+     * Sets logic focus on NanoEngineObject
+     */
     void focus()
     {
         m_focused = true;
         refresh();
     }
 
+    /**
+     * Clears logic focus from NanoEngineObject
+     */
     void defocus()
     {
         m_focused = false;
         refresh();
     }
 
+    /**
+     * Returns true if logic focus points to the object.
+     * At present NanoEngine allows many objects to be in focus at once
+     */
     bool isFocused()
     {
         return m_focused;
     }
 
+    /**
+     * Returns true if NanoEngineObject is bound to NanoEngine instance
+     */
     bool hasTiler() { return m_tiler != nullptr; }
 
+    /**
+     * Returns reference to NanoEngine. Before call to this function,
+     * please check that NanoEngine is valid via hasTiler() function.
+     */
     T &getTiler() { return *(static_cast<T*>(m_tiler)); }
 
 protected:
-    void           *m_tiler = nullptr;
+    void           *m_tiler = nullptr; ///< Active tiler, assigned to the NanoEngineObject
+    NanoEngineObject<T>  *m_next = nullptr; ///< Next NanoEngineObject in the list
 
-    NanoEngineObject<T>  *m_next = nullptr;
-
+    /**
+     * Bind NanoEngineObject to specific NanoEngine
+     *
+     * @param tiler pointer to NanoEngine object
+     */
     void setTiler(void *tiler) { m_tiler = tiler; }
 
 private:
@@ -144,9 +179,6 @@ protected:
     };
 
 public:
-    /** object, representing canvas. Use it in your draw handler */
-    C canvas;
-
     /**
      * Marks all tiles for update. Actual update will take place in display() method.
      */
@@ -300,6 +332,12 @@ public:
      */
     bool collision(NanoPoint &p, NanoRect &rect) { return rect.collision( p ); }
 
+    /**
+     * Inserts new NanoEngineObject. This object will be displayed during next call
+     * to update()/draw() methods.
+     *
+     * @param object object to place to NanoEngine
+     */
     void insert(NanoEngineObject<NanoEngine<C,B>> &object)
     {
         object.m_next = this->m_first;
@@ -308,6 +346,13 @@ public:
         object.refresh();
     }
 
+    /**
+     * Removes NanoEngineObject from the list, but doesn't destroy the object.
+     * The place occupied by this object will be refreshed during next call
+     * to update()/draw() methods.
+     *
+     * @param object object to remove from NanoEngine
+     */
     void remove(NanoEngineObject<NanoEngine<C,B>> &object)
     {
         if ( this->m_first == nullptr )
@@ -338,6 +383,9 @@ public:
         }
     }
 
+    /**
+     * Updates all objects. This method doesn't refresh screen content
+     */
     void update()
     {
         NanoEngineObject<NanoEngine<C,B>> *p = m_first;
@@ -348,8 +396,14 @@ public:
         }
     }
 
-    C& get_canvas() { return canvas; }
+    /**
+     * Returns canvas, used by the NanoEngine.
+     */
+    C& getCanvas() { return canvas; }
 
+    /**
+     * Returns reference to display object.
+     */
     NanoDisplayOps<B>& getDisplay() { return m_display; }
 
 protected:
@@ -359,6 +413,9 @@ protected:
      */
     uint16_t   m_refreshFlags[NE_MAX_TILES_NUM];
 
+    /**
+     * Reference to display object, used by NanoEngine
+     */
     NanoDisplayOps<B>& m_display;
 
     /** Callback to call if specific tile needs to be updated */
@@ -380,6 +437,9 @@ protected:
     void displayPopup(const char *msg);
 
 private:
+    /** object, representing canvas. Use it in your draw handler */
+    C canvas;
+
     NanoPoint offset;
 
     NanoEngineObject<NanoEngine<C,B>>  *m_first;

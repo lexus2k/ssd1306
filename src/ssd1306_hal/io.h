@@ -149,44 +149,96 @@ public:
 
 #if defined(CONFIG_AVR_SPI_AVAILABLE) && defined(CONFIG_AVR_SPI_ENABLE)
 
+/**
+ * PlatformSpi implementation for AVR platforms
+ */
 class PlatformSpi: public AvrSpi
 {
 public:
+    /**
+     * Creates instance of PlatformSpi implementation for AVR controllers
+     *
+     * @param csPin chip select pin to enable display controller, or -1 if not needed
+     * @param dcPin data/command control pin
+     * @param frequency frequency in HZ to run SPI bus on.
+     */
     PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t frequency = 8000000):
         AvrSpi(csPin, dcPin, frequency) {}
 };
 
 #elif defined(CONFIG_ARDUINO_SPI_AVAILABLE) && defined(CONFIG_ARDUINO_SPI_ENABLE)
 
+/**
+ * PlatformSpi implementation for Arduino platforms
+ */
 class PlatformSpi: public ArduinoSpi
 {
 public:
-    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 0):
+    /**
+     * Creates instance of PlatformSpi implementation for Arduino platform
+     *
+     * @param csPin chip select pin to enable display controller, or -1 if not needed
+     * @param dcPin data/command control pin
+     * @param frequency frequency in HZ to run SPI bus on.
+     */
+    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 8000000):
         ArduinoSpi(csPin, dcPin, freq) {}
 };
 
 #elif defined(CONFIG_LINUX_SPI_AVAILABLE) && defined(CONFIG_LINUX_SPI_ENABLE)
 
 #if defined(SDL_EMULATION)
+/**
+ * PlatformSpi implementation for SDL emulator
+ */
 class PlatformSpi: public SdlSpi
 {
 public:
-    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 0):
+    /**
+     * Creates instance of PlatformSpi implementation for SDL Emulator mode
+     *
+     * @param csPin chip select pin to enable display controller, or -1 if not needed
+     * @param dcPin data/command control pin
+     * @param frequency frequency in HZ to run SPI bus on.
+     */
+    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 8000000):
         SdlSpi(dcPin) {}
 };
 #else
+/**
+ * PlatformSpi implementation for Linux platform (spidev)
+ */
 class PlatformSpi: public LinuxSpi
 {
 public:
-    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 0):
+    /**
+     * Creates instance of PlatformSpi implementation for Linux based platforms
+     * (spidev, always uses spidev 0 bus)
+     *
+     * @param csPin device index, if -1, then parameter defaults to 0.
+     * @param dcPin data/command control pin
+     * @param frequency frequency in HZ to run SPI bus on.
+     */
+    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 8000000):
         LinuxSpi( 0, csPin, dcPin, freq ) {}
 };
 #endif
 
 #elif defined(CONFIG_ESP32_SPI_AVAILABLE) && defined(CONFIG_ESP32_SPI_ENABLE)
+/**
+ * PlatformSpi implementation for ESP32 platform
+ */
 class PlatformSpi: public EspSpi
 {
 public:
+    /**
+     * Creates instance of PlatformSpi implementation for ESP32 controllers.
+     * By default uses VSPI bus.
+     *
+     * @param csPin chip select pin to enable display controller, or -1 if not needed
+     * @param dcPin data/command control pin
+     * @param frequency frequency in HZ to run SPI bus on.
+     */
     PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 8000000):
         EspSpi( -1, csPin, dcPin, freq ) {}
 };

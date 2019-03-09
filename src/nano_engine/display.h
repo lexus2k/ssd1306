@@ -218,10 +218,47 @@ public:
      */
     void drawBitmap16(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap);
 
+    /**
+     * Draws bitmap, located in RAM, on the display
+     * Each byte represents 8 vertical pixels.
+     *
+     * ~~~~~~~~~~~~~~~{.cpp}
+     * // Draw small rectangle 3x8 at position 10,8
+     * uint8_t buffer[3] = { 0xFF, 0x81, 0xFF };
+     * display.drawBuffer1(10, 1, 3, 8, buffer);
+     * ~~~~~~~~~~~~~~~
+     *
+     * @param x horizontal position in pixels
+     * @param y vertical position in pixels
+     * @param w width of bitmap in pixels
+     * @param h height of bitmap in pixels (must be divided by 8)
+     * @param buffer pointer to data, located in SRAM: each byte represents 8 vertical pixels.
+     */
     void drawBuffer1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buffer);
 
+    /**
+     * Draws 8-bit bitmap, located in RAM, on the display
+     * Each byte represents one pixel in 2-2-3 format:
+     * refer to RGB_COLOR8 to understand RGB scheme, being used.
+     *
+     * @param x horizontal position in pixels
+     * @param y vertical position in pixels
+     * @param w width of bitmap in pixels
+     * @param h height of bitmap in pixels
+     * @param buffer pointer to data, located in SRAM.
+     */
     void drawBuffer8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buffer);
 
+    /**
+     * Draws 16-bit bitmap, located in RAM, on the display
+     * Each pixel occupies 2 bytes (5-6-5 format): refer to RGB_COLOR16 to understand RGB scheme, being used.
+     *
+     * @param x horizontal position in pixels
+     * @param y vertical position in pixels
+     * @param w width of bitmap in pixels
+     * @param h height of bitmap in pixels
+     * @param buffer pointer to data, located in RAM.
+     */
     void drawBuffer16(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *buffer);
 
     /**
@@ -229,10 +266,31 @@ public:
      */
     void clear();
 
+    /**
+     * Draws 1-bit canvas on lcd display
+     *
+     * @param x x position in pixels
+     * @param y y position in pixels
+     * @param canvas 1-bit canvas to draw on the screen.
+     */
     void drawCanvas(lcdint_t x, lcdint_t y, NanoCanvasOps<1> &canvas);
 
+    /**
+     * Draws 8-bit canvas on lcd display
+     *
+     * @param x x position in pixels
+     * @param y y position in pixels
+     * @param canvas 8-bit canvas to draw on the screen.
+     */
     void drawCanvas(lcdint_t x, lcdint_t y, NanoCanvasOps<8> &canvas);
 
+    /**
+     * Draws 16-bit canvas on lcd display
+     *
+     * @param x x position in pixels
+     * @param y y position in pixels
+     * @param canvas 16-bit canvas to draw on the screen.
+     */
     void drawCanvas(lcdint_t x, lcdint_t y, NanoCanvasOps<16> &canvas);
 
     void fill(uint16_t color);
@@ -280,28 +338,80 @@ public:
      */
     void setColor(uint16_t color) { m_color = color; };
 
+    /**
+     * Creates menu object with the provided list of menu items.
+     * List of menu items (strings) must exist all until menu object is no longer needed.
+     * Selection is set to the first item by default.
+     *
+     * @param menu pointer to SAppMenu structure
+     * @param items array of null-termintated strings (located in SRAM)
+     * @param count count of menu items in the array
+     */
     void createMenu(SAppMenu *menu, const char **items, uint8_t count);
 
+    /**
+     * Shows menu items on the display. If menu items cannot fit the display,
+     * the function provides scrolling.
+     *
+     * @param menu pointer to SAppMenu structure
+     */
     void showMenu( SAppMenu *menu);
 
+    /**
+     * Updates menu items on the display. That is if selection is changed,
+     * the function will update only those areas, affected by the change.
+     *
+     * @param menu Pointer to SAppMenu structure
+     */
     void updateMenu(SAppMenu *menu);
 
+    /**
+     * Returns currently selected menu item.
+     * First item has zero-index.
+     *
+     * @param menu pointer to SAppMenu structure
+     *
+     */
     uint8_t menuSelection(SAppMenu *menu);
 
+    /**
+     * Moves selection pointer down by 1 item. If there are no items below,
+     * it will set selection pointer to the first item.
+     * Use updateMenu() to refresh menu state on the display.
+     *
+     * @param menu pointer to SAppMenu structure
+     */
     void menuDown(SAppMenu *menu);
 
+    /**
+     * Moves selection pointer up by 1 item. If selected item is the first one,
+     * then selection pointer will set to the last item in menu list.
+     * Use updateMenu() to refresh menu state on the display.
+     *
+     * @param menu pointer to SAppMenu structure
+     */
     void menuUp(SAppMenu *menu);
 
+    /**
+     * All drawing functions start to work in negative mode.
+     * Old picture on the display remains unchanged.
+     */
     void negativeMode();
 
+    /**
+     * All drawing functions start to work in positive (default) mode.
+     * Old picture on the display remains unchanged.
+     */
     void positiveMode();
 
-    virtual void setBlock(lcduint_t x, lcduint_t y, lcduint_t w) = 0;
-
-    virtual void nextPage() = 0;
-
+    /**
+     * Returns width of the display in pixels.
+     */
     lcduint_t width() { return m_w; }
 
+    /**
+     * Returns height of the display in pixels.
+     */
     lcduint_t height() { return m_h; }
 
 protected:
@@ -314,8 +424,33 @@ protected:
     EFontStyle   m_fontStyle; ///< currently active font style
     uint16_t  m_color = 0xFFFF;    ///< current color for monochrome operations
 
-//    ssd1306_lcd2_t m_lcd;
-    IWireInterface& m_intf;
+    IWireInterface& m_intf; ///< communication interface with the display
+
+    /**
+     * @brief Sets block in RAM of lcd display controller to write data to.
+     *
+     * Sets block in RAM of lcd display controller to write data to.
+     * For ssd1306 it uses horizontal addressing mode, while for
+     * sh1106 the function uses page addressing mode.
+     * Width can be specified as 0, thus the library will set the right boundary to
+     * region of RAM block to the right column of the display.
+     * @param x - column (left region)
+     * @param y - page (top page of the block)
+     * @param w - width of the block in pixels to control
+     *
+     * @warning - this function initiates session (i2c or spi) and does not close it.
+     *            To close session, please, call m_intf.stop().
+     */
+    virtual void setBlock(lcduint_t x, lcduint_t y, lcduint_t w) = 0;
+
+    /**
+     * Switches to the start of next RAM page for the block, specified by
+     * setBlock().
+     * For ssd1306 it does nothing, while for sh1106 the function moves cursor to
+     * next page.
+     */
+    virtual void nextPage() = 0;
+
 };
 
 /**

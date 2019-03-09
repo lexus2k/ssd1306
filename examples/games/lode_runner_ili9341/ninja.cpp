@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -159,6 +159,6 @@ void Ninja::move(const NanoPoint &target)
 
 void Ninja::draw()
 {
-    getTiler()->get_canvas().setColor(RGB_COLOR8(64,64,255));
+    getTiler()->getCanvas().setColor(RGB_COLOR8(64,64,255));
     NanoFixedSprite::draw();
 }

@@ -61,7 +61,7 @@ public:
 
     void draw() override
     {
-        this->getTiler().get_canvas().drawBitmap1(
+        this->getTiler().getCanvas().drawBitmap1(
             this->getRect().p1.x, this->getRect().p1.y,
             this->getRect().width(), this->getRect().height(),
             this->getBitmap());

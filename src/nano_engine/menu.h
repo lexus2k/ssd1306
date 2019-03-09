@@ -139,8 +139,8 @@ public:
 
     void draw() override
     {
-        this->getTiler()->get_canvas().setColor( 0xFFFF );
-        this->getTiler()->get_canvas().drawRect( { this->m_rect.p1 + (NanoPoint){2, 2},
+        this->getTiler()->getCanvas().setColor( 0xFFFF );
+        this->getTiler()->getCanvas().drawRect( { this->m_rect.p1 + (NanoPoint){2, 2},
                                                 this->m_rect.p2 - (NanoPoint){2, 2} } );
         NanoMenu<T>::draw();
     }
@@ -173,8 +173,8 @@ public:
 
     void draw() override
     {
-        this->getTiler()->get_canvas().setColor( 0xFFFF );
-        this->getTiler()->get_canvas().drawRect( { this->m_rect.p1 + (NanoPoint){2, 2},
+        this->getTiler()->getCanvas().setColor( 0xFFFF );
+        this->getTiler()->getCanvas().drawRect( { this->m_rect.p1 + (NanoPoint){2, 2},
                                                 this->m_rect.p2 - (NanoPoint){2, 2} } );
         NanoMenu<T>::draw();
     }

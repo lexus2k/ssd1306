@@ -31,10 +31,20 @@
 
 #if defined(CONFIG_TWI_I2C_AVAILABLE) && defined(CONFIG_TWI_I2C_ENABLE)
 
+/**
+ * Class implements AVR i2c support via TWI hardware block.
+ */
 class TwiI2c: public IWireInterface
 {
 public:
+    /**
+     * Creates I2C instance for AVR controllers.
+     * Can be used for command compilation with plain avrgcc
+     *
+     * @param sa i2c address of device to control
+     */
     explicit TwiI2c(uint8_t sa = 0x00);
+
     virtual ~TwiI2c();
 
     /**

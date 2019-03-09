@@ -65,18 +65,6 @@ void         ssd1306_fillScreen(uint8_t fill_Data);
 void         ssd1306_clearScreen(void);
 
 /**
- * All drawing functions start to work in negative mode.
- * Old picture on the display remains unchanged.
- */
-void         ssd1306_negativeMode(void);
-
-/**
- * All drawing functions start to work in positive (default) mode.
- * Old picture on the display remains unchanged.
- */
-void         ssd1306_positiveMode(void);
-
-/**
  * Prints text to screen using fixed font.
  * @param xpos - horizontal position in pixels
  * @param y - vertical position in pixels

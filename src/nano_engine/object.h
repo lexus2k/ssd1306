@@ -50,13 +50,21 @@ class NanoObject: public NanoEngineObject<T>
 public:
     template<class N> friend class NanoObjectList;
     /**
-     * Creates basic object.
+     * Creates basic object with the size [1,1]
+     *
+     * @param pos location of the NanoObject being created
      */
     NanoObject(const NanoPoint &pos)
         : m_rect{pos, pos}
     {
     }
 
+    /**
+     * Creates basic object with arbitrary size
+     *
+     * @param pos location of the NanoObject being created
+     * @param size desirable size of NanoObject being created
+     */
     NanoObject(const NanoPoint &pos, const NanoPoint &size)
         : m_rect{pos, pos + size - (NanoPoint){1,1}}
     {
@@ -78,20 +86,29 @@ public:
         }
     }
 
+    /**
+     * Updates NanoObject
+     */
     void update() override {}
 
-    lcdint_t width()
+    /**
+     * Returns width of NanoObject
+     */
+    lcdint_t width() const
     {
         return m_rect.width();
     }
 
-    lcdint_t height()
+    /**
+     * Returns height of NanoObject
+     */
+    lcdint_t height() const
     {
         return m_rect.height();
     }
 
     /**
-     * Moves sprite to new position
+     * Moves sprite to new position and marks screen area for refresh
      */
     void moveTo(const NanoPoint &p)
     {
@@ -110,6 +127,11 @@ public:
         refresh();
     }
 
+    /**
+     * Resizes NanoObject and marks screen area for refresh.
+     *
+     * @param size new size of NanoObject
+     */
     void resize(const NanoPoint &size)
     {
         refresh();
@@ -117,6 +139,11 @@ public:
         refresh();
     }
 
+    /**
+     * Sets new size of NanoObject. Doesn't update screen content
+     *
+     * @param size new size of NanoObject
+     */
     void setSize(const NanoPoint &size)
     {
         m_rect.p2.x = m_rect.p1.x + size.x - 1;
@@ -189,9 +216,13 @@ public:
      */
     const NanoPoint & getPosition() const { return m_rect.p1; }
 
+    /**
+     * Returns rectangle area, occupied by the NanoObject
+     */
     const NanoRect & getRect() const { return m_rect; }
 
 protected:
+    /** Rectangle area occupied by the object */
     NanoRect       m_rect;
 };
 
@@ -201,11 +232,23 @@ class NanoObjectList: public NanoObject<T>
 public:
     using NanoObject<T>::NanoObject;
 
+    /**
+     * Returns next object in the list.
+     * If no objects left, the function returns nullptr.
+     *
+     * @param prev previous object. If nullptr, then first object is returned.
+     */
     NanoObject<T> *getNext(NanoObject<T> *prev = nullptr)
     {
         return static_cast<NanoObject<T>*>(prev ? prev->m_next : m_first);
     }
 
+    /**
+     * Returns previous object in the list.
+     * If no objects left, the function returns nullptr.
+     *
+     * @param curr current object. If nullptr, then last object is returned.
+     */
     NanoObject<T> *getPrev(NanoObject<T> *curr = nullptr)
     {
         NanoObject<T> *p = m_first;
@@ -220,6 +263,9 @@ public:
         return p;
     }
 
+    /**
+     * Updates all objects in the list.
+     */
     void update() override
     {
         NanoObject<T> *p = getNext();
@@ -230,6 +276,9 @@ public:
         }
     }
 
+    /**
+     * Refreshes all objects in the list.
+     */
     void refresh() override
     {
         NanoObject<T> *p = getNext();
@@ -241,6 +290,9 @@ public:
         }
     }
 
+    /**
+     * Draw all objects from the list in the buffer.
+     */
     void draw() override
     {
         NanoObject<T> *p = getNext();
@@ -251,6 +303,11 @@ public:
         }
     }
 
+    /**
+     * Returns true if NanoObjectList contains specified object.
+     *
+     * @param object object to search for.
+     */
     bool has(NanoObject<T> &object)
     {
         NanoObject<T> *p = getNext();
@@ -261,6 +318,11 @@ public:
         return p != nullptr;
     }
 
+    /**
+     * Adds new NanoObject to the end of the list and marks it for refresh.
+     *
+     * @param object object to add.
+     */
     void add(NanoObject<T> &object)
     {
         if ( has( object ) )
@@ -280,6 +342,11 @@ public:
         object.refresh();
     }
 
+    /**
+     * Adds new NanoObject to the beginning of the list and marks it for refresh.
+     *
+     * @param object object to insert.
+     */
     void insert(NanoObject<T> &object)
     {
         if ( has( object ) )
@@ -292,6 +359,11 @@ public:
         object.refresh();
     }
 
+    /**
+     * Removes NanoObject from the list and marks occupied area for refresh.
+     *
+     * @param object object to remove.
+     */
     void remove(NanoObject<T> &object)
     {
         if ( m_first == nullptr )

@@ -31,9 +31,20 @@
 
 #if defined(CONFIG_AVR_SPI_AVAILABLE) && defined(CONFIG_AVR_SPI_ENABLE)
 
+/**
+ * Class implements AVR spi support via hardware module.
+ */
 class AvrSpi: public IWireInterface
 {
 public:
+    /**
+     * Creates AVR spi instance. This interface can be used from command line
+     * avrgcc toolchain.
+     *
+     * @param csPin pin to enable chip select signal, or -1 if cs pin is not required.
+     * @param dcPin pin to control data/command mode.
+     * @param frequency frequency in HZ to run SPI bus.
+     */
     AvrSpi(int8_t csPin, int8_t dcPin, uint32_t frequency);
     virtual ~AvrSpi();
 

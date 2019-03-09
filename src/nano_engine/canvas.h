@@ -281,10 +281,13 @@ public:
      */
     void setColor(uint16_t color) { m_color = color; }
 
+    /** Return pointer to canvas pixels data */
     uint8_t * getData() { return m_buf; }
 
+    /** Returns canvas width in pixels */
     lcduint_t width() { return m_w; }
 
+    /** Returns canvas height in pixels */
     lcduint_t height() { return m_h; }
 
 protected:

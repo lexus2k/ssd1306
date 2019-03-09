@@ -88,7 +88,7 @@ public:
 
     void draw() override
     {
-        getTiler()->get_canvas().setColor(RGB_COLOR8(64,255,255));
+        getTiler()->getCanvas().setColor(RGB_COLOR8(64,255,255));
         NanoFixedSprite<GraphicsEngine>::draw();
     }
 };
