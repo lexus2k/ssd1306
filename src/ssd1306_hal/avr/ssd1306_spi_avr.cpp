@@ -37,14 +37,12 @@
 #define SPI_CLOCK_MASK   0x03
 #define SPI_2XCLOCK_MASK 0x01
 
-static uint32_t s_ssd1306_spi_clock;
-
-static void ssd1306_spiConfigure_avr()
+static void ssd1306_spiConfigure_avr(uint32_t frequency)
 {
     uint8_t clockDiv;
     uint32_t clockSetting = F_CPU / 2;
     clockDiv = 0;
-    while ((clockDiv < 6) && (s_ssd1306_spi_clock < clockSetting))
+    while ((clockDiv < 6) && (frequency < clockSetting))
     {
         clockSetting /= 2;
         clockDiv++;
@@ -75,14 +73,22 @@ AvrSpi::AvrSpi(int8_t csPin, int8_t dcPin, uint32_t frequency)
     : IWireInterface()
     , m_cs( csPin )
     , m_dc( dcPin )
+    , m_frequency( frequency )
 {
-    if (csPin >= 0) pinMode(csPin, OUTPUT);
-    if (dcPin >= 0) pinMode(dcPin, OUTPUT);
-    s_ssd1306_spi_clock = frequency;
-    ssd1306_spiConfigure_avr();
 }
 
 AvrSpi::~AvrSpi()
+{
+}
+
+void AvrSpi::begin()
+{
+    if (m_cs >= 0) pinMode( m_cs, OUTPUT);
+    if (m_dc >= 0) pinMode( m_dc, OUTPUT);
+    ssd1306_spiConfigure_avr( m_frequency );
+}
+
+void AvrSpi::end()
 {
 }
 

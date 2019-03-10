@@ -409,14 +409,13 @@ void DisplaySSD1331::copyBlock(uint8_t left, uint8_t top,
 
 void DisplaySSD1331_96x64_SPI::begin()
 {
-//    m_spi.begin();
-//    m_lcd.type = LCD_TYPE_SSD1331;
+    m_spi.begin();
     DisplaySSD1331::begin();
 }
 
 void DisplaySSD1331_96x64_SPI::end()
 {
-//    m_spi.end();
+    m_spi.end();
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -556,12 +555,11 @@ void DisplaySSD1331x16::copyBlock(uint8_t left, uint8_t top,
 
 void DisplaySSD1331_96x64x16_SPI::begin()
 {
-//    m_spi.begin();
-//    m_lcd.type = LCD_TYPE_SSD1331;
+    m_spi.begin();
     DisplaySSD1331x16::begin();
 }
 
 void DisplaySSD1331_96x64x16_SPI::end()
 {
-//    m_spi.end();
+    m_spi.end();
 }

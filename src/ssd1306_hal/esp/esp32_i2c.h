@@ -33,9 +33,21 @@
 
 #include "driver/i2c.h"
 
+/**
+ * Class implements I2c interface for ESP32 controllers
+ */
 class EspI2c: public IWireInterface
 {
 public:
+    /**
+     * Creates instance of I2C interface for ESP32 controllers.
+     *
+     * @param busId bus number to use, -1 defaults to I2C_NUM_1
+     * @param sa address to use for oled device (7-bits, highest bit should be 0)
+     * @param scl pin number to use as SCL pin, or -1 if default is used
+     * @param sda pin number to use as SDA pin, or -1 if default is used
+     * @param frequency frequency in HZ to run i2c bus on, defaults to 400kHz
+     */
     EspI2c(int8_t busId = -1, uint8_t sa = 0x00,
                int8_t scl = -1, int8_t sda = -1,
                uint32_t frequency = 400000);

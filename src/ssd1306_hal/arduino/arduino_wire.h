@@ -36,6 +36,10 @@ public:
     ArduinoI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00);
     virtual ~ArduinoI2c();
 
+    void begin() override;
+
+    void end() override;
+
     /**
      * Starts communication with SSD1306 display.
      */

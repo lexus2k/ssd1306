@@ -37,6 +37,10 @@ public:
     ArduinoSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 0);
     virtual ~ArduinoSpi();
 
+    void begin() override;
+
+    void end() override;
+
     /**
      * Starts communication with SSD1306 display.
      */

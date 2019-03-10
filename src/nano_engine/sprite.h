@@ -72,6 +72,10 @@ public:
      */
     void setBitmap(const uint8_t *bitmap) { m_bitmap = bitmap; }
 
+    /**
+     * Returns pointer to sprite bitmap data.
+     * The data are located in the Flash memory.
+     */
     const uint8_t *getBitmap() { return m_bitmap; }
 
 private:

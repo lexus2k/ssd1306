@@ -47,6 +47,16 @@ class IWireInterface
 {
 public:
     /**
+     * Initializes interface
+     */
+    virtual void begin() = 0;
+
+    /**
+     * Deinitializes interface
+     */
+    virtual void end() = 0;
+
+    /**
      * Starts communication with SSD1306 display.
      */
     virtual void start() = 0;

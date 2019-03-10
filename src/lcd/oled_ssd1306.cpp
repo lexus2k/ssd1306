@@ -345,15 +345,13 @@ void DisplaySSD1306_128x64::end()
 
 void DisplaySSD1306_128x64_I2C::begin()
 {
-    // TODO:
-    // m_i2c.begin();
+    m_i2c.begin();
     DisplaySSD1306_128x64::begin();
 }
 
 void DisplaySSD1306_128x64_I2C::end()
 {
     DisplaySSD1306_128x64::end();
-    // TODO:
-    // m_i2c.end();
+    m_i2c.end();
 }
 

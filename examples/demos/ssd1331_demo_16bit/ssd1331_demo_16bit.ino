@@ -113,9 +113,9 @@ static void spriteDemo()
     engine.refresh();
     // Set function to draw our sprite
     engine.drawCallback( []()->bool {
-        engine.canvas.clear();
-        engine.canvas.setColor( RGB_COLOR16(255, 32, 32) );
-        engine.canvas.drawBitmap1( sprite.x, sprite.y, 8, 8, heartImage );
+        engine.getCanvas().clear();
+        engine.getCanvas().setColor( RGB_COLOR16(255, 32, 32) );
+        engine.getCanvas().drawBitmap1( sprite.x, sprite.y, 8, 8, heartImage );
         return true;
     } );
     sprite.x = 0;

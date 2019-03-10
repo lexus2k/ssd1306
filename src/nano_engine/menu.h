@@ -56,18 +56,26 @@ class NanoMenu: public NanoObjectList<T>
 public:
     /**
      * Creates menu object.
+     *
      * @param pos position of the sprite in global coordinates
-     * @param bitmap sprite content (in flash memory)
      */
     NanoMenu(const NanoPoint &pos )
          : NanoObjectList<T>( pos )
     {
     }
 
+    /**
+     * Creates instance of NanoMenu at 0,0 position
+     */
     NanoMenu(): NanoObjectList<T>( {0,0} )
     {
     }
 
+    /**
+     * Adds new menu item to the end of the list
+     *
+     * @param item menu item to add
+     */
     void add( NanoObject<T> &item )
     {
         NanoObjectList<T>::add( item );
@@ -80,6 +88,11 @@ public:
         }
     }
 
+    /**
+     * Inserts new menu item to the beginning of the list
+     *
+     * @param item menu item to insert
+     */
     void insert( NanoObject<T> &item )
     {
         NanoObjectList<T>::insert( item );
@@ -92,16 +105,20 @@ public:
         }
     }
 
-    void refresh() override
-    {
-        NanoObjectList<T>::refresh();
-    }
-
+    /**
+     * Returns pointer to active menu item.
+     * If nothing is selected returns nullptr.
+     */
     NanoObject<T> *getSelected()
     {
         return m_selected;
     }
 
+    /**
+     * Moves active menu item position to the next item.
+     * If active menu item is the last one, then first
+     * menu item becomes active.
+     */
     void down()
     {
         m_selected->defocus();
@@ -113,6 +130,11 @@ public:
         m_selected->focus();
     }
 
+    /**
+     * Moves active menu item position to the previous item.
+     * If active menu item is the first one, then last
+     * menu item becomes active.
+     */
     void up()
     {
         m_selected->defocus();
@@ -125,18 +147,29 @@ public:
     }
 
 protected:
+    /**
+     * Recalculates position of all menu items by aligning
+     * each item in accordance with menu type.
+     */
     virtual void updateMenuItemsPosition() = 0;
 
 private:
     NanoObject<T> *m_selected = nullptr;
 };
 
+/**
+ * Class implements menu, organized as the list.
+ * Each item may have different width
+ */
 template<class T>
 class NanoListMenu: public NanoMenu<T>
 {
 public:
     using NanoMenu<T>::NanoMenu;
 
+    /**
+     * Draw all menu items in NanoEngine buffer
+     */
     void draw() override
     {
         this->getTiler()->getCanvas().setColor( 0xFFFF );
@@ -161,16 +194,30 @@ private:
     }
 };
 
+/**
+ * Class implements menu, organized as the list.
+ * Each item has the same some fixed width common
+ * for the whole menu.
+ */
 template<class T>
 class NanoFixedWidthMenu: public NanoMenu<T>
 {
 public:
+    /**
+     * Creates instance of NanoFixedWidthMenu.
+     *
+     * @param pos top left position of menu
+     * @param size width and height of the menu
+     */
     NanoFixedWidthMenu(const NanoPoint &pos, const NanoPoint &size)
         : NanoMenu<T>( pos )
     {
         this->setSize( size );
     }
 
+    /**
+     * Draw all menu items in NanoEngine buffer
+     */
     void draw() override
     {
         this->getTiler()->getCanvas().setColor( 0xFFFF );

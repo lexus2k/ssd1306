@@ -39,12 +39,20 @@ ArduinoSpi::ArduinoSpi(int8_t csPin, int8_t dcPin, uint32_t frequency)
     , m_dc( dcPin )
     , m_frequency( frequency )
 {
-    if (csPin >=0) pinMode(csPin, OUTPUT);
-    if (dcPin >= 0) pinMode(dcPin, OUTPUT);
-    SPI.begin();
 }
 
 ArduinoSpi::~ArduinoSpi()
+{
+}
+
+void ArduinoSpi::begin()
+{
+    if ( m_cs >=0) pinMode( m_cs, OUTPUT );
+    if ( m_dc >= 0) pinMode( m_dc, OUTPUT );
+    SPI.begin();
+}
+
+void ArduinoSpi::end()
 {
     SPI.end();
 }

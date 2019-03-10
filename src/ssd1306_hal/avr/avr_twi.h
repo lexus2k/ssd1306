@@ -47,6 +47,10 @@ public:
 
     virtual ~TwiI2c();
 
+    void begin() override;
+
+    void end() override;
+
     /**
      * Starts communication with SSD1306 display.
      */

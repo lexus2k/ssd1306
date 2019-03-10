@@ -53,6 +53,20 @@ LinuxSpi::LinuxSpi(int busId, int8_t devId, int8_t dcPin, uint32_t frequency)
     , m_frequency( frequency )
     , m_spi_cached_count( 0 )
 {
+}
+
+LinuxSpi::~LinuxSpi()
+{
+    ssd1306_unregisterPinEvent( m_dc );
+    if (m_spi_fd >= 0)
+    {
+        close(m_spi_fd);
+        m_spi_fd = -1;
+    }
+}
+
+void LinuxSpi::begin()
+{
     char filename[20];
     if (m_busId < 0)
     {
@@ -89,7 +103,7 @@ LinuxSpi::LinuxSpi(int busId, int8_t devId, int8_t dcPin, uint32_t frequency)
     ssd1306_registerPinEvent(m_dc, OnDcChange, this);
 }
 
-LinuxSpi::~LinuxSpi()
+void LinuxSpi::end()
 {
     ssd1306_unregisterPinEvent( m_dc );
     if (m_spi_fd >= 0)
@@ -151,45 +165,6 @@ void LinuxSpi::send(uint8_t data)
 }
 
 void LinuxSpi::sendBuffer(const uint8_t *buffer, uint16_t size)
-{
-    while (size--)
-    {
-        send(*buffer);
-        buffer++;
-    }
-}
-
-#else /* SDL_EMULATION */
-
-#include "sdl_core.h"
-
-SdlSpi::SdlSpi(int8_t dcPin)
-{
-    sdl_core_init();
-    sdl_set_dc_pin(dcPin);
-}
-
-SdlSpi::~SdlSpi()
-{
-    sdl_core_close();
-}
-
-void SdlSpi::start()
-{
-    sdl_send_init();
-}
-
-void SdlSpi::stop()
-{
-    sdl_send_stop();
-}
-
-void SdlSpi::send(uint8_t data)
-{
-    sdl_send_byte(data);
-}
-
-void SdlSpi::sendBuffer(const uint8_t *buffer, uint16_t size)
 {
     while (size--)
     {

@@ -253,8 +253,8 @@ public:
      * Draws 16-bit bitmap, located in RAM, on the display
      * Each pixel occupies 2 bytes (5-6-5 format): refer to RGB_COLOR16 to understand RGB scheme, being used.
      *
-     * @param x horizontal position in pixels
-     * @param y vertical position in pixels
+     * @param xpos horizontal position in pixels
+     * @param ypos vertical position in pixels
      * @param w width of bitmap in pixels
      * @param h height of bitmap in pixels
      * @param buffer pointer to data, located in RAM.
@@ -293,6 +293,11 @@ public:
      */
     void drawCanvas(lcdint_t x, lcdint_t y, NanoCanvasOps<16> &canvas);
 
+    /**
+     * Fill screen content with specified color
+     *
+     * @param color color to fill display with
+     */
     void fill(uint16_t color);
 
     /**

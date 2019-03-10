@@ -47,6 +47,19 @@ LinuxI2c::LinuxI2c(int8_t busId, uint8_t sa)
     : m_busId( busId )
     , m_sa( sa )
 {
+}
+
+LinuxI2c::~LinuxI2c()
+{
+    if (m_fd >= 0)
+    {
+        close(m_fd);
+        m_fd = -1;
+    }
+}
+
+void LinuxI2c::begin()
+{
     char filename[20];
     if (m_busId < 0)
     {
@@ -66,7 +79,7 @@ LinuxI2c::LinuxI2c(int8_t busId, uint8_t sa)
     }
 }
 
-LinuxI2c::~LinuxI2c()
+void LinuxI2c::end()
 {
     if (m_fd >= 0)
     {

@@ -35,9 +35,21 @@
 class LinuxSpi: public IWireInterface
 {
 public:
+    /**
+     * Creates instance of LinuxSpi class, implementing SPI bus for user-space linux apps
+     *
+     * @param busId spi bus to use as first number for spidev
+     * @param devId spi device number to use as second number for spidev
+     * @param dcPin pin to use as data/command mode pin
+     * @param frequency frequency to run SPI bus on
+     */
     LinuxSpi(int busId, int8_t devId, int8_t dcPin, uint32_t frequency);
 
     virtual ~LinuxSpi();
+
+    void begin() override;
+
+    void end() override;
 
     /**
      * Starts communication with SSD1306 display.

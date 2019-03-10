@@ -48,12 +48,23 @@
 #include "sdl_core.h"
 
 SdlSpi::SdlSpi(int8_t dcPin)
+   : IWireInterface()
+   , m_dc( dcPin )
 {
-    sdl_core_init();
-    sdl_set_dc_pin(dcPin);
 }
 
 SdlSpi::~SdlSpi()
+{
+    sdl_core_close();
+}
+
+void SdlSpi::begin()
+{
+    sdl_core_init();
+    sdl_set_dc_pin( m_dc );
+}
+
+void SdlSpi::end()
 {
     sdl_core_close();
 }

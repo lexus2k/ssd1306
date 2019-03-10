@@ -35,8 +35,19 @@
 class SdlI2c: public IWireInterface
 {
 public:
+    /**
+     * Creates i2c interface instance for SDL Emulation mode
+     *
+     * @param scl pin number to use as clock
+     * @param sda pin number to use as data line
+     * @param sa i2c address of the display (7 bits)
+     */
     SdlI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00);
     virtual ~SdlI2c();
+
+    void begin() override;
+
+    void end() override;
 
     /**
      * Starts communication with SSD1306 display.

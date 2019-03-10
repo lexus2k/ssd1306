@@ -50,10 +50,19 @@
 
 SdlI2c::SdlI2c(int8_t scl, int8_t sda, uint8_t sa)
 {
-    sdl_core_init();
 }
 
 SdlI2c::~SdlI2c()
+{
+    sdl_core_close();
+}
+
+void SdlI2c::begin()
+{
+    sdl_core_init();
+}
+
+void SdlI2c::end()
 {
     sdl_core_close();
 }

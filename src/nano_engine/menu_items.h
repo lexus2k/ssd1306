@@ -37,6 +37,8 @@
  * @{
  */
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
 template<class T>
 class NanoTestMenuItem: public NanoMenuItem<T>
 {
@@ -63,19 +65,30 @@ public:
     }
 };
 
+#endif
+
 /**
- * Template class for fixed font menu item
+ * Template class for font menu item with user-defined font
  */
 template<class T>
 class NanoTextMenuItem: public NanoMenuItem<T>
 {
 public:
+    /**
+     * Creates instance of test menu item
+     *
+     * @param name text of the item to display
+     */
     NanoTextMenuItem(const char *name)
        : NanoMenuItem<T>( {0, 0} )
        , m_name( name )
     {
     }
 
+    /**
+     * Updates menu item state. Automatically resizes menu item if width is
+     * not defined yet
+     */
     void update() override
     {
         if ( this->m_rect.width() <= 1 )
@@ -86,6 +99,9 @@ public:
         }
     }
 
+    /**
+     * Draws text menu item in the NanoEngine buffer
+     */
     void draw() override
     {
         if ( this->isFocused() )
@@ -105,7 +121,9 @@ public:
     }
 
 protected:
+    /** Menu item text */
     const char *m_name;
+
 };
 
 

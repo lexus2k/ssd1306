@@ -46,7 +46,12 @@ public:
      * @param frequency frequency in HZ to run SPI bus.
      */
     AvrSpi(int8_t csPin, int8_t dcPin, uint32_t frequency);
+
     virtual ~AvrSpi();
+
+    void begin() override;
+
+    void end() override;
 
     /**
      * Starts communication with SSD1306 display.
@@ -78,6 +83,7 @@ public:
 private:
     int8_t m_cs;
     int8_t m_dc;
+    uint32_t m_frequency;
 };
 
 #endif

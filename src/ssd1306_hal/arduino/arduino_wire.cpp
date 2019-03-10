@@ -41,10 +41,18 @@ ArduinoI2c::ArduinoI2c(int8_t scl, int8_t sda, uint8_t sa)
     , m_sda( sda )
     , m_sa( sa )
 {
+}
+
+ArduinoI2c::~ArduinoI2c()
+{
+}
+
+void ArduinoI2c::begin()
+{
 #if defined(ESP8266) || defined(ESP32) || defined(ESP31B)
-    if ((scl >= 0) && (sda >=0))
+    if ((m_scl >= 0) && (m_sda >=0))
     {
-        Wire.begin(sda, scl);
+        Wire.begin(m_sda, m_scl);
     }
     else
 #endif
@@ -56,7 +64,7 @@ ArduinoI2c::ArduinoI2c(int8_t scl, int8_t sda, uint8_t sa)
     #endif
 }
 
-ArduinoI2c::~ArduinoI2c()
+void ArduinoI2c::end()
 {
 }
 

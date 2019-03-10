@@ -35,8 +35,18 @@
 class SdlSpi: public IWireInterface
 {
 public:
+    /**
+     * Creates spi bus instance for SPI in SDL Emulation mode.
+     *
+     * @param dcPin pin to use as data/command control pin
+     */
     SdlSpi(int8_t dcPin = -1);
+
     virtual ~SdlSpi();
+
+    void begin() override;
+
+    void end() override;
 
     /**
      * Starts communication with SSD1306 display.
@@ -65,9 +75,7 @@ public:
      */
     void sendBuffer(const uint8_t *buffer, uint16_t size) override;
 private:
-    int8_t m_cs;
     int8_t m_dc;
-    uint32_t m_frequency;
 };
 
 #endif
