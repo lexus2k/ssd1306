@@ -427,6 +427,8 @@ void NanoCanvasOps<1>::drawXBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint
     if (x + (lcdint_t)w <= 0) return;
     if (x >= (lcdint_t)m_w)  return;
 
+    delay(100);
+
     uint8_t start_bit = 0;
     lcduint_t pitch_delta = 0;
     if (y < 0)
@@ -450,7 +452,7 @@ void NanoCanvasOps<1>::drawXBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint
     {
         w = (lcduint_t)(m_w - (lcduint_t)x);
     }
-    pitch_delta = ((origin_width - w - start_bit ) >> 3);
+    pitch_delta = ((origin_width + 7 - start_bit) >> 3) - ((w + 7) >> 3);
 
     for(lcduint_t j = 0; j < h; j++)
     {
@@ -746,7 +748,7 @@ void NanoCanvasOps<8>::drawXBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint
     {
         w = (lcduint_t)(m_w - (lcduint_t)x);
     }
-    pitch_delta = ((origin_width - w - start_bit ) >> 3);
+    pitch_delta = ((origin_width + 7 - start_bit) >> 3) - ((w + 7) >> 3);
 
     for(lcduint_t j = 0; j < h; j++)
     {
@@ -1071,7 +1073,7 @@ void NanoCanvasOps<16>::drawXBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduin
     {
         w = (lcduint_t)(m_w - (lcduint_t)x);
     }
-    pitch_delta = ((origin_width - w - start_bit ) >> 3);
+    pitch_delta = ((origin_width + 7 - start_bit) >> 3) - ((w + 7) >> 3);
 
     for(lcduint_t j = 0; j < h; j++)
     {
