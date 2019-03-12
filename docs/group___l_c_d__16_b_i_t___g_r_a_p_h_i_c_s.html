@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.13</span>
+   &#160;<span id="projectnumber">1.7.16</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -77,6 +77,8 @@ Functions</h2></td></tr>
 <tr class="separator:gaf299e756244dfa37bfc98ff370716426"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9f75e2448d6992d0ae239d2bd95f4798"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__16_b_i_t___g_r_a_p_h_i_c_s.html#ga9f75e2448d6992d0ae239d2bd95f4798">ssd1306_drawBufferFast16</a> (<a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> x, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> y, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> w, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> h, const uint8_t *data)</td></tr>
 <tr class="separator:ga9f75e2448d6992d0ae239d2bd95f4798"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga35367bb987e72ebd99f47c520c445c5c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__16_b_i_t___g_r_a_p_h_i_c_s.html#ga35367bb987e72ebd99f47c520c445c5c">ssd1306_drawBufferEx16</a> (<a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> x, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> y, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> w, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> h, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> pitch, const uint8_t *data)</td></tr>
+<tr class="separator:ga35367bb987e72ebd99f47c520c445c5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeba9135735bd2b775b31df9fbd7c9410"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__16_b_i_t___g_r_a_p_h_i_c_s.html#gaeba9135735bd2b775b31df9fbd7c9410">ssd1306_drawMonoBuffer16</a> (<a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> xpos, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> ypos, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> w, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> h, const uint8_t *bitmap)</td></tr>
 <tr class="separator:gaeba9135735bd2b775b31df9fbd7c9410"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga44117a2ec29b8c9e0fcf9297a0fbbfba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__16_b_i_t___g_r_a_p_h_i_c_s.html#ga44117a2ec29b8c9e0fcf9297a0fbbfba">ssd1306_fillScreen16</a> (uint16_t fill_Data)</td></tr>
@@ -91,8 +93,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga23e9d8cf141b284f2f6c8623c01ff3c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga670ff0f094501514a5b02e378705f663"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__16_b_i_t___g_r_a_p_h_i_c_s.html#ga670ff0f094501514a5b02e378705f663">ssd1306_drawHLine16</a> (<a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> x1, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> y1, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> x2)</td></tr>
 <tr class="separator:ga670ff0f094501514a5b02e378705f663"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa289963227f999129a416152b38b5031"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__16_b_i_t___g_r_a_p_h_i_c_s.html#gaa289963227f999129a416152b38b5031">ssd1306_drawLine8</a> (<a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> x1, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> y1, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> x2, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> y2)</td></tr>
-<tr class="separator:gaa289963227f999129a416152b38b5031"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga807a24cee37948c0da0491c9d99113ab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__16_b_i_t___g_r_a_p_h_i_c_s.html#ga807a24cee37948c0da0491c9d99113ab">ssd1306_drawLine16</a> (<a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> x1, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> y1, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> x2, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> y2)</td></tr>
+<tr class="separator:ga807a24cee37948c0da0491c9d99113ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7a72e6397a2484509f22452c97865e7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__16_b_i_t___g_r_a_p_h_i_c_s.html#ga7a72e6397a2484509f22452c97865e7a">ssd1306_drawRect16</a> (<a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> x1, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> y1, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> x2, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> y2)</td></tr>
 <tr class="separator:ga7a72e6397a2484509f22452c97865e7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga80cb767733a73eb9e82779dce19c0452"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__16_b_i_t___g_r_a_p_h_i_c_s.html#ga80cb767733a73eb9e82779dce19c0452">ssd1306_fillRect16</a> (<a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> x1, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> y1, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> x2, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> y2)</td></tr>
@@ -101,11 +103,77 @@ Functions</h2></td></tr>
 <tr class="separator:ga3c0b41ade83ba0e193986e220b8bc0cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa14d25ad95e5acf0e4d572792e5a7cc2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__16_b_i_t___g_r_a_p_h_i_c_s.html#gaa14d25ad95e5acf0e4d572792e5a7cc2">ssd1306_drawBitmap16</a> (<a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> xpos, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> ypos, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> w, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> h, const uint8_t *bitmap)</td></tr>
 <tr class="separator:gaa14d25ad95e5acf0e4d572792e5a7cc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa95722d927386fd2c48515ab45e5b83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__16_b_i_t___g_r_a_p_h_i_c_s.html#gafa95722d927386fd2c48515ab45e5b83">ssd1306_clearBlock16</a> (uint8_t x, uint8_t y, uint8_t w, uint8_t h)</td></tr>
+<tr class="separator:gafa95722d927386fd2c48515ab45e5b83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab8ddf0b8f27f4992ed3c13fd7113805b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__16_b_i_t___g_r_a_p_h_i_c_s.html#gab8ddf0b8f27f4992ed3c13fd7113805b">ssd1306_setCursor16</a> (<a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> x, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> y)</td></tr>
+<tr class="separator:gab8ddf0b8f27f4992ed3c13fd7113805b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga06b6795743524b685c8b4bb13ae9a1b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__16_b_i_t___g_r_a_p_h_i_c_s.html#ga06b6795743524b685c8b4bb13ae9a1b2">ssd1306_printChar16</a> (uint8_t c)</td></tr>
+<tr class="separator:ga06b6795743524b685c8b4bb13ae9a1b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3d43b9d63a719def2718545aad69cd02"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__16_b_i_t___g_r_a_p_h_i_c_s.html#ga3d43b9d63a719def2718545aad69cd02">ssd1306_write16</a> (uint8_t ch)</td></tr>
+<tr class="memdesc:ga3d43b9d63a719def2718545aad69cd02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints single character to display at current cursor position.  <a href="#ga3d43b9d63a719def2718545aad69cd02">More...</a><br /></td></tr>
+<tr class="separator:ga3d43b9d63a719def2718545aad69cd02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga78b2f9bf3e0d2b729006efbd4b0849bb"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__16_b_i_t___g_r_a_p_h_i_c_s.html#ga78b2f9bf3e0d2b729006efbd4b0849bb">ssd1306_print16</a> (const char ch[])</td></tr>
+<tr class="memdesc:ga78b2f9bf3e0d2b729006efbd4b0849bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints null-terminated string to display at current cursor position.  <a href="#ga78b2f9bf3e0d2b729006efbd4b0849bb">More...</a><br /></td></tr>
+<tr class="separator:ga78b2f9bf3e0d2b729006efbd4b0849bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga57d5a4aaac79a7da3233eb71f207a980"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__16_b_i_t___g_r_a_p_h_i_c_s.html#ga57d5a4aaac79a7da3233eb71f207a980">ssd1306_printFixed16</a> (<a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> x, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> y, const char *ch, <a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a> style)</td></tr>
+<tr class="separator:ga57d5a4aaac79a7da3233eb71f207a980"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>LCD direct draw functions only for color display. </p>
 <p>LCD direct draw functions are applicable for color display types. These functions will NOT work in ssd1306 compatible mode. Use <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga34699d9f6192c375a6b40d4414502d41" title="Sets library display mode for direct draw functions. ">ssd1306_setMode()</a> function to change display mode to NORMAL. You can combine combine <a class="el" href="class_nano_engine.html">NanoEngine</a> capabilities with these functions. Direct draw functions draw directly in GDRAM and do not use any double-buffering. </p>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="gafa95722d927386fd2c48515ab45e5b83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafa95722d927386fd2c48515ab45e5b83">&#9670;&nbsp;</a></span>ssd1306_clearBlock16()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1306_clearBlock16 </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>w</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>h</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clears block, filling it with black pixels, directly in OLED display GDRAM.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>start horizontal position in pixels </td></tr>
+    <tr><td class="paramname">y</td><td>start vertical position in pixels </td></tr>
+    <tr><td class="paramname">w</td><td>block width in pixels </td></tr>
+    <tr><td class="paramname">h</td><td>block height in pixels </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00270">270</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
+
+</div>
+</div>
 <a id="ga761da6b135614884ebe5eb319caffe17"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga761da6b135614884ebe5eb319caffe17">&#9670;&nbsp;</a></span>ssd1306_clearScreen16()</h2>
 
@@ -123,7 +191,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Fills screen with zero-byte </p>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00102">102</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00116">116</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
 
 </div>
 </div>
@@ -182,7 +250,73 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00244">244</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00258">258</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
+
+</div>
+</div>
+<a id="ga35367bb987e72ebd99f47c520c445c5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga35367bb987e72ebd99f47c520c445c5c">&#9670;&nbsp;</a></span>ssd1306_drawBufferEx16()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1306_drawBufferEx16 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a>&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a>&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a>&#160;</td>
+          <td class="paramname"><em>w</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a>&#160;</td>
+          <td class="paramname"><em>h</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a>&#160;</td>
+          <td class="paramname"><em>pitch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Draws 16-bit bitmap, located in SRAM, on the display, taking into account pitch parameter. Each byte represents separate pixel: refer to RGB_COLOR16 to understand RGB scheme, being used. pitch parameter specifies, length of single line in bytes.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>- horizontal position in pixels </td></tr>
+    <tr><td class="paramname">y</td><td>- vertical position in pixels </td></tr>
+    <tr><td class="paramname">w</td><td>- width of bitmap in pixels </td></tr>
+    <tr><td class="paramname">h</td><td>- height of bitmap in pixels </td></tr>
+    <tr><td class="paramname">pitch</td><td>length of bitmap buffer line in bytes </td></tr>
+    <tr><td class="paramname">data</td><td>- pointer to data, located in SRAM. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00066">66</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
 
 </div>
 </div>
@@ -241,7 +375,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00044">44</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00061">61</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
 
 </div>
 </div>
@@ -287,18 +421,18 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>set color with <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gae2594212c34681fcc7f561032d8c7d7d" title="Sets default color, generated by RGB_COLOR8 or RGB_COLOR16 macros. ">ssd1306_setColor()</a> function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00132">132</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00146">146</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
 
 </div>
 </div>
-<a id="gaa289963227f999129a416152b38b5031"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa289963227f999129a416152b38b5031">&#9670;&nbsp;</a></span>ssd1306_drawLine8()</h2>
+<a id="ga807a24cee37948c0da0491c9d99113ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga807a24cee37948c0da0491c9d99113ab">&#9670;&nbsp;</a></span>ssd1306_drawLine16()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ssd1306_drawLine8 </td>
+          <td class="memname">void ssd1306_drawLine16 </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a>&#160;</td>
           <td class="paramname"><em>x1</em>, </td>
@@ -340,7 +474,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>set color with <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gae2594212c34681fcc7f561032d8c7d7d" title="Sets default color, generated by RGB_COLOR8 or RGB_COLOR16 macros. ">ssd1306_setColor()</a> function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__8bit_8c_source.html#l00154">154</a> of file <a class="el" href="ssd1306__8bit_8c_source.html">ssd1306_8bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00157">157</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
 
 </div>
 </div>
@@ -400,7 +534,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>set color with <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gae2594212c34681fcc7f561032d8c7d7d" title="Sets default color, generated by RGB_COLOR8 or RGB_COLOR16 macros. ">ssd1306_setColor()</a> function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00213">213</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00227">227</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
 
 </div>
 </div>
@@ -459,7 +593,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00060">60</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00074">74</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
 
 </div>
 </div>
@@ -512,7 +646,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>set color with <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gae2594212c34681fcc7f561032d8c7d7d" title="Sets default color, generated by RGB_COLOR8 or RGB_COLOR16 macros. ">ssd1306_setColor()</a> function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00186">186</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00200">200</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
 
 </div>
 </div>
@@ -558,7 +692,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>set color with <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gae2594212c34681fcc7f561032d8c7d7d" title="Sets default color, generated by RGB_COLOR8 or RGB_COLOR16 macros. ">ssd1306_setColor()</a> function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00121">121</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00135">135</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
 
 </div>
 </div>
@@ -611,7 +745,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>set color with <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gae2594212c34681fcc7f561032d8c7d7d" title="Sets default color, generated by RGB_COLOR8 or RGB_COLOR16 macros. ">ssd1306_setColor()</a> function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00194">194</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00208">208</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
 
 </div>
 </div>
@@ -638,7 +772,119 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00091">91</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00105">105</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
+
+</div>
+</div>
+<a id="ga78b2f9bf3e0d2b729006efbd4b0849bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga78b2f9bf3e0d2b729006efbd4b0849bb">&#9670;&nbsp;</a></span>ssd1306_print16()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t ssd1306_print16 </td>
+          <td>(</td>
+          <td class="paramtype">const char&#160;</td>
+          <td class="paramname"><em>ch</em>[]</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prints null-terminated string to display at current cursor position. </p>
+<p>Prints null-terminated string to display at current cursor position Cursor position can be set by <a class="el" href="group___l_c_d__16_b_i_t___g_r_a_p_h_i_c_s.html#gab8ddf0b8f27f4992ed3c13fd7113805b">ssd1306_setCursor16()</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ch</td><td>- string to print to the display. 'LF' and 'CR' are skipped </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>returns number of printed characters. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00334">334</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
+
+</div>
+</div>
+<a id="ga06b6795743524b685c8b4bb13ae9a1b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga06b6795743524b685c8b4bb13ae9a1b2">&#9670;&nbsp;</a></span>ssd1306_printChar16()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1306_printChar16 </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Draws single character to canvas. Cursor position is defined by <a class="el" href="group___l_c_d__16_b_i_t___g_r_a_p_h_i_c_s.html#gab8ddf0b8f27f4992ed3c13fd7113805b">ssd1306_setCursor16()</a>. Do not changes cursor position</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>- character code to print</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>set color with <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gae2594212c34681fcc7f561032d8c7d7d" title="Sets default color, generated by RGB_COLOR8 or RGB_COLOR16 macros. ">ssd1306_setColor()</a> function. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00287">287</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
+
+</div>
+</div>
+<a id="ga57d5a4aaac79a7da3233eb71f207a980"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga57d5a4aaac79a7da3233eb71f207a980">&#9670;&nbsp;</a></span>ssd1306_printFixed16()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ssd1306_printFixed16 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a>&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a>&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="nano__gfx__types_8h.html#a4ceb6be9200d0bb016cbbb87dcf5ed88">EFontStyle</a>&#160;</td>
+          <td class="paramname"><em>style</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Prints text to screen using fixed font. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>horizontal position in pixels </td></tr>
+    <tr><td class="paramname">y</td><td>vertical position in pixels </td></tr>
+    <tr><td class="paramname">ch</td><td>NULL-terminated string to print </td></tr>
+    <tr><td class="paramname">style</td><td>font style (EFontStyle), normal by default (not implemented). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>number of chars in string</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___g_e_n_e_r_i_c___a_p_i.html#gac38e07839ff23bd17a6f0c79f5f92d2d">ssd1306_setFixedFont</a> </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>set color with <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gae2594212c34681fcc7f561032d8c7d7d" title="Sets default color, generated by RGB_COLOR8 or RGB_COLOR16 macros. ">ssd1306_setColor()</a> function. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00345">345</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
 
 </div>
 </div>
@@ -683,7 +929,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00114">114</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00128">128</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
 
 </div>
 </div>
@@ -722,7 +968,45 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>set color with <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gae2594212c34681fcc7f561032d8c7d7d" title="Sets default color, generated by RGB_COLOR8 or RGB_COLOR16 macros. ">ssd1306_setColor()</a> function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00107">107</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00121">121</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
+
+</div>
+</div>
+<a id="gab8ddf0b8f27f4992ed3c13fd7113805b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab8ddf0b8f27f4992ed3c13fd7113805b">&#9670;&nbsp;</a></span>ssd1306_setCursor16()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1306_setCursor16 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a>&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a>&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set cursor position for text functions</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>horizontal position in pixels. </td></tr>
+    <tr><td class="paramname">y</td><td>vertical position in pixels. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00281">281</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
 
 </div>
 </div>
@@ -768,7 +1052,37 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00039">39</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00040">40</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
+
+</div>
+</div>
+<a id="ga3d43b9d63a719def2718545aad69cd02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3d43b9d63a719def2718545aad69cd02">&#9670;&nbsp;</a></span>ssd1306_write16()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t ssd1306_write16 </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>ch</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prints single character to display at current cursor position. </p>
+<p>Prints single character to display at current cursor position. Cursor position can be set by <a class="el" href="group___l_c_d__16_b_i_t___g_r_a_p_h_i_c_s.html#gab8ddf0b8f27f4992ed3c13fd7113805b">ssd1306_setCursor16()</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ch</td><td>- character to print to the display. 'LF' and 'CR' are skipped </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>returns number of printed characters. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="ssd1306__16bit_8c_source.html#l00300">300</a> of file <a class="el" href="ssd1306__16bit_8c_source.html">ssd1306_16bit.c</a>.</p>
 
 </div>
 </div>

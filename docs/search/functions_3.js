@@ -16,5 +16,6 @@ var searchData=
   ['drawsprite',['drawSprite',['../class_nano_canvas.html#a6a6a7006f415cbf2db983b1c41acde17',1,'NanoCanvas::drawSprite(uint8_t x, uint8_t y, const uint8_t sprite[])'],['../class_nano_canvas.html#a54ce488014dd316543d3ae9acba03e12',1,'NanoCanvas::drawSprite(SPRITE *sprite)']]],
   ['drawspritepgm',['drawSpritePgm',['../class_nano_canvas.html#a599f8d8cdaba51b639f8ed8531ecba91',1,'NanoCanvas']]],
   ['drawsprites',['drawSprites',['../class_sprite_pool.html#af3736a90cef87f0a61b260e6b196d289',1,'SpritePool']]],
-  ['drawvline',['drawVLine',['../class_nano_canvas_ops.html#a58b32d28a2693b98dbbd47c5d21b1c16',1,'NanoCanvasOps::drawVLine()'],['../class_nano_canvas.html#a18f6ca61bb4830ef65a2c0aa67bcedcc',1,'NanoCanvas::drawVLine()']]]
+  ['drawvline',['drawVLine',['../class_nano_canvas_ops.html#a58b32d28a2693b98dbbd47c5d21b1c16',1,'NanoCanvasOps::drawVLine()'],['../class_nano_canvas.html#a18f6ca61bb4830ef65a2c0aa67bcedcc',1,'NanoCanvas::drawVLine()']]],
+  ['drawxbitmap1',['drawXBitmap1',['../class_nano_canvas_ops.html#ad185211b36b554fb3308a4154c7489ca',1,'NanoCanvasOps']]]
 ];
