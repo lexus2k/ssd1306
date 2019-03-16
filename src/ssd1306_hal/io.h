@@ -94,18 +94,36 @@ typedef unsigned int lcduint_t;
 
 #if defined(CONFIG_ARDUINO_I2C_AVAILABLE) && defined(CONFIG_ARDUINO_I2C_ENABLE)
 
+/**
+ * PlatformI2c implementation for Arduino platforms
+ */
 class PlatformI2c: public ArduinoI2c
 {
 public:
+    /**
+     * Creates instance of i2c implementation for Arduino platform.
+     * @param scl pin to use as i2c clock
+     * @param sda pin to use as i2c data pin
+     * @param sa i2c address of chip being controlled
+     */
      PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00):
          ArduinoI2c(scl, sda, sa) {}
 };
 
 #elif defined(CONFIG_TWI_I2C_AVAILABLE) && defined(CONFIG_TWI_I2C_ENABLE)
 
+/**
+ * PlatformI2c implementation for AVR platforms
+ */
 class PlatformI2c: public TwiI2c
 {
 public:
+    /**
+     * Creates instance of i2c implementation for AVR platform.
+     * @param scl pin to use as i2c clock
+     * @param sda pin to use as i2c data pin
+     * @param sa i2c address of chip being controlled
+     */
     PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00):
         TwiI2c(sa) {}
 };
@@ -113,16 +131,34 @@ public:
 #elif defined(CONFIG_LINUX_I2C_AVAILABLE) && defined(CONFIG_LINUX_I2C_ENABLE)
 
 #if defined(SDL_EMULATION)
+/**
+ * PlatformI2c implementation for SDL Emulator
+ */
 class PlatformI2c: public SdlI2c
 {
 public:
+    /**
+     * Creates instance of i2c implementation for SDL Emulator.
+     * @param scl pin to use as i2c clock
+     * @param sda pin to use as i2c data pin
+     * @param sa i2c address of chip being controlled
+     */
     PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00):
         SdlI2c(scl, sda, sa) {}
 };
 #else
+/**
+ * PlatformI2c implementation for Linux platforms
+ */
 class PlatformI2c: public LinuxI2c
 {
 public:
+    /**
+     * Creates instance of i2c implementation for Linux platform.
+     * @param scl pin to use as i2c clock
+     * @param sda pin to use as i2c data pin
+     * @param sa i2c address of chip being controlled
+     */
     PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00):
          LinuxI2c( scl, sa ) {}
 };
@@ -130,9 +166,18 @@ public:
 
 #elif defined(CONFIG_ESP32_I2C_AVAILABLE) && defined(CONFIG_ESP32_I2C_ENABLE)
 
+/**
+ * PlatformI2c implementation for ESP32 platform
+ */
 class PlatformI2c: public EspI2c
 {
 public:
+    /**
+     * Creates instance of i2c implementation for esp32 platform.
+     * @param scl pin to use as i2c clock
+     * @param sda pin to use as i2c data pin
+     * @param sa i2c address of chip being controlled
+     */
     PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00):
         EspI2c(-1, sa, scl, sda, 400000) {}
 };

@@ -37,20 +37,31 @@
 #include "lcd/lcd_common.h"
 #include "intf/i2c/ssd1306_i2c.h"
 
+/**
+ * Generic interface to ssd1306-based controllers
+ */
 class DisplaySSD1306: public NanoDisplayOps<1>
 {
 public:
+    /**
+     * Created object instance to control ssd1306-based displays
+     *
+     * @param intf reference to communication interface to use
+     * @param isSPI true if oled is connected via SPI bus, false if i2c bus to use
+     */
     DisplaySSD1306(IWireInterface &intf, bool isSPI = false)
         : NanoDisplayOps<1>(intf)
         , m_isSPI( isSPI ) {}
 
     /**
-     * Switches display to normal mode.
+     * Switches display to normal mode. This feature is specific
+     * for ssd1306 based controllers.
      */
     void normalMode();
 
     /**
-     * Switches display to normal mode.
+     * Switches display to normal mode. This feature is specific
+     * for ssd1306 based controllers.
      */
     void invertMode();
 
@@ -58,22 +69,33 @@ public:
 
     void nextPage() override;
 
-    void commandStart();
-
 protected:
-    bool m_isSPI;
+    bool m_isSPI; ///< true if SPI bus is used
 
+    /**
+     * Enables either data or command mode on SPI bus
+     * @param mode 1 to enable data mode, or 0 to enable command mode
+     */
     void spiDataMode(uint8_t mode);
+
+    /**
+     * Starts communication with LCD display in command mode.
+     * To stop communication use m_intf.end().
+     */
+    void commandStart();
 };
 
+/**
+ * Class implements interface to 128x64 ssd1306 monochrome display.
+ */
 class DisplaySSD1306_128x64: public DisplaySSD1306
 {
 public:
     using DisplaySSD1306::DisplaySSD1306;
 
-    void begin();
+    void begin() override;
 
-    void end();
+    void end() override;
 };
 
 class DisplaySSD1306_128x64_I2C: public DisplaySSD1306_128x64

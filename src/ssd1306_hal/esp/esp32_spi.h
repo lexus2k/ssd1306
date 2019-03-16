@@ -36,6 +36,13 @@
 class EspSpi: public IWireInterface
 {
 public:
+    /**
+     * Creates instance of spi implementation for ESP platform
+     * @param busId number of SPI bus to use: HSPI_HOST, VSPI_HOST
+     * @param csPin pin number to use as chip select, can be -1
+     * @param dcPin pin to use as data command control pin
+     * @param frequency frequency in HZ to run spi bus on
+     */
     EspSpi( int8_t busId = -1, int8_t csPin = -1, int8_t dcPin = -1,
             uint32_t frequency = 8000000 );
     virtual ~EspSpi();

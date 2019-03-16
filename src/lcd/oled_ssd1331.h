@@ -39,11 +39,14 @@
 class DisplaySSD1331: public NanoDisplayOps<8>
 {
 public:
+    /**
+     * Creates instance of SSD1331 controller class
+     *
+     * @param intf interface to use
+     * @param rstPin pin to use as HW reset pin for LCD display
+     * @param dcPin data/command control pin
+     */
     DisplaySSD1331(IWireInterface &intf, int8_t rstPin, int8_t dcPin);
-
-    void negativeMode();
-
-    void positiveMode();
 
     void setBlock(lcduint_t x, lcduint_t y, lcduint_t w) override;
 
@@ -55,8 +58,24 @@ public:
 
     void drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, uint16_t color);
 
+    /**
+     * Copies screen block from one place to another using hardware accelerator
+     * features.
+     * @param left left position of block to copy
+     * @param top top position of block to copy
+     * @param right right position of block to copy
+     * @param bottom bottom position of block to copy
+     * @param newLeft new left position for block being copied
+     * @param newTop new top position for block being copied
+     */
     void copyBlock(uint8_t left, uint8_t top, uint8_t right, uint8_t bottom, uint8_t newLeft, uint8_t newTop);
 
+    /**
+     * @brief Sets screen orientation (rotation)
+     *
+     * Sets screen orientation (rotation): 0 - normal, 1 - 90 CW, 2 - 180 CW, 3 - 270 CW
+     * @param rotation - screen rotation 0 - normal, 1 - 90 CW, 2 - 180 CW, 3 - 270 CW
+     */
     void setRotation(uint8_t rotation);
 
 protected:
@@ -65,7 +84,7 @@ protected:
 
     uint8_t m_rotation = 0x00;
 
-    void begin();
+    void begin() override;
 
     void spiDataMode(uint8_t mode);
 };
@@ -91,10 +110,6 @@ class DisplaySSD1331x16: public NanoDisplayOps<16>
 public:
     DisplaySSD1331x16(IWireInterface &intf, int8_t rstPin, int8_t dcPin);
 
-    void negativeMode();
-
-    void positiveMode();
-
     void setBlock(lcduint_t x, lcduint_t y, lcduint_t w) override;
 
     void nextPage() override;
@@ -105,8 +120,24 @@ public:
 
     void drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, uint16_t color);
 
+    /**
+     * Copies screen block from one place to another using hardware accelerator
+     * features.
+     * @param left left position of block to copy
+     * @param top top position of block to copy
+     * @param right right position of block to copy
+     * @param bottom bottom position of block to copy
+     * @param newLeft new left position for block being copied
+     * @param newTop new top position for block being copied
+     */
     void copyBlock(uint8_t left, uint8_t top, uint8_t right, uint8_t bottom, uint8_t newLeft, uint8_t newTop);
 
+    /**
+     * @brief Sets screen orientation (rotation)
+     *
+     * Sets screen orientation (rotation): 0 - normal, 1 - 90 CW, 2 - 180 CW, 3 - 270 CW
+     * @param rotation - screen rotation 0 - normal, 1 - 90 CW, 2 - 180 CW, 3 - 270 CW
+     */
     void setRotation(uint8_t rotation);
 
 protected:

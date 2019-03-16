@@ -456,6 +456,15 @@ protected:
      */
     virtual void nextPage() = 0;
 
+    /**
+     * Initializes interface and display
+     */
+    virtual void begin() = 0;
+
+    /**
+     * closes interface to lcd display
+     */
+    virtual void end() = 0;
 };
 
 /**

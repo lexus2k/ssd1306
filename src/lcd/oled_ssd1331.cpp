@@ -365,16 +365,6 @@ void DisplaySSD1331::setRotation(uint8_t rotation)
     m_intf.stop();
 }
 
-void DisplaySSD1331::negativeMode()
-{
-    s_ssd1306_invertByte = 0xFF;
-}
-
-void DisplaySSD1331::positiveMode()
-{
-    s_ssd1306_invertByte = 0x00;
-}
-
 void DisplaySSD1331::drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, uint16_t color)
 {
     m_intf.start();
@@ -511,16 +501,6 @@ void DisplaySSD1331x16::setRotation(uint8_t rotation)
     }
     m_intf.send( ram_mode | 0x40 );
     m_intf.stop();
-}
-
-void DisplaySSD1331x16::negativeMode()
-{
-    s_ssd1306_invertByte = 0xFF;
-}
-
-void DisplaySSD1331x16::positiveMode()
-{
-    s_ssd1306_invertByte = 0x00;
 }
 
 void DisplaySSD1331x16::drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2, uint16_t color)
