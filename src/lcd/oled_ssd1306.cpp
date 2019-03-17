@@ -84,169 +84,9 @@ static const uint8_t PROGMEM s_oled128x32_initData[] =
     SSD1306_DISPLAYON,
 };
 
-#if 0
-
-static void ssd1306_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
-{
-    ssd1306_intf.start();
-    if (ssd1306_intf.spi)
-        ssd1306_spiDataMode(0);
-    else
-        ssd1306_intf.send(0x00);
-    ssd1306_intf.send(SSD1306_COLUMNADDR);
-    ssd1306_intf.send(x);
-    ssd1306_intf.send(w ? (x + w - 1) : (ssd1306_lcd.width - 1));
-    ssd1306_intf.send(SSD1306_PAGEADDR);
-    ssd1306_intf.send(y);
-    ssd1306_intf.send((ssd1306_lcd.height >> 3) - 1);
-    if (ssd1306_intf.spi)
-    {
-        ssd1306_spiDataMode(1);
-    }
-    else
-    {
-        ssd1306_intf.stop();
-        ssd1306_intf.start();
-        ssd1306_intf.send(0x40);
-    }
-}
-
-static void ssd1306_nextPage(void)
-{
-}
-
-static void ssd1306_setMode_int(lcd_mode_t mode)
-{
-}
-
-void ssd1306_displayOff()
-{
-    ssd1306_sendCommand(SSD1306_DISPLAYOFF);
-}
-
-
-void ssd1306_displayOn()
-{
-    ssd1306_sendCommand(SSD1306_DISPLAYON);
-}
-
-void ssd1306_setContrast(uint8_t contrast)
-{
-    ssd1306_commandStart();
-    ssd1306_intf.send(SSD1306_SETCONTRAST);
-    ssd1306_intf.send(contrast);
-    ssd1306_intf.stop();
-}
-
-void ssd1306_invertMode()
-{
-    if (ssd1306_lcd.type != LCD_TYPE_SSD1331)
-    {
-        ssd1306_sendCommand(SSD1306_INVERTDISPLAY);
-    }
-}
-
-void ssd1306_normalMode()
-{
-    if (ssd1306_lcd.type != LCD_TYPE_SSD1331)
-    {
-        ssd1306_sendCommand(SSD1306_NORMALDISPLAY);
-    }
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-//  I2C SSD1306 128x64
-///////////////////////////////////////////////////////////////////////////////
-
-void    ssd1306_init()
-{
-    ssd1306_128x64_i2c_init();
-}
-
-
-void    ssd1306_128x64_init()
-{
-    ssd1306_lcd.type = LCD_TYPE_SSD1306;
-    ssd1306_lcd.height = 64;
-    ssd1306_lcd.width = 128;
-    ssd1306_lcd.set_block = ssd1306_setBlock;
-    ssd1306_lcd.next_page = ssd1306_nextPage;
-    ssd1306_lcd.send_pixels1  = ssd1306_intf.send;
-    ssd1306_lcd.send_pixels_buffer1 = ssd1306_intf.send_buffer;
-    ssd1306_lcd.set_mode = ssd1306_setMode_int;
-    for( uint8_t i=0; i<sizeof(s_oled128x64_initData); i++)
-    {
-        ssd1306_sendCommand(pgm_read_byte(&s_oled128x64_initData[i]));
-    }
-}
-
-void    ssd1306_128x64_i2c_init()
-{
-    ssd1306_i2cInit();
-    ssd1306_128x64_init();
-}
-
-void    ssd1306_128x64_i2c_initEx(int8_t scl, int8_t sda, int8_t sa)
-{
-    ssd1306_i2cInitEx(scl, sda, sa);
-    ssd1306_128x64_init();
-}
-
-///////////////////////////////////////////////////////////////////////////////
-//  SPI SSD1306 128x64
-///////////////////////////////////////////////////////////////////////////////
-
-void   ssd1306_128x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
-{
-    if (rstPin >=0)
-    {
-        ssd1306_resetController( rstPin, 10 );
-    }
-    ssd1306_spiInit(cesPin, dcPin);
-    ssd1306_128x64_init();
-}
-
-///////////////////////////////////////////////////////////////////////////////
-//  I2C SSD1306 128x32
-///////////////////////////////////////////////////////////////////////////////
-
-void    ssd1306_128x32_init()
-{
-    ssd1306_lcd.type = LCD_TYPE_SSD1306;
-    ssd1306_lcd.height = 32;
-    ssd1306_lcd.width = 128;
-    ssd1306_lcd.set_block = ssd1306_setBlock;
-    ssd1306_lcd.next_page = ssd1306_nextPage;
-    ssd1306_lcd.send_pixels1  = ssd1306_intf.send;
-    ssd1306_lcd.set_mode = ssd1306_setMode_int;
-    for( uint8_t i=0; i < sizeof(s_oled128x32_initData); i++)
-    {
-        ssd1306_sendCommand(pgm_read_byte(&s_oled128x32_initData[i]));
-    }
-}
-
-void    ssd1306_128x32_i2c_init()
-{
-    ssd1306_i2cInit();
-    ssd1306_128x32_init();
-}
-
-///////////////////////////////////////////////////////////////////////////////
-//  SPI SSD1306 128x32
-///////////////////////////////////////////////////////////////////////////////
-
-void   ssd1306_128x32_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
-{
-    if (rstPin >=0)
-    {
-        ssd1306_resetController( rstPin, 10 );
-    }
-    ssd1306_spiInit(cesPin, dcPin);
-    ssd1306_128x32_init();
-}
-
-#endif
+//////////////////////////////////////////////////////////////////////////
+//          SSD1306 basic functions implementation
+//////////////////////////////////////////////////////////////////////////
 
 void DisplaySSD1306::setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 {
@@ -345,6 +185,10 @@ void DisplaySSD1306::flipVertical(uint8_t mode)
     m_intf.stop();
 }
 
+//////////////////////////////////////////////////////////////////////////
+//          SSD1306 128x64 type
+//////////////////////////////////////////////////////////////////////////
+
 void DisplaySSD1306_128x64::begin()
 {
     m_w = 128;
@@ -360,6 +204,34 @@ void DisplaySSD1306_128x64::begin()
 void DisplaySSD1306_128x64::end()
 {
 }
+
+void DisplaySSD1306_128x64_I2C::begin()
+{
+    m_i2c.begin();
+    DisplaySSD1306_128x64::begin();
+}
+
+void DisplaySSD1306_128x64_I2C::end()
+{
+    DisplaySSD1306_128x64::end();
+    m_i2c.end();
+}
+
+void DisplaySSD1306_128x64_SPI::begin()
+{
+    m_spi.begin();
+    DisplaySSD1306_128x64::begin();
+}
+
+void DisplaySSD1306_128x64_SPI::end()
+{
+    DisplaySSD1306_128x64::end();
+    m_spi.end();
+}
+
+//////////////////////////////////////////////////////////////////////////
+//          SSD1306 128x32 type
+//////////////////////////////////////////////////////////////////////////
 
 void DisplaySSD1306_128x32::begin()
 {
@@ -377,18 +249,6 @@ void DisplaySSD1306_128x32::end()
 {
 }
 
-void DisplaySSD1306_128x64_I2C::begin()
-{
-    m_i2c.begin();
-    DisplaySSD1306_128x64::begin();
-}
-
-void DisplaySSD1306_128x64_I2C::end()
-{
-    DisplaySSD1306_128x64::end();
-    m_i2c.end();
-}
-
 void DisplaySSD1306_128x32_I2C::begin()
 {
     m_i2c.begin();
@@ -399,18 +259,6 @@ void DisplaySSD1306_128x32_I2C::end()
 {
     DisplaySSD1306_128x32::end();
     m_i2c.end();
-}
-
-void DisplaySSD1306_128x64_SPI::begin()
-{
-    m_spi.begin();
-    DisplaySSD1306_128x64::begin();
-}
-
-void DisplaySSD1306_128x64_SPI::end()
-{
-    DisplaySSD1306_128x64::end();
-    m_spi.end();
 }
 
 void DisplaySSD1306_128x32_SPI::begin()
