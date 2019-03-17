@@ -30,12 +30,14 @@
 #define _OLED_SSD1306_H_
 
 #include "ssd1306_hal/io.h"
-
-#ifdef __cplusplus
-
 #include "nano_engine/display.h"
 #include "lcd/lcd_common.h"
 #include "intf/i2c/ssd1306_i2c.h"
+
+/**
+ * @ingroup LCD_INTERFACE_API
+ * @{
+ */
 
 /**
  * Generic interface to ssd1306-based controllers
@@ -183,6 +185,39 @@ private:
 };
 
 /**
+ * Class implements interface to 128x32 ssd1306 i2c monochrome display.
+ */
+class DisplaySSD1306_128x32_I2C: public DisplaySSD1306_128x32
+{
+public:
+    /**
+     * @brief Inits 128x32 OLED display over i2c (based on SSD1306 controller).
+     *
+     * Inits 128x32 OLED display over i2c (based on SSD1306 controller)
+     * This function uses hardcoded pins for i2c communication, depending on your hardware.
+     *
+     * @param scl i2c clock pin. Use -1 if you don't need to change default pin number
+     * @param sda i2c data pin. Use -1 if you don't need to change default pin number
+     * @param sa  i2c address of lcd display. Use 0 to leave default
+     *
+     * @note scl and sda parameters depend on used hardware. For many hardware boards these
+     * parameters do not have any effect. ESP8266 allows to specify these parameters
+     *
+     * @note scl and sda for Linux systems should be the same, and should contain i2c bus id.
+     */
+    DisplaySSD1306_128x32_I2C( int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x3C)
+        : DisplaySSD1306_128x32(m_i2c, -1)
+        , m_i2c( scl, sda, sa ) {}
+
+    void begin() override;
+
+    void end() override;
+
+private:
+    PlatformI2c m_i2c;
+};
+
+/**
  * Class implements interface to 128x64 ssd1306 spi monochrome display.
  */
 class DisplaySSD1306_128x64_SPI: public DisplaySSD1306_128x64
@@ -208,55 +243,35 @@ private:
     PlatformSpi m_spi;
 };
 
-extern "C" {
-#endif
-
-#if 0
-
 /**
- * @ingroup LCD_INTERFACE_API
- * @{
+ * Class implements interface to 128x32 ssd1306 spi monochrome display.
  */
+class DisplaySSD1306_128x32_SPI: public DisplaySSD1306_128x32
+{
+public:
+    /**
+     * @brief Inits 128x32 OLED display over spi (based on SSD1306 controller).
+     *
+     * Inits 128x32 OLED display over spi (based on SSD1306 controller)
+     * @param rstPin pin controlling LCD reset (-1 if not used)
+     * @param cesPin chip enable pin to LCD slave (-1 if not used)
+     * @param dcPin data/command pin to control LCD dc (required)
+     */
+    DisplaySSD1306_128x32_SPI( int8_t rstPin, int8_t csPin, int8_t dcPin )
+        : DisplaySSD1306_128x32( m_spi, dcPin )
+        , m_spi( csPin, dcPin, 10000000 ) {}
 
-/**
- * @brief Inits 128x32 OLED display over spi (based on SSD1306 controller).
- *
- * Inits 128x32 OLED display over spi (based on SSD1306 controller)
- * @param rstPin - pin controlling LCD reset (-1 if not used)
- * @param cesPin - chip enable pin to LCD slave (-1 if not used)
- * @param dcPin - data/command pin to control LCD dc (required)
- */
-void         ssd1306_128x32_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin);
+    void begin() override;
 
-/**
- * @brief Inits 128x32 OLED display over i2c (based on SSD1306 controller).
- *
- * Inits 128x32 OLED display over i2c (based on SSD1306 controller)
- * This function uses hardcoded pins for i2c communication, depending on your hardware.
- * If you use non-standard pins in your project, please perform call ssd1306_i2cInitEx() and
- * ssd1306_128x32_init().
- */
-void         ssd1306_128x32_i2c_init(void);
+    void end() override;
 
-/**
- * @brief Inits 128x32 OLED display (based on ssd1306 controller).
- *
- * Inits 128x32 OLED display (based on ssd1306 controller)
- * spi or i2c bus must be initialized prior to calling this function.
- * @see ssd1306_i2cInit()
- * @see ssd1306_spiInit()
- */
-void         ssd1306_128x32_init(void);
+private:
+    PlatformSpi m_spi;
+};
 
 /**
  * @}
  */
-
-#endif
-
-#ifdef __cplusplus
-}
-#endif
 
 // ----------------------------------------------------------------------------
 #endif // _OLED_SSD1306_H_

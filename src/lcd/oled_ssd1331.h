@@ -86,6 +86,10 @@ protected:
 
     void begin() override;
 
+    /**
+     * Enables either data or command mode on SPI bus
+     * @param mode 1 to enable data mode, or 0 to enable command mode
+     */
     void spiDataMode(uint8_t mode);
 };
 
@@ -141,12 +145,12 @@ public:
     void setRotation(uint8_t rotation);
 
 protected:
-    int8_t m_rstPin;
-    int8_t m_dcPin;
+    int8_t m_rstPin; ///< reset pin number, -1 if reset pin is not used
+    int8_t m_dcPin;  ///< data command control pin number
 
-    uint8_t m_rotation = 0x00;
+    uint8_t m_rotation = 0x00; ///< indicates display orientation
 
-    void begin();
+    void begin() override;
 
     void spiDataMode(uint8_t mode);
 };
