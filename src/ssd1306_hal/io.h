@@ -74,6 +74,11 @@ extern "C" {
 
 // !!! PLATFORM I2C IMPLEMENTATION OPTIONAL !!!
 #if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && defined(CONFIG_PLATFORM_I2C_ENABLE)
+typedef struct {
+    uint16_t sda;
+    uint16_t scl;
+} ssd1306_platform_i2cConfig_t;
+
 /**
  * @brief Initializes i2c interface for platform being used.
  *
@@ -90,7 +95,7 @@ extern "C" {
  *        for AVR it is used as sda pin number. If you want to use default pin number, please
  *        pass -1.
  */
-void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, int8_t arg);
+void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, ssd1306_platform_i2cConfig_t * cfg);
 #endif
 
 
