@@ -38,6 +38,9 @@
  * @{
  */
 
+/**
+ * Template class for NanoEngine objects lists
+ */
 template<class T>
 class NanoObjectList;
 

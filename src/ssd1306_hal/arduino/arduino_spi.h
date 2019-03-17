@@ -30,10 +30,18 @@
 #define _SSD1306_ARDUINO_ARDUINO_SPI_H_
 
 #if defined(CONFIG_ARDUINO_SPI_AVAILABLE) && defined(CONFIG_ARDUINO_SPI_ENABLE)
-
+/**
+ * Class implements SPI support for Arduino platforms
+ */
 class ArduinoSpi: public IWireInterface
 {
 public:
+    /**
+     * Creates instance of spi implementation for Arduino platform.
+     * @param csPin chip select pin to use, -1 if not required
+     * @param dcPin data command pin to use
+     * @param freq frequency in HZ to run spi bus at
+     */
     ArduinoSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 0);
     virtual ~ArduinoSpi();
 

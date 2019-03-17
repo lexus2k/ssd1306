@@ -78,6 +78,9 @@ class NanoEngine;
 template<class C, uint8_t B>
 class NanoEngineTiler;
 
+/**
+ * Template class for all NanoEngine objects
+ */
 template<class T>
 class NanoEngineObject
 {

@@ -43,6 +43,9 @@
  *          ssd1306_128x64_i2c_initEx(), ssd1351_128x128_spi_init(), etc.
  */
 
+/**
+ * Abstract class for system specific interface, used to control oled
+ */
 class IWireInterface
 {
 public:
@@ -84,7 +87,9 @@ public:
     virtual void sendBuffer(const uint8_t *buffer, uint16_t size) = 0;
 };
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 extern "C" void ssd1306_resetController(int8_t rstPin, uint8_t delayMs);
+#endif
 
 /**
  * @}

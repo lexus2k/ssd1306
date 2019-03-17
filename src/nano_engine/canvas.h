@@ -337,6 +337,11 @@ public:
 //    virtual void blt(const NanoRect &rect) = 0;
 };
 
+/**
+ * Template for user-defined canvas object.
+ * template parameters are: width, height and bits per pixels.
+ * If object is defined locally, the pixels buffer is located in stack
+ */
 template <lcduint_t W, lcduint_t H, uint8_t BPP>
 class NanoCanvas: public NanoCanvasBase<BPP>
 {

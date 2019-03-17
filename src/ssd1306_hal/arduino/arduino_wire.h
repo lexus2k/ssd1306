@@ -30,9 +30,18 @@
 #define _SSD1306_ARDUINO_ARDUINO_I2C_H_
 
 #if defined(CONFIG_ARDUINO_I2C_AVAILABLE) && defined(CONFIG_ARDUINO_I2C_ENABLE)
+/**
+ * Class implements i2c support via Wire library for Arduino platforms
+ */
 class ArduinoI2c: public IWireInterface
 {
 public:
+    /**
+     * Creates i2c implementation instance for Arduino platform.
+     * @param scl clock pin to use for i2c
+     * @param sda data pin to use for i2c
+     * @param sa i2c address of the device to control over i2c
+     */
     ArduinoI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00);
     virtual ~ArduinoI2c();
 

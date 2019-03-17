@@ -32,6 +32,9 @@
 #if defined(CONFIG_LINUX_SPI_AVAILABLE) && defined(CONFIG_LINUX_SPI_ENABLE) && \
     !defined(SDL_EMULATION)
 
+/**
+ * Class implements spi bus for linux via spidev interface
+ */
 class LinuxSpi: public IWireInterface
 {
 public:

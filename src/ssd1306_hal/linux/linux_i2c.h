@@ -32,6 +32,9 @@
 #if defined(CONFIG_LINUX_I2C_AVAILABLE) && defined(CONFIG_LINUX_I2C_ENABLE) && \
     !defined(SDL_EMULATION)
 
+/**
+ * Class implements i2c interface for Linux via i2c-dev
+ */
 class LinuxI2c: public IWireInterface
 {
 public:

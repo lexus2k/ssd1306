@@ -125,6 +125,14 @@ void ssd1306_setFont6x8(const uint8_t * progmemFont) __attribute__ ((deprecated)
  */
 void ssd1306_getCharBitmap(uint16_t ch, SCharInfo *info);
 
+/**
+ * @brief returns text width in pixels (and its height if height is requested)
+ *
+ * Returns text width in pixels (and its height if height is requested)
+ * @param text pointer to null-terminated string
+ * @param height pointer to lcduint_t variable to store height to. nullptr if
+ *        height is not required
+ */
 lcduint_t ssd1306_getTextSize(const char *text, lcduint_t *height);
 
 /**

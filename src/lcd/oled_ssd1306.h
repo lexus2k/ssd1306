@@ -228,7 +228,7 @@ public:
      *
      * Inits 128x64 OLED display over spi (based on SSD1306 controller)
      * @param rstPin pin controlling LCD reset (-1 if not used)
-     * @param cesPin chip enable pin to LCD slave (-1 if not used)
+     * @param csPin chip enable pin to LCD slave (-1 if not used)
      * @param dcPin data/command pin to control LCD dc (required)
      */
     DisplaySSD1306_128x64_SPI( int8_t rstPin, int8_t csPin, int8_t dcPin )
@@ -254,7 +254,7 @@ public:
      *
      * Inits 128x32 OLED display over spi (based on SSD1306 controller)
      * @param rstPin pin controlling LCD reset (-1 if not used)
-     * @param cesPin chip enable pin to LCD slave (-1 if not used)
+     * @param csPin chip enable pin to LCD slave (-1 if not used)
      * @param dcPin data/command pin to control LCD dc (required)
      */
     DisplaySSD1306_128x32_SPI( int8_t rstPin, int8_t csPin, int8_t dcPin )

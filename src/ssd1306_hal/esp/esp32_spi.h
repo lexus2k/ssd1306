@@ -33,6 +33,9 @@
 
 #include "driver/spi_master.h"
 
+/**
+ * Class implements spi support for esp32 platform
+ */
 class EspSpi: public IWireInterface
 {
 public:
