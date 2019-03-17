@@ -86,14 +86,12 @@ typedef struct {
  * depends on platform.
  *
  * @param busId i2c bus number. Some platforms have several i2c buses. so, this
- *        argument identifies bus to use. For AVR platforms busId is used as scl
- *        pin number. If you want to use default i2c bus for specific platform, please
- *        pass -1.
+ *        argument identifies bus to use. For several platforms busId is not used.
+ *        If you want to use default i2c bus for specific platform, please pass -1.
  * @param addr i2c address of oled driver, connected to i2c bus. If you want to use default
  *        i2c display address, please, pass 0.
- * @param arg additional parameter for i2c interface. Not used on many platforms, while
- *        for AVR it is used as sda pin number. If you want to use default pin number, please
- *        pass -1.
+ * @param cfg Specify scl and sda for the platform. If you want to use default pin numbers,
+ *        please pass -1 for both members.
  */
 void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, ssd1306_platform_i2cConfig_t * cfg);
 #endif
