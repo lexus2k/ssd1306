@@ -200,7 +200,7 @@ void setup()
     engine.setFrameRate( 30 );
     engine.begin();
 
-    engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
+    engine.getCanvas().setMode(CANVAS_MODE_TRANSPARENT);
     engine.refresh();
 }
 

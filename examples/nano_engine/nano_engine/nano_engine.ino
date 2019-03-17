@@ -36,7 +36,8 @@
 
 #define FRAMES_CAPTURE  128
 
-NanoEngine8 engine;
+DisplaySSD1331_96x64_SPI display(3, 4, 5);
+NanoEngine8 engine(display);
 
 int x = 72;
 int b_x = -128;
@@ -50,37 +51,37 @@ void displayStats()
 {
     if (frames >= FRAMES_CAPTURE)
     {
-        engine.canvas.setMode(0);
+        engine.getCanvas().setMode(0);
         utoa(totalDuration/frames,bufStr,10);
-        engine.canvas.setColor(RGB_COLOR8(255,0,255));
-        engine.canvas.printFixed(0, 0, "MS: ");
-        engine.canvas.printFixed(24, 0, bufStr);
+        engine.getCanvas().setColor(RGB_COLOR8(255,0,255));
+        engine.getCanvas().printFixed(0, 0, "MS: ");
+        engine.getCanvas().printFixed(24, 0, bufStr);
         utoa(1000/(totalDuration/frames),bufStr,10);
-        engine.canvas.printFixed(0, 8, "FPS: ");
-        engine.canvas.printFixed(30, 8, bufStr);
+        engine.getCanvas().printFixed(0, 8, "FPS: ");
+        engine.getCanvas().printFixed(30, 8, bufStr);
     }
 }
 
 bool drawAll()
 {
-    engine.canvas.clear();
-    engine.canvas.setMode(CANVAS_MODE_TRANSPARENT);
-    engine.canvas.setColor(RGB_COLOR8(255,255,0));
-    engine.canvas.drawRect(15,12,x,55);
-    engine.canvas.setColor(RGB_COLOR8(64,64,64));
-    engine.canvas.fillRect(16,13,x-1,54);
-    engine.canvas.setColor(RGB_COLOR8(0,255,255));
-    engine.canvas.drawBitmap1(b_x, b_y, 128, 64, Sova);
-    engine.canvas.setColor(RGB_COLOR8(255,0,0));
-    engine.canvas.printFixed(textx, 30, "This is example of text output");
+    engine.getCanvas().clear();
+    engine.getCanvas().setMode(CANVAS_MODE_TRANSPARENT);
+    engine.getCanvas().setColor(RGB_COLOR8(255,255,0));
+    engine.getCanvas().drawRect(15,12,x,55);
+    engine.getCanvas().setColor(RGB_COLOR8(64,64,64));
+    engine.getCanvas().fillRect(16,13,x-1,54);
+    engine.getCanvas().setColor(RGB_COLOR8(0,255,255));
+    engine.getCanvas().drawBitmap1(b_x, b_y, 128, 64, Sova);
+    engine.getCanvas().setColor(RGB_COLOR8(255,0,0));
+    engine.getCanvas().printFixed(textx, 30, "This is example of text output");
     displayStats();
     return true;
 }
 
 void setup()
 {
+    display.begin();
     ssd1306_setFixedFont(ssd1306xled_font6x8);
-    ssd1331_96x64_spi_init(3, 4, 5);
 
     /* Set draw callback, it will be called by engine every time, *
      * when it needs to refresh some area on the lcd display.     */
