@@ -57,7 +57,7 @@ enum
  * Depending on BPP argument, this class can work with 1,8,16-bit canvas areas.
  */
 template <uint8_t BPP>
-class NanoDisplayOps: public Print
+class NanoDisplayOps
 {
 public:
     /** number of bits per single pixel in buffer */
@@ -304,7 +304,7 @@ public:
      * Writes single character to canvas
      * @param c - character code to print
      */
-    size_t write(uint8_t c) override;
+    size_t write(uint8_t c);
 
     /**
      * Draws single character to canvas
