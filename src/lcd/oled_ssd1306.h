@@ -55,6 +55,10 @@ public:
         : NanoDisplayOps<1>(intf)
         , m_dc( dcPin ) {}
 
+    void setBlock(lcduint_t x, lcduint_t y, lcduint_t w) override;
+
+    void nextPage() override;
+
     /**
      * Switches display to normal mode. This feature is specific
      * for ssd1306 based controllers.
@@ -66,10 +70,6 @@ public:
      * for ssd1306 based controllers.
      */
     void invertMode();
-
-    void setBlock(lcduint_t x, lcduint_t y, lcduint_t w) override;
-
-    void nextPage() override;
 
     /**
      * Set display contrast, ie light intensity
