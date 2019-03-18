@@ -25,7 +25,6 @@
 #include "lcd_pcd8544.h"
 #include "lcd_common.h"
 #include "pcd8544_commands.h"
-#include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
 #ifdef SDL_EMULATION
 #include "sdl_core.h"

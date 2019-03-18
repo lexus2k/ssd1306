@@ -83,8 +83,6 @@ void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, int8_t arg)
 // !!! PLATFORM SPI IMPLEMENTATION OPTIONAL !!!
 #if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)
 
-#include "intf/spi/ssd1306_spi.h"
-
 static void platform_spi_start(void)
 {
     // ... Open spi channel for your device with specific s_ssd1306_cs, s_ssd1306_dc

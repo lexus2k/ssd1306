@@ -38,7 +38,6 @@ SRCS_CPP = \
 	ssd1306_hal/arduino/arduino_wire.cpp \
 	ssd1306_hal/stm32/platform.cpp \
 	ssd1306_hal/template/platform.cpp \
-	intf/spi/ssd1306_spi.cpp \
 	intf/uart/ssd1306_uart_builtin.cpp \
 	intf/vga/vga.cpp \
 	intf/vga/atmega328p/vga128x64.cpp \

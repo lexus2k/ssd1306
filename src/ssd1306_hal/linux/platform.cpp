@@ -25,9 +25,6 @@
 #if defined(__linux__) && !defined(ARDUINO)
 
 #include "ssd1306_hal/io.h"
-#include "intf/i2c/ssd1306_i2c.h"
-#include "intf/spi/ssd1306_spi_conf.h"
-#include "intf/spi/ssd1306_spi.h"
 
 #include <sys/stat.h>
 #include <sys/types.h>

@@ -24,8 +24,6 @@
 
 #include "ssd1306_8bit.h"
 #include "ssd1306_generic.h"
-//#include "ssd1306_fonts.h"
-#include "intf/spi/ssd1306_spi.h"
 #include "ssd1306_hal/io.h"
 
 #include "lcd/ssd1331_commands.h"
