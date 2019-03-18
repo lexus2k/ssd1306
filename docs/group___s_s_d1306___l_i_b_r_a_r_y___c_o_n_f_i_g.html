@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.13</span>
+   &#160;<span id="projectnumber">1.8.0.1</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -88,6 +88,18 @@ Macros</h2></td></tr>
 <tr class="separator:ga879a327dedebec82e853eab3b2f86e50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga022279a3f667bcaf983e4bfb0919ac72"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga022279a3f667bcaf983e4bfb0919ac72">CONFIG_PLATFORM_SPI_ENABLE</a></td></tr>
 <tr class="separator:ga022279a3f667bcaf983e4bfb0919ac72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0cddf893f908f2d876c498a89593ed1b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga0cddf893f908f2d876c498a89593ed1b">CONFIG_LINUX_I2C_ENABLE</a></td></tr>
+<tr class="separator:ga0cddf893f908f2d876c498a89593ed1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7ed21adc9127f1644842fc7fd324eb49"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga7ed21adc9127f1644842fc7fd324eb49">CONFIG_LINUX_SPI_ENABLE</a></td></tr>
+<tr class="separator:ga7ed21adc9127f1644842fc7fd324eb49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacf411e4cf76739adcf8c4d42aa57a344"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#gacf411e4cf76739adcf8c4d42aa57a344">CONFIG_ARDUINO_I2C_ENABLE</a></td></tr>
+<tr class="separator:gacf411e4cf76739adcf8c4d42aa57a344"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5db5722e4d0ad10962a721e0bd13fd85"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga5db5722e4d0ad10962a721e0bd13fd85">CONFIG_ARDUINO_SPI_ENABLE</a></td></tr>
+<tr class="separator:ga5db5722e4d0ad10962a721e0bd13fd85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga869c09543aed6136865114b43e69cf1f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga869c09543aed6136865114b43e69cf1f">CONFIG_ESP32_I2C_ENABLE</a></td></tr>
+<tr class="separator:ga869c09543aed6136865114b43e69cf1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga39237fc286c38a8a5e6360791dd0b5b9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga39237fc286c38a8a5e6360791dd0b5b9">CONFIG_ESP32_SPI_ENABLE</a></td></tr>
+<tr class="separator:ga39237fc286c38a8a5e6360791dd0b5b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacdc84c96cc576f7839a93c71b8e74ef7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#gacdc84c96cc576f7839a93c71b8e74ef7">CONFIG_SSD1306_UNICODE_ENABLE</a></td></tr>
 <tr class="separator:gacdc84c96cc576f7839a93c71b8e74ef7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -95,6 +107,40 @@ Macros</h2></td></tr>
 <p>Group of settings allowing to disable/enable library modules. </p>
 <p>Arduino IDE (at least as for 1.8.2) has a lack library configuration functionality. Some Arduino standard libraries are built the way, if you include them to the project, but do not use any functions from the, they still eat RAM and Flash on you EVK board. To avoid this, you need competely avoid including of such libraries. SSD1306 library has a wide interfaces support for different platforms, and even if you don't use SSD1306 communication via Arduino Wire/Spi/HardwareSerial libraries, those ones do bad things with your sketch size. To avoid this you can manually disable SSD1306 modules, you don't need in <a class="el" href="_user_settings_8h.html">UserSettings.h</a> header file, and gain another 100-200 bytes of RAM and 300-500 bytes of Flash. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="gacf411e4cf76739adcf8c4d42aa57a344"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacf411e4cf76739adcf8c4d42aa57a344">&#9670;&nbsp;</a></span>CONFIG_ARDUINO_I2C_ENABLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CONFIG_ARDUINO_I2C_ENABLE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Define this macro if you need to enable Arduino Wire module for compilation </p>
+
+<p class="definition">Definition at line <a class="el" href="_user_settings_8h_source.html#l00093">93</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
+
+</div>
+</div>
+<a id="ga5db5722e4d0ad10962a721e0bd13fd85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5db5722e4d0ad10962a721e0bd13fd85">&#9670;&nbsp;</a></span>CONFIG_ARDUINO_SPI_ENABLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CONFIG_ARDUINO_SPI_ENABLE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Define this macro if you need to enable Arduino SPI module for compilation </p>
+
+<p class="definition">Definition at line <a class="el" href="_user_settings_8h_source.html#l00096">96</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
+
+</div>
+</div>
 <a id="gac028140be3b57c38264f1a85db026c7f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gac028140be3b57c38264f1a85db026c7f">&#9670;&nbsp;</a></span>CONFIG_AVR_SPI_ENABLE</h2>
 
@@ -126,6 +172,74 @@ Macros</h2></td></tr>
 <p>Define this macro if you need to enable AVR UART module for compilation </p>
 
 <p class="definition">Definition at line <a class="el" href="_user_settings_8h_source.html#l00064">64</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
+
+</div>
+</div>
+<a id="ga869c09543aed6136865114b43e69cf1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga869c09543aed6136865114b43e69cf1f">&#9670;&nbsp;</a></span>CONFIG_ESP32_I2C_ENABLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CONFIG_ESP32_I2C_ENABLE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Define this macro if you need to enable ESP32 I2C module for compilation </p>
+
+<p class="definition">Definition at line <a class="el" href="_user_settings_8h_source.html#l00099">99</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
+
+</div>
+</div>
+<a id="ga39237fc286c38a8a5e6360791dd0b5b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga39237fc286c38a8a5e6360791dd0b5b9">&#9670;&nbsp;</a></span>CONFIG_ESP32_SPI_ENABLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CONFIG_ESP32_SPI_ENABLE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Define this macro if you need to enable ESP32 SPI module for compilation </p>
+
+<p class="definition">Definition at line <a class="el" href="_user_settings_8h_source.html#l00102">102</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
+
+</div>
+</div>
+<a id="ga0cddf893f908f2d876c498a89593ed1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0cddf893f908f2d876c498a89593ed1b">&#9670;&nbsp;</a></span>CONFIG_LINUX_I2C_ENABLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CONFIG_LINUX_I2C_ENABLE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Define this macro if you need to enable Linux I2C module for compilation </p>
+
+<p class="definition">Definition at line <a class="el" href="_user_settings_8h_source.html#l00087">87</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
+
+</div>
+</div>
+<a id="ga7ed21adc9127f1644842fc7fd324eb49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7ed21adc9127f1644842fc7fd324eb49">&#9670;&nbsp;</a></span>CONFIG_LINUX_SPI_ENABLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CONFIG_LINUX_SPI_ENABLE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Define this macro if you need to enable Linux SPI module for compilation </p>
+
+<p class="definition">Definition at line <a class="el" href="_user_settings_8h_source.html#l00090">90</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
 
 </div>
 </div>
@@ -193,7 +307,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <p>Defines, whenever ssd1306 library supports unicode. Support of unicode increases RAM and Flasg memory consumption </p>
 
-<p class="definition">Definition at line <a class="el" href="_user_settings_8h_source.html#l00090">90</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_user_settings_8h_source.html#l00108">108</a> of file <a class="el" href="_user_settings_8h_source.html">UserSettings.h</a>.</p>
 
 </div>
 </div>

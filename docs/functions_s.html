@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.13</span>
+   &#160;<span id="projectnumber">1.8.0.1</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -63,8 +63,16 @@ $(function() {
 <div class="textblock">Here is a list of all documented class members with links to the class documentation for each member:</div>
 
 <h3><a id="index_s"></a>- s -</h3><ul>
+<li>scl
+: <a class="el" href="struct_s_platform_i2c_config.html#af615d7a15c31d184251b2676c8aab130">SPlatformI2cConfig</a>
+, <a class="el" href="struct_s_platform_spi_config.html#a9773200ff4d40e2eff411c0c69c00589">SPlatformSpiConfig</a>
+</li>
 <li>scrollPosition
 : <a class="el" href="struct_s_app_menu.html#a561ec2f54b8defb69d0d6ace7c5702b9">SAppMenu</a>
+</li>
+<li>sda
+: <a class="el" href="struct_s_platform_i2c_config.html#aeb3beab5766bcf03b297bb5e8eefeb23">SPlatformI2cConfig</a>
+, <a class="el" href="struct_s_platform_spi_config.html#a2e387a4952105f7406ab587eb4503fab">SPlatformSpiConfig</a>
 </li>
 <li>secondary_table
 : <a class="el" href="struct_s_fixed_font_info.html#a73c75a104b00970b7fef5c7fe66b5ff6">SFixedFontInfo</a>
@@ -72,39 +80,64 @@ $(function() {
 <li>selection
 : <a class="el" href="struct_s_app_menu.html#abbe11210d697c17d62e0232d6451d06b">SAppMenu</a>
 </li>
-<li>send
-: <a class="el" href="structssd1306__interface__t.html#a9d99111dfccc867514cab4e2ae2cd613">ssd1306_interface_t</a>
-</li>
-<li>send_buffer
-: <a class="el" href="structssd1306__interface__t.html#ab753c14b485fd4588cc08ed6bf598b4c">ssd1306_interface_t</a>
+<li>send()
+: <a class="el" href="class_arduino_i2c.html#a40c946a1871e6a563bff2e9c9838d7d0">ArduinoI2c</a>
+, <a class="el" href="class_arduino_spi.html#aab7c6327eabf487909d7b7661051549b">ArduinoSpi</a>
+, <a class="el" href="class_avr_spi.html#a500e746bf58e43aad9b5a0df4f339ace">AvrSpi</a>
+, <a class="el" href="class_esp_i2c.html#a1bdadfe1ff1279c7ada65e07c8cb1c6e">EspI2c</a>
+, <a class="el" href="class_esp_spi.html#ae525f7c045f8c7982843b4836317fa29">EspSpi</a>
+, <a class="el" href="class_i_wire_interface.html#a9d5573dee232e187fcefed0001adfec0">IWireInterface</a>
+, <a class="el" href="class_linux_i2c.html#a40bf2774885a4eefc221fb9b9644282f">LinuxI2c</a>
+, <a class="el" href="class_linux_spi.html#a0680ffa7c5b711a40335b1099c03d2a5">LinuxSpi</a>
+, <a class="el" href="class_twi_i2c.html#ac6899622397180d05e61bc790e53e214">TwiI2c</a>
 </li>
 <li>send_pixels1
 : <a class="el" href="structssd1306__lcd__t.html#aeb7e3e36bd3480388976f8c4e1ab9adf">ssd1306_lcd_t</a>
 </li>
 <li>send_pixels16
-: <a class="el" href="structssd1306__lcd__t.html#a409b80d44b201f777b8bb6a34df4288e">ssd1306_lcd_t</a>
+: <a class="el" href="structssd1306__lcd2__t.html#a156b63dc1a231a67092141dcc7684f6c">ssd1306_lcd2_t</a>
+, <a class="el" href="structssd1306__lcd__t.html#a409b80d44b201f777b8bb6a34df4288e">ssd1306_lcd_t</a>
 </li>
 <li>send_pixels8
-: <a class="el" href="structssd1306__lcd__t.html#a881f5629ba5b0e9b4d89a1a176ce2668">ssd1306_lcd_t</a>
+: <a class="el" href="structssd1306__lcd2__t.html#abfe0dc7bfcee802e9369f6d18038b2ea">ssd1306_lcd2_t</a>
+, <a class="el" href="structssd1306__lcd__t.html#a881f5629ba5b0e9b4d89a1a176ce2668">ssd1306_lcd_t</a>
 </li>
 <li>send_pixels_buffer1
 : <a class="el" href="structssd1306__lcd__t.html#a7ceb1ea335b937f01a45c2e3529db48c">ssd1306_lcd_t</a>
+</li>
+<li>sendBuffer()
+: <a class="el" href="class_arduino_i2c.html#a8f342893a8ef7eb2ee255f18c75d12fb">ArduinoI2c</a>
+, <a class="el" href="class_arduino_spi.html#aadc28381c55406ab45c0e0607fc155ce">ArduinoSpi</a>
+, <a class="el" href="class_avr_spi.html#ae8ee1b0643a96bd4b41f4b16d87a2405">AvrSpi</a>
+, <a class="el" href="class_esp_i2c.html#a80ba8f870f04c2ebd0b081230696893f">EspI2c</a>
+, <a class="el" href="class_esp_spi.html#a26630fed237c04132e2e5e6980e2eb99">EspSpi</a>
+, <a class="el" href="class_i_wire_interface.html#a101c2dc04c567366ce84fd5fd22969e7">IWireInterface</a>
+, <a class="el" href="class_linux_i2c.html#a9280c20d80a1721aca170e7e6d6c04a0">LinuxI2c</a>
+, <a class="el" href="class_linux_spi.html#a41d54a78a30ac837d173691f45da1b24">LinuxSpi</a>
+, <a class="el" href="class_twi_i2c.html#ab5651e716066590f6fb009e81f9bff69">TwiI2c</a>
 </li>
 <li>set_block
 : <a class="el" href="structssd1306__lcd__t.html#a6429922cc1a9ea852a3152c1942b1d73">ssd1306_lcd_t</a>
 </li>
 <li>set_mode
-: <a class="el" href="structssd1306__lcd__t.html#abace095df95cc15051f0fcb6e44522c7">ssd1306_lcd_t</a>
+: <a class="el" href="structssd1306__lcd2__t.html#ad9e35df2440992bb29d824af6941d043">ssd1306_lcd2_t</a>
+, <a class="el" href="structssd1306__lcd__t.html#abace095df95cc15051f0fcb6e44522c7">ssd1306_lcd_t</a>
 </li>
 <li>setBitmap()
-: <a class="el" href="class_nano_fixed_sprite.html#a68e16417f5ec6aff5e7c49f4efdaf581">NanoFixedSprite&lt; T, E &gt;</a>
-, <a class="el" href="class_nano_sprite.html#acf17b80799bd2230d98255abda620263">NanoSprite&lt; T, E &gt;</a>
+: <a class="el" href="class_nano_sprite.html#a139dd059196676bbaad3a24846582851">NanoSprite&lt; T &gt;</a>
+</li>
+<li>setBlock()
+: <a class="el" href="class_display_s_s_d1306.html#a833418b1aa88b94ec7bc18edb1e832a1">DisplaySSD1306</a>
+, <a class="el" href="class_display_s_s_d1331.html#a35106dc342812fe245161859272f7ab7">DisplaySSD1331</a>
+, <a class="el" href="class_display_s_s_d1331x16.html#a409b06cbe4bf0d5f0063cb4780b7197a">DisplaySSD1331x16</a>
+, <a class="el" href="class_nano_display_ops.html#ad4edd0546d56409c87c8a51fe5dad120">NanoDisplayOps&lt; BPP &gt;</a>
 </li>
 <li>setColor()
 : <a class="el" href="class_nano_canvas_ops.html#a64f9b55e8041a118899437935f488f82">NanoCanvasOps&lt; BPP &gt;</a>
+, <a class="el" href="class_nano_display_ops.html#ab7859c4415ab329fbceaf327e5822011">NanoDisplayOps&lt; BPP &gt;</a>
 </li>
-<li>setCursor()
-: <a class="el" href="class_ssd1306_console.html#ae5725d8fcccdcf8d1496cc82a1d0fe19">Ssd1306Console</a>
+<li>setContrast()
+: <a class="el" href="class_display_s_s_d1306.html#a4f80051bf2597aac37a3c3cac891fbbb">DisplaySSD1306</a>
 </li>
 <li>setFrameRate()
 : <a class="el" href="class_nano_engine_core.html#ae3bea7e85ca03cc698dff398ff853835">NanoEngineCore</a>
@@ -115,40 +148,66 @@ $(function() {
 <li>setOffset()
 : <a class="el" href="class_adafruit_canvas_ops.html#a2c6e7bba427fbc0e9e3b8e36fcd1b0ab">AdafruitCanvasOps&lt; BPP &gt;</a>
 , <a class="el" href="class_nano_canvas_ops.html#a4bef3a62e787ca2390470ef95a77257e">NanoCanvasOps&lt; BPP &gt;</a>
+, <a class="el" href="class_nano_display_ops.html#acf983713a338a4742ed55ca8e382855a">NanoDisplayOps&lt; BPP &gt;</a>
 </li>
 <li>setPoint()
 : <a class="el" href="struct___nano_point.html#a0cca7797568bd0d06f00fd8fb54695d0">_NanoPoint</a>
 </li>
 <li>setPos()
-: <a class="el" href="struct_s_p_r_i_t_e.html#aefc379df23410812d5799c2b93161e19">SPRITE</a>
+: <a class="el" href="class_nano_object.html#a6ce66d0e05547006224125b31573eb56">NanoObject&lt; T &gt;</a>
+, <a class="el" href="struct_s_p_r_i_t_e.html#aefc379df23410812d5799c2b93161e19">SPRITE</a>
 </li>
 <li>setRect()
 : <a class="el" href="struct___nano_rect.html#a4ec46c67e816c1462b4f69ff874e9e8f">_NanoRect</a>
-, <a class="el" href="class_sprite_pool.html#a685c20c2e1b762cf10fad3e89701e0e3">SpritePool</a>
+</li>
+<li>setRotation()
+: <a class="el" href="class_display_s_s_d1331.html#a0f9b144d7ab1cee217c97459c488d3e8">DisplaySSD1331</a>
+, <a class="el" href="class_display_s_s_d1331x16.html#adc0a28e2b4567d56d95cb12610ef0430">DisplaySSD1331x16</a>
+</li>
+<li>setSize()
+: <a class="el" href="class_nano_object.html#a6ab13d68ceedf2defcba210b56fa1e53">NanoObject&lt; T &gt;</a>
+</li>
+<li>setTiler()
+: <a class="el" href="class_nano_engine_object.html#ab4cdd5d7a37746ecfa50844f4780547e">NanoEngineObject&lt; T &gt;</a>
+</li>
+<li>showMenu()
+: <a class="el" href="class_nano_display_ops.html#a63b797e32f7ab8b1369ba30c75be60c6">NanoDisplayOps&lt; BPP &gt;</a>
 </li>
 <li>size()
 : <a class="el" href="struct___nano_rect.html#adae6b01f1eacbed81e29566577333896">_NanoRect</a>
 </li>
-<li>SP_ERR_NO_SPACE
-: <a class="el" href="class_sprite_pool.html#abef7ea5b3414ec7adf053d56df13b7c4">SpritePool</a>
-</li>
 <li>spacing
 : <a class="el" href="struct_s_char_info.html#a812ff013a4ac7c53e8050892cd82541f">SCharInfo</a>
 </li>
-<li>spi
-: <a class="el" href="structssd1306__interface__t.html#afd33289a509ae27cbdafd118b91ff23e">ssd1306_interface_t</a>
+<li>spiDataMode()
+: <a class="el" href="class_display_s_s_d1306.html#a79b54a518c17e0642d27b9336e102b15">DisplaySSD1306</a>
+, <a class="el" href="class_display_s_s_d1331.html#a193c14be774afbe01368030f9bb27202">DisplaySSD1331</a>
+, <a class="el" href="class_display_s_s_d1331x16.html#acbd3bcd7d2a829a7f587c2eb1a2076c1">DisplaySSD1331x16</a>
 </li>
-<li>SpritePool()
-: <a class="el" href="class_sprite_pool.html#ad7f28dde3e55d7e57f68507058c7cbda">SpritePool</a>
-</li>
-<li>start
-: <a class="el" href="structssd1306__interface__t.html#a347dbbf8fdb470d133901c8fbd8c5186">ssd1306_interface_t</a>
+<li>start()
+: <a class="el" href="class_arduino_i2c.html#a65f520bdb1f13da2e1e94b9f4bf00913">ArduinoI2c</a>
+, <a class="el" href="class_arduino_spi.html#a0464269e09dd53427e64ab6b55309e0d">ArduinoSpi</a>
+, <a class="el" href="class_avr_spi.html#afb2900ff24c255ec72cec78d5a6400ac">AvrSpi</a>
+, <a class="el" href="class_esp_i2c.html#aaeb59165fd81777cf784940db1f2bace">EspI2c</a>
+, <a class="el" href="class_esp_spi.html#a4435a770652070a7d33ef31d91bfb249">EspSpi</a>
+, <a class="el" href="class_i_wire_interface.html#a9d19cf03b2f861b3e8ee513ac3573549">IWireInterface</a>
+, <a class="el" href="class_linux_i2c.html#a3d5fe7baca82424a663942605312c29d">LinuxI2c</a>
+, <a class="el" href="class_linux_spi.html#a2b327dcd4d492811de42347e68a9be57">LinuxSpi</a>
+, <a class="el" href="class_twi_i2c.html#a803e96df60796ad2e4afa03055346119">TwiI2c</a>
 </li>
 <li>start_code
 : <a class="el" href="struct_s_unicode_block_record.html#af269a22380bdb209d119e78fd94793b3">SUnicodeBlockRecord</a>
 </li>
-<li>stop
-: <a class="el" href="structssd1306__interface__t.html#a1cccdffea7b707f9db54e93375d12a22">ssd1306_interface_t</a>
+<li>stop()
+: <a class="el" href="class_arduino_i2c.html#ad2d3310b13b35404e82912b820710feb">ArduinoI2c</a>
+, <a class="el" href="class_arduino_spi.html#a29c972c5a73e5d364a30b8744bed4f41">ArduinoSpi</a>
+, <a class="el" href="class_avr_spi.html#af53162cd0975afa18748efe855a08319">AvrSpi</a>
+, <a class="el" href="class_esp_i2c.html#a842cf50605a62b31b934c0362e19736f">EspI2c</a>
+, <a class="el" href="class_esp_spi.html#a982170ab29c7ac0cffcf3a08f47b53f4">EspSpi</a>
+, <a class="el" href="class_i_wire_interface.html#a14f671fcec23533cc592b8fd3d82289b">IWireInterface</a>
+, <a class="el" href="class_linux_i2c.html#a8fb26ab0af1b5396f446cef9327e8918">LinuxI2c</a>
+, <a class="el" href="class_linux_spi.html#a5cf7a8ac8608d0e53ecde59ddf1e9256">LinuxSpi</a>
+, <a class="el" href="class_twi_i2c.html#a4737a0e4e12a91293edf2f03c352c47f">TwiI2c</a>
 </li>
 </ul>
 </div><!-- contents -->

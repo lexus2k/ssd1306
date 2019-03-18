@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['offsetend',['offsetEnd',['../class_nano_canvas_ops.html#a1bc33d61da017643851937d680aefa36',1,'NanoCanvasOps']]],
+  ['offsetend',['offsetEnd',['../class_nano_canvas_ops.html#a1bc33d61da017643851937d680aefa36',1,'NanoCanvasOps::offsetEnd()'],['../class_nano_display_ops.html#af2334703b952d3a9cfde3126c975db9e',1,'NanoDisplayOps::offsetEnd()']]],
   ['operator_2b',['operator+',['../struct___nano_point.html#ae43e5976ea297fa19e2c6802979dd907',1,'_NanoPoint::operator+()'],['../struct___nano_rect.html#a5b1bc5b55fca40919a5da5dc3e93fe7f',1,'_NanoRect::operator+()']]],
   ['operator_2b_3d',['operator+=',['../struct___nano_point.html#a49f5c70f11141579ebcfaee7fb83a7a4',1,'_NanoPoint::operator+=()'],['../struct___nano_rect.html#a504c0982e9e76c09c03b632ff5d9da21',1,'_NanoRect::operator+=()']]],
   ['operator_2d',['operator-',['../struct___nano_point.html#a2e032b491bbeaa37bc3a58a19cb8e818',1,'_NanoPoint::operator-()'],['../struct___nano_rect.html#a283c63d0a75d36aa776228470859ae56',1,'_NanoRect::operator-()']]],

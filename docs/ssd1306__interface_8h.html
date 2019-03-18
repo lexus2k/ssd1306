@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SSD1306 OLED display driver: intf/ssd1306_interface.h File Reference</title>
+<title>SSD1306 OLED display driver: ssd1306_hal/ssd1306_interface.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.13</span>
+   &#160;<span id="projectnumber">1.8.0.1</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -60,56 +60,28 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_79dd6902ba1de7f614a2c98c3be1d0c9.html">intf</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_e8e2c9e5894b9269226c7b242c94fdc2.html">ssd1306_hal</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle">
 <div class="title">ssd1306_interface.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="io_8h_source.html">ssd1306_hal/io.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
 </div>
 <p><a href="ssd1306__interface_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structssd1306__interface__t.html">ssd1306_interface_t</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_platform_i2c_config.html">SPlatformI2cConfig</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gaeff66a04d6a58f031dbc7d8aa4e671a7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaeff66a04d6a58f031dbc7d8aa4e671a7">ssd1306_dcQuickSwitch</a>&#160;&#160;&#160;ssd1306_intf.spi</td></tr>
-<tr class="separator:gaeff66a04d6a58f031dbc7d8aa4e671a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5079a258f12fe4797c7b78dc59196d59"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga5079a258f12fe4797c7b78dc59196d59">ssd1306_startTransmission</a>&#160;&#160;&#160;ssd1306_intf.start</td></tr>
-<tr class="separator:ga5079a258f12fe4797c7b78dc59196d59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga450686fc271e943d9e22b1cfcd06e978"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga450686fc271e943d9e22b1cfcd06e978">ssd1306_endTransmission</a>&#160;&#160;&#160;ssd1306_intf.stop</td></tr>
-<tr class="separator:ga450686fc271e943d9e22b1cfcd06e978"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6fc5fa1be51bd985560f29b5eb1d7d74"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga6fc5fa1be51bd985560f29b5eb1d7d74">ssd1306_sendByte</a>&#160;&#160;&#160;ssd1306_intf.send</td></tr>
-<tr class="separator:ga6fc5fa1be51bd985560f29b5eb1d7d74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf7d0c203fdf6410ad5224d5c5f606352"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaf7d0c203fdf6410ad5224d5c5f606352">ssd1306_sendBytes</a>&#160;&#160;&#160;ssd1306_intf.send_buffer</td></tr>
-<tr class="separator:gaf7d0c203fdf6410ad5224d5c5f606352"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaabf245b331f551cc03ab63386aa0c2ea"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaabf245b331f551cc03ab63386aa0c2ea">ssd1306_closeInterface</a>&#160;&#160;&#160;ssd1306_intf.close</td></tr>
-<tr class="separator:gaabf245b331f551cc03ab63386aa0c2ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gaf63dd3db50389223a46d7c4eb716ef83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaf63dd3db50389223a46d7c4eb716ef83">ssd1306_sendCommand</a> (uint8_t command)</td></tr>
-<tr class="separator:gaf63dd3db50389223a46d7c4eb716ef83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6496dfa0de1c422f00889c1341c522a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga6496dfa0de1c422f00889c1341c522a6">ssd1306_commandStart</a> (void)</td></tr>
-<tr class="separator:ga6496dfa0de1c422f00889c1341c522a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3df07368356ac5f5af1acc77055a4aa2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga3df07368356ac5f5af1acc77055a4aa2">ssd1306_dataStart</a> (void)</td></tr>
-<tr class="separator:ga3df07368356ac5f5af1acc77055a4aa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:ga15909bf29819391d35ecb7f4e37fbea3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structssd1306__interface__t.html">ssd1306_interface_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga15909bf29819391d35ecb7f4e37fbea3">ssd1306_intf</a></td></tr>
-<tr class="separator:ga15909bf29819391d35ecb7f4e37fbea3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_platform_spi_config.html">SPlatformSpiConfig</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_i_wire_interface.html">IWireInterface</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>SSD1306 interface functions. </p>

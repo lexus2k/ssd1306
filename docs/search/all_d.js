@@ -2,7 +2,7 @@ var searchData=
 [
   ['oleds_3a_20initialization_20and_20service_20functions',['OLEDs: initialization and service functions',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html',1,'']]],
   ['offset',['offset',['../class_adafruit_canvas_ops.html#aa3bc52732d31517596321f0efa40bafe',1,'AdafruitCanvasOps::offset()'],['../class_nano_canvas_ops.html#a0ff1def9b165746092c0c21adf420612',1,'NanoCanvasOps::offset()']]],
-  ['offsetend',['offsetEnd',['../class_nano_canvas_ops.html#a1bc33d61da017643851937d680aefa36',1,'NanoCanvasOps']]],
+  ['offsetend',['offsetEnd',['../class_nano_canvas_ops.html#a1bc33d61da017643851937d680aefa36',1,'NanoCanvasOps::offsetEnd()'],['../class_nano_display_ops.html#af2334703b952d3a9cfde3126c975db9e',1,'NanoDisplayOps::offsetEnd()']]],
   ['oldselection',['oldSelection',['../struct_s_app_menu.html#ad79da4d78c16e3fbbd2e380dc5763275',1,'SAppMenu']]],
   ['oled_5fsh1106_2eh',['oled_sh1106.h',['../oled__sh1106_8h.html',1,'']]],
   ['oled_5fssd1306_2eh',['oled_ssd1306.h',['../oled__ssd1306_8h.html',1,'']]],

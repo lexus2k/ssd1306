@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.13</span>
+   &#160;<span id="projectnumber">1.8.0.1</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -78,6 +78,12 @@ $(function() {
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structssd1306__lcd__t.html">ssd1306_lcd_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structssd1306__lcd2__t.html">ssd1306_lcd2_t</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_display_s_s_d1306.html">DisplaySSD1306</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_display_s_s_d1331.html">DisplaySSD1331</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -111,7 +117,7 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:gaf4b71961185e1fa00ee5962123a349ae"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaf4b71961185e1fa00ee5962123a349ae">lcd_type_t</a> { <br />
-&#160;&#160;<a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ggaf4b71961185e1fa00ee5962123a349aead95a2d5ef67df02a85a1bc3bff5129a4">LCD_TYPE_SSD1306</a>, 
+&#160;&#160;<a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ggaf4b71961185e1fa00ee5962123a349aead95a2d5ef67df02a85a1bc3bff5129a4">LCD_TYPE_SSD1306</a> = 65, 
 <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ggaf4b71961185e1fa00ee5962123a349aea846490e1ce898baebea443873c666786">LCD_TYPE_PCD8544</a>, 
 <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ggaf4b71961185e1fa00ee5962123a349aeaecd840f4bc28d78905c61044b139e73c">LCD_TYPE_SH1106</a>, 
 <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ggaf4b71961185e1fa00ee5962123a349aea332304434dfd968714082cb92fc85d33">LCD_TYPE_SSD1331</a>, 
@@ -141,10 +147,6 @@ Functions</h2></td></tr>
 <tr class="memitem:ga2c9a4cae483acc0afd549c59a9946ef3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga2c9a4cae483acc0afd549c59a9946ef3">ssd1306_resetController</a> (int8_t rstPin, uint8_t delayMs)</td></tr>
 <tr class="memdesc:ga2c9a4cae483acc0afd549c59a9946ef3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Does hardware reset for oled controller.  <a href="#ga2c9a4cae483acc0afd549c59a9946ef3">More...</a><br /></td></tr>
 <tr class="separator:ga2c9a4cae483acc0afd549c59a9946ef3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaacca10ced128b51917f24c1d74a0cdb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaaacca10ced128b51917f24c1d74a0cdb">ssd1306_displayHeight</a> (void)</td></tr>
-<tr class="separator:gaaacca10ced128b51917f24c1d74a0cdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga242c99a7c5f09eaad688f91c018215e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga242c99a7c5f09eaad688f91c018215e1">ssd1306_displayWidth</a> (void)</td></tr>
-<tr class="separator:ga242c99a7c5f09eaad688f91c018215e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -191,46 +193,6 @@ Variables</h2></td></tr>
 <tr class="memitem:ga595cfcfd0d9f8658d5a6f5d69df3b967"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga595cfcfd0d9f8658d5a6f5d69df3b967">sh1106_128x64_spi_init</a> (int8_t rstPin, int8_t cesPin, int8_t dcPin)</td></tr>
 <tr class="memdesc:ga595cfcfd0d9f8658d5a6f5d69df3b967"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits 128x64 OLED display over spi (based on SH1106 controller).  <a href="#ga595cfcfd0d9f8658d5a6f5d69df3b967">More...</a><br /></td></tr>
 <tr class="separator:ga595cfcfd0d9f8658d5a6f5d69df3b967"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab4435a11942917172844748956c39294"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gab4435a11942917172844748956c39294">ssd1306_128x64_init</a> (void)</td></tr>
-<tr class="memdesc:gab4435a11942917172844748956c39294"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits 128x64 OLED display (based on SSD1306 controller).  <a href="#gab4435a11942917172844748956c39294">More...</a><br /></td></tr>
-<tr class="separator:gab4435a11942917172844748956c39294"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad4cf492be6e9c71cd461baf8709ab617"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gad4cf492be6e9c71cd461baf8709ab617">ssd1306_128x64_i2c_init</a> (void)</td></tr>
-<tr class="memdesc:gad4cf492be6e9c71cd461baf8709ab617"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits 128x64 OLED display over i2c (based on SSD1306 controller).  <a href="#gad4cf492be6e9c71cd461baf8709ab617">More...</a><br /></td></tr>
-<tr class="separator:gad4cf492be6e9c71cd461baf8709ab617"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae821e21898f6a7187654251c40b138ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gae821e21898f6a7187654251c40b138ce">ssd1306_128x64_i2c_initEx</a> (int8_t scl, int8_t sda, int8_t sa)</td></tr>
-<tr class="memdesc:gae821e21898f6a7187654251c40b138ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits 128x64 OLED display over i2c (based on SSD1306 controller).  <a href="#gae821e21898f6a7187654251c40b138ce">More...</a><br /></td></tr>
-<tr class="separator:gae821e21898f6a7187654251c40b138ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga008655e2f6258b9e4e869733485dd821"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga008655e2f6258b9e4e869733485dd821">ssd1306_128x64_spi_init</a> (int8_t rstPin, int8_t cesPin, int8_t dcPin)</td></tr>
-<tr class="memdesc:ga008655e2f6258b9e4e869733485dd821"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits 128x64 OLED display over spi (based on SSD1306 controller).  <a href="#ga008655e2f6258b9e4e869733485dd821">More...</a><br /></td></tr>
-<tr class="separator:ga008655e2f6258b9e4e869733485dd821"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadf0f74043af024bd5148d6d5e042e8ae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gadf0f74043af024bd5148d6d5e042e8ae">ssd1306_128x32_spi_init</a> (int8_t rstPin, int8_t cesPin, int8_t dcPin)</td></tr>
-<tr class="memdesc:gadf0f74043af024bd5148d6d5e042e8ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits 128x32 OLED display over spi (based on SSD1306 controller).  <a href="#gadf0f74043af024bd5148d6d5e042e8ae">More...</a><br /></td></tr>
-<tr class="separator:gadf0f74043af024bd5148d6d5e042e8ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa7f352281f0fbef55ab6b351d2fbd631"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa7f352281f0fbef55ab6b351d2fbd631">ssd1306_init</a> (void) __attribute__((deprecated))</td></tr>
-<tr class="memdesc:gaa7f352281f0fbef55ab6b351d2fbd631"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits 128x64 OLED display over i2c (based on SSD1306 controller).  <a href="#gaa7f352281f0fbef55ab6b351d2fbd631">More...</a><br /></td></tr>
-<tr class="separator:gaa7f352281f0fbef55ab6b351d2fbd631"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac3fda4135e6f94eb79ffe7919f77de6b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gac3fda4135e6f94eb79ffe7919f77de6b">ssd1306_128x32_i2c_init</a> (void)</td></tr>
-<tr class="memdesc:gac3fda4135e6f94eb79ffe7919f77de6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits 128x32 OLED display over i2c (based on SSD1306 controller).  <a href="#gac3fda4135e6f94eb79ffe7919f77de6b">More...</a><br /></td></tr>
-<tr class="separator:gac3fda4135e6f94eb79ffe7919f77de6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadbd0487bec3e3ffb688206e74a787e1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gadbd0487bec3e3ffb688206e74a787e1d">ssd1306_128x32_init</a> (void)</td></tr>
-<tr class="memdesc:gadbd0487bec3e3ffb688206e74a787e1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits 128x32 OLED display (based on ssd1306 controller).  <a href="#gadbd0487bec3e3ffb688206e74a787e1d">More...</a><br /></td></tr>
-<tr class="separator:gadbd0487bec3e3ffb688206e74a787e1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga67bd0118d1ecea5a1ee321699a209c83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga67bd0118d1ecea5a1ee321699a209c83">ssd1306_displayOff</a> (void)</td></tr>
-<tr class="separator:ga67bd0118d1ecea5a1ee321699a209c83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaef8e39d5e7845baf1b14b1648475e01"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaaef8e39d5e7845baf1b14b1648475e01">ssd1306_displayOn</a> (void)</td></tr>
-<tr class="separator:gaaef8e39d5e7845baf1b14b1648475e01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga27852f112ebe53726badd8f4998fceab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga27852f112ebe53726badd8f4998fceab">ssd1306_setContrast</a> (uint8_t contrast)</td></tr>
-<tr class="separator:ga27852f112ebe53726badd8f4998fceab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa6577db0a6f3385936d6db031c27f233"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa6577db0a6f3385936d6db031c27f233">ssd1306_invertMode</a> (void)</td></tr>
-<tr class="separator:gaa6577db0a6f3385936d6db031c27f233"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabcd6b24c5dfbfeafb4d017dce5019ecf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gabcd6b24c5dfbfeafb4d017dce5019ecf">ssd1306_normalMode</a> (void)</td></tr>
-<tr class="separator:gabcd6b24c5dfbfeafb4d017dce5019ecf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac6a71a50e10fb75181c0c851821d3de6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gac6a71a50e10fb75181c0c851821d3de6">ssd1306_flipHorizontal</a> (uint8_t mode)</td></tr>
-<tr class="memdesc:gac6a71a50e10fb75181c0c851821d3de6"><td class="mdescLeft">&#160;</td><td class="mdescRight">performs horizontal flip  <a href="#gac6a71a50e10fb75181c0c851821d3de6">More...</a><br /></td></tr>
-<tr class="separator:gac6a71a50e10fb75181c0c851821d3de6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga238cd7dab0ae562b70e1a19ad3032caa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga238cd7dab0ae562b70e1a19ad3032caa">ssd1306_flipVertical</a> (uint8_t mode)</td></tr>
-<tr class="memdesc:ga238cd7dab0ae562b70e1a19ad3032caa"><td class="mdescLeft">&#160;</td><td class="mdescRight">performs vertical flip  <a href="#ga238cd7dab0ae562b70e1a19ad3032caa">More...</a><br /></td></tr>
-<tr class="separator:ga238cd7dab0ae562b70e1a19ad3032caa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7970481a2ed34c3730621472fab89ada"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga7970481a2ed34c3730621472fab89ada">ssd1325_setMode</a> (<a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gad2c71a26fa32dfcee88db3a3058ce596">lcd_mode_t</a> mode)</td></tr>
 <tr class="memdesc:ga7970481a2ed34c3730621472fab89ada"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets GDRAM autoincrement mode.  <a href="#ga7970481a2ed34c3730621472fab89ada">More...</a><br /></td></tr>
 <tr class="separator:ga7970481a2ed34c3730621472fab89ada"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -240,22 +202,6 @@ Variables</h2></td></tr>
 <tr class="memitem:ga9d09d25be2577002a164bbb8517b75e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga9d09d25be2577002a164bbb8517b75e0">ssd1325_128x64_spi_init</a> (int8_t rstPin, int8_t cesPin, int8_t dcPin)</td></tr>
 <tr class="memdesc:ga9d09d25be2577002a164bbb8517b75e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits 128x64 SSD1325 OLED display over spi (based on SSD1325 controller).  <a href="#ga9d09d25be2577002a164bbb8517b75e0">More...</a><br /></td></tr>
 <tr class="separator:ga9d09d25be2577002a164bbb8517b75e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga623c41c99d8d4727bf4f94cad9506cca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga623c41c99d8d4727bf4f94cad9506cca">ssd1331_setMode</a> (<a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gad2c71a26fa32dfcee88db3a3058ce596">lcd_mode_t</a> mode)</td></tr>
-<tr class="memdesc:ga623c41c99d8d4727bf4f94cad9506cca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets GDRAM autoincrement mode.  <a href="#ga623c41c99d8d4727bf4f94cad9506cca">More...</a><br /></td></tr>
-<tr class="separator:ga623c41c99d8d4727bf4f94cad9506cca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0cd4120ea19b526a16b33029e3f98f82"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga0cd4120ea19b526a16b33029e3f98f82">ssd1331_96x64_init</a> (void)</td></tr>
-<tr class="memdesc:ga0cd4120ea19b526a16b33029e3f98f82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits 96x64 RGB OLED display (based on SSD1331 controller).  <a href="#ga0cd4120ea19b526a16b33029e3f98f82">More...</a><br /></td></tr>
-<tr class="separator:ga0cd4120ea19b526a16b33029e3f98f82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga838896d36d56ee1619bbc9ae5d7b88a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga838896d36d56ee1619bbc9ae5d7b88a8">ssd1331_96x64_spi_init</a> (int8_t rstPin, int8_t cesPin, int8_t dcPin)</td></tr>
-<tr class="memdesc:ga838896d36d56ee1619bbc9ae5d7b88a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits 96x64 RGB OLED display over spi in 8-bit mode (based on SSD1331 controller).  <a href="#ga838896d36d56ee1619bbc9ae5d7b88a8">More...</a><br /></td></tr>
-<tr class="separator:ga838896d36d56ee1619bbc9ae5d7b88a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7007996bbee474bcd8025b7caeaecc73"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga7007996bbee474bcd8025b7caeaecc73">ssd1331_96x64_spi_init16</a> (int8_t rstPin, int8_t cesPin, int8_t dcPin)</td></tr>
-<tr class="memdesc:ga7007996bbee474bcd8025b7caeaecc73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits 96x64 RGB OLED display over spi in 16-bit mode (based on SSD1331 controller).  <a href="#ga7007996bbee474bcd8025b7caeaecc73">More...</a><br /></td></tr>
-<tr class="separator:ga7007996bbee474bcd8025b7caeaecc73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafa4c239fd99c5541b06d46ac9ed88b6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gafa4c239fd99c5541b06d46ac9ed88b6d">ssd1331_drawLine</a> (uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint16_t color)</td></tr>
-<tr class="separator:gafa4c239fd99c5541b06d46ac9ed88b6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga521e5d88879aa31c3b062ea820665818"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga521e5d88879aa31c3b062ea820665818">ssd1331_copyBlock</a> (uint8_t left, uint8_t top, uint8_t right, uint8_t bottom, uint8_t newLeft, uint8_t newTop)</td></tr>
-<tr class="separator:ga521e5d88879aa31c3b062ea820665818"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad784e60b2fe8b8f92a6f8b0cf5187bcf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gad784e60b2fe8b8f92a6f8b0cf5187bcf">ssd1351_setMode</a> (<a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gad2c71a26fa32dfcee88db3a3058ce596">lcd_mode_t</a> mode)</td></tr>
 <tr class="memdesc:gad784e60b2fe8b8f92a6f8b0cf5187bcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets GDRAM autoincrement mode.  <a href="#gad784e60b2fe8b8f92a6f8b0cf5187bcf">More...</a><br /></td></tr>
 <tr class="separator:gad784e60b2fe8b8f92a6f8b0cf5187bcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -310,7 +256,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> set_block_native(lcduint_t x, lcduint_t y, lcduint_t w) \</div><div class="line">    { \</div><div class="line">        uint8_t rx = w ? (x + w - 1) : (<a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a>.<a class="code" href="structssd1306__lcd__t.html#a0c7d9e9ee7e3d36391e55731b0ebc516">width</a> - 1); \</div><div class="line">        ssd1306_intf.start(); \</div><div class="line">        ssd1306_spiDataMode(0); \</div><div class="line">        ssd1306_intf.send(column_cmd); \</div><div class="line">        ssd1306_intf.send(x); \</div><div class="line">        ssd1306_intf.send(rx &lt; <a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a>.<a class="code" href="structssd1306__lcd__t.html#a0c7d9e9ee7e3d36391e55731b0ebc516">width</a> ? rx : (<a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a>.<a class="code" href="structssd1306__lcd__t.html#a0c7d9e9ee7e3d36391e55731b0ebc516">width</a> - 1)); \</div><div class="line">        ssd1306_intf.send(row_cmd); \</div><div class="line">        ssd1306_intf.send(y); \</div><div class="line">        ssd1306_intf.send(<a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a>.<a class="code" href="structssd1306__lcd__t.html#af576fdaf144fefdb8e278ca3cb90f49e">height</a> - 1); \</div><div class="line">        ssd1306_spiDataMode(1); \</div><div class="line">    } \</div><div class="line">    static <span class="keywordtype">void</span> next_page_native(<span class="keywordtype">void</span>) \</div><div class="line">    { \</div><div class="line">    } \</div><div class="ttc" id="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i_html_gaddd9cfaaeac4d2937f5372313ddaee4f"><div class="ttname"><a href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a></div><div class="ttdeci">ssd1306_lcd_t ssd1306_lcd</div><div class="ttdef"><b>Definition:</b> <a href="lcd__common_8c_source.html#l00032">lcd_common.c:32</a></div></div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> set_block_native(lcduint_t x, lcduint_t y, lcduint_t w) \</div><div class="line">    { \</div><div class="line">        uint8_t rx = w ? (x + w - 1) : (<a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a>.<a class="code" href="structssd1306__lcd__t.html#a0c7d9e9ee7e3d36391e55731b0ebc516">width</a> - 1); \</div><div class="line">        ssd1306_intf.start(); \</div><div class="line">        ssd1306_spiDataMode(0); \</div><div class="line">        ssd1306_intf.send(column_cmd); \</div><div class="line">        ssd1306_intf.send(x); \</div><div class="line">        ssd1306_intf.send(rx &lt; <a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a>.<a class="code" href="structssd1306__lcd__t.html#a0c7d9e9ee7e3d36391e55731b0ebc516">width</a> ? rx : (<a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a>.<a class="code" href="structssd1306__lcd__t.html#a0c7d9e9ee7e3d36391e55731b0ebc516">width</a> - 1)); \</div><div class="line">        ssd1306_intf.send(row_cmd); \</div><div class="line">        ssd1306_intf.send(y); \</div><div class="line">        ssd1306_intf.send(<a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a>.<a class="code" href="structssd1306__lcd__t.html#af576fdaf144fefdb8e278ca3cb90f49e">height</a> - 1); \</div><div class="line">        ssd1306_spiDataMode(1); \</div><div class="line">    } \</div><div class="line">    static <span class="keywordtype">void</span> next_page_native(<span class="keywordtype">void</span>) \</div><div class="line">    { \</div><div class="line">    } \</div><div class="ttc" id="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i_html_gaddd9cfaaeac4d2937f5372313ddaee4f"><div class="ttname"><a href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a></div><div class="ttdeci">ssd1306_lcd_t ssd1306_lcd</div></div>
 <div class="ttc" id="structssd1306__lcd__t_html_af576fdaf144fefdb8e278ca3cb90f49e"><div class="ttname"><a href="structssd1306__lcd__t.html#af576fdaf144fefdb8e278ca3cb90f49e">ssd1306_lcd_t::height</a></div><div class="ttdeci">lcduint_t height</div><div class="ttdef"><b>Definition:</b> <a href="lcd__common_8h_source.html#l00097">lcd_common.h:97</a></div></div>
 <div class="ttc" id="structssd1306__lcd__t_html_a0c7d9e9ee7e3d36391e55731b0ebc516"><div class="ttname"><a href="structssd1306__lcd__t.html#a0c7d9e9ee7e3d36391e55731b0ebc516">ssd1306_lcd_t::width</a></div><div class="ttdeci">lcduint_t width</div><div class="ttdef"><b>Definition:</b> <a href="lcd__common_8h_source.html#l00094">lcd_common.h:94</a></div></div>
 </div><!-- fragment --><p>Macro <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga9d0d908bfa8476c33a85718bb1281f83">CONTROLLER_NATIVE_SPI_BLOCK_8BIT_CMDS()</a> generates 2 static functions, applicable for many oled controllers with 8-bit commands: set_block_native(), next_page_native(). These functions are to be used when working in oled controller native mode. </p><dl class="params"><dt>Parameters</dt><dd>
@@ -322,7 +268,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>It is assumed that column and row commands accept 2 single byte arguments: start and end of region </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00352">352</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00390">390</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
 
 </div>
 </div>
@@ -339,7 +285,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Current selected lcd display type </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000003">Deprecated:</a></b></dt><dd>Use ssd1306_lcd.type instead. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00188">188</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00226">226</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
 
 </div>
 </div>
@@ -356,7 +302,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Current display height </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>Use ssd1306_lcd.height instead. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00176">176</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00214">214</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
 
 </div>
 </div>
@@ -373,7 +319,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Current display width </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000002">Deprecated:</a></b></dt><dd>Use ssd1306_lcd.width instead. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00182">182</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00220">220</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
 
 </div>
 </div>
@@ -393,7 +339,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">extern</span> uint16_t ssd1306_color; \</div><div class="line">    static <span class="keywordtype">void</span> send_pixels_compat16(uint8_t data) \</div><div class="line">    { \</div><div class="line">        for (uint8_t i=8; i&gt;0; i--) \</div><div class="line">        { \</div><div class="line">            if ( data &amp; 0x01 ) \</div><div class="line">            { \</div><div class="line">                ssd1306_intf.send( (uint8_t)(ssd1306_color &gt;&gt; 8 ) ); \</div><div class="line">                ssd1306_intf.send( (uint8_t)(ssd1306_color &amp; 0xFF) ); \</div><div class="line">            } \</div><div class="line">            else \</div><div class="line">            { \</div><div class="line">                ssd1306_intf.send( 0B00000000 ); \</div><div class="line">                ssd1306_intf.send( 0B00000000 ); \</div><div class="line">            } \</div><div class="line">            data &gt;&gt;= 1; \</div><div class="line">        } \</div><div class="line">    } \</div><div class="line">    static <span class="keywordtype">void</span> send_pixels_buffer_compat16(<span class="keyword">const</span> uint8_t *buffer, uint16_t len) \</div><div class="line">    { \</div><div class="line">        while(len--) \</div><div class="line">        { \</div><div class="line">            send_pixels_compat16(*buffer); \</div><div class="line">            buffer++; \</div><div class="line">        } \</div><div class="line">    }</div></div><!-- fragment --><p>Macro <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaac9ef7e17696eb974902f294c38e74f4">SSD1306_COMPAT_SEND_PIXELS_RGB16_CMDS()</a> generates 2 static functions, applicable for many oled controllers in 16-bit RGB mode: send_pixels_compat16(), send_pixels_buffer_compat16(). These functions are to be used when working in ssd1306 compatible mode. </p>
 
-<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00408">408</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00446">446</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
 
 </div>
 </div>
@@ -413,7 +359,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">extern</span> uint16_t ssd1306_color; \</div><div class="line">    static <span class="keywordtype">void</span> send_pixels_compat(uint8_t data) \</div><div class="line">    { \</div><div class="line">        for (uint8_t i=8; i&gt;0; i--) \</div><div class="line">        { \</div><div class="line">            if ( data &amp; 0x01 ) \</div><div class="line">            { \</div><div class="line">                ssd1306_intf.send( (uint8_t)ssd1306_color ); \</div><div class="line">            } \</div><div class="line">            else \</div><div class="line">            { \</div><div class="line">                ssd1306_intf.send( 0B00000000 ); \</div><div class="line">            } \</div><div class="line">            data &gt;&gt;= 1; \</div><div class="line">        } \</div><div class="line">    } \</div><div class="line">    static <span class="keywordtype">void</span> send_pixels_buffer_compat(<span class="keyword">const</span> uint8_t *buffer, uint16_t len) \</div><div class="line">    { \</div><div class="line">        while(len--) \</div><div class="line">        { \</div><div class="line">            send_pixels_compat(*buffer); \</div><div class="line">            buffer++; \</div><div class="line">        } \</div><div class="line">    }</div></div><!-- fragment --><p>Macro <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gabd2a002504a9944d72166af553d0b8ec">SSD1306_COMPAT_SEND_PIXELS_RGB8_CMDS()</a> generates 2 static functions, applicable for many oled controllers in 8-bit RGB mode: send_pixels_compat(), send_pixels_buffer_compat(). These functions are to be used when working in ssd1306 compatible mode. </p>
 
-<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00376">376</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00414">414</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
 
 </div>
 </div>
@@ -442,7 +388,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">static</span> uint8_t __s_column; \</div><div class="line">    static uint8_t __s_page; \</div><div class="line">    static <span class="keywordtype">void</span> set_block_compat(lcduint_t x, lcduint_t y, lcduint_t w) \</div><div class="line">    { \</div><div class="line">        uint8_t rx = w ? (x + w - 1) : (<a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a>.<a class="code" href="structssd1306__lcd__t.html#a0c7d9e9ee7e3d36391e55731b0ebc516">width</a> - 1); \</div><div class="line">        __s_column = x; \</div><div class="line">        __s_page = y; \</div><div class="line">        ssd1306_intf.start(); \</div><div class="line">        ssd1306_spiDataMode(0); \</div><div class="line">        ssd1306_intf.send(column_cmd); \</div><div class="line">        ssd1306_intf.send(x); \</div><div class="line">        ssd1306_intf.send(rx &lt; <a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a>.<a class="code" href="structssd1306__lcd__t.html#a0c7d9e9ee7e3d36391e55731b0ebc516">width</a> ? rx : (<a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a>.<a class="code" href="structssd1306__lcd__t.html#a0c7d9e9ee7e3d36391e55731b0ebc516">width</a> - 1)); \</div><div class="line">        ssd1306_intf.send(row_cmd); \</div><div class="line">        ssd1306_intf.send(y&lt;&lt;3); \</div><div class="line">        ssd1306_intf.send(((y&lt;&lt;3) + 7) &lt; <a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a>.<a class="code" href="structssd1306__lcd__t.html#af576fdaf144fefdb8e278ca3cb90f49e">height</a> ? ((y&lt;&lt;3) + 7) : (<a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a>.<a class="code" href="structssd1306__lcd__t.html#af576fdaf144fefdb8e278ca3cb90f49e">height</a> - 1)); \</div><div class="line">        ssd1306_spiDataMode(1); \</div><div class="line">    } \</div><div class="line">    static <span class="keywordtype">void</span> next_page_compat(<span class="keywordtype">void</span>) \</div><div class="line">    { \</div><div class="line">        ssd1306_intf.stop(); \</div><div class="line">        set_block_compat(__s_column,__s_page+1,0); \</div><div class="line">    } \</div><div class="ttc" id="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i_html_gaddd9cfaaeac4d2937f5372313ddaee4f"><div class="ttname"><a href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a></div><div class="ttdeci">ssd1306_lcd_t ssd1306_lcd</div><div class="ttdef"><b>Definition:</b> <a href="lcd__common_8c_source.html#l00032">lcd_common.c:32</a></div></div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">static</span> uint8_t __s_column; \</div><div class="line">    static uint8_t __s_page; \</div><div class="line">    static <span class="keywordtype">void</span> set_block_compat(lcduint_t x, lcduint_t y, lcduint_t w) \</div><div class="line">    { \</div><div class="line">        uint8_t rx = w ? (x + w - 1) : (<a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a>.<a class="code" href="structssd1306__lcd__t.html#a0c7d9e9ee7e3d36391e55731b0ebc516">width</a> - 1); \</div><div class="line">        __s_column = x; \</div><div class="line">        __s_page = y; \</div><div class="line">        ssd1306_intf.start(); \</div><div class="line">        ssd1306_spiDataMode(0); \</div><div class="line">        ssd1306_intf.send(column_cmd); \</div><div class="line">        ssd1306_intf.send(x); \</div><div class="line">        ssd1306_intf.send(rx &lt; <a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a>.<a class="code" href="structssd1306__lcd__t.html#a0c7d9e9ee7e3d36391e55731b0ebc516">width</a> ? rx : (<a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a>.<a class="code" href="structssd1306__lcd__t.html#a0c7d9e9ee7e3d36391e55731b0ebc516">width</a> - 1)); \</div><div class="line">        ssd1306_intf.send(row_cmd); \</div><div class="line">        ssd1306_intf.send(y&lt;&lt;3); \</div><div class="line">        ssd1306_intf.send(((y&lt;&lt;3) + 7) &lt; <a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a>.<a class="code" href="structssd1306__lcd__t.html#af576fdaf144fefdb8e278ca3cb90f49e">height</a> ? ((y&lt;&lt;3) + 7) : (<a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a>.<a class="code" href="structssd1306__lcd__t.html#af576fdaf144fefdb8e278ca3cb90f49e">height</a> - 1)); \</div><div class="line">        ssd1306_spiDataMode(1); \</div><div class="line">    } \</div><div class="line">    static <span class="keywordtype">void</span> next_page_compat(<span class="keywordtype">void</span>) \</div><div class="line">    { \</div><div class="line">        ssd1306_intf.stop(); \</div><div class="line">        set_block_compat(__s_column,__s_page+1,0); \</div><div class="line">    } \</div><div class="ttc" id="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i_html_gaddd9cfaaeac4d2937f5372313ddaee4f"><div class="ttname"><a href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaddd9cfaaeac4d2937f5372313ddaee4f">ssd1306_lcd</a></div><div class="ttdeci">ssd1306_lcd_t ssd1306_lcd</div></div>
 <div class="ttc" id="structssd1306__lcd__t_html_af576fdaf144fefdb8e278ca3cb90f49e"><div class="ttname"><a href="structssd1306__lcd__t.html#af576fdaf144fefdb8e278ca3cb90f49e">ssd1306_lcd_t::height</a></div><div class="ttdeci">lcduint_t height</div><div class="ttdef"><b>Definition:</b> <a href="lcd__common_8h_source.html#l00097">lcd_common.h:97</a></div></div>
 <div class="ttc" id="structssd1306__lcd__t_html_a0c7d9e9ee7e3d36391e55731b0ebc516"><div class="ttname"><a href="structssd1306__lcd__t.html#a0c7d9e9ee7e3d36391e55731b0ebc516">ssd1306_lcd_t::width</a></div><div class="ttdeci">lcduint_t width</div><div class="ttdef"><b>Definition:</b> <a href="lcd__common_8h_source.html#l00094">lcd_common.h:94</a></div></div>
 </div><!-- fragment --><p>Macro <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gac463703c9f8a874c2b533284d421364e">SSD1306_COMPAT_SPI_BLOCK_8BIT_CMDS()</a> generates 2 static functions, applicable for many oled controllers with 8-bit commands: set_block_compat(), next_page_compat(). These functions are to be used when working in ssd1306 compatible mode. </p><dl class="params"><dt>Parameters</dt><dd>
@@ -454,7 +400,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>It is assumed that column and row commands accept 2 single byte arguments: start and end of region </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00316">316</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00354">354</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
 
 </div>
 </div>
@@ -471,7 +417,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Switches to the start of next RAM page for the block, specified by <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga13280d5cffa007c2a3ee87adbe823e41" title="Sets block in RAM of lcd display controller to write data to. ">ssd1306_setRamBlock()</a>. For ssd1306 it does nothing, while for sh1106 the function moves cursor to next page. </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000006">Deprecated:</a></b></dt><dd>Use ssd1306_lcd.next_page() instead. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00224">224</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00262">262</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
 
 </div>
 </div>
@@ -496,7 +442,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000009">Deprecated:</a></b></dt><dd>Use ssd1306_lcd.send_pixels8() instead. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00247">247</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00285">285</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
 
 </div>
 </div>
@@ -519,7 +465,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000007">Deprecated:</a></b></dt><dd>Use ssd1306_lcd.send_pixels1() instead. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00231">231</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00269">269</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
 
 </div>
 </div>
@@ -543,7 +489,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000008">Deprecated:</a></b></dt><dd>Use ssd1306_lcd.send_pixels_buffer1() instead. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00239">239</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00277">277</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
 
 </div>
 </div>
@@ -571,7 +517,7 @@ Variables</h2></td></tr>
 <dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000005">Deprecated:</a></b></dt><dd>Use ssd1306_lcd.set_block() instead. </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>- this function initiates session (i2c or spi) and do not close it. To close session, please, use ssd1306_intf.stop(). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00215">215</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lcd__common_8h_source.html#l00253">253</a> of file <a class="el" href="lcd__common_8h_source.html">lcd_common.h</a>.</p>
 
 </div>
 </div>
@@ -651,8 +597,6 @@ Variables</h2></td></tr>
 <dd>
 ssd1306_vga_controller_init() </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="composite__video_8c_source.html#l00132">132</a> of file <a class="el" href="composite__video_8c_source.html">composite_video.c</a>.</p>
-
 </div>
 </div>
 <a id="gaab951faf7291d6c038296863c3d3b05b"></a>
@@ -672,11 +616,9 @@ ssd1306_vga_controller_init() </dd></dl>
 </div><div class="memdoc">
 
 <p>Inits 128x128 RGB OLED display (based on il9163 controller). </p>
-<p>Inits 128x128 RGB OLED display (based on il9163 controller). User must init communication interface (i2c, spi) prior to calling this function. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa13b9975cc9b1d9a802db4edf22baa7b">ssd1306_i2cInit()</a> </dd>
+<p>Inits 128x128 RGB OLED display (based on il9163 controller). User must init communication interface (i2c, spi) prior to calling this function. </p><dl class="section see"><dt>See also</dt><dd>ssd1306_i2cInit() </dd>
 <dd>
 <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga0e21371367897c0f86480cfccc100b5c">ssd1306_spiInit()</a> </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="lcd__il9163_8c_source.html#l00235">235</a> of file <a class="el" href="lcd__il9163_8c_source.html">lcd_il9163.c</a>.</p>
 
 </div>
 </div>
@@ -722,8 +664,6 @@ ssd1306_vga_controller_init() </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__il9163_8c_source.html#l00251">251</a> of file <a class="el" href="lcd__il9163_8c_source.html">lcd_il9163.c</a>.</p>
-
 </div>
 </div>
 <a id="gaa85db34b703ff8b54d86a8eea5b30bab"></a>
@@ -752,8 +692,6 @@ ssd1306_vga_controller_init() </dd></dl>
 </dl>
 <dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000010">Deprecated:</a></b></dt><dd>Use <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga34699d9f6192c375a6b40d4414502d41" title="Sets library display mode for direct draw functions. ">ssd1306_setMode()</a> instead. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__il9163_8c_source.html#l00174">174</a> of file <a class="el" href="lcd__il9163_8c_source.html">lcd_il9163.c</a>.</p>
-
 </div>
 </div>
 <a id="ga02c6aa375576491c9d1574f7b6250ff9"></a>
@@ -773,11 +711,9 @@ ssd1306_vga_controller_init() </dd></dl>
 </div><div class="memdoc">
 
 <p>Inits 240x320 RGB OLED display (based on ili9341 controller). </p>
-<p>Inits 240x320 RGB OLED display (based on ili9341 controller). User must init communication interface (i2c, spi) prior to calling this function. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa13b9975cc9b1d9a802db4edf22baa7b">ssd1306_i2cInit()</a> </dd>
+<p>Inits 240x320 RGB OLED display (based on ili9341 controller). User must init communication interface (i2c, spi) prior to calling this function. </p><dl class="section see"><dt>See also</dt><dd>ssd1306_i2cInit() </dd>
 <dd>
 <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga0e21371367897c0f86480cfccc100b5c">ssd1306_spiInit()</a> </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="lcd__ili9341_8c_source.html#l00196">196</a> of file <a class="el" href="lcd__ili9341_8c_source.html">lcd_ili9341.c</a>.</p>
 
 </div>
 </div>
@@ -823,8 +759,6 @@ ssd1306_vga_controller_init() </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__ili9341_8c_source.html#l00212">212</a> of file <a class="el" href="lcd__ili9341_8c_source.html">lcd_ili9341.c</a>.</p>
-
 </div>
 </div>
 <a id="gac338746c1f4c80298ec9cd4d70c3a151"></a>
@@ -853,8 +787,6 @@ ssd1306_vga_controller_init() </dd></dl>
 </dl>
 <dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000011">Deprecated:</a></b></dt><dd>Use <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga34699d9f6192c375a6b40d4414502d41" title="Sets library display mode for direct draw functions. ">ssd1306_setMode()</a> instead. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__ili9341_8c_source.html#l00139">139</a> of file <a class="el" href="lcd__ili9341_8c_source.html">lcd_ili9341.c</a>.</p>
-
 </div>
 </div>
 <a id="ga82a5ff26eaac6065f9fdf8e182e0c1a0"></a>
@@ -874,11 +806,9 @@ ssd1306_vga_controller_init() </dd></dl>
 </div><div class="memdoc">
 
 <p>Inits 84x48 LED display (based on PCD8544 controller). </p>
-<p>Inits 84x48 LED display (based on PCD8544 controller). User must init communication interface (i2c, spi) prior to calling this function. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa13b9975cc9b1d9a802db4edf22baa7b">ssd1306_i2cInit()</a> </dd>
+<p>Inits 84x48 LED display (based on PCD8544 controller). User must init communication interface (i2c, spi) prior to calling this function. </p><dl class="section see"><dt>See also</dt><dd>ssd1306_i2cInit() </dd>
 <dd>
 <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga0e21371367897c0f86480cfccc100b5c">ssd1306_spiInit()</a> </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="lcd__pcd8544_8c_source.html#l00080">80</a> of file <a class="el" href="lcd__pcd8544_8c_source.html">lcd_pcd8544.c</a>.</p>
 
 </div>
 </div>
@@ -922,8 +852,6 @@ ssd1306_vga_controller_init() </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__pcd8544_8c_source.html#l00100">100</a> of file <a class="el" href="lcd__pcd8544_8c_source.html">lcd_pcd8544.c</a>.</p>
-
 </div>
 </div>
 <a id="ga9139ba33a533d8a0e85efddd6e22d87f"></a>
@@ -943,9 +871,7 @@ ssd1306_vga_controller_init() </dd></dl>
 </div><div class="memdoc">
 
 <p>Inits 128x64 OLED display over i2c (based on SH1106 controller). </p>
-<p>Inits 128x64 OLED display over i2c (based on SH1106 controller) This function uses hardcoded pins for i2c communication, depending on your hardware. If you use non-standard pins in your project, please perform call <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gadad8452b053aef2c84c6a14c7f4f247d">ssd1306_i2cInitEx()</a> and <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga931c084327fd2ae48550599c120d72f4" title="Inits 128x64 OLED display (based on SH1106 controller). ">sh1106_128x64_init()</a>. </p>
-
-<p class="definition">Definition at line <a class="el" href="oled__sh1106_8c_source.html#l00113">113</a> of file <a class="el" href="oled__sh1106_8c_source.html">oled_sh1106.c</a>.</p>
+<p>Inits 128x64 OLED display over i2c (based on SH1106 controller) This function uses hardcoded pins for i2c communication, depending on your hardware. If you use non-standard pins in your project, please perform call ssd1306_i2cInitEx() and <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga931c084327fd2ae48550599c120d72f4" title="Inits 128x64 OLED display (based on SH1106 controller). ">sh1106_128x64_init()</a>. </p>
 
 </div>
 </div>
@@ -967,8 +893,6 @@ ssd1306_vga_controller_init() </dd></dl>
 
 <p>Inits 128x64 OLED display (based on SH1106 controller). </p>
 <p>Inits 128x64 OLED display (based on SH1106 controller). User must init communication interface (i2c or spi) prior to calling this function. </p>
-
-<p class="definition">Definition at line <a class="el" href="oled__sh1106_8c_source.html#l00097">97</a> of file <a class="el" href="oled__sh1106_8c_source.html">oled_sh1106.c</a>.</p>
 
 </div>
 </div>
@@ -1014,246 +938,6 @@ ssd1306_vga_controller_init() </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="oled__sh1106_8c_source.html#l00119">119</a> of file <a class="el" href="oled__sh1106_8c_source.html">oled_sh1106.c</a>.</p>
-
-</div>
-</div>
-<a id="gac3fda4135e6f94eb79ffe7919f77de6b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac3fda4135e6f94eb79ffe7919f77de6b">&#9670;&nbsp;</a></span>ssd1306_128x32_i2c_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_128x32_i2c_init </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Inits 128x32 OLED display over i2c (based on SSD1306 controller). </p>
-<p>Inits 128x32 OLED display over i2c (based on SSD1306 controller) This function uses hardcoded pins for i2c communication, depending on your hardware. If you use non-standard pins in your project, please perform call <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gadad8452b053aef2c84c6a14c7f4f247d">ssd1306_i2cInitEx()</a> and <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gadbd0487bec3e3ffb688206e74a787e1d" title="Inits 128x32 OLED display (based on ssd1306 controller). ">ssd1306_128x32_init()</a>. </p>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1306_8c_source.html#l00241">241</a> of file <a class="el" href="oled__ssd1306_8c_source.html">oled_ssd1306.c</a>.</p>
-
-</div>
-</div>
-<a id="gadbd0487bec3e3ffb688206e74a787e1d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gadbd0487bec3e3ffb688206e74a787e1d">&#9670;&nbsp;</a></span>ssd1306_128x32_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_128x32_init </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Inits 128x32 OLED display (based on ssd1306 controller). </p>
-<p>Inits 128x32 OLED display (based on ssd1306 controller) spi or i2c bus must be initialized prior to calling this function. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa13b9975cc9b1d9a802db4edf22baa7b">ssd1306_i2cInit()</a> </dd>
-<dd>
-<a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga0e21371367897c0f86480cfccc100b5c">ssd1306_spiInit()</a> </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1306_8c_source.html#l00225">225</a> of file <a class="el" href="oled__ssd1306_8c_source.html">oled_ssd1306.c</a>.</p>
-
-</div>
-</div>
-<a id="gadf0f74043af024bd5148d6d5e042e8ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gadf0f74043af024bd5148d6d5e042e8ae">&#9670;&nbsp;</a></span>ssd1306_128x32_spi_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_128x32_spi_init </td>
-          <td>(</td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>rstPin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>cesPin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>dcPin</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Inits 128x32 OLED display over spi (based on SSD1306 controller). </p>
-<p>Inits 128x32 OLED display over spi (based on SSD1306 controller) </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">rstPin</td><td>- pin controlling LCD reset (-1 if not used) </td></tr>
-    <tr><td class="paramname">cesPin</td><td>- chip enable pin to LCD slave (-1 if not used) </td></tr>
-    <tr><td class="paramname">dcPin</td><td>- data/command pin to control LCD dc (required) </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1306_8c_source.html#l00251">251</a> of file <a class="el" href="oled__ssd1306_8c_source.html">oled_ssd1306.c</a>.</p>
-
-</div>
-</div>
-<a id="gad4cf492be6e9c71cd461baf8709ab617"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad4cf492be6e9c71cd461baf8709ab617">&#9670;&nbsp;</a></span>ssd1306_128x64_i2c_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_128x64_i2c_init </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Inits 128x64 OLED display over i2c (based on SSD1306 controller). </p>
-<p>Inits 128x64 OLED display over i2c (based on SSD1306 controller) This function uses hardcoded pins for i2c communication, depending on your hardware. If you use non-standard pins in your project, please perform call <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gadad8452b053aef2c84c6a14c7f4f247d">ssd1306_i2cInitEx()</a> and <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gab4435a11942917172844748956c39294" title="Inits 128x64 OLED display (based on SSD1306 controller). ">ssd1306_128x64_init()</a>, or you can use <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gae821e21898f6a7187654251c40b138ce" title="Inits 128x64 OLED display over i2c (based on SSD1306 controller). ">ssd1306_128x64_i2c_initEx()</a>. </p>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1306_8c_source.html#l00195">195</a> of file <a class="el" href="oled__ssd1306_8c_source.html">oled_ssd1306.c</a>.</p>
-
-</div>
-</div>
-<a id="gae821e21898f6a7187654251c40b138ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae821e21898f6a7187654251c40b138ce">&#9670;&nbsp;</a></span>ssd1306_128x64_i2c_initEx()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_128x64_i2c_initEx </td>
-          <td>(</td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>scl</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>sda</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>sa</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Inits 128x64 OLED display over i2c (based on SSD1306 controller). </p>
-<p>Inits 128x64 OLED display over i2c (based on SSD1306 controller) This function uses hardcoded pins for i2c communication, depending on your hardware.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">scl</td><td>- i2c clock pin. Use -1 if you don't need to change default pin number </td></tr>
-    <tr><td class="paramname">sda</td><td>- i2c data pin. Use -1 if you don't need to change default pin number </td></tr>
-    <tr><td class="paramname">sa</td><td>- i2c address of lcd display. Use 0 to leave default</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>scl and sda parameters depend on used hardware. For many hardware boards these parameters do not have any effect. ESP8266 allows to specify these parameters</dd>
-<dd>
-scl and sda for Linux systems should be the same, and should contain i2c bus id. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1306_8c_source.html#l00201">201</a> of file <a class="el" href="oled__ssd1306_8c_source.html">oled_ssd1306.c</a>.</p>
-
-</div>
-</div>
-<a id="gab4435a11942917172844748956c39294"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab4435a11942917172844748956c39294">&#9670;&nbsp;</a></span>ssd1306_128x64_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_128x64_init </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Inits 128x64 OLED display (based on SSD1306 controller). </p>
-<p>Inits 128x64 OLED display (based on SSD1306 controller). User must init communication interface (i2c, spi) prior to calling this function. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa13b9975cc9b1d9a802db4edf22baa7b">ssd1306_i2cInit()</a> </dd>
-<dd>
-<a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga0e21371367897c0f86480cfccc100b5c">ssd1306_spiInit()</a> </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1306_8c_source.html#l00179">179</a> of file <a class="el" href="oled__ssd1306_8c_source.html">oled_ssd1306.c</a>.</p>
-
-</div>
-</div>
-<a id="ga008655e2f6258b9e4e869733485dd821"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga008655e2f6258b9e4e869733485dd821">&#9670;&nbsp;</a></span>ssd1306_128x64_spi_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_128x64_spi_init </td>
-          <td>(</td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>rstPin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>cesPin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>dcPin</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Inits 128x64 OLED display over spi (based on SSD1306 controller). </p>
-<p>Inits 128x64 OLED display over spi (based on SSD1306 controller) </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">rstPin</td><td>- pin controlling LCD reset (-1 if not used) </td></tr>
-    <tr><td class="paramname">cesPin</td><td>- chip enable pin to LCD slave (-1 if not used) </td></tr>
-    <tr><td class="paramname">dcPin</td><td>- data/command pin to control LCD dc (required) </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1306_8c_source.html#l00211">211</a> of file <a class="el" href="oled__ssd1306_8c_source.html">oled_ssd1306.c</a>.</p>
-
 </div>
 </div>
 <a id="ga32e8830f08974692041d504b59cec89f"></a>
@@ -1291,8 +975,6 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="lcd__common_8c_source.html#l00041">41</a> of file <a class="el" href="lcd__common_8c_source.html">lcd_common.c</a>.</p>
 
 </div>
 </div>
@@ -1332,215 +1014,6 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__common_8c_source.html#l00052">52</a> of file <a class="el" href="lcd__common_8c_source.html">lcd_common.c</a>.</p>
-
-</div>
-</div>
-<a id="gaaacca10ced128b51917f24c1d74a0cdb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaaacca10ced128b51917f24c1d74a0cdb">&#9670;&nbsp;</a></span>ssd1306_displayHeight()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> ssd1306_displayHeight </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Returns display height in pixels </p>
-
-<p class="definition">Definition at line <a class="el" href="ssd1306__generic_8c_source.html#l00058">58</a> of file <a class="el" href="ssd1306__generic_8c_source.html">ssd1306_generic.c</a>.</p>
-
-</div>
-</div>
-<a id="ga67bd0118d1ecea5a1ee321699a209c83"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga67bd0118d1ecea5a1ee321699a209c83">&#9670;&nbsp;</a></span>ssd1306_displayOff()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_displayOff </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Turns off display </p>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1306_8c_source.html#l00118">118</a> of file <a class="el" href="oled__ssd1306_8c_source.html">oled_ssd1306.c</a>.</p>
-
-</div>
-</div>
-<a id="gaaef8e39d5e7845baf1b14b1648475e01"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaaef8e39d5e7845baf1b14b1648475e01">&#9670;&nbsp;</a></span>ssd1306_displayOn()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_displayOn </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Turns on display </p>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1306_8c_source.html#l00124">124</a> of file <a class="el" href="oled__ssd1306_8c_source.html">oled_ssd1306.c</a>.</p>
-
-</div>
-</div>
-<a id="ga242c99a7c5f09eaad688f91c018215e1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga242c99a7c5f09eaad688f91c018215e1">&#9670;&nbsp;</a></span>ssd1306_displayWidth()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> ssd1306_displayWidth </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Returns display width in pixels </p>
-
-<p class="definition">Definition at line <a class="el" href="ssd1306__generic_8c_source.html#l00063">63</a> of file <a class="el" href="ssd1306__generic_8c_source.html">ssd1306_generic.c</a>.</p>
-
-</div>
-</div>
-<a id="gac6a71a50e10fb75181c0c851821d3de6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac6a71a50e10fb75181c0c851821d3de6">&#9670;&nbsp;</a></span>ssd1306_flipHorizontal()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_flipHorizontal </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>mode</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>performs horizontal flip </p>
-<p>Performs horizontal flip. If you need to turn display by 180 degree, please use both <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gac6a71a50e10fb75181c0c851821d3de6" title="performs horizontal flip ">ssd1306_flipHorizontal()</a> and <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga238cd7dab0ae562b70e1a19ad3032caa" title="performs vertical flip ">ssd1306_flipVertical()</a>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">mode</td><td>- 0 to disable horizontal flip 1 to enable horizontal flip </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1306_8c_source.html#l00153">153</a> of file <a class="el" href="oled__ssd1306_8c_source.html">oled_ssd1306.c</a>.</p>
-
-</div>
-</div>
-<a id="ga238cd7dab0ae562b70e1a19ad3032caa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga238cd7dab0ae562b70e1a19ad3032caa">&#9670;&nbsp;</a></span>ssd1306_flipVertical()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_flipVertical </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>mode</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>performs vertical flip </p>
-<p>Performs vertical flip. If you need to turn display by 180 degree, please use both <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gac6a71a50e10fb75181c0c851821d3de6" title="performs horizontal flip ">ssd1306_flipHorizontal()</a> and <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga238cd7dab0ae562b70e1a19ad3032caa" title="performs vertical flip ">ssd1306_flipVertical()</a>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">mode</td><td>- 0 to disable vertical flip 1 to enable vertical flip </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1306_8c_source.html#l00161">161</a> of file <a class="el" href="oled__ssd1306_8c_source.html">oled_ssd1306.c</a>.</p>
-
-</div>
-</div>
-<a id="gaa7f352281f0fbef55ab6b351d2fbd631"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa7f352281f0fbef55ab6b351d2fbd631">&#9670;&nbsp;</a></span>ssd1306_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_init </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Inits 128x64 OLED display over i2c (based on SSD1306 controller). </p>
-<p>Inits 128x64 OLED display over i2c (based on SSD1306 controller) This function uses hardcoded pins for i2c communication, depending on your hardware. If you use non-standard pins in your project, please perform call <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gadad8452b053aef2c84c6a14c7f4f247d">ssd1306_i2cInitEx()</a> and <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gab4435a11942917172844748956c39294" title="Inits 128x64 OLED display (based on SSD1306 controller). ">ssd1306_128x64_init()</a>, or you can use <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gae821e21898f6a7187654251c40b138ce" title="Inits 128x64 OLED display over i2c (based on SSD1306 controller). ">ssd1306_128x64_i2c_initEx()</a>. </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000012">Deprecated:</a></b></dt><dd>Use <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gad4cf492be6e9c71cd461baf8709ab617" title="Inits 128x64 OLED display over i2c (based on SSD1306 controller). ">ssd1306_128x64_i2c_init()</a> instead. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1306_8c_source.html#l00173">173</a> of file <a class="el" href="oled__ssd1306_8c_source.html">oled_ssd1306.c</a>.</p>
-
-</div>
-</div>
-<a id="gaa6577db0a6f3385936d6db031c27f233"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa6577db0a6f3385936d6db031c27f233">&#9670;&nbsp;</a></span>ssd1306_invertMode()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_invertMode </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Switches display to inverse mode. LCD will display 0-pixels as white, and 1-pixels as black. </p><dl class="section note"><dt>Note</dt><dd>Not supported for SSD1331 </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1306_8c_source.html#l00137">137</a> of file <a class="el" href="oled__ssd1306_8c_source.html">oled_ssd1306.c</a>.</p>
-
-</div>
-</div>
-<a id="gabcd6b24c5dfbfeafb4d017dce5019ecf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gabcd6b24c5dfbfeafb4d017dce5019ecf">&#9670;&nbsp;</a></span>ssd1306_normalMode()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_normalMode </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Switches display to normal mode. </p><dl class="section note"><dt>Note</dt><dd>Not supported for SSD1331 </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1306_8c_source.html#l00145">145</a> of file <a class="el" href="oled__ssd1306_8c_source.html">oled_ssd1306.c</a>.</p>
-
 </div>
 </div>
 <a id="ga2c9a4cae483acc0afd549c59a9946ef3"></a>
@@ -1579,8 +1052,6 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__common_8c_source.html#l00082">82</a> of file <a class="el" href="lcd__common_8c_source.html">lcd_common.c</a>.</p>
-
 </div>
 </div>
 <a id="ga223fdc8edd9172690f961922f46d330c"></a>
@@ -1606,34 +1077,6 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
 </dl>
 <dl class="section note"><dt>Note</dt><dd>At present this function is used only in Arkanoid demo. </dd></dl>
 <dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000004">Deprecated:</a></b></dt><dd>There is wide variaty of functions, that can be used for this. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="lcd__common_8c_source.html#l00034">34</a> of file <a class="el" href="lcd__common_8c_source.html">lcd_common.c</a>.</p>
-
-</div>
-</div>
-<a id="ga27852f112ebe53726badd8f4998fceab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga27852f112ebe53726badd8f4998fceab">&#9670;&nbsp;</a></span>ssd1306_setContrast()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1306_setContrast </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>contrast</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Set display contrast, ie light intensity </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">contrast</td><td>- contrast value to see, refer to ssd1306 datasheet </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1306_8c_source.html#l00129">129</a> of file <a class="el" href="oled__ssd1306_8c_source.html">oled_ssd1306.c</a>.</p>
 
 </div>
 </div>
@@ -1667,8 +1110,6 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
 <dd>
 <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gad2c71a26fa32dfcee88db3a3058ce596">lcd_mode_t</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__common_8c_source.html#l00074">74</a> of file <a class="el" href="lcd__common_8c_source.html">lcd_common.c</a>.</p>
-
 </div>
 </div>
 <a id="ga46db384aa804f1ba09641c485595aed2"></a>
@@ -1688,11 +1129,9 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
 </div><div class="memdoc">
 
 <p>Inits 128x64 SSD1325 OLED display (based on SSD1325 controller). </p>
-<p>Inits 128x64 SSD1325 OLED display (based on SSD1325 controller). User must init communication interface (i2c, spi) prior to calling this function. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa13b9975cc9b1d9a802db4edf22baa7b">ssd1306_i2cInit()</a> </dd>
+<p>Inits 128x64 SSD1325 OLED display (based on SSD1325 controller). User must init communication interface (i2c, spi) prior to calling this function. </p><dl class="section see"><dt>See also</dt><dd>ssd1306_i2cInit() </dd>
 <dd>
 <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga0e21371367897c0f86480cfccc100b5c">ssd1306_spiInit()</a> </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1325_8c_source.html#l00112">112</a> of file <a class="el" href="oled__ssd1325_8c_source.html">oled_ssd1325.c</a>.</p>
 
 </div>
 </div>
@@ -1738,8 +1177,6 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="oled__ssd1325_8c_source.html#l00132">132</a> of file <a class="el" href="oled__ssd1325_8c_source.html">oled_ssd1325.c</a>.</p>
-
 </div>
 </div>
 <a id="ga7970481a2ed34c3730621472fab89ada"></a>
@@ -1766,283 +1203,7 @@ scl and sda for Linux systems should be the same, and should contain i2c bus id.
   </table>
   </dd>
 </dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000013">Deprecated:</a></b></dt><dd>Use <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga34699d9f6192c375a6b40d4414502d41" title="Sets library display mode for direct draw functions. ">ssd1306_setMode()</a> instead. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1325_8c_source.html#l00092">92</a> of file <a class="el" href="oled__ssd1325_8c_source.html">oled_ssd1325.c</a>.</p>
-
-</div>
-</div>
-<a id="ga0cd4120ea19b526a16b33029e3f98f82"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga0cd4120ea19b526a16b33029e3f98f82">&#9670;&nbsp;</a></span>ssd1331_96x64_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1331_96x64_init </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Inits 96x64 RGB OLED display (based on SSD1331 controller). </p>
-<p>Inits 96x64 RGB OLED display (based on SSD1331 controller). User must init communication interface (i2c, spi) prior to calling this function. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa13b9975cc9b1d9a802db4edf22baa7b">ssd1306_i2cInit()</a> </dd>
-<dd>
-<a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga0e21371367897c0f86480cfccc100b5c">ssd1306_spiInit()</a> </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1331_8c_source.html#l00201">201</a> of file <a class="el" href="oled__ssd1331_8c_source.html">oled_ssd1331.c</a>.</p>
-
-</div>
-</div>
-<a id="ga838896d36d56ee1619bbc9ae5d7b88a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga838896d36d56ee1619bbc9ae5d7b88a8">&#9670;&nbsp;</a></span>ssd1331_96x64_spi_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1331_96x64_spi_init </td>
-          <td>(</td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>rstPin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>cesPin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>dcPin</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Inits 96x64 RGB OLED display over spi in 8-bit mode (based on SSD1331 controller). </p>
-<p>Inits 96x64 RGB OLED display over spi in 8-bit mode (based on SSD1331 controller) </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">rstPin</td><td>- pin controlling LCD reset (-1 if not used) </td></tr>
-    <tr><td class="paramname">cesPin</td><td>- chip enable pin to LCD slave (-1 if not used) </td></tr>
-    <tr><td class="paramname">dcPin</td><td>- data/command pin to control LCD dc (required) </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1331_8c_source.html#l00239">239</a> of file <a class="el" href="oled__ssd1331_8c_source.html">oled_ssd1331.c</a>.</p>
-
-</div>
-</div>
-<a id="ga7007996bbee474bcd8025b7caeaecc73"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7007996bbee474bcd8025b7caeaecc73">&#9670;&nbsp;</a></span>ssd1331_96x64_spi_init16()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1331_96x64_spi_init16 </td>
-          <td>(</td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>rstPin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>cesPin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>dcPin</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Inits 96x64 RGB OLED display over spi in 16-bit mode (based on SSD1331 controller). </p>
-<p>Inits 96x64 RGB OLED display over spi in 16-bit mode (based on SSD1331 controller) </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">rstPin</td><td>- pin controlling LCD reset (-1 if not used) </td></tr>
-    <tr><td class="paramname">cesPin</td><td>- chip enable pin to LCD slave (-1 if not used) </td></tr>
-    <tr><td class="paramname">dcPin</td><td>- data/command pin to control LCD dc (required) </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1331_8c_source.html#l00249">249</a> of file <a class="el" href="oled__ssd1331_8c_source.html">oled_ssd1331.c</a>.</p>
-
-</div>
-</div>
-<a id="ga521e5d88879aa31c3b062ea820665818"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga521e5d88879aa31c3b062ea820665818">&#9670;&nbsp;</a></span>ssd1331_copyBlock()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1331_copyBlock </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>left</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>top</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>right</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>bottom</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>newLeft</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>newTop</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Copies block in GDRAM to new position </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">left</td><td>column start of block to copy </td></tr>
-    <tr><td class="paramname">top</td><td>row start of block to copy </td></tr>
-    <tr><td class="paramname">right</td><td>column end of block to copy </td></tr>
-    <tr><td class="paramname">bottom</td><td>row end of block to copy </td></tr>
-    <tr><td class="paramname">newLeft</td><td>new column start </td></tr>
-    <tr><td class="paramname">newTop</td><td>new row start</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>This API can be used only with ssd1331 RGB oled displays </dd>
-<dd>
-after copy command is sent, it takes some time from oled controller to complete operation. So, it is HIGHLY recommended to wait for reasonable time before send other graphics operations (for example, use 250us delay). This time is required for oled display to become ready to accept new commands. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1331_8c_source.html#l00274">274</a> of file <a class="el" href="oled__ssd1331_8c_source.html">oled_ssd1331.c</a>.</p>
-
-</div>
-</div>
-<a id="gafa4c239fd99c5541b06d46ac9ed88b6d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gafa4c239fd99c5541b06d46ac9ed88b6d">&#9670;&nbsp;</a></span>ssd1331_drawLine()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1331_drawLine </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>x1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>y1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>x2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>y2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>color</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Draws line </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x1</td><td>- x position in pixels of start point </td></tr>
-    <tr><td class="paramname">y1</td><td>- y position in pixels of start point </td></tr>
-    <tr><td class="paramname">x2</td><td>- x position in pixels of end point </td></tr>
-    <tr><td class="paramname">y2</td><td>- y position in pixels of end point </td></tr>
-    <tr><td class="paramname">color</td><td>- color of the line, refer to RGB_COLOR8 macros</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>This API can be used only with ssd1331 RGB oled displays </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1331_8c_source.html#l00259">259</a> of file <a class="el" href="oled__ssd1331_8c_source.html">oled_ssd1331.c</a>.</p>
-
-</div>
-</div>
-<a id="ga623c41c99d8d4727bf4f94cad9506cca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga623c41c99d8d4727bf4f94cad9506cca">&#9670;&nbsp;</a></span>ssd1331_setMode()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ssd1331_setMode </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gad2c71a26fa32dfcee88db3a3058ce596">lcd_mode_t</a>&#160;</td>
-          <td class="paramname"><em>mode</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sets GDRAM autoincrement mode. </p>
-<p>Sets GDRAM autoincrement mode. By default, to make ssd1306_xxx functions compatible with RGB oled display, RGB oled is initialized in vertical auto-increment mode. But for pure rbg oled operations horizontal auto-increment mode is more suitable. So, if you're going to use <a class="el" href="class_nano_canvas8.html">NanoCanvas8</a> functions, please call ssd1331_setMode(0) prior to using pure RGB methods.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">mode</td><td>0 or 1 </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000014">Deprecated:</a></b></dt><dd>Use <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga34699d9f6192c375a6b40d4414502d41" title="Sets library display mode for direct draw functions. ">ssd1306_setMode()</a> instead. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1331_8c_source.html#l00112">112</a> of file <a class="el" href="oled__ssd1331_8c_source.html">oled_ssd1331.c</a>.</p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000012">Deprecated:</a></b></dt><dd>Use <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga34699d9f6192c375a6b40d4414502d41" title="Sets library display mode for direct draw functions. ">ssd1306_setMode()</a> instead. </dd></dl>
 
 </div>
 </div>
@@ -2063,11 +1224,9 @@ after copy command is sent, it takes some time from oled controller to complete 
 </div><div class="memdoc">
 
 <p>Inits 128x128 RGB OLED display (based on SSD1351 controller). </p>
-<p>Inits 128x128 RGB OLED display (based on SSD1351 controller). User must init communication interface (i2c, spi) prior to calling this function. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa13b9975cc9b1d9a802db4edf22baa7b">ssd1306_i2cInit()</a> </dd>
+<p>Inits 128x128 RGB OLED display (based on SSD1351 controller). User must init communication interface (i2c, spi) prior to calling this function. </p><dl class="section see"><dt>See also</dt><dd>ssd1306_i2cInit() </dd>
 <dd>
 <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga0e21371367897c0f86480cfccc100b5c">ssd1306_spiInit()</a> </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1351_8c_source.html#l00184">184</a> of file <a class="el" href="oled__ssd1351_8c_source.html">oled_ssd1351.c</a>.</p>
 
 </div>
 </div>
@@ -2113,8 +1272,6 @@ after copy command is sent, it takes some time from oled controller to complete 
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="oled__ssd1351_8c_source.html#l00216">216</a> of file <a class="el" href="oled__ssd1351_8c_source.html">oled_ssd1351.c</a>.</p>
-
 </div>
 </div>
 <a id="gad784e60b2fe8b8f92a6f8b0cf5187bcf"></a>
@@ -2141,9 +1298,7 @@ after copy command is sent, it takes some time from oled controller to complete 
   </table>
   </dd>
 </dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000015">Deprecated:</a></b></dt><dd>Use <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga34699d9f6192c375a6b40d4414502d41" title="Sets library display mode for direct draw functions. ">ssd1306_setMode()</a> instead. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__ssd1351_8c_source.html#l00124">124</a> of file <a class="el" href="oled__ssd1351_8c_source.html">oled_ssd1351.c</a>.</p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000013">Deprecated:</a></b></dt><dd>Use <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga34699d9f6192c375a6b40d4414502d41" title="Sets library display mode for direct draw functions. ">ssd1306_setMode()</a> instead. </dd></dl>
 
 </div>
 </div>
@@ -2164,11 +1319,9 @@ after copy command is sent, it takes some time from oled controller to complete 
 </div><div class="memdoc">
 
 <p>Inits 128x160 RGB OLED display (based on st7735 controller). </p>
-<p>Inits 128x160 RGB OLED display (based on st7735 controller). User must init communication interface (i2c, spi) prior to calling this function. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa13b9975cc9b1d9a802db4edf22baa7b">ssd1306_i2cInit()</a> </dd>
+<p>Inits 128x160 RGB OLED display (based on st7735 controller). User must init communication interface (i2c, spi) prior to calling this function. </p><dl class="section see"><dt>See also</dt><dd>ssd1306_i2cInit() </dd>
 <dd>
 <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga0e21371367897c0f86480cfccc100b5c">ssd1306_spiInit()</a> </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="lcd__il9163_8c_source.html#l00372">372</a> of file <a class="el" href="lcd__il9163_8c_source.html">lcd_il9163.c</a>.</p>
 
 </div>
 </div>
@@ -2214,8 +1367,6 @@ after copy command is sent, it takes some time from oled controller to complete 
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__il9163_8c_source.html#l00388">388</a> of file <a class="el" href="lcd__il9163_8c_source.html">lcd_il9163.c</a>.</p>
-
 </div>
 </div>
 <a id="gacdd648ca24705e26f4a92119d2337def"></a>
@@ -2242,9 +1393,7 @@ after copy command is sent, it takes some time from oled controller to complete 
   </table>
   </dd>
 </dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000016">Deprecated:</a></b></dt><dd>Use <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga34699d9f6192c375a6b40d4414502d41" title="Sets library display mode for direct draw functions. ">ssd1306_setMode()</a> instead. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__template_8c_source.html#l00124">124</a> of file <a class="el" href="oled__template_8c_source.html">oled_template.c</a>.</p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000014">Deprecated:</a></b></dt><dd>Use <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga34699d9f6192c375a6b40d4414502d41" title="Sets library display mode for direct draw functions. ">ssd1306_setMode()</a> instead. </dd></dl>
 
 </div>
 </div>
@@ -2265,11 +1414,9 @@ after copy command is sent, it takes some time from oled controller to complete 
 </div><div class="memdoc">
 
 <p>Inits WxH TEMPLATE OLED display (based on TEMPLATE controller). </p>
-<p>Inits WxH TEMPLATE OLED display (based on TEMPLATE controller). User must init communication interface (i2c, spi) prior to calling this function. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaa13b9975cc9b1d9a802db4edf22baa7b">ssd1306_i2cInit()</a> </dd>
+<p>Inits WxH TEMPLATE OLED display (based on TEMPLATE controller). User must init communication interface (i2c, spi) prior to calling this function. </p><dl class="section see"><dt>See also</dt><dd>ssd1306_i2cInit() </dd>
 <dd>
 <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga0e21371367897c0f86480cfccc100b5c">ssd1306_spiInit()</a> </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="oled__template_8c_source.html#l00144">144</a> of file <a class="el" href="oled__template_8c_source.html">oled_template.c</a>.</p>
 
 </div>
 </div>
@@ -2315,8 +1462,6 @@ after copy command is sent, it takes some time from oled controller to complete 
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="oled__template_8c_source.html#l00165">165</a> of file <a class="el" href="oled__template_8c_source.html">oled_template.c</a>.</p>
-
 </div>
 </div>
 <a id="ga0c5a94022f25032231a7ba4abb7e20a4"></a>
@@ -2340,8 +1485,6 @@ after copy command is sent, it takes some time from oled controller to complete 
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gab8f6528f3aa977d02549bfd7c4009282">ssd1306_uartInit_Builtin()</a> </dd>
 <dd>
 ssd1306_vga_controller_init() </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="vga__monitor_8c_source.html#l00134">134</a> of file <a class="el" href="vga__monitor_8c_source.html">vga_monitor.c</a>.</p>
 
 </div>
 </div>
@@ -2367,8 +1510,6 @@ ssd1306_vga_controller_init() </dd></dl>
 <dd>
 ssd1306_vga_controller_init() </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vga__monitor_8c_source.html#l00121">121</a> of file <a class="el" href="vga__monitor_8c_source.html">vga_monitor.c</a>.</p>
-
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
@@ -2384,8 +1525,6 @@ ssd1306_vga_controller_init() </dd></dl>
       </table>
 </div><div class="memdoc">
 <p>Structure containing callback to low level function for currently enabled display </p>
-
-<p class="definition">Definition at line <a class="el" href="lcd__common_8c_source.html#l00032">32</a> of file <a class="el" href="lcd__common_8c_source.html">lcd_common.c</a>.</p>
 
 </div>
 </div>

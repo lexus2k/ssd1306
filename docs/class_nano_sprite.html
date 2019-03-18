@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SSD1306 OLED display driver: NanoSprite&lt; T, E &gt; Class Template Reference</title>
+<title>SSD1306 OLED display driver: NanoSprite&lt; T &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.13</span>
+   &#160;<span id="projectnumber">1.8.0.1</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -64,62 +64,125 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="class_nano_sprite-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">NanoSprite&lt; T, E &gt; Class Template Reference<div class="ingroups"><a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html">NANO_ENGINE: Nano Engine description</a></div></div>  </div>
+<div class="title">NanoSprite&lt; T &gt; Class Template Reference<div class="ingroups"><a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html">NANO_ENGINE: Nano Engine description</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="sprite_8h_source.html">sprite.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for NanoSprite&lt; T &gt;:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_nano_sprite.png" usemap="#NanoSprite_3C_20T_20_3E_map" alt=""/>
+  <map id="NanoSprite_3C_20T_20_3E_map" name="NanoSprite_3C_20T_20_3E_map">
+<area href="class_nano_object.html" alt="NanoObject&lt; T &gt;" shape="rect" coords="0,56,149,80"/>
+<area href="class_nano_engine_object.html" alt="NanoEngineObject&lt; T &gt;" shape="rect" coords="0,0,149,24"/>
+<area href="class_nano_fixed_sprite.html" alt="NanoFixedSprite&lt; T &gt;" shape="rect" coords="0,168,149,192"/>
+</map>
+ </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af44fac7d597c2623460e2ec341a940c2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_sprite.html#af44fac7d597c2623460e2ec341a940c2">NanoSprite</a> (const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> &amp;pos, const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> &amp;size, const uint8_t *bitmap)</td></tr>
-<tr class="separator:af44fac7d597c2623460e2ec341a940c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3edd93768ba913a2fbd767271be3b4e6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_sprite.html#a3edd93768ba913a2fbd767271be3b4e6">draw</a> ()</td></tr>
-<tr class="separator:a3edd93768ba913a2fbd767271be3b4e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15fcf795339e8375548c35e1d2f53a50"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_sprite.html#a15fcf795339e8375548c35e1d2f53a50">refresh</a> ()</td></tr>
-<tr class="separator:a15fcf795339e8375548c35e1d2f53a50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af144f32292ddb60d012e2cfed296e3d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_sprite.html#af144f32292ddb60d012e2cfed296e3d8">moveTo</a> (const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> &amp;p)</td></tr>
-<tr class="separator:af144f32292ddb60d012e2cfed296e3d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ffe9307b63f742064f67e23ee36a688"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_sprite.html#a5ffe9307b63f742064f67e23ee36a688">moveBy</a> (const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> &amp;p)</td></tr>
-<tr class="separator:a5ffe9307b63f742064f67e23ee36a688"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c20b78908db9d80fe044e415f79dee3"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_sprite.html#a5c20b78908db9d80fe044e415f79dee3">bottom</a> () const</td></tr>
-<tr class="separator:a5c20b78908db9d80fe044e415f79dee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23e66ae55f65b2986111649a03dd391a"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_sprite.html#a23e66ae55f65b2986111649a03dd391a">top</a> () const</td></tr>
-<tr class="separator:a23e66ae55f65b2986111649a03dd391a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3946de63cdeb5af0580e71886085ef91"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_sprite.html#a3946de63cdeb5af0580e71886085ef91">left</a> () const</td></tr>
-<tr class="separator:a3946de63cdeb5af0580e71886085ef91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92bd5cfe5cc097cf7e78d77ff75030d8"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_sprite.html#a92bd5cfe5cc097cf7e78d77ff75030d8">right</a> () const</td></tr>
-<tr class="separator:a92bd5cfe5cc097cf7e78d77ff75030d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b8ea6524a8463b39caf5d2d7178dd02"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_sprite.html#a6b8ea6524a8463b39caf5d2d7178dd02">center</a> () const</td></tr>
-<tr class="separator:a6b8ea6524a8463b39caf5d2d7178dd02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf17b80799bd2230d98255abda620263"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_sprite.html#acf17b80799bd2230d98255abda620263">setBitmap</a> (const uint8_t *bitmap)</td></tr>
-<tr class="separator:acf17b80799bd2230d98255abda620263"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff8153a3baab3bd30912dc3478a956a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_sprite.html#aff8153a3baab3bd30912dc3478a956a2">x</a> () const</td></tr>
-<tr class="separator:aff8153a3baab3bd30912dc3478a956a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26447909c8d140e4745205de9ef040c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_sprite.html#a26447909c8d140e4745205de9ef040c0">y</a> () const</td></tr>
-<tr class="separator:a26447909c8d140e4745205de9ef040c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a916253c16ca33574368f8a4fea18f334"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_sprite.html#a916253c16ca33574368f8a4fea18f334">NanoSprite</a> (const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> &amp;pos, const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> &amp;size, const uint8_t *bitmap)</td></tr>
+<tr class="separator:a916253c16ca33574368f8a4fea18f334"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a219ee784be52dbc75e6c631147e61620"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_sprite.html#a219ee784be52dbc75e6c631147e61620">draw</a> () override</td></tr>
+<tr class="separator:a219ee784be52dbc75e6c631147e61620"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a139dd059196676bbaad3a24846582851"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_sprite.html#a139dd059196676bbaad3a24846582851">setBitmap</a> (const uint8_t *bitmap)</td></tr>
+<tr class="separator:a139dd059196676bbaad3a24846582851"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab718dcdd480315216106838f486e12c9"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_sprite.html#ab718dcdd480315216106838f486e12c9">getBitmap</a> ()</td></tr>
+<tr class="separator:ab718dcdd480315216106838f486e12c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_nano_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_nano_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_nano_object.html">NanoObject&lt; T &gt;</a></td></tr>
+<tr class="memitem:ac4eb3c60647e3a4db8159a28030150d6 inherit pub_methods_class_nano_object"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#ac4eb3c60647e3a4db8159a28030150d6">NanoObject</a> (const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> &amp;pos)</td></tr>
+<tr class="separator:ac4eb3c60647e3a4db8159a28030150d6 inherit pub_methods_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38f6c3d1b6f8a736c886e12f2eb79716 inherit pub_methods_class_nano_object"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#a38f6c3d1b6f8a736c886e12f2eb79716">NanoObject</a> (const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> &amp;pos, const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> &amp;size)</td></tr>
+<tr class="separator:a38f6c3d1b6f8a736c886e12f2eb79716 inherit pub_methods_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61fa277a6f942fc5bcf1a77487c95362 inherit pub_methods_class_nano_object"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#a61fa277a6f942fc5bcf1a77487c95362">refresh</a> () override</td></tr>
+<tr class="separator:a61fa277a6f942fc5bcf1a77487c95362 inherit pub_methods_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdf8751d3fc79767b59e4b1ec7e085b6 inherit pub_methods_class_nano_object"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#acdf8751d3fc79767b59e4b1ec7e085b6">update</a> () override</td></tr>
+<tr class="separator:acdf8751d3fc79767b59e4b1ec7e085b6 inherit pub_methods_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a990bf8c9f64cb38f67db4176fb2a33a7 inherit pub_methods_class_nano_object"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#a990bf8c9f64cb38f67db4176fb2a33a7">width</a> () const</td></tr>
+<tr class="separator:a990bf8c9f64cb38f67db4176fb2a33a7 inherit pub_methods_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73ab9c2535db5237264ea7380f6091c0 inherit pub_methods_class_nano_object"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#a73ab9c2535db5237264ea7380f6091c0">height</a> () const</td></tr>
+<tr class="separator:a73ab9c2535db5237264ea7380f6091c0 inherit pub_methods_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a492db40bddf384b8e022f277b24e982d inherit pub_methods_class_nano_object"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#a492db40bddf384b8e022f277b24e982d">moveTo</a> (const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> &amp;p)</td></tr>
+<tr class="separator:a492db40bddf384b8e022f277b24e982d inherit pub_methods_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34dec0e95199585af8440176f33c6d7c inherit pub_methods_class_nano_object"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#a34dec0e95199585af8440176f33c6d7c">moveBy</a> (const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> &amp;p)</td></tr>
+<tr class="separator:a34dec0e95199585af8440176f33c6d7c inherit pub_methods_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af37bc51285a058d4a951686236259677 inherit pub_methods_class_nano_object"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#af37bc51285a058d4a951686236259677">resize</a> (const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> &amp;size)</td></tr>
+<tr class="separator:af37bc51285a058d4a951686236259677 inherit pub_methods_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ab13d68ceedf2defcba210b56fa1e53 inherit pub_methods_class_nano_object"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#a6ab13d68ceedf2defcba210b56fa1e53">setSize</a> (const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> &amp;size)</td></tr>
+<tr class="separator:a6ab13d68ceedf2defcba210b56fa1e53 inherit pub_methods_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ce66d0e05547006224125b31573eb56 inherit pub_methods_class_nano_object"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#a6ce66d0e05547006224125b31573eb56">setPos</a> (const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> &amp;p)</td></tr>
+<tr class="separator:a6ce66d0e05547006224125b31573eb56 inherit pub_methods_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e74e22faaaadab8a20bbbbb41d89dcf inherit pub_methods_class_nano_object"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#a0e74e22faaaadab8a20bbbbb41d89dcf">bottom</a> () const</td></tr>
+<tr class="separator:a0e74e22faaaadab8a20bbbbb41d89dcf inherit pub_methods_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13760c134fa30eb3f19ef2c47cb7a375 inherit pub_methods_class_nano_object"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#a13760c134fa30eb3f19ef2c47cb7a375">top</a> () const</td></tr>
+<tr class="separator:a13760c134fa30eb3f19ef2c47cb7a375 inherit pub_methods_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4a4019fa9b7c87f292edb48092580ee inherit pub_methods_class_nano_object"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#ae4a4019fa9b7c87f292edb48092580ee">left</a> () const</td></tr>
+<tr class="separator:ae4a4019fa9b7c87f292edb48092580ee inherit pub_methods_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a538a6ff968016bf7f258810bda5e8ffb inherit pub_methods_class_nano_object"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#a538a6ff968016bf7f258810bda5e8ffb">right</a> () const</td></tr>
+<tr class="separator:a538a6ff968016bf7f258810bda5e8ffb inherit pub_methods_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98b811895d073718d57a50c2423f588f inherit pub_methods_class_nano_object"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#a98b811895d073718d57a50c2423f588f">center</a> () const</td></tr>
+<tr class="separator:a98b811895d073718d57a50c2423f588f inherit pub_methods_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a953bffa151008bde481b5fa03c98e383 inherit pub_methods_class_nano_object"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#a953bffa151008bde481b5fa03c98e383">x</a> () const</td></tr>
+<tr class="separator:a953bffa151008bde481b5fa03c98e383 inherit pub_methods_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71fb2acba7084c1510cae11b63c363c3 inherit pub_methods_class_nano_object"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#a71fb2acba7084c1510cae11b63c363c3">y</a> () const</td></tr>
+<tr class="separator:a71fb2acba7084c1510cae11b63c363c3 inherit pub_methods_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a646afc246dcac65142cd92c19417f4e2 inherit pub_methods_class_nano_object"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#a646afc246dcac65142cd92c19417f4e2">getPosition</a> () const</td></tr>
+<tr class="separator:a646afc246dcac65142cd92c19417f4e2 inherit pub_methods_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27288dc6389706ff2a7f1a17611f7d7f inherit pub_methods_class_nano_object"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga4a82780f66e02834d957e77e70cc17d7">NanoRect</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#a27288dc6389706ff2a7f1a17611f7d7f">getRect</a> () const</td></tr>
+<tr class="separator:a27288dc6389706ff2a7f1a17611f7d7f inherit pub_methods_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_nano_engine_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_nano_engine_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_nano_engine_object.html">NanoEngineObject&lt; T &gt;</a></td></tr>
+<tr class="memitem:a6a5edbfb2bd4f510328b83ccdfd7d661 inherit pub_methods_class_nano_engine_object"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_engine_object.html#a6a5edbfb2bd4f510328b83ccdfd7d661">focus</a> ()</td></tr>
+<tr class="separator:a6a5edbfb2bd4f510328b83ccdfd7d661 inherit pub_methods_class_nano_engine_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a189ba65c0accfb60d745792ce6c3351a inherit pub_methods_class_nano_engine_object"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_engine_object.html#a189ba65c0accfb60d745792ce6c3351a">defocus</a> ()</td></tr>
+<tr class="separator:a189ba65c0accfb60d745792ce6c3351a inherit pub_methods_class_nano_engine_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c4c78f6b5587d51d71081e5322dd0af inherit pub_methods_class_nano_engine_object"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_engine_object.html#a4c4c78f6b5587d51d71081e5322dd0af">isFocused</a> ()</td></tr>
+<tr class="separator:a4c4c78f6b5587d51d71081e5322dd0af inherit pub_methods_class_nano_engine_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3241ba98792e5af469d21e48ef9d65b inherit pub_methods_class_nano_engine_object"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_engine_object.html#ab3241ba98792e5af469d21e48ef9d65b">hasTiler</a> ()</td></tr>
+<tr class="separator:ab3241ba98792e5af469d21e48ef9d65b inherit pub_methods_class_nano_engine_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36da38a043d4e4eec91e532c4c15d8ff inherit pub_methods_class_nano_engine_object"><td class="memItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_engine_object.html#a36da38a043d4e4eec91e532c4c15d8ff">getTiler</a> ()</td></tr>
+<tr class="separator:a36da38a043d4e4eec91e532c4c15d8ff inherit pub_methods_class_nano_engine_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_methods_class_nano_engine_object"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_nano_engine_object')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_nano_engine_object.html">NanoEngineObject&lt; T &gt;</a></td></tr>
+<tr class="memitem:ab4cdd5d7a37746ecfa50844f4780547e inherit pro_methods_class_nano_engine_object"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_engine_object.html#ab4cdd5d7a37746ecfa50844f4780547e">setTiler</a> (void *tiler)</td></tr>
+<tr class="separator:ab4cdd5d7a37746ecfa50844f4780547e inherit pro_methods_class_nano_engine_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_nano_object"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_nano_object')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_nano_object.html">NanoObject&lt; T &gt;</a></td></tr>
+<tr class="memitem:ac321e12bb859ad504f0ba4838a4df04f inherit pro_attribs_class_nano_object"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga4a82780f66e02834d957e77e70cc17d7">NanoRect</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_object.html#ac321e12bb859ad504f0ba4838a4df04f">m_rect</a></td></tr>
+<tr class="separator:ac321e12bb859ad504f0ba4838a4df04f inherit pro_attribs_class_nano_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_nano_engine_object"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_nano_engine_object')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_nano_engine_object.html">NanoEngineObject&lt; T &gt;</a></td></tr>
+<tr class="memitem:a19398c34c50884f981973fb5fca3abb3 inherit pro_attribs_class_nano_engine_object"><td class="memItemLeft" align="right" valign="top"><a id="a19398c34c50884f981973fb5fca3abb3"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_engine_object.html#a19398c34c50884f981973fb5fca3abb3">m_tiler</a> = nullptr</td></tr>
+<tr class="memdesc:a19398c34c50884f981973fb5fca3abb3 inherit pro_attribs_class_nano_engine_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Active tiler, assigned to the <a class="el" href="class_nano_engine_object.html">NanoEngineObject</a>. <br /></td></tr>
+<tr class="separator:a19398c34c50884f981973fb5fca3abb3 inherit pro_attribs_class_nano_engine_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a054e0329e752bad931d107493481ee6b inherit pro_attribs_class_nano_engine_object"><td class="memItemLeft" align="right" valign="top"><a id="a054e0329e752bad931d107493481ee6b"></a>
+<a class="el" href="class_nano_engine_object.html">NanoEngineObject</a>&lt; T &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_nano_engine_object.html#a054e0329e752bad931d107493481ee6b">m_next</a> = nullptr</td></tr>
+<tr class="memdesc:a054e0329e752bad931d107493481ee6b inherit pro_attribs_class_nano_engine_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Next <a class="el" href="class_nano_engine_object.html">NanoEngineObject</a> in the list. <br /></td></tr>
+<tr class="separator:a054e0329e752bad931d107493481ee6b inherit pro_attribs_class_nano_engine_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename T, T &amp; E&gt;<br />
-class NanoSprite&lt; T, E &gt;</h3>
+<div class="textblock"><h3>template&lt;class T&gt;<br />
+class NanoSprite&lt; T &gt;</h3>
 
-<p>This is template class for user sprites implementations. <a class="el" href="class_nano_sprite.html">NanoSprite</a> can work only as part of <a class="el" href="class_nano_engine.html">NanoEngine</a>, it requires <a class="el" href="class_nano_engine.html">NanoEngine</a> type and <a class="el" href="class_nano_engine.html">NanoEngine</a> instance as arguments. </p>
+<p>This is template class for user sprites implementations. <a class="el" href="class_nano_sprite.html">NanoSprite</a> can work only as part of <a class="el" href="class_nano_engine.html">NanoEngine</a>. </p>
 
 <p class="definition">Definition at line <a class="el" href="sprite_8h_source.html#l00046">46</a> of file <a class="el" href="sprite_8h_source.html">sprite.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="af44fac7d597c2623460e2ec341a940c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af44fac7d597c2623460e2ec341a940c2">&#9670;&nbsp;</a></span>NanoSprite()</h2>
+<a id="a916253c16ca33574368f8a4fea18f334"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a916253c16ca33574368f8a4fea18f334">&#9670;&nbsp;</a></span>NanoSprite()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , T &amp; E&gt; </div>
+template&lt;class T &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_nano_sprite.html">NanoSprite</a>&lt; T, E &gt;::<a class="el" href="class_nano_sprite.html">NanoSprite</a> </td>
+          <td class="memname"><a class="el" href="class_nano_sprite.html">NanoSprite</a>&lt; T &gt;::<a class="el" href="class_nano_sprite.html">NanoSprite</a> </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> &amp;&#160;</td>
           <td class="paramname"><em>pos</em>, </td>
@@ -162,79 +225,51 @@ template&lt;typename T , T &amp; E&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a5c20b78908db9d80fe044e415f79dee3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c20b78908db9d80fe044e415f79dee3">&#9670;&nbsp;</a></span>bottom()</h2>
+<a id="a219ee784be52dbc75e6c631147e61620"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a219ee784be52dbc75e6c631147e61620">&#9670;&nbsp;</a></span>draw()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , T &amp; E&gt; </div>
+template&lt;class T &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> <a class="el" href="class_nano_sprite.html">NanoSprite</a>&lt; T, E &gt;::bottom </td>
+          <td class="memname">void <a class="el" href="class_nano_sprite.html">NanoSprite</a>&lt; T &gt;::draw </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const</td>
+          <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Returns bottom-center point of the sprite </p>
+<p>Draws nano object Engine canvas </p>
 
-<p class="definition">Definition at line <a class="el" href="sprite_8h_source.html#l00101">101</a> of file <a class="el" href="sprite_8h_source.html">sprite.h</a>.</p>
+<p>Reimplemented from <a class="el" href="class_nano_object.html#a495096b650ce03bb0b1e038a7a0a84e9">NanoObject&lt; T &gt;</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="sprite_8h_source.html#l00062">62</a> of file <a class="el" href="sprite_8h_source.html">sprite.h</a>.</p>
 
 </div>
 </div>
-<a id="a6b8ea6524a8463b39caf5d2d7178dd02"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b8ea6524a8463b39caf5d2d7178dd02">&#9670;&nbsp;</a></span>center()</h2>
+<a id="ab718dcdd480315216106838f486e12c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab718dcdd480315216106838f486e12c9">&#9670;&nbsp;</a></span>getBitmap()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , T &amp; E&gt; </div>
+template&lt;class T &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> <a class="el" href="class_nano_sprite.html">NanoSprite</a>&lt; T, E &gt;::center </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Returns center point of the sprite </p>
-
-<p class="definition">Definition at line <a class="el" href="sprite_8h_source.html#l00133">133</a> of file <a class="el" href="sprite_8h_source.html">sprite.h</a>.</p>
-
-</div>
-</div>
-<a id="a3edd93768ba913a2fbd767271be3b4e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3edd93768ba913a2fbd767271be3b4e6">&#9670;&nbsp;</a></span>draw()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , T &amp; E&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="class_nano_sprite.html">NanoSprite</a>&lt; T, E &gt;::draw </td>
+          <td class="memname">const uint8_t* <a class="el" href="class_nano_sprite.html">NanoSprite</a>&lt; T &gt;::getBitmap </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -246,177 +281,25 @@ template&lt;typename T , T &amp; E&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Draws monochrome sprite on Engine canvas </p>
+<p>Returns pointer to sprite bitmap data. The data are located in the Flash memory. </p>
 
-<p class="definition">Definition at line <a class="el" href="sprite_8h_source.html#l00065">65</a> of file <a class="el" href="sprite_8h_source.html">sprite.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sprite_8h_source.html#l00079">79</a> of file <a class="el" href="sprite_8h_source.html">sprite.h</a>.</p>
 
 </div>
 </div>
-<a id="a3946de63cdeb5af0580e71886085ef91"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3946de63cdeb5af0580e71886085ef91">&#9670;&nbsp;</a></span>left()</h2>
+<a id="a139dd059196676bbaad3a24846582851"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a139dd059196676bbaad3a24846582851">&#9670;&nbsp;</a></span>setBitmap()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , T &amp; E&gt; </div>
+template&lt;class T &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> <a class="el" href="class_nano_sprite.html">NanoSprite</a>&lt; T, E &gt;::left </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Returns left-center point of the sprite </p>
-
-<p class="definition">Definition at line <a class="el" href="sprite_8h_source.html#l00117">117</a> of file <a class="el" href="sprite_8h_source.html">sprite.h</a>.</p>
-
-</div>
-</div>
-<a id="a5ffe9307b63f742064f67e23ee36a688"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ffe9307b63f742064f67e23ee36a688">&#9670;&nbsp;</a></span>moveBy()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , T &amp; E&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="class_nano_sprite.html">NanoSprite</a>&lt; T, E &gt;::moveBy </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> &amp;&#160;</td>
-          <td class="paramname"><em>p</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Moves sprite to new position by specified offset </p>
-
-<p class="definition">Definition at line <a class="el" href="sprite_8h_source.html#l00091">91</a> of file <a class="el" href="sprite_8h_source.html">sprite.h</a>.</p>
-
-</div>
-</div>
-<a id="af144f32292ddb60d012e2cfed296e3d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af144f32292ddb60d012e2cfed296e3d8">&#9670;&nbsp;</a></span>moveTo()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , T &amp; E&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="class_nano_sprite.html">NanoSprite</a>&lt; T, E &gt;::moveTo </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> &amp;&#160;</td>
-          <td class="paramname"><em>p</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Moves sprite to new position </p>
-
-<p class="definition">Definition at line <a class="el" href="sprite_8h_source.html#l00081">81</a> of file <a class="el" href="sprite_8h_source.html">sprite.h</a>.</p>
-
-</div>
-</div>
-<a id="a15fcf795339e8375548c35e1d2f53a50"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a15fcf795339e8375548c35e1d2f53a50">&#9670;&nbsp;</a></span>refresh()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , T &amp; E&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="class_nano_sprite.html">NanoSprite</a>&lt; T, E &gt;::refresh </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Marks sprite locate for refreshing on the new frame </p>
-
-<p class="definition">Definition at line <a class="el" href="sprite_8h_source.html#l00073">73</a> of file <a class="el" href="sprite_8h_source.html">sprite.h</a>.</p>
-
-</div>
-</div>
-<a id="a92bd5cfe5cc097cf7e78d77ff75030d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a92bd5cfe5cc097cf7e78d77ff75030d8">&#9670;&nbsp;</a></span>right()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , T &amp; E&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> <a class="el" href="class_nano_sprite.html">NanoSprite</a>&lt; T, E &gt;::right </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Returns right-center point of the sprite </p>
-
-<p class="definition">Definition at line <a class="el" href="sprite_8h_source.html#l00125">125</a> of file <a class="el" href="sprite_8h_source.html">sprite.h</a>.</p>
-
-</div>
-</div>
-<a id="acf17b80799bd2230d98255abda620263"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acf17b80799bd2230d98255abda620263">&#9670;&nbsp;</a></span>setBitmap()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , T &amp; E&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="class_nano_sprite.html">NanoSprite</a>&lt; T, E &gt;::setBitmap </td>
+          <td class="memname">void <a class="el" href="class_nano_sprite.html">NanoSprite</a>&lt; T &gt;::setBitmap </td>
           <td>(</td>
           <td class="paramtype">const uint8_t *&#160;</td>
           <td class="paramname"><em>bitmap</em></td><td>)</td>
@@ -429,99 +312,9 @@ template&lt;typename T , T &amp; E&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Changes sprite bitmap to new one. </p>
+<p>Replaces sprite bitmap with new one. </p>
 
-<p class="definition">Definition at line <a class="el" href="sprite_8h_source.html#l00141">141</a> of file <a class="el" href="sprite_8h_source.html">sprite.h</a>.</p>
-
-</div>
-</div>
-<a id="a23e66ae55f65b2986111649a03dd391a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23e66ae55f65b2986111649a03dd391a">&#9670;&nbsp;</a></span>top()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , T &amp; E&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga6bed080ec75d21960ecff045b5b110ff">NanoPoint</a> <a class="el" href="class_nano_sprite.html">NanoSprite</a>&lt; T, E &gt;::top </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Returns top-center point of the sprite </p>
-
-<p class="definition">Definition at line <a class="el" href="sprite_8h_source.html#l00109">109</a> of file <a class="el" href="sprite_8h_source.html">sprite.h</a>.</p>
-
-</div>
-</div>
-<a id="aff8153a3baab3bd30912dc3478a956a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff8153a3baab3bd30912dc3478a956a2">&#9670;&nbsp;</a></span>x()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , T &amp; E&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> <a class="el" href="class_nano_sprite.html">NanoSprite</a>&lt; T, E &gt;::x </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Returns sprite x position </p>
-
-<p class="definition">Definition at line <a class="el" href="sprite_8h_source.html#l00149">149</a> of file <a class="el" href="sprite_8h_source.html">sprite.h</a>.</p>
-
-</div>
-</div>
-<a id="a26447909c8d140e4745205de9ef040c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a26447909c8d140e4745205de9ef040c0">&#9670;&nbsp;</a></span>y()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , T &amp; E&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> <a class="el" href="class_nano_sprite.html">NanoSprite</a>&lt; T, E &gt;::y </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Returns sprite y position </p>
-
-<p class="definition">Definition at line <a class="el" href="sprite_8h_source.html#l00154">154</a> of file <a class="el" href="sprite_8h_source.html">sprite.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sprite_8h_source.html#l00073">73</a> of file <a class="el" href="sprite_8h_source.html">sprite.h</a>.</p>
 
 </div>
 </div>

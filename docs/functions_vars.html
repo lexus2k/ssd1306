@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.13</span>
+   &#160;<span id="projectnumber">1.8.0.1</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -63,6 +63,9 @@ $(function() {
 &#160;
 
 <h3><a id="index_a"></a>- a -</h3><ul>
+<li>addr
+: <a class="el" href="struct_s_platform_i2c_config.html#ae2acdd5bdc416f3addc50e5f256b44da">SPlatformI2cConfig</a>
+</li>
 <li>ascii_offset
 : <a class="el" href="struct_s_font_header_record.html#a2b7b768b98e4da20a932b32d7980dde1">SFontHeaderRecord</a>
 </li>
@@ -73,20 +76,19 @@ $(function() {
 <li>BITS_PER_PIXEL
 : <a class="el" href="class_adafruit_canvas_ops.html#af62e9d7f0736b51ea8fd3a680ccea70a">AdafruitCanvasOps&lt; BPP &gt;</a>
 , <a class="el" href="class_nano_canvas_ops.html#a8c2cedb18e71493a370c01147dbed846">NanoCanvasOps&lt; BPP &gt;</a>
+, <a class="el" href="class_nano_display_ops.html#a75c53f1b2a4b2221a9543b618f6d3305">NanoDisplayOps&lt; BPP &gt;</a>
 </li>
 <li>bottom
 : <a class="el" href="struct_s_s_d1306___r_e_c_t.html#ac6f2761573966ed9540d9ac66cf1b471">SSD1306_RECT</a>
+</li>
+<li>busId
+: <a class="el" href="struct_s_platform_i2c_config.html#ad774ad3eb4229ad9d80e40880f162f78">SPlatformI2cConfig</a>
+, <a class="el" href="struct_s_platform_spi_config.html#a7e6951f894b3b7349464b08a9ee940dd">SPlatformSpiConfig</a>
 </li>
 </ul>
 
 
 <h3><a id="index_c"></a>- c -</h3><ul>
-<li>canvas
-: <a class="el" href="class_nano_engine_tiler.html#a1199d9ef403213788c83abf74ded68d8">NanoEngineTiler&lt; C, W, H, B &gt;</a>
-</li>
-<li>close
-: <a class="el" href="structssd1306__interface__t.html#a082afeefa07cb717ef3f837667b18491">ssd1306_interface_t</a>
-</li>
 <li>count
 : <a class="el" href="struct_s_app_menu.html#ad750fae199422bd44dc6063123631d62">SAppMenu</a>
 , <a class="el" href="struct_s_fixed_font_info.html#af15942a32b4cebccdad63b2d81f24abc">SFixedFontInfo</a>
@@ -98,6 +100,17 @@ $(function() {
 <h3><a id="index_d"></a>- d -</h3><ul>
 <li>data
 : <a class="el" href="struct_s_p_r_i_t_e.html#ac56b0c16d0bcd810ae1289350df821c3">SPRITE</a>
+</li>
+<li>dc
+: <a class="el" href="struct_s_platform_spi_config.html#a96135f30ad5b750b1f88ab818a07643d">SPlatformSpiConfig</a>
+</li>
+</ul>
+
+
+<h3><a id="index_f"></a>- f -</h3><ul>
+<li>frequency
+: <a class="el" href="struct_s_platform_i2c_config.html#ae14daca7c9c390fc24cf9e06fd247bbe">SPlatformI2cConfig</a>
+, <a class="el" href="struct_s_platform_spi_config.html#a29ab1966cccc5bc568b973f0fe136546">SPlatformSpiConfig</a>
 </li>
 </ul>
 
@@ -151,23 +164,34 @@ $(function() {
 <li>m_buffer
 : <a class="el" href="class_adafruit_canvas_ops.html#a0077cb63601a008150f6d4c7642ab702">AdafruitCanvasOps&lt; BPP &gt;</a>
 </li>
-<li>m_canvas
-: <a class="el" href="class_sprite_pool.html#aacf3c183566ace3d39ace8755a2a60aa">SpritePool</a>
-</li>
 <li>m_color
 : <a class="el" href="class_nano_canvas_ops.html#a2791c74fdd94200db0fadd7e0f42e938">NanoCanvasOps&lt; BPP &gt;</a>
+, <a class="el" href="class_nano_display_ops.html#af7996fc0d1f5c8b7a528a3f9a3555d0e">NanoDisplayOps&lt; BPP &gt;</a>
 </li>
 <li>m_cpuLoad
 : <a class="el" href="class_nano_engine_core.html#a03092e366bf50606308bd065d6de9623">NanoEngineCore</a>
 </li>
 <li>m_cursorX
 : <a class="el" href="class_nano_canvas_ops.html#aca15784dd70d1b3dbe5ec3f85757aab2">NanoCanvasOps&lt; BPP &gt;</a>
+, <a class="el" href="class_nano_display_ops.html#a7798cfef01bdf951c890907397571456">NanoDisplayOps&lt; BPP &gt;</a>
 </li>
 <li>m_cursorY
 : <a class="el" href="class_nano_canvas_ops.html#aacc78fabf65b53efb5463ad0ff7d6398">NanoCanvasOps&lt; BPP &gt;</a>
+, <a class="el" href="class_nano_display_ops.html#a15142bb4620409ee716307c8c1371c5d">NanoDisplayOps&lt; BPP &gt;</a>
+</li>
+<li>m_dc
+: <a class="el" href="class_display_s_s_d1306.html#a288b068ee1b756737339c46df75d74c9">DisplaySSD1306</a>
+</li>
+<li>m_dcPin
+: <a class="el" href="class_display_s_s_d1331.html#af88fb596b9f7956b976a12cc4fdba220">DisplaySSD1331</a>
+, <a class="el" href="class_display_s_s_d1331x16.html#a8a18e2d4f76f8a06ddb9cfb9f26e1b51">DisplaySSD1331x16</a>
+</li>
+<li>m_display
+: <a class="el" href="class_nano_engine_tiler.html#a1fea498adc40a93cfd53a5939a4ae37e">NanoEngineTiler&lt; C, B &gt;</a>
 </li>
 <li>m_fontStyle
 : <a class="el" href="class_nano_canvas_ops.html#ae7b89d5a253d5b7699cd214f799146cc">NanoCanvasOps&lt; BPP &gt;</a>
+, <a class="el" href="class_nano_display_ops.html#ac1722c536048336882a4508abbcc9b5d">NanoDisplayOps&lt; BPP &gt;</a>
 </li>
 <li>m_fps
 : <a class="el" href="class_nano_engine_core.html#a451151896bbd7e586e5f5970487bccb8">NanoEngineCore</a>
@@ -177,6 +201,10 @@ $(function() {
 </li>
 <li>m_h
 : <a class="el" href="class_nano_canvas_ops.html#a1fcf1a393470cb8b0110eadf0beae905">NanoCanvasOps&lt; BPP &gt;</a>
+, <a class="el" href="class_nano_display_ops.html#ad5bea689670d2e0a99fe7ceb4d551608">NanoDisplayOps&lt; BPP &gt;</a>
+</li>
+<li>m_intf
+: <a class="el" href="class_nano_display_ops.html#a166a9d5cfdbba6bdf766f414917d0be6">NanoDisplayOps&lt; BPP &gt;</a>
 </li>
 <li>m_lastFrameTs
 : <a class="el" href="class_nano_engine_core.html#afd38c03005b3612e92045d2ee574166c">NanoEngineCore</a>
@@ -184,52 +212,51 @@ $(function() {
 <li>m_loop
 : <a class="el" href="class_nano_engine_core.html#a9754b6af8f57a00416094b1f0e551298">NanoEngineCore</a>
 </li>
+<li>m_name
+: <a class="el" href="class_nano_text_menu_item.html#a84d0c33ba58ed8829a742fff690a08ea">NanoTextMenuItem&lt; T &gt;</a>
+</li>
+<li>m_next
+: <a class="el" href="class_nano_engine_object.html#a054e0329e752bad931d107493481ee6b">NanoEngineObject&lt; T &gt;</a>
+</li>
 <li>m_onButtons
 : <a class="el" href="class_nano_engine_inputs.html#a8c619be0d57a15ed98680ba1fb5e58a6">NanoEngineInputs</a>
 </li>
 <li>m_onDraw
-: <a class="el" href="class_nano_engine_tiler.html#a184dd26abea919c6a7d84d2d20b53a75">NanoEngineTiler&lt; C, W, H, B &gt;</a>
+: <a class="el" href="class_nano_engine_tiler.html#a4285b2ad6df9947679fab68e8e097786">NanoEngineTiler&lt; C, B &gt;</a>
 </li>
 <li>m_p
 : <a class="el" href="class_nano_canvas_ops.html#ad225695be47a6ad53c9d17db4184983c">NanoCanvasOps&lt; BPP &gt;</a>
-</li>
-<li>m_pos
-: <a class="el" href="class_nano_fixed_sprite.html#a7f0281198da917037e1ed71bdf8f86e1">NanoFixedSprite&lt; T, E &gt;</a>
+, <a class="el" href="class_nano_display_ops.html#ab979a3731a1fca4b61f549bfd1563e9d">NanoDisplayOps&lt; BPP &gt;</a>
 </li>
 <li>m_rect
-: <a class="el" href="class_sprite_pool.html#a4a3cbbd6bbd5c9c74f1ed5dd8e631589">SpritePool</a>
+: <a class="el" href="class_nano_object.html#ac321e12bb859ad504f0ba4838a4df04f">NanoObject&lt; T &gt;</a>
 </li>
 <li>m_refreshFlags
-: <a class="el" href="class_nano_engine_tiler.html#aaa4fafbc1339cb6bef17d0aeabd94a44">NanoEngineTiler&lt; C, W, H, B &gt;</a>
+: <a class="el" href="class_nano_engine_tiler.html#ac51c6c90c70b3f14b8be226b5eb0f748">NanoEngineTiler&lt; C, B &gt;</a>
 </li>
-<li>m_size
-: <a class="el" href="class_nano_fixed_sprite.html#a6b601c5a85bf9a388c9bce4fd1c98924">NanoFixedSprite&lt; T, E &gt;</a>
+<li>m_rotation
+: <a class="el" href="class_display_s_s_d1331.html#a718a1a5f60a0dccae5f599c5409a6f61">DisplaySSD1331</a>
+, <a class="el" href="class_display_s_s_d1331x16.html#aaddd62e8418e1f7055612a1a122088a7">DisplaySSD1331x16</a>
+</li>
+<li>m_rstPin
+: <a class="el" href="class_display_s_s_d1331.html#ad76b59f74d8e594fa9a409a8338a9bf3">DisplaySSD1331</a>
+, <a class="el" href="class_display_s_s_d1331x16.html#a848587e807d44b2461e9df8e735bce3c">DisplaySSD1331x16</a>
 </li>
 <li>m_textMode
 : <a class="el" href="class_nano_canvas_ops.html#aa1960bb47eb7a5ee51466740c6ad7b42">NanoCanvasOps&lt; BPP &gt;</a>
+, <a class="el" href="class_nano_display_ops.html#a1d50f4bb87f09c4c48ee465adac8af8b">NanoDisplayOps&lt; BPP &gt;</a>
+</li>
+<li>m_tiler
+: <a class="el" href="class_nano_engine_object.html#a19398c34c50884f981973fb5fca3abb3">NanoEngineObject&lt; T &gt;</a>
 </li>
 <li>m_w
 : <a class="el" href="class_nano_canvas_ops.html#a56d0c52199326b808ddecef112c4cb38">NanoCanvasOps&lt; BPP &gt;</a>
-</li>
-<li>MAX_SPRITES
-: <a class="el" href="class_sprite_pool.html#aa7522b59d079d63cfbb0612aaaee58df">SpritePool</a>
+, <a class="el" href="class_nano_display_ops.html#a83579873888446af5016c9a077eb1c10">NanoDisplayOps&lt; BPP &gt;</a>
 </li>
 </ul>
 
 
 <h3><a id="index_n"></a>- n -</h3><ul>
-<li>NE_MAX_TILES_NUM
-: <a class="el" href="class_nano_engine_tiler.html#ac8565b5893234cf6a90723520df35201">NanoEngineTiler&lt; C, W, H, B &gt;</a>
-</li>
-<li>NE_TILE_HEIGHT
-: <a class="el" href="class_nano_engine_tiler.html#ae69fc60e9fcc37ec005e21af90a67759">NanoEngineTiler&lt; C, W, H, B &gt;</a>
-</li>
-<li>NE_TILE_SIZE_BITS
-: <a class="el" href="class_nano_engine_tiler.html#aff885e01ce1a84146fbaa1ea38e47b37">NanoEngineTiler&lt; C, W, H, B &gt;</a>
-</li>
-<li>NE_TILE_WIDTH
-: <a class="el" href="class_nano_engine_tiler.html#a08c84aaa34760f914a309006cb775f78">NanoEngineTiler&lt; C, W, H, B &gt;</a>
-</li>
 <li>next_page
 : <a class="el" href="structssd1306__lcd__t.html#ae7513c1cb9a358f0d333b5ca73c3b7a7">ssd1306_lcd_t</a>
 </li>
@@ -271,8 +298,16 @@ $(function() {
 
 
 <h3><a id="index_s"></a>- s -</h3><ul>
+<li>scl
+: <a class="el" href="struct_s_platform_i2c_config.html#af615d7a15c31d184251b2676c8aab130">SPlatformI2cConfig</a>
+, <a class="el" href="struct_s_platform_spi_config.html#a9773200ff4d40e2eff411c0c69c00589">SPlatformSpiConfig</a>
+</li>
 <li>scrollPosition
 : <a class="el" href="struct_s_app_menu.html#a561ec2f54b8defb69d0d6ace7c5702b9">SAppMenu</a>
+</li>
+<li>sda
+: <a class="el" href="struct_s_platform_i2c_config.html#aeb3beab5766bcf03b297bb5e8eefeb23">SPlatformI2cConfig</a>
+, <a class="el" href="struct_s_platform_spi_config.html#a2e387a4952105f7406ab587eb4503fab">SPlatformSpiConfig</a>
 </li>
 <li>secondary_table
 : <a class="el" href="struct_s_fixed_font_info.html#a73c75a104b00970b7fef5c7fe66b5ff6">SFixedFontInfo</a>
@@ -280,20 +315,16 @@ $(function() {
 <li>selection
 : <a class="el" href="struct_s_app_menu.html#abbe11210d697c17d62e0232d6451d06b">SAppMenu</a>
 </li>
-<li>send
-: <a class="el" href="structssd1306__interface__t.html#a9d99111dfccc867514cab4e2ae2cd613">ssd1306_interface_t</a>
-</li>
-<li>send_buffer
-: <a class="el" href="structssd1306__interface__t.html#ab753c14b485fd4588cc08ed6bf598b4c">ssd1306_interface_t</a>
-</li>
 <li>send_pixels1
 : <a class="el" href="structssd1306__lcd__t.html#aeb7e3e36bd3480388976f8c4e1ab9adf">ssd1306_lcd_t</a>
 </li>
 <li>send_pixels16
-: <a class="el" href="structssd1306__lcd__t.html#a409b80d44b201f777b8bb6a34df4288e">ssd1306_lcd_t</a>
+: <a class="el" href="structssd1306__lcd2__t.html#a156b63dc1a231a67092141dcc7684f6c">ssd1306_lcd2_t</a>
+, <a class="el" href="structssd1306__lcd__t.html#a409b80d44b201f777b8bb6a34df4288e">ssd1306_lcd_t</a>
 </li>
 <li>send_pixels8
-: <a class="el" href="structssd1306__lcd__t.html#a881f5629ba5b0e9b4d89a1a176ce2668">ssd1306_lcd_t</a>
+: <a class="el" href="structssd1306__lcd2__t.html#abfe0dc7bfcee802e9369f6d18038b2ea">ssd1306_lcd2_t</a>
+, <a class="el" href="structssd1306__lcd__t.html#a881f5629ba5b0e9b4d89a1a176ce2668">ssd1306_lcd_t</a>
 </li>
 <li>send_pixels_buffer1
 : <a class="el" href="structssd1306__lcd__t.html#a7ceb1ea335b937f01a45c2e3529db48c">ssd1306_lcd_t</a>
@@ -302,25 +333,14 @@ $(function() {
 : <a class="el" href="structssd1306__lcd__t.html#a6429922cc1a9ea852a3152c1942b1d73">ssd1306_lcd_t</a>
 </li>
 <li>set_mode
-: <a class="el" href="structssd1306__lcd__t.html#abace095df95cc15051f0fcb6e44522c7">ssd1306_lcd_t</a>
-</li>
-<li>SP_ERR_NO_SPACE
-: <a class="el" href="class_sprite_pool.html#abef7ea5b3414ec7adf053d56df13b7c4">SpritePool</a>
+: <a class="el" href="structssd1306__lcd2__t.html#ad9e35df2440992bb29d824af6941d043">ssd1306_lcd2_t</a>
+, <a class="el" href="structssd1306__lcd__t.html#abace095df95cc15051f0fcb6e44522c7">ssd1306_lcd_t</a>
 </li>
 <li>spacing
 : <a class="el" href="struct_s_char_info.html#a812ff013a4ac7c53e8050892cd82541f">SCharInfo</a>
 </li>
-<li>spi
-: <a class="el" href="structssd1306__interface__t.html#afd33289a509ae27cbdafd118b91ff23e">ssd1306_interface_t</a>
-</li>
-<li>start
-: <a class="el" href="structssd1306__interface__t.html#a347dbbf8fdb470d133901c8fbd8c5186">ssd1306_interface_t</a>
-</li>
 <li>start_code
 : <a class="el" href="struct_s_unicode_block_record.html#af269a22380bdb209d119e78fd94793b3">SUnicodeBlockRecord</a>
-</li>
-<li>stop
-: <a class="el" href="structssd1306__interface__t.html#a1cccdffea7b707f9db54e93375d12a22">ssd1306_interface_t</a>
 </li>
 </ul>
 
@@ -334,6 +354,7 @@ $(function() {
 </li>
 <li>type
 : <a class="el" href="struct_s_font_header_record.html#a0ea841c88936f4f4d49f6d0c4b71ce8e">SFontHeaderRecord</a>
+, <a class="el" href="structssd1306__lcd2__t.html#ab57962784ed16d9f77183dea36527514">ssd1306_lcd2_t</a>
 , <a class="el" href="structssd1306__lcd__t.html#aabe73540a354c4f959e4fe862167b482">ssd1306_lcd_t</a>
 </li>
 </ul>

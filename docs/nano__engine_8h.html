@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.13</span>
+   &#160;<span id="projectnumber">1.8.0.1</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -67,10 +67,13 @@ $(function() {
 <div class="title">nano_engine.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="sprite_8h_source.html">nano_engine/sprite.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="canvas_8h_source.html">nano_engine/canvas.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="canvas_8h_source.html">nano_engine/canvas.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="adafruit_8h_source.html">nano_engine/adafruit.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="tiler_8h_source.html">nano_engine/tiler.h</a>&quot;</code><br />
+<code>#include &quot;nano_engine/object.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="sprite_8h_source.html">nano_engine/sprite.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="menu_8h_source.html">nano_engine/menu.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="menu__items_8h_source.html">nano_engine/menu_items.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="core_8h_source.html">nano_engine/core.h</a>&quot;</code><br />
 </div>
 <p><a href="nano__engine_8h_source.html">Go to the source code of this file.</a></p>
@@ -82,11 +85,11 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga851b20d4f9ae55f000ee7058d5f3412a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga851b20d4f9ae55f000ee7058d5f3412a">NanoEngine1</a>&#160;&#160;&#160;<a class="el" href="class_nano_engine.html">NanoEngine</a>&lt;<a class="el" href="tiler_8h.html#a645f33eeb27590c2eaa57938d8ccb091">TILE_16x16_MONO</a>&gt;</td></tr>
+<tr class="memitem:ga851b20d4f9ae55f000ee7058d5f3412a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga851b20d4f9ae55f000ee7058d5f3412a">NanoEngine1</a>&#160;&#160;&#160;<a class="el" href="class_nano_engine.html">NanoEngine</a>&lt;<a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga645f33eeb27590c2eaa57938d8ccb091">TILE_16x16_MONO</a>&gt;</td></tr>
 <tr class="separator:ga851b20d4f9ae55f000ee7058d5f3412a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3030b7f658c461c80e88876ed8ea0131"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga3030b7f658c461c80e88876ed8ea0131">NanoEngine8</a>&#160;&#160;&#160;<a class="el" href="class_nano_engine.html">NanoEngine</a>&lt;<a class="el" href="tiler_8h.html#a599492648952492afe2b22b6013bf6ff">TILE_16x16_RGB8</a>&gt;</td></tr>
+<tr class="memitem:ga3030b7f658c461c80e88876ed8ea0131"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga3030b7f658c461c80e88876ed8ea0131">NanoEngine8</a>&#160;&#160;&#160;<a class="el" href="class_nano_engine.html">NanoEngine</a>&lt;<a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga599492648952492afe2b22b6013bf6ff">TILE_16x16_RGB8</a>&gt;</td></tr>
 <tr class="separator:ga3030b7f658c461c80e88876ed8ea0131"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac8889599607ff5a2a595ccccd6deaa2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#gac8889599607ff5a2a595ccccd6deaa2f">NanoEngine16</a>&#160;&#160;&#160;<a class="el" href="class_nano_engine.html">NanoEngine</a>&lt;<a class="el" href="tiler_8h.html#a5cd7b167cfc7847c931884788689cf44">TILE_8x8_RGB16</a>&gt;</td></tr>
+<tr class="memitem:gac8889599607ff5a2a595ccccd6deaa2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#gac8889599607ff5a2a595ccccd6deaa2f">NanoEngine16</a>&#160;&#160;&#160;<a class="el" href="class_nano_engine.html">NanoEngine</a>&lt;<a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga5cd7b167cfc7847c931884788689cf44">TILE_8x8_RGB16</a>&gt;</td></tr>
 <tr class="separator:gac8889599607ff5a2a595ccccd6deaa2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>

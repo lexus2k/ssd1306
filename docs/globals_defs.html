@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.13</span>
+   &#160;<span id="projectnumber">1.8.0.1</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -64,23 +64,41 @@ $(function() {
 
 <h3><a id="index_a"></a>- a -</h3><ul>
 <li>ADATILE_8x8_MONO
-: <a class="el" href="tiler_8h.html#aa169357b2355e828ecf067794453df52">tiler.h</a>
+: <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#gaa169357b2355e828ecf067794453df52">tiler.h</a>
 </li>
 <li>ADATILE_8x8_RGB16
-: <a class="el" href="tiler_8h.html#a85ed5b7412c86df151b510e29052f3ca">tiler.h</a>
+: <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga85ed5b7412c86df151b510e29052f3ca">tiler.h</a>
 </li>
 <li>ADATILE_8x8_RGB8
-: <a class="el" href="tiler_8h.html#ab8d6970008cd79df3375f68f77f18197">tiler.h</a>
+: <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#gab8d6970008cd79df3375f68f77f18197">tiler.h</a>
 </li>
 </ul>
 
 
 <h3><a id="index_c"></a>- c -</h3><ul>
+<li>CONFIG_ARDUINO_I2C_ENABLE
+: <a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#gacf411e4cf76739adcf8c4d42aa57a344">UserSettings.h</a>
+</li>
+<li>CONFIG_ARDUINO_SPI_ENABLE
+: <a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga5db5722e4d0ad10962a721e0bd13fd85">UserSettings.h</a>
+</li>
 <li>CONFIG_AVR_SPI_ENABLE
 : <a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#gac028140be3b57c38264f1a85db026c7f">UserSettings.h</a>
 </li>
 <li>CONFIG_AVR_UART_ENABLE
 : <a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga090563dd00874aa0f954021e76b3c6c6">UserSettings.h</a>
+</li>
+<li>CONFIG_ESP32_I2C_ENABLE
+: <a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga869c09543aed6136865114b43e69cf1f">UserSettings.h</a>
+</li>
+<li>CONFIG_ESP32_SPI_ENABLE
+: <a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga39237fc286c38a8a5e6360791dd0b5b9">UserSettings.h</a>
+</li>
+<li>CONFIG_LINUX_I2C_ENABLE
+: <a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga0cddf893f908f2d876c498a89593ed1b">UserSettings.h</a>
+</li>
+<li>CONFIG_LINUX_SPI_ENABLE
+: <a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga7ed21adc9127f1644842fc7fd324eb49">UserSettings.h</a>
 </li>
 <li>CONFIG_PLATFORM_I2C_ENABLE
 : <a class="el" href="group___s_s_d1306___l_i_b_r_a_r_y___c_o_n_f_i_g.html#ga879a327dedebec82e853eab3b2f86e50">UserSettings.h</a>
@@ -169,9 +187,6 @@ $(function() {
 <li>s_displayWidth
 : <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaecbd3a122e1a8388df911787003a9e4c">lcd_common.h</a>
 </li>
-<li>ssd1306_closeInterface
-: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaabf245b331f551cc03ab63386aa0c2ea">ssd1306_interface.h</a>
-</li>
 <li>SSD1306_COMPAT_SEND_PIXELS_RGB16_CMDS
 : <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaac9ef7e17696eb974902f294c38e74f4">lcd_common.h</a>
 </li>
@@ -180,15 +195,6 @@ $(function() {
 </li>
 <li>SSD1306_COMPAT_SPI_BLOCK_8BIT_CMDS
 : <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gac463703c9f8a874c2b533284d421364e">lcd_common.h</a>
-</li>
-<li>ssd1306_dcQuickSwitch
-: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaeff66a04d6a58f031dbc7d8aa4e671a7">ssd1306_interface.h</a>
-</li>
-<li>ssd1306_drawCanvas
-: <a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga9c3f2c5fca79b5111a8407989a8bc1e6">ssd1306_1bit.h</a>
-</li>
-<li>ssd1306_endTransmission
-: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga450686fc271e943d9e22b1cfcd06e978">ssd1306_interface.h</a>
 </li>
 <li>SSD1306_MORE_CHARS_REQUIRED
 : <a class="el" href="ssd1306__generic_8h.html#abed91b24933cbc8ba18dab9cd9f92e08">ssd1306_generic.h</a>
@@ -205,12 +211,6 @@ $(function() {
 <li>SSD1306_SDA
 : <a class="el" href="ssd1306__i2c__conf_8h.html#a87889918230a8a21e8f836f0c8fada7c">ssd1306_i2c_conf.h</a>
 </li>
-<li>ssd1306_sendByte
-: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga6fc5fa1be51bd985560f29b5eb1d7d74">ssd1306_interface.h</a>
-</li>
-<li>ssd1306_sendBytes
-: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#gaf7d0c203fdf6410ad5224d5c5f606352">ssd1306_interface.h</a>
-</li>
 <li>ssd1306_sendPixel8
 : <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga7245c64d758f2243621ec48ffa551945">lcd_common.h</a>
 </li>
@@ -223,9 +223,6 @@ $(function() {
 <li>ssd1306_setRamBlock
 : <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga13280d5cffa007c2a3ee87adbe823e41">lcd_common.h</a>
 </li>
-<li>ssd1306_startTransmission
-: <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga5079a258f12fe4797c7b78dc59196d59">ssd1306_interface.h</a>
-</li>
 <li>ssd1306_swap_data
 : <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#gad8d0ae08f1f0cc9d28af884dfce17f06">io.h</a>
 </li>
@@ -237,31 +234,31 @@ $(function() {
 
 <h3><a id="index_t"></a>- t -</h3><ul>
 <li>TILE_128x64_MONO
-: <a class="el" href="tiler_8h.html#aec88d192410f9265c43f44411c32f597">tiler.h</a>
+: <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#gaec88d192410f9265c43f44411c32f597">tiler.h</a>
 </li>
 <li>TILE_16x16_MONO
-: <a class="el" href="tiler_8h.html#a645f33eeb27590c2eaa57938d8ccb091">tiler.h</a>
+: <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga645f33eeb27590c2eaa57938d8ccb091">tiler.h</a>
 </li>
 <li>TILE_16x16_RGB8
-: <a class="el" href="tiler_8h.html#a599492648952492afe2b22b6013bf6ff">tiler.h</a>
+: <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga599492648952492afe2b22b6013bf6ff">tiler.h</a>
 </li>
 <li>TILE_32x32_MONO
-: <a class="el" href="tiler_8h.html#ad7d915670552b1e8b6f254af1108d754">tiler.h</a>
+: <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#gad7d915670552b1e8b6f254af1108d754">tiler.h</a>
 </li>
 <li>TILE_32x32_RGB8
-: <a class="el" href="tiler_8h.html#a7dcf56eaf791d098acb158af9bcd1283">tiler.h</a>
+: <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga7dcf56eaf791d098acb158af9bcd1283">tiler.h</a>
 </li>
 <li>TILE_8x8_MONO
-: <a class="el" href="tiler_8h.html#a9eb1995a0a6ae0637ff5e948422eee08">tiler.h</a>
+: <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga9eb1995a0a6ae0637ff5e948422eee08">tiler.h</a>
 </li>
 <li>TILE_8x8_MONO_8
-: <a class="el" href="tiler_8h.html#af153c64ca7b15a727adc73c1240b1b55">tiler.h</a>
+: <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#gaf153c64ca7b15a727adc73c1240b1b55">tiler.h</a>
 </li>
 <li>TILE_8x8_RGB16
-: <a class="el" href="tiler_8h.html#a5cd7b167cfc7847c931884788689cf44">tiler.h</a>
+: <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#ga5cd7b167cfc7847c931884788689cf44">tiler.h</a>
 </li>
 <li>TILE_8x8_RGB8
-: <a class="el" href="tiler_8h.html#ac073fe67e8850a43c912c020374c418d">tiler.h</a>
+: <a class="el" href="group___n_a_n_o___e_n_g_i_n_e___a_p_i.html#gac073fe67e8850a43c912c020374c418d">tiler.h</a>
 </li>
 </ul>
 

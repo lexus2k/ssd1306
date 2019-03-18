@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.13</span>
+   &#160;<span id="projectnumber">1.8.0.1</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -63,40 +63,27 @@ $(function() {
 <div class="textblock">Here is a list of all documented class members with links to the class documentation for each member:</div>
 
 <h3><a id="index_c"></a>- c -</h3><ul>
-<li>canvas
-: <a class="el" href="class_nano_engine_tiler.html#a1199d9ef403213788c83abf74ded68d8">NanoEngineTiler&lt; C, W, H, B &gt;</a>
-</li>
 <li>center()
-: <a class="el" href="class_nano_fixed_sprite.html#a29ad64d2c3cf6bcd099fafe5f593ffb9">NanoFixedSprite&lt; T, E &gt;</a>
-, <a class="el" href="class_nano_sprite.html#a6b8ea6524a8463b39caf5d2d7178dd02">NanoSprite&lt; T, E &gt;</a>
-</li>
-<li>char_f6x8()
-: <a class="el" href="class_nano_canvas.html#afe659b5c2c540b8af0d8c0fd53eb7327">NanoCanvas</a>
-</li>
-<li>charF12x16()
-: <a class="el" href="class_nano_canvas.html#aa1ab1e5c598b6d46f261f45396ea2743">NanoCanvas</a>
-</li>
-<li>charF6x8()
-: <a class="el" href="class_nano_canvas.html#a025db957c4a51f9de6afe6b413440d0e">NanoCanvas</a>
+: <a class="el" href="class_nano_object.html#a98b811895d073718d57a50c2423f588f">NanoObject&lt; T &gt;</a>
 </li>
 <li>clear()
-: <a class="el" href="class_nano_canvas.html#a6fe2036b269cc55d9181c727a4fb3951">NanoCanvas</a>
-, <a class="el" href="class_nano_canvas_ops.html#ab5c228332af7aeebecbd953422d6b148">NanoCanvasOps&lt; BPP &gt;</a>
-, <a class="el" href="class_sprite_pool.html#a225cec38d6557f304d2279005a8aa523">SpritePool</a>
-, <a class="el" href="class_ssd1306_console.html#aff27f1a062c1db87e2809782000fdb2d">Ssd1306Console</a>
-</li>
-<li>close
-: <a class="el" href="structssd1306__interface__t.html#a082afeefa07cb717ef3f837667b18491">ssd1306_interface_t</a>
+: <a class="el" href="class_nano_canvas_ops.html#ab5c228332af7aeebecbd953422d6b148">NanoCanvasOps&lt; BPP &gt;</a>
+, <a class="el" href="class_nano_display_ops.html#a9e36864a8b54593bb626a20dd6fae4e8">NanoDisplayOps&lt; BPP &gt;</a>
 </li>
 <li>collision()
 : <a class="el" href="struct___nano_rect.html#a3a7606fc7e68163abc16b397e17761e8">_NanoRect</a>
-, <a class="el" href="class_nano_engine_tiler.html#a591a25e7e08b3c9640c6e87e4d912457">NanoEngineTiler&lt; C, W, H, B &gt;</a>
+, <a class="el" href="class_nano_engine_tiler.html#a49e9413444e6da21cd9ae27f80f2fc78">NanoEngineTiler&lt; C, B &gt;</a>
 </li>
 <li>collisionX()
 : <a class="el" href="struct___nano_rect.html#a6f5a5dce328f9205ffa3c52d93d7e19c">_NanoRect</a>
 </li>
 <li>collisionY()
 : <a class="el" href="struct___nano_rect.html#a785e4fa2c6e7bcc07ee9b8c88bdcb397">_NanoRect</a>
+</li>
+<li>commandStart()
+: <a class="el" href="class_display_s_s_d1306.html#a0918ac35f5501eedfc1192b23fc50195">DisplaySSD1306</a>
+, <a class="el" href="class_display_s_s_d1331.html#a71ef0bc7dd5c36332cb803263f0014ac">DisplaySSD1331</a>
+, <a class="el" href="class_display_s_s_d1331x16.html#a61c6653fd75d1e24ea39d5162d3991f3">DisplaySSD1331x16</a>
 </li>
 <li>connectArduboyKeys()
 : <a class="el" href="class_nano_engine_inputs.html#a44834200b3dd49442b96ea45de2aaf56">NanoEngineInputs</a>
@@ -111,15 +98,22 @@ $(function() {
 : <a class="el" href="class_nano_engine_inputs.html#a4b438315ca118e0721e3a8fb2f638e41">NanoEngineInputs</a>
 </li>
 <li>contains()
-: <a class="el" href="struct___nano_rect.html#a1df5f59b49fa645e8c7d7b8e2b9ab590">_NanoRect</a>
+: <a class="el" href="struct___nano_rect.html#a7ccd5d6e48cad54770641f55e2739a08">_NanoRect</a>
 </li>
 <li>containsPartOf()
 : <a class="el" href="struct___nano_rect.html#a1c6eafcf4abb5770114119ff25dfb8ba">_NanoRect</a>
+</li>
+<li>copyBlock()
+: <a class="el" href="class_display_s_s_d1331.html#ad2af0aea996fec92ea1abd0bba7e6d8a">DisplaySSD1331</a>
+, <a class="el" href="class_display_s_s_d1331x16.html#a2178b536d5d261b7777e6dd478287516">DisplaySSD1331x16</a>
 </li>
 <li>count
 : <a class="el" href="struct_s_app_menu.html#ad750fae199422bd44dc6063123631d62">SAppMenu</a>
 , <a class="el" href="struct_s_fixed_font_info.html#af15942a32b4cebccdad63b2d81f24abc">SFixedFontInfo</a>
 , <a class="el" href="struct_s_unicode_block_record.html#a4e9a958ed2e5507c22490818dd2a304d">SUnicodeBlockRecord</a>
+</li>
+<li>createMenu()
+: <a class="el" href="class_nano_display_ops.html#acd679ed181885df2345d0726b5d63058">NanoDisplayOps&lt; BPP &gt;</a>
 </li>
 <li>crop()
 : <a class="el" href="struct___nano_rect.html#ad2830dc65621088cfc9656e3959ff9b0">_NanoRect</a>
