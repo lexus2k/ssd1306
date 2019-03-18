@@ -183,7 +183,7 @@ private:
     uint8_t timer;
 };
 
-static const uint8_t maxCount = 20;
+static const uint8_t maxCount = 12;
 
 /* These are our snow flakes */
 SnowFlake snowFlakes[maxCount];
