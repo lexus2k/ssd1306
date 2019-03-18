@@ -33,7 +33,6 @@ var searchData=
   ['connectzkeypad',['connectZKeypad',['../class_nano_engine_inputs.html#a4b438315ca118e0721e3a8fb2f638e41',1,'NanoEngineInputs']]],
   ['contains',['contains',['../struct___nano_rect.html#a7ccd5d6e48cad54770641f55e2739a08',1,'_NanoRect::contains(const NanoPoint &amp;p) const'],['../struct___nano_rect.html#a1df5f59b49fa645e8c7d7b8e2b9ab590',1,'_NanoRect::contains(const _NanoRect &amp;r) const']]],
   ['containspartof',['containsPartOf',['../struct___nano_rect.html#a1c6eafcf4abb5770114119ff25dfb8ba',1,'_NanoRect']]],
-  ['controller_5fnative_5fspi_5fblock_5f8bit_5fcmds',['CONTROLLER_NATIVE_SPI_BLOCK_8BIT_CMDS',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga9d0d908bfa8476c33a85718bb1281f83',1,'lcd_common.h']]],
   ['copyblock',['copyBlock',['../class_display_s_s_d1331.html#ad2af0aea996fec92ea1abd0bba7e6d8a',1,'DisplaySSD1331::copyBlock()'],['../class_display_s_s_d1331x16.html#a2178b536d5d261b7777e6dd478287516',1,'DisplaySSD1331x16::copyBlock()']]],
   ['core_2eh',['core.h',['../core_8h.html',1,'']]],
   ['count',['count',['../struct_s_unicode_block_record.html#a4e9a958ed2e5507c22490818dd2a304d',1,'SUnicodeBlockRecord::count()'],['../struct_s_fixed_font_info.html#af15942a32b4cebccdad63b2d81f24abc',1,'SFixedFontInfo::count()'],['../struct_s_app_menu.html#ad750fae199422bd44dc6063123631d62',1,'SAppMenu::count()']]],

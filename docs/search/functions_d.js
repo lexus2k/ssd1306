@@ -6,7 +6,7 @@ var searchData=
   ['platformspi',['PlatformSpi',['../class_platform_spi.html#a26a7c802b47d7e4bcc87735ab0215dc5',1,'PlatformSpi']]],
   ['positivemode',['positiveMode',['../class_nano_display_ops.html#a98b7d55f7599b31a86147657cf811dd4',1,'NanoDisplayOps']]],
   ['pressed',['pressed',['../class_nano_engine_inputs.html#aaf992076a4c0e1a5aa95a9e129e8ad25',1,'NanoEngineInputs']]],
-  ['print',['Print',['../class_print.html#a1b9fe938883bb7b4bce8fba012dab112',1,'Print::Print()'],['../class_print.html#a2131ef6aa11c8551831201ba64cf5f06',1,'Print::print(const char *str)'],['../class_print.html#a6448e13c050d2ea61ded3c2fca262924',1,'Print::print(int n)']]],
+  ['print',['print',['../class_print.html#a2131ef6aa11c8551831201ba64cf5f06',1,'Print::print(const char *str)'],['../class_print.html#a6448e13c050d2ea61ded3c2fca262924',1,'Print::print(int n)'],['../class_print.html#a1b9fe938883bb7b4bce8fba012dab112',1,'Print::Print()']]],
   ['printchar',['printChar',['../class_nano_canvas_ops.html#a4031b35e730a08985d766d32f7c164fc',1,'NanoCanvasOps::printChar()'],['../class_nano_display_ops.html#af09e9b545ed0a00469cc1c93427135d0',1,'NanoDisplayOps::printChar()']]],
   ['printfixed',['printFixed',['../class_nano_canvas_ops.html#a1174380635ea8d9de6b363e6384f7628',1,'NanoCanvasOps::printFixed()'],['../class_nano_display_ops.html#a8644734f750ec5d79dbbfa13441b0ba7',1,'NanoDisplayOps::printFixed()']]],
   ['printfixedpgm',['printFixedPgm',['../class_nano_canvas_ops.html#adb1263d29d204157c1e87aa5172880b3',1,'NanoCanvasOps::printFixedPgm()'],['../class_nano_display_ops.html#a097845ad07f8bf230331d523e1e566b5',1,'NanoDisplayOps::printFixedPgm()']]],

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['g_5flcd_5ftype',['g_lcd_type',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga3ff73af72a351c4c58805f14a6d7e42e',1,'lcd_common.h']]],
   ['getbitmap',['getBitmap',['../class_nano_sprite.html#ab718dcdd480315216106838f486e12c9',1,'NanoSprite']]],
   ['getcanvas',['getCanvas',['../class_nano_engine_tiler.html#a1e5770280f97e37f77b3f65823ff9ac8',1,'NanoEngineTiler']]],
   ['getcpuload',['getCpuLoad',['../class_nano_engine_core.html#a249ba97c3cff086d9837d014546867c0',1,'NanoEngineCore']]],

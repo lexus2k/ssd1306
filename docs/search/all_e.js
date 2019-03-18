@@ -12,7 +12,7 @@ var searchData=
   ['positivemode',['positiveMode',['../class_nano_display_ops.html#a98b7d55f7599b31a86147657cf811dd4',1,'NanoDisplayOps']]],
   ['pressed',['pressed',['../class_nano_engine_inputs.html#aaf992076a4c0e1a5aa95a9e129e8ad25',1,'NanoEngineInputs']]],
   ['primary_5ftable',['primary_table',['../struct_s_fixed_font_info.html#a8b47480d4d3e59a40411045a1c82730c',1,'SFixedFontInfo']]],
-  ['print',['Print',['../class_print.html',1,'Print'],['../class_print.html#a1b9fe938883bb7b4bce8fba012dab112',1,'Print::Print()'],['../class_print.html#a2131ef6aa11c8551831201ba64cf5f06',1,'Print::print(const char *str)'],['../class_print.html#a6448e13c050d2ea61ded3c2fca262924',1,'Print::print(int n)']]],
+  ['print',['Print',['../class_print.html',1,'Print'],['../class_print.html#a2131ef6aa11c8551831201ba64cf5f06',1,'Print::print(const char *str)'],['../class_print.html#a6448e13c050d2ea61ded3c2fca262924',1,'Print::print(int n)'],['../class_print.html#a1b9fe938883bb7b4bce8fba012dab112',1,'Print::Print()']]],
   ['print_5finternal_2eh',['Print_internal.h',['../_print__internal_8h.html',1,'']]],
   ['printchar',['printChar',['../class_nano_canvas_ops.html#a4031b35e730a08985d766d32f7c164fc',1,'NanoCanvasOps::printChar()'],['../class_nano_display_ops.html#af09e9b545ed0a00469cc1c93427135d0',1,'NanoDisplayOps::printChar()']]],
   ['printfixed',['printFixed',['../class_nano_canvas_ops.html#a1174380635ea8d9de6b363e6384f7628',1,'NanoCanvasOps::printFixed()'],['../class_nano_display_ops.html#a8644734f750ec5d79dbbfa13441b0ba7',1,'NanoDisplayOps::printFixed()']]],
