@@ -38,8 +38,7 @@
 
 #include "ssd1306.h"
 #include "nano_engine.h"
-#include "intf/i2c/ssd1306_i2c.h"
-#include "sova.h"
+#include "owl.h"
 
 DisplaySSD1306_128x64_I2C display;
 
@@ -81,7 +80,7 @@ const char *menuItems[] =
 
 static void bitmapDemo()
 {
-    display.drawBitmap1(0, 0, 128, 64, Sova);
+    display.drawBitmap1(0, 0, 128, 64, Owl);
     delay(1000);
     display.invertMode();
     delay(2000);

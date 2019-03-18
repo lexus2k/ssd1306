@@ -22,13 +22,12 @@
     SOFTWARE.
 */
 
-#ifndef _SOVA_H_
-#define _SOVA_H_
+#ifndef _OWL_H_
+#define _OWL_H_
 
 // ----------------------------------------------------------------------------
 #include "ssd1306_hal/io.h"
-#include <stdint.h>
 
-extern const uint8_t Sova [] PROGMEM;
+extern const uint8_t Owl [] PROGMEM;
 
 #endif

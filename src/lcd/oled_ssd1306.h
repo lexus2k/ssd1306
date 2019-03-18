@@ -110,7 +110,7 @@ public:
     void flipVertical(uint8_t mode);
 
 protected:
-    int8_t m_dc; ///< data/command pin for SPI, -1 for i2c
+    const int8_t m_dc; ///< data/command pin for SPI, -1 for i2c
 
     /**
      * Enables either data or command mode on SPI bus

@@ -119,7 +119,6 @@ void DisplaySSD1306::nextPage()
 
 void DisplaySSD1306::spiDataMode(uint8_t mode)
 {
-    // DC pin
     if (m_dc >= 0)
     {
         digitalWrite( m_dc, mode ? HIGH : LOW);
