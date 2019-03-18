@@ -38,8 +38,6 @@
 
 #include "ssd1306.h"
 #include "nano_engine.h"
-#include "intf/i2c/ssd1306_i2c.h"
-
 
 DisplaySSD1306_128x64_I2C display;
 

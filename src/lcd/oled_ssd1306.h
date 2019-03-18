@@ -32,7 +32,6 @@
 #include "ssd1306_hal/io.h"
 #include "nano_engine/display.h"
 #include "lcd/lcd_common.h"
-#include "intf/i2c/ssd1306_i2c.h"
 
 /**
  * @ingroup LCD_INTERFACE_API
