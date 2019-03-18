@@ -1,7 +1,7 @@
 var searchData=
 [
   ['data',['data',['../struct_s_p_r_i_t_e.html#ac56b0c16d0bcd810ae1289350df821c3',1,'SPRITE']]],
-  ['dc',['dc',['../struct_s_platform_spi_config.html#a96135f30ad5b750b1f88ab818a07643d',1,'SPlatformSpiConfig']]],
+  ['dc',['dc',['../struct_s_platform_spi_config.html#adee7ca6a2c67537243aa6365dc364015',1,'SPlatformSpiConfig']]],
   ['defocus',['defocus',['../class_nano_engine_object.html#a189ba65c0accfb60d745792ce6c3351a',1,'NanoEngineObject']]],
   ['deprecated_20list',['Deprecated List',['../deprecated.html',1,'']]],
   ['digital_5ffont5x7',['digital_font5x7',['../group___l_c_d___f_o_n_t_s.html#gab4a00e83316ed32b7d85c7edbd23f689',1,'ssd1306_fonts.h']]],

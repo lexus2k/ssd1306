@@ -74,15 +74,17 @@ $(function() {
 Public Attributes</h2></td></tr>
 <tr class="memitem:a7e6951f894b3b7349464b08a9ee940dd"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_platform_spi_config.html#a7e6951f894b3b7349464b08a9ee940dd">busId</a></td></tr>
 <tr class="separator:a7e6951f894b3b7349464b08a9ee940dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96135f30ad5b750b1f88ab818a07643d"><td class="memItemLeft" >union {</td></tr>
+<tr class="memitem:aa9028cefe86618bf9ab621d38bca3dbb"><td class="memItemLeft" >union {</td></tr>
 <tr class="memitem:a58d3fc65f920c199e8acb0579811fb41"><td class="memItemLeft" >
 &#160;&#160;&#160;int8_t&#160;&#160;&#160;<b>cs</b></td></tr>
 <tr class="separator:a58d3fc65f920c199e8acb0579811fb41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a171280269166d2d182bff3baaace94f1"><td class="memItemLeft" >
 &#160;&#160;&#160;int8_t&#160;&#160;&#160;<b>devId</b></td></tr>
 <tr class="separator:a171280269166d2d182bff3baaace94f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96135f30ad5b750b1f88ab818a07643d"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_platform_spi_config.html#a96135f30ad5b750b1f88ab818a07643d">dc</a></td></tr>
-<tr class="separator:a96135f30ad5b750b1f88ab818a07643d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9028cefe86618bf9ab621d38bca3dbb"><td class="memItemLeft" valign="top">};&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:aa9028cefe86618bf9ab621d38bca3dbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adee7ca6a2c67537243aa6365dc364015"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_platform_spi_config.html#adee7ca6a2c67537243aa6365dc364015">dc</a></td></tr>
+<tr class="separator:adee7ca6a2c67537243aa6365dc364015"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29ab1966cccc5bc568b973f0fe136546"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_platform_spi_config.html#a29ab1966cccc5bc568b973f0fe136546">frequency</a></td></tr>
 <tr class="separator:a29ab1966cccc5bc568b973f0fe136546"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9773200ff4d40e2eff411c0c69c00589"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_platform_spi_config.html#a9773200ff4d40e2eff411c0c69c00589">scl</a></td></tr>
@@ -96,6 +98,21 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="ssd1306__interface_8h_source.html#l00088">88</a> of file <a class="el" href="ssd1306__interface_8h_source.html">ssd1306_interface.h</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="aa9028cefe86618bf9ab621d38bca3dbb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9028cefe86618bf9ab621d38bca3dbb">&#9670;&nbsp;</a></span>@4</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">union { ... } </td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>parameter is optional for all platforms, except Linux. If chip select pin is not used, it should be set to -1 For Linux platform devId should be pointed, if -1, it defaults to spidevX.0 </p>
+
+</div>
+</div>
 <a id="a7e6951f894b3b7349464b08a9ee940dd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7e6951f894b3b7349464b08a9ee940dd">&#9670;&nbsp;</a></span>busId</h2>
 
@@ -113,18 +130,20 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a96135f30ad5b750b1f88ab818a07643d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a96135f30ad5b750b1f88ab818a07643d">&#9670;&nbsp;</a></span>dc</h2>
+<a id="adee7ca6a2c67537243aa6365dc364015"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adee7ca6a2c67537243aa6365dc364015">&#9670;&nbsp;</a></span>dc</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">union { ... }  SPlatformSpiConfig::dc</td>
+          <td class="memname">int8_t SPlatformSpiConfig::dc</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>parameter is optional for all platforms, except Linux. If chip select pin is not used, it should be set to -1 For Linux platform devId should be pointed, if -1, it defaults to spidevX.0 Data command control pin number. This pin assignment is mandatory </p>
+<p>Data command control pin number. This pin assignment is mandatory </p>
+
+<p class="definition">Definition at line <a class="el" href="ssd1306__interface_8h_source.html#l00110">110</a> of file <a class="el" href="ssd1306__interface_8h_source.html">ssd1306_interface.h</a>.</p>
 
 </div>
 </div>
