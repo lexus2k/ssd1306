@@ -44,6 +44,91 @@
  */
 
 /**
+ * Structure describes i2c platform configuration
+ *
+ * @warning Not all fields are used by specific platforms
+ */
+typedef struct
+{
+    /**
+     * bus id number. this parameter is valid for Linux, ESP32.
+     * If -1 is pointed, it defaults to platform specific i2c bus (Linux i2c-dev0, esp32 I2C_NUM_0).
+     */
+    int8_t busId;
+
+    /**
+     * Address of i2c device to control. This is mandatory argument for all platforms
+     */
+    uint8_t addr;
+
+    /**
+     * Pin to use as i2c clock pin. This parameter is not used in Linux.
+     * If -1 is pointed, the library uses default clock pin for specific platform.
+     */
+    int8_t scl;
+
+    /**
+     * Pin to use as i2c data pin. This parameter is not used in Linux.
+     * If -1 is pointed, the library uses default data pin for specific platform.
+     */
+    int8_t sda;
+
+    /**
+     * Frequency in HZ to run spi bus at. Zero value defaults to platform optimal clock
+     * speed (100kHz or 400kHz depending on platform).
+     */
+    uint32_t frequency;
+} SPlatformI2cConfig;
+
+/**
+ * Structure describes spi platform configuration
+ *
+ * @warning Not all fields are used by specific platforms
+ */
+typedef struct
+{
+    /**
+     * bus id number. this parameter is valid for Linux, ESP32.
+     * If -1 is pointed, it defaults to platform specific i2c bus (Linux spidev1.X, esp32 VSPI_HOST).
+     */
+    int8_t busId;
+
+    /**
+     * parameter is optional for all platforms, except Linux.
+     * If chip select pin is not used, it should be set to -1
+     * For Linux platform devId should be pointed, if -1, it defaults to spidevX.0
+     */
+    union
+    {
+        int8_t cs;
+        int8_t devId;
+    };
+
+    /**
+     * Data command control pin number. This pin assignment is mandatory
+     */
+    int8_t dc;
+
+    /**
+     * Frequency in HZ to run spi bus at. If 0, it defaults to max frequency, supported
+     * by platform
+     */
+    uint32_t frequency;
+
+    /**
+     * Optional - spi clock pin number. -1 if to use default spi clock pin.
+     * This is required for ESP32 platform only.
+     */
+    int8_t scl;
+
+    /**
+     * Optional - spi data MOSI pin number. -1 if to use default spi MOSI pin.
+     * This is required for ESP32 platform only.
+     */
+    int8_t sda;
+} SPlatformSpiConfig;
+
+/**
  * Abstract class for system specific interface, used to control oled
  */
 class IWireInterface
