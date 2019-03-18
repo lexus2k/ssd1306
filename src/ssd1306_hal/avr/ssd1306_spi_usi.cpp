@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,6 @@
     SOFTWARE.
 */
 
-#include "ssd1306_spi_usi.h"
-#include "ssd1306_spi.h"
-
-#include "lcd/lcd_common.h"
 #include "ssd1306_hal/io.h"
 
 #if defined(CONFIG_USI_SPI_AVAILABLE) && defined(CONFIG_USI_SPI_ENABLE)
@@ -39,8 +35,25 @@
 #define DD_DO       DDB1
 #define DD_SCK      DDB2
 
-static void ssd1306_spiConfigure_Usi()
+UsiSpi::UsiSpi(int8_t csPin, int8_t dcPin)
+   : IWireInterface()
+   , m_cs( csPin )
+   , m_dc( dcPin )
 {
+}
+
+UsiSpi::~UsiSpi()
+{
+}
+
+void UsiSpi::begin()
+{
+    if ( m_cs >=0 )
+    {
+        pinMode( m_cs, OUTPUT );
+        digitalWrite( m_cs, HIGH );
+    }
+    if ( m_dc >= 0) pinMode( m_dc, OUTPUT );
     DDR_SPI |= (1<<DD_DO); // as output (DO) - data out
     DDR_SPI |= (1<<DD_SCK); // as output (USISCK) - clock
     /* DI pin is still used by USI, although ssd1306 library doesn't need it */
@@ -48,21 +61,38 @@ static void ssd1306_spiConfigure_Usi()
 //    PORT_SPI|= (1<<DD_DI); // pullup on (DI)
 }
 
-static void ssd1306_spiClose_Usi()
+void UsiSpi::end()
 {
 }
 
-static void ssd1306_spiStart_Usi()
+void UsiSpi::start()
 {
-    if (s_ssd1306_cs >= 0)
+    if ( m_cs >= 0)
     {
-        digitalWrite(s_ssd1306_cs,LOW);
+        digitalWrite( m_cs, LOW );
     }
     USICR = (0<<USIWM1) | (1<<USIWM0) |
             (1<<USICS1) | (0<<USICS0) | (1<<USICLK);
 }
 
-static void ssd1306_spiSendByte_Usi(uint8_t data)
+void UsiSpi::stop()
+{
+    if ( m_cs >= 0)
+    {
+        digitalWrite( m_cs, HIGH);
+    }
+    // TODO:
+//    if (ssd1306_lcd.type == LCD_TYPE_PCD8544)
+//    {
+//        digitalWrite(s_ssd1306_dc, LOW);
+//        ssd1306_spiSendByte_Usi( 0x00 ); // Send NOP command to allow last data byte to pass (bug in PCD8544?)
+//                                         // ssd1306 E3h is NOP command
+//    }
+//    NOT TODO:
+//    USICR &= ~((1<<USIWM1) | (1<<USIWM0));
+}
+
+void UsiSpi::send(uint8_t data)
 {
     USIDR = data;
     USISR = (1<<USIOIF);
@@ -75,7 +105,7 @@ static void ssd1306_spiSendByte_Usi(uint8_t data)
     }
 }
 
-static void ssd1306_spiSendBytes_Usi(const uint8_t *buffer, uint16_t size)
+void UsiSpi::sendBuffer(const uint8_t *buffer, uint16_t size)
 {
     while (size--)
     {
@@ -90,44 +120,6 @@ static void ssd1306_spiSendBytes_Usi(const uint8_t *buffer, uint16_t size)
         }
         buffer++;
     };
-}
-
-static void ssd1306_spiStop_Usi()
-{
-    if (s_ssd1306_cs >= 0)
-    {
-        digitalWrite(s_ssd1306_cs, HIGH);
-    }
-    if (ssd1306_lcd.type == LCD_TYPE_PCD8544)
-    {
-        digitalWrite(s_ssd1306_dc, LOW);
-        ssd1306_spiSendByte_Usi( 0x00 ); // Send NOP command to allow last data byte to pass (bug in PCD8544?)
-                                         // ssd1306 E3h is NOP command
-    }
-//    USICR &= ~((1<<USIWM1) | (1<<USIWM0));
-}
-
-void ssd1306_spiInit_Usi(int8_t cesPin, int8_t dcPin)
-{
-    if (cesPin >=0)
-    {
-        pinMode(cesPin, OUTPUT);
-        digitalWrite(cesPin, HIGH);
-    }
-    if (dcPin >= 0) pinMode(dcPin, OUTPUT);
-    if ((cesPin >= 0) || (dcPin >= 0))
-    {
-        /* Even if CS pin is not used we need still to set it to value passed to the function */
-        s_ssd1306_cs = cesPin;
-        s_ssd1306_dc = dcPin;
-    }
-    ssd1306_spiConfigure_Usi();
-    ssd1306_intf.spi = 1;
-    ssd1306_intf.start = ssd1306_spiStart_Usi;
-    ssd1306_intf.stop = ssd1306_spiStop_Usi;
-    ssd1306_intf.send = ssd1306_spiSendByte_Usi;
-    ssd1306_intf.send_buffer = ssd1306_spiSendBytes_Usi;
-    ssd1306_intf.close = ssd1306_spiClose_Usi;
 }
 
 #endif

@@ -22,12 +22,7 @@
     SOFTWARE.
 */
 
-#include "ssd1306_i2c_embedded.h"
-#include "ssd1306_i2c.h"
-
 #include "ssd1306_hal/io.h"
-
-#if 0
 
 #if defined(CONFIG_SOFTWARE_I2C_AVAILABLE) && defined(CONFIG_SOFTWARE_I2C_ENABLE)
 
@@ -37,9 +32,32 @@
  * For ATmega328p, it is PORTC, which corresponds to Analog inputs/outputs
  */
 
-static uint8_t s_scl = (1<<SSD1306_SCL);
-static uint8_t s_sda = (1<<SSD1306_SDA);
-static uint8_t s_sa  = SSD1306_SA;
+#ifndef SSD1306_SA
+    #define SSD1306_SA    0x3C  // Slave address
+#endif
+
+#if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
+    #ifndef SSD1306_SCL
+        #define SSD1306_SCL   3 ///< SCL, Pin 3 on SSD1306 Board
+    #endif
+    #ifndef SSD1306_SDA
+        #define SSD1306_SDA   4 ///< SDA, Pin 4 on SSD1306 Board
+    #endif
+#elif defined(__AVR_ATtiny24__) || defined(__AVR_ATtiny44__) || defined(__AVR_ATtiny84__)
+    #ifndef SSD1306_SCL
+        #define SSD1306_SCL   4 ///< SCL, Pin 4 - physical pin 9 of Attiny84
+    #endif
+    #ifndef SSD1306_SDA
+        #define SSD1306_SDA   6 ///< SDA, Pin 6 - physical pin 7 of Attiny84
+    #endif
+#else
+    #ifndef SSD1306_SCL
+        #define SSD1306_SCL   5 // SCL, Pin A5 on SSD1306 Board
+    #endif
+    #ifndef SSD1306_SDA
+        #define SSD1306_SDA   4 // SDA, Pin A4 on SSD1306 Board
+    #endif
+#endif
 
 #if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
     // at 8Mhz each command takes ~ 0.125us
@@ -101,68 +119,45 @@ static uint8_t s_sa  = SSD1306_SA;
 static uint8_t oldSREG;
 static uint8_t interruptsOff = 0;
 
-/**
- * Inputs: SCL is LOW, SDA is has no meaning
- * Outputs: SCL is LOW
- */
-static void ssd1306_i2cSendByte_Embedded(uint8_t data)
+SoftwareI2c::SoftwareI2c(int8_t scl, int8_t sda, uint8_t sa)
+    : IWireInterface()
+    , m_scl( scl >= 0 ? scl : (1<<SSD1306_SCL) )
+    , m_sda( sda >= 0 ? sda : (1<<SSD1306_SDA) )
+    , m_sa ( sa ? : SSD1306_SA )
 {
-    uint8_t i;
-    for(i=8; i>0; i--)
-    {
-        if(data & 0x80)
-          DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_sda)
-        else
-          DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_sda);
-        data<<=1;
-        ssd1306_delay(I2C_RISE_TIME); // Fall time is the same as rise time
-
-        DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_scl);
-        ssd1306_delay(I2C_HALF_CLOCK);
-
-        DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_scl);
-        ssd1306_delay(I2C_HALF_CLOCK);
-    }
-    // generating confirmation impulse
-    DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_sda);
-    ssd1306_delay(I2C_RISE_TIME); // Fall time is the same as rise time
-    DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_scl);
-    ssd1306_delay(I2C_HALF_CLOCK);
-    DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_scl); 
-    ssd1306_delay(I2C_HALF_CLOCK);
 }
 
-static void ssd1306_i2cSendBytes_Embedded(const uint8_t *buffer, uint16_t size)
+SoftwareI2c::~SoftwareI2c()
 {
-    while (size--)
-    {
-        ssd1306_i2cSendByte_Embedded(*buffer);
-        buffer++;
-    }
 }
 
-/**
- * SCL remains HIGH on EXIT, Low SDA means start transmission
- */
-static void ssd1306_i2cStart_Embedded(void)
+void SoftwareI2c::begin()
+{
+}
+
+void SoftwareI2c::end()
+{
+}
+
+void SoftwareI2c::start()
 {
     oldSREG = SREG;
     cli();
     interruptsOff = 1;
-    DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_sda);     // Set to LOW
+    DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, m_sda);     // Set to LOW
     ssd1306_delay(I2C_START_STOP_DELAY);
-    DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_scl);     // Set to LOW
+    DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, m_scl);     // Set to LOW
     ssd1306_delay(I2C_HALF_CLOCK);
-    ssd1306_i2cSendByte_Embedded((s_sa << 1) | 0);
+    send( (m_sa << 1) | 0 );
 }
 
-static void ssd1306_i2cStop_Embedded(void)
+void SoftwareI2c::stop()
 {
-    DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_sda);		// Set to LOW
+    DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, m_sda);		// Set to LOW
     ssd1306_delay(I2C_RISE_TIME); // Fall time is the same as rise time
-    DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_scl);	// Set to HIGH
-    ssd1306_delay(I2C_START_STOP_DELAY); 
-    DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_sda);	// Set to HIGH
+    DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, m_scl);	// Set to HIGH
+    ssd1306_delay(I2C_START_STOP_DELAY);
+    DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, m_sda);	// Set to HIGH
     ssd1306_delay(I2C_IDLE_TIME);
     if (interruptsOff)
     {
@@ -171,23 +166,40 @@ static void ssd1306_i2cStop_Embedded(void)
     }
 }
 
-static void ssd1306_i2cClose_Embedded()
+void SoftwareI2c::send(uint8_t data)
 {
+    uint8_t i;
+    for(i=8; i>0; i--)
+    {
+        if(data & 0x80)
+          DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, m_sda)
+        else
+          DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, m_sda);
+        data<<=1;
+        ssd1306_delay(I2C_RISE_TIME); // Fall time is the same as rise time
+
+        DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, m_scl);
+        ssd1306_delay(I2C_HALF_CLOCK);
+
+        DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, m_scl);
+        ssd1306_delay(I2C_HALF_CLOCK);
+    }
+    // generating confirmation impulse
+    DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, m_sda);
+    ssd1306_delay(I2C_RISE_TIME); // Fall time is the same as rise time
+    DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, m_scl);
+    ssd1306_delay(I2C_HALF_CLOCK);
+    DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, m_scl);
+    ssd1306_delay(I2C_HALF_CLOCK);
 }
 
-void ssd1306_i2cInit_Embedded(int8_t scl, int8_t sda, uint8_t sa)
+void SoftwareI2c::sendBuffer(const uint8_t *buffer, uint16_t size)
 {
-    if (scl>=0) s_scl = (1<<scl);
-    if (sda>=0) s_sda = (1<<sda);
-    if (sa)  s_sa  = sa;
-    ssd1306_intf.spi = 0;
-    ssd1306_intf.start = ssd1306_i2cStart_Embedded;
-    ssd1306_intf.stop = ssd1306_i2cStop_Embedded;
-    ssd1306_intf.send = ssd1306_i2cSendByte_Embedded;
-    ssd1306_intf.send_buffer = ssd1306_i2cSendBytes_Embedded;
-    ssd1306_intf.close = ssd1306_i2cClose_Embedded;
+    while (size--)
+    {
+        send(*buffer);
+        buffer++;
+    }
 }
-
-#endif
 
 #endif

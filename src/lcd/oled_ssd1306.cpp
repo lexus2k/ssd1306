@@ -90,11 +90,7 @@ static const uint8_t PROGMEM s_oled128x32_initData[] =
 
 void DisplaySSD1306::setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 {
-    m_intf.start();
-    if (m_dc >= 0)
-        spiDataMode(0);
-    else
-        m_intf.send(0x00);
+    commandStart();
     m_intf.send(SSD1306_COLUMNADDR);
     m_intf.send(x);
     m_intf.send(w ? (x + w - 1) : (m_w - 1));

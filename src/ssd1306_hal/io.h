@@ -47,12 +47,16 @@
 #include "arduino/arduino_wire.h"
 #include "avr/avr_spi.h"
 #include "avr/avr_twi.h"
+#include "avr/ssd1306_spi_usi.h"
+#include "avr/ssd1306_i2c_embedded.h"
 #include "esp/esp32_i2c.h"
 #include "esp/esp32_spi.h"
 #elif defined(__AVR__) && !defined(ARDUINO)
 #include "avr/io.h"
 #include "avr/avr_spi.h"
 #include "avr/avr_twi.h"
+#include "avr/ssd1306_spi_usi.h"
+#include "avr/ssd1306_i2c_embedded.h"
 #elif defined(__XTENSA__) && !defined(ARDUINO)
 #include "esp/io.h"
 #include "esp/esp32_i2c.h"
@@ -171,6 +175,22 @@ public:
         : EspI2c( config.busId, config.addr, config.scl, config.sda, 400000) {}
 };
 
+#elif defined(CONFIG_SOFTWARE_I2C_AVAILABLE) && defined(CONFIG_SOFTWARE_I2C_ENABLE)
+
+/**
+ * PlatformI2c implementation for current platform.
+ */
+class PlatformI2c: public SoftwareI2c
+{
+public:
+    /**
+     * Creates instance of i2c implementation for current platform.
+     * @param config i2c platform configuration. Refer to SPlatformI2cConfig.
+     */
+     PlatformI2c(const SPlatformI2cConfig &config)
+         : SoftwareI2c(config.scl, config.sda, config.addr) {}
+};
+
 #else
 
 #error "Platform not supported"
@@ -276,6 +296,26 @@ public:
     PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 8000000):
         EspSpi( -1, csPin, dcPin, freq ) {}
 };
+
+#elif defined(CONFIG_USI_SPI_AVAILABLE) && defined(CONFIG_USI_SPI_ENABLE)
+
+/**
+ * PlatformSpi implementation for Attiny
+ */
+class PlatformSpi: public UsiSpi
+{
+public:
+    /**
+     * Creates instance of PlatformSpi implementation for Attiny platform
+     *
+     * @param csPin chip select pin to enable display controller, or -1 if not needed
+     * @param dcPin data/command control pin
+     * @param frequency frequency in HZ to run SPI bus on.
+     */
+    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 8000000):
+        UsiSpi(csPin, dcPin) {}
+};
+
 #else
 
 #error "Platform not supported"

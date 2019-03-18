@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2018, Alexey Dynda
+    Copyright (c) 2017-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -29,32 +29,57 @@
 #ifndef _SSD1306_I2C_EMBEDDED_H_
 #define _SSD1306_I2C_EMBEDDED_H_
 
-#include "ssd1306_hal/io.h"
-#include "ssd1306_i2c_conf.h"
-
 #if defined(CONFIG_SOFTWARE_I2C_AVAILABLE) && defined(CONFIG_SOFTWARE_I2C_ENABLE)
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+class SoftwareI2c: public IWireInterface
+{
+public:
+    /**
+     * Creates i2c interface instance for SDL Emulation mode
+     *
+     * @param scl pin number to use as clock
+     * @param sda pin number to use as data line
+     * @param sa i2c address of the display (7 bits)
+     */
+    SoftwareI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00);
 
-/**
- * @ingroup LCD_HW_INTERFACE_API
- *
- * Initializes software implementation of i2c.
- * If you do not know i2c parameters, try ssd1306_i2cInit_Embedded(0,0,0).
- * @warning the function disables interrupts.
- * @param scl - i2c clock pin. Use -1 if you don't need to change default pin number
- * @param sda - i2c data pin. Use -1 if you don't need to change default pin number
- * @param sa  - i2c address of lcd display. Use 0 to leave default
- *
- * @note: after call to this function you need to initialize lcd display.
- */
-void ssd1306_i2cInit_Embedded(int8_t scl, int8_t sda, uint8_t sa);
+    virtual ~SoftwareI2c();
 
-#ifdef __cplusplus
-}
-#endif
+    void begin() override;
+
+    void end() override;
+
+    /**
+     * Starts communication with SSD1306 display.
+     */
+    void start() override;
+
+    /**
+     * Ends communication with SSD1306 display.
+     */
+    void stop() override;
+
+    /**
+     * Sends byte to SSD1306 device
+     * @param data - byte to send
+     */
+    void send(uint8_t data) override;
+
+    /**
+     * @brief Sends bytes to SSD1306 device
+     *
+     * Sends bytes to SSD1306 device. This functions gives
+     * ~ 30% performance increase than ssd1306_intf.send.
+     *
+     * @param buffer - bytes to send
+     * @param size - number of bytes to send
+     */
+    void sendBuffer(const uint8_t *buffer, uint16_t size) override;
+private:
+    int8_t m_scl;
+    int8_t m_sda;
+    uint8_t m_sa;
+};
 
 #endif
 

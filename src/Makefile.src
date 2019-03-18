@@ -27,6 +27,8 @@ SRCS_CPP = \
 	ssd1306_hal/avr/platform.cpp \
 	ssd1306_hal/avr/ssd1306_i2c_twi.cpp \
 	ssd1306_hal/avr/ssd1306_spi_avr.cpp \
+	ssd1306_hal/avr/ssd1306_i2c_embedded.cpp \
+	ssd1306_hal/avr/ssd1306_spi_usi.cpp \
 	ssd1306_hal/linux/platform.cpp \
 	ssd1306_hal/linux/linux_i2c.cpp \
 	ssd1306_hal/linux/linux_spi.cpp \
@@ -37,9 +39,7 @@ SRCS_CPP = \
 	ssd1306_hal/stm32/platform.cpp \
 	ssd1306_hal/template/platform.cpp \
 	intf/i2c/ssd1306_i2c.cpp \
-	intf/i2c/ssd1306_i2c_embedded.cpp \
 	intf/spi/ssd1306_spi.cpp \
-	intf/spi/ssd1306_spi_usi.cpp \
 	intf/uart/ssd1306_uart_builtin.cpp \
 	intf/vga/vga.cpp \
 	intf/vga/atmega328p/vga128x64.cpp \
