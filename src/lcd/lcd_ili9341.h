@@ -41,6 +41,8 @@ extern "C" {
  * @{
  */
 
+#if 0
+
 /**
  * @brief Sets GDRAM autoincrement mode
  *
@@ -104,6 +106,8 @@ void ili9341_setRotation(uint8_t rotation);
  * @warning experimental feature, may work incorrectly
  */
 void ili9341_rotateOutput(uint8_t on);
+
+#endif
 
 /**
  * @}

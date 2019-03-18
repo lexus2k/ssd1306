@@ -37,20 +37,11 @@ extern "C" {
 #endif
 
 /**
- * @defgroup TEMPLATE_OLED_API TEMPLATE: template control functions
- * @{
- */
-
-// PLACE ANY OLED SPECIFIC FUNCTIONS HERE
-
-/**
- * @}
- */
-
-/**
  * @ingroup LCD_INTERFACE_API
  * @{
  */
+
+#if 0
 
 /**
  * @brief Sets GDRAM autoincrement mode
@@ -86,6 +77,8 @@ void         template_WxH_init(void);
  * @param dcPin - data/command pin to control LCD dc (required)
  */
 void         template_WxH_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin);
+
+#endif
 
 /**
  * @}

@@ -41,6 +41,8 @@ extern "C" {
  * @{
  */
 
+#if 0
+
 /**
  * @brief Sets GDRAM autoincrement mode
  *
@@ -122,6 +124,8 @@ void il9163_setRotation(uint8_t rotation);
  * @note works only with ST7735 display
  */
 #define st7735_setRotation il9163_setRotation
+
+#endif
 
 /**
  * @}

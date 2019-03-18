@@ -41,6 +41,8 @@ extern "C" {
  * @{
  */
 
+#if 0
+
 /**
  * @brief Sets GDRAM autoincrement mode
  *
@@ -75,6 +77,8 @@ void         ssd1351_128x128_init(void);
  * @param dcPin - data/command pin to control LCD dc (required)
  */
 void         ssd1351_128x128_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin);
+
+#endif
 
 /**
  * @}

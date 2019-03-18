@@ -37,19 +37,11 @@ extern "C" {
 #endif
 
 /**
- * @defgroup SSD1325_OLED_API SSD1325: ssd1325 control functions
- * @{
- */
-
-
-/**
- * @}
- */
-
-/**
  * @ingroup LCD_INTERFACE_API
  * @{
  */
+
+#if 0
 
 /**
  * @brief Sets GDRAM autoincrement mode
@@ -85,6 +77,8 @@ void ssd1325_128x64_init(void);
  * @param dcPin - data/command pin to control LCD dc (required)
  */
 void ssd1325_128x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin);
+
+#endif
 
 /**
  * @}
