@@ -163,18 +163,15 @@ public:
      * Inits 128x64 OLED display over i2c (based on SSD1306 controller)
      * This function uses hardcoded pins for i2c communication, depending on your hardware.
      *
-     * @param scl i2c clock pin. Use -1 if you don't need to change default pin number
-     * @param sda i2c data pin. Use -1 if you don't need to change default pin number
-     * @param sa  i2c address of lcd display. Use 0 to leave default
-     *
-     * @note scl and sda parameters depend on used hardware. For many hardware boards these
-     * parameters do not have any effect. ESP8266 allows to specify these parameters
-     *
-     * @note scl and sda for Linux systems should be the same, and should contain i2c bus id.
+     * @param config platform i2c configuration. Please refer to SPlatformI2cConfig.
      */
-    DisplaySSD1306_128x64_I2C( int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x3C)
+    DisplaySSD1306_128x64_I2C( const SPlatformI2cConfig &config = { -1, 0x3C, -1, -1, 0 } )
         : DisplaySSD1306_128x64(m_i2c, -1)
-        , m_i2c( scl, sda, sa ) {}
+        , m_i2c( SPlatformI2cConfig{ config.busId,
+                                     config.addr ?: (uint8_t)0x3C,
+                                     config.scl,
+                                     config.sda,
+                                     config.frequency } ) {}
 
     void begin() override;
 
@@ -196,18 +193,15 @@ public:
      * Inits 128x32 OLED display over i2c (based on SSD1306 controller)
      * This function uses hardcoded pins for i2c communication, depending on your hardware.
      *
-     * @param scl i2c clock pin. Use -1 if you don't need to change default pin number
-     * @param sda i2c data pin. Use -1 if you don't need to change default pin number
-     * @param sa  i2c address of lcd display. Use 0 to leave default
-     *
-     * @note scl and sda parameters depend on used hardware. For many hardware boards these
-     * parameters do not have any effect. ESP8266 allows to specify these parameters
-     *
-     * @note scl and sda for Linux systems should be the same, and should contain i2c bus id.
+     * @param config platform i2c configuration. Please refer to SPlatformI2cConfig.
      */
-    DisplaySSD1306_128x32_I2C( int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x3C)
+    DisplaySSD1306_128x32_I2C( const SPlatformI2cConfig &config = { -1, 0x3C, -1, -1, 0 } )
         : DisplaySSD1306_128x32(m_i2c, -1)
-        , m_i2c( scl, sda, sa ) {}
+        , m_i2c( SPlatformI2cConfig{ config.busId,
+                                     config.addr ?: (uint8_t)0x3C,
+                                     config.scl,
+                                     config.sda,
+                                     config.frequency } ) {}
 
     void begin() override;
 

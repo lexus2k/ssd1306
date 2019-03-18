@@ -93,93 +93,82 @@ typedef unsigned int lcduint_t;
 ////////////////////////////////////////////////////////////////////////////////
 
 #if defined(CONFIG_ARDUINO_I2C_AVAILABLE) && defined(CONFIG_ARDUINO_I2C_ENABLE)
-
 /**
- * PlatformI2c implementation for Arduino platforms
+ * PlatformI2c implementation for current platform.
  */
 class PlatformI2c: public ArduinoI2c
 {
 public:
     /**
-     * Creates instance of i2c implementation for Arduino platform.
-     * @param scl pin to use as i2c clock
-     * @param sda pin to use as i2c data pin
-     * @param sa i2c address of chip being controlled
+     * Creates instance of i2c implementation for current platform.
+     * @param config i2c platform configuration. Refer to SPlatformI2cConfig.
      */
-     PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00):
-         ArduinoI2c(scl, sda, sa) {}
+     PlatformI2c(const SPlatformI2cConfig &config)
+         : ArduinoI2c(config.scl, config.sda, config.addr) {}
 };
 
 #elif defined(CONFIG_TWI_I2C_AVAILABLE) && defined(CONFIG_TWI_I2C_ENABLE)
 
 /**
- * PlatformI2c implementation for AVR platforms
+ * PlatformI2c implementation for current platform.
  */
 class PlatformI2c: public TwiI2c
 {
 public:
     /**
-     * Creates instance of i2c implementation for AVR platform.
-     * @param scl pin to use as i2c clock
-     * @param sda pin to use as i2c data pin
-     * @param sa i2c address of chip being controlled
+     * Creates instance of i2c implementation for current platform.
+     * @param config i2c platform configuration. Refer to SPlatformI2cConfig.
      */
-    PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00):
-        TwiI2c(sa) {}
+    PlatformI2c(const SPlatformI2cConfig &config)
+        : TwiI2c(config.addr) {}
 };
 
 #elif defined(CONFIG_LINUX_I2C_AVAILABLE) && defined(CONFIG_LINUX_I2C_ENABLE)
 
 #if defined(SDL_EMULATION)
 /**
- * PlatformI2c implementation for SDL Emulator
+ * PlatformI2c implementation for current platform.
  */
 class PlatformI2c: public SdlI2c
 {
 public:
     /**
-     * Creates instance of i2c implementation for SDL Emulator.
-     * @param scl pin to use as i2c clock
-     * @param sda pin to use as i2c data pin
-     * @param sa i2c address of chip being controlled
+     * Creates instance of i2c implementation for current platform.
+     * @param config i2c platform configuration. Refer to SPlatformI2cConfig.
      */
-    PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00):
-        SdlI2c(scl, sda, sa) {}
+    PlatformI2c(const SPlatformI2cConfig &config)
+        : SdlI2c(config.scl, config.sda, config.addr) {}
 };
 #else
 /**
- * PlatformI2c implementation for Linux platforms
+ * PlatformI2c implementation for current platform.
  */
 class PlatformI2c: public LinuxI2c
 {
 public:
     /**
-     * Creates instance of i2c implementation for Linux platform.
-     * @param scl pin to use as i2c clock
-     * @param sda pin to use as i2c data pin
-     * @param sa i2c address of chip being controlled
+     * Creates instance of i2c implementation for current platform.
+     * @param config i2c platform configuration. Refer to SPlatformI2cConfig.
      */
-    PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00):
-         LinuxI2c( scl, sa ) {}
+    PlatformI2c(const SPlatformI2cConfig &config)
+        : LinuxI2c( config.busId, config.addr ) {}
 };
 #endif
 
 #elif defined(CONFIG_ESP32_I2C_AVAILABLE) && defined(CONFIG_ESP32_I2C_ENABLE)
 
 /**
- * PlatformI2c implementation for ESP32 platform
+ * PlatformI2c implementation for current platform.
  */
 class PlatformI2c: public EspI2c
 {
 public:
     /**
-     * Creates instance of i2c implementation for esp32 platform.
-     * @param scl pin to use as i2c clock
-     * @param sda pin to use as i2c data pin
-     * @param sa i2c address of chip being controlled
+     * Creates instance of i2c implementation for current platform.
+     * @param config i2c platform configuration. Refer to SPlatformI2cConfig.
      */
-    PlatformI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00):
-        EspI2c(-1, sa, scl, sda, 400000) {}
+    PlatformI2c(const SPlatformI2cConfig &config)
+        : EspI2c( config.busId, config.addr, config.scl, config.sda, 400000) {}
 };
 
 #else
