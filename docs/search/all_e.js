@@ -6,7 +6,7 @@ var searchData=
   ['pcd8544_5f84x48_5finit',['pcd8544_84x48_init',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga82a5ff26eaac6065f9fdf8e182e0c1a0',1,'lcd_pcd8544.h']]],
   ['pcd8544_5f84x48_5fspi_5finit',['pcd8544_84x48_spi_init',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga6e5fe50f6c6bae1adb75b0008880035d',1,'lcd_pcd8544.h']]],
   ['pcd8544_5fcommands_2eh',['pcd8544_commands.h',['../pcd8544__commands_8h.html',1,'']]],
-  ['platformi2c',['PlatformI2c',['../class_platform_i2c.html',1,'PlatformI2c'],['../class_platform_i2c.html#a6a3e35a6ef49cce54d71dde691b220ce',1,'PlatformI2c::PlatformI2c()']]],
+  ['platformi2c',['PlatformI2c',['../class_platform_i2c.html',1,'PlatformI2c'],['../class_platform_i2c.html#a354a79976e4f4c42a73b0dd5088767de',1,'PlatformI2c::PlatformI2c()']]],
   ['platformspi',['PlatformSpi',['../class_platform_spi.html',1,'PlatformSpi'],['../class_platform_spi.html#a26a7c802b47d7e4bcc87735ab0215dc5',1,'PlatformSpi::PlatformSpi()']]],
   ['point_2eh',['point.h',['../point_8h.html',1,'']]],
   ['positivemode',['positiveMode',['../class_nano_display_ops.html#a98b7d55f7599b31a86147657cf811dd4',1,'NanoDisplayOps']]],
