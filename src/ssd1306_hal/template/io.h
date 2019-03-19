@@ -142,7 +142,7 @@ static inline char *utoa(unsigned int num, char *str, int radix)    // util utoa
 
 // !!! PLATFORM I2C IMPLEMENTATION OPTIONAL !!!
 #if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && defined(CONFIG_PLATFORM_I2C_ENABLE)
-void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, int8_t arg);
+void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, ssd1306_platform_i2cConfig_t * cfg);
 #endif
 
 

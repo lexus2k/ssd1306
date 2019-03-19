@@ -101,12 +101,12 @@ static void ssd1306_i2cClose_Wire()
 {
 }
 
-void ssd1306_platform_i2cInit(int8_t scl, uint8_t sa, int8_t sda)
+void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, ssd1306_platform_i2cConfig_t * cfg)
 {
 #if defined(ESP8266) || defined(ESP32) || defined(ESP31B)
-    if ((scl >= 0) && (sda >=0))
+    if ((cfg->scl >= 0) && (cfg->sda >=0))
     {
-        Wire.begin(sda, scl);
+        Wire.begin(cfg->sda, cfg->scl);
     }
     else
 #endif
@@ -117,7 +117,7 @@ void ssd1306_platform_i2cInit(int8_t scl, uint8_t sa, int8_t sda)
         Wire.setClock(400000);
     #endif
 
-    if (sa) s_sa = sa;
+    if (sa) s_sa = addr;
     ssd1306_intf.spi = 0;
     ssd1306_intf.start = ssd1306_i2cStart_Wire;
     ssd1306_intf.stop = ssd1306_i2cStop_Wire;
