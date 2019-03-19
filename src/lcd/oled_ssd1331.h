@@ -132,13 +132,16 @@ public:
      *
      * Inits 96x64 OLED display over spi (based on SSD1331 controller): 8-bit mode
      * @param rstPin pin controlling LCD reset (-1 if not used)
-     * @param csPin chip enable pin to LCD slave (-1 if not used)
-     * @param dcPin data/command pin to control LCD dc (required)
+     * @param config platform spi configuration. Please refer to SPlatformI2cConfig.
      */
-    DisplaySSD1331_96x64_SPI(int8_t rstPin = -1, int8_t csPin = -1,
-                             int8_t dcPin = -1)
-       : DisplaySSD1331(m_spi, rstPin, dcPin)
-       , m_spi(csPin, dcPin, 6000000 ) {}
+    DisplaySSD1331_96x64_SPI( int8_t rstPin, const SPlatformSpiConfig &config = { -1, -1, -1, 0, -1, -1 } )
+        : DisplaySSD1331(m_spi, rstPin, config.dc)
+        , m_spi( SPlatformSpiConfig{ config.busId,
+                                     config.cs,
+                                     config.dc,
+                                     config.frequency ?: 6000000,
+                                     config.scl,
+                                     config.sda } ) {}
 
     void begin() override;
 
@@ -242,13 +245,16 @@ public:
      *
      * Inits 96x64 OLED display over spi (based on SSD1331 controller): 16-bit mode
      * @param rstPin pin controlling LCD reset (-1 if not used)
-     * @param csPin chip enable pin to LCD slave (-1 if not used)
-     * @param dcPin data/command pin to control LCD dc (required)
+     * @param config platform spi configuration. Please refer to SPlatformI2cConfig.
      */
-    DisplaySSD1331_96x64x16_SPI(int8_t rstPin = -1, int8_t csPin = -1,
-                                int8_t dcPin = -1)
-       : DisplaySSD1331x16(m_spi, rstPin, dcPin)
-       , m_spi(csPin, dcPin, 6000000) {}
+    DisplaySSD1331_96x64x16_SPI( int8_t rstPin, const SPlatformSpiConfig &config = { -1, -1, -1, 0, -1, -1 } )
+        : DisplaySSD1331x16(m_spi, rstPin, config.dc)
+        , m_spi( SPlatformSpiConfig{ config.busId,
+                                     config.cs,
+                                     config.dc,
+                                     config.frequency ?: 6000000,
+                                     config.scl,
+                                     config.sda } ) {}
 
     void begin() override;
 

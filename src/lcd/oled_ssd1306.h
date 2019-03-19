@@ -221,12 +221,16 @@ public:
      *
      * Inits 128x64 OLED display over spi (based on SSD1306 controller)
      * @param rstPin pin controlling LCD reset (-1 if not used)
-     * @param csPin chip enable pin to LCD slave (-1 if not used)
-     * @param dcPin data/command pin to control LCD dc (required)
+     * @param config platform spi configuration. Please refer to SPlatformI2cConfig.
      */
-    DisplaySSD1306_128x64_SPI( int8_t rstPin, int8_t csPin, int8_t dcPin )
-        : DisplaySSD1306_128x64( m_spi, dcPin )
-        , m_spi( csPin, dcPin, 10000000 ) {}
+    DisplaySSD1306_128x64_SPI( int8_t rstPin, const SPlatformSpiConfig &config = { -1, -1, -1, 0, -1, -1 } )
+        : DisplaySSD1306_128x64( m_spi, config.dc )
+        , m_spi( SPlatformSpiConfig{ config.busId,
+                                     config.cs,
+                                     config.dc,
+                                     config.frequency ?: 10000000,
+                                     config.scl,
+                                     config.sda } ) {}
 
     void begin() override;
 
@@ -247,12 +251,16 @@ public:
      *
      * Inits 128x32 OLED display over spi (based on SSD1306 controller)
      * @param rstPin pin controlling LCD reset (-1 if not used)
-     * @param csPin chip enable pin to LCD slave (-1 if not used)
-     * @param dcPin data/command pin to control LCD dc (required)
+     * @param config platform spi configuration. Please refer to SPlatformI2cConfig.
      */
-    DisplaySSD1306_128x32_SPI( int8_t rstPin, int8_t csPin, int8_t dcPin )
-        : DisplaySSD1306_128x32( m_spi, dcPin )
-        , m_spi( csPin, dcPin, 10000000 ) {}
+    DisplaySSD1306_128x32_SPI( int8_t rstPin, const SPlatformSpiConfig &config = { -1, -1, -1, 0, -1, -1 } )
+        : DisplaySSD1306_128x32( m_spi, config.dc )
+        , m_spi( SPlatformSpiConfig{ config.busId,
+                                     config.cs,
+                                     config.dc,
+                                     config.frequency ?: 10000000,
+                                     config.scl,
+                                     config.sda } ) {}
 
     void begin() override;
 
