@@ -204,116 +204,96 @@ public:
 #if defined(CONFIG_AVR_SPI_AVAILABLE) && defined(CONFIG_AVR_SPI_ENABLE)
 
 /**
- * PlatformSpi implementation for AVR platforms
+ * PlatformSpi implementation for current platform
  */
 class PlatformSpi: public AvrSpi
 {
 public:
     /**
-     * Creates instance of PlatformSpi implementation for AVR controllers
-     *
-     * @param csPin chip select pin to enable display controller, or -1 if not needed
-     * @param dcPin data/command control pin
-     * @param frequency frequency in HZ to run SPI bus on.
+     * Creates instance of PlatformSpi implementation for current platform
+     * @param config spi platform configuration. Refer to SPlatformSpiConfig.
      */
-    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t frequency = 8000000):
-        AvrSpi(csPin, dcPin, frequency) {}
+    PlatformSpi(const SPlatformSpiConfig &config)
+        : AvrSpi( config.cs, config.dc, config.frequency ) {}
 };
 
 #elif defined(CONFIG_ARDUINO_SPI_AVAILABLE) && defined(CONFIG_ARDUINO_SPI_ENABLE)
 
 /**
- * PlatformSpi implementation for Arduino platforms
+ * PlatformSpi implementation for current platform
  */
 class PlatformSpi: public ArduinoSpi
 {
 public:
     /**
-     * Creates instance of PlatformSpi implementation for Arduino platform
-     *
-     * @param csPin chip select pin to enable display controller, or -1 if not needed
-     * @param dcPin data/command control pin
-     * @param frequency frequency in HZ to run SPI bus on.
+     * Creates instance of PlatformSpi implementation for current platform
+     * @param config spi platform configuration. Refer to SPlatformSpiConfig.
      */
-    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 8000000):
-        ArduinoSpi(csPin, dcPin, freq) {}
+    PlatformSpi(const SPlatformSpiConfig &config)
+        : ArduinoSpi(config.cs, config.dc, config.frequency) {}
 };
 
 #elif defined(CONFIG_LINUX_SPI_AVAILABLE) && defined(CONFIG_LINUX_SPI_ENABLE)
 
 #if defined(SDL_EMULATION)
 /**
- * PlatformSpi implementation for SDL emulator
+ * PlatformSpi implementation for current platform
  */
 class PlatformSpi: public SdlSpi
 {
 public:
     /**
-     * Creates instance of PlatformSpi implementation for SDL Emulator mode
-     *
-     * @param csPin chip select pin to enable display controller, or -1 if not needed
-     * @param dcPin data/command control pin
-     * @param frequency frequency in HZ to run SPI bus on.
+     * Creates instance of PlatformSpi implementation for current platform
+     * @param config spi platform configuration. Refer to SPlatformSpiConfig.
      */
-    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 8000000):
-        SdlSpi(dcPin) {}
+    PlatformSpi(const SPlatformSpiConfig &config)
+        : SdlSpi(config.dc) {}
 };
 #else
 /**
- * PlatformSpi implementation for Linux platform (spidev)
+ * PlatformSpi implementation for current platform
  */
 class PlatformSpi: public LinuxSpi
 {
 public:
     /**
-     * Creates instance of PlatformSpi implementation for Linux based platforms
-     * (spidev, always uses spidev 0 bus)
-     *
-     * @param csPin device index, if -1, then parameter defaults to 0.
-     * @param dcPin data/command control pin
-     * @param frequency frequency in HZ to run SPI bus on.
+     * Creates instance of PlatformSpi implementation for current platform
+     * @param config spi platform configuration. Refer to SPlatformSpiConfig.
      */
-    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 8000000):
-        LinuxSpi( 0, csPin, dcPin, freq ) {}
+    PlatformSpi(const SPlatformSpiConfig &config)
+        : LinuxSpi( config.busId, config.devId, config.dc, config.frequency ) {}
 };
 #endif
 
 #elif defined(CONFIG_ESP32_SPI_AVAILABLE) && defined(CONFIG_ESP32_SPI_ENABLE)
 /**
- * PlatformSpi implementation for ESP32 platform
+ * PlatformSpi implementation for current platform
  */
 class PlatformSpi: public EspSpi
 {
 public:
     /**
-     * Creates instance of PlatformSpi implementation for ESP32 controllers.
-     * By default uses VSPI bus.
-     *
-     * @param csPin chip select pin to enable display controller, or -1 if not needed
-     * @param dcPin data/command control pin
-     * @param frequency frequency in HZ to run SPI bus on.
+     * Creates instance of PlatformSpi implementation for current platform
+     * @param config spi platform configuration. Refer to SPlatformSpiConfig.
      */
-    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 8000000):
-        EspSpi( -1, csPin, dcPin, freq ) {}
+    PlatformSpi(const SPlatformSpiConfig &config)
+        : EspSpi( config.busId, config.cs, config.dc, config.frequency ) {}
 };
 
 #elif defined(CONFIG_USI_SPI_AVAILABLE) && defined(CONFIG_USI_SPI_ENABLE)
 
 /**
- * PlatformSpi implementation for Attiny
+ * PlatformSpi implementation for current platform
  */
 class PlatformSpi: public UsiSpi
 {
 public:
     /**
-     * Creates instance of PlatformSpi implementation for Attiny platform
-     *
-     * @param csPin chip select pin to enable display controller, or -1 if not needed
-     * @param dcPin data/command control pin
-     * @param frequency frequency in HZ to run SPI bus on.
+     * Creates instance of PlatformSpi implementation for current platform
+     * @param config spi platform configuration. Refer to SPlatformSpiConfig.
      */
-    PlatformSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 8000000):
-        UsiSpi(csPin, dcPin) {}
+    PlatformSpi(const SPlatformSpiConfig &config)
+        : UsiSpi( config.cs, config.dc ) {}
 };
 
 #else

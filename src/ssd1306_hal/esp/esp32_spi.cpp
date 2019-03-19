@@ -39,6 +39,14 @@ EspSpi::EspSpi(int8_t busId, int8_t csPin, int8_t dcPin, uint32_t frequency)
    , m_first_spi_session( true )
    , m_frequency( frequency )
 {
+}
+
+EspSpi::~EspSpi()
+{
+}
+
+void EspSpi::begin()
+{
     // Use VSPI by default
     if ( m_busId < 0 ) m_busId = 1;
 
@@ -61,7 +69,7 @@ EspSpi::EspSpi(int8_t busId, int8_t csPin, int8_t dcPin, uint32_t frequency)
     spi_bus_initialize( m_busId ? VSPI_HOST : HSPI_HOST, &buscfg, 0 ); // 0 -no dma
 }
 
-EspSpi::~EspSpi()
+void EspSpi::end()
 {
 }
 

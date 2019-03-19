@@ -53,6 +53,10 @@ public:
                uint32_t frequency = 400000);
     virtual ~EspI2c();
 
+    void begin() override;
+
+    void end() override;
+
     /**
      * Starts communication with SSD1306 display.
      */
@@ -85,6 +89,7 @@ private:
     uint8_t m_sa;
     int8_t m_scl;
     int8_t m_sda;
+    uint32_t m_frequency;
     i2c_cmd_handle_t m_cmd_handle;
 };
 

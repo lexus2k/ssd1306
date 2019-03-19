@@ -50,6 +50,10 @@ public:
             uint32_t frequency = 8000000 );
     virtual ~EspSpi();
 
+    void begin() override;
+
+    void end() override;
+
     /**
      * Starts communication with SSD1306 display.
      */
