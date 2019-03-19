@@ -139,7 +139,7 @@ uint8_t NanoEngineInputs::ky40Buttons()
         }
     }
     last_clk = clk;
-    if ( s_ky40_sw >=0 && digitalRead( s_ky40_sw ) == LOW )
+    if ( digitalRead( s_ky40_sw ) == LOW )
     {
         buttons |= BUTTON_A;
     }
