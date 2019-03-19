@@ -115,7 +115,7 @@ static void platform_i2c_send_buffer(const uint8_t *data, uint16_t len)
 //    i2c_master_write(cmd, data_wr, size, ACK_CHECK_EN);
 }
 
-void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, ssd1306_platform_i2cConfig_t * cfg)
+void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, int8_t arg)
 {
     if (addr) s_i2c_addr = addr;
     ssd1306_intf.spi = 0;
@@ -129,9 +129,9 @@ void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, ssd1306_platform_i2cCo
     s_bus_id = busId;
     i2c_config_t conf;
     conf.mode = I2C_MODE_MASTER;
-    conf.sda_io_num = cfg->sda;
+    conf.sda_io_num = 21; // I2C_EXAMPLE_MASTER_SDA_IO;
     conf.sda_pullup_en = GPIO_PULLUP_ENABLE;
-    conf.scl_io_num = cfg->scl;
+    conf.scl_io_num = 22; // I2C_EXAMPLE_MASTER_SCL_IO;
     conf.scl_pullup_en = GPIO_PULLUP_ENABLE;
     conf.master.clk_speed = 400000; //I2C_EXAMPLE_MASTER_FREQ_HZ;
     i2c_param_config(s_bus_id, &conf);
