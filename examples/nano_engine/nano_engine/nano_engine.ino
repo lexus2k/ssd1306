@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -36,8 +36,9 @@
 
 #define FRAMES_CAPTURE  128
 
-DisplaySSD1331_96x64_SPI display(3, 4, 5);
+DisplaySSD1331_96x64_SPI display(3, {-1, 4, 5});
 NanoEngine8 engine(display);
+
 
 int x = 72;
 int b_x = -128;
