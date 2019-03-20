@@ -54,9 +54,9 @@ public:
         : NanoDisplayOps<1>(intf)
         , m_dc( dcPin ) {}
 
-    void setBlock(lcduint_t x, lcduint_t y, lcduint_t w) override;
+    void startBlock(lcduint_t x, lcduint_t y, lcduint_t w) override;
 
-    void nextPage() override;
+    void nextBlock() override;
 
     /**
      * Switches display to normal mode. This feature is specific

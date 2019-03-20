@@ -470,13 +470,13 @@ void NanoEngineTiler<C,B>::displayBuffer()
             if (flag & 0x01)
             {
                 canvas.setOffset(x + offset.x, y + offset.y);
-                if (!m_onDraw)
+                if ( m_onDraw == nullptr )
                 {
                     canvas.clear();
                     draw();
                     m_display.drawCanvas(x,y,canvas);
                 }
-                else if (m_onDraw())
+                else if ( m_onDraw() )
                 {
                     draw();
                     m_display.drawCanvas(x,y,canvas);

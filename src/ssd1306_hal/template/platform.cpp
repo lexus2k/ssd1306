@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,6 @@
 */
 
 #include "ssd1306_hal/io.h"
-
-// TODO: DON'T FORGET ADD YOUR PLATFORM FILE TO MAKEFILE
 
 #if defined(YOUR_PLATFORM)
 

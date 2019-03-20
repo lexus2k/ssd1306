@@ -31,6 +31,9 @@
 
 #if defined(CONFIG_SOFTWARE_I2C_AVAILABLE) && defined(CONFIG_SOFTWARE_I2C_ENABLE)
 
+/**
+ * Class implements i2c software interface for AVR platform
+ */
 class SoftwareI2c: public IWireInterface
 {
 public:

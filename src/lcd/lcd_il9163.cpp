@@ -69,7 +69,7 @@ static const PROGMEM uint8_t s_oled128x128_initData[] =
     0xC7,  CMD_ARG,  0x40,                // vcom offset
 //    0x2A,  CMD_ARG,  0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x7F,   // set column address, not needed. set by direct API
 //    0x2B,  CMD_ARG,  0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x9F,   // set page address, not needed. set by direct API
-    0x36,  CMD_ARG,  0b10001100,          // enable fake "vertical addressing" mode (for il9163_setBlock() )
+    0x36,  CMD_ARG,  0b10001100,          // enable fake "vertical addressing" mode (for il9163_startBlock() )
     0x29,                                 // display on
 };
 
@@ -103,14 +103,14 @@ static const PROGMEM uint8_t s_oled128x160_initData[] =
     0xC7,  CMD_ARG,  0x40,                // vcom offset
 //    0x2A,  CMD_ARG,  0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x7F,   // set column address, not needed. set by direct API
 //    0x2B,  CMD_ARG,  0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x9F,   // set page address, not needed. set by direct API
-    0x36,  CMD_ARG,  0b00100000,          // enable fake "vertical addressing" mode (for il9163_setBlock() )
+    0x36,  CMD_ARG,  0b00100000,          // enable fake "vertical addressing" mode (for il9163_startBlock() )
     0x29,                                 // display on
 };
 
 static uint8_t s_column;
 static uint8_t s_page;
 
-static void il9163_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
+static void il9163_startBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
     s_column = x;
@@ -137,7 +137,7 @@ static void il9163_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
     ssd1306_spiDataMode(1);
 }
 
-static void il9163_setBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
+static void il9163_startBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
     ssd1306_intf.start();
@@ -161,13 +161,13 @@ static void il9163_setBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
     ssd1306_spiDataMode(1);
 }
 
-static void il9163_nextPage(void)
+static void il9163_nextBlock(void)
 {
     ssd1306_intf.stop();
     ssd1306_lcd.set_block(s_column,s_page+1,0);
 }
 
-static void il9163_nextPage2(void)
+static void il9163_nextBlock2(void)
 {
 }
 
@@ -181,13 +181,13 @@ void    il9163_setMode(lcd_mode_t mode)
     ssd1306_intf.stop();
     if (mode == LCD_MODE_SSD1306_COMPAT )
     {
-        ssd1306_lcd.set_block = il9163_setBlock;
-        ssd1306_lcd.next_page = il9163_nextPage;
+        ssd1306_lcd.set_block = il9163_startBlock;
+        ssd1306_lcd.next_page = il9163_nextBlock;
     }
     else if ( mode == LCD_MODE_NORMAL )
     {
-        ssd1306_lcd.set_block = il9163_setBlock2;
-        ssd1306_lcd.next_page = il9163_nextPage2;
+        ssd1306_lcd.set_block = il9163_startBlock2;
+        ssd1306_lcd.next_page = il9163_nextBlock2;
     }
     s_rotation = mode ? 0x00 : 0x04;
 }
@@ -238,8 +238,8 @@ void    il9163_128x128_init()
     ssd1306_lcd.height = 128;
     ssd1306_lcd.width = 128;
     s_rgb_bit = 0b00001000; // set BGR mode mapping
-    ssd1306_lcd.set_block = il9163_setBlock;
-    ssd1306_lcd.next_page = il9163_nextPage;
+    ssd1306_lcd.set_block = il9163_startBlock;
+    ssd1306_lcd.next_page = il9163_nextBlock;
     ssd1306_lcd.send_pixels1  = il9163_sendPixels;
     ssd1306_lcd.send_pixels_buffer1 = il9163_sendPixelsBuffer;
     ssd1306_lcd.send_pixels8 = il9163_sendPixel8;
@@ -319,7 +319,7 @@ void il9163_setRotation(uint8_t rotation)
 //                         ST7735 support
 ////////////////////////////////////////////////////////////////////////////////////////
 
-static void st7735_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
+static void st7735_startBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
     s_column = x;
@@ -345,7 +345,7 @@ static void st7735_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 }
 
 #if 0
-static void st7735_setBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
+static void st7735_startBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
     ssd1306_intf.start();
@@ -375,8 +375,8 @@ void    st7735_128x160_init()
     ssd1306_lcd.width = 128;
     ssd1306_lcd.height = 160;
     s_rgb_bit = 0b00000000; // set RGB mode mapping
-    ssd1306_lcd.set_block = st7735_setBlock;
-    ssd1306_lcd.next_page = il9163_nextPage;
+    ssd1306_lcd.set_block = st7735_startBlock;
+    ssd1306_lcd.next_page = il9163_nextBlock;
     ssd1306_lcd.send_pixels1  = il9163_sendPixels;
     ssd1306_lcd.send_pixels_buffer1 = il9163_sendPixelsBuffer;
     ssd1306_lcd.send_pixels8 = il9163_sendPixel8;

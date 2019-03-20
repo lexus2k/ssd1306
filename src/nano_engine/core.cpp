@@ -150,8 +150,7 @@ uint8_t NanoEngineInputs::ky40Buttons()
 ////// NANO ENGINE CORE CLASS /////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-/** Defaut frame rate for all engines */
-static const uint8_t ENGINE_DEFAULT_FPS = 30;
+#if 0
 
 /** Duration between frames in milliseconds */
 uint8_t   NanoEngineCore::m_frameDurationMs = 1000/ENGINE_DEFAULT_FPS;
@@ -164,6 +163,7 @@ uint32_t  NanoEngineCore::m_lastFrameTs;
 /** Callback to call before starting oled update */
 TLoopCallback NanoEngineCore::m_loop = nullptr;
 
+#endif
 
 void NanoEngineCore::begin()
 {

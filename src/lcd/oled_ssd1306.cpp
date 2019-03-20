@@ -86,7 +86,7 @@ static const uint8_t PROGMEM s_oled128x32_initData[] =
 //          SSD1306 basic functions implementation
 //////////////////////////////////////////////////////////////////////////
 
-void DisplaySSD1306::setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
+void DisplaySSD1306::startBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     commandStart();
     m_intf.send(SSD1306_COLUMNADDR);
@@ -107,7 +107,7 @@ void DisplaySSD1306::setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
     }
 }
 
-void DisplaySSD1306::nextPage()
+void DisplaySSD1306::nextBlock()
 {
 }
 

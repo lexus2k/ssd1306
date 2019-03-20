@@ -69,14 +69,14 @@ static const PROGMEM uint8_t s_oled240x320_initData[] =
     0xC1,  CMD_ARG,  0x02,                // power control 2
     0xC5,  CMD_ARG,  0x50, CMD_ARG, 0x5B, // vcom control 1
     0xC7,  CMD_ARG,  0x40,                // vcom offset
-    0x36,  CMD_ARG,  0b10100000,          // enable fake "vertical addressing" mode (for ili9341_setBlock() )
+    0x36,  CMD_ARG,  0b10100000,          // enable fake "vertical addressing" mode (for ili9341_startBlock() )
     0x29,                                 // display on
 };
 
 static lcduint_t s_column;
 static lcduint_t s_page;
 
-static void ili9341_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
+static void ili9341_startBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     lcduint_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
     s_column = x;
@@ -101,7 +101,7 @@ static void ili9341_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
     ssd1306_spiDataMode(1);
 }
 
-static void ili9341_setBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
+static void ili9341_startBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     lcduint_t width = s_rotate_output ? ssd1306_lcd.height : ssd1306_lcd.width;
     lcduint_t height = s_rotate_output ? ssd1306_lcd.width : ssd1306_lcd.height;
@@ -126,13 +126,13 @@ static void ili9341_setBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
     ssd1306_spiDataMode(1);
 }
 
-static void ili9341_nextPage(void)
+static void ili9341_nextBlock(void)
 {
     ssd1306_intf.stop();
     ssd1306_lcd.set_block(s_column,s_page+1,0);
 }
 
-static void ili9341_nextPage2(void)
+static void ili9341_nextBlock2(void)
 {
 }
 
@@ -143,13 +143,13 @@ void    ili9341_setMode(lcd_mode_t mode)
     ili9341_setRotation( s_rotation );
     if (mode == LCD_MODE_SSD1306_COMPAT)
     {
-        ssd1306_lcd.set_block = ili9341_setBlock;
-        ssd1306_lcd.next_page = ili9341_nextPage;
+        ssd1306_lcd.set_block = ili9341_startBlock;
+        ssd1306_lcd.next_page = ili9341_nextBlock;
     }
     else if (mode == LCD_MODE_NORMAL)
     {
-        ssd1306_lcd.set_block = ili9341_setBlock2;
-        ssd1306_lcd.next_page = ili9341_nextPage2;
+        ssd1306_lcd.set_block = ili9341_startBlock2;
+        ssd1306_lcd.next_page = ili9341_nextBlock2;
     }
 }
 
@@ -200,8 +200,8 @@ void    ili9341_240x320_init()
     // casting to lcduint_t is hack for attiny arch
     ssd1306_lcd.height = (lcduint_t)320;
     s_rgb_bit = 0b00001000; // set BGR mode mapping
-    ssd1306_lcd.set_block = ili9341_setBlock;
-    ssd1306_lcd.next_page = ili9341_nextPage;
+    ssd1306_lcd.set_block = ili9341_startBlock;
+    ssd1306_lcd.next_page = ili9341_nextBlock;
     ssd1306_lcd.send_pixels1  = ili9341_sendPixels;
     ssd1306_lcd.send_pixels_buffer1 = ili9341_sendPixelsBuffer;
     ssd1306_lcd.send_pixels8 = ili9341_sendPixel8;

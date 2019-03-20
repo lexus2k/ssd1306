@@ -181,36 +181,36 @@ uint8_t ssd1306_printFixed16(lcdint_t x, lcdint_t y, const char *ch, EFontStyle 
 template <>
 void NanoDisplayOps<16>::putPixel(lcdint_t x, lcdint_t y)
 {
-    setBlock(x, y, 0);
+    startBlock(x, y, 0);
     m_intf.send( m_color >> 8 );
     m_intf.send( m_color & 0xFF );
-    m_intf.stop();
+    endBlock();
 }
 
 template <>
 void NanoDisplayOps<16>::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
 {
-    setBlock(x1, y1, 0);
+    startBlock(x1, y1, 0);
     while (x1 < x2)
     {
         m_intf.send( m_color >> 8 );
         m_intf.send( m_color & 0xFF );
         x1++;
     }
-    m_intf.stop();
+    endBlock();
 }
 
 template <>
 void NanoDisplayOps<16>::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
 {
-    setBlock(x1, y1, 1);
+    startBlock(x1, y1, 1);
     while (y1<=y2)
     {
         m_intf.send( m_color >> 8 );
         m_intf.send( m_color & 0xFF );
         y1++;
     }
-    m_intf.stop();
+    endBlock();
 }
 
 template <>
@@ -224,27 +224,27 @@ void NanoDisplayOps<16>::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_
     {
         ssd1306_swap_data(x1, x2, lcdint_t);
     }
-    setBlock(x1, y1, x2 - x1 + 1);
+    startBlock(x1, y1, x2 - x1 + 1);
     uint16_t count = (x2 - x1 + 1) * (y2 - y1 + 1);
     while (count--)
     {
         m_intf.send( m_color >> 8 );
         m_intf.send( m_color & 0xFF );
     }
-    m_intf.stop();
+    endBlock();
 }
 
 template <>
 void NanoDisplayOps<16>::fill(uint16_t color)
 {
-    setBlock(0, 0, 0);
+    startBlock(0, 0, 0);
     uint32_t count = (uint32_t)m_w * (uint32_t)m_h;
     while (count--)
     {
         m_intf.send( color >> 8 );
         m_intf.send( color & 0xFF );
     }
-    m_intf.stop();
+    endBlock();
 }
 
 template <>
@@ -259,7 +259,7 @@ void NanoDisplayOps<16>::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, 
     uint8_t bit = 1;
     uint16_t blackColor = s_ssd1306_invertByte ? m_color : 0x0000;
     uint16_t color = s_ssd1306_invertByte ? 0x0000 : m_color;
-    setBlock(xpos, ypos, w);
+    startBlock(xpos, ypos, w);
     while (h--)
     {
         lcduint_t wx = w;
@@ -288,13 +288,13 @@ void NanoDisplayOps<16>::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, 
             bitmap -= w;
         }
     }
-    m_intf.stop();
+    endBlock();
 }
 
 template <>
 void NanoDisplayOps<16>::drawBitmap8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
-    setBlock(x, y, w);
+    startBlock(x, y, w);
     uint32_t count = (w) * (h);
     while (count--)
     {
@@ -303,13 +303,13 @@ void NanoDisplayOps<16>::drawBitmap8(lcdint_t x, lcdint_t y, lcduint_t w, lcduin
         m_intf.send( color & 0xFF );
         bitmap++;
     }
-    m_intf.stop();
+    endBlock();
 }
 
 template <>
 void NanoDisplayOps<16>::drawBitmap16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
-    setBlock(x, y, w);
+    startBlock(x, y, w);
     uint32_t count = (w) * (h);
     while (count--)
     {
@@ -317,7 +317,7 @@ void NanoDisplayOps<16>::drawBitmap16(lcdint_t x, lcdint_t y, lcduint_t w, lcdui
         m_intf.send( pgm_read_byte( &bitmap[1] ) );
         bitmap += 2;
     }
-    m_intf.stop();
+    endBlock();
 }
 
 template <>
@@ -326,7 +326,7 @@ void NanoDisplayOps<16>::drawBuffer1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, 
     uint8_t bit = 1;
     uint16_t blackColor = s_ssd1306_invertByte ? m_color : 0x0000;
     uint16_t color = s_ssd1306_invertByte ? 0x0000 : m_color;
-    setBlock(xpos, ypos, w);
+    startBlock(xpos, ypos, w);
     while (h--)
     {
         lcduint_t wx = w;
@@ -355,13 +355,13 @@ void NanoDisplayOps<16>::drawBuffer1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, 
             buffer -= w;
         }
     }
-    m_intf.stop();
+    endBlock();
 }
 
 template <>
 void NanoDisplayOps<16>::drawBuffer8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buffer)
 {
-    setBlock(x, y, w);
+    startBlock(x, y, w);
     uint32_t count = (w) * (h);
     while (count--)
     {
@@ -370,13 +370,13 @@ void NanoDisplayOps<16>::drawBuffer8(lcdint_t x, lcdint_t y, lcduint_t w, lcduin
         m_intf.send( color & 0xFF );
         buffer++;
     }
-    m_intf.stop();
+    endBlock();
 }
 
 template <>
 void NanoDisplayOps<16>::drawBuffer16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buffer)
 {
-    setBlock(x, y, w);
+    startBlock(x, y, w);
     uint32_t count = (w) * (h);
     while (count--)
     {
@@ -384,7 +384,7 @@ void NanoDisplayOps<16>::drawBuffer16(lcdint_t x, lcdint_t y, lcduint_t w, lcdui
         m_intf.send( buffer[1] );
         buffer += 2;
     }
-    m_intf.stop();
+    endBlock();
 }
 
 template <>

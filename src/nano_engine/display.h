@@ -443,17 +443,22 @@ protected:
      * @param w - width of the block in pixels to control
      *
      * @warning - this function initiates session (i2c or spi) and does not close it.
-     *            To close session, please, call m_intf.stop().
+     *            To close session, please, call endBlock().
      */
-    virtual void setBlock(lcduint_t x, lcduint_t y, lcduint_t w) = 0;
+    virtual void startBlock(lcduint_t x, lcduint_t y, lcduint_t w) = 0;
 
     /**
      * Switches to the start of next RAM page for the block, specified by
-     * setBlock().
+     * startBlock().
      * For ssd1306 it does nothing, while for sh1106 the function moves cursor to
      * next page.
      */
-    virtual void nextPage() = 0;
+    virtual void nextBlock() = 0;
+
+    /**
+     * Closes data send operation to lcd display.
+     */
+    virtual void endBlock();
 
     /**
      * Initializes interface and display

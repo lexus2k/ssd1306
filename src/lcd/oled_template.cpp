@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -53,7 +53,7 @@ static uint8_t s_column;
 static uint8_t s_page;
 
 // The function must set block to draw data
-static void template_setBlock_compat(lcduint_t x, lcduint_t y, lcduint_t w)
+static void template_startBlock_compat(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
     s_column = x;
@@ -69,10 +69,10 @@ static void template_setBlock_compat(lcduint_t x, lcduint_t y, lcduint_t w)
     ssd1306_spiDataMode(1);
 }
 
-static void template_nextPage_compat(void)
+static void template_nextBlock_compat(void)
 {
     ssd1306_intf.stop();
-    template_setBlock_compat(s_column,s_page+1,0);
+    template_startBlock_compat(s_column,s_page+1,0);
 }
 
 static void template_sendPixels(uint8_t data)
@@ -103,7 +103,7 @@ static void template_sendPixelsBuffer(const uint8_t *buffer, uint16_t len)
 /////////////   template functions below are for SPI display  ////////////
 /////////////   in native/normal mode                         ////////////
 
-static void template_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
+static void template_startBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
     ssd1306_intf.start();
@@ -117,7 +117,7 @@ static void template_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
     ssd1306_spiDataMode(1);
 }
 
-static void template_nextPage(void)
+static void template_nextBlock(void)
 {
 }
 
@@ -125,13 +125,13 @@ void    template_setMode(lcd_mode_t mode)
 {
     if (mode == LCD_MODE_NORMAL)
     {
-        ssd1306_lcd.set_block = template_setBlock;
-        ssd1306_lcd.next_page = template_nextPage;
+        ssd1306_lcd.set_block = template_startBlock;
+        ssd1306_lcd.next_page = template_nextBlock;
     }
     else if (mode == LCD_MODE_SSD1306_COMPAT)
     {
-        ssd1306_lcd.set_block = template_setBlock_compat;
-        ssd1306_lcd.next_page = template_nextPage_compat;
+        ssd1306_lcd.set_block = template_startBlock_compat;
+        ssd1306_lcd.next_page = template_nextBlock_compat;
     }
     // Send command to update controller
 //    ssd1306_intf.start();
@@ -147,8 +147,8 @@ void    template_WxH_init()
     ssd1306_lcd.width = 96;  // specify width
     ssd1306_lcd.height = 64; // specify height
     // Set functions for compatible mode
-    ssd1306_lcd.set_block = template_setBlock_compat;
-    ssd1306_lcd.next_page = template_nextPage_compat;
+    ssd1306_lcd.set_block = template_startBlock_compat;
+    ssd1306_lcd.next_page = template_nextBlock_compat;
     ssd1306_lcd.send_pixels1  = template_sendPixels;
     ssd1306_lcd.send_pixels_buffer1 = template_sendPixelsBuffer;
     // Set function for 8-bit mode

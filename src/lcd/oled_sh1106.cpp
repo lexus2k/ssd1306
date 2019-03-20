@@ -58,7 +58,7 @@ static const uint8_t PROGMEM s_oled128x64_initData[] =
 static uint8_t s_column;
 static uint8_t s_page;
 
-static void sh1106_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
+static void sh1106_startBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     s_column = x;
     s_page = y;
@@ -82,10 +82,10 @@ static void sh1106_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
     }
 }
 
-static void sh1106_nextPage(void)
+static void sh1106_nextBlock(void)
 {
     ssd1306_intf.stop();
-    sh1106_setBlock(s_column,s_page+1,0);
+    sh1106_startBlock(s_column,s_page+1,0);
 }
 
 static void sh1106_setMode(lcd_mode_t mode)
@@ -97,8 +97,8 @@ void    sh1106_128x64_init()
     ssd1306_lcd.type = LCD_TYPE_SH1106;
     ssd1306_lcd.height = 64;
     ssd1306_lcd.width = 128;
-    ssd1306_lcd.set_block = sh1106_setBlock;
-    ssd1306_lcd.next_page = sh1106_nextPage;
+    ssd1306_lcd.set_block = sh1106_startBlock;
+    ssd1306_lcd.next_page = sh1106_nextBlock;
     ssd1306_lcd.send_pixels1 = ssd1306_intf.send;
     ssd1306_lcd.send_pixels_buffer1 = ssd1306_intf.send_buffer;
     ssd1306_lcd.set_mode = sh1106_setMode;

@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2018, Alexey Dynda
+    Copyright (c) 2017-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +49,7 @@ static uint8_t s_column;
 static uint8_t s_page;
 static uint8_t s_width;
 
-static void pcd8544_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
+static void pcd8544_startBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 {
 #if 0
     s_width = w;
@@ -64,13 +64,13 @@ static void pcd8544_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 #endif
 }
 
-static void pcd8544_nextPage(void)
+static void pcd8544_nextBlock(void)
 {
 #if 0
     if ( s_width != 1)
     {
         ssd1306_intf.stop();
-        pcd8544_setBlock(s_column, s_page+1, s_width);
+        pcd8544_startBlock(s_column, s_page+1, s_width);
     }
 #endif
 }
@@ -87,8 +87,8 @@ void pcd8544_84x48_init()
     ssd1306_lcd.height = 48;
     ssd1306_intf.start();
     ssd1306_spiDataMode(0);
-    ssd1306_lcd.set_block = pcd8544_setBlock;
-    ssd1306_lcd.next_page = pcd8544_nextPage;
+    ssd1306_lcd.set_block = pcd8544_startBlock;
+    ssd1306_lcd.next_page = pcd8544_nextBlock;
     ssd1306_lcd.send_pixels1 = ssd1306_intf.send;
     ssd1306_lcd.send_pixels_buffer1 = ssd1306_intf.send_buffer;
     ssd1306_lcd.set_mode = pcd8544_setMode;

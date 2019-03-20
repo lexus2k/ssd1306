@@ -53,9 +53,9 @@ public:
      */
     DisplaySSD1331(IWireInterface &intf, int8_t rstPin, int8_t dcPin);
 
-    void setBlock(lcduint_t x, lcduint_t y, lcduint_t w) override;
+    void startBlock(lcduint_t x, lcduint_t y, lcduint_t w) override;
 
-    void nextPage() override;
+    void nextBlock() override;
 
     // Make software implementation of drawLine available for this type of display
     using NanoDisplayOps<8>::drawLine;
@@ -166,9 +166,9 @@ public:
      */
     DisplaySSD1331x16(IWireInterface &intf, int8_t rstPin, int8_t dcPin);
 
-    void setBlock(lcduint_t x, lcduint_t y, lcduint_t w) override;
+    void startBlock(lcduint_t x, lcduint_t y, lcduint_t w) override;
 
-    void nextPage() override;
+    void nextBlock() override;
 
     // Make software implementation of drawLine available for this type of display
     using NanoDisplayOps<16>::drawLine;

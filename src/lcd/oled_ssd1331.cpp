@@ -119,7 +119,7 @@ void DisplaySSD1331::end()
 {
 }
 
-void DisplaySSD1331::setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
+void DisplaySSD1331::startBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     uint8_t rx = w ? (x + w - 1) : (m_w - 1);
     m_intf.start();
@@ -133,16 +133,16 @@ void DisplaySSD1331::setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
     spiDataMode(1);
 }
 
-void DisplaySSD1331::nextPage()
+void DisplaySSD1331::nextBlock()
 {
 }
 
 void DisplaySSD1331::spiDataMode(uint8_t mode)
 {
     // TODO:
-    if (m_dcPin)
+    if ( m_dcPin >= 0 )
     {
-        digitalWrite(m_dcPin, mode ? HIGH : LOW);
+        digitalWrite( m_dcPin, mode ? HIGH : LOW );
     }
 }
 
@@ -157,11 +157,11 @@ void DisplaySSD1331::setRotation(uint8_t rotation)
     uint8_t ram_mode;
     if ((rotation^m_rotation) & 0x01)
     {
-        uint16_t t = m_w;
+        lcduint_t t = m_w;
         m_w = m_h;
         m_h = t;
     }
-    m_rotation = (rotation & 0x03) | (m_rotation & 0x04);
+    m_rotation = rotation & 0x03;
     m_intf.start();
     spiDataMode(0);
     m_intf.send( SSD1331_SEGREMAP );
@@ -262,7 +262,7 @@ void DisplaySSD1331x16::end()
 {
 }
 
-void DisplaySSD1331x16::setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
+void DisplaySSD1331x16::startBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     uint8_t rx = w ? (x + w - 1) : (m_w - 1);
     m_intf.start();
@@ -276,7 +276,7 @@ void DisplaySSD1331x16::setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
     spiDataMode(1);
 }
 
-void DisplaySSD1331x16::nextPage()
+void DisplaySSD1331x16::nextBlock()
 {
 }
 
@@ -304,7 +304,7 @@ void DisplaySSD1331x16::setRotation(uint8_t rotation)
         m_w = m_h;
         m_h = t;
     }
-    m_rotation = (rotation & 0x03) | (m_rotation & 0x04);
+    m_rotation = rotation & 0x03;
     m_intf.start();
     spiDataMode(0);
     m_intf.send( SSD1331_SEGREMAP );

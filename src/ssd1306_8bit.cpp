@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -111,33 +111,33 @@ void ssd1306_putColorPixel8(lcdint_t x, lcdint_t y, uint8_t color)
 template <>
 void NanoDisplayOps<8>::putPixel(lcdint_t x, lcdint_t y)
 {
-    setBlock(x, y, 0);
+    startBlock(x, y, 0);
     m_intf.send( m_color );
-    m_intf.stop();
+    endBlock();
 }
 
 template <>
 void NanoDisplayOps<8>::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
 {
-    setBlock(x1, y1, 0);
+    startBlock(x1, y1, 0);
     while (x1 < x2)
     {
         m_intf.send( m_color );
         x1++;
     }
-    m_intf.stop();
+    endBlock();
 }
 
 template <>
 void NanoDisplayOps<8>::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
 {
-    setBlock(x1, y1, 1);
+    startBlock(x1, y1, 1);
     while (y1<=y2)
     {
         m_intf.send( m_color );
         y1++;
     }
-    m_intf.stop();
+    endBlock();
 }
 
 template <>
@@ -151,25 +151,25 @@ void NanoDisplayOps<8>::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t
     {
         ssd1306_swap_data(x1, x2, lcdint_t);
     }
-    setBlock(x1, y1, x2 - x1 + 1);
-    uint16_t count = (x2 - x1 + 1) * (y2 - y1 + 1);
+    startBlock(x1, y1, x2 - x1 + 1);
+    uint32_t count = (x2 - x1 + 1) * (y2 - y1 + 1);
     while (count--)
     {
         m_intf.send( m_color );
     }
-    m_intf.stop();
+    endBlock();
 }
 
 template <>
 void NanoDisplayOps<8>::fill(uint16_t color)
 {
-    setBlock(0, 0, 0);
+    startBlock(0, 0, 0);
     uint32_t count = (uint32_t)m_w * (uint32_t)m_h;
     while (count--)
     {
         m_intf.send( color );
     }
-    m_intf.stop();
+    endBlock();
 }
 
 template <>
@@ -184,7 +184,7 @@ void NanoDisplayOps<8>::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, l
     uint8_t bit = 1;
     uint8_t blackColor = s_ssd1306_invertByte ? m_color : 0x00;
     uint8_t color = s_ssd1306_invertByte ? 0x00 : m_color;
-    setBlock(xpos, ypos, w);
+    startBlock(xpos, ypos, w);
     while (h--)
     {
         lcduint_t wx = w;
@@ -207,20 +207,20 @@ void NanoDisplayOps<8>::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, l
             bitmap -= w;
         }
     }
-    m_intf.stop();
+    endBlock();
 }
 
 template <>
 void NanoDisplayOps<8>::drawBitmap8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
-    setBlock(x, y, w);
+    startBlock(x, y, w);
     uint32_t count = (w) * (h);
     while (count--)
     {
         m_intf.send( pgm_read_byte( bitmap ) );
         bitmap++;
     }
-    m_intf.stop();
+    endBlock();
 }
 
 template <>
@@ -235,7 +235,7 @@ void NanoDisplayOps<8>::drawBuffer1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, l
     uint8_t bit = 1;
     uint8_t blackColor = s_ssd1306_invertByte ? m_color : 0x00;
     uint8_t color = s_ssd1306_invertByte ? 0x00 : m_color;
-    setBlock(xpos, ypos, w);
+    startBlock(xpos, ypos, w);
     while (h--)
     {
         lcduint_t wx = w;
@@ -258,20 +258,20 @@ void NanoDisplayOps<8>::drawBuffer1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, l
             buffer -= w;
         }
     }
-    m_intf.stop();
+    endBlock();
 }
 
 template <>
 void NanoDisplayOps<8>::drawBuffer8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buffer)
 {
-    setBlock(x, y, w);
+    startBlock(x, y, w);
     uint32_t count = (w) * (h);
     while (count--)
     {
         m_intf.send( *buffer );
         buffer++;
     }
-    m_intf.stop();
+    endBlock();
 }
 
 template <>

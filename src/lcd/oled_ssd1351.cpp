@@ -71,7 +71,7 @@ static const PROGMEM uint8_t s_oled128x128_initData[] =
 static uint8_t s_column;
 static uint8_t s_page;
 
-static void ssd1351_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
+static void ssd1351_startBlock(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
     s_column = x;
@@ -92,7 +92,7 @@ static void ssd1351_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
     ssd1306_spiDataMode(1);
 }
 
-static void ssd1351_setBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
+static void ssd1351_startBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
     ssd1306_intf.start();
@@ -111,13 +111,13 @@ static void ssd1351_setBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
     ssd1306_spiDataMode(1);
 }
 
-static void ssd1351_nextPage(void)
+static void ssd1351_nextBlock(void)
 {
     ssd1306_intf.stop();
-    ssd1351_setBlock(s_column,s_page+1,0);
+    ssd1351_startBlock(s_column,s_page+1,0);
 }
 
-static void ssd1351_nextPage2(void)
+static void ssd1351_nextBlock2(void)
 {
 }
 
@@ -131,13 +131,13 @@ void    ssd1351_setMode(lcd_mode_t mode)
     ssd1306_intf.stop();
     if (mode == LCD_MODE_SSD1306_COMPAT)
     {
-        ssd1306_lcd.set_block = ssd1351_setBlock;
-        ssd1306_lcd.next_page = ssd1351_nextPage;
+        ssd1306_lcd.set_block = ssd1351_startBlock;
+        ssd1306_lcd.next_page = ssd1351_nextBlock;
     }
     else if (mode == LCD_MODE_NORMAL )
     {
-        ssd1306_lcd.set_block = ssd1351_setBlock2;
-        ssd1306_lcd.next_page = ssd1351_nextPage2;
+        ssd1306_lcd.set_block = ssd1351_startBlock2;
+        ssd1306_lcd.next_page = ssd1351_nextBlock2;
     }
 }
 
@@ -186,8 +186,8 @@ void    ssd1351_128x128_init()
     ssd1306_lcd.type = LCD_TYPE_SSD1331;
     ssd1306_lcd.height = 128;
     ssd1306_lcd.width = 128;
-    ssd1306_lcd.set_block = ssd1351_setBlock;
-    ssd1306_lcd.next_page = ssd1351_nextPage;
+    ssd1306_lcd.set_block = ssd1351_startBlock;
+    ssd1306_lcd.next_page = ssd1351_nextBlock;
     ssd1306_lcd.send_pixels1  = ssd1351_sendPixels;
     ssd1306_lcd.send_pixels_buffer1 = ssd1351_sendPixelsBuffer;
     ssd1306_lcd.send_pixels8 = ssd1351_sendPixel8;
