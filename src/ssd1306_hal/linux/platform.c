@@ -325,7 +325,7 @@ static void empty_function_two_args(const uint8_t *arg1, uint16_t arg2)
 {
 }
 
-void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, int8_t arg)
+void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, ssd1306_platform_i2cConfig_t * cfg)
 {
     char filename[20];
     if (busId < 0)
@@ -373,7 +373,7 @@ static void platform_i2c_send_buffer(const uint8_t *buffer, uint16_t size)
     };
 }
 
-void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, int8_t arg)
+void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, ssd1306_platform_i2cConfig_t * cfg)
 {
     sdl_core_init();
     ssd1306_intf.spi = 0;
@@ -568,7 +568,7 @@ void ssd1306_platform_spiInit(int8_t busId, int8_t ces, int8_t dcPin)
 
 #else  // end of !KERNEL, KERNEL is below
 
-void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, int8_t arg)
+void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, ssd1306_platform_i2cConfig_t * cfg)
 {
 }
 
