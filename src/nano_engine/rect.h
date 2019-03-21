@@ -244,8 +244,8 @@ typedef struct _NanoRect
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 inline NanoRect operator+(const NanoRect& rect, const NanoPoint& p)
 {
-    return { { rect.p1.x + p.x, rect.p1.y + p.y },
-             { rect.p2.x + p.x, rect.p2.y + p.y } };
+    return { { (lcdint_t)(rect.p1.x + p.x), (lcdint_t)(rect.p1.y + p.y) },
+             { (lcdint_t)(rect.p2.x + p.x), (lcdint_t)(rect.p2.y + p.y) } };
 }
 #endif
 
