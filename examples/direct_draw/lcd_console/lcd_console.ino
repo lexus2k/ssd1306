@@ -49,10 +49,13 @@ void setup()
 
 void loop()
 {
+    static uint8_t i = 0;
     /* Here use any methods, provided by Arduino Print class */
-    console.print( "This is console output: " );
-    console.println( "go to the next line" );
+    console.print("Line ");
+    console.print( i );
+    i++;
     delay(500);
+    console.println("");
 }
 
 
