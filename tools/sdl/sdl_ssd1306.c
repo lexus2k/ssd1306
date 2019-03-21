@@ -27,6 +27,8 @@
 #include "sdl_graphics.h"
 #include "sdl_core.h"
 
+#define SSD1306_MAX_BANKS 8
+
 static int s_activeColumn = 0;
 static int s_activePage = 0;
 static int s_columnStart = 0;
@@ -46,7 +48,7 @@ static uint8_t displayOn = 0;
 static void blt_single_pixel(uint8_t x, uint8_t y, uint8_t color)
 {
     uint16_t sdl_color = color ? 0xAD59: 0x0000;
-    gdram[x &0x7F ][y & 0x3F] = color;
+    gdram[x & 0x7F ][y & 0x3F] = color;
     uint8_t line = (y - displayOffset - displayStartLine) & 0x3F;
     if ( displayRemap )
     {
@@ -69,13 +71,12 @@ static void blt_content()
             row = multiplexRatio - row;
             ram = multiplexRatio - ram;
         }
-        row = (row + displayOffset) & 0x3F;
         ram = (row + displayOffset + displayStartLine) & 0x3F;
+        row = (row + displayOffset) & 0x3F;
         for(uint8_t column = 0; column < sdl_ssd1306.width; column++)
         {
-            uint8_t x = column;
-            uint16_t color = gdram[x][ram] ? 0xAD59: 0x0000;
-            if ( row > multiplexRatio ) color = 0x0000;
+            uint16_t color = (gdram[column][ram]) ? 0xAD59: 0x0000;
+            if ( row > (multiplexRatio + displayStartLine) ) color = 0x0000;
             sdl_put_pixel(column, line, color);
         }
     }
@@ -114,11 +115,11 @@ static void sdl_ssd1306_commands(uint8_t data)
             switch (s_cmdArgIndex)
             {
                 case 0:
-                     s_pageStart = (data >= (sdl_ssd1306.height >> 3) ? (sdl_ssd1306.height >> 3) - 1 : data);
+                     s_pageStart = (data >= SSD1306_MAX_BANKS ? SSD1306_MAX_BANKS - 1 : data);
                      s_activePage = s_pageStart;
                      break;
                 case 1:
-                     s_pageEnd = (data >= (sdl_ssd1306.height >> 3) ? (sdl_ssd1306.height >> 3) - 1 : data);
+                     s_pageEnd = (data >= SSD1306_MAX_BANKS ? SSD1306_MAX_BANKS - 1 : data);
                      s_commandId = SSD_COMMAND_NONE;
                      break;
                 default: break;
