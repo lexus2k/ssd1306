@@ -73,7 +73,7 @@ static void blt_content()
         ram = (row + displayOffset + displayStartLine) & 0x3F;
         for(uint8_t column = 0; column < sdl_ssd1306.width; column++)
         {
-            uint8_t x = line;
+            uint8_t x = column;
             uint16_t color = gdram[x][ram] ? 0xAD59: 0x0000;
             if ( row > multiplexRatio ) color = 0x0000;
             sdl_put_pixel(column, line, color);
