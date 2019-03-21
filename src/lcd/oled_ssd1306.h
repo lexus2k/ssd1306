@@ -174,6 +174,11 @@ void         ssd1306_flipHorizontal(uint8_t mode);
  */
 void         ssd1306_flipVertical(uint8_t mode);
 
+/**
+ * Sets start line in gdram to start display content with
+ *
+ * @param line start line in range 0 - 63
+ */
 void ssd1306_setStartLine(uint8_t line);
 
 /**

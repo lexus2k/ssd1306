@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.16</span>
+   &#160;<span id="projectnumber">1.7.17</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -75,8 +75,8 @@ Inheritance diagram for Ssd1306Console:</div>
  <div class="center">
   <img src="class_ssd1306_console.png" usemap="#Ssd1306Console_map" alt=""/>
   <map id="Ssd1306Console_map" name="Ssd1306Console_map">
-<area href="class_lcd_console.html" alt="LcdConsole&lt; ssd1306_write &gt;" shape="rect" coords="0,56,184,80"/>
-<area href="class_print.html" alt="Print" shape="rect" coords="0,0,184,24"/>
+<area href="class_lcd_console.html" alt="LcdConsole&lt; ssd1306_consoleWriter &gt;" shape="rect" coords="0,56,235,80"/>
+<area href="class_print.html" alt="Print" shape="rect" coords="0,0,235,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -86,7 +86,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aff27f1a062c1db87e2809782000fdb2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5725d8fcccdcf8d1496cc82a1d0fe19"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_ssd1306_console.html#ae5725d8fcccdcf8d1496cc82a1d0fe19">setCursor</a> (<a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> x, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> y)</td></tr>
 <tr class="separator:ae5725d8fcccdcf8d1496cc82a1d0fe19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_class_lcd_console"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_lcd_console')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_lcd_console.html">LcdConsole&lt; ssd1306_write &gt;</a></td></tr>
+<tr class="inherit_header pub_methods_class_lcd_console"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_lcd_console')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_lcd_console.html">LcdConsole&lt; ssd1306_consoleWriter &gt;</a></td></tr>
 <tr class="memitem:a8d54972e9e06390b812137b54528d400 inherit pub_methods_class_lcd_console"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lcd_console.html#a8d54972e9e06390b812137b54528d400">LcdConsole</a> ()</td></tr>
 <tr class="separator:a8d54972e9e06390b812137b54528d400 inherit pub_methods_class_lcd_console"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b6b939e0499d2ebc06b7d7a03fc8480 inherit pub_methods_class_lcd_console"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_lcd_console.html#a6b6b939e0499d2ebc06b7d7a03fc8480">begin</a> ()</td></tr>
@@ -107,7 +107,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="class_ssd1306_console.html">Ssd1306Console</a> represents object to work with LCD display. Easy to use: </p><div class="fragment"><div class="line"><a class="code" href="class_ssd1306_console.html">Ssd1306Console</a>  console;</div><div class="line"><span class="keywordtype">void</span> setup()</div><div class="line">{</div><div class="line">     <a class="code" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga008655e2f6258b9e4e869733485dd821">ssd1306_128x64_spi_init</a>(3, 4, 5);</div><div class="line">     <a class="code" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga96cae701774193ce8abc0f7058506723">ssd1306_clearScreen</a>();</div><div class="line">     console.<a class="code" href="class_print.html#a2131ef6aa11c8551831201ba64cf5f06">print</a>( <span class="stringliteral">&quot;Hello&quot;</span> );</div><div class="line">}</div></div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="ssd1306__console_8h_source.html#l00085">85</a> of file <a class="el" href="ssd1306__console_8h_source.html">ssd1306_console.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__console_8h_source.html#l00092">92</a> of file <a class="el" href="ssd1306__console_8h_source.html">ssd1306_console.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="aff27f1a062c1db87e2809782000fdb2d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aff27f1a062c1db87e2809782000fdb2d">&#9670;&nbsp;</a></span>clear()</h2>

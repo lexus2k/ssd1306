@@ -69,6 +69,11 @@ private:
 
 };
 
+/**
+ * ssd1306 console support function.
+ * @param ch character to print
+ * @warning only for SSD1306 based displays
+ */
 size_t ssd1306_consoleWriter(uint8_t ch);
 
 /**
