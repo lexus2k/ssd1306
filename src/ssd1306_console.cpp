@@ -41,10 +41,9 @@ size_t ssd1306_consoleWriter(uint8_t ch)
         ssd1306_cursorX = 0;
         ssd1306_cursorY += s_fixedFont.h.height;
         uint8_t bottomScanLine = lcd_offset ? lcd_offset : ssd1306_lcd.height;
-        if ( (ssd1306_cursorY + s_fixedFont.h.height) > bottomScanLine )
+        if ( ssd1306_cursorY >= bottomScanLine )
         {
-            ssd1306_cursorY += s_fixedFont.h.height;
-            if ( lcd_offset >= ssd1306_lcd.height )
+            if ( ssd1306_cursorY >= ssd1306_lcd.height )
             {
                 ssd1306_cursorY -= (int8_t)ssd1306_lcd.height;
             }
