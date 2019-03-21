@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2018, Alexey Dynda
+    Copyright (c) 2017-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,8 @@ extern lcduint_t ssd1306_cursorX;
 extern lcduint_t ssd1306_cursorY;
 extern SFixedFontInfo s_fixedFont;
 
+#define SSD1306_MAX_SCAN_LINES  64
+
 size_t ssd1306_consoleWriter(uint8_t ch)
 {
     static uint8_t lcd_offset = 0;
@@ -40,19 +42,19 @@ size_t ssd1306_consoleWriter(uint8_t ch)
     {
         ssd1306_cursorX = 0;
         ssd1306_cursorY += s_fixedFont.h.height;
-        uint8_t bottomScanLine = lcd_offset ? lcd_offset : ssd1306_lcd.height;
+        uint8_t bottomScanLine = lcd_offset >= s_fixedFont.h.height ? lcd_offset : ssd1306_lcd.height;
         if ( ssd1306_cursorY >= bottomScanLine )
         {
-            if ( ssd1306_cursorY >= ssd1306_lcd.height )
-            {
-                ssd1306_cursorY -= (int8_t)ssd1306_lcd.height;
-            }
             lcd_offset += s_fixedFont.h.height;
-            if ( lcd_offset >= ssd1306_lcd.height )
+            if ( lcd_offset >= SSD1306_MAX_SCAN_LINES )
             {
-                lcd_offset -= (uint8_t)ssd1306_lcd.height;
+                lcd_offset -= SSD1306_MAX_SCAN_LINES;
             }
             ssd1306_setStartLine( lcd_offset );
+        }
+        if ( ssd1306_cursorY >= SSD1306_MAX_SCAN_LINES )
+        {
+            ssd1306_cursorY -= SSD1306_MAX_SCAN_LINES;
         }
         ssd1306_clearBlock(0, ssd1306_cursorY >> 3, ssd1306_lcd.width, s_fixedFont.h.height);
         if (ch == '\n')
