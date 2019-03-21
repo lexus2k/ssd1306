@@ -24,6 +24,56 @@
 
 #include "ssd1306_console.h"
 
+extern lcduint_t ssd1306_cursorX;
+extern lcduint_t ssd1306_cursorY;
+extern SFixedFontInfo s_fixedFont;
+
+size_t ssd1306_consoleWriter(uint8_t ch)
+{
+    static uint8_t lcd_offset = 0;
+    if (ch == '\r')
+    {
+        ssd1306_cursorX = 0;
+        return 0;
+    }
+    else if ( (ssd1306_cursorX > ssd1306_lcd.width - s_fixedFont.h.width) || (ch == '\n') )
+    {
+        ssd1306_cursorX = 0;
+        ssd1306_cursorY += s_fixedFont.h.height;
+        uint8_t bottomScanLine = lcd_offset ? lcd_offset : ssd1306_lcd.height;
+        if ( (ssd1306_cursorY + s_fixedFont.h.height) > bottomScanLine )
+        {
+            ssd1306_cursorY += s_fixedFont.h.height;
+            if ( lcd_offset >= ssd1306_lcd.height )
+            {
+                ssd1306_cursorY -= (int8_t)ssd1306_lcd.height;
+            }
+            lcd_offset += s_fixedFont.h.height;
+            if ( lcd_offset >= ssd1306_lcd.height )
+            {
+                lcd_offset -= (uint8_t)ssd1306_lcd.height;
+            }
+            ssd1306_setStartLine( lcd_offset );
+        }
+        ssd1306_clearBlock(0, ssd1306_cursorY >> 3, ssd1306_lcd.width, s_fixedFont.h.height);
+        if (ch == '\n')
+        {
+            return 0;
+        }
+    }
+    uint16_t unicode = ssd1306_unicode16FromUtf8(ch);
+    if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
+    SCharInfo char_info;
+    ssd1306_getCharBitmap(unicode, &char_info);
+    ssd1306_drawBitmap( ssd1306_cursorX,
+                        ssd1306_cursorY >> 3,
+                        char_info.width,
+                        char_info.height,
+                        char_info.glyph );
+    ssd1306_cursorX += char_info.width + char_info.spacing;
+    return 1;
+}
+
 void Ssd1306Console::clear()
 {
     ssd1306_clearScreen();
