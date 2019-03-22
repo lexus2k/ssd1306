@@ -33,6 +33,7 @@
 #include "sdl_core.h"
 #endif
 
+uint8_t s_ssd1306_startLine = 0;
 
 static const uint8_t PROGMEM s_oled128x64_initData[] =
 {
@@ -156,7 +157,13 @@ void ssd1306_flipVertical(uint8_t mode)
 
 void ssd1306_setStartLine(uint8_t line)
 {
+    s_ssd1306_startLine = line;
     ssd1306_sendCommand( SSD1306_SETSTARTLINE | (line & 0x3F) );
+}
+
+uint8_t ssd1306_getStartLine(void)
+{
+    return s_ssd1306_startLine;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

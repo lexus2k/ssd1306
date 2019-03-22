@@ -32,7 +32,6 @@ extern SFixedFontInfo s_fixedFont;
 
 size_t ssd1306_consoleWriter(uint8_t ch)
 {
-    static uint8_t lcd_offset = 0;
     if (ch == '\r')
     {
         ssd1306_cursorX = 0;
@@ -42,14 +41,14 @@ size_t ssd1306_consoleWriter(uint8_t ch)
     {
         ssd1306_cursorX = 0;
         ssd1306_cursorY += s_fixedFont.h.height;
-        uint8_t bottomScanLine = lcd_offset + ssd1306_lcd.height;
+        uint8_t bottomScanLine = ssd1306_getStartLine() + ssd1306_lcd.height;
         if ( bottomScanLine > SSD1306_MAX_SCAN_LINES )
         {
             bottomScanLine -= SSD1306_MAX_SCAN_LINES;
         }
         if ( ssd1306_cursorY >= bottomScanLine )
         {
-            lcd_offset += s_fixedFont.h.height;
+            uint8_t lcd_offset = ssd1306_getStartLine() + s_fixedFont.h.height;
             if ( lcd_offset >= SSD1306_MAX_SCAN_LINES )
             {
                 lcd_offset -= SSD1306_MAX_SCAN_LINES;

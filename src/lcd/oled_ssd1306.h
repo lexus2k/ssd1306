@@ -182,6 +182,11 @@ void         ssd1306_flipVertical(uint8_t mode);
 void ssd1306_setStartLine(uint8_t line);
 
 /**
+ * returns start line in gdram.
+ */
+uint8_t ssd1306_getStartLine(void);
+
+/**
  * @}
  */
 
