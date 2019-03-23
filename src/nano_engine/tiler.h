@@ -182,6 +182,9 @@ protected:
     };
 
 public:
+    /**
+     * This type is template argument for all Nano Objects.
+     */
     typedef NanoEngineTiler<C,D> TilerT;
     /**
      * Marks all tiles for update. Actual update will take place in display() method.

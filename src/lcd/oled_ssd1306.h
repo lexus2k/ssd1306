@@ -40,6 +40,9 @@
  * @{
  */
 
+/**
+ * Class implements interface functions to SSD1306 displays
+ */
 template <class I>
 class InterfaceSSD1306: public I
 {
@@ -50,6 +53,21 @@ public:
 
     void setSize(lcduint_t w, lcduint_t h) { m_w = w; m_h =h; }
 
+    /**
+     * @brief Sets block in RAM of lcd display controller to write data to.
+     *
+     * Sets block in RAM of lcd display controller to write data to.
+     * For ssd1306 it uses horizontal addressing mode, while for
+     * sh1106 the function uses page addressing mode.
+     * Width can be specified as 0, thus the library will set the right boundary to
+     * region of RAM block to the right column of the display.
+     * @param x - column (left region)
+     * @param y - page (top page of the block)
+     * @param w - width of the block in pixels to control
+     *
+     * @warning - this function initiates session (i2c or spi) and does not close it.
+     *            To close session, please, call endBlock().
+     */
     void startBlock(lcduint_t x, lcduint_t y, lcduint_t w)
     {
         commandStart();
@@ -71,10 +89,19 @@ public:
         }
     }
 
+    /**
+     * Switches to the start of next RAM page for the block, specified by
+     * startBlock().
+     * For ssd1306 it does nothing, while for sh1106 the function moves cursor to
+     * next page.
+     */
     void nextBlock()
     {
     }
 
+    /**
+     * Closes data send operation to lcd display.
+     */
     void endBlock()
     {
         this->stop();
@@ -107,8 +134,8 @@ public:
 
 protected:
     int8_t m_dc = -1; ///< data/command pin for SPI, -1 for i2c
-    lcduint_t m_w;
-    lcduint_t m_h;
+    lcduint_t m_w; ///< holds display width, needed for setBlock
+    lcduint_t m_h; ///< holds display height, needed for setBlock
 };
 
 /**
@@ -227,6 +254,10 @@ class DisplaySSD1306_128x64: public DisplaySSD1306<I>
 public:
     using DisplaySSD1306<I>::DisplaySSD1306;
 
+    /**
+     * Initializes 128x64 lcd display. Interface should be ready prior to
+     * this function call
+     */
     void begin() override
     {
         this->m_w = 128;
@@ -240,6 +271,9 @@ public:
         }
     }
 
+    /**
+     * Closes display connection
+     */
     void end() override
     {
     }
@@ -254,6 +288,10 @@ class DisplaySSD1306_128x32: public DisplaySSD1306<I>
 public:
     using DisplaySSD1306<I>::DisplaySSD1306;
 
+    /**
+     * Initializes 128x32 lcd display. Interface should be ready prior to
+     * this function call
+     */
     void begin() override
     {
         this->m_w = 128;
@@ -267,6 +305,9 @@ public:
         }
     }
 
+    /**
+     * Closes display connection
+     */
     void end() override
     {
     }
@@ -294,12 +335,18 @@ public:
                                      config.sda,
                                      config.frequency } ) {}
 
+    /**
+     * Initializes LCD display over I2C.
+     */
     void begin() override
     {
         this->m_intf.begin();
         DisplaySSD1306_128x64::begin();
     }
 
+    /**
+     * Closes display connection
+     */
     void end() override
     {
         DisplaySSD1306_128x64::end();
