@@ -36,8 +36,7 @@
 #define DD_SCK      DDB2
 
 UsiSpi::UsiSpi(int8_t csPin, int8_t dcPin)
-   : IWireInterface()
-   , m_cs( csPin )
+   : m_cs( csPin )
    , m_dc( dcPin )
 {
 }

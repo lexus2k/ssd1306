@@ -22,7 +22,6 @@
     SOFTWARE.
 */
 
-#include "oled_ssd1331.h"
 #include "lcd_common.h"
 #include "ssd1331_commands.h"
 #include "ssd1306_hal/io.h"
@@ -30,6 +29,8 @@
 #include "sdl_core.h"
 #endif
 #include "nano_gfx_types.h"
+#if 0
+#include "oled_ssd1331.h"
 
 static const PROGMEM uint8_t s_oled96x64_initData[] =
 {
@@ -368,3 +369,5 @@ void DisplaySSD1331_96x64x16_SPI::end()
     DisplaySSD1331x16::end();
     m_spi.end();
 }
+
+#endif

@@ -48,8 +48,7 @@
 #include "sdl_core.h"
 
 SdlSpi::SdlSpi(int8_t dcPin)
-   : IWireInterface()
-   , m_dc( dcPin )
+   : m_dc( dcPin )
 {
 }
 

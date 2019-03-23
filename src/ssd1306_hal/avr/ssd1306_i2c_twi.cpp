@@ -102,8 +102,7 @@ void ssd1306_i2cConfigure_Twi(uint8_t arg)
 
 
 TwiI2c::TwiI2c(uint8_t sa)
-   : IWireInterface()
-   , m_sa( sa )
+   : m_sa( sa )
 {
 }
 

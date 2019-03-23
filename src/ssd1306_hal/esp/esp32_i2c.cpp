@@ -35,8 +35,7 @@
 EspI2c::EspI2c(int8_t busId, uint8_t sa,
                int8_t scl, int8_t sda,
                uint32_t frequency)
-    : IWireInterface()
-    , m_busId( busId )
+    : m_busId( busId )
     , m_sa( sa )
     , m_scl( scl )
     , m_sda( sda )

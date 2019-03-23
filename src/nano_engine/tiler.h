@@ -174,9 +174,9 @@ class NanoEngineTiler
 protected:
     /** Only child classes can initialize the engine */
     NanoEngineTiler(D &display):
+        m_display( display ),
         m_onDraw(nullptr),
-        offset{0, 0},
-        m_display( display )
+        offset{0, 0}
     {
         refresh();
     };

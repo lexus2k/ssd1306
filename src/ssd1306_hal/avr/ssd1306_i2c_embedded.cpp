@@ -81,7 +81,7 @@
 #endif
 #define CPU_CYCLE_NS   (1000000000/F_CPU)
 
-// each delay loop takes 4 cycles: nop(1), dec(1), jnz(2) 
+// each delay loop takes 4 cycles: nop(1), dec(1), jnz(2)
 #define DELAY_LOOP_CYCLES 4
 #define ssd1306_delay(x) for(uint8_t i2=x; i2>0; i2--){__asm__("nop\n\t");}
 
@@ -120,8 +120,7 @@ static uint8_t oldSREG;
 static uint8_t interruptsOff = 0;
 
 SoftwareI2c::SoftwareI2c(int8_t scl, int8_t sda, uint8_t sa)
-    : IWireInterface()
-    , m_scl( scl >= 0 ? scl : (1<<SSD1306_SCL) )
+    : m_scl( scl >= 0 ? scl : (1<<SSD1306_SCL) )
     , m_sda( sda >= 0 ? sda : (1<<SSD1306_SDA) )
     , m_sa ( sa ? : SSD1306_SA )
 {

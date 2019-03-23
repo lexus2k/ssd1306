@@ -35,7 +35,7 @@
 /**
  * Class implements i2c interface for Linux via i2c-dev
  */
-class LinuxI2c: public IWireInterface
+class LinuxI2c
 {
 public:
     /**
@@ -47,25 +47,25 @@ public:
     LinuxI2c(int8_t busId = -1, uint8_t sa = 0x00);
     virtual ~LinuxI2c();
 
-    void begin() override;
+    void begin();
 
-    void end() override;
+    void end();
 
     /**
      * Starts communication with SSD1306 display.
      */
-    void start() override;
+    void start();
 
     /**
      * Ends communication with SSD1306 display.
      */
-    void stop() override;
+    void stop();
 
     /**
      * Sends byte to SSD1306 device
      * @param data - byte to send
      */
-    void send(uint8_t data) override;
+    void send(uint8_t data);
 
     /**
      * @brief Sends bytes to SSD1306 device

@@ -70,8 +70,7 @@ static void ssd1306_spiConfigure_avr(uint32_t frequency)
 }
 
 AvrSpi::AvrSpi(int8_t csPin, int8_t dcPin, uint32_t frequency)
-    : IWireInterface()
-    , m_cs( csPin )
+    : m_cs( csPin )
     , m_dc( dcPin )
     , m_frequency( frequency )
 {

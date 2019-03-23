@@ -32,8 +32,7 @@
 #include "driver/spi_master.h"
 
 EspSpi::EspSpi(int8_t busId, int8_t csPin, int8_t dcPin, uint32_t frequency)
-   : IWireInterface()
-   , m_busId( busId )
+   : m_busId( busId )
    , m_cs( csPin )
    , m_dc( dcPin )
    , m_first_spi_session( true )

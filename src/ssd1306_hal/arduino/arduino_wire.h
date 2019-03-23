@@ -33,7 +33,7 @@
 /**
  * Class implements i2c support via Wire library for Arduino platforms
  */
-class ArduinoI2c: public IWireInterface
+class ArduinoI2c
 {
 public:
     /**
@@ -45,25 +45,25 @@ public:
     ArduinoI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00);
     virtual ~ArduinoI2c();
 
-    void begin() override;
+    void begin();
 
-    void end() override;
+    void end();
 
     /**
      * Starts communication with SSD1306 display.
      */
-    void start() override;
+    void start();
 
     /**
      * Ends communication with SSD1306 display.
      */
-    void stop() override;
+    void stop();
 
     /**
      * Sends byte to SSD1306 device
      * @param data - byte to send
      */
-    void send(uint8_t data) override;
+    void send(uint8_t data);
 
     /**
      * @brief Sends bytes to SSD1306 device
@@ -74,7 +74,7 @@ public:
      * @param buffer - bytes to send
      * @param size - number of bytes to send
      */
-    void sendBuffer(const uint8_t *buffer, uint16_t size) override;
+    void sendBuffer(const uint8_t *buffer, uint16_t size);
 private:
     int8_t m_scl;
     int8_t m_sda;

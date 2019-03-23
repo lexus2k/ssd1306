@@ -137,28 +137,28 @@ public:
     /**
      * Initializes interface
      */
-    virtual void begin() = 0;
+//    virtual void begin() = 0;
 
     /**
      * Deinitializes interface
      */
-    virtual void end() = 0;
+//    virtual void end() = 0;
 
     /**
      * Starts communication with SSD1306 display.
      */
-    virtual void start() = 0;
+//    virtual void start() = 0;
 
     /**
      * Ends communication with SSD1306 display.
      */
-    virtual void stop() = 0;
+//    virtual void stop() = 0;
 
     /**
      * Sends byte to SSD1306 device
      * @param data - byte to send
      */
-    virtual void send(uint8_t data) = 0;
+//    virtual void send(uint8_t data) = 0;
 
     /**
      * @brief Sends bytes to SSD1306 device
@@ -169,7 +169,7 @@ public:
      * @param buffer - bytes to send
      * @param size - number of bytes to send
      */
-    virtual void sendBuffer(const uint8_t *buffer, uint16_t size) = 0;
+//    virtual void sendBuffer(const uint8_t *buffer, uint16_t size) = 0;
 };
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
