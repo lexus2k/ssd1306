@@ -26,22 +26,25 @@
 ////// GENERIC FUNCTIONS APPLICABLE FOR ALL DISPLAY TYPES /////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
+#include "ssd1306_hal/io.h"
+#include "ssd1306_generic.h"
+
+#if 0
 #include "ssd1306.h"
 #include "ssd1306_fonts.h"
 #include "lcd/lcd_common.h"
-#include "ssd1306_hal/io.h"
-#include "ssd1306_generic.h"
 
 // TODO: remove
 #include "lcd/ssd1306_commands.h"
 
-uint8_t s_ssd1306_invertByte = 0x00000000;
+#endif
+
 //const uint8_t *s_font6x8 = &ssd1306xled_font6x8[4];
 //extern lcduint_t ssd1306_cursorX;
 //extern lcduint_t ssd1306_cursorY;
-extern SFixedFontInfo s_fixedFont;
+extern "C" SFixedFontInfo s_fixedFont;
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
-extern uint8_t g_ssd1306_unicode;
+extern "C" uint8_t g_ssd1306_unicode;
 #endif
 
 #if 0
@@ -556,178 +559,27 @@ void ssd1306_setFont6x8(const uint8_t * progmemFont)
 
 /////////////////////////////////////////////////////////////////////////////////
 //
-//                            COMMON GRAPHICS
+//                             1-BIT GRAPHICS
 //
 /////////////////////////////////////////////////////////////////////////////////
 
-template class NanoDisplayOps<1>;
-template class NanoDisplayOps<8>;
-template class NanoDisplayOps<16>;
-
-template <uint8_t BPP>
-void NanoDisplayOps<BPP>::endBlock()
-{
-    m_intf.stop();
-}
-
-template <uint8_t BPP>
-void NanoDisplayOps<BPP>::putPixel(const NanoPoint &p)
-{
-    putPixel(p.x, p.y);
-}
-
-template <uint8_t BPP>
-void NanoDisplayOps<BPP>::drawRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
-{
-    drawHLine(x1, y1, x2);
-    drawHLine(x1, y2, x2);
-    drawVLine(x1, y1, y2);
-    drawVLine(x2, y1, y2);
-}
-
-template <uint8_t BPP>
-void NanoDisplayOps<BPP>::drawRect(const NanoRect &rect)
-{
-    drawRect(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
-}
-
-template <uint8_t BPP>
-void NanoDisplayOps<BPP>::drawLine(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
-{
-    lcduint_t  dx = x1 > x2 ? (x1 - x2): (x2 - x1);
-    lcduint_t  dy = y1 > y2 ? (y1 - y2): (y2 - y1);
-    lcduint_t  err = 0;
-    if (dy > dx)
-    {
-        if (y1 > y2)
-        {
-            ssd1306_swap_data(x1, x2, lcdint_t);
-            ssd1306_swap_data(y1, y2, lcdint_t);
-        }
-        for(; y1<=y2; y1++)
-        {
-            err += dx;
-            if (err >= dy)
-            {
-                 err -= dy;
-                 x1 < x2 ? x1++: x1--;
-            }
-            putPixel( x1, y1 );
-        }
-    }
-    else
-    {
-        if (x1 > x2)
-        {
-            ssd1306_swap_data(x1, x2, lcdint_t);
-            ssd1306_swap_data(y1, y2, lcdint_t);
-        }
-        for(; x1<=x2; x1++)
-        {
-            err += dy;
-            if (err >= dx)
-            {
-                 err -= dx;
-                 if (y1 < y2) y1++; else y1--;
-            }
-            putPixel( x1, y1 );
-        }
-    }
-}
-
-template <uint8_t BPP>
-void NanoDisplayOps<BPP>::drawLine(const NanoRect &rect)
-{
-    drawLine(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
-}
-
-template <uint8_t BPP>
-void NanoDisplayOps<BPP>::fillRect(const NanoRect &rect)
-{
-    fillRect(rect.p1.x, rect.p1.y, rect.p2.x, rect.p2.y);
-}
-
-template <uint8_t BPP>
-uint8_t NanoDisplayOps<BPP>::printChar(uint8_t c)
-{
-    uint16_t unicode = ssd1306_unicode16FromUtf8(c);
-    if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
-    SCharInfo char_info;
-    ssd1306_getCharBitmap(unicode, &char_info);
-    uint8_t mode = m_textMode;
-    for (uint8_t i = 0; i<(m_fontStyle == STYLE_BOLD ? 2: 1); i++)
-    {
-        drawBitmap1(m_cursorX + i,
-                    m_cursorY,
-                    char_info.width,
-                    char_info.height,
-                    char_info.glyph );
-        m_textMode |= CANVAS_MODE_TRANSPARENT;
-    }
-    m_textMode = mode;
-    m_cursorX += (lcdint_t)(char_info.width + char_info.spacing);
-    if ( ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorX > ((lcdint_t)m_w - (lcdint_t)s_fixedFont.h.width) ) )
-       || ( (m_textMode & CANVAS_TEXT_WRAP) && (m_cursorX > ((lcdint_t)m_w - (lcdint_t)s_fixedFont.h.width)) ) )
-    {
-        m_cursorY += (lcdint_t)s_fixedFont.h.height;
-        m_cursorX = 0;
-        if ( (m_textMode & CANVAS_TEXT_WRAP_LOCAL) && (m_cursorY > ((lcdint_t)m_h - (lcdint_t)s_fixedFont.h.height)) )
-        {
-            m_cursorY = 0;
-        }
-    }
-    return 1;
-}
-
-template <uint8_t BPP>
-size_t NanoDisplayOps<BPP>::write(uint8_t c)
-{
-    if (c == '\n')
-    {
-        m_cursorY += (lcdint_t)s_fixedFont.h.height;
-        m_cursorX = 0;
-    }
-    else if (c == '\r')
-    {
-        // skip non-printed char
-    }
-    else
-    {
-        return printChar( c );
-    }
-    return 1;
-}
-
-template <uint8_t BPP>
-void NanoDisplayOps<BPP>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style)
-{
-    m_fontStyle = style;
-    m_cursorX = xpos;
-    m_cursorY = y;
-    while (*ch)
-    {
-        write(*ch);
-        ch++;
-    }
-}
-
-template <>
-void NanoDisplayOps<1>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style)
+template <class I>
+void NanoDisplayOps1<I>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style)
 {
     uint8_t i, j=0;
     uint8_t text_index = 0;
     uint8_t page_offset = 0;
     uint8_t x = xpos;
     y >>= 3;
-    startBlock(xpos, y, m_w - xpos);
+    this->m_intf.startBlock(xpos, y, this->m_w - xpos);
     for(;;)
     {
         uint8_t ldata;
-        if ( (x > m_w - s_fixedFont.h.width) || (ch[j] == '\0') )
+        if ( (x > this->m_w - s_fixedFont.h.width) || (ch[j] == '\0') )
         {
             x = xpos;
             y++;
-            if (y >= (lcdint_t)( m_h >> 3))
+            if (y >= (lcdint_t)( this->m_h >> 3))
             {
                 break;
             }
@@ -745,8 +597,8 @@ void NanoDisplayOps<1>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EF
             {
                 j = text_index;
             }
-            endBlock();
-            startBlock(xpos, y, m_w - xpos);
+            this->m_intf.endBlock();
+            this->m_intf.startBlock(xpos, y, this->m_w - xpos);
         }
         uint16_t unicode;
         do
@@ -780,7 +632,7 @@ void NanoDisplayOps<1>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EF
                     data = (temp & 0xF0) | ldata;
                     ldata = (temp & 0x0F);
                 }
-                m_intf.send(data^s_ssd1306_invertByte);
+                this->m_intf.send(data^s_ssd1306_invertByte);
                 char_info.glyph++;
             }
         }
@@ -789,246 +641,77 @@ void NanoDisplayOps<1>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EF
             char_info.spacing += char_info.width;
         }
         for (i = 0; i < char_info.spacing; i++)
-            m_intf.send(s_ssd1306_invertByte);
+            this->m_intf.send(s_ssd1306_invertByte);
     }
-    endBlock();
+    this->m_intf.endBlock();
 }
 
-template <uint8_t BPP>
-void NanoDisplayOps<BPP>::printFixedPgm(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style)
+template <class I>
+void NanoDisplayOps1<I>::putPixel(lcdint_t x, lcdint_t y)
 {
-    m_fontStyle = style;
-    m_cursorX = xpos;
-    m_cursorY = y;
-    for (;;)
-    {
-        char c = pgm_read_byte(ch);
-        if (!c) break;
-        write(c);
-        ch++;
-    }
+    this->m_intf.startBlock(x, y >> 3, 1);
+    this->m_intf.send((1 << (y & 0x07))^s_ssd1306_invertByte);
+    this->m_intf.endBlock();
 }
 
-#ifndef min
-#define min(x,y) ((x)<(y)?(x):(y))
-#endif
-
-#ifndef max
-#define max(x,y) ((x)>(y)?(x):(y))
-#endif
-
-template <uint8_t BPP>
-static uint8_t getMaxScreenItems(NanoDisplayOps<BPP> &display)
+template <class I>
+void NanoDisplayOps1<I>::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
 {
-    return (display.height() >> 3) - 2;
-}
-
-template <uint8_t BPP>
-static uint8_t calculateScrollPosition(NanoDisplayOps<BPP> &display, SAppMenu *menu, uint8_t selection)
-{
-    if ( selection < menu->scrollPosition )
-    {
-        return selection;
-    }
-    else if ( selection - menu->scrollPosition > getMaxScreenItems<BPP>(display) - 1)
-    {
-        return selection - getMaxScreenItems<BPP>(display) + 1;
-    }
-    return menu->scrollPosition;
-}
-
-template <uint8_t BPP>
-static void drawMenuItem(NanoDisplayOps<BPP> &display, SAppMenu *menu, uint8_t index)
-{
-    if (index == menu->selection)
-    {
-        display.negativeMode();
-    }
-    else
-    {
-        display.positiveMode();
-    }
-    display.setColor( 0xFFFF );
-    display.printFixed(8, (index - menu->scrollPosition + 1)*8, menu->items[index], STYLE_NORMAL );
-    display.positiveMode();
-}
-
-template <uint8_t BPP>
-void NanoDisplayOps<BPP>::createMenu(SAppMenu *menu, const char **items, uint8_t count)
-{
-    menu->items = items;
-    menu->count = count;
-    menu->selection = 0;
-    menu->oldSelection = 0;
-    menu->scrollPosition = 0;
-}
-
-template <uint8_t BPP>
-void NanoDisplayOps<BPP>::showMenu( SAppMenu *menu)
-{
-    drawRect(4, 4, m_w - 5, m_h - 5);
-    menu->scrollPosition = calculateScrollPosition<BPP>(*this, menu, menu->selection );
-    for (uint8_t i = menu->scrollPosition; i < min(menu->count, menu->scrollPosition + getMaxScreenItems<BPP>( *this )); i++)
-    {
-        drawMenuItem<BPP>(*this, menu, i);
-    }
-    menu->oldSelection = menu->selection;
-}
-
-template <uint8_t BPP>
-void NanoDisplayOps<BPP>::updateMenu(SAppMenu *menu)
-{
-    if (menu->selection != menu->oldSelection)
-    {
-        uint8_t scrollPosition = calculateScrollPosition<BPP>( *this, menu, menu->selection );
-        if ( scrollPosition != menu->scrollPosition )
-        {
-            clear();
-            showMenu(menu);
-        }
-        else
-        {
-            drawMenuItem<BPP>( *this, menu, menu->oldSelection);
-            drawMenuItem<BPP>( *this, menu, menu->selection);
-            menu->oldSelection = menu->selection;
-        }
-    }
-}
-
-template <uint8_t BPP>
-uint8_t NanoDisplayOps<BPP>::menuSelection(SAppMenu *menu)
-{
-    return menu->selection;
-}
-
-template <uint8_t BPP>
-void NanoDisplayOps<BPP>::menuDown(SAppMenu *menu)
-{
-    if (menu->selection < menu->count - 1)
-    {
-        menu->selection++;
-    }
-    else
-    {
-        menu->selection = 0;
-    }
-}
-
-template <uint8_t BPP>
-void NanoDisplayOps<BPP>::menuUp(SAppMenu *menu)
-{
-    if (menu->selection > 0)
-    {
-        menu->selection--;
-    }
-    else
-    {
-        menu->selection = menu->count - 1;
-    }
-}
-
-template <uint8_t BPP>
-void NanoDisplayOps<BPP>::drawCanvas(lcdint_t x, lcdint_t y, NanoCanvasOps<1> &canvas)
-{
-    drawBuffer1( x, y, canvas.width(), canvas.height(), canvas.getData() );
-}
-
-template <uint8_t BPP>
-void NanoDisplayOps<BPP>::drawCanvas(lcdint_t x, lcdint_t y, NanoCanvasOps<8> &canvas)
-{
-    drawBuffer8( x, y, canvas.width(), canvas.height(), canvas.getData() );
-}
-
-template <uint8_t BPP>
-void NanoDisplayOps<BPP>::drawCanvas(lcdint_t x, lcdint_t y, NanoCanvasOps<16> &canvas)
-{
-    drawBuffer16( x, y, canvas.width(), canvas.height(), canvas.getData() );
-}
-
-template <uint8_t BPP>
-void NanoDisplayOps<BPP>::negativeMode()
-{
-    s_ssd1306_invertByte = 0xFF;
-}
-
-template <uint8_t BPP>
-void NanoDisplayOps<BPP>::positiveMode()
-{
-    s_ssd1306_invertByte = 0x00;
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-//
-//                             1-BIT GRAPHICS
-//
-/////////////////////////////////////////////////////////////////////////////////
-
-template <>
-void NanoDisplayOps<1>::putPixel(lcdint_t x, lcdint_t y)
-{
-    startBlock(x, y >> 3, 1);
-    m_intf.send((1 << (y & 0x07))^s_ssd1306_invertByte);
-    endBlock();
-}
-
-template <>
-void NanoDisplayOps<1>::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
-{
-    startBlock(x1, y1 >> 3, x2 - x1 + 1);
+    this->m_intf.startBlock(x1, y1 >> 3, x2 - x1 + 1);
     for (uint8_t x = x1; x <= x2; x++)
     {
-        m_intf.send((1 << (y1 & 0x07))^s_ssd1306_invertByte);
+        this->m_intf.send((1 << (y1 & 0x07))^s_ssd1306_invertByte);
     }
-    endBlock();
+    this->m_intf.endBlock();
 }
 
-template <>
-void NanoDisplayOps<1>::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
+template <class I>
+void NanoDisplayOps1<I>::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
 {
     uint8_t topPage = y1 >> 3;
     uint8_t bottomPage = y2 >> 3;
     uint8_t height = y2-y1;
     uint8_t y;
-    startBlock(x1, topPage, 1);
+    this->m_intf.startBlock(x1, topPage, 1);
     if (topPage == bottomPage)
     {
-        m_intf.send( ((0xFF >> (0x07 - height)) << (y1 & 0x07))^s_ssd1306_invertByte );
-        endBlock();
+        this->m_intf.send( ((0xFF >> (0x07 - height)) << (y1 & 0x07))^s_ssd1306_invertByte );
+        this->m_intf.endBlock();
         return;
     }
-    m_intf.send( (0xFF << (y1 & 0x07))^s_ssd1306_invertByte );
+    this->m_intf.send( (0xFF << (y1 & 0x07))^s_ssd1306_invertByte );
     for ( y = (topPage + 1); y <= (bottomPage - 1); y++)
     {
-        nextBlock();
-        m_intf.send( 0xFF^s_ssd1306_invertByte );
+        this->m_intf.nextBlock();
+        this->m_intf.send( 0xFF^s_ssd1306_invertByte );
     }
-    nextBlock();
-    m_intf.send( (0xFF >> (0x07 - (y2 & 0x07)))^s_ssd1306_invertByte );
-    endBlock();
+    this->m_intf.nextBlock();
+    this->m_intf.send( (0xFF >> (0x07 - (y2 & 0x07)))^s_ssd1306_invertByte );
+    this->m_intf.endBlock();
 }
 
-template <>
-void NanoDisplayOps<1>::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+template <class I>
+void NanoDisplayOps1<I>::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
 {
 }
 
-template <>
-void NanoDisplayOps<1>::clear()
+template <class I>
+void NanoDisplayOps1<I>::clear()
 {
-    startBlock(0, 0, 0);
-    for(uint8_t m=(m_h >> 3); m>0; m--)
+    this->m_intf.startBlock(0, 0, 0);
+    for(uint8_t m=(this->m_h >> 3); m>0; m--)
     {
-        for(uint8_t n=m_w; n>0; n--)
+        for(uint8_t n=this->m_w; n>0; n--)
         {
-            m_intf.send( s_ssd1306_invertByte );
+            this->m_intf.send( s_ssd1306_invertByte );
         }
-        nextBlock();
+        this->m_intf.nextBlock();
     }
-    endBlock();
+    this->m_intf.endBlock();
 }
 
-template <>
-void NanoDisplayOps<1>::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+template <class I>
+void NanoDisplayOps1<I>::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
     lcduint_t origin_width = w;
     uint8_t offset = y & 0x07;
@@ -1038,9 +721,9 @@ void NanoDisplayOps<1>::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint
     uint8_t pages;
     lcduint_t i, j;
     if (y + (lcdint_t)h <= 0) return;
-    if (y >= (lcdint_t)m_h) return;
+    if (y >= (lcdint_t)this->m_h) return;
     if (x + (lcdint_t)w <= 0) return;
-    if (x >= (lcdint_t)m_w)  return;
+    if (x >= (lcdint_t)this->m_w)  return;
     if (y < 0)
     {
          bitmap += ((lcduint_t)((-y) + 7) >> 3) * w;
@@ -1055,49 +738,49 @@ void NanoDisplayOps<1>::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint
          x = 0;
     }
     max_pages = (lcduint_t)(h + 15 - offset) >> 3;
-    if ((lcduint_t)((lcduint_t)y + h) > (lcduint_t)m_h)
+    if ((lcduint_t)((lcduint_t)y + h) > (lcduint_t)this->m_h)
     {
-         h = (lcduint_t)(m_h - (lcduint_t)y);
+         h = (lcduint_t)(this->m_h - (lcduint_t)y);
     }
-    if ((lcduint_t)((lcduint_t)x + w) > (lcduint_t)m_w)
+    if ((lcduint_t)((lcduint_t)x + w) > (lcduint_t)this->m_w)
     {
-         w = (lcduint_t)(m_w - (lcduint_t)x);
+         w = (lcduint_t)(this->m_w - (lcduint_t)x);
     }
     pages = ((y + h - 1) >> 3) - (y >> 3) + 1;
 
-    startBlock(x, y >> 3, w);
+    this->m_intf.startBlock(x, y >> 3, w);
     for(j=0; j < pages; j++)
     {
         if ( j == (lcduint_t)(max_pages - 1) ) mainFlag = !offset;
         for( i=w; i > 0; i--)
         {
             uint8_t data = 0;
-            if ( mainFlag )    data |= ((pgm_read_byte(bitmap) << offset) & m_color);
-            if ( complexFlag ) data |= ((pgm_read_byte(bitmap - origin_width) >> (8 - offset)) & m_color);
+            if ( mainFlag )    data |= ((pgm_read_byte(bitmap) << offset) & this->m_color);
+            if ( complexFlag ) data |= ((pgm_read_byte(bitmap - origin_width) >> (8 - offset)) & this->m_color);
             bitmap++;
-            m_intf.send(s_ssd1306_invertByte^data);
+            this->m_intf.send(s_ssd1306_invertByte^data);
         }
         bitmap += origin_width - w;
         complexFlag = offset;
-        nextBlock();
+        this->m_intf.nextBlock();
     }
-    endBlock();
+    this->m_intf.endBlock();
 }
 
-template <>
-void NanoDisplayOps<1>::drawBitmap8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+template <class I>
+void NanoDisplayOps1<I>::drawBitmap8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
     // NOT IMPLEMENTED
 }
 
-template <>
-void NanoDisplayOps<1>::drawBitmap16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+template <class I>
+void NanoDisplayOps1<I>::drawBitmap16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
     // NOT IMPLEMENTED
 }
 
-template <>
-void NanoDisplayOps<1>::drawBuffer1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buffer)
+template <class I>
+void NanoDisplayOps1<I>::drawBuffer1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buffer)
 {
     lcduint_t origin_width = w;
     uint8_t offset = y & 0x07;
@@ -1107,9 +790,9 @@ void NanoDisplayOps<1>::drawBuffer1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint
     uint8_t pages;
     lcduint_t i, j;
     if (y + (lcdint_t)h <= 0) return;
-    if (y >= (lcdint_t)m_h) return;
+    if (y >= (lcdint_t)this->m_h) return;
     if (x + (lcdint_t)w <= 0) return;
-    if (x >= (lcdint_t)m_w)  return;
+    if (x >= (lcdint_t)this->m_w)  return;
     if (y < 0)
     {
          buffer += ((lcduint_t)((-y) + 7) >> 3) * w;
@@ -1124,60 +807,60 @@ void NanoDisplayOps<1>::drawBuffer1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint
          x = 0;
     }
     max_pages = (lcduint_t)(h + 15 - offset) >> 3;
-    if ((lcduint_t)((lcduint_t)y + h) > (lcduint_t)m_h)
+    if ((lcduint_t)((lcduint_t)y + h) > (lcduint_t)this->m_h)
     {
-         h = (lcduint_t)(m_h - (lcduint_t)y);
+         h = (lcduint_t)(this->m_h - (lcduint_t)y);
     }
-    if ((lcduint_t)((lcduint_t)x + w) > (lcduint_t)m_w)
+    if ((lcduint_t)((lcduint_t)x + w) > (lcduint_t)this->m_w)
     {
-         w = (lcduint_t)(m_w - (lcduint_t)x);
+         w = (lcduint_t)(this->m_w - (lcduint_t)x);
     }
     pages = ((y + h - 1) >> 3) - (y >> 3) + 1;
 
-    startBlock(x, y >> 3, w);
+    this->m_intf.startBlock(x, y >> 3, w);
     for(j=0; j < pages; j++)
     {
         if ( j == (lcduint_t)(max_pages - 1) ) mainFlag = !offset;
         for( i=w; i > 0; i--)
         {
             uint8_t data = 0;
-            if ( mainFlag )    data |= ((*buffer << offset) & m_color);
-            if ( complexFlag ) data |= ((*(buffer - origin_width) >> (8 - offset)) & m_color);
+            if ( mainFlag )    data |= ((*buffer << offset) & this->m_color);
+            if ( complexFlag ) data |= ((*(buffer - origin_width) >> (8 - offset)) & this->m_color);
             buffer++;
-            m_intf.send(s_ssd1306_invertByte^data);
+            this->m_intf.send(s_ssd1306_invertByte^data);
         }
         buffer += origin_width - w;
         complexFlag = offset;
-        nextBlock();
+        this->m_intf.nextBlock();
     }
-    endBlock();
+    this->m_intf.endBlock();
 }
 
-template <>
-void NanoDisplayOps<1>::drawBuffer8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buffer)
+template <class I>
+void NanoDisplayOps1<I>::drawBuffer8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buffer)
 {
     // NOT IMPLEMENTED
 }
 
-template <>
-void NanoDisplayOps<1>::drawBuffer16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buffer)
+template <class I>
+void NanoDisplayOps1<I>::drawBuffer16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buffer)
 {
     // NOT IMPLEMENTED
 }
 
-template <>
-void NanoDisplayOps<1>::fill(uint16_t color)
+template <class I>
+void NanoDisplayOps1<I>::fill(uint16_t color)
 {
     color ^= s_ssd1306_invertByte;
-    startBlock(0, 0, 0);
-    for(uint8_t m=(m_h >> 3); m>0; m--)
+    this->m_intf.startBlock(0, 0, 0);
+    for(uint8_t m=(this->m_h >> 3); m>0; m--)
     {
-        for(uint8_t n=m_w; n>0; n--)
+        for(uint8_t n=this->m_w; n>0; n--)
         {
-            m_intf.send(color);
+            this->m_intf.send(color);
         }
-        nextBlock();
+        this->m_intf.nextBlock();
     }
-    endBlock();
+    this->m_intf.endBlock();
 }
 

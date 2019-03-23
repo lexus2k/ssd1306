@@ -100,13 +100,14 @@
  *
  * @warning Works only in RGB 8-bit color mode
  */
-class NanoEngine1_8: public NanoEngine<TILE_8x8_MONO_8>
+template <class D>
+class NanoEngine1_8: public NanoEngine<TILE_8x8_MONO_8,D>
 {
 public:
     /**
      * Creates new Graphics Engine object.
      */
-    using NanoEngine<TILE_8x8_MONO_8>::NanoEngine;
+    using NanoEngine<TILE_8x8_MONO_8,D>::NanoEngine;
 };
 
 /**

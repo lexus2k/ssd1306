@@ -44,6 +44,7 @@ enum
 //lcduint_t ssd1306_cursorX = 0;
 //lcduint_t ssd1306_cursorY = 0;
 SFixedFontInfo s_fixedFont{};
+uint8_t s_ssd1306_invertByte = 0x00000000;
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
 uint8_t g_ssd1306_unicode = 1;
 #endif

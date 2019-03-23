@@ -45,8 +45,6 @@ SRCS_CPP = \
 	intf/vga/esp32/vga128x64.cpp \
 	intf/vga/esp32/CompositeOutput.cpp \
 	lcd/lcd_common.cpp \
-	lcd/oled_ssd1306.cpp \
-	lcd/oled_ssd1331.cpp \
 	lcd/lcd_pcd8544.cpp \
 	lcd/lcd_il9163.cpp \
 	lcd/lcd_ili9341.cpp \
@@ -56,9 +54,6 @@ SRCS_CPP = \
 	lcd/oled_template.cpp \
 	lcd/vga_monitor.cpp \
 	ssd1306_generic.cpp \
-	ssd1306_1bit.cpp \
-	ssd1306_8bit.cpp \
-	ssd1306_16bit.cpp \
 	ssd1306_uart.cpp \
 	ssd1306_fonts.cpp \
 	nano_engine/canvas.cpp \

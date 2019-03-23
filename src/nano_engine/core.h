@@ -229,15 +229,15 @@ protected:
 /**
  * Base class for NanoEngine.
  */
-template<class C, uint8_t B>
+template<class C, class D>
 class NanoEngine: public NanoEngineCore,
-                  public NanoEngineTiler<C,B>
+                  public NanoEngineTiler<C,D>
 {
 public:
     /**
      * Initializes Nano Engine Base object.
      */
-    NanoEngine(NanoDisplayOps<B> &display);
+    NanoEngine(D &display);
 
     /**
      * @brief refreshes content on oled display.
@@ -263,33 +263,33 @@ public:
 protected:
 };
 
-template<class C, uint8_t B>
-NanoEngine<C,B>::NanoEngine( NanoDisplayOps<B> & display)
-    : NanoEngineCore(), NanoEngineTiler<C,B>(display)
+template<class C, class D>
+NanoEngine<C,D>::NanoEngine( D & display)
+    : NanoEngineCore(), NanoEngineTiler<C,D>(display)
 {
 }
 
-template<class C, uint8_t B>
-void NanoEngine<C,B>::display()
+template<class C, class D>
+void NanoEngine<C,D>::display()
 {
     m_lastFrameTs = millis();
-    NanoEngineTiler<C,B>::displayBuffer();
+    NanoEngineTiler<C,D>::displayBuffer();
     m_cpuLoad = ((millis() - m_lastFrameTs)*100)/m_frameDurationMs;
 }
 
-template<class C, uint8_t B>
-void NanoEngine<C,B>::begin()
+template<class C, class D>
+void NanoEngine<C,D>::begin()
 {
     NanoEngineCore::begin();
 }
 
-template<class C, uint8_t B>
-void NanoEngine<C,B>::notify(const char *str)
+template<class C, class D>
+void NanoEngine<C,D>::notify(const char *str)
 {
-    NanoEngineTiler<C,B>::displayPopup(str);
+    NanoEngineTiler<C,D>::displayPopup(str);
     delay(1000);
     m_lastFrameTs = millis();
-    NanoEngineTiler<C,B>::refresh();
+    NanoEngineTiler<C,D>::refresh();
 }
 
 /**

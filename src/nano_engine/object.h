@@ -76,7 +76,7 @@ public:
     /**
      * Draws nano object Engine canvas
      */
-    void draw() override {};
+    void draw() override { };
 
     /**
      * Marks nano object location for refreshing on the new frame
@@ -92,7 +92,7 @@ public:
     /**
      * Updates NanoObject
      */
-    void update() override {}
+    void update() override { }
 
     /**
      * Returns width of NanoObject

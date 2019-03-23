@@ -22,21 +22,24 @@
     SOFTWARE.
 */
 
-#include "ssd1306_8bit.h"
-#include "ssd1306_generic.h"
 #include "ssd1306_hal/io.h"
+#include "ssd1306_generic.h"
+
+#if 0
+#include "ssd1306_8bit.h"
 
 #include "lcd/ssd1331_commands.h"
 #include "lcd/lcd_common.h"
 #include "nano_engine/display.h"
+#endif
 
 //extern uint16_t ssd1306_color;
 extern uint8_t s_ssd1306_invertByte;
 //extern lcduint_t ssd1306_cursorX;
 //extern lcduint_t ssd1306_cursorY;
-extern SFixedFontInfo s_fixedFont;
+extern "C" SFixedFontInfo s_fixedFont;
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
-extern uint8_t g_ssd1306_unicode;
+extern "C" uint8_t g_ssd1306_unicode;
 #endif
 
 #if 0
@@ -91,10 +94,10 @@ void ssd1306_putColorPixel8(lcdint_t x, lcdint_t y, uint8_t color)
 //
 /////////////////////////////////////////////////////////////////////////////////
 
-//template class NanoDisplayOps<8>;
+//template class NanoDisplayOps8<I>;
 
-//template <>
-//void NanoDisplayOps<8>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style)
+//template <class I>
+//void NanoDisplayOps8<I>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style)
 //{
 //    m_cursorX = xpos;
 //    m_cursorY = y;
@@ -108,40 +111,40 @@ void ssd1306_putColorPixel8(lcdint_t x, lcdint_t y, uint8_t color)
 //
 /////////////////////////////////////////////////////////////////////////////////
 
-template <>
-void NanoDisplayOps<8>::putPixel(lcdint_t x, lcdint_t y)
+template <class I>
+void NanoDisplayOps8<I>::putPixel(lcdint_t x, lcdint_t y)
 {
-    startBlock(x, y, 0);
-    m_intf.send( m_color );
-    endBlock();
+    this->m_intf.startBlock(x, y, 0);
+    this->m_intf.send( this->m_color );
+    this->m_intf.endBlock();
 }
 
-template <>
-void NanoDisplayOps<8>::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
+template <class I>
+void NanoDisplayOps8<I>::drawHLine(lcdint_t x1, lcdint_t y1, lcdint_t x2)
 {
-    startBlock(x1, y1, 0);
+    this->m_intf.startBlock(x1, y1, 0);
     while (x1 < x2)
     {
-        m_intf.send( m_color );
+        this->m_intf.send( this->m_color );
         x1++;
     }
-    endBlock();
+    this->m_intf.endBlock();
 }
 
-template <>
-void NanoDisplayOps<8>::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
+template <class I>
+void NanoDisplayOps8<I>::drawVLine(lcdint_t x1, lcdint_t y1, lcdint_t y2)
 {
-    startBlock(x1, y1, 1);
+    this->m_intf.startBlock(x1, y1, 1);
     while (y1<=y2)
     {
-        m_intf.send( m_color );
+        this->m_intf.send( this->m_color );
         y1++;
     }
-    endBlock();
+    this->m_intf.endBlock();
 }
 
-template <>
-void NanoDisplayOps<8>::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+template <class I>
+void NanoDisplayOps8<I>::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
 {
     if (y1 > y2)
     {
@@ -151,40 +154,40 @@ void NanoDisplayOps<8>::fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t
     {
         ssd1306_swap_data(x1, x2, lcdint_t);
     }
-    startBlock(x1, y1, x2 - x1 + 1);
+    this->m_intf.startBlock(x1, y1, x2 - x1 + 1);
     uint32_t count = (x2 - x1 + 1) * (y2 - y1 + 1);
     while (count--)
     {
-        m_intf.send( m_color );
+        this->m_intf.send( this->m_color );
     }
-    endBlock();
+    this->m_intf.endBlock();
 }
 
-template <>
-void NanoDisplayOps<8>::fill(uint16_t color)
+template <class I>
+void NanoDisplayOps8<I>::fill(uint16_t color)
 {
-    startBlock(0, 0, 0);
-    uint32_t count = (uint32_t)m_w * (uint32_t)m_h;
+    this->m_intf.startBlock(0, 0, 0);
+    uint32_t count = (uint32_t)this->m_w * (uint32_t)this->m_h;
     while (count--)
     {
-        m_intf.send( color );
+        this->m_intf.send( color );
     }
-    endBlock();
+    this->m_intf.endBlock();
 }
 
-template <>
-void NanoDisplayOps<8>::clear()
+template <class I>
+void NanoDisplayOps8<I>::clear()
 {
     fill( 0x00 );
 }
 
-template <>
-void NanoDisplayOps<8>::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+template <class I>
+void NanoDisplayOps8<I>::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
     uint8_t bit = 1;
-    uint8_t blackColor = s_ssd1306_invertByte ? m_color : 0x00;
-    uint8_t color = s_ssd1306_invertByte ? 0x00 : m_color;
-    startBlock(xpos, ypos, w);
+    uint8_t blackColor = s_ssd1306_invertByte ? this->m_color : 0x00;
+    uint8_t color = s_ssd1306_invertByte ? 0x00 : this->m_color;
+    this->m_intf.startBlock(xpos, ypos, w);
     while (h--)
     {
         lcduint_t wx = w;
@@ -192,9 +195,9 @@ void NanoDisplayOps<8>::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, l
         {
             uint8_t data = pgm_read_byte( bitmap );
             if ( data & bit )
-                m_intf.send( color );
+                this->m_intf.send( color );
             else
-                m_intf.send( blackColor );
+                this->m_intf.send( blackColor );
             bitmap++;
         }
         bit <<= 1;
@@ -207,35 +210,35 @@ void NanoDisplayOps<8>::drawBitmap1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, l
             bitmap -= w;
         }
     }
-    endBlock();
+    this->m_intf.endBlock();
 }
 
-template <>
-void NanoDisplayOps<8>::drawBitmap8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+template <class I>
+void NanoDisplayOps8<I>::drawBitmap8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
-    startBlock(x, y, w);
+    this->m_intf.startBlock(x, y, w);
     uint32_t count = (w) * (h);
     while (count--)
     {
-        m_intf.send( pgm_read_byte( bitmap ) );
+        this->m_intf.send( pgm_read_byte( bitmap ) );
         bitmap++;
     }
-    endBlock();
+    this->m_intf.endBlock();
 }
 
-template <>
-void NanoDisplayOps<8>::drawBitmap16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
+template <class I>
+void NanoDisplayOps8<I>::drawBitmap16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
     // NOT IMPLEMENTED
 }
 
-template <>
-void NanoDisplayOps<8>::drawBuffer1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *buffer)
+template <class I>
+void NanoDisplayOps8<I>::drawBuffer1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *buffer)
 {
     uint8_t bit = 1;
-    uint8_t blackColor = s_ssd1306_invertByte ? m_color : 0x00;
-    uint8_t color = s_ssd1306_invertByte ? 0x00 : m_color;
-    startBlock(xpos, ypos, w);
+    uint8_t blackColor = s_ssd1306_invertByte ? this->m_color : 0x00;
+    uint8_t color = s_ssd1306_invertByte ? 0x00 : this->m_color;
+    this->m_intf.startBlock(xpos, ypos, w);
     while (h--)
     {
         lcduint_t wx = w;
@@ -243,9 +246,9 @@ void NanoDisplayOps<8>::drawBuffer1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, l
         {
             uint8_t data = *buffer;
             if ( data & bit )
-                m_intf.send( color );
+                this->m_intf.send( color );
             else
-                m_intf.send( blackColor );
+                this->m_intf.send( blackColor );
             buffer++;
         }
         bit <<= 1;
@@ -258,38 +261,38 @@ void NanoDisplayOps<8>::drawBuffer1(lcdint_t xpos, lcdint_t ypos, lcduint_t w, l
             buffer -= w;
         }
     }
-    endBlock();
+    this->m_intf.endBlock();
 }
 
-template <>
-void NanoDisplayOps<8>::drawBuffer8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buffer)
+template <class I>
+void NanoDisplayOps8<I>::drawBuffer8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buffer)
 {
-    startBlock(x, y, w);
+    this->m_intf.startBlock(x, y, w);
     uint32_t count = (w) * (h);
     while (count--)
     {
-        m_intf.send( *buffer );
+        this->m_intf.send( *buffer );
         buffer++;
     }
-    endBlock();
+    this->m_intf.endBlock();
 }
 
-template <>
-void NanoDisplayOps<8>::drawBuffer16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buffer)
+template <class I>
+void NanoDisplayOps8<I>::drawBuffer16(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *buffer)
 {
     // NOT IMPLEMENTED
 }
 
-template <>
-void NanoDisplayOps<8>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style)
+template <class I>
+void NanoDisplayOps8<I>::printFixed(lcdint_t xpos, lcdint_t y, const char *ch, EFontStyle style)
 {
     // TODO: fontstyle not supported
     // m_fontStyle = style;
-    m_cursorX = xpos;
-    m_cursorY = y;
+    this->m_cursorX = xpos;
+    this->m_cursorY = y;
     while (*ch)
     {
-        write(*ch);
+        this->write(*ch);
         ch++;
     }
 }
