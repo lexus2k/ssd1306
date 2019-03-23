@@ -29,9 +29,8 @@
 #ifndef _NANO_ENGINE_H_
 #define _NANO_ENGINE_H_
 
-//#include "nano_engine/menu_items.h"
-#include "nano_engine/canvas.h"
-#include "nano_engine/adafruit.h"
+#include "canvas/canvas.h"
+#include "canvas/adafruit.h"
 #include "nano_engine/tiler.h"
 #include "nano_engine/object.h"
 #include "nano_engine/sprite.h"
@@ -66,7 +65,8 @@
  *
  * @warning Works only in SSD1306 compatible mode
  */
-#define NanoEngine1   NanoEngine<TILE_16x16_MONO>
+template <class D>
+using NanoEngine1 = NanoEngine<TILE_16x16_MONO,D>;
 
 /**
  * NanoEngine8 is simple graphics engine, that implements double buffering work
@@ -82,7 +82,8 @@
  * In your application you can choose, if you want to refresh whole screen (refresh()), or you
  * need to refresh only part of oled display.
  */
-#define NanoEngine8   NanoEngine<TILE_16x16_RGB8>
+template <class D>
+using NanoEngine8 = NanoEngine<TILE_16x16_RGB8,D>;
 
 /**
  * NanoEngine1 is simple graphics engine, that implements double buffering work
@@ -125,7 +126,8 @@ public:
  * In your application you can choose, if you want to refresh whole screen (refresh()), or you
  * need to refresh only part of oled display.
  */
-#define NanoEngine16  NanoEngine<TILE_8x8_RGB16>
+template <class D>
+using NanoEngine16 = NanoEngine<TILE_8x8_RGB16,D>;
 
 /**
  * @}

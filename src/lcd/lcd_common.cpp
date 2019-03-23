@@ -29,8 +29,6 @@
 
 #if 0
 
-ssd1306_lcd_t ssd1306_lcd = { 0 };
-
 void ssd1306_sendData(uint8_t data)
 {
     ssd1306_dataStart();

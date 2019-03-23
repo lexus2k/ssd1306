@@ -28,9 +28,9 @@
 #ifndef _NANO_DISPLAY_H_
 #define _NANO_DISPLAY_H_
 
-#include "point.h"
-#include "rect.h"
-#include "canvas.h"
+#include "canvas/point.h"
+#include "canvas/rect.h"
+#include "canvas/canvas.h"
 #include "ssd1306_hal/io.h"
 #include "nano_gfx_types.h"
 #include "lcd/lcd_common.h"
@@ -812,10 +812,10 @@ protected:
     virtual void end() = 0;
 };
 
-#include "../ssd1306_1bit.inl"
-#include "../ssd1306_8bit.inl"
-#include "../ssd1306_16bit.inl"
-#include "../ssd1306_common.inl"
+#include "ssd1306_1bit.inl"
+#include "ssd1306_8bit.inl"
+#include "ssd1306_16bit.inl"
+#include "ssd1306_common.inl"
 
 /**
  * @}

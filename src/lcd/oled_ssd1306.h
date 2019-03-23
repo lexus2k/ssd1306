@@ -30,7 +30,7 @@
 #define _OLED_SSD1306_H_
 
 #include "ssd1306_hal/io.h"
-#include "nano_engine/display.h"
+#include "display/display.h"
 #include "lcd/lcd_common.h"
 
 #include "oled_ssd1306.inl"

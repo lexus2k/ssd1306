@@ -25,12 +25,6 @@
 #include "ssd1306_hal/io.h"
 #include "ssd1306_generic.h"
 
-#if 0
-#include "ssd1306_16bit.h"
-#include "lcd/lcd_common.h"
-#include "nano_engine/display.h"
-#endif
-
 //extern uint16_t ssd1306_color;
 extern uint8_t s_ssd1306_invertByte;
 //extern lcduint_t ssd1306_cursorX;

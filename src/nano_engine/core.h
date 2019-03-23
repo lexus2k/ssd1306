@@ -30,7 +30,7 @@
 #define _NANO_ENGINE_CORE_H_
 
 #include "tiler.h"
-#include "canvas.h"
+#include "canvas/canvas.h"
 
 /**
  * @ingroup NANO_ENGINE_API

@@ -28,9 +28,9 @@
 #ifndef _NANO_SPRITE_H_
 #define _NANO_SPRITE_H_
 
-#include "point.h"
+#include "canvas/point.h"
+#include "canvas/rect.h"
 #include "object.h"
-#include "rect.h"
 #include "ssd1306_hal/io.h"
 
 /**

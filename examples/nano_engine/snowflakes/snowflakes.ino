@@ -130,14 +130,14 @@ const PROGMEM uint8_t snowFlakeImage[8][8] =
     },
 };
 
-typedef NanoEngine<TILE_16x16_MONO, DisplaySSD1306_128x64_I2C> NanoEngineDemo;
+typedef NanoEngine1<DisplaySSD1306_128x64_I2C> NanoEngineDemo;
 
 NanoEngineDemo engine(display);
 
-class SnowFlake: public NanoFixedSprite<NanoEngineDemo::NanoEngineTilerImpl>
+class SnowFlake: public NanoFixedSprite<NanoEngineDemo::TilerT>
 {
 public:
-    SnowFlake(): NanoFixedSprite<NanoEngineDemo::NanoEngineTilerImpl>({0, 0}, {8, 8}, nullptr)
+    SnowFlake(): NanoFixedSprite<NanoEngineDemo::TilerT>({0, 0}, {8, 8}, nullptr)
     {
     }
 

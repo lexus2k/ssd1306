@@ -29,9 +29,9 @@
 #ifndef _NANO_ENGINE_TILER_H_
 #define _NANO_ENGINE_TILER_H_
 
-#include "canvas.h"
-#include "display.h"
-#include "rect.h"
+#include "canvas/rect.h"
+#include "canvas/canvas.h"
+#include "display/display.h"
 //#include "object.h"
 #include "lcd/lcd_common.h"
 
@@ -51,17 +51,17 @@ extern "C" SFixedFontInfo s_fixedFont;
 /* The table below defines arguments for NanoEngineTiler.          *
  *                            canvas                    bits   */
 // Tiles for monochrome displays
-#define TILE_128x64_MONO      NanoCanvas<128,64,1>,     1    ///< Full-screen 1-bit tile for SSD1306
-#define TILE_8x8_MONO         NanoCanvas<8,8,1>,        1    ///< Standard 1-bit tile 8x8 for monochrome mode
+#define TILE_128x64_MONO      NanoCanvas<128,64,1>           ///< Full-screen 1-bit tile for SSD1306
+#define TILE_8x8_MONO         NanoCanvas<8,8,1>              ///< Standard 1-bit tile 8x8 for monochrome mode
 #define TILE_16x16_MONO       NanoCanvas<16,16,1>            ///< Standard 1-bit tile 16x16 for monochrome mode
-#define TILE_32x32_MONO       NanoCanvas<32,32,1>,      1    ///< Standard 1-bit tile 32x32 for monochrome mode
+#define TILE_32x32_MONO       NanoCanvas<32,32,1>            ///< Standard 1-bit tile 32x32 for monochrome mode
 // Tiles for 8-bit displays
-#define TILE_8x8_RGB8         NanoCanvas<8,8,8>,        8    ///< Standard 8-bit RGB tile 8x8
-#define TILE_16x16_RGB8       NanoCanvas<16,16,8>,      8    ///< Standard 8-bit RGB tile 16x16
-#define TILE_32x32_RGB8       NanoCanvas<32,32,8>,      8    ///< Standard 8-bit RGB tile 32x32
+#define TILE_8x8_RGB8         NanoCanvas<8,8,8>              ///< Standard 8-bit RGB tile 8x8
+#define TILE_16x16_RGB8       NanoCanvas<16,16,8>            ///< Standard 8-bit RGB tile 16x16
+#define TILE_32x32_RGB8       NanoCanvas<32,32,8>            ///< Standard 8-bit RGB tile 32x32
 #define TILE_8x8_MONO_8       NanoCanvas<8,8,1>    ///< Standard 1-bit tile 8x8 for RGB mode
 // Tiles for 16-bit displays
-#define TILE_8x8_RGB16        NanoCanvas<8,8,16>,       16    ///< Standard 16-bit RGB tile 8x8
+#define TILE_8x8_RGB16        NanoCanvas<8,8,16>             ///< Standard 16-bit RGB tile 8x8
 // Adafruit tiles
 #define ADATILE_8x8_MONO      AdafruitCanvas1,  8,  8,      3    ///< Use Adafruit GFX implementation as NanoEngine canvas
 #define ADATILE_8x8_RGB8      AdafruitCanvas8,  8,  8,      3    ///< Use Adafruit GFX implementation as NanoEngine canvas
@@ -182,7 +182,7 @@ protected:
     };
 
 public:
-    typedef NanoEngineTiler<C,D> NanoEngineTilerImpl;
+    typedef NanoEngineTiler<C,D> TilerT;
     /**
      * Marks all tiles for update. Actual update will take place in display() method.
      */
@@ -342,7 +342,7 @@ public:
      *
      * @param object object to place to NanoEngine
      */
-    void insert(NanoEngineObject<NanoEngineTilerImpl> &object)
+    void insert(NanoEngineObject<TilerT> &object)
     {
         object.m_next = this->m_first;
         object.setTiler( this );
@@ -357,7 +357,7 @@ public:
      *
      * @param object object to remove from NanoEngine
      */
-    void remove(NanoEngineObject<NanoEngineTilerImpl> &object)
+    void remove(NanoEngineObject<TilerT> &object)
     {
         if ( this->m_first == nullptr )
         {
@@ -371,7 +371,7 @@ public:
         }
         else
         {
-            NanoEngineObject<NanoEngineTilerImpl> *p = this->m_first;
+            NanoEngineObject<TilerT> *p = this->m_first;
             while ( p->m_next )
             {
                 if ( p->m_next == &object )
@@ -392,7 +392,7 @@ public:
      */
     void update()
     {
-        NanoEngineObject<NanoEngineTilerImpl> *p = m_first;
+        NanoEngineObject<TilerT> *p = m_first;
         while (p)
         {
             p->update();
@@ -446,11 +446,11 @@ private:
 
     NanoPoint offset;
 
-    NanoEngineObject<NanoEngineTilerImpl>  *m_first;
+    NanoEngineObject<TilerT>  *m_first;
 
     void draw()
     {
-        NanoEngineObject<NanoEngineTilerImpl> *p = m_first;
+        NanoEngineObject<TilerT> *p = m_first;
         while (p)
         {
             p->draw();
@@ -462,10 +462,12 @@ private:
 template<class C, class D>
 void NanoEngineTiler<C,D>::displayBuffer()
 {
+//    printf("--------------\n");
     for (lcduint_t y = 0; y < m_display.height(); y = y + canvas.height())
     {
         uint16_t flag = m_refreshFlags[y/canvas.height()];
         m_refreshFlags[y/canvas.height()] = 0;
+//        printf("|%d%d%d%d%d%d%d%d|\n", flag & 1, (flag >> 1) & 1, (flag >> 2) & 1, (flag >> 3) & 1, (flag >> 4) & 1, (flag >> 5) & 1,(flag >> 6) & 1,(flag >> 7) & 1 );
         for (lcduint_t x = 0; x < m_display.width(); x = x + canvas.width())
         {
             if (flag & 0x01)

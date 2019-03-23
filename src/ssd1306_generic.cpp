@@ -53,16 +53,6 @@ static void (*s_ssd1306_getCharBitmap)(uint16_t unicode, SCharInfo *info) = NULL
 static const uint8_t *ssd1306_getCharGlyph(char ch);
 static const uint8_t *ssd1306_getU16CharGlyph(uint16_t unicode);
 
-lcduint_t      ssd1306_displayHeight()
-{
-    return ssd1306_lcd.height;
-}
-
-lcduint_t      ssd1306_displayWidth()
-{
-    return ssd1306_lcd.width;
-}
-
 //void       ssd1306_setCursor(lcdint_t x, lcdint_t y)
 //{
 //    ssd1306_cursorX = x;

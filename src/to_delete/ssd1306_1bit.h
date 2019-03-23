@@ -141,57 +141,6 @@ size_t      ssd1306_write(uint8_t ch);
 size_t      ssd1306_print(const char ch[]);
 
 /**
- * Prints text to screen using font 6x8.
- * @param x - horizontal position in pixels
- * @param y - vertical position in blocks (pixels/8)
- * @param ch - NULL-terminated string to print
- * @param style - font style (EFontStyle), normal by default.
- * @returns number of chars in string
- * @deprecated Use ssd1306_printFixed() instead.
- */
-uint8_t      ssd1306_charF6x8(uint8_t x, uint8_t y,
-                              const char ch[],
-                              EFontStyle style
-#ifdef __cplusplus
-                              = STYLE_NORMAL
-#endif
-                             ) __attribute__ ((deprecated));
-
-/**
- * Prints text to screen using double size font 12x16.
- * @param xpos - horizontal position in pixels
- * @param y - vertical position in blocks (pixels/8)
- * @param ch - NULL-terminated string to print
- * @param style - font style (EFontStyle).
- * @returns number of chars in string
- * @deprecated Use ssd1306_drawFixedN() instead.
- */
-uint8_t      ssd1306_charF12x16(uint8_t xpos,
-                                uint8_t y,
-                                const char ch[],
-                                EFontStyle style) __attribute__ ((deprecated));
-
-
-/**
- * Prints text to screen using set font.
- * If real text ends before right boundary,
- * the remaining part on the display will be erased till right
- * boundary.
- * @param left - horizontal position in pixels
- * @param y - vertical position in blocks (pixels/8)
- * @param ch - NULL-terminated string to print
- * @param style - font style (EFontStyle), normal by default.
- * @param right - right boundary of the text to output
- * @returns number of chars in string
- * @deprecated This function is removed as superflouse.
- */
-uint8_t      ssd1306_charF6x8_eol(uint8_t left,
-                                  uint8_t y,
-                                  const char ch[],
-                                  EFontStyle style,
-                                  uint8_t right) __attribute__ ((deprecated));
-
-/**
  * Put single pixel on the LCD.
  *
  * @warning Please, take into account that there is no way
@@ -334,52 +283,6 @@ void         gfx_drawMonoBitmap(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h
  * @note usually this method is used to erase bitmap on the screen.
  */
 void         ssd1306_clearBlock(uint8_t x, uint8_t y, uint8_t w, uint8_t h);
-
-/**
- * Draws bitmap, located in Flash, on the display. This sprite must have wx8 size
- * @param x - horizontal position in pixels
- * @param y - vertical position in blocks (pixels/8)
- * @param w - width in pixels
- * @param sprite - pointer to data, located in Flash: each byte represents 8 vertical pixels.
- */
-void         ssd1306_drawSpriteEx(uint8_t x, uint8_t y, uint8_t w, const uint8_t *sprite);
-
-/**
- * Draws sprite on the display. Position can be changed by
- * updating x and y fields of SPRITE structure.
- * @param sprite - pointer to SPRITE structure
- */
-void         ssd1306_drawSprite(SPRITE *sprite);
-
-/**
- * Clears sprite from the display leaving black rectangle.
- * @param sprite - pointer to SPRITE structure
- */
-void         ssd1306_eraseSprite(SPRITE *sprite);
-
-/**
- * Clears some sprite parts in old position on the display.
- * @param sprite - pointer to SPRITE structure
- */
-void         ssd1306_eraseTrace(SPRITE *sprite);
-
-/**
- * Creates sprite object. Sprite height is fixed to 8 pixels
- * @param x - horizontal position in pixels
- * @param y - vertical position in pixels
- * @param w - width of sprite in pixels
- * @param data - pointer to data, located in Flash: each byte represents 8 vertical pixels.
- * @return SPRITE structure
- */
-SPRITE       ssd1306_createSprite(uint8_t x, uint8_t y, uint8_t w, const uint8_t *data);
-
-/**
- * Replaces image of the sprite with different data. The width must be the same as
- * the width of original sprite image
- * @param sprite - pointer to SPRITE structure
- * @param data - pointer to data, located in Flash: each byte represents 8 vertical pixels.
- */
-void         ssd1306_replaceSprite(SPRITE *sprite, const uint8_t *data);
 
 #endif
 

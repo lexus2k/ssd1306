@@ -28,9 +28,9 @@
 #ifndef _NANO_MENU_H_
 #define _NANO_MENU_H_
 
-#include "point.h"
+#include "canvas/point.h"
+#include "canvas/rect.h"
 #include "object.h"
-#include "rect.h"
 #include "ssd1306_hal/io.h"
 #include "lcd/lcd_common.h"
 
@@ -190,7 +190,7 @@ private:
             p = this->getNext( p );
         }
         this->m_rect.p2.y = y_pos + 7;
-        this->m_rect.p2.x = ssd1306_lcd.width;
+        this->m_rect.p2.x = this->getDisplay().width();
     }
 };
 

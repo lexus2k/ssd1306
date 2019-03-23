@@ -30,9 +30,6 @@
 
 #include "nano_gfx_types.h"
 #include "ssd1306_generic.h"
-#include "ssd1306_1bit.h"
-#include "ssd1306_8bit.h"
-#include "ssd1306_16bit.h"
 #include "ssd1306_fonts.h"
 
 #include "lcd/lcd_common.h"
