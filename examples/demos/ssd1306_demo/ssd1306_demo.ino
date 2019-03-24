@@ -41,6 +41,10 @@
 #include "owl.h"
 
 DisplaySSD1306_128x64_I2C display;
+//DisplaySSD1306_128x64_SPI display(3,{-1, 4, 5, 0,-1,-1});   // Use this line for Atmega328p (3=RST, 4=CE, 5=D/C)
+//DisplaySSD1306_128x64_SPI display(24,{-1, 0, 23, 0,-1,-1}); // Use this line for Raspberry  (gpio24=RST, 0=CE, gpio23=D/C)
+//DisplaySSD1306_128x64_SPI display(22,{-1, 5, 21, 0,-1,-1}); // Use this line for ESP32 (VSPI)  (gpio22=RST, gpio5=CE for VSPI, gpio21=D/C)
+// composite_video_128x64_mono_init(); // Use this line for ESP32 with Composite video support
 
 /*
  * Heart image below is defined directly in flash memory.
@@ -168,11 +172,6 @@ void setup()
     ssd1306_setFixedFont(ssd1306xled_font6x8);
 
     display.begin();
-//    display.128x64_i2c_init();
-//    display.128x64_spi_init(3,4,5);     // Use this line for Atmega328p (3=RST, 4=CE, 5=D/C)
-//    display.128x64_spi_init(24, 0, 23); // Use this line for Raspberry  (gpio24=RST, 0=CE, gpio23=D/C)
-//    display.128x64_spi_init(22, 5, 21); // Use this line for ESP32 (VSPI)  (gpio22=RST, gpio5=CE for VSPI, gpio21=D/C)
-//    composite_video_128x64_mono_init(); // Use this line for ESP32 with Composite video support
 
     display.fill( 0x00 );
     display.createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );

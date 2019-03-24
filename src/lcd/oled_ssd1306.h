@@ -47,11 +47,15 @@ template <class I>
 class InterfaceSSD1306: public I
 {
 public:
-    using I::I;
-
-    void setDc(int8_t dc) { m_dc = dc; }
-
-    void setSize(lcduint_t w, lcduint_t h) { m_w = w; m_h =h; }
+    // We must not change default constructor. This is limitation of library
+    // implementation
+    template <typename... Args>
+    InterfaceSSD1306(NanoDisplayBase<InterfaceSSD1306<I>> &base, int8_t dc, Args&&... data)
+        : I(data...)
+        , m_dc( dc )
+        , m_base(base)
+    {
+    }
 
     /**
      * @brief Sets block in RAM of lcd display controller to write data to.
@@ -73,10 +77,10 @@ public:
         commandStart();
         this->send(SSD1306_COLUMNADDR);
         this->send(x);
-        this->send(w ? (x + w - 1) : (m_w - 1));
+        this->send(w ? (x + w - 1) : (m_base.width() - 1));
         this->send(SSD1306_PAGEADDR);
         this->send(y);
-        this->send((m_h >> 3) - 1);
+        this->send((m_base.height() >> 3) - 1);
         if (m_dc >= 0)
         {
             spiDataMode(1);
@@ -132,10 +136,9 @@ public:
             this->send(0x00);
     }
 
-protected:
+private:
     int8_t m_dc = -1; ///< data/command pin for SPI, -1 for i2c
-    lcduint_t m_w; ///< holds display width, needed for setBlock
-    lcduint_t m_h; ///< holds display height, needed for setBlock
+    NanoDisplayBase<InterfaceSSD1306<I>> &m_base; ///< basic lcd display support interface
 };
 
 /**
@@ -151,8 +154,8 @@ public:
      * @param intf reference to communication interface to use
      * @param dcPin data/command pin, -1 for i2c bus
      */
-    DisplaySSD1306(InterfaceSSD1306<I> &intf, int8_t dcPin = -1)
-        : NanoDisplayOps<NanoDisplayOps1<InterfaceSSD1306<I>>, InterfaceSSD1306<I>>(intf) { this->m_intf.setDc( dcPin ); }
+    DisplaySSD1306(InterfaceSSD1306<I> &intf)
+        : NanoDisplayOps<NanoDisplayOps1<InterfaceSSD1306<I>>, InterfaceSSD1306<I>>(intf) { }
 
 
     /**
@@ -241,8 +244,6 @@ public:
         this->m_intf.send( mode ? SSD1306_COMSCANINC : SSD1306_COMSCANDEC );
         this->m_intf.stop();
     }
-
-protected:
 };
 
 /**
@@ -262,7 +263,6 @@ public:
     {
         this->m_w = 128;
         this->m_h = 64;
-        this->m_intf.setSize( this->m_w, this->m_h );
         for( uint8_t i=0; i < sizeof(s_oled128x64_initData); i++)
         {
             this->m_intf.commandStart();
@@ -296,7 +296,6 @@ public:
     {
         this->m_w = 128;
         this->m_h = 32;
-        this->m_intf.setSize( this->m_w, this->m_h );
         for( uint8_t i=0; i < sizeof(s_oled128x32_initData); i++)
         {
             this->m_intf.commandStart();
@@ -328,8 +327,9 @@ public:
      * @param config platform i2c configuration. Please refer to SPlatformI2cConfig.
      */
     DisplaySSD1306_128x64_I2C( const SPlatformI2cConfig &config = { -1, 0x3C, -1, -1, 0 } )
-        : DisplaySSD1306_128x64(m_i2c, -1)
-        , m_i2c( SPlatformI2cConfig{ config.busId,
+        : DisplaySSD1306_128x64(m_i2c)
+        , m_i2c( *this, -1,
+                 SPlatformI2cConfig{ config.busId,
                                      config.addr ?: (uint8_t)0x3C,
                                      config.scl,
                                      config.sda,
@@ -372,8 +372,9 @@ public:
      * @param config platform i2c configuration. Please refer to SPlatformI2cConfig.
      */
     DisplaySSD1306_128x32_I2C( const SPlatformI2cConfig &config = { -1, 0x3C, -1, -1, 0 } )
-        : DisplaySSD1306_128x32(m_i2c, -1)
-        , m_i2c( SPlatformI2cConfig{ config.busId,
+        : DisplaySSD1306_128x32(m_i2c)
+        , m_i2c( *this, -1,
+                 SPlatformI2cConfig{ config.busId,
                                      config.addr ?: (uint8_t)0x3C,
                                      config.scl,
                                      config.sda,
@@ -409,8 +410,9 @@ public:
      * @param config platform spi configuration. Please refer to SPlatformI2cConfig.
      */
     DisplaySSD1306_128x64_SPI( int8_t rstPin, const SPlatformSpiConfig &config = { -1, -1, -1, 0, -1, -1 } )
-        : DisplaySSD1306_128x64( m_spi, config.dc )
-        , m_spi( SPlatformSpiConfig{ config.busId,
+        : DisplaySSD1306_128x64( m_spi )
+        , m_spi( *this, config.dc,
+                 SPlatformSpiConfig{ config.busId,
                                      config.cs,
                                      config.dc,
                                      config.frequency ?: 10000000,
@@ -447,8 +449,9 @@ public:
      * @param config platform spi configuration. Please refer to SPlatformI2cConfig.
      */
     DisplaySSD1306_128x32_SPI( int8_t rstPin, const SPlatformSpiConfig &config = { -1, -1, -1, 0, -1, -1 } )
-        : DisplaySSD1306_128x32( m_spi, config.dc )
-        , m_spi( SPlatformSpiConfig{ config.busId,
+        : DisplaySSD1306_128x32( m_spi )
+        , m_spi( *this, config.dc,
+                 SPlatformSpiConfig{ config.busId,
                                      config.cs,
                                      config.dc,
                                      config.frequency ?: 10000000,
