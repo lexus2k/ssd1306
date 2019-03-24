@@ -1,3 +1,6 @@
+_**Check also 2.0.0 version in development at [2.0.0_dev](https://github.com/lexus2k/ssd1306/tree/2.0.0_dev) branch. It consumpts less memory, and implements C++ api**_
+***
+
 # SSD1306/SSD1331/SSD1351/IL9163/ILI9341/ST7735/ILI9341 OLED display driver, PCD8544 LED display driver
 
 [tocstart]: # (toc start)
