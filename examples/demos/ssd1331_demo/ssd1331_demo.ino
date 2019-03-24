@@ -33,7 +33,7 @@
 #include "nano_engine.h"
 #include "sova.h"
 
-DisplaySSD1331_96x64_SPI display(3, 4, 5);
+DisplaySSD1331_96x64_SPI display(3,{-1, 4, 5, 0,-1,-1}); // Use this line for Atmega328p
 
 /*
  * Heart image below is defined directly in flash memory.
@@ -104,7 +104,7 @@ static void bitmapDemo()
  * Refer to C++ documentation.
  */
 NanoPoint sprite;
-NanoEngine8 engine(display);
+NanoEngine8<DisplaySSD1331_96x64_SPI> engine(display);
 static void spriteDemo()
 {
     // We not need to clear screen, engine will do it for us
@@ -187,11 +187,11 @@ static void drawLinesDemo()
     display.clear();
     for (lcduint_t y = 0; y < display.height(); y += 8)
     {
-        display.drawLine(0,0, display.width() -1, y, RGB_COLOR8(0,255,0));
+        display.getInterface().drawLine(0,0, display.width() -1, y, RGB_COLOR16(0,255,0));
     }
     for (lcduint_t x = 0; x < display.width(); x += 8)
     {
-        display.drawLine(0,0, x, display.height() - 1, RGB_COLOR8(0,0,255));
+        display.getInterface().drawLine(0,0, x, display.height() - 1, RGB_COLOR16(0,0,255));
     }
     delay(3000);
 }
@@ -241,7 +241,7 @@ void loop()
     }
     if ((menu.count - 1) == display.menuSelection(&menu))
     {
-         display.setRotation((++rotation) & 0x03);
+         display.getInterface().setRotation((++rotation) & 0x03);
     }
     display.fill( 0x00 );
     display.setColor(RGB_COLOR8(255,255,255));

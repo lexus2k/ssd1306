@@ -50,6 +50,7 @@ SRCS_CPP = \
 	lcd/lcd_ili9341.cpp \
 	lcd/oled_sh1106.cpp \
 	lcd/oled_ssd1325.cpp \
+	lcd/oled_ssd1331.cpp \
 	lcd/oled_ssd1351.cpp \
 	lcd/oled_template.cpp \
 	lcd/vga_monitor.cpp \

@@ -43,10 +43,16 @@ public:
      * @param sa i2c address of the device to control over i2c
      */
     ArduinoI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00);
-    virtual ~ArduinoI2c();
+    ~ArduinoI2c();
 
+    /**
+     * Initializes i2c interface
+     */
     void begin();
 
+    /**
+     * Closes i2c interface
+     */
     void end();
 
     /**

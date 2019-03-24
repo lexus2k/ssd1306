@@ -45,10 +45,16 @@ public:
      */
     explicit TwiI2c(uint8_t sa = 0x00);
 
-    virtual ~TwiI2c();
+    ~TwiI2c();
 
+    /**
+     * Initializes i2c interface
+     */
     void begin();
 
+    /**
+     * Closes i2c interface
+     */
     void end();
 
     /**

@@ -38,17 +38,6 @@
  * @{
  */
 
-enum
-{
-    CANVAS_MODE_BASIC           = 0x00,
-    /** If the flag is specified, text cursor is moved to new line when end of screen is reached */
-    CANVAS_TEXT_WRAP            = 0x01,
-    /** This flag make bitmaps transparent (Black color) */
-    CANVAS_MODE_TRANSPARENT     = 0x02,
-    /** If the flag is specified, text cursor is moved to new line when end of canvas is reached */
-    CANVAS_TEXT_WRAP_LOCAL      = 0x04,
-};
-
 extern uint8_t s_ssd1306_invertByte;
 
 /**
@@ -102,6 +91,16 @@ public:
     lcduint_t height() { return m_h; }
 
     /**
+     * Swaps width and height dimensions
+     */
+    void swapDimensions()
+    {
+        lcduint_t t = m_w;
+        m_w = m_h;
+        m_h = t;
+    }
+
+    /**
      * Sets color for monochrome operations
      * @param color - color to set (refer to RGB_COLOR8 definition)
      */
@@ -118,6 +117,19 @@ public:
      * Old picture on the display remains unchanged.
      */
     void positiveMode() { s_ssd1306_invertByte = 0x00; }
+
+    /**
+     * Returns reference to interface communicator.
+     * This interface can be used to use display hardware related
+     * features.
+     */
+    I& getInterface() { return m_intf; }
+
+    /**
+     * Prints single character on the display
+     * @param ch character to print
+     */
+    virtual size_t write(uint8_t ch) = 0;
 
 protected:
     lcduint_t m_w = 0;    ///< width of NanoCanvas area in pixels

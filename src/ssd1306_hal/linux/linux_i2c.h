@@ -45,10 +45,16 @@ public:
      * @param sa i2c address of the display (7 bits)
      */
     LinuxI2c(int8_t busId = -1, uint8_t sa = 0x00);
-    virtual ~LinuxI2c();
+    ~LinuxI2c();
 
+    /**
+     * Initializes i2c interface
+     */
     void begin();
 
+    /**
+     * Closes i2c interface
+     */
     void end();
 
     /**

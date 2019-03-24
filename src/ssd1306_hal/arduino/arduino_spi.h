@@ -43,10 +43,16 @@ public:
      * @param freq frequency in HZ to run spi bus at
      */
     ArduinoSpi(int8_t csPin = -1, int8_t dcPin = -1, uint32_t freq = 0);
-    virtual ~ArduinoSpi();
+    ~ArduinoSpi();
 
+    /**
+     * Initializes spi interface
+     */
     void begin();
 
+    /**
+     * Closes spi interface
+     */
     void end();
 
     /**

@@ -43,10 +43,16 @@ public:
      * @param sa i2c address of the display (7 bits)
      */
     SdlI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00);
-    virtual ~SdlI2c();
+    ~SdlI2c();
 
+    /**
+     * Initializes i2c interface
+     */
     void begin();
 
+    /**
+     * Closes i2c interface
+     */
     void end();
 
     /**

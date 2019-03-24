@@ -604,7 +604,7 @@ public:
      * Writes single character to canvas
      * @param c - character code to print
      */
-    size_t write(uint8_t c);
+    size_t write(uint8_t c) override;
 
     /**
      * Draws single character to canvas

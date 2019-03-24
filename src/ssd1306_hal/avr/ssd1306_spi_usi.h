@@ -52,10 +52,16 @@ public:
      */
     UsiSpi(int8_t csPin, int8_t dcPin);
 
-    virtual ~UsiSpi();
+    ~UsiSpi();
 
+    /**
+     * Initializes spi interface
+     */
     void begin();
 
+    /**
+     * Closes spi interface
+     */
     void end();
 
     /**

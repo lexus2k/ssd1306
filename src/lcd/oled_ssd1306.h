@@ -47,8 +47,13 @@ template <class I>
 class InterfaceSSD1306: public I
 {
 public:
-    // We must not change default constructor. This is limitation of library
-    // implementation
+    /**
+     * Creates instance of interface to LCD display.
+     *
+     * @param base Reference to base class, which represents Display
+     * @param dc Data/command control pin number, for i2c communication should be -1
+     * @param data variable argument list, accepted by platform interface (PlatformI2c, PlatformSpi)
+     */
     template <typename... Args>
     InterfaceSSD1306(NanoDisplayBase<InterfaceSSD1306<I>> &base, int8_t dc, Args&&... data)
         : I(data...)
@@ -145,17 +150,16 @@ private:
  * Generic interface to ssd1306-based controllers
  */
 template <class I>
-class DisplaySSD1306: public NanoDisplayOps<NanoDisplayOps1<InterfaceSSD1306<I>>, InterfaceSSD1306<I>>
+class DisplaySSD1306: public NanoDisplayOps<NanoDisplayOps1<I>, I>
 {
 public:
     /**
      * Created object instance to control ssd1306-based displays
      *
      * @param intf reference to communication interface to use
-     * @param dcPin data/command pin, -1 for i2c bus
      */
-    DisplaySSD1306(InterfaceSSD1306<I> &intf)
-        : NanoDisplayOps<NanoDisplayOps1<InterfaceSSD1306<I>>, InterfaceSSD1306<I>>(intf) { }
+    DisplaySSD1306(I &intf)
+        : NanoDisplayOps<NanoDisplayOps1<I>, I>(intf) { }
 
 
     /**
@@ -315,7 +319,7 @@ public:
 /**
  * Class implements interface to 128x64 ssd1306 i2c monochrome display.
  */
-class DisplaySSD1306_128x64_I2C: public DisplaySSD1306_128x64<PlatformI2c>
+class DisplaySSD1306_128x64_I2C: public DisplaySSD1306_128x64<InterfaceSSD1306<PlatformI2c>>
 {
 public:
     /**
@@ -360,7 +364,7 @@ private:
 /**
  * Class implements interface to 128x32 ssd1306 i2c monochrome display.
  */
-class DisplaySSD1306_128x32_I2C: public DisplaySSD1306_128x32<PlatformI2c>
+class DisplaySSD1306_128x32_I2C: public DisplaySSD1306_128x32<InterfaceSSD1306<PlatformI2c>>
 {
 public:
     /**
@@ -399,7 +403,7 @@ private:
 /**
  * Class implements interface to 128x64 ssd1306 spi monochrome display.
  */
-class DisplaySSD1306_128x64_SPI: public DisplaySSD1306_128x64<PlatformSpi>
+class DisplaySSD1306_128x64_SPI: public DisplaySSD1306_128x64<InterfaceSSD1306<PlatformSpi>>
 {
 public:
     /**
@@ -438,7 +442,7 @@ private:
 /**
  * Class implements interface to 128x32 ssd1306 spi monochrome display.
  */
-class DisplaySSD1306_128x32_SPI: public DisplaySSD1306_128x32<PlatformSpi>
+class DisplaySSD1306_128x32_SPI: public DisplaySSD1306_128x32<InterfaceSSD1306<PlatformSpi>>
 {
 public:
     /**

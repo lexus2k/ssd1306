@@ -67,6 +67,17 @@ typedef enum
     STYLE_ITALIC,
 } EFontStyle;
 
+enum
+{
+    CANVAS_MODE_BASIC           = 0x00,
+    /** If the flag is specified, text cursor is moved to new line when end of screen is reached */
+    CANVAS_TEXT_WRAP            = 0x01,
+    /** This flag make bitmaps transparent (Black color) */
+    CANVAS_MODE_TRANSPARENT     = 0x02,
+    /** If the flag is specified, text cursor is moved to new line when end of canvas is reached */
+    CANVAS_TEXT_WRAP_LOCAL      = 0x04,
+};
+
 /** Supported scale font values */
 typedef enum
 {

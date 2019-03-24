@@ -46,10 +46,16 @@ public:
      */
     SoftwareI2c(int8_t scl = -1, int8_t sda = -1, uint8_t sa = 0x00);
 
-    virtual ~SoftwareI2c();
+    ~SoftwareI2c();
 
+    /**
+     * Initializes i2c interface
+     */
     void begin();
 
+    /**
+     * Closes i2c interface
+     */
     void end();
 
     /**

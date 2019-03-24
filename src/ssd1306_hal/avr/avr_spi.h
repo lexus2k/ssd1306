@@ -47,10 +47,16 @@ public:
      */
     AvrSpi(int8_t csPin, int8_t dcPin, uint32_t frequency);
 
-    virtual ~AvrSpi();
+    ~AvrSpi();
 
+    /**
+     * Initializes spi interface
+     */
     void begin();
 
+    /**
+     * Closes spi interface
+     */
     void end();
 
     /**

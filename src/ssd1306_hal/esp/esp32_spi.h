@@ -48,10 +48,16 @@ public:
      */
     EspSpi( int8_t busId = -1, int8_t csPin = -1, int8_t dcPin = -1,
             uint32_t frequency = 8000000 );
-    virtual ~EspSpi();
+    ~EspSpi();
 
+    /**
+     * Initializes spi interface
+     */
     void begin();
 
+    /**
+     * Closes spi interface
+     */
     void end();
 
     /**

@@ -23,8 +23,8 @@
 */
 
 #include "canvas.h"
+#include "ssd1306_generic.h"
 #include "lcd/lcd_common.h"
-#include "ssd1306.h"
 
 extern const uint8_t *s_font6x8;
 extern "C" SFixedFontInfo s_fixedFont;

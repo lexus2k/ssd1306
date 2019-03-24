@@ -51,10 +51,16 @@ public:
     EspI2c(int8_t busId = -1, uint8_t sa = 0x00,
                int8_t scl = -1, int8_t sda = -1,
                uint32_t frequency = 400000);
-    virtual ~EspI2c();
+    ~EspI2c();
 
+    /**
+     * Initializes i2c interface
+     */
     void begin();
 
+    /**
+     * Closes i2c interface
+     */
     void end();
 
     /**

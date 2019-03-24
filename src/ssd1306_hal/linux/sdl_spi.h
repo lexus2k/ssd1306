@@ -42,10 +42,16 @@ public:
      */
     SdlSpi(int8_t dcPin = -1);
 
-    virtual ~SdlSpi();
+    ~SdlSpi();
 
+    /**
+     * Initializes spi interface
+     */
     void begin();
 
+    /**
+     * Closes spi interface
+     */
     void end();
 
     /**

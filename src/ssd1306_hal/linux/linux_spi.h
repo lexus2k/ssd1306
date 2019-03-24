@@ -48,10 +48,16 @@ public:
      */
     LinuxSpi(int busId, int8_t devId, int8_t dcPin, uint32_t frequency);
 
-    virtual ~LinuxSpi();
+    ~LinuxSpi();
 
+    /**
+     * Initializes spi interface
+     */
     void begin();
 
+    /**
+     * Closes spi interface
+     */
     void end();
 
     /**
