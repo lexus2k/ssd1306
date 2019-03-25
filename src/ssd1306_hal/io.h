@@ -75,8 +75,8 @@ extern "C" {
 // !!! PLATFORM I2C IMPLEMENTATION OPTIONAL !!!
 #if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && defined(CONFIG_PLATFORM_I2C_ENABLE)
 typedef struct {
-    uint16_t sda;
-    uint16_t scl;
+    int8_t sda;
+    int8_t scl;
 } ssd1306_platform_i2cConfig_t;
 
 /**

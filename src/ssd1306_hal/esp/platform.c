@@ -129,9 +129,9 @@ void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, ssd1306_platform_i2cCo
     s_bus_id = busId;
     i2c_config_t conf;
     conf.mode = I2C_MODE_MASTER;
-    conf.sda_io_num = cfg->sda;
+    conf.sda_io_num = cfg->sda >= 0 ? cfg->sda : 21;
     conf.sda_pullup_en = GPIO_PULLUP_ENABLE;
-    conf.scl_io_num = cfg->scl;
+    conf.scl_io_num = cfg->scl >= 0 ? cfg->scl : 22;
     conf.scl_pullup_en = GPIO_PULLUP_ENABLE;
     conf.master.clk_speed = 400000; //I2C_EXAMPLE_MASTER_FREQ_HZ;
     i2c_param_config(s_bus_id, &conf);
