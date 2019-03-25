@@ -59,7 +59,7 @@ static void platform_i2c_send_buffer(const uint8_t *data, uint16_t len)
     // ... Send len bytes to i2c communication channel here
 }
 
-void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, int8_t arg)
+void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, ssd1306_platform_i2cConfig_t * cfg)
 {
     if (addr) s_i2c_addr = addr;
     ssd1306_intf.spi = 0;
