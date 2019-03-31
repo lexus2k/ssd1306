@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -34,13 +34,24 @@ static int s_columnEnd = 127;
 static int s_pageStart = 0;
 static int s_pageEnd = 7;
 static uint8_t detected = 0;
+static uint8_t s_lcd_type;
 
 static int sdl_il9163_detect(uint8_t data)
 {
     if (detected)
     {
+        switch (data)
+        {
+            case 0b00000011:
+                sdl_il9163.width = 128;
+                sdl_il9163.height = 160;
+                break;
+            default:
+                break;
+        }
         return 1;
     }
+    s_lcd_type = data;
     detected = (data == SDL_LCD_IL9163) || (data == SDL_LCD_ST7735);
     return 0;
 }
@@ -104,8 +115,11 @@ static void sdl_il9163_commands(uint8_t data)
                 case 1:
                      if (!(s_verticalMode & 0b00100000))
                      {
-                         // emulating bug in IL9163 Black display
-                         s_activePage = (s_verticalMode & 0b10000000) ? data - 32 : data;
+                         if ( s_lcd_type == SDL_LCD_ST7735 )
+                             s_activePage = data;
+                         else
+                             // emulating bug in IL9163 Black display
+                             s_activePage = (s_verticalMode & 0b10000000) ? data - 32 : data;
                          s_pageStart = s_activePage;
                      }
                      else
@@ -117,8 +131,11 @@ static void sdl_il9163_commands(uint8_t data)
                 case 3:
                      if (!(s_verticalMode & 0b00100000))
                      {
-                         // emulating bug in IL9163 Black display
-                         s_pageEnd = (s_verticalMode & 0b10000000) ? data - 32 : data;
+                         if ( s_lcd_type == SDL_LCD_ST7735 )
+                             s_pageEnd = data;
+                         else
+                             // emulating bug in IL9163 Black display
+                             s_pageEnd = (s_verticalMode & 0b10000000) ? data - 32 : data;
                      }
                      else
                      {
