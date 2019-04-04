@@ -107,7 +107,8 @@
     /** The macro is defined when micro controller doesn't support multiplication operation */
     #define CONFIG_MULTIPLICATION_NOT_SUPPORTED
 
-#elif defined(ESP8266) || defined(ESP32) || defined(ESP31B) || defined(ARDUINO_ARCH_SAMD)
+#elif defined(ESP8266) || defined(ESP32) || defined(ESP31B) || \
+      defined(ARDUINO_ARCH_SAMD) || defined(ARDUINO_ARCH_SAM)
     /* SW implementation of i2c isn't supported on ESP platforms */
     /** The macro is defined when i2c Wire library is available */
     #define CONFIG_PLATFORM_I2C_AVAILABLE
