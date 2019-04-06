@@ -63,7 +63,7 @@ public:
     static const uint8_t BITS_PER_PIXEL = BPP;
 
     /** Fixed offset for all operation of NanoCanvasOps in pixels */
-    NanoPoint offset;
+    NanoPoint offset = { 0, 0 };
 
     /**
      * Creates new empty canvas object.

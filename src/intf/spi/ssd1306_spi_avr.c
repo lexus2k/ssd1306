@@ -97,14 +97,13 @@ static void ssd1306_spiSendByte_avr(uint8_t data)
 
 static void ssd1306_spiSendBytes_avr(const uint8_t * buffer, uint16_t size)
 {
-    const uint8_t *p = buffer;
     while (size--)
     {
-        SPDR = *p;
+        SPDR = *buffer;
         asm volatile("nop"); // to improve speed
         while((SPSR & (1<<SPIF))==0);
         SPDR; // read SPI input
-        p++;
+        buffer++;
     }
 }
 
