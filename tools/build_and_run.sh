@@ -21,6 +21,7 @@
 #    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #    SOFTWARE.
 #
+# avrdude -c avrisp -p ATtiny85 -P /dev/ttyS6 -b 19200 -U flash:w:../bld/demo.hex
 
 platform=avr
 extra_args=
