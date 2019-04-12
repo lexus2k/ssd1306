@@ -88,6 +88,7 @@ class Generator:
             # jump table
             offset = 0
             heights = []
+            sizes = []
             for char in chars:
                 bitmap = self.source.charBitmap(char)
                 print "   ",
@@ -97,28 +98,34 @@ class Generator:
                     height -= 1
                 heights.append( height )
                 size = ((height + 7) / 8) * width
+                sizes.append( size )
                 total_size += 4
                 print "0x%02X, 0x%02X, 0x%02X, 0x%02X," % (offset >> 8, offset & 0xFF, width, height),
                 print "// char '%s' (0x%04X/%d)" % (char.encode("utf-8"), ord(char), ord(char))
                 offset += size
             total_size += 2
-            print "    0x%02X, 0x%02X," % (offset >> 8, offset % 0xFF)
+            print "    0x%02X, 0x%02X," % (offset >> 8, offset & 0xFF)
             # char data
             for index in range(len(chars)):
                 char = chars[index]
                 bitmap = self.source.charBitmap(char)
                 print "   ",
+                size = 0
                 for row in range((heights[index] + 7) / 8):
                     for x in range(len(bitmap[0])):
                         data = 0
                         for i in range(8):
                             y = row * 8 + i
                             if y >= len(bitmap):
-                               break
+                                break
                             data |= (self.source.charBitmap(char)[y][x] << i)
                         total_size += 1
+                        size += 1
                         print "0x%02X," % data,
                 print "// char '%s' (0x%04X/%d)" % (char.encode("utf-8"), ord(char), ord(char))
+                if size != sizes[index]:
+                    print "ERROR!!!!"
+                    exit(1)
         total_size += 3
         print "    0x00, 0x00, 0x00, // end of unicode tables"
         print "    // FONT REQUIRES %d BYTES" % (total_size)

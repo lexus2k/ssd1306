@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -784,7 +784,8 @@ const uint8_t free_calibri11x12[] PROGMEM =
     0x01, 0xC0, 0x02, 0x0A, // char '}' (0x007D/125)
     0x01, 0xC4, 0x05, 0x04, // char '~' (0x007E/126)
     0x01, 0xC9, 0x06, 0x08, // char '' (0x007F/127)
-    0x01, 0xD0,
+//    0x01, 0xD0,
+    0x01, 0xCF,
     // char ' ' (0x0020/32)
     0xBE, 0x80, // char '!' (0x0021/33)
     0x0E, 0x00, 0x0E, // char '"' (0x0022/34)
