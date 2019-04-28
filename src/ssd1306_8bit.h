@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -44,10 +44,8 @@ extern "C" {
  *
  * @brief LCD direct draw functions only for color display.
  *
- * @details LCD direct draw functions are applicable for color display types. These functions will NOT work
- *        in ssd1306 compatible mode. Use ssd1306_setMode() function to change display mode to NORMAL.
- *        You can combine combine NanoEngine capabilities with these functions.
- *        Direct draw functions draw directly in GDRAM and do not use any double-buffering.
+ * @details LCD direct draw functions are applicable for color display types.
+ *          Direct draw functions draw directly in GDRAM and do not use any double-buffering.
  */
 
 /**

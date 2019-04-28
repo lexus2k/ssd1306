@@ -40,16 +40,12 @@ extern "C" {
 ///////////////////////////////////////////////////////////////////////
 
 /**
- * @defgroup LCD_1BIT_GRAPHICS DIRECT DRAW: 1-bit graphic functions for ssd1306 compatible mode.
+ * @defgroup LCD_1BIT_GRAPHICS DIRECT DRAW: 1-bit graphic functions for monochome ssd1306-like displays only.
  * @{
- * @brief LCD direct draw functions for all display types: color and monochrome.
+ * @brief LCD direct draw functions for monochrome display types.
  *
- * @details LCD direct draw functions are applicable for all display types. These functions will work
- *        both for monochrome and 8-bit/16-bit color OLED displays. You need remember, that for RGB
- *        oled displays these functions work only in special ssd1306 compatible mode. If you're going to
- *        combine NanoEngine capabilities with these functions, don't forget to switch addressing
- *        mode via ssd1306_setMode().
- *        Direct draw functions draw directly in GDRAM and do not use any double-buffering.
+ * @details LCD direct draw functions are applicable for monochrome display types only.
+ *          Direct draw functions draw directly in GDRAM and do not use any double-buffering.
  */
 
 /**

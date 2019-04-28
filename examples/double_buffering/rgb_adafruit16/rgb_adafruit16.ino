@@ -102,9 +102,6 @@ void setup()
 //    -- ssd1306_128x64_i2c_init();  // RGB canvas does not support monochrome displays
 //    -- pcd8544_84x48_spi_init(3, 4, 5);
 
-    /* The library should be switched to normal mode for RGB displays */
-    ssd1306_setMode(LCD_MODE_NORMAL);
-
     ssd1306_fillScreen(0x00);
     /* Create 4 "hearts", and place them at different positions and give different movement direction */
     for(uint8_t i = 0; i < spritesCount; i++)

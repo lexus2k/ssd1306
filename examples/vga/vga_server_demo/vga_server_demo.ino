@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -130,10 +130,11 @@ void vga_uart_on_receive(uint8_t data)
         if (s_uart_arg)
         {
             if (data >= '0') data -= '0';
-            ssd1306_setMode(static_cast<lcd_mode_t>(data));
+            vga_set_mode(data);
             s_uart_command = UART_CMD_LISTEN;
         }
     }
+
     s_uart_arg++;
 }
 

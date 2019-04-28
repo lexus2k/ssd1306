@@ -98,14 +98,14 @@ static void vga_send_pixels_buffer(const uint8_t *buffer, uint16_t len)
     }
 }
 
-static void vga_set_mode(lcd_mode_t mode)
+void vga_set_mode(uint8_t mode)
 {
-    if (mode == LCD_MODE_NORMAL)
+    if (mode == 0)
     {
         ssd1306_lcd.set_block = vga_set_block2;
         ssd1306_lcd.next_page = vga_next_page2;
     }
-    else if (mode == LCD_MODE_SSD1306_COMPAT)
+    else if (mode == 1)
     {
         ssd1306_lcd.set_block = vga_set_block1;
         ssd1306_lcd.next_page = vga_next_page1;
@@ -128,7 +128,7 @@ void vga_96x40_8colors_init(void)
     ssd1306_lcd.send_pixels1  = vga_send_pixels;
     ssd1306_lcd.send_pixels_buffer1 = vga_send_pixels_buffer;
     ssd1306_lcd.send_pixels8 = ssd1306_intf.send;
-    ssd1306_lcd.set_mode = vga_set_mode;
+    vga_set_mode(0);
 }
 
 void vga_128x64_mono_init(void)
@@ -140,6 +140,6 @@ void vga_128x64_mono_init(void)
     ssd1306_lcd.next_page = vga_next_page2;
     ssd1306_lcd.send_pixels1  = ssd1306_intf.send;
     ssd1306_lcd.send_pixels_buffer1 = ssd1306_intf.send_buffer;
-    ssd1306_lcd.set_mode = vga_set_mode;
+    vga_set_mode(1);
 }
 

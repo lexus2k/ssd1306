@@ -112,10 +112,6 @@ static void ssd1306_nextPage(void)
 {
 }
 
-static void ssd1306_setMode_int(lcd_mode_t mode)
-{
-}
-
 void ssd1306_displayOff()
 {
     ssd1306_sendCommand(SSD1306_DISPLAYOFF);
@@ -185,7 +181,6 @@ void    ssd1306_128x64_init()
     ssd1306_lcd.next_page = ssd1306_nextPage;
     ssd1306_lcd.send_pixels1  = ssd1306_intf.send;
     ssd1306_lcd.send_pixels_buffer1 = ssd1306_intf.send_buffer;
-    ssd1306_lcd.set_mode = ssd1306_setMode_int;
     for( uint8_t i=0; i<sizeof(s_oled128x64_initData); i++)
     {
         ssd1306_sendCommand(pgm_read_byte(&s_oled128x64_initData[i]));
@@ -230,7 +225,6 @@ void    ssd1306_128x32_init()
     ssd1306_lcd.set_block = ssd1306_setBlock;
     ssd1306_lcd.next_page = ssd1306_nextPage;
     ssd1306_lcd.send_pixels1  = ssd1306_intf.send;
-    ssd1306_lcd.set_mode = ssd1306_setMode_int;
     for( uint8_t i=0; i < sizeof(s_oled128x32_initData); i++)
     {
         ssd1306_sendCommand(pgm_read_byte(&s_oled128x32_initData[i]));

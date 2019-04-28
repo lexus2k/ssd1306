@@ -77,7 +77,7 @@ static const PROGMEM uint8_t s_oled128x160_initData[] =
 {
 #ifdef SDL_EMULATION
     SDL_LCD_ST7735,
-    0x00,
+    0b00000011,
 #endif
 //    0x01,                     // sw reset. not needed, we do hardware reset
     0x11,                       // exit sleep mode
@@ -107,36 +107,6 @@ static const PROGMEM uint8_t s_oled128x160_initData[] =
     0x29,                                 // display on
 };
 
-static uint8_t s_column;
-static uint8_t s_page;
-
-static void il9163_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
-{
-    uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
-    s_column = x;
-    s_page = y;
-    ssd1306_intf.start();
-    ssd1306_spiDataMode(0);
-    ssd1306_intf.send(0x2B);
-    ssd1306_spiDataMode(1);  // According to datasheet all args must be passed in data mode
-    ssd1306_intf.send(0);
-    ssd1306_intf.send(x + (s_rotation == 3 ? 32 : 0));
-    ssd1306_intf.send(0);
-    ssd1306_intf.send((rx < ssd1306_lcd.width ? rx : (ssd1306_lcd.width - 1))
-                       + (s_rotation == 3 ? 32 : 0));
-    ssd1306_spiDataMode(0);
-    ssd1306_intf.send(0x2A);
-    ssd1306_spiDataMode(1);  // According to datasheet all args must be passed in data mode
-    ssd1306_intf.send(0);
-    ssd1306_intf.send((y<<3) + (s_rotation == 2 ? 32: 0));
-    ssd1306_intf.send(0);
-    ssd1306_intf.send((((y<<3) + 7) < ssd1306_lcd.height ? ((y<<3) + 7) : (ssd1306_lcd.height - 1))
-                      + (s_rotation == 2 ? 32: 0));
-    ssd1306_spiDataMode(0);
-    ssd1306_intf.send(0x2C);
-    ssd1306_spiDataMode(1);
-}
-
 static void il9163_setBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
@@ -161,35 +131,8 @@ static void il9163_setBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
     ssd1306_spiDataMode(1);
 }
 
-static void il9163_nextPage(void)
-{
-    ssd1306_intf.stop();
-    ssd1306_lcd.set_block(s_column,s_page+1,0);
-}
-
 static void il9163_nextPage2(void)
 {
-}
-
-void    il9163_setMode(lcd_mode_t mode)
-{
-    ssd1306_intf.start();
-    ssd1306_spiDataMode(0);
-    ssd1306_intf.send( 0x36 );
-    ssd1306_spiDataMode(1);
-    ssd1306_intf.send( mode ? 0b00101000 : 0b00001000 );
-    ssd1306_intf.stop();
-    if (mode == LCD_MODE_SSD1306_COMPAT )
-    {
-        ssd1306_lcd.set_block = il9163_setBlock;
-        ssd1306_lcd.next_page = il9163_nextPage;
-    }
-    else if ( mode == LCD_MODE_NORMAL )
-    {
-        ssd1306_lcd.set_block = il9163_setBlock2;
-        ssd1306_lcd.next_page = il9163_nextPage2;
-    }
-    s_rotation = mode ? 0x00 : 0x04;
 }
 
 static void il9163_sendPixels(uint8_t data)
@@ -238,14 +181,14 @@ void    il9163_128x128_init()
     ssd1306_lcd.height = 128;
     ssd1306_lcd.width = 128;
     s_rgb_bit = 0b00001000; // set BGR mode mapping
-    ssd1306_lcd.set_block = il9163_setBlock;
-    ssd1306_lcd.next_page = il9163_nextPage;
+    ssd1306_lcd.set_block = il9163_setBlock2;
+    ssd1306_lcd.next_page = il9163_nextPage2;
     ssd1306_lcd.send_pixels1  = il9163_sendPixels;
     ssd1306_lcd.send_pixels_buffer1 = il9163_sendPixelsBuffer;
     ssd1306_lcd.send_pixels8 = il9163_sendPixel8;
     ssd1306_lcd.send_pixels16 = il9163_sendPixel16;
-    ssd1306_lcd.set_mode = il9163_setMode;
     ssd1306_configureSpiDisplay(s_oled128x128_initData, sizeof(s_oled128x128_initData));
+    il9163_setRotation(0);
 }
 
 void   il9163_128x128_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
@@ -276,7 +219,7 @@ void il9163_setRotation(uint8_t rotation)
         ssd1306_lcd.width = ssd1306_lcd.height;
         ssd1306_lcd.height = t;
     }
-    s_rotation = (rotation & 0x03) | (s_rotation & 0x04);
+    s_rotation = rotation & 0x03;
     ssd1306_intf.start();
     ssd1306_spiDataMode(0);
     ssd1306_intf.send(0x28);
@@ -288,21 +231,9 @@ void il9163_setRotation(uint8_t rotation)
         ram_mode = 0b00000000;
         break;
     case 1: // 90 degree CW
-        ram_mode = 0b01000000;
-        break;
-    case 2: // 180 degree CW
-        ram_mode = 0b11100000;
-        break;
-    case 3: // 270 degree CW
-        ram_mode = 0b10000000;
-        break;
-    case 4:
-        ram_mode = 0b00000000;
-        break;
-    case 5: // 90 degree CW
         ram_mode = 0b01100000;
         break;
-    case 6: // 180 degree CW
+    case 2: // 180 degree CW
         ram_mode = 0b11000000;
         break;
     default: // 270 degree CW
@@ -319,32 +250,6 @@ void il9163_setRotation(uint8_t rotation)
 //                         ST7735 support
 ////////////////////////////////////////////////////////////////////////////////////////
 
-static void st7735_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
-{
-    uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
-    s_column = x;
-    s_page = y;
-    ssd1306_intf.start();
-    ssd1306_spiDataMode(0);
-    ssd1306_intf.send(0x2B);
-    ssd1306_spiDataMode(1);  // According to datasheet all args must be passed in data mode
-    ssd1306_intf.send(0);
-    ssd1306_intf.send(x);
-    ssd1306_intf.send(0);
-    ssd1306_intf.send((rx < ssd1306_lcd.width ? rx : (ssd1306_lcd.width - 1)));
-    ssd1306_spiDataMode(0);
-    ssd1306_intf.send(0x2A);
-    ssd1306_spiDataMode(1);  // According to datasheet all args must be passed in data mode
-    ssd1306_intf.send(0);
-    ssd1306_intf.send((y<<3));
-    ssd1306_intf.send(0);
-    ssd1306_intf.send((((y<<3) + 7) < ssd1306_lcd.height ? ((y<<3) + 7) : (ssd1306_lcd.height - 1)));
-    ssd1306_spiDataMode(0);
-    ssd1306_intf.send(0x2C);
-    ssd1306_spiDataMode(1);
-}
-
-#if 0
 static void st7735_setBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
 {
     uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
@@ -367,7 +272,6 @@ static void st7735_setBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
     ssd1306_intf.send(0x2C);
     ssd1306_spiDataMode(1);
 }
-#endif
 
 void    st7735_128x160_init()
 {
@@ -375,14 +279,14 @@ void    st7735_128x160_init()
     ssd1306_lcd.width = 128;
     ssd1306_lcd.height = 160;
     s_rgb_bit = 0b00000000; // set RGB mode mapping
-    ssd1306_lcd.set_block = st7735_setBlock;
-    ssd1306_lcd.next_page = il9163_nextPage;
+    ssd1306_lcd.set_block = st7735_setBlock2;
+    ssd1306_lcd.next_page = il9163_nextPage2;
     ssd1306_lcd.send_pixels1  = il9163_sendPixels;
     ssd1306_lcd.send_pixels_buffer1 = il9163_sendPixelsBuffer;
     ssd1306_lcd.send_pixels8 = il9163_sendPixel8;
     ssd1306_lcd.send_pixels16 = il9163_sendPixel16;
-    ssd1306_lcd.set_mode = il9163_setMode;
     ssd1306_configureSpiDisplay(s_oled128x160_initData, sizeof(s_oled128x160_initData));
+    il9163_setRotation(0);
 }
 
 void   st7735_128x160_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)

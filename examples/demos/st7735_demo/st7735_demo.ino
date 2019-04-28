@@ -188,8 +188,6 @@ void setup()
 //    st7735_128x160_spi_init(3, -1, 4); // Use this line for ATTINY
 //    st7735_128x160_spi_init(22, 5, 21); // Use this line for ESP32 (VSPI)  (gpio22=RST, gpio5=CE for VSPI, gpio21=D/C)
 
-    // RGB functions do not work in default SSD1306 compatible mode
-    ssd1306_setMode( LCD_MODE_NORMAL );
     ssd1306_fillScreen8( 0x00 );
     ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
     ssd1306_showMenu8( &menu );

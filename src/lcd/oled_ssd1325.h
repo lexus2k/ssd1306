@@ -52,21 +52,6 @@ extern "C" {
  */
 
 /**
- * @brief Sets GDRAM autoincrement mode
- *
- * Sets GDRAM autoincrement mode. By default, to make
- * ssd1306_xxx functions compatible with SSD1325 oled display,
- * SSD1325 oled is initialized in vertical auto-increment mode.
- * But for pure SSD1325 oled operations horizontal auto-increment mode is more suitable.
- * So, if you're going to use NanoCanvas8 functions, please call
- * ssd1325_setMode(0) prior to using pure SSD1325 oled methods.
- *
- * @param mode 0 or 1
- * @deprecated Use ssd1306_setMode() instead.
- */
-void ssd1325_setMode(lcd_mode_t mode);
-
-/**
  * @brief Inits 128x64 SSD1325 OLED display (based on SSD1325 controller).
  *
  * Inits 128x64 SSD1325 OLED display (based on SSD1325 controller).

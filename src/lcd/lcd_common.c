@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2018, Alexey Dynda
+    Copyright (c) 2017-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -69,14 +69,6 @@ void ssd1306_configureSpiDisplay(const uint8_t *config, uint8_t configSize)
         }
     }
     ssd1306_intf.stop();
-}
-
-void ssd1306_setMode(lcd_mode_t mode)
-{
-    if (ssd1306_lcd.set_mode)
-    {
-        ssd1306_lcd.set_mode( mode );
-    }
 }
 
 void ssd1306_resetController(int8_t rstPin, uint8_t delayMs)

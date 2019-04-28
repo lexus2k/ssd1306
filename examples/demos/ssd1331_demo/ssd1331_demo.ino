@@ -183,7 +183,7 @@ static void drawLinesDemo()
 {
     /* SSD1331 controller has hardware acceleration, thus                *
      * use hw ssd1331_drawLine() instead of software ssd1331_drawLine8() */
-    ssd1306_clearScreen();
+    ssd1306_clearScreen8();
     for (uint8_t y = 0; y < ssd1306_displayHeight(); y += 8)
     {
         ssd1331_drawLine(0,0, ssd1306_displayWidth() -1, y, RGB_COLOR8(0,255,0));
@@ -203,8 +203,6 @@ void setup()
 //    ssd1331_96x64_spi_init(24, 0, 23); // Use this line for Raspberry  (gpio24=RST, 0=CE, gpio23=D/C)
 //    ssd1331_96x64_spi_init(22, 5, 21); // Use this line for ESP32 (VSPI)  (gpio22=RST, gpio5=CE for VSPI, gpio21=D/C)
 
-    // RGB functions do not work in default SSD1306 compatible mode
-    ssd1306_setMode( LCD_MODE_NORMAL );
     ssd1306_fillScreen8( 0x00 );
     ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
     ssd1306_showMenu8( &menu );

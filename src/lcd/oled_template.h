@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -51,21 +51,6 @@ extern "C" {
  * @ingroup LCD_INTERFACE_API
  * @{
  */
-
-/**
- * @brief Sets GDRAM autoincrement mode
- *
- * Sets GDRAM autoincrement mode. By default, to make
- * ssd1306_xxx functions compatible with TEMPLATE oled display,
- * TEMPLATE oled is initialized in vertical auto-increment mode.
- * But for pure TEMPLATE oled operations horizontal auto-increment mode is more suitable.
- * So, if you're going to use NanoCanvas8 functions, please call
- * template_setMode(0) prior to using pure TEMPLATE oled methods.
- *
- * @param mode 0 or 1
- * @deprecated Use ssd1306_setMode() instead.
- */
-void        template_setMode(lcd_mode_t mode);
 
 /**
  * @brief Inits WxH TEMPLATE OLED display (based on TEMPLATE controller).

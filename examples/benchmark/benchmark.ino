@@ -130,9 +130,6 @@ void doSendBuffer()
 {
     SSD1306_DIRECT_TEST  ();  // not applicable
     SSD1306_GFX_TEST     (display.blt(0,0));
-    #if TEST_OLED == OLED_SSD1351
-    SSD1306_ENGINE_TEST  (ssd1306_setMode( LCD_MODE_NORMAL ));
-    #endif
     SSD1306_ENGINE_TEST  (display.blt());
     ADAFRUIT_TEST        (display.display());
     U8G2_TEST            (u8g2.sendBuffer());

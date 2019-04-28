@@ -62,27 +62,6 @@ typedef enum
 } lcd_type_t;
 
 /**
- * Available lcd modes used by the library.
- * LCD_MODE_SSD1306_COMPAT is compatible mode, which should be used
- * with standard monochrome functions.
- */
-typedef enum
-{
-    /**
-     * Normal mode RGB displays. All ssd1306 monochrome direct draw
-     * functions do not work in this mode.
-     */
-    LCD_MODE_NORMAL = 0,
-
-    /**
-     * ssd1306 compatible mode. This is special mode, that allows
-     * to use ssd1306 monochrome direct draw functions, but RGB
-     * functions will not work.
-     */
-    LCD_MODE_SSD1306_COMPAT = 1,
-} lcd_mode_t;
-
-/**
  * Structure, describing display driver configuration
  */
 typedef struct
@@ -147,21 +126,6 @@ typedef struct
      * @param data 16-bit word, representing RGB16 pixel
      */
     void (*send_pixels16)(uint16_t data);
-
-    /**
-     * @brief Sets library display mode for direct draw functions.
-     *
-     * Sets library display mode for direct draw functions.
-     * There are currently 2 modes supported: LCD_MODE_SSD1306_COMPAT and
-     * LCD_MODE_NORMAL. In general, ssd1306 compatible mode uses different GDRAM
-     * addressing mode, than normal mode, intended for using with RBG full-color functions.
-     *
-     * @param mode lcd mode to activate.
-     * @see LCD_MODE_SSD1306_COMPAT
-     * @see LCD_MODE_NORMAL
-     * @see lcd_mode_t
-     */
-    void (*set_mode)(lcd_mode_t mode);
 } ssd1306_lcd_t;
 
 /**
@@ -273,21 +237,6 @@ void ssd1306_configureI2cDisplay(const uint8_t *config, uint8_t configSize);
  * @param configSize - size of configuration data in bytes.
  */
 void ssd1306_configureSpiDisplay(const uint8_t *config, uint8_t configSize);
-
-/**
- * @brief Sets library display mode for direct draw functions.
- *
- * Sets library display mode for direct draw functions.
- * There are currently 2 modes supported: LCD_MODE_SSD1306_COMPAT and
- * LCD_MODE_NORMAL. In general, ssd1306 compatible mode uses different GDRAM
- * addressing mode, than normal mode, intended for using with RBG full-color functions.
- *
- * @param mode lcd mode to activate.
- * @see LCD_MODE_SSD1306_COMPAT
- * @see LCD_MODE_NORMAL
- * @see lcd_mode_t
- */
-void ssd1306_setMode(lcd_mode_t mode);
 
 /**
  * @brief Does hardware reset for oled controller.

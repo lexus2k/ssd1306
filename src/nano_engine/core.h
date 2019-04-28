@@ -245,8 +245,7 @@ public:
     static void display();
 
     /**
-     * Initializes internal timestamps, engine state, and
-     * switches oled display to required mode (see ssd1306_setMode()).
+     * Initializes internal timestamps, engine state.
      */
     static void begin();
 
@@ -278,10 +277,6 @@ template<class C, uint8_t W, uint8_t H, uint8_t B>
 void NanoEngine<C,W,H,B>::begin()
 {
     NanoEngineCore::begin();
-    if (C::BITS_PER_PIXEL > 1)
-    {
-        ssd1306_setMode(LCD_MODE_NORMAL);
-    }
 }
 
 template<class C, uint8_t W, uint8_t H, uint8_t B>

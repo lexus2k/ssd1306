@@ -190,8 +190,6 @@ void setup()
     ssd1306_setFixedFont(ssd1306xled_font6x8);
     ssd1306_vga_controller_init();
     vga_96x40_8colors_init();
-    // RGB functions do not work in default SSD1306 compatible mode
-    ssd1306_setMode( LCD_MODE_NORMAL );
 
     ssd1306_vga_delay(3000); // wait until VGA monitor starts
 

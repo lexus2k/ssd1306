@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -82,32 +82,8 @@ static void ssd1325_sendPixelsBuffer(const uint8_t *buffer, uint16_t len)
     }
 }
 
-//////////////////////// SSD1331 NATIVE MODE ///////////////////////////////////
-
-CONTROLLER_NATIVE_SPI_BLOCK_8BIT_CMDS( 0x15, 0x75 );
-
 /////////////   ssd1325 functions below are for SPI display  ////////////
 /////////////   in native/normal mode                        ////////////
-
-void    ssd1325_setMode(lcd_mode_t mode)
-{
-    if (mode == LCD_MODE_NORMAL)
-    {
-        ssd1306_lcd.set_block = set_block_native;
-        ssd1306_lcd.next_page = next_page_native;
-    }
-    else if (mode == LCD_MODE_SSD1306_COMPAT )
-    {
-        ssd1306_lcd.set_block = set_block_compat;
-        ssd1306_lcd.next_page = next_page_compat;
-    }
-    ssd1306_intf.start();
-    ssd1306_spiDataMode(0);
-    ssd1306_intf.send( 0xA0 );
-    ssd1306_intf.send( 0x10 | (mode == LCD_MODE_NORMAL ? 0x00 : 0x04) );
-    ssd1306_intf.stop();
-    return;
-}
 
 void    ssd1325_128x64_init()
 {
@@ -121,12 +97,17 @@ void    ssd1325_128x64_init()
     ssd1306_lcd.send_pixels_buffer1 = ssd1325_sendPixelsBuffer;
     // Set function for 8-bit mode
     ssd1306_lcd.send_pixels8 = ssd1306_intf.send;
-    ssd1306_lcd.set_mode = ssd1325_setMode;
     // Use one of 2 functions for initialization below
     // Please, read help on this functions and read datasheet before you decide, which
     // one needs to be used. For example, ssd1331 is OK with ssd1306_configureI2cDisplay(),
     // while st7735 can be initialized only with ssd1306_configureSpiDisplay().
     ssd1306_configureI2cDisplay(s_oled_128x64_initData, sizeof(s_oled_128x64_initData));
+
+    ssd1306_intf.start();
+    ssd1306_spiDataMode(0);
+    ssd1306_intf.send( 0xA0 );
+    ssd1306_intf.send( 0x10 | 0x04 ); // Only compat mode is supported for now. 0x00 - full scale
+    ssd1306_intf.stop();
 }
 
 void   ssd1325_128x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)

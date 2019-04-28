@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -40,21 +40,6 @@ extern "C" {
  * @ingroup LCD_INTERFACE_API
  * @{
  */
-
-/**
- * @brief Sets GDRAM autoincrement mode
- *
- * Sets GDRAM autoincrement mode. By default, to make
- * ssd1306_xxx functions compatible with RGB oled display,
- * RGB oled is initialized in vertical auto-increment mode.
- * But for pure rbg oled operations horizontal auto-increment mode is more suitable.
- * So, if you're going to use NanoCanvas8 functions, please call
- * ili9341_setMode(0) prior to using pure RGB methods.
- *
- * @param mode 0 or 1
- * @deprecated Use ssd1306_setMode() instead.
- */
-void        ili9341_setMode(lcd_mode_t mode);
 
 /**
  * @brief Inits 240x320 RGB OLED display (based on ili9341 controller).

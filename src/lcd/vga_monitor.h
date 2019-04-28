@@ -63,6 +63,10 @@ void vga_96x40_8colors_init(void);
  */
 void vga_128x64_mono_init(void);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+void vga_set_mode(uint8_t mode);
+#endif
+
 /**
  * @}
  */
