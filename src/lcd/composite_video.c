@@ -104,7 +104,7 @@ static void vga_send_pixels(uint8_t data)
 
 #endif
 
-static void vga_set_mode(uint8_t mode)
+static void vga_set_mode_internal(uint8_t mode)
 {
     if (mode == 0)
     {
@@ -136,8 +136,7 @@ void composite_video_128x64_mono_init(void)
     ssd1306_lcd.next_page = vga_next_page2;
     ssd1306_lcd.send_pixels1  = ssd1306_intf.send;
     ssd1306_lcd.send_pixels_buffer1 = ssd1306_intf.send_buffer;
-    ssd1306_lcd.set_mode = vga_set_mode;
     ssd1306_configureI2cDisplay( s_composite128x64_initData, sizeof(s_composite128x64_initData));
-    vga_set_mode(1);
+    vga_set_mode_internal(1);
 }
 
