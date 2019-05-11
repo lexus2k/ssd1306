@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -333,6 +333,15 @@ size_t ssd1306_write8(uint8_t ch)
     if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
     SCharInfo char_info;
     ssd1306_getCharBitmap(unicode, &char_info);
+    if ( 1 )
+    {
+        uint8_t color = ssd1306_color;
+        ssd1306_color = s_ssd1306_invertByte ? color : 0x00;
+        ssd1306_fillRect8( ssd1306_cursorX, ssd1306_cursorY,
+                    ssd1306_cursorX + char_info.width + char_info.spacing - 1,
+                    ssd1306_cursorY + s_fixedFont.h.height - 1 );
+        ssd1306_color = color;
+    }
     ssd1306_drawMonoBitmap8( ssd1306_cursorX,
                              ssd1306_cursorY,
                              char_info.width,

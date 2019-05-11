@@ -126,7 +126,7 @@ Ssd1306 library requires at least c++11 and c99 (by default Digispark package mi
    * cd ssd1306/src && make -f Makefile.avr MCU=<your_mcu>
    * Link library to your project (refer to [Makefile.avr](examples/Makefile.avr) in examples folder).
  * Build demo code (variant 2)
-   * cd ssd1306/tools && ./build_and_run.sh -p avr -m <your_mcu> ssd1306_demo
+   * cd ssd1306/tools && ./build_and_run.sh -p avr -m <your_mcu> demos/ssd1306_demo
 
  *For esp32:*
   * Download source from https://github.com/lexus2k/ssd1306

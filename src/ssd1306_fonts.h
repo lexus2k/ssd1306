@@ -43,6 +43,9 @@ extern "C" {
 /** Standard ASCII 6x8 font */
 extern const PROGMEM uint8_t ssd1306xled_font6x8 [];
 
+/** Standard ASCII 8x16 font */
+extern const PROGMEM uint8_t ssd1306xled_font8x16[];
+
 /** German chars for standard ASCII 6x8 font */
 extern const PROGMEM uint8_t ssd1306xled_font6x8_German [];
 

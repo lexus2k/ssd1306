@@ -322,6 +322,15 @@ size_t ssd1306_write16(uint8_t ch)
     if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
     SCharInfo char_info;
     ssd1306_getCharBitmap(unicode, &char_info);
+    if ( 1 )
+    {
+        uint16_t color = ssd1306_color;
+        ssd1306_color = s_ssd1306_invertByte ? color : 0x0000;
+        ssd1306_fillRect16( ssd1306_cursorX, ssd1306_cursorY,
+                    ssd1306_cursorX + char_info.width + char_info.spacing - 1,
+                    ssd1306_cursorY + s_fixedFont.h.height - 1 );
+        ssd1306_color = color;
+    }
     ssd1306_drawMonoBitmap16( ssd1306_cursorX,
                               ssd1306_cursorY,
                               char_info.width,
