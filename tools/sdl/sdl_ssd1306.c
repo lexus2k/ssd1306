@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,8 @@
 #include "sdl_graphics.h"
 #include "sdl_core.h"
 
+#define SSD1306_MAX_BANKS 8
+
 static int s_activeColumn = 0;
 static int s_activePage = 0;
 static int s_columnStart = 0;
@@ -35,6 +37,50 @@ static int s_pageStart = 0;
 static int s_pageEnd = 7;
 static uint8_t detected = 0;
 
+static uint8_t gdram[128][64];
+
+static uint8_t displayRemap = 0;
+static uint8_t displayStartLine = 0;
+static uint8_t displayOffset = 0;
+static uint8_t multiplexRatio = 15;
+static uint8_t displayOn = 0;
+
+static void blt_single_pixel(uint8_t x, uint8_t y, uint8_t color)
+{
+    uint16_t sdl_color = color ? 0xAD59: 0x0000;
+    gdram[x & 0x7F ][y & 0x3F] = color;
+    uint8_t line = (y - displayOffset - displayStartLine) & 0x3F;
+    if ( displayRemap )
+    {
+        line = multiplexRatio - line;
+    }
+    if ( line < sdl_ssd1306.height )
+    {
+        sdl_put_pixel(x, line, sdl_color);
+    }
+}
+
+static void blt_content()
+{
+    for(uint8_t line = 0; line < sdl_ssd1306.height; line++)
+    {
+        uint8_t row = line;
+        uint8_t ram = line;
+        if ( displayRemap )
+        {
+            row = multiplexRatio - row;
+            ram = multiplexRatio - ram;
+        }
+        ram = (row + displayOffset + displayStartLine) & 0x3F;
+        row = (row + displayOffset) & 0x3F;
+        for(uint8_t column = 0; column < sdl_ssd1306.width; column++)
+        {
+            uint16_t color = (gdram[column][ram]) ? 0xAD59: 0x0000;
+            if ( row > (multiplexRatio + displayStartLine) ) color = 0x0000;
+            sdl_put_pixel(column, line, color);
+        }
+    }
+}
 
 static int sdl_ssd1306_detect(uint8_t data)
 {
@@ -48,7 +94,7 @@ static int sdl_ssd1306_detect(uint8_t data)
 
 static void sdl_ssd1306_commands(uint8_t data)
 {
-//    printf("%02X\n", data);
+//    printf("%02X (CMD: %02X)\n", data, s_commandId);
     switch (s_commandId)
     {
         case 0x21:
@@ -69,11 +115,11 @@ static void sdl_ssd1306_commands(uint8_t data)
             switch (s_cmdArgIndex)
             {
                 case 0:
-                     s_pageStart = (data >= (sdl_ssd1306.height >> 3) ? (sdl_ssd1306.height >> 3) - 1 : data);
+                     s_pageStart = (data >= SSD1306_MAX_BANKS ? SSD1306_MAX_BANKS - 1 : data);
                      s_activePage = s_pageStart;
                      break;
                 case 1:
-                     s_pageEnd = (data >= (sdl_ssd1306.height >> 3) ? (sdl_ssd1306.height >> 3) - 1 : data);
+                     s_pageEnd = (data >= SSD1306_MAX_BANKS ? SSD1306_MAX_BANKS - 1 : data);
                      s_commandId = SSD_COMMAND_NONE;
                      break;
                 default: break;
@@ -82,11 +128,33 @@ static void sdl_ssd1306_commands(uint8_t data)
         case 0xA8:
             if (s_cmdArgIndex == 0)
             {
+                multiplexRatio = data;
                 sdl_ssd1306.height = data + 1;
                 sdl_graphics_set_oled_params(sdl_ssd1306.width,
                                              sdl_ssd1306.height,
                                              sdl_ssd1306.bpp,
                                              sdl_ssd1306.pixfmt);
+                if ( displayOn ) blt_content();
+                s_commandId = SSD_COMMAND_NONE;
+            }
+            break;
+        case 0xAF:
+            displayOn = 1;
+            blt_content();
+            s_commandId = SSD_COMMAND_NONE;
+            break;
+        case 0x81:
+            if ( s_cmdArgIndex == 0 )
+            {
+                // Just skip contrast command
+                s_commandId = SSD_COMMAND_NONE;
+            }
+            break;
+        case 0xD3: // Display offset
+            if ( s_cmdArgIndex == 0 )
+            {
+                displayOffset = data;
+                if ( displayOn ) blt_content();
                 s_commandId = SSD_COMMAND_NONE;
             }
             break;
@@ -99,6 +167,11 @@ static void sdl_ssd1306_commands(uint8_t data)
             if ((s_commandId <= 0x0F))
             {
                 s_activeColumn = (s_activeColumn & 0xFFF0) | (uint16_t)s_commandId;
+            }
+            if ((s_commandId >= 0x40) && (s_commandId <= 0x7F))
+            {
+                displayStartLine = s_commandId & 0x3F;
+                if ( displayOn ) blt_content();
             }
             if ((s_commandId <= 0x1F) && (s_commandId >= 0x10))
             {
@@ -115,14 +188,7 @@ void sdl_ssd1306_data(uint8_t data)
     int x = s_activeColumn;
     for (int i=0; i<8; i++)
     {
-        if (data & (1<<i))
-        {
-            sdl_put_pixel(x, (y<<3) + i, 0xAD59);
-        }
-        else
-        {
-            sdl_put_pixel(x, (y<<3) + i, 0x0000);
-        }
+        blt_single_pixel( x, (y<<3) + i, data & (1<<i) );
     }
     s_activeColumn++;
     if (s_activeColumn > s_columnEnd)
@@ -135,6 +201,7 @@ void sdl_ssd1306_data(uint8_t data)
         }
     }
 }
+
 
 sdl_oled_info sdl_ssd1306 =
 {

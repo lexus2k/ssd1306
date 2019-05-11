@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2018, Alexey Dynda
+    Copyright (c) 2017-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -88,6 +88,16 @@ void         ssd1306_128x64_i2c_initEx(int8_t scl, int8_t sda, int8_t sa);
 void         ssd1306_128x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin);
 
 /**
+ * @brief Inits 128x32 OLED display over spi (based on SSD1306 controller).
+ *
+ * Inits 128x32 OLED display over spi (based on SSD1306 controller)
+ * @param rstPin - pin controlling LCD reset (-1 if not used)
+ * @param cesPin - chip enable pin to LCD slave (-1 if not used)
+ * @param dcPin - data/command pin to control LCD dc (required)
+ */
+void         ssd1306_128x32_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin);
+
+/**
  * @copydoc ssd1306_128x64_i2c_init
  * @deprecated Use ssd1306_128x64_i2c_init() instead.
  */
@@ -163,6 +173,18 @@ void         ssd1306_flipHorizontal(uint8_t mode);
  *               1 to enable vertical flip
  */
 void         ssd1306_flipVertical(uint8_t mode);
+
+/**
+ * Sets start line in gdram to start display content with
+ *
+ * @param line start line in range 0 - 63
+ */
+void ssd1306_setStartLine(uint8_t line);
+
+/**
+ * returns start line in gdram.
+ */
+uint8_t ssd1306_getStartLine(void);
 
 /**
  * @}

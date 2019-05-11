@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2016-2018, Alexey Dynda
+    Copyright (c) 2016-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -44,6 +44,7 @@
 #include "lcd/lcd_pcd8544.h"
 #include "lcd/lcd_il9163.h"
 #include "lcd/lcd_ili9341.h"
+#include "lcd/composite_video.h"
 
 #include "lcd/oled_template.h"
 

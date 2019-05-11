@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,8 @@
 extern "C" {
 #endif
 
-extern sdl_oled_info sdl_ssd1331;
+extern sdl_oled_info sdl_ssd1331x8;
+extern sdl_oled_info sdl_ssd1331x16;
 
 #ifdef __cplusplus
 }

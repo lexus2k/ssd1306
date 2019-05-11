@@ -156,12 +156,12 @@ typedef struct _NanoPoint
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 inline NanoPoint operator+(const NanoPoint& p1, const NanoPoint& p2)
 {
-    return { p1.x + p2.x, p1.y + p2.y };
+    return { (lcdint_t)(p1.x + p2.x), (lcdint_t)(p1.y + p2.y) };
 }
 
 inline NanoPoint operator-(const NanoPoint& p1, const NanoPoint& p2)
 {
-    return { p1.x - p2.x, p1.y - p2.y };
+    return { (lcdint_t)(p1.x - p2.x), (lcdint_t)(p1.y - p2.y) };
 }
 
 inline bool operator==(const NanoPoint& p1, const NanoPoint& p2)

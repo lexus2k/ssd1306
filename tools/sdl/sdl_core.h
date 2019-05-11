@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,8 @@ enum
     SDL_LCD_SH1106,
     SDL_LCD_PCD8544,
     SDL_LCD_SSD1325,
-    SDL_LCD_SSD1331,
+    SDL_LCD_SSD1331_X8,
+    SDL_LCD_SSD1331_X16,
     SDL_LCD_SSD1351,
     SDL_LCD_IL9163,
     SDL_LCD_ST7735,

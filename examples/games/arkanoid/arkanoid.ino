@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2016-2018, Alexey Dynda
+    Copyright (c) 2016-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -158,7 +158,8 @@ void drawIntro()
 #elif defined(CONFIG_SOFTWARE_I2C_AVAILABLE)
     ssd1306_i2cInit_Embedded(-1,-1,0);
 #elif defined(CONFIG_PLATFORM_I2C_AVAILABLE)
-    ssd1306_platform_i2cInit(-1,0,-1);
+    ssd1306_platform_i2cConfig_t cfg = { -1, -1 };
+    ssd1306_platform_i2cInit(-1,0,&cfg);
 #elif defined(CONFIG_TWI_I2C_AVAILABLE)
     ssd1306_i2cInit_Twi(0);
 #else

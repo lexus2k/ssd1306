@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -43,6 +43,11 @@
 #include <linux/i2c-dev.h>
 #include <linux/spi/spidev.h>
 
+#if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE) \
+    && !defined(SDL_EMULATION)
+#define LINUX_SPI_AVAILABLE
+#endif
+
 #define MAX_GPIO_COUNT   256
 
 #ifdef IN
@@ -54,6 +59,10 @@
 #undef OUT
 #endif
 #define OUT 1
+
+#ifdef LINUX_SPI_AVAILABLE
+static void platform_spi_send_cache();
+#endif
 
 int gpio_export(int pin)
 {
@@ -72,14 +81,16 @@ int gpio_export(int pin)
     fd = open("/sys/class/gpio/export", O_WRONLY);
     if (-1 == fd)
     {
-        fprintf(stderr, "Failed to allocate gpio pin resources[%d]: %s!\n", pin, strerror (errno));
+        fprintf(stderr, "Failed to allocate gpio pin[%d]: %s%s!\n",
+                pin, strerror (errno), getuid() == 0 ? "" : ", need to be root");
         return(-1);
     }
 
     bytes_written = snprintf(buffer, sizeof(buffer), "%d", pin);
     if (write(fd, buffer, bytes_written) < 0)
     {
-        fprintf(stderr, "Failed to allocate gpio pin resources[%d]: %s!\n", pin, strerror (errno));
+        fprintf(stderr, "Failed to allocate gpio pin[%d]: %s%s!\n",
+                pin, strerror (errno), getuid() == 0 ? "" : ", need to be root");
         close(fd);
         return -1;
     }
@@ -120,13 +131,15 @@ int gpio_direction(int pin, int dir)
     fd = open(path, O_WRONLY);
     if (-1 == fd)
     {
-        fprintf(stderr, "Failed to set gpio pin direction1[%d]: %s!\n", pin, strerror(errno));
+        fprintf(stderr, "Failed to set gpio pin direction1[%d]: %s!\n",
+                pin, strerror(errno));
         return(-1);
     }
 
     if (-1 == write(fd, &s_directions_str[IN == dir ? 0 : 3], IN == dir ? 2 : 3))
     {
-        fprintf(stderr, "Failed to set gpio pin direction2[%d]: %s!\n", pin, strerror(errno));
+        fprintf(stderr, "Failed to set gpio pin direction2[%d]: %s!\n",
+                pin, strerror(errno));
         return(-1);
     }
 
@@ -170,13 +183,15 @@ int gpio_write(int pin, int value)
     fd = open(path, O_WRONLY);
     if (-1 == fd)
     {
-        fprintf(stderr, "Failed to set gpio pin value[%d]: %s!\n", pin, strerror(errno));
+        fprintf(stderr, "Failed to set gpio pin value[%d]: %s%s!\n",
+                pin, strerror (errno), getuid() == 0 ? "" : ", need to be root");
         return(-1);
     }
 
     if (1 != write(fd, &s_values_str[LOW == value ? 0 : 1], 1))
     {
-        fprintf(stderr, "Failed to set gpio pin value[%d]: %s!\n", pin, strerror (errno));
+        fprintf(stderr, "Failed to set gpio pin value[%d]: %s%s!\n",
+                pin, strerror (errno), getuid() == 0 ? "" : ", need to be root");
         return(-1);
     }
 
@@ -213,6 +228,13 @@ void pinMode(int pin, int mode)
 
 void digitalWrite(int pin, int level)
 {
+#ifdef LINUX_SPI_AVAILABLE
+    if (s_ssd1306_dc == pin)
+    {
+        platform_spi_send_cache();
+    }
+#endif
+
     if (!s_exported_pin[pin])
     {
         if ( gpio_export(pin)<0 )
@@ -303,7 +325,7 @@ static void empty_function_two_args(const uint8_t *arg1, uint16_t arg2)
 {
 }
 
-void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, int8_t arg)
+void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, ssd1306_platform_i2cConfig_t * cfg)
 {
     char filename[20];
     if (busId < 0)
@@ -318,7 +340,8 @@ void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, int8_t arg)
     ssd1306_intf.send_buffer = empty_function_two_args;
     if ((s_fd = open(filename, O_RDWR)) < 0)
     {
-        fprintf(stderr, "Failed to open the i2c bus\n");
+        fprintf(stderr, "Failed to open the i2c bus %s\n",
+                getuid() == 0 ? "": ": need to be root");
         return;
     }
     if (sa)
@@ -350,7 +373,7 @@ static void platform_i2c_send_buffer(const uint8_t *buffer, uint16_t size)
     };
 }
 
-void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, int8_t arg)
+void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, ssd1306_platform_i2cConfig_t * cfg)
 {
     sdl_core_init();
     ssd1306_intf.spi = 0;
@@ -375,27 +398,33 @@ void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, int8_t arg)
 
 static int     s_spi_fd = -1;
 extern uint32_t s_ssd1306_spi_clock;
+static uint8_t s_spi_cache[1024];
+static int s_spi_cached_count = 0;
 
 static void platform_spi_start(void)
 {
+    s_spi_cached_count = 0;
 }
 
 static void platform_spi_stop(void)
 {
+    platform_spi_send_cache();
 }
 
-static void platform_spi_send(uint8_t data)
+static void platform_spi_send_cache()
 {
     /* TODO: Yeah, sending single bytes is too slow, but *
      * need to figure out how to detect data/command bytes *
      * to send bytes as one block */
-    uint8_t buf[1];
+    if ( s_spi_cached_count == 0 )
+    {
+        return;
+    }
     struct spi_ioc_transfer mesg;
-    buf[0] = data;
     memset(&mesg, 0, sizeof mesg);
-    mesg.tx_buf = (unsigned long)&buf[0];
+    mesg.tx_buf = (unsigned long)&s_spi_cache[0];
     mesg.rx_buf = 0;
-    mesg.len = 1;
+    mesg.len = s_spi_cached_count;
     mesg.delay_usecs = 0;
     mesg.speed_hz = 0;
     mesg.bits_per_word = 8;
@@ -403,6 +432,17 @@ static void platform_spi_send(uint8_t data)
     if (ioctl(s_spi_fd, SPI_IOC_MESSAGE(1), &mesg) < 1)
     {
         fprintf(stderr, "SPI failed to send SPI message: %s\n", strerror (errno)) ;
+    }
+    s_spi_cached_count = 0;
+}
+
+static void platform_spi_send(uint8_t data)
+{
+    s_spi_cache[s_spi_cached_count] = data;
+    s_spi_cached_count++;
+    if ( s_spi_cached_count >= sizeof( s_spi_cache ) )
+    {
+        platform_spi_send_cache();
     }
 }
 
@@ -461,7 +501,8 @@ void ssd1306_platform_spiInit(int8_t busId,
     snprintf(filename, 19, "/dev/spidev%d.%d", busId, ces);
     if ((s_spi_fd = open(filename, O_RDWR)) < 0)
     {
-        printf("Failed to initialize SPI: %s!\n", strerror(errno));
+        printf("Failed to initialize SPI: %s%s!\n",
+               strerror(errno), getuid() == 0 ? "": ", need to be root");
         return;
     }
     unsigned int speed = s_ssd1306_spi_clock;
@@ -525,6 +566,18 @@ void ssd1306_platform_spiInit(int8_t busId, int8_t ces, int8_t dcPin)
 
 #endif // CONFIG_PLATFORM_SPI_AVAILABLE
 
-#endif // !KERNEL
+#else  // end of !KERNEL, KERNEL is below
+
+void ssd1306_platform_i2cInit(int8_t busId, uint8_t sa, ssd1306_platform_i2cConfig_t * cfg)
+{
+}
+
+void ssd1306_platform_spiInit(int8_t busId,
+                              int8_t ces,
+                              int8_t dcPin)
+{
+}
+
+#endif // KERNEL
 
 #endif // __linux__

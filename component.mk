@@ -7,6 +7,8 @@ COMPONENT_SRCDIRS := ./src \
                      ./src/intf \
                      ./src/intf/i2c \
                      ./src/intf/spi \
+                     ./sec/intf/vga/esp32 \
+                     ./sec/intf/vga \
                      ./src/lcd \
                      ./src/nano_engine
 

@@ -3,6 +3,7 @@ var searchData=
   ['nanocanvas',['NanoCanvas',['../class_nano_canvas.html',1,'']]],
   ['nanocanvas1',['NanoCanvas1',['../class_nano_canvas1.html',1,'']]],
   ['nanocanvas16',['NanoCanvas16',['../class_nano_canvas16.html',1,'']]],
+  ['nanocanvas1_5f16',['NanoCanvas1_16',['../class_nano_canvas1__16.html',1,'']]],
   ['nanocanvas1_5f8',['NanoCanvas1_8',['../class_nano_canvas1__8.html',1,'']]],
   ['nanocanvas8',['NanoCanvas8',['../class_nano_canvas8.html',1,'']]],
   ['nanocanvasbase',['NanoCanvasBase',['../class_nano_canvas_base.html',1,'']]],

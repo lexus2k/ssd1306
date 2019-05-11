@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -208,6 +208,12 @@ static void ssd1351_sendPixel8(uint8_t data)
     ssd1306_intf.send( color & 0xFF );
 }
 
+static void ssd1351_sendPixel16(uint16_t color)
+{
+    ssd1306_intf.send( color >> 8 );
+    ssd1306_intf.send( color & 0xFF );
+}
+
 void    ssd1351_128x128_init()
 {
     ssd1306_lcd.type = LCD_TYPE_SSD1331;
@@ -218,6 +224,7 @@ void    ssd1351_128x128_init()
     ssd1306_lcd.send_pixels1  = ssd1351_sendPixels;
     ssd1306_lcd.send_pixels_buffer1 = ssd1351_sendPixelsBuffer;
     ssd1306_lcd.send_pixels8 = ssd1351_sendPixel8;
+    ssd1306_lcd.send_pixels16 = ssd1351_sendPixel16;
     ssd1306_lcd.set_mode = ssd1351_setMode;
     ssd1306_intf.start();
     ssd1306_spiDataMode(0);
@@ -246,7 +253,7 @@ void   ssd1351_128x128_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
         ssd1306_resetController( rstPin, 20 );
     }
     /* ssd1351 cannot work faster than at 4MHz per datasheet */
-    s_ssd1306_spi_clock = 4000000;
+    s_ssd1306_spi_clock = 4400000;
     ssd1306_spiInit(cesPin, dcPin);
     ssd1351_128x128_init();
 }

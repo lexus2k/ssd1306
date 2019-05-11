@@ -65,7 +65,8 @@ void sdl_core_init(void)
 {
     register_oled( &sdl_ssd1306 );
     register_oled( &sdl_ssd1325 );
-    register_oled( &sdl_ssd1331 );
+    register_oled( &sdl_ssd1331x8 );
+    register_oled( &sdl_ssd1331x16 );
     register_oled( &sdl_ssd1351 );
     register_oled( &sdl_il9163 );
     register_oled( &sdl_ili9341 );
@@ -140,7 +141,7 @@ void sdl_core_close(void)
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
 
-int s_commandId;
+int s_commandId = SSD_COMMAND_NONE;
 int s_cmdArgIndex;
 static int s_ssdMode = SSD_MODE_NONE;
 static sdl_data_mode s_active_data_mode = SDM_COMMAND_ARG;
@@ -151,7 +152,7 @@ void sdl_send_init()
 {
     s_active_data_mode = SDM_COMMAND_ARG;
     s_ssdMode = SSD_MODE_NONE;
-    s_commandId = SSD_COMMAND_NONE;
+//    s_commandId = SSD_COMMAND_NONE;
 }
 
 
@@ -204,6 +205,7 @@ void sdl_send_byte(uint8_t data)
                 {
                     p_active_driver = *p;
                     s_oled = SDL_DETECTED;
+                    s_commandId = SSD_COMMAND_NONE;
                     sdl_graphics_set_oled_params(
                         p_active_driver->width,
                         p_active_driver->height,
@@ -253,5 +255,3 @@ void sdl_set_data_mode(sdl_data_mode mode)
 {
     s_active_data_mode = mode;
 }
-
-

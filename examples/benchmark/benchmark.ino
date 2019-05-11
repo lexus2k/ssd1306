@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2016-2018, Alexey Dynda
+    Copyright (c) 2016-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@
     SOFTWARE.
 */
 
-
 #define SSD1306_DIRECT_TEST(X)  X
 #define SSD1306_GFX_TEST(X)     0
 #define SSD1306_ENGINE_TEST(X)  0
@@ -32,7 +31,11 @@
 #define TEST_I2C                0
 #define TEST_SPI                1
 
+#define OLED_SSD1306            0
+#define OLED_SSD1351            1
+
 #define TEST_INTERFACE          TEST_SPI
+#define TEST_OLED               OLED_SSD1306
 
 
 
@@ -41,13 +44,26 @@
 #include "ssd1306.h"
 #if SSD1306_GFX_TEST(1)
 #include "nano_gfx.h"
+#if TEST_OLED == OLED_SSD1306
 uint8_t data[1024];
 NanoCanvas display(128,64,data);
 #endif
+#if TEST_OLED == OLED_SSD1351
+uint8_t data[128*128/8];
+NanoCanvas display(128,128,data);
+#endif
+#endif
 #if SSD1306_ENGINE_TEST(1)
 #include "nano_engine.h"
+
+#if TEST_OLED == OLED_SSD1306
 uint8_t data[1024];
 NanoCanvas1 display(128,64,data);
+#endif
+#if TEST_OLED == OLED_SSD1351
+uint8_t data[128*128*16/8];
+NanoCanvas16 display(128,128,data);
+#endif
 #endif
 
 #elif ADAFRUIT_TEST(1)
@@ -114,6 +130,9 @@ void doSendBuffer()
 {
     SSD1306_DIRECT_TEST  ();  // not applicable
     SSD1306_GFX_TEST     (display.blt(0,0));
+    #if TEST_OLED == OLED_SSD1351
+    SSD1306_ENGINE_TEST  (ssd1306_setMode( LCD_MODE_NORMAL ));
+    #endif
     SSD1306_ENGINE_TEST  (display.blt());
     ADAFRUIT_TEST        (display.display());
     U8G2_TEST            (u8g2.sendBuffer());
@@ -179,8 +198,13 @@ void initLcd()
     #if (SSD1306_DIRECT_TEST(1)) || (SSD1306_ENGINE_TEST(1)) || (SSD1306_GFX_TEST(1))
     /* Replace the line below with ssd1306_128x32_i2c_init() if you need to use 128x32 display */
     #if (TEST_INTERFACE == TEST_SPI)
+#if TEST_OLED == OLED_SSD1306
     ssd1306_128x64_spi_init(3,4,5);
-//    ssd1351_128x128_spi_init(3,4,5);
+#endif
+#if TEST_OLED == OLED_SSD1351
+    ssd1351_128x128_spi_init(24, 0, 23); // Use this line for Raspberry  (gpio24=RST, 0=CE, gpio23=D/C)
+//    ssd1351_128x128_spi_init(3,4,5); // Use this line for Atmega328p
+#endif
     #elif (TEST_INTERFACE == TEST_I2C)
     ssd1306_128x64_i2c_init();
     #endif
@@ -196,7 +220,10 @@ void initLcd()
 
 void setup()
 {
+    #ifdef __linux__
+    #else
     Serial.begin(115200);
+    #endif
     initLcd();
     for (uint8_t i=0; i<sizeof(tests)/sizeof(TestInfo); i++)
     {
@@ -211,11 +238,19 @@ void setup()
          const char *p = tests[i].name;
          while (pgm_read_byte(p))
          {
+             #ifdef __linux__
+             printf("%c", (char)pgm_read_byte(p++));
+             #else
              Serial.print((char)pgm_read_byte(p++));
+             #endif
          }
+         #ifdef __linux__
+         printf(": %u us\n", tests[i].result);
+         #else
          Serial.print(": ");
          Serial.print(tests[i].result);
          Serial.println("us");
+         #endif
          doSendBuffer();
          delay(2000);
     }

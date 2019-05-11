@@ -44,7 +44,7 @@ enum EVgaCommands
      *    top boundary in pixels,
      *    bottom boundary in pixels, (last arg in not implemented yet)
      */
-    VGA_SET_BLOCK            = 0x01,
+    VGA_SET_BLOCK       = 0x01,
 
     /**
      * VGA_SET_MODE command sets memory addressing mode: there are 2 modes
@@ -57,6 +57,10 @@ enum EVgaCommands
      * to top of block, and x position shifts right by 1 pixel.
      */
     VGA_SET_MODE        = 0x02,
+
+    VGA_SET_RESOLUTION  = 0x03,
+
+    VGA_DISPLAY_ON      = 0x04,
 };
 
 #ifdef __cplusplus

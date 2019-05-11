@@ -73,6 +73,19 @@ void ssd1306_setColor(uint16_t color);
 void ssd1306_setRgbColor(uint8_t r, uint8_t g, uint8_t b);
 
 /**
+ * @brief Sets default color.
+ *
+ * Sets default color for monochrome operations.
+ * For now this function supports only 8-bit RGB mode.
+ * To work with RGB colors in 16-bit mode, please refer to ssd1306_setColor() function
+ * and RGB_COLOR16 macros.
+ * @param r - red in 0-255 range.
+ * @param g - green in 0-255 range.
+ * @param b - blue in 0-255 range.
+ */
+void ssd1306_setRgbColor8(uint8_t r, uint8_t g, uint8_t b);
+
+/**
  * Draws 1-bit bitmap, located in SRAM, on the display
  * Each bit represents separate pixel: refer to ssd1306 datasheet for more information.
  *
@@ -97,6 +110,20 @@ void ssd1306_drawMonoBuffer8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
 void ssd1306_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data);
 
 /**
+ * Draws 8-bit bitmap, located in SRAM, on the display, taking into account pitch parameter.
+ * Each byte represents separate pixel: refer to RGB_COLOR8 to understand RGB scheme, being used.
+ * pitch parameter specifies, length of single line in bytes.
+ *
+ * @param x - horizontal position in pixels
+ * @param y - vertical position in pixels
+ * @param w - width of bitmap in pixels
+ * @param h - height of bitmap in pixels
+ * @param pitch length of bitmap buffer line in bytes
+ * @param data - pointer to data, located in SRAM.
+ */
+void ssd1306_drawBufferEx8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, lcduint_t pitch, const uint8_t *data);
+
+/**
  * Fills screen with pattern byte
  *
  * @param fill_Data pattern color to fill screen with
@@ -117,6 +144,15 @@ void ssd1306_clearScreen8(void);
  * @note set color with ssd1306_setColor() function.
  */
 void ssd1306_putPixel8(lcdint_t x, lcdint_t y);
+
+/**
+ * Puts single color point directly in OLED display GDRAM.
+ *
+ * @param x - horizontal position in pixels
+ * @param y - vertical position in pixels
+ * @param color color in RGB8 format (2-3-2)
+ */
+void ssd1306_putColorPixel8(lcdint_t x, lcdint_t y, uint8_t color);
 
 /**
  * Draw vertical line directly in OLED display GDRAM.

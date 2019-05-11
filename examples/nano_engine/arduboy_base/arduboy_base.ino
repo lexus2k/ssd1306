@@ -29,7 +29,8 @@
 #include "ssd1306.h"
 #include "nano_engine.h"
 
-NanoEngine1 engine;
+/* Do not use NanoEngine1, because there is issue in Arduboy emulator */
+NanoEngineArduboy engine;
 
 /* Define rect to move on the display */
 NanoRect rect = { {15,12}, {60,35} }; 

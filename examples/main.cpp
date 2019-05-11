@@ -34,7 +34,6 @@ void main(void)
     setup();
     for(;;)
     {
-        
         loop();
 #ifdef SDL_EMULATION
         sdl_read_analog(0);
