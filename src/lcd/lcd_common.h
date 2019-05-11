@@ -275,6 +275,20 @@ void ssd1306_configureI2cDisplay(const uint8_t *config, uint8_t configSize);
 void ssd1306_configureSpiDisplay(const uint8_t *config, uint8_t configSize);
 
 /**
+ * @brief Sends configuration being passed to lcd display spi controller.
+ *
+ * Sends configuration being passed to lcd display spi controller. If data byte value
+ * to be sent is less than 255, then data byte is sent in command mode. Each command has
+ * additional parameter: number of arguments.
+ * If lcd controller requires cmd arguments to be sent in command mode,
+ * please use ssd1306_configureI2cDisplay().
+ *
+ * @param config configuration, located in flash, to send to i2c/spi controller.
+ * @param configSize - size of configuration data in bytes.
+ */
+void ssd1306_configureSpiDisplay2(const uint8_t *config, uint8_t configSize);
+
+/**
  * @brief Sets library display mode for direct draw functions.
  *
  * Sets library display mode for direct draw functions.
