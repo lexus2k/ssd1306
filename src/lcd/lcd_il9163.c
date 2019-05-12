@@ -74,6 +74,8 @@ static const PROGMEM uint8_t s_oled128x128_initData[] =
     0x29,                                 // display on
 };
 
+#if 0
+
 static const PROGMEM uint8_t s_oled128x160_initData[] =
 {
 #ifdef SDL_EMULATION
@@ -97,8 +99,8 @@ static const PROGMEM uint8_t s_oled128x160_initData[] =
                 0x18, 0x25, 0x2A,
                 0x2B, 0x2B, 0x3A, // negative gamma correction
 
-    0xB1, 0x02, 0x08, 0x08,       // frame rate control 1, use by default
-//    0xB1, 0x00, 0x06, 0x03,       // TODO: Adafruit. frame rate control 1, use by default
+    0xB1, 0x03, 0x00, 0x08, 0x08,   // frame rate control 1, use by default
+//    0xB1, 0x03, 0x00, 0x06, 0x03,   // TODO: Adafruit. frame rate control 1, use by default
     0xB4, 0x01, 0x07,             // display inversion, use by default
     0xC0, 0x02, 0x0A, 0x02,       // power control 1
     0xC1, 0x01, 0x02,             // power control 2
@@ -110,6 +112,44 @@ static const PROGMEM uint8_t s_oled128x160_initData[] =
     0x36, 0x01, 0b00100000,       // MADCTL // enable fake "vertical addressing" mode (for il9163_setBlock() )
     0x29, 0x00,                   // display on
 };
+
+#else
+
+static const PROGMEM uint8_t s_oled128x160_initData[] =
+{
+#ifdef SDL_EMULATION
+    SDL_LCD_ST7735, 0x00,
+    0b00000011, 0x00,
+#endif
+    0x01, CMD_DELAY,   50,   // SWRESET sw reset. not needed, we do hardware reset
+    0x11, CMD_DELAY, 0xFF,   // SLPOUT exit sleep mode
+    0x3A, 0x01, 0x05,        // COLMOD set 16-bit pixel format
+    0xB1, 0x03, 0x00, 0x06, 0x03,  // FRMCTR1 frame rate control 1, use by default
+    0x36, 0x01, 0b00100000,  // MADCTL // enable fake "vertical addressing" mode (for il9163_setBlock() )
+    0xB6, 0x02, 0x15, 0x02,  // DISSET5
+    0xB4, 0x01, 0x00,        // INVCTR display inversion, use by default
+    0xC0, 0x02, 0x02, 0x70,  // PWCTR1 power control 1
+    0xC1, 0x01, 0x05,        // PWCTR2 power control 2
+    0xC2, 0x02, 0x01, 0x02,  // PWCTR3 power control 3
+    0xC5, 0x02, 0x3C, 0x38,  // VMCTR vcom control 1
+    0xFC, 0x02, 0x11, 0x15,  // PWCTR6
+    0xE0, 0x10, // GMCTRP1 positive gamma correction
+                0x09, 0x16, 0x09, 0x20,
+                0x21, 0x1B, 0x13, 0x19,
+                0x17, 0x15, 0x1E, 0x2B,
+                0x04, 0x05, 0x02, 0x0E,
+    0xE1, 0x10, // GMCTRN1 negative gamma correction
+                0x0B, 0x14, 0x08, 0x1E,
+                0x22, 0x1D, 0x18, 0x1E,
+                0x1B, 0x1A, 0x24, 0x2B,
+                0x06, 0x06, 0x02, 0x0F,
+//    0x2A,  CMD_ARG,  0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x7F,   // CASET // NOT NEEDED FOR THIS LIB
+//    0x2B,  CMD_ARG,  0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x9F,   // RASET // NOT NEEDED FOR THIS LIB
+    0x13, 0x00, // NORON
+    0x29, CMD_DELAY,  100, // DISPON display on
+};
+
+#endif
 
 static uint8_t s_column;
 static uint8_t s_page;
