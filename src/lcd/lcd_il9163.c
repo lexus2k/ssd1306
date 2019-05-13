@@ -177,7 +177,7 @@ void    il9163_setMode(lcd_mode_t mode)
     ssd1306_spiDataMode(0);
     ssd1306_intf.send( 0x36 );
     ssd1306_spiDataMode(1);
-    ssd1306_intf.send( mode ? 0b00101000 : 0b00001000 );
+    ssd1306_intf.send( ( mode ? 0b00100000 : 0b00000000 ) | s_rgb_bit );
     ssd1306_intf.stop();
     if (mode == LCD_MODE_SSD1306_COMPAT )
     {
