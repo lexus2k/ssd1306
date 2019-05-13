@@ -127,6 +127,8 @@ static const PROGMEM uint8_t s_oled128x160_initData[] =
     0xB1, 0x03, 0x00, 0x06, 0x03,  // FRMCTR1 frame rate control 1, use by default
     0x36, 0x01, 0b00100000,  // MADCTL // enable fake "vertical addressing" mode (for il9163_setBlock() )
     0xB6, 0x02, 0x15, 0x02,  // DISSET5
+    0x26, 1, 0x08,        // GAMSET set gamma curve: valid values 1, 2, 4, 8
+//    0xF2, 1, 0x01,        // enable gamma adjustment, 0 - to disable
     0xB4, 0x01, 0x00,        // INVCTR display inversion, use by default
     0xC0, 0x02, 0x02, 0x70,  // PWCTR1 power control 1
     0xC1, 0x01, 0x05,        // PWCTR2 power control 2
@@ -143,9 +145,10 @@ static const PROGMEM uint8_t s_oled128x160_initData[] =
                 0x22, 0x1D, 0x18, 0x1E,
                 0x1B, 0x1A, 0x24, 0x2B,
                 0x06, 0x06, 0x02, 0x0F,
-//    0x2A,  CMD_ARG,  0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x7F,   // CASET // NOT NEEDED FOR THIS LIB
-//    0x2B,  CMD_ARG,  0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x9F,   // RASET // NOT NEEDED FOR THIS LIB
-    0x13, 0x00, // NORON
+//    0xC7,  1,  0x40,                // vcom offset
+//    0x2A,  CMD_ARG,  0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x7F,   // set column address, not needed. set by direct API
+//    0x2B,  CMD_ARG,  0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x9F,   // set page address, not needed. set by direct API
+    0x13, CMD_DELAY,   10, // NORON
     0x29, CMD_DELAY,  100, // DISPON display on
 };
 
