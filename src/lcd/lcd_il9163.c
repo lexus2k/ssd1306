@@ -74,67 +74,33 @@ static const PROGMEM uint8_t s_oled128x128_initData[] =
     0x29,                                 // display on
 };
 
-#if 0
-
 static const PROGMEM uint8_t s_oled128x160_initData[] =
 {
 #ifdef SDL_EMULATION
     SDL_LCD_ST7735, 0x00,
     0b00000011, 0x00,
 #endif
-    0x01, CMD_DELAY,   50,   // sw reset. not needed, we do hardware reset
-    0x11, CMD_DELAY, 0xFF,   // exit sleep mode
-    0x3A, 0x01, 0x05,        // set 16-bit pixel format
-    0x26, 0x01, 0x04,        // set gamma curve: valid values 1, 2, 4, 8
-    0xF2, 0x01, 0x01,        // enable gamma adjustment, 0 - to disable
-    0xE0, 0x0F, 0x3F, 0x25, 0x1C,
-                0x1E, 0x20, 0x12,
-                0x2A, 0x90, 0x24,
-                0x11, 0x00, 0x00,
-                0x00, 0x00, 0x00, // positive gamma correction
-
-    0xE1, 0x0F, 0x20, 0x20, 0x20,
-                0x20, 0x05, 0x00,
-                0x15, 0xA7, 0x3D,
-                0x18, 0x25, 0x2A,
-                0x2B, 0x2B, 0x3A, // negative gamma correction
-
-    0xB1, 0x03, 0x00, 0x08, 0x08,   // frame rate control 1, use by default
-//    0xB1, 0x03, 0x00, 0x06, 0x03,   // TODO: Adafruit. frame rate control 1, use by default
-    0xB4, 0x01, 0x07,             // display inversion, use by default
-    0xC0, 0x02, 0x0A, 0x02,       // power control 1
-    0xC1, 0x01, 0x02,             // power control 2
-    0xC2, 0x02, 0x01, 0x02,       // power control 3
-    0xC5, 0x02, 0x50, 0x5B,       // vcom control 1
-    0xC7, 0x01, 0x40,             // vcom offset
-//    0x2A,  CMD_ARG,  0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x7F,   // set column address, not needed. set by direct API
-//    0x2B,  CMD_ARG,  0x00, CMD_ARG, 0x00, CMD_ARG, 0x00, CMD_ARG, 0x9F,   // set page address, not needed. set by direct API
-    0x36, 0x01, 0b00100000,       // MADCTL // enable fake "vertical addressing" mode (for il9163_setBlock() )
-    0x29, 0x00,                   // display on
-};
-
-#else
-
-static const PROGMEM uint8_t s_oled128x160_initData[] =
-{
-#ifdef SDL_EMULATION
-    SDL_LCD_ST7735, 0x00,
-    0b00000011, 0x00,
-#endif
-    0x01, CMD_DELAY,   50,   // SWRESET sw reset. not needed, we do hardware reset
-    0x11, CMD_DELAY, 0xFF,   // SLPOUT exit sleep mode
-    0x3A, 0x01, 0x05,        // COLMOD set 16-bit pixel format
+    0x01, CMD_DELAY,  150,   // SWRESET sw reset. not needed, we do hardware reset
+    0x11, CMD_DELAY,  255,   // SLPOUT exit sleep mode
     0xB1, 0x03, 0x00, 0x06, 0x03,  // FRMCTR1 frame rate control 1, use by default
-    0x36, 0x01, 0b00100000,  // MADCTL // enable fake "vertical addressing" mode (for il9163_setBlock() )
-    0xB6, 0x02, 0x15, 0x02,  // DISSET5
-    0x26, 1, 0x08,        // GAMSET set gamma curve: valid values 1, 2, 4, 8
-//    0xF2, 1, 0x01,        // enable gamma adjustment, 0 - to disable
+//    0xB2, 0x03, 0x01, 0x2C, 0x2D,  // FRMCTR2, Frame Rate Control (In Idle mode/ 8-colors)
+//    0xB3, 0x06,              // FRMCTR3 (B3h): Frame Rate Control (In Partial mode/ full colors)
+//                0x01, 0x2C, 0x2D,
+//                0x01, 0x2C, 0x2D,
     0xB4, 0x01, 0x00,        // INVCTR display inversion, use by default
+    0xB6, 0x02, 0x15, 0x02,  // DISSET5
     0xC0, 0x02, 0x02, 0x70,  // PWCTR1 power control 1
     0xC1, 0x01, 0x05,        // PWCTR2 power control 2
     0xC2, 0x02, 0x01, 0x02,  // PWCTR3 power control 3
+//    0xC3, 0x02, 0x8A, 0x2A, // PWCTR4 (C3h): Power Control 4 (in Idle mode/ 8-colors)
+//    0xC4, 0x02, 0x8A, 0xEE, // PWCTR5 (C4h): Power Control 5 (in Partial mode/ full-colors) 
     0xC5, 0x02, 0x3C, 0x38,  // VMCTR vcom control 1
+//    0x20, 0x00, // INVOFF (20h): Display Inversion Off
     0xFC, 0x02, 0x11, 0x15,  // PWCTR6
+    0x36, 0x01, 0b00100000,  // MADCTL // enable fake "vertical addressing" mode (for il9163_setBlock() )
+    0x3A, 0x01, 0x05,        // COLMOD set 16-bit pixel format
+    0x26, 1, 0x08,        // GAMSET set gamma curve: valid values 1, 2, 4, 8
+//    0xF2, 1, 0x01,        // enable gamma adjustment, 0 - to disable
     0xE0, 0x10, // GMCTRP1 positive gamma correction
                 0x09, 0x16, 0x09, 0x20,
                 0x21, 0x1B, 0x13, 0x19,
@@ -151,8 +117,6 @@ static const PROGMEM uint8_t s_oled128x160_initData[] =
     0x13, CMD_DELAY,   10, // NORON
     0x29, CMD_DELAY,  100, // DISPON display on
 };
-
-#endif
 
 static uint8_t s_column;
 static uint8_t s_page;

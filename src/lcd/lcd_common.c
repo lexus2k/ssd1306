@@ -86,7 +86,7 @@ void ssd1306_configureSpiDisplay2(const uint8_t *config, uint8_t configSize)
             if ( command == CMD_DELAY )
             {
                 command = 1;
-                delay( data );
+                delay( data == 0xFF ? 500: data );
             }
             else
             {
