@@ -77,7 +77,7 @@ static const PROGMEM uint8_t s_oled128x160_initData[] =
 {
 #ifdef SDL_EMULATION
     SDL_LCD_ST7735,
-    0x00,
+    0x03,
 #endif
 //    0x01,                     // sw reset. not needed, we do hardware reset
     0x11,                       // exit sleep mode
