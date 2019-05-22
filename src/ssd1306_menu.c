@@ -263,7 +263,7 @@ void ssd1306_drawProgressBar(int8_t progress)
     ssd1306_color = 0x0000;
     ssd1306_fillRect( progress_pos, middle, ssd1306_displayWidth() - 8, middle + height );
     ssd1306_color = color;
-    ssd1306_printFixed( ssd1306_displayWidth() / 2 - width / 2, middle - height, str );
+    ssd1306_printFixed( ssd1306_displayWidth() / 2 - width / 2, middle - height, str, STYLE_NORMAL );
     ssd1306_drawRect( 8, middle, ssd1306_displayWidth() - 8, middle + height );
     ssd1306_fillRect( 8, middle, progress_pos, middle + height );
 }
