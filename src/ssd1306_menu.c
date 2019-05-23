@@ -34,6 +34,7 @@
 #endif
 
 extern SFixedFontInfo s_fixedFont;
+extern uint16_t ssd1306_color;
 
 static uint8_t getMaxScreenItems(void)
 {
@@ -239,4 +240,58 @@ void ssd1306_menuUp(SAppMenu *menu)
     {
         menu->selection = menu->count - 1;
     }
+}
+
+void ssd1306_drawProgressBar(int8_t progress)
+{
+    lcduint_t height = 8;
+    lcduint_t width = 8;
+    char str[5] = "100%";
+    if ( progress < 100 )
+    {
+        str[0] = ' ';
+        str[1] = progress / 10 + '0';
+        str[2] = progress % 10 + '0';
+        str[3] = '%';
+    }
+    if ( s_fixedFont.primary_table != NULL )
+    {
+        width = ssd1306_getTextSize( str, &height );
+    }
+    lcdint_t middle = ssd1306_displayHeight() / 2;
+    lcdint_t progress_pos = 8 + (int16_t)(ssd1306_displayWidth() - 16) * progress / 100;
+    uint16_t color = ssd1306_color;
+    ssd1306_color = 0x0000;
+    ssd1306_fillRect( progress_pos, middle, ssd1306_displayWidth() - 8, middle + height );
+    ssd1306_color = color;
+    ssd1306_printFixed( ssd1306_displayWidth() / 2 - width / 2, middle - height, str, STYLE_NORMAL );
+    ssd1306_drawRect( 8, middle, ssd1306_displayWidth() - 8, middle + height );
+    ssd1306_fillRect( 8, middle, progress_pos, middle + height );
+}
+
+void ssd1306_drawProgressBar8(int8_t progress)
+{
+    lcduint_t height = 8;
+    lcduint_t width = 8;
+    char str[5] = "100%";
+    if ( progress < 100 )
+    {
+        str[0] = ' ';
+        str[1] = progress / 10 + '0';
+        str[2] = progress % 10 + '0';
+        str[3] = '%';
+    }
+    if ( s_fixedFont.primary_table != NULL )
+    {
+        width = ssd1306_getTextSize( str, &height );
+    }
+    lcdint_t middle = ssd1306_displayHeight() / 2;
+    lcdint_t progress_pos = 8 + (int16_t)(ssd1306_displayWidth() - 16) * progress / 100;
+    uint16_t color = ssd1306_color;
+    ssd1306_color = 0x0000;
+    ssd1306_fillRect8( progress_pos, middle, ssd1306_displayWidth() - 8, middle + height );
+    ssd1306_color = color;
+    ssd1306_printFixed8( ssd1306_displayWidth() / 2 - width / 2, middle - height, str, STYLE_NORMAL );
+    ssd1306_drawRect8( 8, middle, ssd1306_displayWidth() - 8, middle + height );
+    ssd1306_fillRect8( 8, middle, progress_pos, middle + height );
 }

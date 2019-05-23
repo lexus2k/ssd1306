@@ -368,3 +368,28 @@ void ssd1306_setSquixFont(const uint8_t * progmemFont)
     s_fixedFont.secondary_table = NULL;
 #endif
 }
+
+lcduint_t ssd1306_getTextSize(const char *text, lcduint_t *height)
+{
+    lcduint_t width = 0;
+    while (*text)
+    {
+        if (*text == '\r' || *text == '\n')
+        {
+            text++;
+            break;
+        }
+        uint16_t unicode = ssd1306_unicode16FromUtf8(*text);
+        if (unicode == SSD1306_MORE_CHARS_REQUIRED)
+        {
+            text++;
+            continue;
+        }
+        SCharInfo char_info;
+        ssd1306_getCharBitmap(unicode, &char_info);
+        width += char_info.width + char_info.spacing;
+        if ( height ) *height = char_info.height;
+        text++;
+    }
+    return width;
+}
