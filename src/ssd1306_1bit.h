@@ -241,6 +241,20 @@ void         ssd1306_putPixels(uint8_t x, uint8_t y, uint8_t pixels);
 void         ssd1306_drawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
 
 /**
+ * Fill rectangle directly in OLED display GDRAM.
+ * This is software implementation. Some OLED controllers have hardware implementation.
+ * Refer to datasheet.
+ *
+ * @param x1 - start horizontal position in pixels
+ * @param y1 - start vertical position in pixels
+ * @param x2 - end horizontal position in pixels
+ * @param y2 - end vertical position in pixels
+ *
+ * @note set color with ssd1306_setColor() function.
+ */
+void ssd1306_fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2);
+
+/**
  * Draws line
  * @param x1 - x position in pixels of start point
  * @param y1 - y position in pixels of start point

@@ -38,6 +38,7 @@
 #include "lcd/ssd1306_commands.h"
 
 uint8_t s_ssd1306_invertByte = 0x00000000;
+extern uint16_t ssd1306_color;
 const uint8_t *s_font6x8 = &ssd1306xled_font6x8[4];
 extern lcduint_t ssd1306_cursorX;
 extern lcduint_t ssd1306_cursorY;
@@ -860,6 +861,40 @@ void ssd1306_clearBlock(uint8_t x, uint8_t y, uint8_t w, uint8_t h)
         for(i=w;i>0;i--)
         {
             ssd1306_lcd.send_pixels1(s_ssd1306_invertByte);
+        }
+        ssd1306_lcd.next_page();
+    }
+    ssd1306_intf.stop();
+}
+
+void ssd1306_fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+{
+    uint8_t templ = ssd1306_color^s_ssd1306_invertByte;
+    if (x1 > x2) return;
+    if (y1 > y2) return;
+    if ((lcduint_t)x2 >= ssd1306_displayWidth()) x2 = (lcdint_t)ssd1306_displayWidth() - 1;
+    if ((lcduint_t)y2 >= ssd1306_displayHeight()) y2 = (lcdint_t)ssd1306_displayHeight() - 1;
+    uint8_t bank1 = (y1 >> 3);
+    uint8_t bank2 = (y2 >> 3);
+    ssd1306_lcd.set_block(x1, bank1, x2 - x1 + 1);
+    for (uint8_t bank = bank1; bank<=bank2; bank++)
+    {
+        uint8_t mask = 0xFF;
+        if (bank1 == bank2)
+        {
+            mask = (mask >> ((y1 & 7) + 7 - (y2 & 7))) << (y1 & 7);
+        }
+        else if (bank1 == bank)
+        {
+            mask = (mask << (y1 & 7));
+        }
+        else if (bank2 == bank)
+        {
+            mask = (mask >> (7 - (y2 & 7)));
+        }
+        for (uint8_t x=x1; x<=x2; x++)
+        {
+            ssd1306_lcd.send_pixels1(templ & mask);
         }
         ssd1306_lcd.next_page();
     }

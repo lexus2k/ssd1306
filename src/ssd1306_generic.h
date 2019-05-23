@@ -302,6 +302,12 @@ void ssd1306_menuUp(SAppMenu *menu);
 void ssd1306_drawProgressBar(int8_t progress);
 
 /**
+ * Draws progress bar in the middle of the screen
+ * @param progress progress value in range 0 - 100.
+ */
+void ssd1306_drawProgressBar8(int8_t progress);
+
+/**
  * @}
  */
 
