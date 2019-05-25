@@ -8,6 +8,7 @@ var searchData=
   ['spritepool',['SpritePool',['../class_sprite_pool.html',1,'']]],
   ['ssd1306_5finterface_5ft',['ssd1306_interface_t',['../structssd1306__interface__t.html',1,'']]],
   ['ssd1306_5flcd_5ft',['ssd1306_lcd_t',['../structssd1306__lcd__t.html',1,'']]],
+  ['ssd1306_5fplatform_5fi2cconfig_5ft',['ssd1306_platform_i2cConfig_t',['../structssd1306__platform__i2c_config__t.html',1,'']]],
   ['ssd1306_5frect',['SSD1306_RECT',['../struct_s_s_d1306___r_e_c_t.html',1,'']]],
   ['ssd1306console',['Ssd1306Console',['../class_ssd1306_console.html',1,'']]],
   ['sunicodeblockrecord',['SUnicodeBlockRecord',['../struct_s_unicode_block_record.html',1,'']]]

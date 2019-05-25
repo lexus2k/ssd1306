@@ -4,7 +4,7 @@ var searchData=
   ['pcd8544_5f84x48_5fspi_5finit',['pcd8544_84x48_spi_init',['../group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga6e5fe50f6c6bae1adb75b0008880035d',1,'lcd_pcd8544.c']]],
   ['pos',['pos',['../class_nano_fixed_sprite.html#a515f0fc8500870939edaa86e3e0bc4b4',1,'NanoFixedSprite']]],
   ['pressed',['pressed',['../class_nano_engine_inputs.html#aaf992076a4c0e1a5aa95a9e129e8ad25',1,'NanoEngineInputs']]],
-  ['print',['Print',['../class_print.html#a1b9fe938883bb7b4bce8fba012dab112',1,'Print::Print()'],['../class_print.html#a2131ef6aa11c8551831201ba64cf5f06',1,'Print::print(const char *str)'],['../class_print.html#a6448e13c050d2ea61ded3c2fca262924',1,'Print::print(int n)']]],
+  ['print',['print',['../class_print.html#a2131ef6aa11c8551831201ba64cf5f06',1,'Print::print(const char *str)'],['../class_print.html#a6448e13c050d2ea61ded3c2fca262924',1,'Print::print(int n)'],['../class_print.html#a1b9fe938883bb7b4bce8fba012dab112',1,'Print::Print()']]],
   ['printchar',['printChar',['../class_nano_canvas_ops.html#a4031b35e730a08985d766d32f7c164fc',1,'NanoCanvasOps']]],
   ['printfixed',['printFixed',['../class_nano_canvas_ops.html#a1174380635ea8d9de6b363e6384f7628',1,'NanoCanvasOps::printFixed()'],['../class_nano_canvas.html#a6f89c3edb9833b7d79f7d1f771b44254',1,'NanoCanvas::printFixed()']]],
   ['printfixed2x',['printFixed2x',['../class_nano_canvas.html#a6dcb23724a60a84baaa06c189903edef',1,'NanoCanvas']]],

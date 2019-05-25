@@ -74,9 +74,12 @@ extern "C" {
 
 // !!! PLATFORM I2C IMPLEMENTATION OPTIONAL !!!
 #if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && defined(CONFIG_PLATFORM_I2C_ENABLE)
+/**
+ * Structure describes i2c pins used by platform
+ */
 typedef struct {
-    int8_t sda;
-    int8_t scl;
+    int8_t sda; ///< data pin number
+    int8_t scl; ///< clock pin number
 } ssd1306_platform_i2cConfig_t;
 
 /**

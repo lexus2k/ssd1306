@@ -157,7 +157,7 @@ uint16_t ssd1306_unicode16FromUtf8(uint8_t ch);
 /**
  * Returns dimensions in pixels for text provided.
  * @param text text to calculate size of
- * @raram height variable to store text height. Can be NULL
+ * @param height variable to store text height. Can be NULL
  * @return witdth of passed text in pixels
  */
 lcduint_t ssd1306_getTextSize(const char *text, lcduint_t *height);

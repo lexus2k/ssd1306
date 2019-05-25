@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.17</span>
+   &#160;<span id="projectnumber">1.7.20</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -61,6 +61,7 @@ $(function() {
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
@@ -72,6 +73,11 @@ $(function() {
 <p>i2c/spi ssd1306 library hardware abstraction layer  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structssd1306__platform__i2c_config__t.html">ssd1306_platform_i2cConfig_t</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga57896cfd0f578b584d58e3bef85b0e78"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga57896cfd0f578b584d58e3bef85b0e78">LCDINT_TYPES_DEFINED</a></td></tr>
@@ -88,9 +94,9 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga7b16dcc41b55cd60ca4749f16934adff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga7b16dcc41b55cd60ca4749f16934adff">ssd1306_platform_i2cInit</a> (int8_t busId, uint8_t addr, int8_t arg)</td></tr>
-<tr class="memdesc:ga7b16dcc41b55cd60ca4749f16934adff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes i2c interface for platform being used.  <a href="#ga7b16dcc41b55cd60ca4749f16934adff">More...</a><br /></td></tr>
-<tr class="separator:ga7b16dcc41b55cd60ca4749f16934adff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabfbc35d9ad49ecfab95ccb34afb0ef81"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#gabfbc35d9ad49ecfab95ccb34afb0ef81">ssd1306_platform_i2cInit</a> (int8_t busId, uint8_t addr, <a class="el" href="structssd1306__platform__i2c_config__t.html">ssd1306_platform_i2cConfig_t</a> *cfg)</td></tr>
+<tr class="memdesc:gabfbc35d9ad49ecfab95ccb34afb0ef81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes i2c interface for platform being used.  <a href="#gabfbc35d9ad49ecfab95ccb34afb0ef81">More...</a><br /></td></tr>
+<tr class="separator:gabfbc35d9ad49ecfab95ccb34afb0ef81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga48b3e1e6fc7eec0e0634370746d31c22"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga48b3e1e6fc7eec0e0634370746d31c22">ssd1306_platform_spiInit</a> (int8_t busId, int8_t cesPin, int8_t dcPin)</td></tr>
 <tr class="memdesc:ga48b3e1e6fc7eec0e0634370746d31c22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes spi interface for platform being used.  <a href="#ga48b3e1e6fc7eec0e0634370746d31c22">More...</a><br /></td></tr>
 <tr class="separator:ga48b3e1e6fc7eec0e0634370746d31c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -189,8 +195,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga7b16dcc41b55cd60ca4749f16934adff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7b16dcc41b55cd60ca4749f16934adff">&#9670;&nbsp;</a></span>ssd1306_platform_i2cInit()</h2>
+<a id="gabfbc35d9ad49ecfab95ccb34afb0ef81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabfbc35d9ad49ecfab95ccb34afb0ef81">&#9670;&nbsp;</a></span>ssd1306_platform_i2cInit()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -210,8 +216,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>arg</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="structssd1306__platform__i2c_config__t.html">ssd1306_platform_i2cConfig_t</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -225,9 +231,9 @@ Functions</h2></td></tr>
 <p>Initializes i2c interface for platform being used. i2c implementation depends on platform.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">busId</td><td>i2c bus number. Some platforms have several i2c buses. so, this argument identifies bus to use. For AVR platforms busId is used as scl pin number. If you want to use default i2c bus for specific platform, please pass -1. </td></tr>
+    <tr><td class="paramname">busId</td><td>i2c bus number. Some platforms have several i2c buses. so, this argument identifies bus to use. For several platforms busId is not used. If you want to use default i2c bus for specific platform, please pass -1. </td></tr>
     <tr><td class="paramname">addr</td><td>i2c address of oled driver, connected to i2c bus. If you want to use default i2c display address, please, pass 0. </td></tr>
-    <tr><td class="paramname">arg</td><td>additional parameter for i2c interface. Not used on many platforms, while for AVR it is used as sda pin number. If you want to use default pin number, please pass -1. </td></tr>
+    <tr><td class="paramname">cfg</td><td>Specify scl and sda for the platform. If you want to use default pin numbers, please pass -1 for both members. </td></tr>
   </table>
   </dd>
 </dl>
