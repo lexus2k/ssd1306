@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -35,10 +35,19 @@
 
 #define PORT_SPI    PORTB
 #define DDR_SPI     DDRB
-#define DD_MISO     DDB4
-#define DD_MOSI     DDB3
-#define DD_SS       DDB2
-#define DD_SCK      DDB5
+
+#if defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)
+    #define DD_MISO     DDB3
+    #define DD_MOSI     DDB2
+    #define DD_SCK      DDB1
+    #define DD_SS       DDB0
+#else
+    #define DD_MISO     DDB4
+    #define DD_MOSI     DDB3
+    #define DD_SCK      DDB5
+    #define DD_SS       DDB2
+#endif
+
 #define SPI_CLOCK_MASK   0x03
 #define SPI_2XCLOCK_MASK 0x01
 

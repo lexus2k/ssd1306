@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -68,6 +68,14 @@
     #define CONFIG_AVR_UART_AVAILABLE
     /** The macro is defined when VGA monitor control is available directly from controller */
     #define CONFIG_VGA_AVAILABLE
+
+#elif defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)
+    /** The macro is defined when i2c Wire library is available */
+    #define CONFIG_SOFTWARE_I2C_AVAILABLE
+    /** The macro is defined when TWI module is available (ATTINY) */
+    #define CONFIG_TWI_I2C_AVAILABLE
+    /** The macro is defined when SPI module is available */
+    #define CONFIG_AVR_SPI_AVAILABLE
 
 #else
     /** The macro is defined when software i2c implementation is available */
