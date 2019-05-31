@@ -191,7 +191,7 @@ void setup()
 
     // RGB functions do not work in default SSD1306 compatible mode
     ssd1306_setMode( LCD_MODE_NORMAL );
-    ssd1306_fillScreen16( 0x0000 );
+    ssd1306_clearScreen16( );
     ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
     ssd1306_showMenu16( &menu );
 }
@@ -224,7 +224,7 @@ void loop()
         default:
             break;
     }
-    ssd1306_fillScreen16( 0x00 );
+    ssd1306_clearScreen16( );
     ssd1306_setColor(RGB_COLOR16(255,255,255));
     ssd1306_showMenu16(&menu);
     delay(500);
