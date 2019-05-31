@@ -136,10 +136,10 @@ void setup()
 
 void loop()
 {
-    ssd1306_fillScreen(0x00);
+    ssd1306_clearScreen( );
     ssd1306_drawBitmap(0, 0, 128, 64, Owl);
     delay(3000);
-    ssd1306_fillScreen(0x00);
+    ssd1306_clearScreen( );
     ssd1306_drawXBitmap(0, 0, 40, 32, Soba);
     delay(3000);
 }
