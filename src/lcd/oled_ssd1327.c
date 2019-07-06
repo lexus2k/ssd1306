@@ -39,20 +39,23 @@ static const PROGMEM uint8_t s_oled_128x128_initData[] =
     SDL_LCD_SSD1325,
     0x01,
 #endif
+    0xFD, 0x12,  // Unlock OLED
     0xAE,        // OFF		                /* display off */
-    0xB3, 0x91,	 // CLK
     0xA8, 0x7F,  // multiplex 128
-    0xA2, 0x00,	 // Display offset
     0xA1, 0x00,	 // Start line
-    0xAD, 0x02,	 // VCOMH
-    0xA0, 0x10 | 0x04 | 0x02 | 0x01,	 // REMAP: vertical increment mode
-    0x86,        // CURRENT
+    0xA2, 0x00,	 // Display offset
+    0xA0, 0x10 | 0x04 | (0x02 | 0x01),	 // REMAP: vertical increment mode
+    0xAB, 0x01,  // VDD internal
     0x81, 0x70,	 // CONTRAST
-    0xB2, 0x51,	 // FREQ
-    0xB1, 0x55,  // PHASE
-    0xBC, 0x10,  // PRECHARGE
-    0xBE, 0x1C,  // VCOMH voltage
+    0xB1, 0x55,  // PHASE 0x51
+    0xB3, 0x01,	 // CLK
+//   0xB9,         //Reload grey scale
+    0xBC, 0x08,  // PRECHARGE
+    0xBE, 0x07,  // VCOMH voltage
+    0xB6, 0x01,  // Second pre-charge
     0xA4,        // NORMAL
+    0x2E,        // Deactivate scroll
+    0xAF,        // Display ON
 };
 
 /////////////   ssd1327 functions below are for SPI display  ////////////
@@ -127,6 +130,7 @@ void    ssd1327_128x128_init()
     // one needs to be used. For example, ssd1331 is OK with ssd1306_configureI2cDisplay(),
     // while st7735 can be initialized only with ssd1306_configureSpiDisplay().
     ssd1306_configureI2cDisplay(s_oled_128x128_initData, sizeof(s_oled_128x128_initData));
+    delay(100);
 }
 
 void   ssd1327_128x128_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
