@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -27,12 +27,17 @@
 #if defined(SSD1306_ESP_PLATFORM)
 
 #include "intf/ssd1306_interface.h"
-
+#include "intf/spi/ssd1306_spi.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/gpio.h"
 
 #if 1
+
+#if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)
+static void platform_spi_send_cache();
+#endif
+
 // TODO: To complete support. Any help is welcome
 int  digitalRead(int pin)   // digitalRead()
 {
@@ -41,6 +46,12 @@ int  digitalRead(int pin)   // digitalRead()
 
 void digitalWrite(int pin, int level)  // digitalWrite()
 {
+#if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)
+    if (s_ssd1306_dc == pin)
+    {
+        platform_spi_send_cache();
+    }
+#endif
     gpio_set_level(pin, level);
 }
 
@@ -155,6 +166,31 @@ static int8_t s_spi_bus_id;
 // Some oled displays have slow max SPI speed, so display init function can change
 // spi frequency s_ssd1306_spi_clock. Register device, only when frequency is known.
 static uint8_t s_first_spi_session = 0;
+static uint8_t s_spi_cache[1024];
+static int s_spi_cached_count = 0;
+
+static void platform_spi_send_cache()
+{
+    /* TODO: Yeah, sending single bytes is too slow, but *
+     * need to figure out how to detect data/command bytes *
+     * to send bytes as one block */
+    uint8_t *data = s_spi_cache;
+    while (s_spi_cached_count)
+    {
+        size_t sz = s_spi_cached_count > 32 ? 32: s_spi_cached_count;
+        spi_transaction_t t;
+        memset(&t, 0, sizeof(t));
+        t.length=8*sz;          // 8 bits
+        t.tx_buffer=data;
+        // ... Send byte to spi communication channel
+        // We do not care here about DC line state, because
+        // ssd1306 library already set DC pin via ssd1306_spiDataMode() before call to send().
+        spi_device_transmit(s_spi, &t);
+        data+=sz;
+        s_spi_cached_count-=sz;
+    }
+    s_spi_cached_count = 0;
+}
 
 static void platform_spi_start(void)
 {
@@ -171,24 +207,24 @@ static void platform_spi_start(void)
         spi_bus_add_device(s_spi_bus_id ? VSPI_HOST : HSPI_HOST, &devcfg, &s_spi);
         s_first_spi_session = 0;
     }
+    s_spi_cached_count = 0;
 }
 
 static void platform_spi_stop(void)
 {
     // ... Complete spi communication
     // no complete actions required for this implementation
+    platform_spi_send_cache();
 }
 
 static void platform_spi_send(uint8_t data)
 {
-    // ... Send byte to spi communication channel
-    // We do not care here about DC line state, because
-    // ssd1306 library already set DC pin via ssd1306_spiDataMode() before call to send().
-    spi_transaction_t t;
-    memset(&t, 0, sizeof(t));
-    t.length = 8;          // 8 bits
-    t.tx_buffer=&data;
-    spi_device_transmit(s_spi, &t);  // Transmit!
+    s_spi_cache[s_spi_cached_count] = data;
+    s_spi_cached_count++;
+    if ( s_spi_cached_count >= sizeof( s_spi_cache ) )
+    {
+        platform_spi_send_cache();
+    }
 }
 
 static void platform_spi_close(void)
@@ -203,17 +239,10 @@ static void platform_spi_close(void)
 
 static void platform_spi_send_buffer(const uint8_t *data, uint16_t len)
 {
-    // ... Send len bytes to spi communication channel here
-    while (len)
+    while (len--)
     {
-        size_t sz = len > 32 ? 32: len;
-        spi_transaction_t t;
-        memset(&t, 0, sizeof(t));
-        t.length=8*sz;          // 8 bits
-        t.tx_buffer=data;
-        spi_device_transmit(s_spi, &t);
-        data+=sz;
-        len-=sz;
+        platform_i2c_send(*data);
+        data++;
     }
 }
 
