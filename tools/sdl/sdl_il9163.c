@@ -42,6 +42,10 @@ static int sdl_il9163_detect(uint8_t data)
     {
         switch (data)
         {
+            case 0b00000000:
+                sdl_il9163.width = 128;
+                sdl_il9163.height = 128;
+                break;
             case 0b00000011:
                 sdl_il9163.width = 128;
                 sdl_il9163.height = 160;
