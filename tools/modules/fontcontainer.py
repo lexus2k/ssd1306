@@ -146,7 +146,7 @@ class FontContainer:
             data['bitmap'].insert(0, [0] * data['width'])
         data['top'] = self.baseline
         data['height'] = len(data['bitmap'])
-    
+
     # Function expands character bitmap vertically to match the tallest char
     def __expand_char_v(self, data):
         # expand top
@@ -230,7 +230,7 @@ class FontContainer:
                 top_p = max([c['top'] - top_part, 0])
                 bottom_p = max([c['height'] - c['top'] - bottom_part, 0])
                 self.__deflate_char_v( c, top_p, bottom_p )
-        self.__commit_updates()
+        self._commit_updates()
 
     # Deflate chars from bottom side to specified height
     def deflate_chars_bottom(self, height):
