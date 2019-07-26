@@ -58,6 +58,14 @@ static int sdl_ssd1325_detect(uint8_t data)
 {
     if (detected)
     {
+        switch (data)
+        {
+            case 0b00000001:
+                sdl_ssd1325.height = 128;
+                break;
+            default:
+                break;
+        }
         return 1;
     }
     detected = (data == SDL_LCD_SSD1325);
