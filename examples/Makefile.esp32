@@ -60,6 +60,12 @@ prepare_esp32_project:
 	# echo "COMPONENTS:=main sketch ssd1306" >> $(BLD)/esp32/Makefile
 	echo "include \$$(IDF_PATH)/make/project.mk" >> $(BLD)/esp32/Makefile
 
+.PHONY: build
 
-all: prepare_esp32_project prepare_esp32_library prepare_esp32_sketch
+build: prepare_esp32_project prepare_esp32_library prepare_esp32_sketch
 	$(MAKE) -C $(BLD)/esp32
+
+all: build
+
+flash: build
+	$(MAKE) -C $(BLD)/esp32 flash
