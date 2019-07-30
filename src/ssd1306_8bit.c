@@ -315,7 +315,17 @@ size_t ssd1306_write8(uint8_t ch)
         ssd1306_cursorX = 0;
         return 0;
     }
-    else if ( (ssd1306_cursorX > ssd1306_lcd.width - s_fixedFont.h.width) || (ch == '\n') )
+    SCharInfo char_info;
+    uint8_t gotoNewLine = 1;
+    if (ch != '\n')
+    {
+        uint16_t unicode;
+        unicode = ssd1306_unicode16FromUtf8(ch);
+        if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
+        ssd1306_getCharBitmap(unicode, &char_info);
+        gotoNewLine = (ssd1306_cursorX > (ssd1306_lcd.width - char_info.width));
+    }
+    if ( gotoNewLine )
     {
         ssd1306_cursorX = 0;
         ssd1306_cursorY += s_fixedFont.h.height;
@@ -329,10 +339,6 @@ size_t ssd1306_write8(uint8_t ch)
             return 0;
         }
     }
-    uint16_t unicode = ssd1306_unicode16FromUtf8(ch);
-    if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
-    SCharInfo char_info;
-    ssd1306_getCharBitmap(unicode, &char_info);
     if ( 1 )
     {
         uint8_t color = ssd1306_color;
