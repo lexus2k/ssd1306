@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 #    MIT License
 #
-#    Copyright (c) 2018, Alexey Dynda
+#    Copyright (c) 2018-2019, Alexey Dynda
 #
 #    Permission is hereby granted, free of charge, to any person obtaining a copy
 #    of this software and associated documentation files (the "Software"), to deal
@@ -48,17 +48,19 @@ def print_help_and_exit():
     print "      -fh       fixed height"
     print "      -fw       fixed width"
     print "      -g <S> <E> add chars group to the font"
+    print "                where <S> - first char hex or binary code, or char symbol"
+    print "                      <E> - chars count minus 1 (integer), or char symbol"
     print "      -f old    old format 1.7.6 and below"
     print "      -f new    new format 1.7.8 and above"
     print "      -d        Print demo text to console"
     print "      --demo-only Prints demo text to console and exits"
     print "Examples:"
-    print "   [convert ttf font to ssd1306 old format]"
-    print "      ttf_fonts.py --ttf FreeSans.ttf -s 8 -f old > ssd1306font.h"
-    print "   [convert ttf font to ssd1306 new format with demo text and print to console]"
+    print "   [convert ttf font to old format]"
+    print "      ttf_fonts.py --ttf FreeSans.ttf -s 8 -f old > font.h"
+    print "   [convert ttf font to new format with demo text and print to console]"
     print "      ttf_fonts.py --ttf FreeSans.ttf -d -f new"
     print "   [convert GLCD font generated file to new format]"
-    print "      ttf_fonts.py --glcd font.c -f new > ssd1306font.h"
+    print "      ttf_fonts.py --glcd font.c -f new > font.h"
     exit(1)
 
 if len(sys.argv) < 2:

@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #    MIT License
 #
-#    Copyright (c) 2018, Alexey Dynda
+#    Copyright (c) 2018-2019, Alexey Dynda
 #
 #    Permission is hereby granted, free of charge, to any person obtaining a copy
 #    of this software and associated documentation files (the "Software"), to deal
@@ -146,7 +146,7 @@ class FontContainer:
             data['bitmap'].insert(0, [0] * data['width'])
         data['top'] = self.baseline
         data['height'] = len(data['bitmap'])
-    
+
     # Function expands character bitmap vertically to match the tallest char
     def __expand_char_v(self, data):
         # expand top
@@ -192,6 +192,15 @@ class FontContainer:
             data['left'] = 0
 
     def __deflate_char_v(self, data, top=0, bottom=0):
+        if top < 0:
+            data['bitmap'] = [ ([0] * data['width']) for x in range(-top) ] + data['bitmap']
+            data['height'] -= top
+            data['top'] -= top
+            top = 0
+        if bottom < 0:
+            data['bitmap'].extend( [ ([0] * data['width']) for x in range(-bottom) ] )
+            data['height'] -= bottom
+            bottom = 0
         data['bitmap'] = data['bitmap'][top:len(data['bitmap'])-bottom]
         data['height'] -= (top + bottom)
         data['top'] -= top
@@ -228,7 +237,8 @@ class FontContainer:
                 right_p = max([c['width'] - c['left'] - right_part, 0])
                 self.__deflate_char_h( c, left_p, right_p )
                 top_p = max([c['top'] - top_part, 0])
-                bottom_p = max([c['height'] - c['top'] - bottom_part, 0])
+                # bottom_p = max([c['height'] - c['top'] - bottom_part, 0])
+                bottom_p = c['height'] - c['top'] - bottom_part
                 self.__deflate_char_v( c, top_p, bottom_p )
         self._commit_updates()
 

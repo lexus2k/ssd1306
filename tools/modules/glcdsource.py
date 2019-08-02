@@ -22,7 +22,6 @@
 #    SOFTWARE.
 #
 ###################################################################################
-# Fixed font converter for GLCD Creator fonts to internal ssd1306 format
 #
 
 import os
