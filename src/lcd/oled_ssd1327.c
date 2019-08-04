@@ -63,22 +63,68 @@ static const PROGMEM uint8_t s_oled_128x128_initData[] =
 
 //////////////////////// SSD1306 COMPATIBLE MODE ///////////////////////////////
 
-SSD1306_COMPAT_SPI_BLOCK_8BIT_CMDS( 0x15, 0x75 );
+static uint8_t __s_column;
+static uint8_t __s_w;
+static uint8_t __s_w2;
+static uint8_t __s_page;
+static uint8_t __s_leftPixel;
+static uint8_t __s_pos;
+
+static void set_block_compat(lcduint_t x, lcduint_t y, lcduint_t w)
+{
+    uint8_t rx = w ? (x + w - 1) : (ssd1306_lcd.width - 1);
+    rx = rx < ssd1306_lcd.width ? rx : (ssd1306_lcd.width - 1);
+    __s_column = x;
+    __s_page = y;
+    __s_w = w;
+    __s_w2 = rx - x + 1;
+    __s_leftPixel = 0;
+    __s_pos = __s_column;
+    ssd1306_intf.start();
+    ssd1306_spiDataMode(0);
+    ssd1306_intf.send(0x15);
+    ssd1306_intf.send(x / 2);
+    ssd1306_intf.send(rx / 2);
+    ssd1306_intf.send(0x75);
+    ssd1306_intf.send(y<<3);
+    ssd1306_intf.send(((y<<3) + 7) < ssd1306_lcd.height ? ((y<<3) + 7) : (ssd1306_lcd.height - 1));
+    ssd1306_spiDataMode(1);
+}
+
+static void ssd1327_sendPixels(uint8_t data);
+
+static void next_page_compat(void)
+{
+    ssd1306_intf.stop();
+    set_block_compat(__s_column,__s_page + 1, __s_w);
+}
+
+//SSD1306_COMPAT_SPI_BLOCK_8BIT_CMDS( 0x15, 0x75 );
 
 static void ssd1327_sendPixels(uint8_t data)
 {
-    for (uint8_t i=4; i>0; i--)
+    if (!(__s_pos & 0x01))
     {
-        uint8_t color = (data & 0x01) ? ssd1306_color : 0;
-        color |= (((data & 0x02) ? ssd1306_color: 0) << 4);
-        ssd1306_intf.send(color);
-        data >>= 2;
+        __s_leftPixel = data;
+        data = 0x00;
     }
+    if ((__s_pos & 0x01) || (__s_pos == __s_column + __s_w2 - 1))
+    {
+        for (uint8_t i=8; i>0; i--)
+        {
+            uint8_t color = (__s_leftPixel & 0x01) ? (ssd1306_color & 0x0F) : 0;
+            color |= (((data & 0x01) ? (ssd1306_color & 0x0F): 0) << 4);
+            ssd1306_intf.send(color);
+            data >>= 1;
+            __s_leftPixel >>= 1;
+        }
+    }
+    __s_pos++;
 }
 
 static void ssd1327_sendPixelsBuffer(const uint8_t *buffer, uint16_t len)
 {
-    while(len--)
+    while (len--)
     {
         ssd1327_sendPixels(*buffer);
         buffer++;
