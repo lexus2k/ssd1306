@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -36,6 +36,8 @@ static int s_rowEnd = 7;
 static int s_newColumn;
 static int s_newPage;
 static uint8_t detected = 0;
+static uint8_t s_subtype = SDL_LCD_SSD1325_GENERIC;
+static uint8_t s_hwComSplit = 0;
 
 
 static void copyBlock()
@@ -60,15 +62,25 @@ static int sdl_ssd1325_detect(uint8_t data)
     {
         switch (data)
         {
-            case 0b00000001:
+            case SDL_LCD_SSD1325_GENERIC:
+                s_hwComSplit = 1;
+                sdl_ssd1325.height = 64;
+                break;
+            case SDL_LCD_SSD1327_GENERIC:
+                s_hwComSplit = 1;
+                sdl_ssd1325.height = 128;
+                break;
+            case SDL_LCD_SSD1327_NO_COM_SPLIT:
+                s_hwComSplit = 0;
                 sdl_ssd1325.height = 128;
                 break;
             default:
                 break;
         }
+        s_subtype = data;
         return 1;
     }
-    detected = (data == SDL_LCD_SSD1325);
+    detected = (data == SDL_LCD_SSD1325 || data == SDL_LCD_SSD1327);
     return 0;
 }
 
@@ -181,7 +193,7 @@ static void sdl_ssd1325_data(uint8_t data)
     {
         int y = s_topToBottom ? s_activeRow : (sdl_ssd1325.height - s_activeRow - 1);
         int x = s_leftToRight ? s_activeColumn: (sdl_ssd1325.width - s_activeColumn - 1);
-        if (s_comSplit)
+        if ( (s_comSplit && !s_hwComSplit) || (!s_comSplit && s_hwComSplit) )
         {
             y = ((y & 0x3F) * 2) + ((y > 0x3F) ? 1: 0);
         }

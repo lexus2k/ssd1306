@@ -38,12 +38,21 @@ enum
     SDL_LCD_SH1106,
     SDL_LCD_PCD8544,
     SDL_LCD_SSD1325,
+    SDL_LCD_SSD1327,
     SDL_LCD_SSD1331_X8,
     SDL_LCD_SSD1331_X16,
     SDL_LCD_SSD1351,
     SDL_LCD_IL9163,
     SDL_LCD_ST7735,
     SDL_LCD_ILI9341,
+};
+
+/** ssd1325 / ssd1327 types */
+enum
+{
+    SDL_LCD_SSD1325_GENERIC,
+    SDL_LCD_SSD1327_GENERIC,
+    SDL_LCD_SSD1327_NO_COM_SPLIT,
 };
 
 extern void sdl_core_init(void);

@@ -36,15 +36,15 @@ extern uint16_t ssd1306_color;
 static const PROGMEM uint8_t s_oled_128x128_initData[] =
 {
 #ifdef SDL_EMULATION
-    SDL_LCD_SSD1325,
-    0x01,
+    SDL_LCD_SSD1327,
+    SDL_LCD_SSD1327_GENERIC,
 #endif
     0xFD, 0x12,  // Unlock OLED
     0xAE,        // OFF		                /* display off */
     0xA8, 0x7F,  // multiplex 128
     0xA1, 0x00,	 // Start line
     0xA2, 0x00,	 // Display offset
-    0xA0, 0x10 | 0x04 | (0x02 | 0x01),	 // REMAP: vertical increment mode
+    0xA0, 0x40 | 0x10 | 0x04 | (0x02 | 0x01),   // REMAP: vertical increment mode
     0xAB, 0x01,  // VDD internal
     0x81, 0x70,	 // CONTRAST
     0xB1, 0x55,  // PHASE 0x51
