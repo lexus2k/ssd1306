@@ -352,6 +352,22 @@ void         ssd1306_drawBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, cons
 void         ssd1306_drawXBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf);
 
 /**
+ * Draw bitmap, located in Flash, on the display
+ * The bitmap should be in in grayscale 4-bit format:
+ * ROW 1: 222211114444333366665555...
+ * ROW 2: 222211114444333366665555...
+ * ...
+ * ROW N: 222211114444333366665555...
+ *
+ * @param x - horizontal position in pixels
+ * @param y - vertical position in pixels
+ * @param w - width of bitmap in pixels
+ * @param h - height of bitmap in pixels (must be divided by 8)
+ * @param buf - pointer to data, located in Flash.
+ */
+void         ssd1306_drawBitmap1_4(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf);
+
+/**
  * Draws bitmap, located in Flash, on the display
  *
  * @param x - horizontal position in pixels

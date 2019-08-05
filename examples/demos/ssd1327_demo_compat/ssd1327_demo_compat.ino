@@ -53,6 +53,18 @@ const PROGMEM uint8_t heartImage[8] =
     0B00001110
 };
 
+const PROGMEM uint8_t heartImage4[4 * 8] =
+{
+    0xF0, 0x0F, 0xF0, 0x0F,
+    0xFF, 0xFF, 0x7F, 0xF2,
+    0xFF, 0xFF, 0xCF, 0xF7,
+    0xFF, 0xFF, 0xFF, 0xF9,
+    0xF0, 0xFF, 0xFF, 0x3F,
+    0x00, 0xFF, 0xFF, 0x03,
+    0x00, 0xF0, 0x3F, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+};
+
 /*
  * Define sprite width. The width can be of any size.
  * But sprite height is always assumed to be 8 pixels
@@ -73,8 +85,12 @@ const char *menuItems[] =
 
 static void bitmapDemo()
 {
+    ssd1306_clearScreen();
     ssd1306_setColor(GRAY_COLOR4(128));
     ssd1306_drawBitmap(0, 0, 96, 64, Sova);
+    ssd1306_drawBitmap1_4(8, 72, 8, 8, heartImage4);
+    ssd1306_drawBitmap1_4(10, 82, 8, 8, heartImage4);
+    ssd1306_drawBitmap1_4(18, 74, 8, 8, heartImage4);
     delay(3000);
 }
 

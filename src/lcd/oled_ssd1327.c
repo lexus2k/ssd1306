@@ -122,6 +122,11 @@ static void ssd1327_sendPixels(uint8_t data)
     __s_pos++;
 }
 
+static void ssd1327_sendPixels8(uint8_t data)
+{
+    ssd1306_intf.send( data );
+}
+
 static void ssd1327_sendPixelsBuffer(const uint8_t *buffer, uint16_t len)
 {
     while (len--)
@@ -169,7 +174,7 @@ void    ssd1327_128x128_init()
     ssd1306_lcd.send_pixels1  = ssd1327_sendPixels;
     ssd1306_lcd.send_pixels_buffer1 = ssd1327_sendPixelsBuffer;
     // Set function for 8-bit mode
-    ssd1306_lcd.send_pixels8 = ssd1306_intf.send;
+    ssd1306_lcd.send_pixels8 = ssd1327_sendPixels8;
     ssd1306_lcd.set_mode = ssd1327_setMode;
     // Use one of 2 functions for initialization below
     // Please, read help on this functions and read datasheet before you decide, which
