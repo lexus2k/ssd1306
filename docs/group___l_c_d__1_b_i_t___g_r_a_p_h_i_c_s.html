@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.20</span>
+   &#160;<span id="projectnumber">1.7.22</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -126,6 +126,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga0a4c06ba9b309741003b172c3c5cf874"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab9232895352296557f083f367da7c0b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#gab9232895352296557f083f367da7c0b5">ssd1306_drawXBitmap</a> (uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)</td></tr>
 <tr class="separator:gab9232895352296557f083f367da7c0b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1666e79e681b193bde513f107b3e4412"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga1666e79e681b193bde513f107b3e4412">ssd1306_drawBitmap1_4</a> (uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)</td></tr>
+<tr class="separator:ga1666e79e681b193bde513f107b3e4412"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac47f2a6a1e4c3f78fd4b793f49694f53"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#gac47f2a6a1e4c3f78fd4b793f49694f53">gfx_drawMonoBitmap</a> (<a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> x, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> y, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> w, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga3de6a212815ee8499f4042db94992210">lcduint_t</a> h, const uint8_t *buf)</td></tr>
 <tr class="separator:gac47f2a6a1e4c3f78fd4b793f49694f53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac25cf0ec751a4a3e81e4c7d4ae04e81e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#gac25cf0ec751a4a3e81e4c7d4ae04e81e">ssd1306_clearBlock</a> (uint8_t x, uint8_t y, uint8_t w, uint8_t h)</td></tr>
@@ -264,7 +266,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00798">798</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00837">837</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -317,7 +319,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>number of chars in string </dd></dl>
 <dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000025">Deprecated:</a></b></dt><dd>Use ssd1306_drawFixedN() instead. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00509">509</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00515">515</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -370,7 +372,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>number of chars in string </dd></dl>
 <dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000024">Deprecated:</a></b></dt><dd>Use <a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga8000e9cfe2aa02fc552ea80cb23d49fa">ssd1306_printFixed()</a> instead. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00463">463</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00469">469</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -430,7 +432,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>number of chars in string </dd></dl>
 <dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000026">Deprecated:</a></b></dt><dd>This function is removed as superflouse. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00584">584</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00590">590</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -482,7 +484,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>usually this method is used to erase bitmap on the screen. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00855">855</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00894">894</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -555,7 +557,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_s_p_r_i_t_e.html">SPRITE</a> structure </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l01002">1002</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l01041">1041</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -614,7 +616,66 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00747">747</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00753">753</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+
+</div>
+</div>
+<a id="ga1666e79e681b193bde513f107b3e4412"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1666e79e681b193bde513f107b3e4412">&#9670;&nbsp;</a></span>ssd1306_drawBitmap1_4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ssd1306_drawBitmap1_4 </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>w</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>h</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>buf</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Draw bitmap, located in Flash, on the display The bitmap should be in in grayscale 4-bit format: ROW 1: 222211114444333366665555... ROW 2: 222211114444333366665555... ... ROW N: 222211114444333366665555...</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>- horizontal position in pixels </td></tr>
+    <tr><td class="paramname">y</td><td>- vertical position in pixels </td></tr>
+    <tr><td class="paramname">w</td><td>- width of bitmap in pixels </td></tr>
+    <tr><td class="paramname">h</td><td>- height of bitmap in pixels (must be divided by 8) </td></tr>
+    <tr><td class="paramname">buf</td><td>- pointer to data, located in Flash. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00771">771</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -673,7 +734,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00732">732</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00738">738</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -733,7 +794,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd><a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#gad490bc94008439efae8c688b6e6d3f86">ssd1306_drawBufferFast()</a> doesn't support negative draw mode. Use <a class="el" href="group___l_c_d__1_b_i_t___g_r_a_p_h_i_c_s.html#ga7a7f8e761a45eb4b4d53d76dd5f72a35">ssd1306_drawBuffer()</a> instead. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00719">719</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00725">725</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -777,7 +838,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00677">677</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00683">683</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -829,7 +890,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>Remember that this function draws line directly in GDRAM of oled controller. Since there is no way to detect pixels already being displayed, some pixels can be overwritten by black color. If you use RGB oled, based on ssd1331 controller, use <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gafa4c239fd99c5541b06d46ac9ed88b6d">ssd1331_drawLine()</a> function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00633">633</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00639">639</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -880,7 +941,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00711">711</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00717">717</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -906,7 +967,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00917">917</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00956">956</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -957,7 +1018,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00905">905</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00944">944</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -1001,7 +1062,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00687">687</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00693">693</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -1060,7 +1121,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00765">765</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00804">804</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -1086,7 +1147,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00943">943</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00982">982</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -1112,7 +1173,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00965">965</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l01004">1004</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -1165,7 +1226,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>set color with <a class="el" href="group___l_c_d__8_b_i_t___g_r_a_p_h_i_c_s.html#gae2594212c34681fcc7f561032d8c7d7d" title="Sets default color, generated by RGB_COLOR8 or RGB_COLOR16 macros. ">ssd1306_setColor()</a> function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00870">870</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00909">909</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -1207,7 +1268,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>All drawing functions start to work in negative mode. Old picture on the display remains unchanged. </p>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l01012">1012</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l01051">1051</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -1228,7 +1289,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>All drawing functions start to work in positive (default) mode. Old picture on the display remains unchanged. </p>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l01017">1017</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l01056">1056</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -1257,7 +1318,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>returns number of printed characters. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00452">452</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00458">458</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -1477,7 +1538,7 @@ Be careful with you flash space! Do not mix too many different functions in sing
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00599">599</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00605">605</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -1522,7 +1583,7 @@ Be careful with you flash space! Do not mix too many different functions in sing
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00606">606</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l00612">612</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
@@ -1559,7 +1620,7 @@ Be careful with you flash space! Do not mix too many different functions in sing
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l01007">1007</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ssd1306__1bit_8c_source.html#l01046">1046</a> of file <a class="el" href="ssd1306__1bit_8c_source.html">ssd1306_1bit.c</a>.</p>
 
 </div>
 </div>
