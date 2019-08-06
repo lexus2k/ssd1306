@@ -773,15 +773,22 @@ void ssd1306_drawBitmap1_4(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uin
     uint8_t i, j, k;
     ssd1306_lcd.set_block(x, y>>3, w);
     uint8_t y_offset = (y & 0x07);
+    uint8_t x_offset = (x & 0x01);
     for( j = 0; j < ((h + 7 + y_offset) >> 3); j++)
     {
-        for( i = 0; i < w / 2; i++)
+        for( i = 0; i < w / 2 + x_offset; i++)
         {
             for( k = 0; k < 8; k++)
             {
                 if ((j*8 + k - y_offset < h) && (k >= y_offset || j != 0))
                 {
-                    ssd1306_lcd.send_pixels8( pgm_read_byte( &buf[ i + (j * 8 + k - y_offset) * w / 2 ] ) );
+                    uint8_t data = (i < w / 2) ? pgm_read_byte( &buf[ i + (j * 8 + k - y_offset) * w / 2 ] ) : 0x00;
+                    if ( x_offset )
+                    {
+                        data <<= 4;
+                        if ( i > 0) data |= pgm_read_byte( &buf[ i + (j * 8 + k - y_offset) * w / 2 - 1] ) >> 4;
+                    }
+                    ssd1306_lcd.send_pixels8( data );
                 }
                 else
                 {

@@ -89,8 +89,8 @@ static void bitmapDemo()
     ssd1306_setColor(GRAY_COLOR4(128));
     ssd1306_drawBitmap(0, 0, 96, 64, Sova);
     ssd1306_drawBitmap1_4(8, 72, 8, 8, heartImage4);
-    ssd1306_drawBitmap1_4(10, 82, 8, 8, heartImage4);
     ssd1306_drawBitmap1_4(18, 74, 8, 8, heartImage4);
+    ssd1306_drawBitmap1_4(11, 82, 8, 8, heartImage4);
     delay(3000);
 }
 
