@@ -481,6 +481,48 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////
 //
+//                             4-BIT GRAPHICS
+//
+/////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * NanoCanvas1_4 represents objects for drawing in memory buffer
+ * NanoCanvas1_4 represents each pixel as 4-bits in GRAYscale: 11112222
+ * For details refer to ssd1327/ssd1325 datasheet
+ */
+class NanoCanvas1_4: public NanoCanvasBase<4>
+{
+public:
+    using NanoCanvasBase::NanoCanvasBase;
+
+    /**
+     * Draws canvas on the LCD display
+     * @param x - horizontal position in pixels
+     * @param y - vertical position in pixels
+     */
+    void blt(lcdint_t x, lcdint_t y) override;
+
+    /**
+     * Draws canvas on the LCD display using offset values.
+     */
+    void blt() override;
+
+    /**
+     * Draws only part of canvas on the LCD display.
+     * This method uses Canvas offset field as top-left point of whole canvas
+     * content. First point of specified rectangle defines the actual top-left
+     * point on the screen to be refreshed.
+     * For example, `blt({{8,0},{15,7}});` will copy canvas area {8,0}-{15,7}
+     * to screen starting at {8,0} if canvas offset is {0,0}.
+     * If canvas offset is {12,3}, then canvas area {8,0}-{15,7} will be copied
+     * to screen at position {20,3}.
+     * @param rect rectagle describing part of canvas to move to display.
+     */
+    void blt(const NanoRect &rect) override;
+};
+
+/////////////////////////////////////////////////////////////////////////////////
+//
 //                             8-BIT GRAPHICS
 //
 /////////////////////////////////////////////////////////////////////////////////

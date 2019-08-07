@@ -30,7 +30,7 @@
 /* !!! THIS DEMO RUNS in SSD1306 COMPATIBLE MODE */
 
 #include "ssd1306.h"
-#include "nano_gfx.h"
+#include "nano_engine.h"
 #include "sova.h"
 
 #define GRAY_COLOR4(x) (x/16)
@@ -141,20 +141,22 @@ static void textDemo()
 
 static void canvasDemo()
 {
-    uint8_t buffer[64*16/8];
-    NanoCanvas canvas(64,16, buffer);
-    ssd1306_setColor(GRAY_COLOR4(192));
+    uint8_t buffer[32*16/2];
+    NanoCanvas1_4 canvas(32,16, buffer);
     ssd1306_setFixedFont(ssd1306xled_font6x8);
     ssd1306_clearScreen();
     canvas.clear();
-    canvas.fillRect(10, 3, 80, 5, 0xFF);
-    canvas.blt((ssd1306_displayWidth()-64)/2, 1);
+    canvas.setColor(GRAY_COLOR4(127));
+    canvas.fillRect(10, 3, 80, 5);
+    canvas.blt((ssd1306_displayWidth()-32)/2, 1);
     delay(500);
-    canvas.fillRect(50, 1, 60, 15, 0xFF);
-    canvas.blt((ssd1306_displayWidth()-64)/2, 1);
+    canvas.setColor(GRAY_COLOR4(255));
+    canvas.fillRect(16, 1, 20, 15);
+    canvas.blt((ssd1306_displayWidth()-32)/2, 1);
     delay(1500);
-    canvas.printFixed(20, 1, " DEMO ", STYLE_BOLD );
-    canvas.blt((ssd1306_displayWidth()-64)/2, 1);
+    canvas.setColor(GRAY_COLOR4(64));
+    canvas.printFixed(3, 1, "DEMO", STYLE_BOLD );
+    canvas.blt((ssd1306_displayWidth()-32)/2, 1);
     delay(3000);
 }
 

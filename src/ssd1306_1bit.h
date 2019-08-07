@@ -304,6 +304,19 @@ void         ssd1306_drawBuffer(uint8_t x, uint8_t y, uint8_t w, uint8_t h, cons
 
 /**
  * Draws bitmap, located in SRAM, on the display
+ * Each byte represents 2 horizontal grayscale pixels.
+ *
+ * @param x - horizontal position in pixels
+ * @param y - vertical position in pixels
+ * @param w - width of bitmap in pixels
+ * @param h - height of bitmap in pixels (must be divided by 8)
+ * @param buf - pointer to data, located in SRAM: each byte represents 2 horizontal pixels.
+ */
+void         ssd1306_drawBuffer1_4(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf);
+
+
+/**
+ * Draws bitmap, located in SRAM, on the display
  * Each byte represents 8 vertical pixels.
  *
  * ~~~~~~~~~~~~~~~{.c}

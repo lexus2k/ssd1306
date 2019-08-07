@@ -51,6 +51,12 @@
                                (((uint16_t)c & 0b00011100) << 6) | \
                                (((uint16_t)c & 0b00000011) << 3) )
 
+/** Macro to convert 8-bit RGB to 4-bit monochrome format */
+#define RGB8_TO_GRAY4(rgb)  ( (rgb >> 6) + ((rgb >> 2) & 0x07) + (rgb & 0x03) )
+
+/** Macro to generate 4-bit monochrome color from gray component */
+#define GRAY_COLOR4(gray)    ( ((gray >> 4) & 0x0F) | (gray & 0xF0) )
+
 /** Macro to convert 5-6-5 color to 3-3-2 color */
 #define RGB16_TO_RGB8(c)     ( ((uint16_t)(c >> 8) & 0b11100000) | \
                                ((uint16_t)(c >> 6) & 0b00011100) | \
