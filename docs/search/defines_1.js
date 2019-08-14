@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['max',['max',['../nano__gfx__types_8h.html#affe776513b24d84b39af8ab0930fef7f',1,'nano_gfx_types.h']]],
-  ['min',['min',['../nano__gfx__types_8h.html#ac6afabdc09a49a433ee19d8a9486056d',1,'nano_gfx_types.h']]]
+  ['gray_5fcolor4',['GRAY_COLOR4',['../nano__gfx__types_8h.html#afd58e53d7074f56bbd024730c0f24067',1,'nano_gfx_types.h']]]
 ];
