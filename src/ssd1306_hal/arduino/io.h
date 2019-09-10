@@ -70,7 +70,7 @@
         typedef uint8_t lcduint_t;
     #endif
 
-#elif defined(ARDUINO_AVR_ATTINYX5)
+#elif defined(ARDUINO_AVR_ATTINYX5) || defined(ARDUINO_AVR_ATTINYX4)
 
     /** The macro is defined when software i2c implementation is available */
     #define CONFIG_SOFTWARE_I2C_AVAILABLE
