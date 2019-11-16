@@ -36,6 +36,11 @@ static int s_pageEnd = 7;
 static uint8_t detected = 0;
 static uint8_t s_lcd_type;
 
+static void sdl_il9163_reset(void)
+{
+    detected = 0;
+}
+
 static int sdl_il9163_detect(uint8_t data)
 {
     if (detected)
@@ -252,4 +257,5 @@ sdl_oled_info sdl_il9163 =
     .detect = sdl_il9163_detect,
     .run_cmd = sdl_il9163_commands,
     .run_data = sdl_il9163_data,
+    .reset = sdl_il9163_reset,
 };

@@ -49,7 +49,7 @@ typedef enum
 
 typedef enum
 {
-    SDM_COMMAND_ARG,    // data mode interprets all data as command args 
+    SDM_COMMAND_ARG,    // data mode interprets all data as command args
     SDM_WRITE_DATA,     // data mode sends all data to GDRAM
 } sdl_data_mode;
 
@@ -63,6 +63,7 @@ typedef struct
     int   (*detect)(uint8_t data);
     void  (*run_cmd)(uint8_t data);
     void  (*run_data)(uint8_t data);
+    void  (*reset)(void);
 } sdl_oled_info;
 
 #if defined(SDL_NO_BORDER)
@@ -78,6 +79,7 @@ const static int PIXEL_SIZE = 2;
 
 extern int s_commandId;
 extern int s_cmdArgIndex;
+extern uint8_t s_detected;
 
 extern void sdl_set_data_mode(sdl_data_mode mode);
 

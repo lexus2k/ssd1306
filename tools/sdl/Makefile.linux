@@ -1,6 +1,6 @@
 #    MIT License
 #
-#    Copyright (c) 2018, Alexey Dynda
+#    Copyright (c) 2018-2019, Alexey Dynda
 #
 #    Permission is hereby granted, free of charge, to any person obtaining a copy
 #    of this software and associated documentation files (the "Software"), to deal
@@ -22,58 +22,34 @@
 #
 #################################################################
 # Makefile containing common logic for all systems
-#
-# Accepts the following parameters:
-# CC
-# CXX
-# STRIP
-# AR
 
 default: all
 
 DESTDIR ?=
 BLD ?= ../../bld
-BACKSLASH?=/
-MKDIR?=mkdir -p
-convert=$(subst /,$(BACKSLASH),$1)
-
-.SUFFIXES: .c .cpp .ino
-
-$(BLD)/%.o: %.c
-	-$(MKDIR) $(call convert,$(dir $@))
-	$(CC) -std=gnu11 $(CCFLAGS) -c $< -o $@
-
-$(BLD)/%.o: %.ino
-	-$(MKDIR) $(call convert,$(dir $@))
-	$(CXX) -std=c++11 $(CCFLAGS) -x c++ -c $< -o $@
-
-$(BLD)/%.o: %.cpp
-	-$(MKDIR) $(call convert,$(dir $@))
-	$(CXX) -std=c++11 $(CCFLAGS) -c $< -o $@
 
 # ************* Common defines ********************
 
-INCLUDES += \
-        -I.
+CPPFLAGS += -I.
 
-CCFLAGS += -g -Os $(INCLUDES) -Wall -Werror -ffunction-sections -fdata-sections \
+CPPFLAGS += -g -Os -Wall -Werror -ffunction-sections -fdata-sections \
 	-fno-exceptions -Wno-error=deprecated-declarations \
-	$(EXTRA_CCFLAGS)
+	$(EXTRA_CPPFLAGS)
+
+CFLAGS += -std=c99
 
 .PHONY: clean ssd1306_sdl all
 
-SRCS = \
-	sdl_core.c \
-	sdl_graphics.c \
-	sdl_ssd1306.c \
-	sdl_ssd1325.c \
-	sdl_ssd1331.c \
-	sdl_ssd1351.c \
-	sdl_il9163.c \
-	sdl_ili9341.c \
-	sdl_pcd8544.c \
-
-OBJS = $(addprefix $(BLD)/, $(addsuffix .o, $(basename $(SRCS))))
+OBJS = \
+	sdl_core.o \
+	sdl_graphics.o \
+	sdl_ssd1306.o \
+	sdl_ssd1325.o \
+	sdl_ssd1331.o \
+	sdl_ssd1351.o \
+	sdl_il9163.o \
+	sdl_ili9341.o \
+	sdl_pcd8544.o \
 
 ####################### Compiling library #########################
 
@@ -86,3 +62,6 @@ all: ssd1306_sdl
 
 clean:
 	rm -rf $(BLD)
+	rm -rf $(OBJS)
+	rm -rf $(OBJS:%.o=%.d)
+	rm -rf $(OBJS:.o=.gcno) $(OBJS:.o=.gcda)

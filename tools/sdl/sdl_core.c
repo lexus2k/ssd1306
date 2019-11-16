@@ -54,15 +54,40 @@ static uint8_t s_gpioKeys[6] = {0};
 static sdl_oled_info *p_oled_db[128] = { NULL };
 static sdl_oled_info *p_active_driver = NULL;
 
+int s_commandId = SSD_COMMAND_NONE;
+int s_cmdArgIndex;
+static int s_ssdMode = SSD_MODE_NONE;
+static sdl_data_mode s_active_data_mode = SDM_COMMAND_ARG;
+
+static int s_oled = SDL_AUTODETECT;
+
+
 static void register_oled(sdl_oled_info *oled_info)
 {
     sdl_oled_info **p = p_oled_db;
     while (*p) (p++);
     *p = oled_info;
+    if ( oled_info->reset )
+    {
+        oled_info->reset();
+    }
+}
+
+static void unregister_oleds(void)
+{
+    memset( p_oled_db, 0, sizeof( p_oled_db ) );
+    p_active_driver = NULL;
 }
 
 void sdl_core_init(void)
 {
+    s_commandId = SSD_COMMAND_NONE;
+    s_ssdMode = SSD_MODE_NONE;
+    s_active_data_mode = SDM_COMMAND_ARG;
+    s_oled = SDL_AUTODETECT;
+    s_dcPin = -1;
+    memset(s_gpioKeys, 0, sizeof(s_gpioKeys));
+
     register_oled( &sdl_ssd1306 );
     register_oled( &sdl_ssd1325 );
     register_oled( &sdl_ssd1331x8 );
@@ -136,17 +161,11 @@ void sdl_core_close(void)
 {
     sdl_graphics_close();
     SDL_Quit();
+    unregister_oleds();
 }
 
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
-
-int s_commandId = SSD_COMMAND_NONE;
-int s_cmdArgIndex;
-static int s_ssdMode = SSD_MODE_NONE;
-static sdl_data_mode s_active_data_mode = SDM_COMMAND_ARG;
-
-static int s_oled = SDL_AUTODETECT;
 
 void sdl_send_init()
 {

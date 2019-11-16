@@ -54,5 +54,5 @@ flash: $(OUTFILE)
 ifeq ($(SDL_EMULATION),y)
 $(OUTFILE): ssd1306_sdl
 ssd1306_sdl:
-	$(MAKE) -C ../tools/sdl -f Makefile.$(platform) EXTRA_CCFLAGS="$(EXTRA_CCFLAGS)"
+	$(MAKE) -C ../tools/sdl -f Makefile.$(platform) EXTRA_CPPFLAGS="$(EXTRA_CCFLAGS)"
 endif

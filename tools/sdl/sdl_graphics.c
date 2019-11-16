@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,7 @@
 #include <SDL2/SDL.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <string.h>
 
 #define CANVAS_REFRESH_RATE  60
@@ -41,6 +42,7 @@ static int s_width = 128;
 static int s_height = 64;
 static int s_bpp = 16;
 static uint32_t s_pixfmt = SDL_PIXELFORMAT_RGB565;
+static bool s_unittest_mode = false;
 
 static int windowWidth() { return s_width * PIXEL_SIZE + BORDER_SIZE * 2; };
 static int windowHeight() { return s_height * PIXEL_SIZE + BORDER_SIZE * 2 + TOP_HEADER; };
@@ -49,8 +51,13 @@ void sdl_graphics_init(void)
 {
     if ((g_window != NULL) && (g_renderer != NULL))
     {
-         /* SDL engine is already initialize */
-         return;
+        /* SDL engine is already initialize */
+        return;
+    }
+    if ( s_unittest_mode )
+    {
+        SDL_Init(0);
+        return;
     }
     SDL_Init(SDL_INIT_EVERYTHING);
     g_window = SDL_CreateWindow
@@ -132,6 +139,10 @@ static void sdl_draw_oled_frame(void)
 
 void sdl_graphics_refresh(void)
 {
+    if ( s_unittest_mode )
+    {
+        return;
+    }
     sdl_draw_oled_frame();
     if (g_texture)
     {
@@ -176,6 +187,10 @@ void sdl_graphics_set_oled_params(int width, int height, int bpp, uint32_t pixfm
         g_pixels = NULL;
     }
     g_pixels = malloc(s_width * s_height * (s_bpp / 8));
+    if ( s_unittest_mode )
+    {
+        return;
+    }
     g_texture = SDL_CreateTexture( g_renderer, s_pixfmt,
                                    SDL_TEXTUREACCESS_STREAMING,
                                    width, height );
@@ -249,9 +264,63 @@ uint32_t sdl_get_pixel(int x, int y)
     return pixel;
 }
 
-
 void sdl_graphics_close(void)
 {
+    if ( s_unittest_mode )
+    {
+        return;
+    }
     SDL_DestroyWindow(g_window);
 }
 
+static uint32_t convert_pixel( uint32_t value, uint8_t target_bpp )
+{
+    uint32_t pixel;
+    switch ( s_pixfmt )
+    {
+        case SDL_PIXELFORMAT_RGB332: pixel = ((value & 0xE0) << 24) | ((value & 0x1C) << 19) | ((value & 0x03) << 14) | ( 0xFF ); break;
+        case SDL_PIXELFORMAT_RGB565: pixel = ((value & 0xF800) << 16) | ((value & 0x07E0) << 13) | ((value & 0x001F) << 11) | ( 0xFF ); break;
+        case SDL_PIXELFORMAT_RGBX8888: pixel = value;
+        default: pixel = 0; break;
+    }
+    switch ( target_bpp )
+    {
+        case 1: pixel = (pixel & 0xFFFFFF00) ? 1 : 0; break;
+        case 4: pixel = (pixel & 0x000000F0) >> 4; break;
+        case 8: pixel = ((pixel & 0xE0000000) >> 24) | ((pixel & 0x00E00000) >> 19) | ((pixel & 0x0000C000) >> 14); break;
+        case 16: pixel = ((pixel & 0xF8000000) >> 16) | ((pixel & 0x00FC0000) >> 13) | ((pixel & 0x0000F800) >> 11); break;
+        case 32: break;
+        default: break;
+    }
+    return pixel;
+}
+
+void sdl_core_get_pixels_data( uint8_t *pixels, uint8_t target_bpp )
+{
+    for (int x = 0; x < s_width; x++)
+        for (int y = 0; y < s_height; y++)
+        {
+            uint32_t pixel = sdl_get_pixel( x, y );
+            pixel = convert_pixel( pixel, target_bpp );
+            switch ( target_bpp )
+            {
+                case 1: ((uint8_t *)pixels)[x + (y / 8)*s_width] |= (pixel << (y & 0x7));  break;
+                case 4: ((uint8_t *)pixels)[x / 2 + y * s_width / 2] |= (pixel << ((x & 1) * 4)); break;
+                case 8: ((uint8_t *)pixels)[x + y * s_width] = pixel; break;
+                case 16: ((uint16_t *)pixels)[x + y * s_width] = pixel; break;
+                case 32: ((uint32_t *)pixels)[x + y * s_width] = pixel; break;
+                default: break;
+            }
+        }
+}
+
+int sdl_core_get_pixels_len( uint8_t target_bpp )
+{
+    int size = s_width * s_height * target_bpp / 8;
+    return size;
+}
+
+void sdl_core_set_unittest_mode(void)
+{
+    s_unittest_mode = true;
+}
