@@ -68,6 +68,11 @@ extern int  sdl_read_analog(int pin);
 extern void sdl_write_digital(int pin, int value);
 extern int sdl_read_digital(int pin);
 
+/** Allocates buffer, returns number of bytes allocated */
+extern void sdl_core_get_pixels_data( uint8_t *pixels, uint8_t target_bpp );
+/** Returns length in bytes, required to hold the data */
+extern int sdl_core_get_pixels_len( uint8_t target_bpp );
+extern void sdl_core_set_unittest_mode(void);
 extern void sdl_core_close(void);
 
 #ifdef __cplusplus

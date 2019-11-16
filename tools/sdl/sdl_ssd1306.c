@@ -82,6 +82,11 @@ static void blt_content()
     }
 }
 
+static void sdl_ssd1306_reset(void)
+{
+    detected = 0;
+}
+
 static int sdl_ssd1306_detect(uint8_t data)
 {
     if (detected)
@@ -213,4 +218,5 @@ sdl_oled_info sdl_ssd1306 =
     .detect = sdl_ssd1306_detect,
     .run_cmd = sdl_ssd1306_commands,
     .run_data = sdl_ssd1306_data,
+    .reset = sdl_ssd1306_reset,
 };
