@@ -46,7 +46,7 @@ enum
 uint16_t ssd1306_color = 0xFFFF;
 lcduint_t ssd1306_cursorX = 0;
 lcduint_t ssd1306_cursorY = 0;
-SFixedFontInfo s_fixedFont = {0}; //{ { 0 }, 0 };
+SFixedFontInfo s_fixedFont = {}; //{ { 0 }, 0 };
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
 uint8_t g_ssd1306_unicode = 1;
 #endif
