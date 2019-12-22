@@ -30,6 +30,8 @@
 
 #if defined(CONFIG_SOFTWARE_I2C_AVAILABLE) && defined(CONFIG_SOFTWARE_I2C_ENABLE)
 
+#include <util/delay_basic.h>
+
 /**
  * Port registers, containing pins, which SSD1306 display is connected to.
  * For ATtiny controllers it is standard PORTB
@@ -62,9 +64,8 @@ static uint8_t s_sa  = SSD1306_SA;
 #endif
 #define CPU_CYCLE_NS   (1000000000/F_CPU)
 
-// each delay loop takes 4 cycles: nop(1), dec(1), jnz(2) 
 #define DELAY_LOOP_CYCLES 4
-#define ssd1306_delay(x) for(uint8_t i2=x; i2>0; i2--){__asm__("nop\n\t");}
+#define ssd1306_delay(x) _delay_loop_2(x)
 
 /**
  * Section, which defines I2C timings for SSD1306 display from datasheet
@@ -160,7 +161,7 @@ static void ssd1306_i2cStop_Embedded(void)
     DIGITAL_WRITE_LOW(DDR_REG, PORT_REG, s_sda);		// Set to LOW
     ssd1306_delay(I2C_RISE_TIME); // Fall time is the same as rise time
     DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_scl);	// Set to HIGH
-    ssd1306_delay(I2C_START_STOP_DELAY); 
+    ssd1306_delay(I2C_START_STOP_DELAY);
     DIGITAL_WRITE_HIGH(DDR_REG, PORT_REG, s_sda);	// Set to HIGH
     ssd1306_delay(I2C_IDLE_TIME);
     if (interruptsOff)
