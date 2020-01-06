@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018-2019, Alexey Dynda
+    Copyright (c) 2018-2020, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -40,6 +40,8 @@ extern uint32_t s_ssd1306_spi_clock;
 
 static uint8_t s_rotation = 0x00;
 static uint8_t s_rgb_bit  = 0b00001000;
+static lcdint_t s_offset_x = 0;
+static lcdint_t s_offset_y = 0;
 
 static const PROGMEM uint8_t s_oled128x128_initData[] =
 {
@@ -133,18 +135,16 @@ static void il9163_setBlock(lcduint_t x, lcduint_t y, lcduint_t w)
     ssd1306_intf.send(0x2B);
     ssd1306_spiDataMode(1);  // According to datasheet all args must be passed in data mode
     ssd1306_intf.send(0);
-    ssd1306_intf.send(x + (s_rotation == 3 ? 32 : 0));
+    ssd1306_intf.send(x + s_offset_x);
     ssd1306_intf.send(0);
-    ssd1306_intf.send((rx < ssd1306_lcd.width ? rx : (ssd1306_lcd.width - 1))
-                       + (s_rotation == 3 ? 32 : 0));
+    ssd1306_intf.send((rx < ssd1306_lcd.width ? rx : (ssd1306_lcd.width - 1)) + s_offset_x);
     ssd1306_spiDataMode(0);
     ssd1306_intf.send(0x2A);
     ssd1306_spiDataMode(1);  // According to datasheet all args must be passed in data mode
     ssd1306_intf.send(0);
-    ssd1306_intf.send((y<<3) + (s_rotation == 2 ? 32: 0));
+    ssd1306_intf.send((y<<3) + s_offset_y);
     ssd1306_intf.send(0);
-    ssd1306_intf.send((((y<<3) + 7) < ssd1306_lcd.height ? ((y<<3) + 7) : (ssd1306_lcd.height - 1))
-                      + (s_rotation == 2 ? 32: 0));
+    ssd1306_intf.send((((y<<3) + 7) < ssd1306_lcd.height ? ((y<<3) + 7) : (ssd1306_lcd.height - 1)) + s_offset_y);
     ssd1306_spiDataMode(0);
     ssd1306_intf.send(0x2C);
     ssd1306_spiDataMode(1);
@@ -158,20 +158,25 @@ static void il9163_setBlock2(lcduint_t x, lcduint_t y, lcduint_t w)
     ssd1306_intf.send(0x2A);
     ssd1306_spiDataMode(1);  // According to datasheet all args must be passed in data mode
     ssd1306_intf.send(0);
-    ssd1306_intf.send(x + (s_rotation == 7 ? 32 : 0));
+    ssd1306_intf.send(x + s_offset_x);
     ssd1306_intf.send(0);
-    ssd1306_intf.send((rx < ssd1306_lcd.width ? rx : (ssd1306_lcd.width - 1))
-                       + (s_rotation == 7 ? 32 : 0));
+    ssd1306_intf.send((rx < ssd1306_lcd.width ? rx : (ssd1306_lcd.width - 1)) + s_offset_x);
     ssd1306_spiDataMode(0);
     ssd1306_intf.send(0x2B);
     ssd1306_spiDataMode(1);  // According to datasheet all args must be passed in data mode
     ssd1306_intf.send(0);
-    ssd1306_intf.send(y + (s_rotation == 6 ? 32: 0));
+    ssd1306_intf.send(y + s_offset_y);
     ssd1306_intf.send(0);
-    ssd1306_intf.send(ssd1306_lcd.height - 1 + (s_rotation == 6 ? 32: 0));
+    ssd1306_intf.send(ssd1306_lcd.height - 1 + s_offset_y);
     ssd1306_spiDataMode(0);
     ssd1306_intf.send(0x2C);
     ssd1306_spiDataMode(1);
+}
+
+void il9163_setOffset(lcdint_t x, lcdint_t y)
+{
+    s_offset_x = x;
+    s_offset_y = y;
 }
 
 static void il9163_nextPage(void)
@@ -322,6 +327,8 @@ void il9163_setRotation(uint8_t rotation)
         ram_mode = 0b10100000;
         break;
     }
+    s_offset_x = ((s_rotation & 0x03) == 3 ? 32 : 0);
+    s_offset_y = ((s_rotation & 0x03) == 2 ? 32 : 0);
     ssd1306_intf.send( ram_mode | s_rgb_bit );
     ssd1306_spiDataMode(0);
     ssd1306_intf.send(0x29);
