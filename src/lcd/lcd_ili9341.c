@@ -221,6 +221,7 @@ void   ili9341_240x320_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin)
         digitalWrite(rstPin, LOW);
         delay(100);
         digitalWrite(rstPin, HIGH);
+        delay(100);
     }
     s_ssd1306_spi_clock = 10000000;
     ssd1306_spiInit(cesPin, dcPin);
