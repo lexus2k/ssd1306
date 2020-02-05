@@ -51,9 +51,9 @@ void ssd1306_fillScreen(uint8_t fill_Data)
 {
     fill_Data ^= s_ssd1306_invertByte;
     ssd1306_lcd.set_block(0, 0, 0);
-    for(uint8_t m=(ssd1306_lcd.height >> 3); m>0; m--)
+    for(lcduint_t m=(ssd1306_lcd.height >> 3); m>0; m--)
     {
-        for(uint8_t n=ssd1306_lcd.width; n>0; n--)
+        for(lcduint_t n=ssd1306_lcd.width; n>0; n--)
         {
             ssd1306_lcd.send_pixels1(fill_Data);
         }
@@ -65,9 +65,9 @@ void ssd1306_fillScreen(uint8_t fill_Data)
 void ssd1306_clearScreen()
 {
     ssd1306_lcd.set_block(0, 0, 0);
-    for(uint8_t m=(ssd1306_lcd.height >> 3); m>0; m--)
+    for(lcduint_t m=(ssd1306_lcd.height >> 3); m>0; m--)
     {
-        for(uint8_t n=ssd1306_lcd.width; n>0; n--)
+        for(lcduint_t n=ssd1306_lcd.width; n>0; n--)
         {
             ssd1306_lcd.send_pixels1( s_ssd1306_invertByte );
         }
