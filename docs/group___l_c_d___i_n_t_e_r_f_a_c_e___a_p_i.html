@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.8.0</span>
+   &#160;<span id="projectnumber">1.8.2</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -162,6 +162,9 @@ Variables</h2></td></tr>
 <tr class="memitem:gaab951faf7291d6c038296863c3d3b05b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#gaab951faf7291d6c038296863c3d3b05b">il9163_128x128_init</a> (void)</td></tr>
 <tr class="memdesc:gaab951faf7291d6c038296863c3d3b05b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits 128x128 RGB OLED display (based on il9163 controller).  <a href="#gaab951faf7291d6c038296863c3d3b05b">More...</a><br /></td></tr>
 <tr class="separator:gaab951faf7291d6c038296863c3d3b05b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga10928d9f89617a3b92731f001283709b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga10928d9f89617a3b92731f001283709b">il9163_setOffset</a> (<a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> x, <a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a> y)</td></tr>
+<tr class="memdesc:ga10928d9f89617a3b92731f001283709b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets screen offset (refer to datasheet of your display)  <a href="#ga10928d9f89617a3b92731f001283709b">More...</a><br /></td></tr>
+<tr class="separator:ga10928d9f89617a3b92731f001283709b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga04b389a1c1de158d260115156c8919b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga04b389a1c1de158d260115156c8919b9">st7735_128x160_init</a> (void)</td></tr>
 <tr class="memdesc:ga04b389a1c1de158d260115156c8919b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits 128x160 RGB OLED display (based on st7735 controller).  <a href="#ga04b389a1c1de158d260115156c8919b9">More...</a><br /></td></tr>
 <tr class="separator:ga04b389a1c1de158d260115156c8919b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -689,7 +692,7 @@ ssd1306_vga_controller_init() </dd></dl>
 <dd>
 <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga0e21371367897c0f86480cfccc100b5c">ssd1306_spiInit()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__il9163_8c_source.html#l00248">248</a> of file <a class="el" href="lcd__il9163_8c_source.html">lcd_il9163.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lcd__il9163_8c_source.html#l00253">253</a> of file <a class="el" href="lcd__il9163_8c_source.html">lcd_il9163.c</a>.</p>
 
 </div>
 </div>
@@ -735,7 +738,7 @@ ssd1306_vga_controller_init() </dd></dl>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__il9163_8c_source.html#l00264">264</a> of file <a class="el" href="lcd__il9163_8c_source.html">lcd_il9163.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lcd__il9163_8c_source.html#l00269">269</a> of file <a class="el" href="lcd__il9163_8c_source.html">lcd_il9163.c</a>.</p>
 
 </div>
 </div>
@@ -765,7 +768,46 @@ ssd1306_vga_controller_init() </dd></dl>
 </dl>
 <dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000010">Deprecated:</a></b></dt><dd>Use <a class="el" href="group___l_c_d___i_n_t_e_r_f_a_c_e___a_p_i.html#ga34699d9f6192c375a6b40d4414502d41" title="Sets library display mode for direct draw functions. ">ssd1306_setMode()</a> instead. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__il9163_8c_source.html#l00187">187</a> of file <a class="el" href="lcd__il9163_8c_source.html">lcd_il9163.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lcd__il9163_8c_source.html#l00192">192</a> of file <a class="el" href="lcd__il9163_8c_source.html">lcd_il9163.c</a>.</p>
+
+</div>
+</div>
+<a id="ga10928d9f89617a3b92731f001283709b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga10928d9f89617a3b92731f001283709b">&#9670;&nbsp;</a></span>il9163_setOffset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void il9163_setOffset </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a>&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_s_d1306___h_a_l___a_p_i.html#ga609c6ba2ba635102cd316b7b59af8351">lcdint_t</a>&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets screen offset (refer to datasheet of your display) </p>
+<p>Set offset for the display </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>offset in pixels </td></tr>
+    <tr><td class="paramname">y</td><td>offset in pixels </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="lcd__il9163_8c_source.html#l00176">176</a> of file <a class="el" href="lcd__il9163_8c_source.html">lcd_il9163.c</a>.</p>
 
 </div>
 </div>
@@ -2340,7 +2382,7 @@ after copy command is sent, it takes some time from oled controller to complete 
 <dd>
 <a class="el" href="group___l_c_d___h_w___i_n_t_e_r_f_a_c_e___a_p_i.html#ga0e21371367897c0f86480cfccc100b5c">ssd1306_spiInit()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__il9163_8c_source.html#l00399">399</a> of file <a class="el" href="lcd__il9163_8c_source.html">lcd_il9163.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lcd__il9163_8c_source.html#l00406">406</a> of file <a class="el" href="lcd__il9163_8c_source.html">lcd_il9163.c</a>.</p>
 
 </div>
 </div>
@@ -2386,7 +2428,7 @@ after copy command is sent, it takes some time from oled controller to complete 
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="lcd__il9163_8c_source.html#l00415">415</a> of file <a class="el" href="lcd__il9163_8c_source.html">lcd_il9163.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lcd__il9163_8c_source.html#l00422">422</a> of file <a class="el" href="lcd__il9163_8c_source.html">lcd_il9163.c</a>.</p>
 
 </div>
 </div>
