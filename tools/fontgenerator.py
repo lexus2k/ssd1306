@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 #    MIT License
 #
-#    Copyright (c) 2018-2019, Alexey Dynda
+#    Copyright (c) 2018-2020, Alexey Dynda
 #
 #    Permission is hereby granted, free of charge, to any person obtaining a copy
 #    of this software and associated documentation files (the "Software"), to deal
@@ -35,6 +35,7 @@
 
 import re
 import sys
+import codecs
 from modules import glcdsource
 from modules import fontgenerator
 
@@ -53,6 +54,7 @@ def print_help_and_exit():
     print "      -f old    old format 1.7.6 and below"
     print "      -f new    new format 1.7.8 and above"
     print "      -d        Print demo text to console"
+    print "      -t text   Use text as demo text"
     print "      --demo-only Prints demo text to console and exits"
     print "Examples:"
     print "   [convert ttf font to old format]"

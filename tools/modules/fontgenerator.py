@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #    MIT License
 #
-#    Copyright (c) 2018, Alexey Dynda
+#    Copyright (c) 2018-2020, Alexey Dynda
 #
 #    Permission is hereby granted, free of charge, to any person obtaining a copy
 #    of this software and associated documentation files (the "Software"), to deal
@@ -63,7 +63,7 @@ class Generator:
                             break
                         data |= (self.source.charBitmap(char)[y][x] << i)
                     print "0x%02X," % data,
-            print "// char '%s' (0x%04X/%d)" % (char, char_code, char_code)
+            print "// char '%s' (0x%04X/%d)" % (char.encode("utf-8"), char_code, char_code)
             char_code = char_code + 1
         print "#ifdef CONFIG_SSD1306_UNICODE_ENABLE"
         print "    0x00, 0x00, 0x00, // end of unicode tables"
