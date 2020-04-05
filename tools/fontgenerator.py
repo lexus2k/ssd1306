@@ -40,29 +40,29 @@ from modules import glcdsource
 from modules import fontgenerator
 
 def print_help_and_exit():
-    print "Usage: ttf_fonts.py [args] > outputFile"
-    print "args:"
-    print "      --ttf S   use ttf name as source"
-    print "      --glcd S  use glcd file as as source"
-    print "      -s <N>    font size (this is not pixels!) "
-    print "      -SB <N>   limit size in pixels to value (pixels will be cut)"
-    print "      -fh       fixed height"
-    print "      -fw       fixed width"
-    print "      -g <S> <E> add chars group to the font"
-    print "                where <S> - first char hex or binary code, or char symbol"
-    print "                      <E> - chars count minus 1 (integer), or char symbol"
-    print "      -f old    old format 1.7.6 and below"
-    print "      -f new    new format 1.7.8 and above"
-    print "      -d        Print demo text to console"
-    print "      -t text   Use text as demo text"
-    print "      --demo-only Prints demo text to console and exits"
-    print "Examples:"
-    print "   [convert ttf font to old format]"
-    print "      ttf_fonts.py --ttf FreeSans.ttf -s 8 -f old > font.h"
-    print "   [convert ttf font to new format with demo text and print to console]"
-    print "      ttf_fonts.py --ttf FreeSans.ttf -d -f new"
-    print "   [convert GLCD font generated file to new format]"
-    print "      ttf_fonts.py --glcd font.c -f new > font.h"
+    print("Usage: ttf_fonts.py [args] > outputFile")
+    print("args:")
+    print("      --ttf S   use ttf name as source")
+    print("      --glcd S  use glcd file as as source")
+    print("      -s <N>    font size (this is not pixels!) ")
+    print("      -SB <N>   limit size in pixels to value (pixels will be cut)")
+    print("      -fh       fixed height")
+    print("      -fw       fixed width")
+    print("      -g <S> <E> add chars group to the font")
+    print("                where <S> - first char hex or binary code, or char symbol")
+    print("                      <E> - chars count minus 1 (integer), or char symbol")
+    print("      -f old    old format 1.7.6 and below")
+    print("      -f new    new format 1.7.8 and above")
+    print("      -d        Print demo text to console")
+    print("      -t text   Use text as demo text")
+    print("      --demo-only Prints demo text to console and exits")
+    print("Examples:")
+    print("   [convert ttf font to old format]")
+    print("      ttf_fonts.py --ttf FreeSans.ttf -s 8 -f old > font.h")
+    print("   [convert ttf font to new format with demo text and print to console]")
+    print("      ttf_fonts.py --ttf FreeSans.ttf -d -f new")
+    print("   [convert GLCD font generated file to new format]")
+    print("      ttf_fonts.py --glcd font.c -f new > font.h")
     exit(1)
 
 if len(sys.argv) < 2:
@@ -115,15 +115,23 @@ while idx < len(sys.argv):
             code = int(_start_char, 16)
             _start_char = unichr(code)
         elif _start_char.isdigit() and len(_start_char) > 1:
-            _start_char = unichr(int(_start_char))
+            if sys.version_info < (3, 0):
+                _start_char = unichr(int(_start_char))
+            else:
+                _start_char = chr(int(_start_char))
         else:
-            _start_char = _start_char.decode("utf-8")
+            if sys.version_info < (3, 0):
+                _start_char = _start_char.decode("utf-8")
         idx += 1
         _end_char = sys.argv[idx]
         if _end_char.isdigit():
-            _end_char = unichr(ord(_start_char) + int(_end_char))
+            if sys.version_info < (3, 0):
+                _end_char = unichr(ord(_start_char) + int(_end_char))
+            else:
+                _end_char = chr(ord(_start_char) + int(_end_char))
         else:
-            _end_char = _end_char.decode("utf-8")
+            if sys.version_info < (3, 0):
+                _end_char = _end_char.decode("utf-8")
         fgroups.append( (_start_char, _end_char ) )
     elif opt == "-d":
         demo_text = True
@@ -134,7 +142,7 @@ while idx < len(sys.argv):
         generate_font = False
         demo_text = True
     else:
-        print "Unknown option: ", opt
+        print("Unknown option: {0}".format(opt))
         print_help_and_exit()
     idx += 1
 
@@ -163,12 +171,18 @@ font = fontgenerator.Generator( source )
 if fold:
     source.expand_chars()
     if demo_text:
-        source.printString(demo_text_.decode("utf-8"))
+        if sys.version_info < (3, 0):
+            source.printString(demo_text_.decode("utf-8"))
+        else:
+            source.printString(demo_text_)
     if generate_font:
         font.generate_fixed_old()
 else:
     if demo_text:
-        source.printString(demo_text_.decode("utf-8"))
+        if sys.version_info < (3, 0):
+            source.printString(demo_text_.decode("utf-8"))
+        else:
+            source.printString(demo_text_)
     if generate_font:
         font.generate_new_format()
 

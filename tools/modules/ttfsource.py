@@ -29,9 +29,10 @@
 # Get fonts
 # wget https://ftp.gnu.org/gnu/freefont/freefont-ttf-20120503.zip
 
+from . import fontcontainer
 import os
+import sys
 import freetype
-import fontcontainer
 
 class TTFSource(fontcontainer.FontContainer):
     face = None
@@ -49,19 +50,23 @@ class TTFSource(fontcontainer.FontContainer):
         if self.first_char is None:
             self.first_char = ord(first)
         for code in range(ord(first), ord(last) + 1):
-            ch = unichr( code )
+            if sys.version_info < (3, 0):
+                ch = unichr( code )
+            else:
+                ch = chr( code )
             self.__add_char(index, ch)
         self._commit_updates()
 
     def __add_char(self, group_index, ch):
         self.face.load_char(ch, freetype.FT_LOAD_MONOCHROME | freetype.FT_LOAD_RENDER )
         bitmap = self.face.glyph.bitmap
+        print(bitmap.buffer)
         bitmap_data = []
         for y in range( bitmap.rows ):
             bitmap_data.append( [] )
             for x in range( bitmap.width ):
-                b_index = y * bitmap.pitch + x / 8
-                bit = 7 - (x % 8)
+                b_index = y * bitmap.pitch + int(x / 8)
+                bit = 7 - int(x % 8)
                 bit_data = (bitmap.buffer[ b_index ] >> bit) & 1
                 bitmap_data[y].append( bit_data )
         self.add_char(group_index, ch,\

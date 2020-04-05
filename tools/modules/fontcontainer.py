@@ -23,6 +23,8 @@
 #
 ###################################################################################
 
+import sys
+
 class FontContainer:
     width = 0
     height = 0
@@ -80,11 +82,11 @@ class FontContainer:
         data = self._find_char_data(ch)
         if data is None:
             return
-        # print ch
-        # print data
-        # print data['source_data']
+        # print(ch)
+        # print(data)
+        # print(data['source_data'])
         for row in data['bitmap']:
-            print "".join('-' if x == 0 else '@' for x in row)
+            print("".join('-' if x == 0 else '@' for x in row))
 
     def printString(self, s):
         for y in range(self.height):
@@ -99,7 +101,7 @@ class FontContainer:
                    continue
                row += "".join('-' if x == 0 else '@' for x in data['bitmap'][index])
                row += "-"
-            print "//", row
+            print("// {0}".format(row))
 
     def charBitmap(self, ch):
         data = self._find_char_data(ch)
@@ -108,12 +110,14 @@ class FontContainer:
         return data['bitmap']
 
     def rows(self):
-        return (self.height + 7) / 8
+        return int((self.height + 7) / 8)
 
     def _find_char_data(self, ch):
         res = []
         for g in self._groups:
             res = filter(lambda x: x['char'] == ch, g)
+            if sys.version_info >= (3, 0):
+                res = list(res)
             if len(res) > 0:
                 break
         return None if len(res) == 0 else res[0]
@@ -161,7 +165,7 @@ class FontContainer:
     def __expand_char_h(self, data):
         # expand top
         if self.baseline_h == 0:
-            before = (self.width - data['width']) / 2
+            before = int((self.width - data['width']) / 2)
             after = self.width - data['width'] - before
         else:
             before = self.baseline_h - data['left']
