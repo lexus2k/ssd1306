@@ -123,9 +123,6 @@ static void textDemo()
     ssd1306_printFixed(0, 32, "Inverted bold", STYLE_BOLD);
     ssd1306_positiveMode();
     delay(3000);
-    ssd1306_clearScreen();
-    ssd1306_printFixedN(0, 0, "N3", STYLE_NORMAL, FONT_SIZE_8X);
-    delay(3000);
 }
 
 static void canvasDemo()
@@ -166,12 +163,13 @@ void setup()
     ssd1306_setFixedFont(ssd1306xled_font6x8);
 
     ssd1306_128x64_i2c_init();
+//    ssd1306_128x64_spi_init(-1, 0, 1);  // Use this line for nano pi (RST not used, 0=CE, gpio1=D/C)
 //    ssd1306_128x64_spi_init(3,4,5);     // Use this line for Atmega328p (3=RST, 4=CE, 5=D/C)
 //    ssd1306_128x64_spi_init(24, 0, 23); // Use this line for Raspberry  (gpio24=RST, 0=CE, gpio23=D/C)
 //    ssd1306_128x64_spi_init(22, 5, 21); // Use this line for ESP32 (VSPI)  (gpio22=RST, gpio5=CE for VSPI, gpio21=D/C)
 //    composite_video_128x64_mono_init(); // Use this line for ESP32 with Composite video support
 
-    ssd1306_fillScreen( 0x00 );
+    ssd1306_clearScreen();
     ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
     ssd1306_showMenu( &menu );
 }
@@ -204,7 +202,7 @@ void loop()
         default:
             break;
     }
-    ssd1306_fillScreen( 0x00 );
+    ssd1306_clearScreen( );
     ssd1306_showMenu(&menu);
     delay(500);
     ssd1306_menuDown(&menu);

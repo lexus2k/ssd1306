@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -37,9 +37,14 @@ static int s_pageStart = 0;
 static int s_pageEnd = 7;
 static int s_newColumn;
 static int s_newPage;
-static uint8_t detected = 0;
 static uint32_t s_color = 0;
 
+static uint8_t s_verticalMode = 1;
+static uint8_t s_leftToRight = 0;
+static uint8_t s_topToBottom = 0;
+static uint8_t s_16bitmode = 0;
+static uint8_t detected_x8 = 0;
+static uint8_t detected_x16 = 0;
 
 static void copyBlock()
 {
@@ -89,19 +94,31 @@ static void drawLine()
     }
 }
 
-static int sdl_ssd1331_detect(uint8_t data)
+static void sdl_ssd1331_reset(void)
 {
-    if (detected)
+    detected_x8 = 0;
+    detected_x16 = 0;
+}
+
+static int sdl_ssd1331_detect_x8(uint8_t data)
+{
+    if (detected_x8)
     {
         return 1;
     }
-    detected = (data == SDL_LCD_SSD1331);
+    detected_x8 = (data == SDL_LCD_SSD1331_X8);
     return 0;
 }
 
-static uint8_t s_verticalMode = 1;
-static uint8_t s_leftToRight = 0;
-static uint8_t s_topToBottom = 0;
+static int sdl_ssd1331_detect_x16(uint8_t data)
+{
+    if (detected_x16)
+    {
+        return 1;
+    }
+    detected_x16 = (data == SDL_LCD_SSD1331_X16);
+    return 0;
+}
 
 static void sdl_ssd1331_commands(uint8_t data)
 {
@@ -113,6 +130,7 @@ static void sdl_ssd1331_commands(uint8_t data)
                 s_verticalMode = data & 0x01;
                 s_leftToRight = data & 0x02;
                 s_topToBottom = data & 0x10;
+                s_16bitmode = data & 0x40;
                 s_commandId = SSD_COMMAND_NONE;
             }
             break;
@@ -137,9 +155,23 @@ static void sdl_ssd1331_commands(uint8_t data)
                 case 1: s_pageStart = data; break;
                 case 2: s_columnEnd = data; break;
                 case 3: s_pageEnd = data; break;
-                case 4: s_color |= ((data & 0x30) >> 4); break;
-                case 5: s_color |= ((data & 0x30) >> 1); break;
-                case 6: s_color |= ((data & 0x38) << 2);
+                case 4:
+                    if (s_16bitmode)
+                        s_color |= ((data & 0x3F) >> 1);
+                    else
+                        s_color |= ((data & 0x30) >> 4);
+                    break;
+                case 5:
+                    if (s_16bitmode)
+                        s_color |= ((data & 0x3F) << 5);
+                    else
+                        s_color |= ((data & 0x30) >> 1);
+                    break;
+                case 6:
+                     if (s_16bitmode)
+                        s_color |= ((data & 0x3E) << 10);
+                     else
+                        s_color |= ((data & 0x38) << 2);
                      drawLine();
                      s_commandId = SSD_COMMAND_NONE;
                      break;
@@ -187,9 +219,25 @@ static void sdl_ssd1331_commands(uint8_t data)
 
 static void sdl_ssd1331_data(uint8_t data)
 {
-    int y = s_topToBottom ? s_activePage : (sdl_ssd1331.height - s_activePage - 1);
-    int x = s_leftToRight ? s_activeColumn: (sdl_ssd1331.width - s_activeColumn - 1);
-    sdl_put_pixel(x, y, data);
+    int y = s_topToBottom ? s_activePage : (sdl_ssd1331x8.height - s_activePage - 1);
+    int x = s_leftToRight ? s_activeColumn: (sdl_ssd1331x8.width - s_activeColumn - 1);
+    static uint8_t firstByte = 1;  /// SSD1331
+    static uint8_t dataFirst = 0x00;  /// SSD1331
+    if (firstByte && s_16bitmode)
+    {
+        dataFirst = data;
+        firstByte = 0;
+        return;
+    }
+    firstByte = 1;
+    if ( s_16bitmode )
+    {
+        sdl_put_pixel(x, y, (dataFirst<<8) | data);
+    }
+    else
+    {
+        sdl_put_pixel(x, y, data);
+    }
 
     if (s_verticalMode)
     {
@@ -219,14 +267,29 @@ static void sdl_ssd1331_data(uint8_t data)
     }
 }
 
-sdl_oled_info sdl_ssd1331 =
+sdl_oled_info sdl_ssd1331x8 =
 {
     .width = 96,
     .height = 64,
     .bpp = 8,
     .pixfmt = SDL_PIXELFORMAT_RGB332,
     .dataMode = SDMS_AUTO,
-    .detect = sdl_ssd1331_detect,
+    .detect = sdl_ssd1331_detect_x8,
     .run_cmd = sdl_ssd1331_commands,
     .run_data = sdl_ssd1331_data,
+    .reset = sdl_ssd1331_reset,
 };
+
+sdl_oled_info sdl_ssd1331x16 =
+{
+    .width = 96,
+    .height = 64,
+    .bpp = 16,
+    .pixfmt = SDL_PIXELFORMAT_RGB565,
+    .dataMode = SDMS_AUTO,
+    .detect = sdl_ssd1331_detect_x16,
+    .run_cmd = sdl_ssd1331_commands,
+    .run_data = sdl_ssd1331_data,
+    .reset = sdl_ssd1331_reset,
+};
+

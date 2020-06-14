@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -51,6 +51,11 @@ void    ssd1306_setRgbColor(uint8_t r, uint8_t g, uint8_t b)
     ssd1306_color = RGB_COLOR8(r,g,b);
 }
 
+void    ssd1306_setRgbColor8(uint8_t r, uint8_t g, uint8_t b)
+{
+    ssd1306_color = RGB_COLOR8(r,g,b);
+}
+
 void ssd1306_drawMonoBuffer8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_t h, const uint8_t *bitmap)
 {
     uint8_t bit = 1;
@@ -82,16 +87,30 @@ void ssd1306_drawMonoBuffer8(lcdint_t xpos, lcdint_t ypos, lcduint_t w, lcduint_
     ssd1306_intf.stop();
 }
 
-void ssd1306_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data)
+static void ssd1306_drawBufferPitch8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, lcduint_t pitch, const uint8_t *data)
 {
-    uint32_t count = w * h;
     ssd1306_lcd.set_block(x, y, w);
-    while (count--)
+    while (h--)
     {
-        ssd1306_lcd.send_pixels8( *data );
-        data++;
+        lcduint_t line = w;
+        while (line--)
+        {
+            ssd1306_lcd.send_pixels8( *data );
+            data++;
+        }
+        data += pitch - w;
     }
     ssd1306_intf.stop();
+}
+
+void ssd1306_drawBufferFast8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, const uint8_t *data)
+{
+    ssd1306_drawBufferPitch8( x, y, w, h, w, data );
+}
+
+void ssd1306_drawBufferEx8(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_t h, lcduint_t pitch, const uint8_t *data)
+{
+    ssd1306_drawBufferPitch8( x, y, w, h, pitch, data );
 }
 
 void ssd1306_fillScreen8(uint8_t fill_Data)
@@ -114,6 +133,13 @@ void ssd1306_putPixel8(lcdint_t x, lcdint_t y)
 {
     ssd1306_lcd.set_block(x, y, 0);
     ssd1306_lcd.send_pixels8( ssd1306_color );
+    ssd1306_intf.stop();
+}
+
+void ssd1306_putColorPixel8(lcdint_t x, lcdint_t y, uint8_t color)
+{
+    ssd1306_lcd.set_block(x, y, 0);
+    ssd1306_lcd.send_pixels8( color );
     ssd1306_intf.stop();
 }
 
@@ -289,7 +315,17 @@ size_t ssd1306_write8(uint8_t ch)
         ssd1306_cursorX = 0;
         return 0;
     }
-    else if ( (ssd1306_cursorX > ssd1306_lcd.width - s_fixedFont.h.width) || (ch == '\n') )
+    SCharInfo char_info;
+    uint8_t gotoNewLine = 1;
+    if (ch != '\n')
+    {
+        uint16_t unicode;
+        unicode = ssd1306_unicode16FromUtf8(ch);
+        if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
+        ssd1306_getCharBitmap(unicode, &char_info);
+        gotoNewLine = (ssd1306_cursorX > (ssd1306_lcd.width - char_info.width));
+    }
+    if ( gotoNewLine )
     {
         ssd1306_cursorX = 0;
         ssd1306_cursorY += s_fixedFont.h.height;
@@ -303,10 +339,15 @@ size_t ssd1306_write8(uint8_t ch)
             return 0;
         }
     }
-    uint16_t unicode = ssd1306_unicode16FromUtf8(ch);
-    if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
-    SCharInfo char_info;
-    ssd1306_getCharBitmap(unicode, &char_info);
+    if ( 1 )
+    {
+        uint8_t color = ssd1306_color;
+        ssd1306_color = s_ssd1306_invertByte ? color : 0x00;
+        ssd1306_fillRect8( ssd1306_cursorX, ssd1306_cursorY,
+                    ssd1306_cursorX + char_info.width + char_info.spacing - 1,
+                    ssd1306_cursorY + s_fixedFont.h.height - 1 );
+        ssd1306_color = color;
+    }
     ssd1306_drawMonoBitmap8( ssd1306_cursorX,
                              ssd1306_cursorY,
                              char_info.width,

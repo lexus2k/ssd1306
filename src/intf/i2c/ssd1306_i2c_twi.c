@@ -46,7 +46,7 @@ static uint8_t ssd1306_twi_start(void)
         TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);
         while ( (TWCR & (1<<TWINT)) == 0 );
         twst = TWSR & 0xF8;
-        if (!--iters);
+        if (!--iters)
         {
             break;
         }

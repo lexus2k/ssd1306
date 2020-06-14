@@ -161,7 +161,7 @@ void setup()
 //    ssd1351_128x128_spi_init(24, 0, 23); // Use this line for Raspberry  (gpio24=RST, 0=CE, gpio23=D/C)
 //    ssd1351_128x128_spi_init(3, -1, 4);  // Use this line for ATTINY
 
-    ssd1306_fillScreen( 0x00 );
+    ssd1306_clearScreen( );
     ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
     ssd1306_showMenu( &menu );
 }
@@ -194,7 +194,7 @@ void loop()
         default:
             break;
     }
-    ssd1306_fillScreen( 0x00 );
+    ssd1306_clearScreen( );
     ssd1306_setColor(RGB_COLOR16(255,255,255));
     ssd1306_showMenu(&menu);
     delay(500);

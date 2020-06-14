@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ static int sdl_ssd1351_detect(uint8_t data)
     return 0;
 }
 
-static uint8_t s_verticalMode = 1;
+static uint8_t s_verticalMode = 0;
 
 static void sdl_ssd1351_commands(uint8_t data)
 {
@@ -90,6 +90,12 @@ static void sdl_ssd1351_commands(uint8_t data)
         case 0x5C:
             sdl_set_data_mode( SDM_WRITE_DATA );
             s_commandId = SSD_COMMAND_NONE;
+            break;
+        case 0xB4:
+            if ( s_cmdArgIndex == 2)
+            {
+                s_commandId = SSD_COMMAND_NONE;
+            }
             break;
         default:
             s_commandId = SSD_COMMAND_NONE;

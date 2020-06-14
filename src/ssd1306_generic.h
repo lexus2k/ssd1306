@@ -74,6 +74,10 @@ void ssd1306_setCursor(lcdint_t x, lcdint_t y);
  */
 void ssd1306_setFixedFont(const uint8_t * progmemFont);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+void ssd1306_setFixedFont_oldStyle(const uint8_t * progmemFont);
+#endif
+
 /**
  * Function allows to set another free font for the library.
  * By default, the font supports only first 128 - 32 ascii chars.
@@ -150,6 +154,14 @@ void ssd1306_setSquixFont(const uint8_t * progmemFont);
 uint16_t ssd1306_unicode16FromUtf8(uint8_t ch);
 #endif
 
+/**
+ * Returns dimensions in pixels for text provided.
+ * @param text text to calculate size of
+ * @param height variable to store text height. Can be NULL
+ * @return witdth of passed text in pixels
+ */
+lcduint_t ssd1306_getTextSize(const char *text, lcduint_t *height);
+
 
 ///////////////////////////////////////////////////////////////////////
 //                 HIGH-LEVEL GRAPH FUNCTIONS
@@ -203,6 +215,16 @@ void ssd1306_showMenu(SAppMenu *menu);
  */
 void ssd1306_showMenu8(SAppMenu *menu);
 
+/**
+ * Shows menu items on the display. If menu items cannot fit the display,
+ * the function provides scrolling.
+ *
+ * @param menu - Pointer to SAppMenu structure
+ *
+ * @warning works only in 16-bit RGB normal mode.
+ */
+void ssd1306_showMenu16(SAppMenu *menu);
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 static inline void ssd1331_showMenu8(SAppMenu *menu)
 {
@@ -227,6 +249,16 @@ void ssd1306_updateMenu(SAppMenu *menu);
  * @warning works only in SSD1306 compatible mode.
  */
 void ssd1306_updateMenu8(SAppMenu *menu);
+
+/**
+ * Updates menu items on the display. That is if selection is changed,
+ * the function will update only those areas, affected by the change.
+ *
+ * @param menu - Pointer to SAppMenu structure
+ *
+ * @warning works only in SSD1306 compatible mode.
+ */
+void ssd1306_updateMenu16(SAppMenu *menu);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 static inline void ssd1331_updateMenu8(SAppMenu *menu)
@@ -262,6 +294,18 @@ void ssd1306_menuDown(SAppMenu *menu);
  * @param menu - Pointer to SAppMenu structure
  */
 void ssd1306_menuUp(SAppMenu *menu);
+
+/**
+ * Draws progress bar in the middle of the screen
+ * @param progress progress value in range 0 - 100.
+ */
+void ssd1306_drawProgressBar(int8_t progress);
+
+/**
+ * Draws progress bar in the middle of the screen
+ * @param progress progress value in range 0 - 100.
+ */
+void ssd1306_drawProgressBar8(int8_t progress);
 
 /**
  * @}

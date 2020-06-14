@@ -84,6 +84,8 @@ static void vga_next_page2(void)
 {
 }
 
+#if 0
+
 static void vga_send_pixels(uint8_t data)
 {
     for (uint8_t i=8; i>0; i--)
@@ -100,14 +102,7 @@ static void vga_send_pixels(uint8_t data)
     }
 }
 
-static void vga_send_pixels_buffer(const uint8_t *buffer, uint16_t len)
-{
-    while(len--)
-    {
-        vga_send_pixels(*buffer);
-        buffer++;
-    }
-}
+#endif
 
 static void vga_set_mode(lcd_mode_t mode)
 {

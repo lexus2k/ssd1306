@@ -1,3 +1,6 @@
+_**Check also new C++ library [lcdgfx](https://github.com/lexus2k/lcdgfx). It consumpts less memory, has simple C++ api**_
+***
+
 # SSD1306/SSD1331/SSD1351/IL9163/ILI9341/ST7735/ILI9341 OLED display driver, PCD8544 LED display driver
 
 [tocstart]: # (toc start)
@@ -57,6 +60,8 @@ through API.
 | sh1106 128x64 | X |   |   |   |
 | ssd1306 128x64 | X | X |   |   |
 | ssd1306 128x32 | X | X |   |   |
+| ssd1325 128x64 |   | X |   |   |
+| ssd1327 128x128 |   | X |   |   |
 | ssd1331 96x64 |   | X | X |   |
 | ssd1351 128x128 |   | X |   |   |
 | il9163 128x128 |   | X | X |   |
@@ -123,7 +128,7 @@ Ssd1306 library requires at least c++11 and c99 (by default Digispark package mi
    * cd ssd1306/src && make -f Makefile.avr MCU=<your_mcu>
    * Link library to your project (refer to [Makefile.avr](examples/Makefile.avr) in examples folder).
  * Build demo code (variant 2)
-   * cd ssd1306/tools && ./build_and_run.sh -p avr -m <your_mcu> ssd1306_demo
+   * cd ssd1306/tools && ./build_and_run.sh -p avr -m <your_mcu> demos/ssd1306_demo
 
  *For esp32:*
   * Download source from https://github.com/lexus2k/ssd1306
@@ -137,8 +142,6 @@ If you found any problem or have any idea, please, report to Issues section.
 ## License
 
 The library is free. If this project helps you, you can give me a cup of coffee.
-[![Donate via Paypal](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/lexus2k)
-
 
 MIT License
 

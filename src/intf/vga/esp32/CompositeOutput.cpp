@@ -8,7 +8,7 @@
 
 #include "driver/i2s.h"
 
-#define I2S_VGA_SAMPLE_RATE   (1000000)
+#define I2S_VGA_SAMPLE_RATE   (4000000)
 static const i2s_port_t I2S_PORT = (i2s_port_t)I2S_NUM_0;
 
 const TechProperties PALProperties = {
@@ -104,7 +104,7 @@ void CompositeOutput::init(int xres, int yres, int bpp)
 
     line = (uint16_t*)malloc(sizeof(uint16_t) * m_samples_per_line * 2);
     m_ptr = line;
-    m_end = line + m_samples_per_line * 2 / sizeof(uint16_t);
+    m_end = line + m_samples_per_line * 2;
 
     init_hardware();
 }

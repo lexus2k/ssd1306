@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017-2018, Alexey Dynda
+    Copyright (c) 2017-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -142,6 +142,13 @@ typedef struct
     void (*send_pixels8)(uint8_t data);
 
     /**
+     * @brief Sends RGB pixel encoded in 5-6-5 format to OLED driver.
+     * Sends RGB pixel encoded in 5-6-5 format to OLED driver.
+     * @param data 16-bit word, representing RGB16 pixel
+     */
+    void (*send_pixels16)(uint16_t data);
+
+    /**
      * @brief Sets library display mode for direct draw functions.
      *
      * Sets library display mode for direct draw functions.
@@ -268,6 +275,20 @@ void ssd1306_configureI2cDisplay(const uint8_t *config, uint8_t configSize);
 void ssd1306_configureSpiDisplay(const uint8_t *config, uint8_t configSize);
 
 /**
+ * @brief Sends configuration being passed to lcd display spi controller.
+ *
+ * Sends configuration being passed to lcd display spi controller. If data byte value
+ * to be sent is less than 255, then data byte is sent in command mode. Each command has
+ * additional parameter: number of arguments.
+ * If lcd controller requires cmd arguments to be sent in command mode,
+ * please use ssd1306_configureI2cDisplay().
+ *
+ * @param config configuration, located in flash, to send to i2c/spi controller.
+ * @param configSize - size of configuration data in bytes.
+ */
+void ssd1306_configureSpiDisplay2(const uint8_t *config, uint8_t configSize);
+
+/**
  * @brief Sets library display mode for direct draw functions.
  *
  * Sets library display mode for direct draw functions.
@@ -388,6 +409,40 @@ void ssd1306_resetController(int8_t rstPin, uint8_t delayMs);
         while(len--) \
         { \
             send_pixels_compat(*buffer); \
+            buffer++; \
+        } \
+    }
+
+/**
+ * Macro SSD1306_COMPAT_SEND_PIXELS_RGB16_CMDS() generates 2 static functions,
+ * applicable for many oled controllers in 16-bit RGB mode:
+ * send_pixels_compat16(), send_pixels_buffer_compat16(). These functions are to be used
+ * when working in ssd1306 compatible mode.
+ */
+#define SSD1306_COMPAT_SEND_PIXELS_RGB16_CMDS() \
+    extern uint16_t ssd1306_color; \
+    static void send_pixels_compat16(uint8_t data) \
+    { \
+        for (uint8_t i=8; i>0; i--) \
+        { \
+            if ( data & 0x01 ) \
+            { \
+                ssd1306_intf.send( (uint8_t)(ssd1306_color >> 8 ) ); \
+                ssd1306_intf.send( (uint8_t)(ssd1306_color & 0xFF) ); \
+            } \
+            else \
+            { \
+                ssd1306_intf.send( 0B00000000 ); \
+                ssd1306_intf.send( 0B00000000 ); \
+            } \
+            data >>= 1; \
+        } \
+    } \
+    static void send_pixels_buffer_compat16(const uint8_t *buffer, uint16_t len) \
+    { \
+        while(len--) \
+        { \
+            send_pixels_compat16(*buffer); \
             buffer++; \
         } \
     }

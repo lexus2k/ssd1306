@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.13</span>
+   &#160;<span id="projectnumber">1.8.2</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -100,6 +100,12 @@ Macros</h2></td></tr>
 <tr class="separator:a5ffae889173a34bb16146d3a3b869c04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ab6a81b88d852058c6522940bc236c5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nano__gfx__types_8h.html#a4ab6a81b88d852058c6522940bc236c5">RGB8_TO_RGB16</a>(c)</td></tr>
 <tr class="separator:a4ab6a81b88d852058c6522940bc236c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e5e80ef82d44dc9ddee69aa8abda4d5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nano__gfx__types_8h.html#a1e5e80ef82d44dc9ddee69aa8abda4d5">RGB8_TO_GRAY4</a>(rgb)&#160;&#160;&#160;( (rgb &gt;&gt; 6) + ((rgb &gt;&gt; 2) &amp; 0x07) + (rgb &amp; 0x03) )</td></tr>
+<tr class="separator:a1e5e80ef82d44dc9ddee69aa8abda4d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd58e53d7074f56bbd024730c0f24067"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nano__gfx__types_8h.html#afd58e53d7074f56bbd024730c0f24067">GRAY_COLOR4</a>(gray)&#160;&#160;&#160;( ((gray &gt;&gt; 4) &amp; 0x0F) | (gray &amp; 0xF0) )</td></tr>
+<tr class="separator:afd58e53d7074f56bbd024730c0f24067"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7332c54dc2b98a7d65df62d2785f58d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nano__gfx__types_8h.html#ab7332c54dc2b98a7d65df62d2785f58d">RGB16_TO_RGB8</a>(c)</td></tr>
+<tr class="separator:ab7332c54dc2b98a7d65df62d2785f58d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -127,6 +133,27 @@ Enumerations</h2></td></tr>
 
 <p class="definition">Definition in file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="afd58e53d7074f56bbd024730c0f24067"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd58e53d7074f56bbd024730c0f24067">&#9670;&nbsp;</a></span>GRAY_COLOR4</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GRAY_COLOR4</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">gray</td><td>)</td>
+          <td>&#160;&#160;&#160;( ((gray &gt;&gt; 4) &amp; 0x0F) | (gray &amp; 0xF0) )</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Macro to generate 4-bit monochrome color from gray component </p>
+
+<p class="definition">Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00058">58</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
+
+</div>
+</div>
 <a id="affe776513b24d84b39af8ab0930fef7f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#affe776513b24d84b39af8ab0930fef7f">&#9670;&nbsp;</a></span>max</h2>
 
@@ -186,6 +213,48 @@ Enumerations</h2></td></tr>
 <p>Macros returning minimum of 2 numbers </p>
 
 <p class="definition">Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00035">35</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
+
+</div>
+</div>
+<a id="ab7332c54dc2b98a7d65df62d2785f58d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7332c54dc2b98a7d65df62d2785f58d">&#9670;&nbsp;</a></span>RGB16_TO_RGB8</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RGB16_TO_RGB8</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">c</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">( ((uint16_t)(c &gt;&gt; 8) &amp; 0b11100000) | \</div><div class="line">                               ((uint16_t)(c &gt;&gt; 6) &amp; 0b00011100) | \</div><div class="line">                               ((uint16_t)(c &gt;&gt; 3) &amp; 0b00000011) )</div></div><!-- fragment --><p>Macro to convert 5-6-5 color to 3-3-2 color </p>
+
+<p class="definition">Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00061">61</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
+
+</div>
+</div>
+<a id="a1e5e80ef82d44dc9ddee69aa8abda4d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e5e80ef82d44dc9ddee69aa8abda4d5">&#9670;&nbsp;</a></span>RGB8_TO_GRAY4</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RGB8_TO_GRAY4</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">rgb</td><td>)</td>
+          <td>&#160;&#160;&#160;( (rgb &gt;&gt; 6) + ((rgb &gt;&gt; 2) &amp; 0x07) + (rgb &amp; 0x03) )</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Macro to convert 8-bit RGB to 4-bit monochrome format </p>
+
+<p class="definition">Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00055">55</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
 
 </div>
 </div>
@@ -298,7 +367,7 @@ Enumerations</h2></td></tr>
 </div><div class="memdoc">
 <p>Pointer type to LCD display initialization function </p>
 
-<p class="definition">Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00055">55</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00066">66</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
 
 </div>
 </div>
@@ -331,7 +400,7 @@ Enumerations</h2></td></tr>
 </div><div class="memdoc">
 <p>Supported scale font values </p>
 
-<p class="definition">Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00066">66</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00077">77</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
 
 </div>
 </div>
@@ -348,7 +417,7 @@ Enumerations</h2></td></tr>
 </div><div class="memdoc">
 <p>Supported font styles </p>
 
-<p class="definition">Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00058">58</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="nano__gfx__types_8h_source.html#l00069">69</a> of file <a class="el" href="nano__gfx__types_8h_source.html">nano_gfx_types.h</a>.</p>
 
 </div>
 </div>

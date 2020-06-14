@@ -7,6 +7,7 @@
 * [MinusWall](https://github.com/minuswall)
 * [drgallaci](https://github.com/drgallaci)
 * [CromFr](https://gitbug.com/CromFr)
+* [montaguk](https://github.com/montaguk)
 
 ## Special thanks to
 

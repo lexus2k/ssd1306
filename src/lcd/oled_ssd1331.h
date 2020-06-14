@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -85,14 +85,24 @@ void        ssd1331_setMode(lcd_mode_t mode);
 void         ssd1331_96x64_init(void);
 
 /**
- * @brief Inits 96x64 RGB OLED display over spi (based on SSD1331 controller).
+ * @brief Inits 96x64 RGB OLED display over spi in 8-bit mode (based on SSD1331 controller).
  *
- * Inits 96x64 RGB OLED display over spi (based on SSD1331 controller)
+ * Inits 96x64 RGB OLED display over spi in 8-bit mode (based on SSD1331 controller)
  * @param rstPin - pin controlling LCD reset (-1 if not used)
  * @param cesPin - chip enable pin to LCD slave (-1 if not used)
  * @param dcPin - data/command pin to control LCD dc (required)
  */
 void         ssd1331_96x64_spi_init(int8_t rstPin, int8_t cesPin, int8_t dcPin);
+
+/**
+ * @brief Inits 96x64 RGB OLED display over spi in 16-bit mode (based on SSD1331 controller).
+ *
+ * Inits 96x64 RGB OLED display over spi in 16-bit mode (based on SSD1331 controller)
+ * @param rstPin - pin controlling LCD reset (-1 if not used)
+ * @param cesPin - chip enable pin to LCD slave (-1 if not used)
+ * @param dcPin - data/command pin to control LCD dc (required)
+ */
+void         ssd1331_96x64_spi_init16(int8_t rstPin, int8_t cesPin, int8_t dcPin);
 
 /**
  * Draws line

@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2016-2018, Alexey Dynda
+    Copyright (c) 2016-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ enum
 uint16_t ssd1306_color = 0xFFFF;
 lcduint_t ssd1306_cursorX = 0;
 lcduint_t ssd1306_cursorY = 0;
-SFixedFontInfo s_fixedFont = { { 0 }, 0 };
+SFixedFontInfo s_fixedFont = {}; //{ { 0 }, 0 };
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
 uint8_t g_ssd1306_unicode = 1;
 #endif
@@ -146,6 +146,7 @@ static const uint8_t *ssd1306_getCharGlyph(char ch)
                                         (s_fixedFont.h.type == 0x01 ? sizeof(SUnicodeBlockRecord) : 0) ];
 }
 
+#ifdef CONFIG_SSD1306_UNICODE_ENABLE
 static const uint8_t *ssd1306_searchCharGlyph(const uint8_t * unicode_table, uint16_t unicode)
 {
     SUnicodeBlockRecord r;
@@ -172,6 +173,7 @@ static const uint8_t *ssd1306_searchCharGlyph(const uint8_t * unicode_table, uin
     }
     return &data[ (unicode - r.start_code) * s_fixedFont.glyph_size ];
 }
+#endif
 
 static const uint8_t *ssd1306_getU16CharGlyph(uint16_t unicode)
 {
@@ -230,6 +232,17 @@ void ssd1306_setFixedFont(const uint8_t * progmemFont)
 #endif
 }
 
+void ssd1306_setFixedFont_oldStyle(const uint8_t * progmemFont)
+{
+    s_fixedFont.h.type   = pgm_read_byte( &progmemFont[0] );
+    s_fixedFont.h.width  = pgm_read_byte(&progmemFont[1]);
+    s_fixedFont.h.height = pgm_read_byte(&progmemFont[2]);
+    s_fixedFont.h.ascii_offset = pgm_read_byte(&progmemFont[3]);
+    s_fixedFont.primary_table = progmemFont + 4;
+    s_fixedFont.pages = (s_fixedFont.h.height + 7) >> 3;
+    s_fixedFont.glyph_size = s_fixedFont.pages * s_fixedFont.h.width;
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /// NEW FORMAT: 1.7.8 and later
 /// NEW FORMAT is supported only by latest versions of ssd1306 library
@@ -238,7 +251,9 @@ static void __ssd1306_newFormatGetBitmap(uint16_t unicode, SCharInfo *info)
 {
     if (info)
     {
+#ifdef CONFIG_SSD1306_UNICODE_ENABLE
         uint8_t table_index = 0;
+#endif
         const uint8_t *data = s_fixedFont.primary_table;
         while (data)
         {
@@ -352,4 +367,29 @@ void ssd1306_setSquixFont(const uint8_t * progmemFont)
 #ifdef CONFIG_SSD1306_UNICODE_ENABLE
     s_fixedFont.secondary_table = NULL;
 #endif
+}
+
+lcduint_t ssd1306_getTextSize(const char *text, lcduint_t *height)
+{
+    lcduint_t width = 0;
+    while (*text)
+    {
+        if (*text == '\r' || *text == '\n')
+        {
+            text++;
+            break;
+        }
+        uint16_t unicode = ssd1306_unicode16FromUtf8(*text);
+        if (unicode == SSD1306_MORE_CHARS_REQUIRED)
+        {
+            text++;
+            continue;
+        }
+        SCharInfo char_info;
+        ssd1306_getCharBitmap(unicode, &char_info);
+        width += char_info.width + char_info.spacing;
+        if ( height ) *height = char_info.height;
+        text++;
+    }
+    return width;
 }

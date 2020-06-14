@@ -33,6 +33,7 @@
 #include "sdl_core.h"
 #endif
 
+uint8_t s_ssd1306_startLine = 0;
 
 static const uint8_t PROGMEM s_oled128x64_initData[] =
 {
@@ -45,7 +46,7 @@ static const uint8_t PROGMEM s_oled128x64_initData[] =
     SSD1306_COMSCANDEC,             // Scan from 127 to 0 (Reverse scan)
     SSD1306_SETSTARTLINE | 0x00,    // First line to start scanning from
     SSD1306_SETCONTRAST, 0x7F,      // contast value to 0x7F according to datasheet
-    SSD1306_SEGREMAP | 0x01,        // Use reverse mapping. 0x00 - is normal mapping 
+    SSD1306_SEGREMAP | 0x01,        // Use reverse mapping. 0x00 - is normal mapping
     SSD1306_NORMALDISPLAY,
     SSD1306_SETMULTIPLEX, 63,       // Reset to default MUX. See datasheet
     SSD1306_SETDISPLAYOFFSET, 0x00, // no offset
@@ -68,7 +69,7 @@ static const uint8_t PROGMEM s_oled128x32_initData[] =
     SSD1306_SETDISPLAYCLOCKDIV, 0x80,
     SSD1306_SETMULTIPLEX, 31,
     SSD1306_SETDISPLAYOFFSET, 0x00, // --no offset
-    SSD1306_SETSTARTLINE,
+    SSD1306_SETSTARTLINE | 0x00,
     SSD1306_CHARGEPUMP, 0x14, // 0x10
     SSD1306_SEGREMAP | 0x01,  // Reverse mapping
     SSD1306_COMSCANDEC,
@@ -164,34 +165,33 @@ void ssd1306_deactive_scroll(){
 
 void ssd1306_invertMode()
 {
-    if (ssd1306_lcd.type != LCD_TYPE_SSD1331)
-    {
-        ssd1306_sendCommand(SSD1306_INVERTDISPLAY);
-    }
+    ssd1306_sendCommand(SSD1306_INVERTDISPLAY);
 }
 
 void ssd1306_normalMode()
 {
-    if (ssd1306_lcd.type != LCD_TYPE_SSD1331)
-    {
-        ssd1306_sendCommand(SSD1306_NORMALDISPLAY);
-    }
+    ssd1306_sendCommand(SSD1306_NORMALDISPLAY);
 }
 
 void ssd1306_flipHorizontal(uint8_t mode)
 {
-    if (ssd1306_lcd.type != LCD_TYPE_SSD1331)
-    {
-         ssd1306_sendCommand( SSD1306_SEGREMAP | (mode ? 0x00: 0x01 ) );
-    }
+    ssd1306_sendCommand( SSD1306_SEGREMAP | (mode ? 0x00: 0x01 ) );
 }
 
 void ssd1306_flipVertical(uint8_t mode)
 {
-    if (ssd1306_lcd.type != LCD_TYPE_SSD1331)
-    {
-         ssd1306_sendCommand( mode ? SSD1306_COMSCANINC : SSD1306_COMSCANDEC );
-    }
+    ssd1306_sendCommand( mode ? SSD1306_COMSCANINC : SSD1306_COMSCANDEC );
+}
+
+void ssd1306_setStartLine(uint8_t line)
+{
+    s_ssd1306_startLine = line;
+    ssd1306_sendCommand( SSD1306_SETSTARTLINE | (line & 0x3F) );
+}
+
+uint8_t ssd1306_getStartLine(void)
+{
+    return s_ssd1306_startLine;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

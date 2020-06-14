@@ -70,7 +70,7 @@
         typedef uint8_t lcduint_t;
     #endif
 
-#elif defined(ARDUINO_AVR_ATTINYX5)
+#elif defined(ARDUINO_AVR_ATTINYX5) || defined(ARDUINO_AVR_ATTINYX4)
 
     /** The macro is defined when software i2c implementation is available */
     #define CONFIG_SOFTWARE_I2C_AVAILABLE
@@ -107,7 +107,8 @@
     /** The macro is defined when micro controller doesn't support multiplication operation */
     #define CONFIG_MULTIPLICATION_NOT_SUPPORTED
 
-#elif defined(ESP8266) || defined(ESP32) || defined(ESP31B) || defined(ARDUINO_ARCH_SAMD)
+#elif defined(ESP8266) || defined(ESP32) || defined(ESP31B) || \
+      defined(ARDUINO_ARCH_SAMD) || defined(ARDUINO_ARCH_SAM)
     /* SW implementation of i2c isn't supported on ESP platforms */
     /** The macro is defined when i2c Wire library is available */
     #define CONFIG_PLATFORM_I2C_AVAILABLE
@@ -137,6 +138,21 @@
     #define CONFIG_AVR_UART_AVAILABLE
     /** The macro is defined when VGA monitor control is available directly from controller */
     #define CONFIG_VGA_AVAILABLE
+
+#elif defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)
+    /** The macro is defined when i2c Wire library is available */
+    #define CONFIG_SOFTWARE_I2C_AVAILABLE
+    /** The macro is defined when i2c Wire library is available */
+    #define CONFIG_PLATFORM_I2C_AVAILABLE
+    /** The macro is defined when Wire library speed can be configured */
+    #define SSD1306_WIRE_CLOCK_CONFIGURABLE
+    /** The macro is defined when TWI module is available (ATTINY) */
+    #define CONFIG_TWI_I2C_AVAILABLE
+    /** The macro is defined when SPI library is available */
+    #define CONFIG_PLATFORM_SPI_AVAILABLE
+    // Disable internal AVR SPI implementation for ATMEGA 2560 since,
+    // it doesn't work for now
+    // #define CONFIG_AVR_SPI_AVAILABLE
 
 #elif defined(NRF52) || defined(NRF5)
     /** The macro is defined when i2c Wire library is available */

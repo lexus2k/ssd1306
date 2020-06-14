@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -34,13 +34,33 @@ static int s_columnEnd = 127;
 static int s_pageStart = 0;
 static int s_pageEnd = 7;
 static uint8_t detected = 0;
+static uint8_t s_lcd_type;
+
+static void sdl_il9163_reset(void)
+{
+    detected = 0;
+}
 
 static int sdl_il9163_detect(uint8_t data)
 {
     if (detected)
     {
+        switch (data)
+        {
+            case 0b00000000:
+                sdl_il9163.width = 128;
+                sdl_il9163.height = 128;
+                break;
+            case 0b00000011:
+                sdl_il9163.width = 128;
+                sdl_il9163.height = 160;
+                break;
+            default:
+                break;
+        }
         return 1;
     }
+    s_lcd_type = data;
     detected = (data == SDL_LCD_IL9163) || (data == SDL_LCD_ST7735);
     return 0;
 }
@@ -104,8 +124,11 @@ static void sdl_il9163_commands(uint8_t data)
                 case 1:
                      if (!(s_verticalMode & 0b00100000))
                      {
-                         // emulating bug in IL9163 Black display
-                         s_activePage = (s_verticalMode & 0b10000000) ? data - 32 : data;
+                         if ( s_lcd_type == SDL_LCD_ST7735 )
+                             s_activePage = data;
+                         else
+                             // emulating bug in IL9163 Black display
+                             s_activePage = (s_verticalMode & 0b10000000) ? data - 32 : data;
                          s_pageStart = s_activePage;
                      }
                      else
@@ -117,8 +140,11 @@ static void sdl_il9163_commands(uint8_t data)
                 case 3:
                      if (!(s_verticalMode & 0b00100000))
                      {
-                         // emulating bug in IL9163 Black display
-                         s_pageEnd = (s_verticalMode & 0b10000000) ? data - 32 : data;
+                         if ( s_lcd_type == SDL_LCD_ST7735 )
+                             s_pageEnd = data;
+                         else
+                             // emulating bug in IL9163 Black display
+                             s_pageEnd = (s_verticalMode & 0b10000000) ? data - 32 : data;
                      }
                      else
                      {
@@ -133,6 +159,33 @@ static void sdl_il9163_commands(uint8_t data)
             sdl_set_data_mode( SDM_WRITE_DATA );
             s_commandId = SSD_COMMAND_NONE;
             break;
+        case 0xC1: // PWCTR2
+        case 0xB4: // INVCTR display inversion, use by default
+        case 0xC5: // VMCTR vcom control 1
+        case 0x3A: // COLMOD set 16-bit pixel format
+            if (s_cmdArgIndex == 0) s_commandId = SSD_COMMAND_NONE;
+            break;
+        case 0xC2: // PWCTR3 power control 3
+        case 0xC3: // PWCTR4 (C3h): Power Control 4 (in Idle mode/ 8-colors)
+        case 0xC4: // PWCTR5 (C4h): Power Control 5 (in Partial mode/ full-colors)
+        case 0xB6: // DISSET5
+            if (s_cmdArgIndex == 1) s_commandId = SSD_COMMAND_NONE;
+            break;
+        case 0xB1: // FRMCTR1 frame rate control 1, use by default
+        case 0xB2: // FRMCTR2, Frame Rate Control (In Idle mode/ 8-colors)
+        case 0xC0: // PWCTR1 power control 1
+            if (s_cmdArgIndex == 2) s_commandId = SSD_COMMAND_NONE;
+            break;
+        case 0xB3: // FRMCTR3 (B3h): Frame Rate Control (In Partial mode/ full colors)
+            if (s_cmdArgIndex == 5) s_commandId = SSD_COMMAND_NONE;
+            break;
+        case 0xE0: // GMCTRP1 positive gamma correction
+        case 0xE1: // GMCTRN1 negative gamma correction
+            if (s_cmdArgIndex == 15) s_commandId = SSD_COMMAND_NONE;
+            break;
+        case 0x01: // SWRESET
+        case 0x11: // SLPOUT
+        case 0x20: // INVOFF (20h): Display Inversion Off
         default:
             s_commandId = SSD_COMMAND_NONE;
             break;
@@ -204,4 +257,5 @@ sdl_oled_info sdl_il9163 =
     .detect = sdl_il9163_detect,
     .run_cmd = sdl_il9163_commands,
     .run_data = sdl_il9163_data,
+    .reset = sdl_il9163_reset,
 };

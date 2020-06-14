@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -35,10 +35,19 @@
 
 #define PORT_SPI    PORTB
 #define DDR_SPI     DDRB
-#define DD_MISO     DDB4
-#define DD_MOSI     DDB3
-#define DD_SS       DDB2
-#define DD_SCK      DDB5
+
+#if defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)
+    #define DD_MISO     DDB3
+    #define DD_MOSI     DDB2
+    #define DD_SCK      DDB1
+    #define DD_SS       DDB0
+#else
+    #define DD_MISO     DDB4
+    #define DD_MOSI     DDB3
+    #define DD_SCK      DDB5
+    #define DD_SS       DDB2
+#endif
+
 #define SPI_CLOCK_MASK   0x03
 #define SPI_2XCLOCK_MASK 0x01
 
@@ -97,14 +106,13 @@ static void ssd1306_spiSendByte_avr(uint8_t data)
 
 static void ssd1306_spiSendBytes_avr(const uint8_t * buffer, uint16_t size)
 {
-    const uint8_t *p = buffer;
     while (size--)
     {
-        SPDR = *p;
+        SPDR = *buffer;
         asm volatile("nop"); // to improve speed
         while((SPSR & (1<<SPIF))==0);
         SPDR; // read SPI input
-        p++;
+        buffer++;
     }
 }
 

@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018, Alexey Dynda
+    Copyright (c) 2018-2020, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -65,6 +65,15 @@ void        il9163_setMode(lcd_mode_t mode);
  * @see ssd1306_spiInit()
  */
 void         il9163_128x128_init(void);
+
+/**
+ * @brief Sets screen offset (refer to datasheet of your display)
+ *
+ * Set offset for the display
+ * @param x offset in pixels
+ * @param y offset in pixels
+ */
+void         il9163_setOffset(lcdint_t x, lcdint_t y);
 
 /**
  * @brief Inits 128x160 RGB OLED display (based on st7735 controller).

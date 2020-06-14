@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSD1306 OLED display driver
-   &#160;<span id="projectnumber">1.7.13</span>
+   &#160;<span id="projectnumber">1.8.2</span>
    </div>
    <div id="projectbrief">This library is developed to control SSD1306/SSD1331/SSD1351/IL9163/PCD8554 RGB i2c/spi LED displays</div>
   </td>
@@ -62,7 +62,8 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">ssd1306_console.h File Reference</div>  </div>
 </div><!--header-->
@@ -84,6 +85,11 @@ Classes</h2></td></tr>
 Typedefs</h2></td></tr>
 <tr class="memitem:af5099e06f17b3868b9b9961ab64263ef"><td class="memItemLeft" align="right" valign="top">typedef size_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306__console_8h.html#af5099e06f17b3868b9b9961ab64263ef">LcdWriter</a>) (uint8_t ch)</td></tr>
 <tr class="separator:af5099e06f17b3868b9b9961ab64263ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a9fbeaf5fb5c8245c655d5fa12968d0b5"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ssd1306__console_8h.html#a9fbeaf5fb5c8245c655d5fa12968d0b5">ssd1306_consoleWriter</a> (uint8_t ch)</td></tr>
+<tr class="separator:a9fbeaf5fb5c8245c655d5fa12968d0b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This is for console </p>
@@ -104,6 +110,32 @@ Typedefs</h2></td></tr>
 <p>Callback function to print text to the LCD display </p>
 
 <p class="definition">Definition at line <a class="el" href="ssd1306__console_8h_source.html#l00038">38</a> of file <a class="el" href="ssd1306__console_8h_source.html">ssd1306_console.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a9fbeaf5fb5c8245c655d5fa12968d0b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fbeaf5fb5c8245c655d5fa12968d0b5">&#9670;&nbsp;</a></span>ssd1306_consoleWriter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t ssd1306_consoleWriter </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>ch</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>ssd1306 console support function. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ch</td><td>character to print </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>only for SSD1306 based displays </dd></dl>
 
 </div>
 </div>

@@ -203,6 +203,18 @@ void ssd1306_active_scroll();
 void ssd1306_deactive_scroll();
 
 /**
+ * Sets start line in gdram to start display content with
+ *
+ * @param line start line in range 0 - 63
+ */
+void ssd1306_setStartLine(uint8_t line);
+
+/**
+ * returns start line in gdram.
+ */
+uint8_t ssd1306_getStartLine(void);
+
+/**
  * @}
  */
 

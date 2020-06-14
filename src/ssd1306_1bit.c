@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2016-2018, Alexey Dynda
+    Copyright (c) 2016-2019, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +38,7 @@
 #include "lcd/ssd1306_commands.h"
 
 uint8_t s_ssd1306_invertByte = 0x00000000;
+extern uint16_t ssd1306_color;
 const uint8_t *s_font6x8 = &ssd1306xled_font6x8[4];
 extern lcduint_t ssd1306_cursorX;
 extern lcduint_t ssd1306_cursorY;
@@ -50,9 +51,9 @@ void ssd1306_fillScreen(uint8_t fill_Data)
 {
     fill_Data ^= s_ssd1306_invertByte;
     ssd1306_lcd.set_block(0, 0, 0);
-    for(uint8_t m=(ssd1306_lcd.height >> 3); m>0; m--)
+    for(lcduint_t m=(ssd1306_lcd.height >> 3); m>0; m--)
     {
-        for(uint8_t n=ssd1306_lcd.width; n>0; n--)
+        for(lcduint_t n=ssd1306_lcd.width; n>0; n--)
         {
             ssd1306_lcd.send_pixels1(fill_Data);
         }
@@ -64,9 +65,9 @@ void ssd1306_fillScreen(uint8_t fill_Data)
 void ssd1306_clearScreen()
 {
     ssd1306_lcd.set_block(0, 0, 0);
-    for(uint8_t m=(ssd1306_lcd.height >> 3); m>0; m--)
+    for(lcduint_t m=(ssd1306_lcd.height >> 3); m>0; m--)
     {
-        for(uint8_t n=ssd1306_lcd.width; n>0; n--)
+        for(lcduint_t n=ssd1306_lcd.width; n>0; n--)
         {
             ssd1306_lcd.send_pixels1( s_ssd1306_invertByte );
         }
@@ -153,6 +154,80 @@ uint8_t ssd1306_printFixed(uint8_t xpos, uint8_t y, const char *ch, EFontStyle s
         }
         for (i = 0; i < char_info.spacing; i++)
             ssd1306_lcd.send_pixels1(s_ssd1306_invertByte);
+    }
+    ssd1306_intf.stop();
+    return j;
+}
+
+uint8_t ssd1306_printFixed_oldStyle(uint8_t xpos, uint8_t y, const char *ch, EFontStyle style)
+{
+    uint8_t i, j=0;
+    uint8_t text_index = 0;
+    uint8_t page_offset = 0;
+    uint8_t x = xpos;
+    y >>= 3;
+    ssd1306_lcd.set_block(xpos, y, ssd1306_lcd.width - xpos);
+    for(;;)
+    {
+        uint8_t c;
+        uint8_t ldata;
+        uint16_t offset;
+        if( (x > ssd1306_lcd.width - s_fixedFont.h.width) || (ch[j] == '\0') )
+        {
+            x = xpos;
+            y++;
+            if (y >= (ssd1306_lcd.height >> 3))
+            {
+                break;
+            }
+            page_offset++;
+            if (page_offset == s_fixedFont.pages)
+            {
+                text_index = j;
+                page_offset = 0;
+                if (ch[j] == '\0')
+                {
+                    break;
+                }
+            }
+            else
+            {
+                j = text_index;
+            }
+            ssd1306_intf.stop();
+            ssd1306_lcd.set_block(xpos, y, ssd1306_lcd.width - xpos);
+        }
+        c = ch[j];
+        if ( c >= s_fixedFont.h.ascii_offset )
+        {
+            c -= s_fixedFont.h.ascii_offset;
+        }
+        ldata = 0;
+        offset = (c * s_fixedFont.pages + page_offset) * s_fixedFont.h.width;
+        for( i=s_fixedFont.h.width; i>0; i--)
+        {
+            uint8_t data;
+            if ( style == STYLE_NORMAL )
+            {
+                data = pgm_read_byte(&s_fixedFont.primary_table[offset]);
+            }
+            else if ( style == STYLE_BOLD )
+            {
+                uint8_t temp = pgm_read_byte(&s_fixedFont.primary_table[offset]);
+                data = temp | ldata;
+                ldata = temp;
+            }
+            else
+            {
+                uint8_t temp = pgm_read_byte(&s_fixedFont.primary_table[offset + 1]);
+                data = (temp & 0xF0) | ldata;
+                ldata = (temp & 0x0F);
+            }
+            ssd1306_lcd.send_pixels1(data^s_ssd1306_invertByte);
+            offset++;
+        }
+        x += s_fixedFont.h.width;
+        j++;
     }
     ssd1306_intf.stop();
     return j;
@@ -347,7 +422,17 @@ size_t ssd1306_write(uint8_t ch)
         ssd1306_cursorX = 0;
         return 0;
     }
-    else if ( (ssd1306_cursorX > ssd1306_lcd.width - s_fixedFont.h.width) || (ch == '\n') )
+    SCharInfo char_info = {};
+    uint8_t gotoNewLine = 1;
+    if (ch != '\n')
+    {
+        uint16_t unicode;
+        unicode = ssd1306_unicode16FromUtf8(ch);
+        if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
+        ssd1306_getCharBitmap(unicode, &char_info);
+        gotoNewLine = (ssd1306_cursorX > (ssd1306_lcd.width - char_info.width));
+    }
+    if ( gotoNewLine )
     {
         ssd1306_cursorX = 0;
         ssd1306_cursorY += s_fixedFont.h.height;
@@ -361,10 +446,6 @@ size_t ssd1306_write(uint8_t ch)
             return 0;
         }
     }
-    uint16_t unicode = ssd1306_unicode16FromUtf8(ch);
-    if (unicode == SSD1306_MORE_CHARS_REQUIRED) return 0;
-    SCharInfo char_info;
-    ssd1306_getCharBitmap(unicode, &char_info);
     ssd1306_drawBitmap( ssd1306_cursorX,
                         ssd1306_cursorY >> 3,
                         char_info.width,
@@ -669,6 +750,39 @@ void ssd1306_drawBuffer(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_
     ssd1306_intf.stop();
 }
 
+void ssd1306_drawBuffer1_4(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)
+{
+    uint8_t i, j, k;
+    ssd1306_lcd.set_block(x, y>>3, w);
+    uint8_t y_offset = (y & 0x07);
+    uint8_t x_offset = (x & 0x01);
+    for( j = 0; j < ((h + 7 + y_offset) >> 3); j++)
+    {
+        for( i = 0; i < w / 2 + x_offset; i++)
+        {
+            for( k = 0; k < 8; k++)
+            {
+                if ((j*8 + k - y_offset < h) && (k >= y_offset || j != 0))
+                {
+                    uint8_t data = (i < w / 2) ? buf[ i + (j * 8 + k - y_offset) * w / 2 ]: 0x00;
+                    if ( x_offset )
+                    {
+                        data <<= 4;
+                        if ( i > 0) data |= buf[ i + (j * 8 + k - y_offset) * w / 2 - 1] >> 4;
+                    }
+                    ssd1306_lcd.send_pixels8( data );
+                }
+                else
+                {
+                    ssd1306_lcd.send_pixels8( 0x00 );
+                }
+            }
+        }
+        ssd1306_lcd.next_page();
+    }
+    ssd1306_intf.stop();
+}
+
 void ssd1306_drawBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)
 {
     uint8_t i, j;
@@ -682,6 +796,72 @@ void ssd1306_drawBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_
             ssd1306_lcd.send_pixels1(s_ssd1306_invertByte^pgm_read_byte(buf++));
         }
         buf += remainder;
+        ssd1306_lcd.next_page();
+    }
+    ssd1306_intf.stop();
+}
+
+void ssd1306_drawBitmap1_4(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)
+{
+    uint8_t i, j, k;
+    ssd1306_lcd.set_block(x, y>>3, w);
+    uint8_t y_offset = (y & 0x07);
+    uint8_t x_offset = (x & 0x01);
+    for( j = 0; j < ((h + 7 + y_offset) >> 3); j++)
+    {
+        for( i = 0; i < w / 2 + x_offset; i++)
+        {
+            for( k = 0; k < 8; k++)
+            {
+                if ((j*8 + k - y_offset < h) && (k >= y_offset || j != 0))
+                {
+                    uint8_t data = (i < w / 2) ? pgm_read_byte( &buf[ i + (j * 8 + k - y_offset) * w / 2 ] ) : 0x00;
+                    if ( x_offset )
+                    {
+                        data <<= 4;
+                        if ( i > 0) data |= pgm_read_byte( &buf[ i + (j * 8 + k - y_offset) * w / 2 - 1] ) >> 4;
+                    }
+                    ssd1306_lcd.send_pixels8( data );
+                }
+                else
+                {
+                    ssd1306_lcd.send_pixels8( 0x00 );
+                }
+            }
+        }
+        ssd1306_lcd.next_page();
+    }
+    ssd1306_intf.stop();
+}
+
+void ssd1306_drawXBitmap(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *buf)
+{
+    uint8_t i, j;
+    lcduint_t pitch = (w + 7) >> 3;
+    ssd1306_lcd.set_block(x, y, w);
+    for(j=(h >> 3); j>0; j--)
+    {
+        uint8_t bit = 0;
+        for(i=w;i>0;i--)
+        {
+            uint8_t data = 0;
+            for (uint8_t k = 0; k<8; k++)
+            {
+                data |= ( ((pgm_read_byte(&buf[k*pitch]) >> bit) & 0x01) << k );
+            }
+            ssd1306_lcd.send_pixels1(s_ssd1306_invertByte^data);
+            bit++;
+            if (bit >= 8)
+            {
+                buf++;
+                bit=0;
+            }
+        }
+        if (bit)
+        {
+            buf++;
+        }
+        buf += pitch * 7;
         ssd1306_lcd.next_page();
     }
     ssd1306_intf.stop();
@@ -753,6 +933,40 @@ void ssd1306_clearBlock(uint8_t x, uint8_t y, uint8_t w, uint8_t h)
         for(i=w;i>0;i--)
         {
             ssd1306_lcd.send_pixels1(s_ssd1306_invertByte);
+        }
+        ssd1306_lcd.next_page();
+    }
+    ssd1306_intf.stop();
+}
+
+void ssd1306_fillRect(lcdint_t x1, lcdint_t y1, lcdint_t x2, lcdint_t y2)
+{
+    uint8_t templ = ssd1306_color^s_ssd1306_invertByte;
+    if (x1 > x2) return;
+    if (y1 > y2) return;
+    if ((lcduint_t)x2 >= ssd1306_displayWidth()) x2 = (lcdint_t)ssd1306_displayWidth() - 1;
+    if ((lcduint_t)y2 >= ssd1306_displayHeight()) y2 = (lcdint_t)ssd1306_displayHeight() - 1;
+    uint8_t bank1 = (y1 >> 3);
+    uint8_t bank2 = (y2 >> 3);
+    ssd1306_lcd.set_block(x1, bank1, x2 - x1 + 1);
+    for (uint8_t bank = bank1; bank<=bank2; bank++)
+    {
+        uint8_t mask = 0xFF;
+        if (bank1 == bank2)
+        {
+            mask = (mask >> ((y1 & 7) + 7 - (y2 & 7))) << (y1 & 7);
+        }
+        else if (bank1 == bank)
+        {
+            mask = (mask << (y1 & 7));
+        }
+        else if (bank2 == bank)
+        {
+            mask = (mask >> (7 - (y2 & 7)));
+        }
+        for (uint8_t x=x1; x<=x2; x++)
+        {
+            ssd1306_lcd.send_pixels1(templ & mask);
         }
         ssd1306_lcd.next_page();
     }

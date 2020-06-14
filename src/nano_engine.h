@@ -64,6 +64,10 @@
  */
 #define NanoEngine1   NanoEngine<TILE_16x16_MONO>
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#define NanoEngineArduboy   NanoEngine<TILE_8x8_MONO>
+#endif
+
 /**
  * NanoEngine8 is simple graphics engine, that implements double buffering work
  * for the systems with very low resources. That is, memory buffer for SSD1331 oled

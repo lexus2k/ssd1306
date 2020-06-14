@@ -160,7 +160,7 @@ void setup()
     st7735_128x160_spi_init(3, 4, 5);
 //    st7735_128x160_spi_init(3, -1, 4); // Use this line for ATTINY
 
-    ssd1306_fillScreen( 0x00 );
+    ssd1306_clearScreen( );
     ssd1306_createMenu( &menu, menuItems, sizeof(menuItems) / sizeof(char *) );
     ssd1306_showMenu( &menu );
 }
@@ -199,7 +199,7 @@ void loop()
     {
          st7735_setRotation((++rotation) & 0x03);
     }
-    ssd1306_fillScreen( 0x00 );
+    ssd1306_clearScreen( );
     ssd1306_setColor(RGB_COLOR16(255,255,255));
     ssd1306_showMenu(&menu);
     delay(500);
