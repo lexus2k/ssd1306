@@ -24,7 +24,7 @@ Initially the library is intended for very small microcontrollers (with a little
 few resources as possible, but still has powerful capabilities (NanoEngine), allowing to develop nice animation.
 It works on any powerful devices like raspberry pi, esp32; and can be easily ported to new platform.
 
-You can find the online simulation for one of the examples from the library ![here](https://wokwi.com/arduino/libraries/ssd1306/draw_bitmap) 
+You can find the online simulation for one of the examples from the library [here](https://wokwi.com/arduino/libraries/ssd1306/draw_bitmap) 
 
 ## Key Features
 
