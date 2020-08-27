@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018-2019, Alexey Dynda
+    Copyright (c) 2018-2020, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -155,6 +155,15 @@
     // #define CONFIG_AVR_SPI_AVAILABLE
 
 #elif defined(NRF52) || defined(NRF5)
+    /** The macro is defined when i2c Wire library is available */
+    #define CONFIG_PLATFORM_I2C_AVAILABLE
+    /** The macro is defined when Wire library speed can be configured */
+    #define SSD1306_WIRE_CLOCK_CONFIGURABLE
+    /** The macro is defined when SPI library is available */
+    #define CONFIG_PLATFORM_SPI_AVAILABLE
+
+#elif defined(__AVR_ATmega4808__) || defined(__AVR_ATmega3208__) || defined(__AVR_ATmega1608__)
+
     /** The macro is defined when i2c Wire library is available */
     #define CONFIG_PLATFORM_I2C_AVAILABLE
     /** The macro is defined when Wire library speed can be configured */
