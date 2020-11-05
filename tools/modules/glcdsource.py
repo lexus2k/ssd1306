@@ -28,7 +28,7 @@ import os
 import sys
 import re
 import codecs
-import fontcontainer
+from . import fontcontainer
 
 class GLCDSource(fontcontainer.FontContainer):
 
@@ -67,7 +67,7 @@ class GLCDSource(fontcontainer.FontContainer):
                            if len(self.get_group_chars()) == 0:
                                self.first_char = ord(char[0])
                        else:
-                           print "Parsing error"
+                           print("Parsing error")
                            exit(1)
                 # Cast bitmap from parsed data
                 bitmap=[]

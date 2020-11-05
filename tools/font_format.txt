@@ -1,0 +1,44 @@
+============================ SQUIX FORMAT:
+WIDTH|HEIGHT|FIRSTCHAR|COUNT|
+--- JUMP TABLE:
+OFFSET(MSB)|OFFSET(LSB)|BYTES|WIDTH|
+--- FONT DATA:
+
+
+============================ FIXED FONT FORMAT
+TYPE|WIDTH|HEIGHT|FIRSTCHAR|
+FIRSTUNICODE(MSB)|FIRSTUNICODE(LSB)|COUNT|
+--- FONT DATA:
+* [COUNT*WIDTH*((HEIGHT+7)/8)]
+
+where:
+ - TYPE is 0 or 1
+    - type 0 fonts support only ascii chars with codes 0 - 127, and extended chars with codes 128 - 255.
+      These fonts can be generated with LCD font generator ONLY.
+    - type 1 fonts are fixed size, but support unicode tables
+      These fonts can be generated with fontgenerator.py script in tools folder:
+          ./fontgenerator.py --ttf consola.ttf -s 8 -g 0 127 -f old -d > output.cpp
+ - WIDTH is fixed width of the font char
+ - HEIGH is fixed height of the font char
+ - FIRSTCHAR has meaning only for fonts of type 0 - it is first ascii char code in the glyph table
+
+
+============================ FREE FONT FORMAT
+TYPE|WIDTH|HEIGHT|FIRSTCHAR|
+FIRSTUNICODE(MSB)|FIRSTUNICODE(LSB)|COUNT|
+--- JUMP TABLE:
+OFFSET(MSB)|OFFSET(LSB)|WIDTH|HEIGHT|
+--- FONT DATA:
+
+where:
+ - TYPE is 2 (mandatory)
+ - WIDTH has no meaning
+ - HEIGHT is fixed height of the font char
+ - FIRSTCHAR has no meaning
+
+
+Free font can be generated with the following command:
+Fixed width:
+    ./fontgenerator.py --ttf consola.ttf -s 8 -fw -g 0 127 -f new -d > output.cpp
+Variable width:
+    ./fontgenerator.py --ttf consola.ttf -s 8 -g 0 127 -f new -d > output.cpp

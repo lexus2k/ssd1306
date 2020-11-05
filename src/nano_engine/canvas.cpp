@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018-2019, Alexey Dynda
+    Copyright (c) 2018-2020, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -358,8 +358,8 @@ void NanoCanvasOps<1>::drawBitmap1(lcdint_t x, lcdint_t y, lcduint_t w, lcduint_
     uint8_t mainFlag = 1;
     if (y + (lcdint_t)h <= 0) return;
     if (y >= (lcdint_t)m_h) return;
-    if (x + (lcdint_t)w <= 0) return;
-    if (x >= (lcdint_t)m_w)  return;
+    if ((int16_t)x + (int16_t)w <= 0) return;
+    if ((int16_t)x >= (int16_t)m_w)  return;
     if (y < 0)
     {
          bitmap += ((lcduint_t)((-y) + 7) >> 3) * w;
