@@ -1,6 +1,6 @@
 #    MIT License
 #
-#    Copyright (c) 2019, Alexey Dynda
+#    Copyright (c) 2019-2020, Alexey Dynda
 #
 #    Permission is hereby granted, free of charge, to any person obtaining a copy
 #    of this software and associated documentation files (the "Software"), to deal
@@ -41,6 +41,6 @@ check:
 	    --enable=warning,style,performance,portability \
 	    --suppress=information \
 	    -q -I ./src \
-	    --error-exitcode=1 .
+	    --error-exitcode=1 src
 	@echo "[DONE]"
 
