@@ -75,7 +75,7 @@ void ssd1306_configureSpiDisplay(const uint8_t *config, uint8_t configSize)
 void ssd1306_configureSpiDisplay2(const uint8_t *config, uint8_t configSize)
 {
     uint8_t command = 1;
-    int8_t args;
+    int8_t args = -1;
     ssd1306_intf.start();
     ssd1306_spiDataMode(0);
     for( uint8_t i=0; i<configSize; i++)
