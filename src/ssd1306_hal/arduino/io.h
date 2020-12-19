@@ -37,10 +37,16 @@
     #include <pgmspace.h>
 #else  // AVR support
     #include <Arduino.h>
-    #include <avr/pgmspace.h>
-    #include <avr/interrupt.h>
     #if !defined(ARDUINO_ARCH_SAMD) && defined(__AVR__)
     #include <avr/sleep.h>
+    #include <avr/pgmspace.h>
+    #include <avr/interrupt.h>
+    #elif defined(ARDUINO_ARCH_SAMD)
+    #include <api/deprecated-avr-comp/avr/pgmspace.h>
+    #include <api/deprecated-avr-comp/avr/interrupt.h>
+    #else
+    #include <avr/pgmspace.h>
+    #include <avr/interrupt.h>
     #endif
 #endif
 
