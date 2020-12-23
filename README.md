@@ -94,7 +94,7 @@ through API.
 | Attiny85, Attiny45 |  X  |  X  |         |
 | Atmega328p, Atmega168 |  X  |  X  |         |
 | Atmega32u4  |  X  |  X  |    |
-| **Plain ESP32** |   |     |          |
+| **ESP32-IDF** |   |     |          |
 | ESP32 |  X  | X  |  library can be used as IDF component  |
 | **Linux**  |    |     |          |
 | Raspberry Pi |  X  |  X  | i2c-dev, spidev, sys/class/gpio  |
