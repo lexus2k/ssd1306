@@ -1,6 +1,6 @@
 #    MIT License
 #
-#    Copyright (c) 2018, Alexey Dynda
+#    Copyright (c) 2018, 2021, Alexey Dynda
 #
 #    Permission is hereby granted, free of charge, to any person obtaining a copy
 #    of this software and associated documentation files (the "Software"), to deal
@@ -48,4 +48,4 @@ OUTFILE:=$(BLD)/$(PROJECT).exe
 
 # No support for sdl2-config tool in MINGW32
 #$(shell sdl2-config --libs)
-LDFLAGS += -L/mingw/lib -lSDL2
+LDFLAGS += -L/mingw/lib -lSDL2 -lstdc++

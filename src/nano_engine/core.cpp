@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018-2019, Alexey Dynda
+    Copyright (c) 2018-2021, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +33,11 @@
 
 /** Callback to call if buttons state needs to be updated */
 TNanoEngineGetButtons NanoEngineInputs::m_onButtons = nullptr;
+
+uint8_t NanoEngineInputs::s_ky40_clk;
+uint8_t NanoEngineInputs::s_ky40_dt;
+uint8_t NanoEngineInputs::s_ky40_sw;
+
 
 bool NanoEngineInputs::pressed(uint8_t buttons)
 {
