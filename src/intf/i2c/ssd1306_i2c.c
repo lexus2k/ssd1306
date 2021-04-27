@@ -42,6 +42,23 @@ void ssd1306_i2cInitEx(int8_t scl, int8_t sda, int8_t sa)
 #endif
 }
 
+void ssd1306_i2cInitEx2(int8_t busId, int8_t scl, int8_t sda, int8_t sa)
+{
+#if defined(CONFIG_PLATFORM_I2C_AVAILABLE) && defined(CONFIG_PLATFORM_I2C_ENABLE)
+    ssd1306_platform_i2cConfig_t cfg;
+    cfg.scl = scl;
+    cfg.sda = sda;
+    ssd1306_platform_i2cInit(busId, sa, &cfg);
+#elif defined(CONFIG_TWI_I2C_AVAILABLE) && defined(CONFIG_TWI_I2C_ENABLE)
+    ssd1306_i2cConfigure_Twi(0);
+    ssd1306_i2cInit_Twi(sa);
+#elif defined(CONFIG_SOFTWARE_I2C_AVAILABLE) && defined(CONFIG_SOFTWARE_I2C_ENABLE)
+    ssd1306_i2cInit_Embedded(scl, sda, sa);
+#else
+    #warning "ssd1306 library: no i2c support for the target platform"
+#endif
+}
+
 void ssd1306_i2cInit()
 {
     ssd1306_i2cInitEx(-1, -1, SSD1306_SA);

@@ -78,6 +78,32 @@ void         ssd1306_i2cInit(void);
  */
 void ssd1306_i2cInitEx(int8_t scl, int8_t sda, int8_t sa);
 
+/**
+ * @ingroup LCD_HW_INTERFACE_API
+ *
+ * Inits display interface to use i2c bus.
+ * The function automatically selects available type of i2c implementation
+ * 1. Wire library
+ * 2. sw i2c implementation
+ * In case of using Wire library this function calls Wire.begin() and
+ * sets speed to fast i2c (400kHz). If you prefer to use your own Wire settings
+ * or avoid reinitializing of Wire library, please use ssd1306_i2cInit_Wire().
+ * If you want to use embedded i2c (if it is supported), use ssd1306_i2cInit_Embedded().
+ *
+ * @param busId - number of i2c bus if there are multiple hw blocks avialable.
+ * @param scl - i2c clock pin. Use -1 if you don't need to change default pin number
+ * @param sda - i2c data pin. Use -1 if you don't need to change default pin number
+ * @param sa  - i2c address of lcd display. Use 0 to leave default
+ *
+ * @note scl and sda parameters depend on used hardware. For many hardware boards these
+ * parameters do not have any effect. ESP8266 allows to specify these parameters
+ *
+ * @note scl and sda for Linux systems should be the same, and should contain i2c bus id.
+ *
+ * @note: after call to this function you need to initialize lcd display.
+ */
+void ssd1306_i2cInitEx2(int8_t busId, int8_t scl, int8_t sda, int8_t sa);
+
 #ifdef __cplusplus
 }
 #endif
