@@ -42,7 +42,7 @@
 
 static uint8_t s_bytesWritten = 0;
 static uint8_t s_sa = SSD1306_SA;
-static TwoWire *s_i2c = nullptr_t;
+static TwoWire *s_i2c = nullptr;
 
 static void ssd1306_i2cStart_Wire(void)
 {
