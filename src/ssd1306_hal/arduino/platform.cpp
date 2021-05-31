@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2016-2019, Alexey Dynda
+    Copyright (c) 2016-2021, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -39,6 +39,9 @@
     defined(CONFIG_PLATFORM_I2C_ENABLE)
 
 #include <Wire.h>
+#if defined( WIRE_INTERFACES_COUNT ) && WIRE_INTERFACES_COUNT > 1
+#include <Wire1.h>
+#endif
 
 static uint8_t s_bytesWritten = 0;
 static uint8_t s_sa = SSD1306_SA;

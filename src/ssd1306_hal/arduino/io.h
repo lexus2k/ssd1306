@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018-2020, Alexey Dynda
+    Copyright (c) 2018-2021, Alexey Dynda
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -127,7 +127,7 @@
         #define CONFIG_VGA_AVAILABLE
     #endif
 
-#elif defined(__AVR_ATmega328P__)
+#elif defined(__AVR_ATmega328P__) || defined(__AVR_ATmega328PB__)
     /** The macro is defined when i2c Wire library is available */
     #define CONFIG_SOFTWARE_I2C_AVAILABLE
     /** The macro is defined when i2c Wire library is available */
@@ -144,6 +144,9 @@
     #define CONFIG_AVR_UART_AVAILABLE
     /** The macro is defined when VGA monitor control is available directly from controller */
     #define CONFIG_VGA_AVAILABLE
+    #if defined(__AVR_ATmega328PB__) && !defined(WIRE_INTERFACES_COUNT)
+        #define WIRE_INTERFACES_COUNT 2
+    #endif
 
 #elif defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)
     /** The macro is defined when i2c Wire library is available */
