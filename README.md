@@ -24,6 +24,8 @@ Initially the library is intended for very small microcontrollers (with a little
 few resources as possible, but still has powerful capabilities (NanoEngine), allowing to develop nice animation.
 It works on any powerful devices like raspberry pi, esp32; and can be easily ported to new platform.
 
+You can find the online simulation for one of the examples from the library [here](https://wokwi.com/arduino/libraries/ssd1306/draw_bitmap) 
+
 ## Key Features
 
  * Supports color, monochrome OLED displays, and VGA monitor
@@ -92,7 +94,7 @@ through API.
 | Attiny85, Attiny45 |  X  |  X  |         |
 | Atmega328p, Atmega168 |  X  |  X  |         |
 | Atmega32u4  |  X  |  X  |    |
-| **Plain ESP32** |   |     |          |
+| **ESP32-IDF** |   |     |          |
 | ESP32 |  X  | X  |  library can be used as IDF component  |
 | **Linux**  |    |     |          |
 | Raspberry Pi |  X  |  X  | i2c-dev, spidev, sys/class/gpio  |
@@ -145,7 +147,7 @@ The library is free. If this project helps you, you can give me a cup of coffee.
 
 MIT License
 
-Copyright (c) 2016-2019, Alexey Dynda
+Copyright (c) 2016-2021, Alexey Dynda
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

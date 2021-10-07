@@ -241,7 +241,7 @@ static void platform_spi_send_buffer(const uint8_t *data, uint16_t len)
 {
     while (len--)
     {
-        platform_i2c_send(*data);
+        platform_spi_send(*data);
         data++;
     }
 }
