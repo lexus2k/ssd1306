@@ -183,7 +183,8 @@ void CompositeOutput::sendFrameHalfResolution(const uint8_t *frame)
     generate_short_sync();        // 625
     if (m_ptr != line) // force to send data
     {
-        i2s_write_bytes(I2S_PORT, (char*)line, (m_ptr - line) * sizeof(uint16_t), portMAX_DELAY);
+        size_t bytes_written;
+        i2s_write(I2S_PORT, (char*)line, (m_ptr - line) * sizeof(uint16_t), &bytes_written, portMAX_DELAY);
         m_ptr = line;
     }
 }
@@ -275,7 +276,8 @@ void CompositeOutput::check_buffer()
 {
     if (m_ptr == m_end)
     {
-        i2s_write_bytes(I2S_PORT, (char*)line, sizeof(uint16_t) * (m_end - line), portMAX_DELAY);
+        size_t bytes_written;
+        i2s_write_bytes(I2S_PORT, (char*)line, sizeof(uint16_t) * (m_end - line), &bytes_written, portMAX_DELAY);
         m_ptr = line;
     }
 }
