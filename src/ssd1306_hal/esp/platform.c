@@ -138,7 +138,7 @@ void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, ssd1306_platform_i2cCo
     // init your interface here
     if ( busId < 0) busId = I2C_NUM_1;
     s_bus_id = busId;
-    i2c_config_t conf;
+    i2c_config_t conf = { 0 };
     conf.mode = I2C_MODE_MASTER;
     conf.sda_io_num = cfg->sda >= 0 ? cfg->sda : 21;
     conf.sda_pullup_en = GPIO_PULLUP_ENABLE;
