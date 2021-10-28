@@ -277,7 +277,7 @@ void CompositeOutput::check_buffer()
     if (m_ptr == m_end)
     {
         size_t bytes_written;
-        i2s_write_bytes(I2S_PORT, (char*)line, sizeof(uint16_t) * (m_end - line), &bytes_written, portMAX_DELAY);
+        i2s_write(I2S_PORT, (char*)line, sizeof(uint16_t) * (m_end - line), &bytes_written, portMAX_DELAY);
         m_ptr = line;
     }
 }
