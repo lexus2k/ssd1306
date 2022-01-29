@@ -60,7 +60,7 @@ class TTFSource(fontcontainer.FontContainer):
     def __add_char(self, group_index, ch):
         self.face.load_char(ch, freetype.FT_LOAD_MONOCHROME | freetype.FT_LOAD_RENDER )
         bitmap = self.face.glyph.bitmap
-        print(bitmap.buffer)
+        # print(bitmap.buffer)
         bitmap_data = []
         for y in range( bitmap.rows ):
             bitmap_data.append( [] )
