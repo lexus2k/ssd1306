@@ -65,6 +65,7 @@ SRCS_CPP = \
 	sprite_pool.cpp \
 	ssd1306_console.cpp \
 	ssd1306_hal/arduino/platform.cpp \
+	ssd1306_hal/energia/platform.cpp \
 	intf/vga/esp32/vga128x64.cpp \
 	intf/vga/esp32/CompositeOutput.cpp \
 
