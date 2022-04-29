@@ -91,24 +91,34 @@ void ssd1306_platform_i2cInit(int8_t busId, uint8_t addr, ssd1306_platform_i2cCo
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // !!! PLATFORM SPI IMPLEMENTATION OPTIONAL !!!
-// TODO: (Energia) Implement SPI communication
 #if defined(CONFIG_PLATFORM_SPI_AVAILABLE) && defined(CONFIG_PLATFORM_SPI_ENABLE)
 
 #include "intf/spi/ssd1306_spi.h"
+#include "lcd/lcd_common.h"
+#include <SPI.h>
 
 static void platform_spi_start(void)
 {
-    // ... Open spi channel for your device with specific s_ssd1306_cs, s_ssd1306_dc
+    digitalWrite(s_ssd1306_cs, LOW);
 }
 
 static void platform_spi_stop(void)
 {
-    // ... Complete spi communication
+    if (ssd1306_lcd.type == LCD_TYPE_PCD8544)
+    {
+        digitalWrite(s_ssd1306_dc, LOW);
+        SPI.transfer(0x00); // Send NOP command to allow last data byte to pass (bug in PCD8544?)
+                            // ssd1306 E3h is NOP command
+    }
+    if (s_ssd1306_cs >= 0)
+    {
+        digitalWrite(s_ssd1306_cs, HIGH);
+    }
 }
 
 static void platform_spi_send(uint8_t data)
 {
-    // ... Send byte to spi communication channel
+    SPI.transfer(data);
 }
 
 static void platform_spi_close(void)
@@ -118,15 +128,22 @@ static void platform_spi_close(void)
 
 static void platform_spi_send_buffer(const uint8_t *data, uint16_t len)
 {
-    // ... Send len bytes to spi communication channel here
+    while (len--)
+    {
+        SPI.transfer(*data);
+        data++;
+    };
 }
 
 void ssd1306_platform_spiInit(int8_t busId,
                               int8_t cesPin,
                               int8_t dcPin)
 {
+    if (cesPin >=0) pinMode(cesPin, OUTPUT);
+    if (dcPin >= 0) pinMode(dcPin, OUTPUT);
     if (cesPin>=0) s_ssd1306_cs = cesPin;
     if (dcPin>=0) s_ssd1306_dc = dcPin;
+    SPI.begin();
     ssd1306_intf.spi = 1;
     ssd1306_intf.start = &platform_spi_start;
     ssd1306_intf.stop  = &platform_spi_stop;
