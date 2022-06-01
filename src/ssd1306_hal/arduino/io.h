@@ -96,6 +96,26 @@
     /** The macro is defined when micro controller doesn't support multiplication operation */
     #define CONFIG_MULTIPLICATION_NOT_SUPPORTED
 
+#elif defined(__AVR_ATtinyxy4__) || defined(__AVR_ATtinyxy2__) || defined(__AVR_ATtinyxy6__) || defined(__AVR_ATtinyxy7__)
+    /** The macro is defined when i2c Wire library is available */
+    #define CONFIG_PLATFORM_I2C_AVAILABLE
+    /** The macro is defined when Wire library speed can be configured */
+    // Note: Might work for faster draw. But it does brick some devices that can't run at these speeds.
+    // Leaving it off for now
+    //#define SSD1306_WIRE_CLOCK_CONFIGURABLE
+    /** The macro is defined when SPI library is available */
+    #define CONFIG_PLATFORM_SPI_AVAILABLE
+    /** Define lcdint as smallest types to reduce memo usage on tiny controllers. *
+     * Remember, that this can cause issues with large lcd displays, i.e. 320x240*/
+    #define LCDINT_TYPES_DEFINED
+    /** This is for Attiny controllers */
+    typedef int8_t lcdint_t;
+    /** This is for Attiny controllers */
+    typedef uint8_t lcduint_t;
+    /** The macro is defined when micro controller doesn't support multiplication operation */
+    //#define CONFIG_MULTIPLICATION_NOT_SUPPORTED
+
+
 #elif defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__) || \
       defined(__AVR_ATtiny24__) || defined(__AVR_ATtiny44__) || defined(__AVR_ATtiny84__)
 
