@@ -85,12 +85,13 @@ void delay(uint32_t ms)     // delay()
 static uint8_t s_i2c_addr = 0x3C;
 static int8_t s_bus_id;
 
-static i2c_cmd_handle_t s_cmd_handle;
+static i2c_cmd_handle_t s_cmd_handle = NULL;
 
 static void platform_i2c_start(void)
 {
     // ... Open i2c channel for your device with specific s_i2c_addr
-    s_cmd_handle = i2c_cmd_link_create();
+    if (s_cmd_handle == NULL)
+        s_cmd_handle = i2c_cmd_link_create();
     i2c_master_start(s_cmd_handle);
     i2c_master_write_byte(s_cmd_handle, ( s_i2c_addr << 1 ) | I2C_MASTER_WRITE, 0x1);
 }
@@ -101,6 +102,7 @@ static void platform_i2c_stop(void)
     i2c_master_stop(s_cmd_handle);
     /*esp_err_t ret =*/ i2c_master_cmd_begin(s_bus_id, s_cmd_handle, 1000 / portTICK_RATE_MS);
     i2c_cmd_link_delete(s_cmd_handle);
+    s_cmd_handle = NULL;
 }
 
 static void platform_i2c_send(uint8_t data)
