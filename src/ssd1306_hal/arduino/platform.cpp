@@ -29,7 +29,7 @@
 #include "intf/spi/ssd1306_spi.h"
 #include "lcd/lcd_common.h"
 
-#if defined(ARDUINO)
+#if defined(ARDUINO) && !defined(ENERGIA)
 
 //////////////////////////////////////////////////////////////////////////////////
 //                        ARDUINO I2C IMPLEMENTATION

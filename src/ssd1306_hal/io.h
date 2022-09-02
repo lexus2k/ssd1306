@@ -39,7 +39,7 @@
  */
 
 #include "UserSettings.h"
-#if defined(ARDUINO)
+#if defined(ARDUINO) && !defined(ENERGIA)
 #include "arduino/io.h"
 #elif defined(__AVR__) && !defined(ARDUINO)
 #include "avr/io.h"
@@ -51,6 +51,8 @@
 #include "linux/io.h"
 #elif defined(__MINGW32__)
 #include "mingw/io.h"
+#elif defined(ENERGIA)
+#include "energia/io.h"
 #else
 #warning "Platform is not supported. Use template to add support"
 #include "template/io.h"

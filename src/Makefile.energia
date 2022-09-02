@@ -1,0 +1,4 @@
+# NO MAKEFILE REQUIRED FOR ENERGIA PLATFORM
+#
+# For using ssd1306 library just copy it to the libraries folder
+# located in the Energia folder in Documents.
