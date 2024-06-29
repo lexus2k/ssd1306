@@ -53,6 +53,8 @@
 #include "mingw/io.h"
 #elif defined(ENERGIA)
 #include "energia/io.h"
+#elif defined(CH32V00X)
+#include "ch32v/io.h"
 #else
 #warning "Platform is not supported. Use template to add support"
 #include "template/io.h"

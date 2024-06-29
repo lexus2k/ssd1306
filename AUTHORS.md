@@ -8,6 +8,7 @@
 * [drgallaci](https://github.com/drgallaci)
 * [CromFr](https://gitbug.com/CromFr)
 * [montaguk](https://github.com/montaguk)
+* [ldab](https://github.com/ldab)
 
 ## Special thanks to
 
