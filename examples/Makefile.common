@@ -38,7 +38,7 @@ default: all
 
 DESTDIR ?=
 BLD ?= ../bld
-PROJECT ?= ssd1306_demo
+PROJECT ?= demos/ssd1306_demo
 PROJECTS = $(subst /,,$(wildcard */))
 BACKSLASH?=/
 OUTFILE?=$(BLD)/$(PROJECT).out

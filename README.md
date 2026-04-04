@@ -103,6 +103,8 @@ through API.
 | [SDL Emulation](https://github.com/lexus2k/ssd1306/wiki/How-to-run-emulator-mode) |  X  |  X  | demo code can be run without real OLED HW via MinGW32 + SDL library |
 | **Energia**  |    |     |          |
 | MSP432P401R |  X  |  X  |  |
+| **Raspberry Pi Pico**  |    |     |          |
+| RP2040 |  X  |  X  | via [Arduino-Pico](https://github.com/earlephilhower/arduino-pico) or [Mbed RP2040](https://arduino-pico.readthedocs.io/) |
 | **WCH32**  |    |     |          |
 | WCH32V003 |  X  |      |          |
 
@@ -154,6 +156,45 @@ Ssd1306 library requires at least c++11 and c99 (by default Digispark package mi
 For more information about this library, please, visit https://github.com/lexus2k/ssd1306.
 Doxygen documentation can be found at [github.io site](http://lexus2k.github.io/ssd1306).
 If you found any problem or have any idea, please, report to Issues section.
+
+## FAQ
+
+### How to select I2C bus on Linux?
+
+Pass the bus number as `busId` to the init function. For example, if your display is on `/dev/i2c-7`:
+```c
+// busId=7 maps to /dev/i2c-7, address 0x3C
+ssd1306_i2cInit_Wire(7, 0x3C, -1, -1);
+```
+
+### How to use Software I2C?
+
+Software I2C is available on AVR platforms. Define `CONFIG_SOFTWARE_I2C_ENABLE` before including the library header, then use the standard init functions with your desired SDA/SCL pins.
+
+### How to use larger fonts?
+
+Use `ssd1306_setFreeFont()` with a larger font, or use the 2x-scaled print functions (`ssd1306_printFixed2x()`). To generate custom fonts from TTF files, use `tools/fontgenerator.py`:
+```bash
+pip install freetype-py
+python3 tools/fontgenerator.py --ttf myfont.ttf -s 16 -f new > myfont.h
+```
+
+### How to turn the display on/off for power saving?
+
+```c
+ssd1306_sendCommand(0xAE);  // Display OFF (sleep mode)
+ssd1306_sendCommand(0xAF);  // Display ON
+```
+
+### How to build Linux demos?
+
+```bash
+cd examples && make -f Makefile.linux PROJECT=demos/ssd1306_demo
+# Or for a specific demo:
+cd examples && make -f Makefile.linux PROJECT=demos/ssd1331_demo
+# Or using the build script:
+cd tools && ./build_and_run.sh -p linux demos/ssd1306_demo
+```
 
 ## License
 
