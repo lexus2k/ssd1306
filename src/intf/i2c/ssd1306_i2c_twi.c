@@ -76,7 +76,6 @@ static uint8_t ssd1306_twi_send(uint8_t data)
         {
             return twsr;
         }
-        iters++;
         if (!--iters)
         {
             break;

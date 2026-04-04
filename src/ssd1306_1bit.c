@@ -1039,9 +1039,9 @@ void ssd1306_eraseTrace(SPRITE *sprite)
     uint8_t y1 = sprite->ly >> 3;
     uint8_t y2 = (sprite->ly + 7) >> 3;
     if (sprite->ly < sprite->y)
-        y2 = min(y2, (uint8_t)((sprite->y >> 3) - 1));
+        y2 = ssd1306_min(y2, (uint8_t)((sprite->y >> 3) - 1));
     else if (sprite->y + 8 > sprite->ly)
-        y1 = max(y1, (sprite->ly + 7) >> 3);
+        y1 = ssd1306_max(y1, (sprite->ly + 7) >> 3);
     for(uint8_t y = y1; y <= y2; y++)
     {
         ssd1306_lcd.set_block(sprite->lx, y, sprite->w);
@@ -1056,9 +1056,9 @@ void ssd1306_eraseTrace(SPRITE *sprite)
         uint8_t x1 = sprite->lx;
         uint8_t x2 = sprite->lx + sprite->w - 1;
         if (sprite->x < sprite->lx)
-            x1 = max(x1, sprite->x + sprite->w);
+            x1 = ssd1306_max(x1, sprite->x + sprite->w);
         else
-            x2 = min((uint8_t)(sprite->x - 1), x2);
+            x2 = ssd1306_min((uint8_t)(sprite->x - 1), x2);
         for(uint8_t y = sprite->ly >> 3; y <= (sprite->ly + 7) >> 3; y++)
         {
             ssd1306_lcd.set_block(x1, y, x2 - x1 + 1 );

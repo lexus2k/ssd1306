@@ -111,10 +111,10 @@ void SpritePool::updateRegion(SSD1306_RECT ur)
     ur.top >>= 3;
     ur.right >>= 3;
     ur.bottom >>= 3;
-    ur.left = max(ur.left, m_rect.left);
-    ur.top = max(ur.top, m_rect.top);
-    ur.right = min(ur.right, m_rect.right);
-    ur.bottom = min(ur.bottom, m_rect.bottom);
+    ur.left = ssd1306_max(ur.left, m_rect.left);
+    ur.top = ssd1306_max(ur.top, m_rect.top);
+    ur.right = ssd1306_min(ur.right, m_rect.right);
+    ur.bottom = ssd1306_min(ur.bottom, m_rect.bottom);
     for(uint8_t x = ur.left; x <= ur.right; x++)
     {
        for(uint8_t y = ur.top; y <= ur.bottom; y++)

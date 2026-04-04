@@ -30,15 +30,10 @@
 
 #include "ssd1306_hal/io.h"
 
-#ifndef min
-/** Macros returning minimum of 2 numbers */
-#define min(a,b) ((a)<(b)?(a):(b))
-#endif
-
-#ifndef max
-/** Macros returning maximum of 2 numbers */
-#define max(a,b) ((a)>(b)?(a):(b))
-#endif
+/** Internal macro returning minimum of 2 numbers */
+#define ssd1306_min(a,b) ((a)<(b)?(a):(b))
+/** Internal macro returning maximum of 2 numbers */
+#define ssd1306_max(a,b) ((a)>(b)?(a):(b))
 
 /** Macro to generate 8-bit color for SSD1331 OLED display */
 #define RGB_COLOR8(r,g,b)    ( (r & 0xE0) | ((g >> 3)&0x1C) | (b>>6) )
@@ -238,14 +233,14 @@ typedef struct SPRITE
      */
     inline SSD1306_RECT getUpdateRect() const
     {
-        uint8_t left = min(x,lx);
-        uint8_t top = min(y,ly);
-        uint8_t right = max((uint8_t)(x + w - 1), (uint8_t)(lx + w - 1));
+        uint8_t left = ssd1306_min(x,lx);
+        uint8_t top = ssd1306_min(y,ly);
+        uint8_t right = ssd1306_max((uint8_t)(x + w - 1), (uint8_t)(lx + w - 1));
         if (((uint8_t)(lx + w - 1) < w) && (right > 2*w))
         {
             right = (uint8_t)(lx + w - 1);
         }
-        uint8_t bottom = max((uint8_t)(y + 7), (uint8_t)(ly + 7));
+        uint8_t bottom = ssd1306_max((uint8_t)(y + 7), (uint8_t)(ly + 7));
         if (((uint8_t)(ly + 7) < 8) && (bottom > 16))
         {
             bottom = (uint8_t)(ly + 7);

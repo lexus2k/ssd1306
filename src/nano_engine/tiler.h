@@ -137,7 +137,7 @@ public:
         if (y1 < 0) y1 = 0;
         if (x1 < 0) x1 = 0;
         y1 = y1>>B;
-        y2 = min((y2>>B), NE_MAX_TILES_NUM - 1);
+        y2 = ssd1306_min((y2>>B), NE_MAX_TILES_NUM - 1);
         for (uint8_t y=y1; y<=y2; y++)
         {
             for(uint8_t x=x1>>B; x<=(x2>>B); x++)

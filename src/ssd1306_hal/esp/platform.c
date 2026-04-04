@@ -100,7 +100,7 @@ static void platform_i2c_stop(void)
 {
     // ... Complete i2c communication
     i2c_master_stop(s_cmd_handle);
-    /*esp_err_t ret =*/ i2c_master_cmd_begin(s_bus_id, s_cmd_handle, 1000 / portTICK_RATE_MS);
+    /*esp_err_t ret =*/ i2c_master_cmd_begin(s_bus_id, s_cmd_handle, 1000 / portTICK_PERIOD_MS);
     i2c_cmd_link_delete(s_cmd_handle);
     s_cmd_handle = NULL;
 }
