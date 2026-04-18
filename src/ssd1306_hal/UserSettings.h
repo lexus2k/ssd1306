@@ -45,49 +45,70 @@
  *          header file, and gain another 100-200 bytes of RAM and 300-500 bytes of Flash.
  */
 
-/* Comment out options below if you don't need support in the library,  *
- * and want to reduce memory consumption.                               */
+/* To disable unused library features and save memory,         *
+ * define the corresponding SSD1306_xxxxxx_DISABLE options.    */
 
-/** Define this macro if you need to enable software I2C module for compilation */
+
+/** Define SSD1306_SOFTWARE_I2C_DISABLE to exclude software I2C module from compilation. */
+#ifndef SSD1306_SOFTWARE_I2C_DISABLE
 #define CONFIG_SOFTWARE_I2C_ENABLE
+#endif
 
-/** Define this macro if you need to enable TWI I2C module for compilation */
+/** Define SSD1306_TWI_I2C_DISABLE to exclude TWI I2C module from compilation. */
+#ifndef SSD1306_TWI_I2C_DISABLE
 #define CONFIG_TWI_I2C_ENABLE
+#endif
 
-/** Define this macro if you need to enable AVR SPI module for compilation */
+/** Define SSD1306_AVR_SPI_DISABLE to exclude AVR SPI module from compilation. */
+#ifndef SSD1306_AVR_SPI_DISABLE
 #define CONFIG_AVR_SPI_ENABLE
+#endif
 
-/** Define this macro if you need to enable USI SPI module for compilation */
+/** Define SSD1306_USI_SPI_DISABLE to exclude USI SPI module from compilation. */
+#ifndef SSD1306_USI_SPI_DISABLE
 #define CONFIG_USI_SPI_ENABLE
+#endif
 
-/** Define this macro if you need to enable AVR UART module for compilation */
+/** Define SSD1306_AVR_UART_DISABLE to exclude AVR UART module from compilation. */
+#ifndef SSD1306_AVR_UART_DISABLE
 #define CONFIG_AVR_UART_ENABLE
+#endif
 
-/** Define this macro if you need to enable VGA module for compilation */
+/** Define SSD1306_VGA_DISABLE to exclude VGA module from compilation. */
+#ifndef SSD1306_VGA_DISABLE
 #define CONFIG_VGA_ENABLE
+#endif
 
 /** Define this macro if you need to enable Adafruit GFX canvas support for compilation */
-#ifndef CONFIG_ADAFRUIT_GFX_ENABLE
 //#define CONFIG_ADAFRUIT_GFX_ENABLE
+
+/**
+ * Define SSD1306_PLATFORM_I2C_DISABLE to disable the platform-specific I2C interface
+ * implemented in SSD1306 HAL.
+ * 
+ * If you use Arduino platform, this lets you skip compilation of the Wire library.
+ */
+#ifndef SSD1306_PLATFORM_I2C_DISABLE
+#define CONFIG_PLATFORM_I2C_ENABLE
 #endif
 
 /**
- * Define this macro if platform specific i2c interface is implemented in SSD1306 HAL.
- * If you use Arduino platform, this macro enables Arduino Wire library module for compilation.
+ * Define SSD1306_PLATFORM_SPI_DISABLE to disable the platform-specific SPI interface
+ * implemented in SSD1306 HAL.
+ * 
+ * If you use Arduino platform, this lets you skip compilation of the SPI library.
  */
-#define CONFIG_PLATFORM_I2C_ENABLE
-
-/**
- * Define this macro if platform specific spi interface is implemented in SSD1306 HAL
- * If you use Arduino platform, this macro enables Arduino SPI library module for compilation.
- */
+#ifndef SSD1306_PLATFORM_SPI_DISABLE
 #define CONFIG_PLATFORM_SPI_ENABLE
+#endif
 
 /**
- * Defines, whenever ssd1306 library supports unicode.
- * Support of unicode increases RAM and Flasg memory consumption
+ * Define SSD1306_UNICODE_DISABLE to disable this library's unicode support.
+ * Unicode support increases RAM and Flash memory consumption.
  */
+#ifndef SSD1306_UNICODE_DISABLE
 #define CONFIG_SSD1306_UNICODE_ENABLE
+#endif
 
 /**
  * @}
