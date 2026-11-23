@@ -41,9 +41,17 @@
     #include <avr/sleep.h>
     #include <avr/pgmspace.h>
     #include <avr/interrupt.h>
-    #elif defined(ARDUINO_ARCH_SAMD)
-    #include <api/deprecated-avr-comp/avr/pgmspace.h>
-    #include <api/deprecated-avr-comp/avr/interrupt.h>
+    #elif defined(__has_include)
+        /* Newer ArduinoCore-API based cores (SAMD, Zephyr, ...) moved AVR compatibility
+         * headers to api/deprecated-avr-comp, while older board packages still keep
+         * them at <avr/...>. Pick whichever exists. */
+        #if __has_include(<api/deprecated-avr-comp/avr/pgmspace.h>)
+        #include <api/deprecated-avr-comp/avr/pgmspace.h>
+        #include <api/deprecated-avr-comp/avr/interrupt.h>
+        #else
+        #include <avr/pgmspace.h>
+        #include <avr/interrupt.h>
+        #endif
     #else
     #include <avr/pgmspace.h>
     #include <avr/interrupt.h>
